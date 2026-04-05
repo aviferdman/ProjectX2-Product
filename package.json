@@ -1,0 +1,24 @@
+{
+  "name": "crewspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TypeScript-native agent orchestration framework with visual canvas",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "npm@10.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "npm run clean --workspaces",
+    "typecheck": "npm run typecheck --workspaces"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

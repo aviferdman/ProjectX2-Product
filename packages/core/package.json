@@ -1,0 +1,44 @@
+{
+  "name": "@crewspace/core",
+  "version": "0.1.0",
+  "description": "Core agent orchestration framework for Crewspace",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean && rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/ --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "agent",
+    "orchestration",
+    "multi-agent",
+    "typescript",
+    "ai",
+    "llm",
+    "framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aviferdman/ProjectX2-Product.git",
+    "directory": "packages/core"
+  }
+}
