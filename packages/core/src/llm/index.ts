@@ -9,6 +9,8 @@ export { ModelCatalog } from './model-catalog.js';
 export {
   createAnthropicProvider,
   AnthropicProvider,
+  createOllamaProvider,
+  OllamaProvider,
   createOpenAIProvider,
   OpenAIProvider,
 } from './providers/index.js';
