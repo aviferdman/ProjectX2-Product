@@ -17,7 +17,10 @@
 
 import { EventEmitter } from 'eventemitter3';
 
-import { MemoryConfigError, MemoryOperationError, MemoryQueryError } from '../errors/memory-errors.js';
+import {
+  MemoryConfigError,
+  MemoryOperationError,
+} from '../errors/memory-errors.js';
 import type {
   MemoryConfig,
   MemoryEntry,
@@ -200,15 +203,17 @@ export class SqliteMemory implements MemoryProvider {
 
     const metadataJson = entry.metadata ? JSON.stringify(entry.metadata) : null;
 
-    this._db.prepare(
-      `INSERT INTO memory_entries (id, content, role, namespace, created_at, metadata)
+    this._db
+      .prepare(
+        `INSERT INTO memory_entries (id, content, role, namespace, created_at, metadata)
        VALUES (?, ?, ?, ?, ?, ?)`,
-    ).run(entry.id, entry.content, entry.role, entry.namespace, entry.createdAt, metadataJson);
+      )
+      .run(entry.id, entry.content, entry.role, entry.namespace, entry.createdAt, metadataJson);
 
     // Insert into FTS index
-    this._db.prepare(
-      'INSERT INTO memory_fts (entry_id, content) VALUES (?, ?)',
-    ).run(entry.id, entry.content);
+    this._db
+      .prepare('INSERT INTO memory_fts (entry_id, content) VALUES (?, ?)')
+      .run(entry.id, entry.content);
 
     const stored = Object.freeze({ ...entry });
     this._emit('memory:add', stored);
@@ -217,9 +222,9 @@ export class SqliteMemory implements MemoryProvider {
 
   async get(id: string): Promise<MemoryEntry | undefined> {
     this._ensureOpen();
-    const row = this._db
-      .prepare('SELECT * FROM memory_entries WHERE id = ?')
-      .get(id) as MemoryRow | undefined;
+    const row = this._db.prepare('SELECT * FROM memory_entries WHERE id = ?').get(id) as
+      | MemoryRow
+      | undefined;
 
     return row ? rowToEntry(row) : undefined;
   }

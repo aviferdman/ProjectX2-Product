@@ -80,9 +80,9 @@ describe('TASK-048: SqliteMemory — Long-Term Memory with SQLite Persistence', 
     });
 
     it('should reject negative maxEntries in retention policy', () => {
-      expect(
-        () => new SqliteMemory({ dbPath: ':memory:', retention: { maxEntries: -1 } }),
-      ).toThrow('maxEntries');
+      expect(() => new SqliteMemory({ dbPath: ':memory:', retention: { maxEntries: -1 } })).toThrow(
+        'maxEntries',
+      );
     });
 
     it('should reject non-integer maxEntries', () => {
@@ -92,9 +92,9 @@ describe('TASK-048: SqliteMemory — Long-Term Memory with SQLite Persistence', 
     });
 
     it('should reject negative maxAge in retention policy', () => {
-      expect(
-        () => new SqliteMemory({ dbPath: ':memory:', retention: { maxAge: -100 } }),
-      ).toThrow('maxAge');
+      expect(() => new SqliteMemory({ dbPath: ':memory:', retention: { maxAge: -100 } })).toThrow(
+        'maxAge',
+      );
     });
   });
 
@@ -317,7 +317,9 @@ describe('TASK-048: SqliteMemory — Long-Term Memory with SQLite Persistence', 
 
   describe('search()', () => {
     it('should find entries by content text', async () => {
-      await memory.add(makeEntry({ content: 'The agent completed the research task successfully' }));
+      await memory.add(
+        makeEntry({ content: 'The agent completed the research task successfully' }),
+      );
       await memory.add(makeEntry({ content: 'The weather is sunny today' }));
 
       const result = await memory.search('research');
