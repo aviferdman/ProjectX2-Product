@@ -13,8 +13,10 @@ export {
   OpenAIProvider,
 } from './providers/index.js';
 export { LLMProviderRegistry } from './provider-registry.js';
-export { RetryLLMProvider } from './retry-provider.js';
-export type { RetryLLMProviderOptions } from './retry-provider.js';
+export { CircuitBreaker, CircuitState } from './circuit-breaker.js';
+export type { CircuitBreakerConfig, CircuitBreakerSnapshot } from './circuit-breaker.js';
+export { createRetryProvider, RetryLLMProvider } from './retry-provider.js';
+export type { RetryLLMProviderOptions, RetryStats } from './retry-provider.js';
 export {
   buildRetryConfig,
   calculateDelay,

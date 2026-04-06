@@ -34,8 +34,11 @@ export {
   BaseLLMProvider,
   buildRetryConfig,
   calculateDelay,
+  CircuitBreaker,
+  CircuitState,
   createAnthropicProvider,
   createOpenAIProvider,
+  createRetryProvider,
   DefaultLLMStreamResponse,
   isRetryableError,
   isStreamingProvider,
@@ -53,10 +56,13 @@ export {
   withRetry,
 } from './llm/index.js';
 export type {
+  CircuitBreakerConfig,
+  CircuitBreakerSnapshot,
   OnRetryCallback,
   RetryConfig,
   RetryContext,
   RetryLLMProviderOptions,
+  RetryStats,
 } from './llm/index.js';
 
 // Types
