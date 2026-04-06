@@ -1,0 +1,129 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Validate tag matches package versions
+        run: npx tsx scripts/prepare-publish.ts --tag ${{ github.ref_name }}
+
+  ci:
+    name: CI Checks
+    needs: [validate]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        if: matrix.node-version == 20
+        run: npm run lint
+
+      - name: Format check
+        if: matrix.node-version == 20
+        run: npm run format:check
+
+      - name: Type check
+        if: matrix.node-version == 20
+        run: npm run typecheck
+
+      - name: Run tests
+        run: npm test
+
+  build:
+    name: Build
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build all packages
+        run: npm run build
+
+      - name: Verify dist output
+        run: |
+          test -d packages/core/dist || (echo "ERROR: packages/core/dist not found" && exit 1)
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: packages/core/dist/
+          retention-days: 1
+
+  publish:
+    name: Publish
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: packages/core/dist/
+
+      - name: Verify package contents
+        run: npm pack --dry-run --workspace=packages/core
+
+      - name: Publish @crewspace/core
+        run: npm publish --workspace=packages/core --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify published package
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./packages/core/package.json').version")
+          echo "Published @crewspace/core@${PACKAGE_VERSION}"
+          sleep 10
+          npm view @crewspace/core@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"

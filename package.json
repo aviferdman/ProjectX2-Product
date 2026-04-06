@@ -23,6 +23,7 @@
     "clean": "npm run clean --workspaces",
     "typecheck": "npm run typecheck --workspaces",
     "version:check": "tsx scripts/check-versions.ts",
+    "publish:prepare": "tsx scripts/prepare-publish.ts",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -37,6 +38,7 @@
     "prettier": "^3.8.1",
     "typescript": "^5.4.0",
     "typescript-eslint": "^8.58.0",
+    "tsx": "^4.19.0",
     "vitepress": "^1.6.4",
     "vitest": "^4.1.2"
   }
