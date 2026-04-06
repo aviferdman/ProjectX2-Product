@@ -31,14 +31,9 @@ export class LLMProviderError extends Error {
 
   public override readonly cause: Error | undefined;
 
-  constructor(
-    provider: string,
-    message: string,
-    statusCode?: number,
-    cause?: Error,
-  ) {
+  constructor(provider: string, message: string, statusCode?: number, cause?: Error) {
     super(`LLM provider "${provider}": ${message}`);
-    this.name = "LLMProviderError";
+    this.name = 'LLMProviderError';
     this.provider = provider;
     this.statusCode = statusCode;
     this.cause = cause;
@@ -54,14 +49,9 @@ export class LLMRateLimitError extends LLMProviderError {
   /** Suggested wait time before retrying, in milliseconds. */
   public readonly retryAfterMs: number | undefined;
 
-  constructor(
-    provider: string,
-    message: string,
-    retryAfterMs?: number,
-    cause?: Error,
-  ) {
+  constructor(provider: string, message: string, retryAfterMs?: number, cause?: Error) {
     super(provider, message, 429, cause);
-    this.name = "LLMRateLimitError";
+    this.name = 'LLMRateLimitError';
     this.retryAfterMs = retryAfterMs;
   }
 }
@@ -72,7 +62,7 @@ export class LLMRateLimitError extends LLMProviderError {
 export class LLMAuthenticationError extends LLMProviderError {
   constructor(provider: string, message: string, cause?: Error) {
     super(provider, message, 401, cause);
-    this.name = "LLMAuthenticationError";
+    this.name = 'LLMAuthenticationError';
   }
 }
 
@@ -94,7 +84,7 @@ export class LLMContextLengthError extends LLMProviderError {
     cause?: Error,
   ) {
     super(provider, message, 400, cause);
-    this.name = "LLMContextLengthError";
+    this.name = 'LLMContextLengthError';
     this.requestTokens = requestTokens;
     this.maxTokens = maxTokens;
   }
@@ -118,7 +108,7 @@ export class LLMStreamError extends LLMProviderError {
     cause?: Error,
   ) {
     super(provider, message, undefined, cause);
-    this.name = "LLMStreamError";
+    this.name = 'LLMStreamError';
     this.chunksReceived = chunksReceived;
     this.partialContent = partialContent;
   }

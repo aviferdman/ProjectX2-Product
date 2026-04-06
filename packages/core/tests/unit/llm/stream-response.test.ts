@@ -101,19 +101,16 @@ describe('DefaultLLMStreamResponse', () => {
     });
 
     it('should throw LLMStreamError when stream fails', async () => {
-      const source = failingAsyncIterable(
-        [{ content: 'partial' }],
-        new Error('Connection reset'),
-      );
+      const source = failingAsyncIterable([{ content: 'partial' }], new Error('Connection reset'));
 
       const stream = new DefaultLLMStreamResponse('openai', source);
 
       await expect(stream.toResponse()).rejects.toThrow(LLMStreamError);
       try {
-        const retryStream = new DefaultLLMStreamResponse('openai', failingAsyncIterable(
-          [{ content: 'partial' }],
-          new Error('Connection reset'),
-        ));
+        const retryStream = new DefaultLLMStreamResponse(
+          'openai',
+          failingAsyncIterable([{ content: 'partial' }], new Error('Connection reset')),
+        );
         await retryStream.toResponse();
       } catch (error) {
         expect(error).toBeInstanceOf(LLMStreamError);
@@ -125,10 +122,7 @@ describe('DefaultLLMStreamResponse', () => {
     });
 
     it('should throw when consumed twice via toResponse', async () => {
-      const stream = new DefaultLLMStreamResponse(
-        'test',
-        asyncIterableFrom([{ content: 'data' }]),
-      );
+      const stream = new DefaultLLMStreamResponse('test', asyncIterableFrom([{ content: 'data' }]));
 
       await stream.toResponse();
       await expect(stream.toResponse()).rejects.toThrow(LLMStreamError);
@@ -159,13 +153,10 @@ describe('DefaultLLMStreamResponse', () => {
     });
 
     it('should throw when consumed twice via iteration', async () => {
-      const stream = new DefaultLLMStreamResponse(
-        'test',
-        asyncIterableFrom([{ content: 'data' }]),
-      );
+      const stream = new DefaultLLMStreamResponse('test', asyncIterableFrom([{ content: 'data' }]));
 
       // First consumption
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       for await (const _chunk of stream) {
         // consume
       }
@@ -175,10 +166,7 @@ describe('DefaultLLMStreamResponse', () => {
     });
 
     it('should throw when iteration follows toResponse', async () => {
-      const stream = new DefaultLLMStreamResponse(
-        'test',
-        asyncIterableFrom([{ content: 'data' }]),
-      );
+      const stream = new DefaultLLMStreamResponse('test', asyncIterableFrom([{ content: 'data' }]));
 
       await stream.toResponse();
 
@@ -186,12 +174,8 @@ describe('DefaultLLMStreamResponse', () => {
     });
 
     it('should throw when toResponse follows iteration', async () => {
-      const stream = new DefaultLLMStreamResponse(
-        'test',
-        asyncIterableFrom([{ content: 'data' }]),
-      );
+      const stream = new DefaultLLMStreamResponse('test', asyncIterableFrom([{ content: 'data' }]));
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for await (const _chunk of stream) {
         // consume
       }

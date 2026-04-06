@@ -7,6 +7,7 @@ import type {
   LLMProviderConfig,
   LLMRequestOptions,
   LLMResponse,
+  LLMStreamChunk,
   LLMStreamResponse,
 } from '../../../src/types/llm.js';
 import { LLMRole } from '../../../src/types/llm.js';
@@ -50,7 +51,7 @@ class StreamingTestProvider extends BaseLLMProvider {
     _messages: readonly LLMMessage[],
     _options: LLMRequestOptions,
   ): Promise<LLMStreamResponse> {
-    async function* gen() {
+    async function* gen(): AsyncGenerator<LLMStreamChunk> {
       yield { content: 'streamed ' };
       yield {
         content: 'response',
@@ -104,27 +105,21 @@ describe('BaseLLMProvider', () => {
     });
 
     it('should throw LLMProviderError for empty provider name', () => {
-      expect(
-        () => new TestProvider({ provider: '', modelId: 'model' }),
-      ).toThrow(LLMProviderError);
+      expect(() => new TestProvider({ provider: '', modelId: 'model' })).toThrow(LLMProviderError);
     });
 
     it('should throw LLMProviderError for empty modelId', () => {
-      expect(
-        () => new TestProvider({ provider: 'test', modelId: '' }),
-      ).toThrow(LLMProviderError);
+      expect(() => new TestProvider({ provider: 'test', modelId: '' })).toThrow(LLMProviderError);
     });
 
     it('should throw LLMProviderError for whitespace-only provider', () => {
-      expect(
-        () => new TestProvider({ provider: '   ', modelId: 'model' }),
-      ).toThrow(LLMProviderError);
+      expect(() => new TestProvider({ provider: '   ', modelId: 'model' })).toThrow(
+        LLMProviderError,
+      );
     });
 
     it('should throw LLMProviderError for whitespace-only modelId', () => {
-      expect(
-        () => new TestProvider({ provider: 'test', modelId: '  ' }),
-      ).toThrow(LLMProviderError);
+      expect(() => new TestProvider({ provider: 'test', modelId: '  ' })).toThrow(LLMProviderError);
     });
   });
 
@@ -153,9 +148,7 @@ describe('BaseLLMProvider', () => {
 
     it('should throw when messages have no USER or SYSTEM role', async () => {
       const provider = new TestProvider(validConfig);
-      const messages: LLMMessage[] = [
-        { role: LLMRole.ASSISTANT, content: 'I am an assistant' },
-      ];
+      const messages: LLMMessage[] = [{ role: LLMRole.ASSISTANT, content: 'I am an assistant' }];
       await expect(provider.generateText(messages)).rejects.toThrow(LLMProviderError);
       await expect(provider.generateText(messages)).rejects.toThrow(/USER or SYSTEM/);
     });

@@ -96,12 +96,7 @@ describe('LLM Error Classes', () => {
     });
 
     it('should store token counts', () => {
-      const error = new LLMContextLengthError(
-        'openai',
-        'Context too long',
-        200_000,
-        128_000,
-      );
+      const error = new LLMContextLengthError('openai', 'Context too long', 200_000, 128_000);
       expect(error.requestTokens).toBe(200_000);
       expect(error.maxTokens).toBe(128_000);
     });
@@ -120,12 +115,7 @@ describe('LLM Error Classes', () => {
 
   describe('LLMStreamError', () => {
     it('should store chunksReceived and partialContent', () => {
-      const error = new LLMStreamError(
-        'anthropic',
-        'Connection reset',
-        5,
-        'partial output here',
-      );
+      const error = new LLMStreamError('anthropic', 'Connection reset', 5, 'partial output here');
       expect(error.name).toBe('LLMStreamError');
       expect(error.chunksReceived).toBe(5);
       expect(error.partialContent).toBe('partial output here');

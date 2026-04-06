@@ -8,9 +8,9 @@
  * @packageDocumentation
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { LLMRole } from "../types/llm.js";
+import { LLMRole } from '../types/llm.js';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -41,8 +41,8 @@ export const LLMRequestOptionsSchema = z
       .optional(),
     maxTokens: z
       .number()
-      .int("maxTokens must be an integer")
-      .positive("maxTokens must be positive")
+      .int('maxTokens must be an integer')
+      .positive('maxTokens must be positive')
       .optional(),
     stopSequences: z.array(z.string()).optional(),
     signal: z.custom<AbortSignal>().optional(),
@@ -57,10 +57,10 @@ export const LLMRequestOptionsSchema = z
 export const LLMMessageSchema = z.object({
   role: z.nativeEnum(LLMRole, {
     errorMap: () => ({
-      message: `role must be one of: ${Object.values(LLMRole).join(", ")}`,
+      message: `role must be one of: ${Object.values(LLMRole).join(', ')}`,
     }),
   }),
-  content: z.string().min(1, "Message content must not be empty"),
+  content: z.string().min(1, 'Message content must not be empty'),
   name: z.string().optional(),
 });
 
@@ -73,12 +73,10 @@ export const LLMMessageSchema = z.object({
  */
 export const LLMMessagesSchema = z
   .array(LLMMessageSchema)
-  .min(1, "Messages array must not be empty")
-  .refine(
-    (msgs) =>
-      msgs.some((m) => m.role === LLMRole.USER || m.role === LLMRole.SYSTEM),
-    { message: "Messages must contain at least one USER or SYSTEM message" },
-  );
+  .min(1, 'Messages array must not be empty')
+  .refine((msgs) => msgs.some((m) => m.role === LLMRole.USER || m.role === LLMRole.SYSTEM), {
+    message: 'Messages must contain at least one USER or SYSTEM message',
+  });
 
 // ---------------------------------------------------------------------------
 // LLMProviderConfig schema
@@ -105,26 +103,23 @@ const PROVIDER_NAME_PATTERN = /^[a-z][a-z0-9_-]*$/;
 export const LLMProviderConfigSchema = z.object({
   provider: z
     .string()
-    .min(1, "Provider name must not be empty")
+    .min(1, 'Provider name must not be empty')
     .regex(
       PROVIDER_NAME_PATTERN,
-      "Provider name must start with lowercase letter and contain only lowercase letters, digits, hyphens, or underscores",
+      'Provider name must start with lowercase letter and contain only lowercase letters, digits, hyphens, or underscores',
     ),
-  modelId: z.string().min(1, "Model ID must not be empty"),
-  apiKey: z.string().min(1, "API key must not be empty").optional(),
-  baseUrl: z.string().url("baseUrl must be a valid URL").optional(),
+  modelId: z.string().min(1, 'Model ID must not be empty'),
+  apiKey: z.string().min(1, 'API key must not be empty').optional(),
+  baseUrl: z.string().url('baseUrl must be a valid URL').optional(),
   maxRetries: z
     .number()
-    .int("maxRetries must be an integer")
-    .nonnegative("maxRetries must be ≥ 0")
-    .max(
-      MAX_RETRIES_UPPER_BOUND,
-      `maxRetries must be ≤ ${String(MAX_RETRIES_UPPER_BOUND)}`,
-    )
+    .int('maxRetries must be an integer')
+    .nonnegative('maxRetries must be ≥ 0')
+    .max(MAX_RETRIES_UPPER_BOUND, `maxRetries must be ≤ ${String(MAX_RETRIES_UPPER_BOUND)}`)
     .optional(),
   timeout: z
     .number()
-    .int("timeout must be an integer")
+    .int('timeout must be an integer')
     .min(MIN_TIMEOUT_MS, `timeout must be ≥ ${String(MIN_TIMEOUT_MS)}ms`)
     .max(MAX_TIMEOUT_MS, `timeout must be ≤ ${String(MAX_TIMEOUT_MS)}ms`)
     .optional(),
@@ -141,17 +136,11 @@ export const LLMProviderConfigSchema = z.object({
  * Validates model metadata used for token budgeting and cost estimation.
  */
 export const LLMModelInfoSchema = z.object({
-  modelId: z.string().min(1, "modelId must not be empty"),
-  provider: z.string().min(1, "provider must not be empty"),
-  displayName: z.string().min(1, "displayName must not be empty"),
-  maxContextTokens: z
-    .number()
-    .int()
-    .positive("maxContextTokens must be positive"),
-  maxOutputTokens: z
-    .number()
-    .int()
-    .positive("maxOutputTokens must be positive"),
+  modelId: z.string().min(1, 'modelId must not be empty'),
+  provider: z.string().min(1, 'provider must not be empty'),
+  displayName: z.string().min(1, 'displayName must not be empty'),
+  maxContextTokens: z.number().int().positive('maxContextTokens must be positive'),
+  maxOutputTokens: z.number().int().positive('maxOutputTokens must be positive'),
   supportsStreaming: z.boolean(),
   costPer1kInputTokens: z.number().nonnegative().optional(),
   costPer1kOutputTokens: z.number().nonnegative().optional(),
@@ -181,8 +170,6 @@ export function validateLLMProviderConfig(
  * @returns The parsed (validated) messages
  * @throws {ZodError} If validation fails
  */
-export function validateLLMMessages(
-  messages: unknown,
-): z.infer<typeof LLMMessagesSchema> {
+export function validateLLMMessages(messages: unknown): z.infer<typeof LLMMessagesSchema> {
   return LLMMessagesSchema.parse(messages);
 }

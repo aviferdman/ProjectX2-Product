@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { LLMProvider, StreamingLLMProvider } from '../../../src/types/llm.js';
+import type { LLMProvider, LLMStreamChunk, StreamingLLMProvider } from '../../../src/types/llm.js';
 import { isStreamingProvider } from '../../../src/llm/type-guards.js';
 
 describe('isStreamingProvider', () => {
@@ -26,7 +26,7 @@ describe('isStreamingProvider', () => {
         tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
       }),
       generateStream: async () => {
-        async function* gen() {
+        async function* gen(): AsyncGenerator<LLMStreamChunk> {
           yield { content: 'hello' };
         }
         return {
