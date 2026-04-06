@@ -14,6 +14,12 @@ export { Crew } from './crew/index.js';
 
 // Task
 export { Task } from './task/index.js';
+export { TaskContextManager } from './task/index.js';
+export type {
+  ContextMergeStrategy,
+  ContextTransformer,
+  TaskContextManagerConfig,
+} from './task/index.js';
 
 // Execution Engine
 export { ExecutionEngine } from './engine/index.js';

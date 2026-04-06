@@ -12,6 +12,8 @@ import type { Agent } from '../agent/agent.js';
 import type { Task } from '../task/task.js';
 import type { TaskResult } from '../types/task.js';
 
+import type { TaskContextManagerConfig } from '../task/task-context-manager.js';
+
 // ---------------------------------------------------------------------------
 // Enums
 // ---------------------------------------------------------------------------
@@ -71,6 +73,9 @@ export interface ExecutionEngineConfig {
 
   /** Enable verbose logging of engine operations (default: false). */
   readonly verbose?: boolean;
+
+  /** Configuration for the task context manager (default: shallow-merge, output-only). */
+  readonly contextManager?: TaskContextManagerConfig;
 }
 
 // ---------------------------------------------------------------------------
