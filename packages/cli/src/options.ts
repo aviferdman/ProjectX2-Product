@@ -4,6 +4,8 @@
  * @packageDocumentation
  */
 
+import * as path from 'node:path';
+
 const VALID_LOG_LEVELS = ['debug', 'info', 'warn', 'error'] as const;
 
 export type LogLevel = (typeof VALID_LOG_LEVELS)[number];
@@ -44,5 +46,5 @@ function isValidLogLevel(value: string): value is LogLevel {
  */
 export function resolveConfigPath(configFlag: string | undefined, cwd: string): string {
   if (configFlag !== undefined) return configFlag;
-  return `${cwd}/crewspace.config.ts`;
+  return path.join(cwd, 'crewspace.config.ts');
 }

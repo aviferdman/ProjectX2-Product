@@ -1,0 +1,63 @@
+name: Cross-Platform CLI Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/cli/**'
+      - '.github/workflows/ci-cross-platform.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/cli/**'
+      - '.github/workflows/ci-cross-platform.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cli-cross-platform:
+    name: CLI (${{ matrix.os }}, Node ${{ matrix.node-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build packages
+        run: npm run build
+
+      - name: Run CLI unit tests
+        run: npm run test:unit
+        working-directory: packages/cli
+
+      - name: Run CLI cross-platform tests
+        run: npx vitest run tests/unit/cross-platform.test.ts
+        working-directory: packages/cli
+
+      - name: Verify CLI bin entry point
+        shell: bash
+        run: node packages/cli/dist/bin.js --version
+
+      - name: Verify init scaffold (smoke test)
+        shell: bash
+        run: |
+          tmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'crewspace')
+          node packages/cli/dist/bin.js init "$tmpdir/smoke-test"
+          test -f "$tmpdir/smoke-test/package.json"
+          echo "Scaffold smoke test passed"
+          rm -rf "$tmpdir"

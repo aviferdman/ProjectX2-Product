@@ -216,8 +216,9 @@ describe('resolveConfigPath', () => {
   });
 
   it('should fall back to default config in cwd', () => {
-    expect(resolveConfigPath(undefined, '/home/user/project')).toBe(
-      '/home/user/project/crewspace.config.ts',
+    const cwd = '/home/user/project';
+    expect(resolveConfigPath(undefined, cwd)).toBe(
+      path.join(cwd, 'crewspace.config.ts'),
     );
   });
 });

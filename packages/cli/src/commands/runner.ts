@@ -110,7 +110,12 @@ export async function executeWorkflow(options: RunnerOptions): Promise<RunResult
   const startTime = Date.now();
 
   return new Promise<RunResult>((resolve, reject) => {
-    const child = spawn(command, args, {
+    // On Windows with shell: true, paths with spaces need quoting
+    const spawnArgs = process.platform === 'win32'
+      ? args.map((a) => (a.includes(' ') ? `"${a}"` : a))
+      : args;
+
+    const child = spawn(command, spawnArgs, {
       cwd: options.cwd,
       stdio: 'inherit',
       shell: process.platform === 'win32',
