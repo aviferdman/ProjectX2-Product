@@ -97,19 +97,6 @@ export interface ToolValidationIssue {
   readonly code: string;
 }
 
-/** Thrown when tool composition fails (e.g. max depth exceeded). */
-export class ToolCompositionError extends ToolExecutionError {
-  public readonly depth: number;
-  public readonly maxDepth: number;
-
-  constructor(toolName: string, message: string, depth: number, maxDepth: number) {
-    super(toolName, message);
-    this.name = 'ToolCompositionError';
-    this.depth = depth;
-    this.maxDepth = maxDepth;
-  }
-}
-
 /** Thrown when a tool's input fails Zod schema validation. */
 export class ToolInputValidationError extends ToolExecutionError {
   public readonly issues: readonly ToolValidationIssue[];
