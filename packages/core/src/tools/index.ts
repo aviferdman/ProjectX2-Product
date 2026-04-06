@@ -27,3 +27,39 @@ export type {
   WriteFileInput,
   WriteFileOutput,
 } from './file/index.js';
+
+export {
+  createFetchUrlTool,
+  createParseHtmlTool,
+  createWebSearchTool,
+  createWebTools,
+  decodeHtmlEntities,
+  DEFAULT_MAX_RESULTS,
+  DEFAULT_TIMEOUT_MS,
+  DEFAULT_USER_AGENT,
+  extractLinks,
+  extractMetadata,
+  extractTitle,
+  HARD_MAX_RESULTS,
+  MAX_RESPONSE_SIZE,
+  stripTags,
+} from './web/index.js';
+
+export type {
+  FetchUrlToolOptions,
+  WebSearchToolOptions,
+} from './web/index.js';
+
+export type {
+  ExtractedLink,
+  FetchUrlInput,
+  FetchUrlOutput,
+  HtmlMetadata,
+  ParseHtmlInput,
+  ParseHtmlOutput,
+  SearchResult,
+  WebSearchInput,
+  WebSearchOutput,
+  WebTools,
+  WebToolsOptions,
+} from './web/index.js';
