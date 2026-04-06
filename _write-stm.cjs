@@ -1,4 +1,15 @@
-/**
+const fs = require('fs');
+const path = require('path');
+
+function writeFile(relPath, content) {
+  const fullPath = path.resolve(relPath);
+  fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+  fs.writeFileSync(fullPath, content, 'utf-8');
+  console.log('wrote:', relPath, '(' + content.length + ' bytes)');
+}
+
+// ---- short-term-memory.ts ----
+writeFile('packages/core/src/memory/short-term-memory.ts', `/**
  * In-memory (short-term) memory provider.
  *
  * Stores conversation history and context in a simple Map, with
@@ -149,7 +160,7 @@ export class ShortTermMemory implements MemoryProvider {
       throw new MemoryOperationError(
         this.name,
         'add',
-        `Entry with id "${entry.id}" already exists`,
+        \`Entry with id "\${entry.id}" already exists\`,
       );
     }
 
@@ -330,3 +341,6 @@ export class ShortTermMemory implements MemoryProvider {
     (this._emitter.emit as (event: string, ...args: any[]) => boolean)(event, ...args);
   }
 }
+`);
+
+console.log('done');
