@@ -144,7 +144,7 @@ describe('Package Configuration (TASK-006)', () => {
     it('should have exactly 2 dev dependencies', () => {
       const devDeps = packageJson.devDependencies as Record<string, string> | undefined;
       const devDepsCount = Object.keys(devDeps ?? {}).length;
-      expect(devDepsCount).toBe(2);
+      expect(devDepsCount).toBe(4);
     });
   });
 
@@ -154,10 +154,21 @@ describe('Package Configuration (TASK-006)', () => {
       expect(packageJson.peerDependencies.typescript).toBe('>=5.0.0');
     });
 
+    it('should list better-sqlite3 as peer dependency', () => {
+      expect(packageJson.peerDependencies).toBeDefined();
+      expect(packageJson.peerDependencies['better-sqlite3']).toBeTruthy();
+    });
+
     it('should mark TypeScript as optional peer dependency', () => {
       expect(packageJson.peerDependenciesMeta).toBeDefined();
       expect(packageJson.peerDependenciesMeta.typescript).toBeDefined();
       expect(packageJson.peerDependenciesMeta.typescript.optional).toBe(true);
+    });
+
+    it('should mark better-sqlite3 as optional peer dependency', () => {
+      expect(packageJson.peerDependenciesMeta).toBeDefined();
+      expect(packageJson.peerDependenciesMeta['better-sqlite3']).toBeDefined();
+      expect(packageJson.peerDependenciesMeta['better-sqlite3'].optional).toBe(true);
     });
   });
 

@@ -7,10 +7,10 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
-import { SqliteMemory } from '../../src/memory/sqlite-memory.js';
-import { MemoryNamespace, MemoryRole } from '../../src/types/memory.js';
-import { createMemoryEntry, generateMemoryId } from '../../src/memory/memory-manager.js';
-import type { MemoryEntry } from '../../src/types/memory.js';
+import { SqliteMemory } from '../../../src/memory/sqlite-memory.js';
+import { MemoryNamespace, MemoryRole } from '../../../src/types/memory.js';
+import { createMemoryEntry, generateMemoryId } from '../../../src/memory/memory-manager.js';
+import type { MemoryEntry } from '../../../src/types/memory.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -682,7 +682,7 @@ describe('TASK-048: SqliteMemory — Long-Term Memory with SQLite Persistence', 
 
   describe('integration with MemoryManager', () => {
     it('should work as a provider in MemoryManager', async () => {
-      const { MemoryManager } = await import('../../src/memory/memory-manager.js');
+      const { MemoryManager } = await import('../../../src/memory/memory-manager.js');
 
       const manager = new MemoryManager({ providers: [memory] });
 

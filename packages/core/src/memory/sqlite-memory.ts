@@ -207,7 +207,7 @@ export class SqliteMemory implements MemoryProvider {
 
     // Insert into FTS index
     this._db.prepare(
-      'INSERT INTO memory_fts (rowid, content) VALUES ((SELECT rowid FROM memory_entries WHERE id = ?), ?)',
+      'INSERT INTO memory_fts (entry_id, content) VALUES (?, ?)',
     ).run(entry.id, entry.content);
 
     const stored = Object.freeze({ ...entry });
@@ -256,10 +256,10 @@ export class SqliteMemory implements MemoryProvider {
     const escapedText = escapeFtsQuery(text);
 
     // Use FTS5 for full-text search, joined with the main table for filtering
-    const ftsJoin = ` INNER JOIN memory_fts ON memory_entries.rowid = memory_fts.rowid`;
+    const ftsJoin = ` INNER JOIN memory_fts ON memory_entries.id = memory_fts.entry_id`;
     const ftsWhere = filterSql
-      ? `${filterSql} AND memory_fts MATCH ?`
-      : ' WHERE memory_fts MATCH ?';
+      ? `${filterSql} AND memory_fts.content MATCH ?`
+      : ' WHERE memory_fts.content MATCH ?';
 
     const allParams = [...filterParams, escapedText];
 
@@ -282,17 +282,10 @@ export class SqliteMemory implements MemoryProvider {
   async delete(id: string): Promise<boolean> {
     this._ensureOpen();
 
-    // Delete from FTS first (needs rowid)
-    const row = this._db
-      .prepare('SELECT rowid FROM memory_entries WHERE id = ?')
-      .get(id) as { rowid: number } | undefined;
-
-    if (!row) return false;
-
-    this._db.prepare('DELETE FROM memory_fts WHERE rowid = ?').run(row.rowid);
     const result = this._db.prepare('DELETE FROM memory_entries WHERE id = ?').run(id);
 
     if (result.changes > 0) {
+      this._db.prepare('DELETE FROM memory_fts WHERE entry_id = ?').run(id);
       this._emit('memory:delete', id);
       return true;
     }
@@ -311,14 +304,14 @@ export class SqliteMemory implements MemoryProvider {
       this._db.exec('DELETE FROM memory_fts');
       this._db.exec('DELETE FROM memory_entries');
     } else {
-      // Get rowids for FTS cleanup
+      // Get IDs for FTS cleanup
       const rows = this._db
-        .prepare('SELECT rowid FROM memory_entries WHERE namespace = ?')
-        .all(namespace) as { rowid: number }[];
+        .prepare('SELECT id FROM memory_entries WHERE namespace = ?')
+        .all(namespace) as { id: string }[];
 
       count = rows.length;
       for (const row of rows) {
-        this._db.prepare('DELETE FROM memory_fts WHERE rowid = ?').run(row.rowid);
+        this._db.prepare('DELETE FROM memory_fts WHERE entry_id = ?').run(row.id);
       }
       this._db.prepare('DELETE FROM memory_entries WHERE namespace = ?').run(namespace);
     }
@@ -373,11 +366,11 @@ export class SqliteMemory implements MemoryProvider {
       CREATE INDEX IF NOT EXISTS idx_memory_role ON memory_entries(role);
     `);
 
-    // Create FTS5 virtual table (content-less to save space; content is in main table)
+    // Create FTS5 virtual table for full-text search
     this._db.exec(`
       CREATE VIRTUAL TABLE IF NOT EXISTS memory_fts USING fts5(
+        entry_id,
         content,
-        content='',
         tokenize='porter unicode61'
       );
     `);
@@ -394,15 +387,15 @@ export class SqliteMemory implements MemoryProvider {
 
     const rows = this._db
       .prepare(
-        'SELECT id, content, role, namespace, created_at, metadata, rowid FROM memory_entries ORDER BY created_at ASC LIMIT ?',
+        'SELECT id, content, role, namespace, created_at, metadata FROM memory_entries ORDER BY created_at ASC LIMIT ?',
       )
-      .all(count) as (MemoryRow & { rowid: number })[];
+      .all(count) as MemoryRow[];
 
     const evicted: MemoryEntry[] = [];
 
     const doEvict = this._db.transaction(() => {
       for (const row of rows) {
-        this._db.prepare('DELETE FROM memory_fts WHERE rowid = ?').run(row.rowid);
+        this._db.prepare('DELETE FROM memory_fts WHERE entry_id = ?').run(row.id);
         this._db.prepare('DELETE FROM memory_entries WHERE id = ?').run(row.id);
         evicted.push(rowToEntry(row));
       }
@@ -421,9 +414,9 @@ export class SqliteMemory implements MemoryProvider {
 
     const rows = this._db
       .prepare(
-        'SELECT id, content, role, namespace, created_at, metadata, rowid FROM memory_entries WHERE created_at < ?',
+        'SELECT id, content, role, namespace, created_at, metadata FROM memory_entries WHERE created_at < ?',
       )
-      .all(cutoff) as (MemoryRow & { rowid: number })[];
+      .all(cutoff) as MemoryRow[];
 
     if (rows.length === 0) return;
 
@@ -431,7 +424,7 @@ export class SqliteMemory implements MemoryProvider {
 
     const doEvict = this._db.transaction(() => {
       for (const row of rows) {
-        this._db.prepare('DELETE FROM memory_fts WHERE rowid = ?').run(row.rowid);
+        this._db.prepare('DELETE FROM memory_fts WHERE entry_id = ?').run(row.id);
         this._db.prepare('DELETE FROM memory_entries WHERE id = ?').run(row.id);
         evicted.push(rowToEntry(row));
       }

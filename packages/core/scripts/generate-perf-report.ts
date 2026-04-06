@@ -10,7 +10,7 @@
  * @packageDocumentation
  */
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -122,13 +122,13 @@ export function generateReport(
 function trendIcon(trend: ReportEntry['trend']): string {
   switch (trend) {
     case 'faster':
-      return '🚀';
+      return '\ud83d\ude80';
     case 'slower':
-      return '🐢';
+      return '\ud83d\udc22';
     case 'stable':
-      return '✅';
+      return '\u2705';
     case 'new':
-      return '🆕';
+      return '\ud83c\udd95';
   }
 }
 
@@ -145,7 +145,7 @@ function buildMarkdown(
   lines.push(`**Generated:** ${timestamp}`);
   lines.push(`**Total benchmarks:** ${String(totalBenchmarks)}`);
   lines.push(
-    `**Budget compliance:** ${allWithinBudget ? '✅ All within budget' : '❌ Some benchmarks exceed budget'}`,
+    `**Budget compliance:** ${allWithinBudget ? '\u2705 All within budget' : '\u274c Some benchmarks exceed budget'}`,
   );
   lines.push('');
   lines.push('---');
@@ -159,7 +159,7 @@ function buildMarkdown(
 
     for (const entry of entries) {
       const icon = trendIcon(entry.trend);
-      const status = entry.withinBudget ? '✅' : '❌';
+      const status = entry.withinBudget ? '\u2705' : '\u274c';
       lines.push(
         `| ${icon} | ${entry.name} | ${entry.avgMs.toFixed(3)}ms | ${entry.p95Ms.toFixed(3)}ms | ${String(entry.budget)}ms | ${status} |`,
       );
@@ -173,10 +173,10 @@ function buildMarkdown(
   lines.push('');
   lines.push('| Icon | Meaning |');
   lines.push('|------|---------|');
-  lines.push('| 🚀 | Faster than baseline (>5% improvement) |');
-  lines.push('| ✅ | Stable (within ±5% of baseline) |');
-  lines.push('| 🐢 | Slower than baseline (>5% regression) |');
-  lines.push('| 🆕 | New benchmark (no baseline) |');
+  lines.push('| \ud83d\ude80 | Faster than baseline (>5% improvement) |');
+  lines.push('| \u2705 | Stable (within \u00b15% of baseline) |');
+  lines.push('| \ud83d\udc22 | Slower than baseline (>5% regression) |');
+  lines.push('| \ud83c\udd95 | New benchmark (no baseline) |');
   lines.push('');
   lines.push(
     '*Budgets are p95 latency thresholds. See CONTRIBUTING.md for performance policy.*',
