@@ -12,8 +12,11 @@ export { Agent } from './agent/index.js';
 // Crew
 export { Crew } from './crew/index.js';
 
+// Task
+export { Task } from './task/index.js';
+
 // Types
-export { AgentStatus, CrewStatus, LLMRole } from './types/index.js';
+export { AgentStatus, CrewStatus, LLMRole, TaskPriority, TaskStatus } from './types/index.js';
 export type {
   AgentConfig,
   AgentEventMap,
@@ -25,6 +28,8 @@ export type {
   LLMProvider,
   LLMRequestOptions,
   LLMResponse,
+  TaskConfig,
+  TaskEventMap,
   TaskInput,
   TaskResult,
   TokenUsage,
@@ -34,3 +39,4 @@ export type {
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
+export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './errors/index.js';
