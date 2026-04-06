@@ -25,3 +25,13 @@ export type {
   ContextTransformer,
   TaskContextManagerConfig,
 } from './task-context-manager.js';
+export {
+  calculateTaskRetryDelay,
+  executeWithRetry,
+  executeWithTimeout,
+  TaskExecutionWrapper,
+} from './task-execution-wrapper.js';
+export type {
+  TaskExecutionWrapperConfig,
+  TaskRetryStats,
+} from './task-execution-wrapper.js';

@@ -31,6 +31,16 @@ export type {
   ContextTransformer,
   TaskContextManagerConfig,
 } from './task/index.js';
+export {
+  calculateTaskRetryDelay,
+  executeWithRetry,
+  executeWithTimeout,
+  TaskExecutionWrapper,
+} from './task/index.js';
+export type {
+  TaskExecutionWrapperConfig,
+  TaskRetryStats,
+} from './task/index.js';
 
 // Execution Engine
 export { ExecutionEngine } from './engine/index.js';

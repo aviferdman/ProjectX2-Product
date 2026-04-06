@@ -326,6 +326,19 @@ export class Task {
     return this;
   }
 
+  /**
+   * Emit a task lifecycle event.
+   *
+   * Primarily used by execution infrastructure (e.g., {@link TaskExecutionWrapper})
+   * to signal retry and timeout events.
+   *
+   * @param event - Event name
+   * @param args  - Event arguments
+   */
+  emit<E extends keyof TaskEventMap>(event: E, ...args: Parameters<TaskEventMap[E]>): void {
+    this._emit(event, ...args);
+  }
+
   // -------------------------------------------------------------------------
   // Conversion helpers
   // -------------------------------------------------------------------------
