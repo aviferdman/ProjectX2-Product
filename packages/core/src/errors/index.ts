@@ -14,8 +14,15 @@ export {
   LLMRateLimitError,
   LLMStreamError,
 } from './llm-errors.js';
-export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './task-errors.js';
 export {
+  CircularDependencyError,
+  TaskConfigError,
+  TaskExecutionError,
+  TaskTimeoutError,
+} from './task-errors.js';
+export type { DependencyCycle } from './task-errors.js';
+export {
+  ToolCompositionError,
   ToolConfigError,
   ToolExecutionError,
   ToolInputValidationError,

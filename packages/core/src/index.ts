@@ -27,8 +27,10 @@ export {
   getSchedulerExecutionLevels,
   resolveTaskDependencies,
   schedulerTopologicalSort,
+  detectCircularDependencies,
+  assertNoCycles,
 } from './task/index.js';
-export type { TopologicalSortResult } from './task/index.js';
+export type { TopologicalSortResult, CircularDependencyCheckResult } from './task/index.js';
 export { TaskContextManager } from './task/index.js';
 export type {
   ContextMergeStrategy,
