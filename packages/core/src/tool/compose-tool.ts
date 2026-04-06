@@ -86,10 +86,11 @@ export interface ComposableTool extends Tool {
  * @returns `true` if the tool was created by {@link composeTool}
  */
 export function isComposableTool(tool: Tool): tool is ComposableTool {
+  const record = tool as unknown as Record<string | symbol, unknown>;
   return (
     COMPOSABLE_MARKER in tool &&
-    (tool as Record<string | symbol, unknown>)[COMPOSABLE_MARKER] === true &&
-    typeof (tool as ComposableTool).executeComposed === 'function'
+    record[COMPOSABLE_MARKER] === true &&
+    typeof record['executeComposed'] === 'function'
   );
 }
 
@@ -198,7 +199,7 @@ export function composeTool<TInput = unknown, TOutput = unknown>(
     return userExecute(input as TInput, context);
   }
 
-  const tool: ComposableTool = {
+  const tool = {
     name: options.name,
     description: options.description,
     ...(options.category !== undefined && { category: options.category }),
@@ -207,9 +208,6 @@ export function composeTool<TInput = unknown, TOutput = unknown>(
     ...(zodSchema !== undefined && { inputZodSchema: zodSchema }),
     ...(options.outputSchema !== undefined && { outputSchema: options.outputSchema }),
     ...(options.timeout !== undefined && { timeout: options.timeout }),
-
-    // Mark as composable
-    [COMPOSABLE_MARKER]: true as const,
 
     // Standard execute — uses no-op context
     async execute(input: unknown): Promise<unknown> {
@@ -220,7 +218,15 @@ export function composeTool<TInput = unknown, TOutput = unknown>(
     async executeComposed(input: unknown, context: ToolContext): Promise<unknown> {
       return runWithContext(input, context);
     },
-  };
+  } as ComposableTool;
+
+  // Attach the composable marker (not in the interface, used by isComposableTool)
+  Object.defineProperty(tool, COMPOSABLE_MARKER, {
+    value: true,
+    enumerable: false,
+    writable: false,
+    configurable: false,
+  });
 
   return Object.freeze(tool);
 }
