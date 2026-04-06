@@ -221,6 +221,7 @@ export {
   createWebTools,
   decodeHtmlEntities,
   DEFAULT_MAX_RESULTS,
+  DEFAULT_RATE_LIMIT,
   DEFAULT_TIMEOUT_MS,
   DEFAULT_USER_AGENT,
   extractLinks,
@@ -230,7 +231,9 @@ export {
   HARD_MAX_RESULTS,
   MAX_RESPONSE_SIZE,
   ParseHtmlInputSchema,
+  RateLimiter,
   stripTags,
+  ToolRateLimitError,
   WebSearchInputSchema,
 } from './tools/index.js';
 export type {
@@ -241,6 +244,7 @@ export type {
   HtmlMetadata,
   ParseHtmlInput,
   ParseHtmlOutput,
+  RateLimiterConfig,
   SearchResult,
   WebSearchInput,
   WebSearchOutput,
@@ -297,6 +301,21 @@ export {
 // Memory
 export { createMemoryEntry, generateMemoryId, MemoryManager, ShortTermMemory, SqliteMemory } from './memory/index.js';
 export type { MemoryManagerConfig, SqliteMemoryConfig } from './memory/index.js';
+export {
+  exportMemory,
+  exportToJson,
+  importMemory,
+  MAX_EXPORT_ENTRIES,
+  MEMORY_EXPORT_VERSION,
+  parseExportJson,
+} from './memory/index.js';
+export type {
+  ExportMemoryOptions,
+  ImportMemoryOptions,
+  MemoryExportData,
+  MemoryImportError,
+  MemoryImportResult,
+} from './memory/index.js';
 
 // Types — Memory (re-export from types for convenience)
 export { MemoryNamespace, MemoryRole } from './types/index.js';

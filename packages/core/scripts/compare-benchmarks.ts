@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Performance regression detection script.
  *
@@ -84,10 +85,14 @@ export function loadCurrentResults(filePath: string): CurrentResult[] {
 
 // ---------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Core comparison logic (pure - no I/O)
 =======
 // Core comparison logic (pure — no I/O)
 >>>>>>> agent/developer/development-developer-c71
+=======
+// Core comparison logic (pure - no I/O)
+>>>>>>> agent/developer/development-developer-c1
 // ---------------------------------------------------------------------------
 
 export function compareResults(
@@ -116,9 +121,7 @@ export function compareResults(
     }
 
     const changePercent =
-      baseEntry.p95Ms > 0
-        ? ((result.p95Ms - baseEntry.p95Ms) / baseEntry.p95Ms) * 100
-        : 0;
+      baseEntry.p95Ms > 0 ? ((result.p95Ms - baseEntry.p95Ms) / baseEntry.p95Ms) * 100 : 0;
 
     let status: ComparisonStatus;
     if (changePercent > regressionThreshold) {
@@ -191,8 +194,7 @@ export function formatComparisonTable(report: ComparisonReport): string {
               ? '❌'
               : '🆕';
 
-    const baseline =
-      entry.baselineP95 !== null ? `${entry.baselineP95.toFixed(3)}ms` : '—';
+    const baseline = entry.baselineP95 !== null ? `${entry.baselineP95.toFixed(3)}ms` : '—';
     const current = `${entry.currentP95.toFixed(3)}ms`;
     const change =
       entry.changePercent !== null
@@ -207,12 +209,8 @@ export function formatComparisonTable(report: ComparisonReport): string {
 
   lines.push('');
   if (report.hasRegression) {
-    lines.push(
-      '> ❌ **Regressions detected.** Performance degraded beyond the 15% threshold.',
-    );
-    lines.push(
-      '> Fix regressions before merging, or update the baseline with team approval.',
-    );
+    lines.push('> ❌ **Regressions detected.** Performance degraded beyond the 15% threshold.');
+    lines.push('> Fix regressions before merging, or update the baseline with team approval.');
   } else if (report.hasWarning) {
     lines.push(
       '> ⚠️ **Warnings detected.** Performance degraded 5–15%. Please justify in PR description.',
@@ -260,11 +258,7 @@ function parseArgs(argv: readonly string[]): {
 // ---------------------------------------------------------------------------
 
 export function main(argv: readonly string[] = process.argv.slice(2)): number {
-  const {
-    baseline: baselinePath,
-    current: currentPath,
-    threshold,
-  } = parseArgs(argv);
+  const { baseline: baselinePath, current: currentPath, threshold } = parseArgs(argv);
 
   console.log('Comparing benchmarks...');
   console.log(`  Baseline: ${baselinePath}`);
@@ -294,7 +288,7 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
 }
 
 // Run if executed directly
-const __filename = fileURLToPath(import.meta.url);
-if (process.argv[1] === __filename || process.argv[1]?.endsWith('compare-benchmarks.ts')) {
+const currentFile = fileURLToPath(import.meta.url);
+if (process.argv[1] === currentFile || process.argv[1]?.endsWith('compare-benchmarks.ts')) {
   process.exit(main());
 }

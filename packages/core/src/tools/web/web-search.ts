@@ -82,6 +82,8 @@ export interface WebSearchToolOptions {
   readonly userAgent?: string;
   /** Request timeout in milliseconds. */
   readonly timeoutMs?: number;
+  /** Shared rate limiter instance. When set, each call consumes a token. */
+  readonly rateLimiter?: import('./rate-limiter.js').RateLimiter;
 }
 
 /**
@@ -93,6 +95,7 @@ export interface WebSearchToolOptions {
 export function createWebSearchTool(options?: WebSearchToolOptions): Tool {
   const userAgent = options?.userAgent ?? DEFAULT_USER_AGENT;
   const timeoutMs = options?.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const rateLimiter = options?.rateLimiter;
 
   return {
     name: 'webSearch',
@@ -135,6 +138,9 @@ export function createWebSearchTool(options?: WebSearchToolOptions): Tool {
     async execute(input: unknown): Promise<WebSearchOutput> {
       const parsed = parseToolInput('webSearch', WebSearchInputSchema, input);
       const { query, maxResults = 10 } = parsed;
+
+      // Rate-limit check (throws ToolRateLimitError when exhausted)
+      rateLimiter?.consume('webSearch');
 
       const limit = Math.min(Math.max(1, maxResults), HARD_MAX_RESULTS);
 

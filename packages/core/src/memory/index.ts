@@ -13,3 +13,19 @@ export {
   MemoryManager,
 } from './memory-manager.js';
 export type { MemoryManagerConfig } from './memory-manager.js';
+
+export {
+  exportMemory,
+  exportToJson,
+  importMemory,
+  MAX_EXPORT_ENTRIES,
+  MEMORY_EXPORT_VERSION,
+  parseExportJson,
+} from './memory-export.js';
+export type {
+  ExportMemoryOptions,
+  ImportMemoryOptions,
+  MemoryExportData,
+  MemoryImportError,
+  MemoryImportResult,
+} from './memory-export.js';

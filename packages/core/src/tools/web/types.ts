@@ -139,6 +139,16 @@ export interface WebToolsOptions {
   readonly timeoutMs?: number;
   /** Default User-Agent header. */
   readonly userAgent?: string;
+  /**
+   * Rate-limit configuration shared by all web tools in the bundle.
+   *
+   * When set, all outbound requests (fetchUrl, webSearch) are gated by
+   * a shared token-bucket limiter. Set to `false` to disable rate
+   * limiting entirely.
+   *
+   * Default: 30 requests per 60 000 ms.
+   */
+  readonly rateLimit?: import('./rate-limiter.js').RateLimiterConfig | false;
 }
 
 /** Bundle of all web tools created by {@link createWebTools}. */

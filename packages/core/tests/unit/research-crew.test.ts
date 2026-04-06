@@ -1,5 +1,6 @@
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Tests for TASK-085: Research Crew Example
  *
  * Validates the research crew example file and that the multi-agent
@@ -8,6 +9,8 @@
 
 import { describe, it, expect, vi } from 'vitest';
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
  * Tests for TASK-085: Research Crew Example (Web + File Tools)
  *
  * Validates the research crew example file, its structure, and that the
@@ -15,13 +18,17 @@ import { describe, it, expect, vi } from 'vitest';
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { Agent } from '../../src/agent/agent.js';
 import { Crew } from '../../src/crew/crew.js';
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { CrewStatus } from '../../src/types/crew.js';
 import { ToolCategory, ToolPermission } from '../../src/types/tool.js';
@@ -32,6 +39,11 @@ import { createWebTools } from '../../src/tools/web/index.js';
 import { createFileTools } from '../../src/tools/file/index.js';
 import { ToolCategory, ToolPermission } from '../../src/types/tool.js';
 >>>>>>> agent/developer/development-developer-c71
+=======
+import { createWebTools } from '../../src/tools/web/index.js';
+import { createFileTools } from '../../src/tools/file/index.js';
+import { ToolCategory, ToolPermission } from '../../src/types/tool.js';
+>>>>>>> agent/developer/development-developer-c1
 import type { LLMProvider, LLMResponse, LLMMessage, Tool } from '../../src/types/index.js';
 
 const currentFilename = fileURLToPath(import.meta.url);
@@ -57,6 +69,7 @@ function createMockLLMProvider(content?: string): LLMProvider {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 function createMockTool(name: string, category?: ToolCategory): Tool {
   return {
     name,
@@ -64,6 +77,8 @@ function createMockTool(name: string, category?: ToolCategory): Tool {
     category,
     execute: vi.fn<(input: unknown) => Promise<unknown>>().mockResolvedValue({ success: true }),
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
 function createTaskAwareMockProvider(responses: Record<string, string>): LLMProvider {
   return {
     name: 'task-aware-mock',
@@ -79,7 +94,10 @@ function createTaskAwareMockProvider(responses: Record<string, string>): LLMProv
           finishReason: 'stop',
         };
       }),
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
   };
 }
 
@@ -101,7 +119,10 @@ describe('TASK-085: Research Crew — Example File', () => {
   });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
   it('should import Agent and Crew from @crewspace/core', () => {
     expect(content).toContain('Agent');
     expect(content).toContain('Crew');
@@ -147,7 +168,10 @@ describe('TASK-085: Research Crew — Example File', () => {
     expect(content).toContain(".on('crew:");
   });
 
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
   it('should include usage instructions in header', () => {
     expect(content).toContain('npx tsx examples/research-crew.ts');
   });
@@ -156,6 +180,7 @@ describe('TASK-085: Research Crew — Example File', () => {
     expect(content).toMatch(/[Rr]eplace.*real provider|[Mm]ock.*provider/);
   });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   describe('Imports', () => {
     it('should import Agent and Crew from @crewspace/core', () => {
@@ -245,6 +270,8 @@ describe('TASK-085: Research Crew — Example File', () => {
       expect(content).toContain('tokenUsage');
     });
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
   it('should define agents with distinct roles', () => {
     expect(content).toMatch(/role:.*[Rr]esearch/);
     expect(content).toMatch(/role:.*[Aa]nalyst/);
@@ -259,11 +286,15 @@ describe('TASK-085: Research Crew — Example File', () => {
   it('should use expectedOutput for tasks', () => {
     const expectedOutputCount = (content.match(/expectedOutput:/g) ?? []).length;
     expect(expectedOutputCount).toBeGreaterThanOrEqual(1);
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
   });
 });
 
 // ---------------------------------------------------------------------------
+<<<<<<< HEAD
 <<<<<<< HEAD
 // Web tools validation
 // ---------------------------------------------------------------------------
@@ -271,18 +302,24 @@ describe('TASK-085: Research Crew — Example File', () => {
 describe('TASK-085: Research Crew — Web Tools', () => {
   it('should create web tools bundle', () => {
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
 // Web tools integration
 // ---------------------------------------------------------------------------
 
 describe('TASK-085: Research Crew — Web Tools', () => {
   it('should create web tools bundle with all three tools', () => {
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
     const tools = createWebTools();
     expect(tools.webSearch).toBeDefined();
     expect(tools.fetchUrl).toBeDefined();
     expect(tools.parseHtml).toBeDefined();
   });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   it('webSearch tool should have correct metadata', () => {
     const tools = createWebTools();
@@ -319,6 +356,8 @@ describe('TASK-085: Research Crew — File Tools', () => {
   it('should create file tools bundle', () => {
     const tools = createFileTools();
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
   it('web tools should have correct names', () => {
     const tools = createWebTools();
     expect(tools.webSearch.name).toBe('webSearch');
@@ -384,12 +423,16 @@ describe('TASK-085: Research Crew — File Tools', () => {
 describe('TASK-085: Research Crew — File Tools', () => {
   it('should create file tools bundle with all three tools', () => {
     const tools = createFileTools({ basePath: '.' });
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
     expect(tools.readFile).toBeDefined();
     expect(tools.writeFile).toBeDefined();
     expect(tools.listFiles).toBeDefined();
   });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   it('readFile tool should have correct metadata', () => {
     const tools = createFileTools();
@@ -417,6 +460,8 @@ describe('TASK-085: Research Crew — File Tools', () => {
     expect(tools.readFile).toBeDefined();
     expect(tools.writeFile).toBeDefined();
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
   it('file tools should have correct names', () => {
     const tools = createFileTools({ basePath: '.' });
     expect(tools.readFile.name).toBe('readFile');
@@ -532,7 +577,10 @@ describe('TASK-085: Research Crew — Agent Tool Registration', () => {
     agent.addTool(fileToolBundle.writeFile);
     expect(agent.tools.size).toBe(2);
     expect(agent.hasTool('writeFile')).toBe(true);
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
   });
 });
 
@@ -541,6 +589,7 @@ describe('TASK-085: Research Crew — Agent Tool Registration', () => {
 // ---------------------------------------------------------------------------
 
 describe('TASK-085: Research Crew — Functional Validation', () => {
+<<<<<<< HEAD
 <<<<<<< HEAD
   it('should run a three-agent research crew end-to-end', async () => {
     const researcher = new Agent({
@@ -597,6 +646,8 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           dependencies: ['analyze'],
           expectedOutput: 'Markdown report saved to file',
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
   let webResearcher: Agent;
   let contentAnalyst: Agent;
   let reportWriter: Agent;
@@ -661,7 +712,10 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           description: 'Write a comprehensive report',
           agentId: 'report-writer',
           dependencies: ['analyze-content'],
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
         },
       ],
     });
@@ -671,17 +725,22 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
     expect(result.success).toBe(true);
     expect(result.taskResults.size).toBe(3);
 <<<<<<< HEAD
+<<<<<<< HEAD
     expect(result.taskResults.get('search')?.agentId).toBe('researcher');
     expect(result.taskResults.get('analyze')?.agentId).toBe('analyst');
     expect(result.taskResults.get('write-report')?.agentId).toBe('writer');
 =======
     expect(result.duration).toBeGreaterThanOrEqual(0);
 >>>>>>> agent/developer/development-developer-c71
+=======
+    expect(result.duration).toBeGreaterThanOrEqual(0);
+>>>>>>> agent/developer/development-developer-c1
   });
 
   it('should execute tasks in dependency order', async () => {
     const executionOrder: string[] = [];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     const researcher = new Agent({
       id: 'researcher',
@@ -716,6 +775,8 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           agentId: 'writer',
           dependencies: ['analyze'],
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
     const crew = new Crew({
       id: 'order-crew',
       agents: [webResearcher, contentAnalyst, reportWriter],
@@ -736,7 +797,10 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           description: 'Write the report',
           agentId: 'report-writer',
           dependencies: ['analyze-content'],
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
         },
       ],
     });
@@ -747,6 +811,7 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
 
     await crew.run();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     expect(executionOrder).toEqual(['search', 'analyze', 'write-report']);
   });
@@ -766,6 +831,8 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           return {
             content: 'Structured analysis of trends',
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
     expect(executionOrder).toEqual(['search-sources', 'analyze-content', 'write-report']);
   });
 
@@ -780,13 +847,17 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           analyzerMessages = messages;
           return {
             content: 'Analysis complete',
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
             tokenUsage: { promptTokens: 10, completionTokens: 20, totalTokens: 30 },
             finishReason: 'stop',
           };
         }),
     };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     const writerProvider: LLMProvider = {
       name: 'writer-provider',
@@ -840,6 +911,8 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           agentId: 'writer',
           dependencies: ['analyze'],
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
     const fileToolBundle = createFileTools({ basePath: '.' });
     const webToolBundle = createWebTools();
     const analyst = new Agent({
@@ -870,13 +943,17 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           description: 'Write the report',
           agentId: 'report-writer',
           dependencies: ['analyze-content'],
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
         },
       ],
     });
 
     await crew.run();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // Analyst should receive researcher's output
     const analystUserMsg = analystMessages.find((m) => m.role === 'user');
@@ -890,11 +967,17 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
     const userMessage = analyzerMessages.find((m) => m.role === 'user');
     expect(userMessage?.content).toContain('arxiv.org');
 >>>>>>> agent/developer/development-developer-c71
+=======
+    // The analyst should receive the researcher's output as context
+    const userMessage = analyzerMessages.find((m) => m.role === 'user');
+    expect(userMessage?.content).toContain('arxiv.org');
+>>>>>>> agent/developer/development-developer-c1
   });
 
   it('should emit all crew lifecycle events', async () => {
     const events: string[] = [];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     const researcher = new Agent({
       id: 'researcher',
@@ -917,6 +1000,8 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
         { id: 'search', description: 'Search', agentId: 'researcher' },
         { id: 'analyze', description: 'Analyze', agentId: 'analyst', dependencies: ['search'] },
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
     const crew = new Crew({
       id: 'events-crew',
       agents: [webResearcher, contentAnalyst, reportWriter],
@@ -938,11 +1023,15 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           agentId: 'report-writer',
           dependencies: ['analyze-content'],
         },
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
       ],
     });
 
     crew.on('crew:start', () => events.push('crew:start'));
+<<<<<<< HEAD
 <<<<<<< HEAD
     crew.on('crew:task:start', (_crewId, taskId) => events.push(`task:start:${taskId}`));
     crew.on('crew:task:complete', (_crewId, taskId) => events.push(`task:complete:${taskId}`));
@@ -950,6 +1039,10 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
     crew.on('crew:task:start', () => events.push('crew:task:start'));
     crew.on('crew:task:complete', () => events.push('crew:task:complete'));
 >>>>>>> agent/developer/development-developer-c71
+=======
+    crew.on('crew:task:start', () => events.push('crew:task:start'));
+    crew.on('crew:task:complete', () => events.push('crew:task:complete'));
+>>>>>>> agent/developer/development-developer-c1
     crew.on('crew:complete', () => events.push('crew:complete'));
 
     await crew.run();
@@ -957,22 +1050,29 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
     expect(events).toEqual([
       'crew:start',
 <<<<<<< HEAD
+<<<<<<< HEAD
       'task:start:search',
       'task:complete:search',
       'task:start:analyze',
       'task:complete:analyze',
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
       'crew:task:start',
       'crew:task:complete',
       'crew:task:start',
       'crew:task:complete',
       'crew:task:start',
       'crew:task:complete',
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
       'crew:complete',
     ]);
   });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   it('should report correct crew status after completion', async () => {
     const agent = new Agent({
@@ -1016,6 +1116,8 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
         { id: 'write', description: 'Write', agentId: 'writer', dependencies: ['search'] },
 =======
   it('should include token usage in all task results', async () => {
+=======
+  it('should include token usage in all task results', async () => {
     const crew = new Crew({
       id: 'tokens-crew',
       agents: [webResearcher, contentAnalyst, reportWriter],
@@ -1033,6 +1135,37 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           agentId: 'report-writer',
           dependencies: ['analyze'],
         },
+      ],
+    });
+
+    const result = await crew.run();
+
+    for (const [, taskResult] of result.taskResults) {
+      expect(taskResult.tokenUsage).toBeDefined();
+      expect(taskResult.tokenUsage?.totalTokens).toBeGreaterThan(0);
+    }
+  });
+
+  it('should include task outputs in results', async () => {
+>>>>>>> agent/developer/development-developer-c1
+    const crew = new Crew({
+      id: 'tokens-crew',
+      agents: [webResearcher, contentAnalyst, reportWriter],
+      tasks: [
+        { id: 'search', description: 'Search', agentId: 'web-researcher' },
+        {
+          id: 'analyze',
+          description: 'Analyze',
+          agentId: 'content-analyst',
+          dependencies: ['search'],
+        },
+        {
+          id: 'report',
+          description: 'Report',
+          agentId: 'report-writer',
+          dependencies: ['analyze'],
+        },
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
       ],
     });
@@ -1107,13 +1240,18 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
           dependencies: ['analyze'],
         },
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
       ],
     });
 
     const result = await crew.run();
 <<<<<<< HEAD
+<<<<<<< HEAD
     expect(result.success).toBe(true);
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
 
     const searchResult = result.taskResults.get('search');
     expect(searchResult?.output).toContain('sources');
@@ -1151,7 +1289,10 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
     expect(result.taskResults.get('search')?.agentId).toBe('web-researcher');
     expect(result.taskResults.get('analyze')?.agentId).toBe('content-analyst');
     expect(result.taskResults.get('report')?.agentId).toBe('report-writer');
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
   });
 });
 
@@ -1161,8 +1302,11 @@ describe('TASK-085: Research Crew — Functional Validation', () => {
 
 describe('TASK-085: Research Crew — Edge Cases', () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
   it('should handle a single-agent crew with tools', async () => {
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
   it('should reject circular dependencies between research tasks', () => {
     const agent = new Agent({
       id: 'agent-1',
@@ -1230,11 +1374,15 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
   });
 
   it('should handle a single-task research crew', async () => {
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
     const agent = new Agent({
       id: 'solo-researcher',
       role: 'Solo Researcher',
       goal: 'Do everything',
+<<<<<<< HEAD
 <<<<<<< HEAD
       tools: [
         createMockTool('webSearch', ToolCategory.WEB),
@@ -1243,6 +1391,9 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
 =======
       tools: [createWebTools().webSearch, createFileTools({ basePath: '.' }).writeFile],
 >>>>>>> agent/developer/development-developer-c71
+=======
+      tools: [createWebTools().webSearch, createFileTools({ basePath: '.' }).writeFile],
+>>>>>>> agent/developer/development-developer-c1
       llmProvider: createMockLLMProvider('Solo research complete'),
     });
 
@@ -1250,8 +1401,11 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
       id: 'solo-crew',
       agents: [agent],
 <<<<<<< HEAD
+<<<<<<< HEAD
       tasks: [{ id: 'research-all', description: 'Research and write', agentId: 'solo-researcher' }],
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
       tasks: [
         {
           id: 'research-all',
@@ -1259,11 +1413,15 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
           agentId: 'solo-researcher',
         },
       ],
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
     });
 
     const result = await crew.run();
     expect(result.success).toBe(true);
+<<<<<<< HEAD
 <<<<<<< HEAD
     expect(result.taskResults.get('research-all')?.output).toBe('Solo research complete');
   });
@@ -1325,6 +1483,8 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
         { id: 'task3', description: 'Step 3', agentId: 'step3', dependencies: ['task2'] },
         { id: 'task4', description: 'Step 4', agentId: 'step4', dependencies: ['task3'] },
 =======
+=======
+>>>>>>> agent/developer/development-developer-c1
     expect(result.taskResults.size).toBe(1);
     expect(result.taskResults.get('research-all')?.output).toBe('Solo research complete');
   });
@@ -1347,13 +1507,19 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
           expectedOutput: 'A structured report in markdown format',
           agentId: 'agent-1',
         },
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
       ],
     });
 
     const result = await crew.run();
     expect(result.success).toBe(true);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> agent/developer/development-developer-c1
     expect(result.taskResults.size).toBe(4);
 
     const executionOrder: string[] = [];
@@ -1361,7 +1527,10 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
     crew.on('crew:task:start', (_crewId, taskId) => executionOrder.push(taskId));
     await crew.run();
     expect(executionOrder).toEqual(['task1', 'task2', 'task3', 'task4']);
+<<<<<<< HEAD
 =======
 >>>>>>> agent/developer/development-developer-c71
+=======
+>>>>>>> agent/developer/development-developer-c1
   });
 });

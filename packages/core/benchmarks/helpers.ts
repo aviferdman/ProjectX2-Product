@@ -8,11 +8,15 @@
 
 import { appendFileSync } from 'node:fs';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 =======
 import { resolve } from 'node:path';
 >>>>>>> agent/developer/development-developer-c71
+=======
+import { resolve } from 'node:path';
+>>>>>>> agent/developer/development-developer-c1
 
 import { Agent } from '../src/agent/agent.js';
 import { Task } from '../src/task/task.js';
@@ -30,11 +34,15 @@ import type { LLMProvider, LLMMessage, LLMResponse, Tool } from '../src/types/in
 // ---------------------------------------------------------------------------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const BENCH_DIR = dirname(fileURLToPath(import.meta.url));
 const RESULTS_FILE = resolve(BENCH_DIR, '..', 'benchmark-results-detailed.jsonl');
 =======
 const RESULTS_FILE = resolve(process.cwd(), 'benchmark-results-detailed.jsonl');
 >>>>>>> agent/developer/development-developer-c71
+=======
+const RESULTS_FILE = resolve(process.cwd(), 'benchmark-results-detailed.jsonl');
+>>>>>>> agent/developer/development-developer-c1
 
 function collectResult(result: BenchmarkResult): void {
   try {

@@ -38,6 +38,7 @@ export {
   createWebTools,
   decodeHtmlEntities,
   DEFAULT_MAX_RESULTS,
+  DEFAULT_RATE_LIMIT,
   DEFAULT_TIMEOUT_MS,
   DEFAULT_USER_AGENT,
   extractLinks,
@@ -47,11 +48,13 @@ export {
   HARD_MAX_RESULTS,
   MAX_RESPONSE_SIZE,
   ParseHtmlInputSchema,
+  RateLimiter,
   stripTags,
+  ToolRateLimitError,
   WebSearchInputSchema,
 } from './web/index.js';
 
-export type { FetchUrlToolOptions, WebSearchToolOptions } from './web/index.js';
+export type { FetchUrlToolOptions, RateLimiterConfig, WebSearchToolOptions } from './web/index.js';
 
 export type {
   ExtractedLink,

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Update the performance baseline from current benchmark results.
  *
@@ -89,11 +90,15 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
 }
 
 // Run if executed directly
-const __filename = fileURLToPath(import.meta.url);
-if (process.argv[1] === __filename || process.argv[1]?.endsWith('update-baseline.ts')) {
+const currentFile = fileURLToPath(import.meta.url);
+if (process.argv[1] === currentFile || process.argv[1]?.endsWith('update-baseline.ts')) {
   process.exit(main());
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 =======
 }
 >>>>>>> agent/developer/development-developer-c71
+=======
+}
+>>>>>>> agent/developer/development-developer-c1
