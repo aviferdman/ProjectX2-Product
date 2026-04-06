@@ -14,6 +14,15 @@ export { Crew } from './crew/index.js';
 
 // Task
 export { Task } from './task/index.js';
+export { getExecutionLevels, ParallelExecutor, topologicalSort } from './task/index.js';
+export type {
+  ExecutionLevel,
+  ParallelErrorPolicy,
+  ParallelExecutionResult,
+  ParallelExecutorConfig,
+  ParallelExecutorEventMap,
+  TaskRunner,
+} from './task/index.js';
 
 // Execution Engine
 export { ExecutionEngine } from './engine/index.js';
