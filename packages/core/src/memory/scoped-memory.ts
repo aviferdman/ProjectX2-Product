@@ -1,5 +1,5 @@
 /**
- * Scoped memory — namespace-aware wrapper around any MemoryProvider.
+ * Scoped memory -- namespace-aware wrapper around any MemoryProvider.
  *
  * Provides automatic namespace scoping with visibility rules:
  * - **AGENT** scope: writes to AGENT namespace, reads from AGENT + CREW + GLOBAL
@@ -28,7 +28,7 @@ import { MemoryNamespace } from '../types/memory.js';
 
 /**
  * Default readable namespaces for each scope level.
- * The hierarchy flows: AGENT → CREW → GLOBAL.
+ * The hierarchy flows: AGENT -> CREW -> GLOBAL.
  */
 const DEFAULT_READABLE_NAMESPACES: Readonly<Record<MemoryNamespace, readonly MemoryNamespace[]>> = {
   [MemoryNamespace.AGENT]: [MemoryNamespace.AGENT, MemoryNamespace.CREW, MemoryNamespace.GLOBAL],
@@ -152,7 +152,7 @@ export class ScopedMemory implements MemoryProvider {
    * Query entries across all readable namespaces.
    *
    * If `options.namespace` is specified, it must be one of the readable
-   * namespaces — otherwise an empty result is returned.
+   * namespaces -- otherwise an empty result is returned.
    */
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     if (options?.namespace) {
@@ -195,11 +195,7 @@ export class ScopedMemory implements MemoryProvider {
       throw new MemoryOperationError(
         this.name,
         'delete',
-<<<<<<< HEAD
-        `Cannot delete entry "${id}" — not owned by this scope`,
-=======
         `Cannot delete entry "${id}" -- not owned by this scope`,
->>>>>>> agent/developer/development-developer-c76
       );
     }
     return this._provider.delete(id);
@@ -218,11 +214,7 @@ export class ScopedMemory implements MemoryProvider {
       throw new MemoryOperationError(
         this.name,
         'clear',
-<<<<<<< HEAD
-        `Cannot clear namespace "${target}" — this scope only owns "${this._namespace}"`,
-=======
         `Cannot clear namespace "${target}" -- this scope only owns "${this._namespace}"`,
->>>>>>> agent/developer/development-developer-c76
       );
     }
     return this._provider.clear(target);
@@ -266,11 +258,7 @@ export class ScopedMemory implements MemoryProvider {
   /** Check if an entry belongs to this owner. */
   private _isOwned(entry: MemoryEntry): boolean {
     return entry.namespace === this._namespace &&
-<<<<<<< HEAD
       entry.metadata?.ownerId === this._ownerId;
-=======
-      entry.metadata?.['ownerId'] === this._ownerId;
->>>>>>> agent/developer/development-developer-c76
   }
 
   /** Filter a query result to only include visible entries. */
@@ -279,22 +267,6 @@ export class ScopedMemory implements MemoryProvider {
     return { entries: visible, total: visible.length };
   }
 
-<<<<<<< HEAD
-=======
-
-  /** Build namespace-scoped query options, omitting undefined values. */
-  private _buildNsOptions(ns: MemoryNamespace, options?: MemoryQueryOptions): MemoryQueryOptions {
-    const result: MemoryQueryOptions = { namespace: ns };
-    if (options?.role !== undefined) (result as Record<string, unknown>)['role'] = options.role;
-    if (options?.roles !== undefined) (result as Record<string, unknown>)['roles'] = options.roles;
-    if (options?.after !== undefined) (result as Record<string, unknown>)['after'] = options.after;
-    if (options?.before !== undefined) (result as Record<string, unknown>)['before'] = options.before;
-    if (options?.metadata !== undefined) (result as Record<string, unknown>)['metadata'] = options.metadata;
-    if (options?.sortOrder !== undefined) (result as Record<string, unknown>)['sortOrder'] = options.sortOrder;
-    return result;
-  }
-
->>>>>>> agent/developer/development-developer-c76
   /** Query across all readable namespaces and merge results. */
   private async _queryAcrossNamespaces(
     options?: MemoryQueryOptions,
@@ -302,17 +274,13 @@ export class ScopedMemory implements MemoryProvider {
     const allEntries: MemoryEntry[] = [];
 
     for (const ns of this._readableNamespaces) {
-<<<<<<< HEAD
       const result = await this._provider.query({
         ...options,
         namespace: ns,
-        // Remove limit/offset — we handle pagination after merge
+        // Remove limit/offset -- we handle pagination after merge
         limit: undefined,
         offset: undefined,
       });
-=======
-      const result = await this._provider.query(this._buildNsOptions(ns, options));
->>>>>>> agent/developer/development-developer-c76
       for (const entry of result.entries) {
         if (this._isVisible(entry)) {
           allEntries.push(entry);
@@ -343,16 +311,12 @@ export class ScopedMemory implements MemoryProvider {
     const allEntries: MemoryEntry[] = [];
 
     for (const ns of this._readableNamespaces) {
-<<<<<<< HEAD
       const result = await this._provider.search(text, {
         ...options,
         namespace: ns,
         limit: undefined,
         offset: undefined,
       });
-=======
-      const result = await this._provider.search(text, this._buildNsOptions(ns, options));
->>>>>>> agent/developer/development-developer-c76
       for (const entry of result.entries) {
         if (this._isVisible(entry)) {
           allEntries.push(entry);
@@ -372,8 +336,4 @@ export class ScopedMemory implements MemoryProvider {
 
     return { entries: paginated, total: allEntries.length };
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> agent/developer/development-developer-c76
