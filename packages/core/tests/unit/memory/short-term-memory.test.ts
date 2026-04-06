@@ -57,6 +57,12 @@ describe('ShortTermMemory', () => {
         defaultNamespace: MemoryNamespace.CREW,
       });
       expect(mem.name).toBe('short-term');
+      expect(mem.defaultNamespace).toBe(MemoryNamespace.CREW);
+    });
+
+    it('defaults namespace to AGENT when not specified', () => {
+      const mem = new ShortTermMemory();
+      expect(mem.defaultNamespace).toBe(MemoryNamespace.AGENT);
     });
 
     it('throws on invalid maxEntries', () => {
@@ -107,6 +113,24 @@ describe('ShortTermMemory', () => {
       await expect(
         memory.add({ ...makeEntry(), content: '' }),
       ).rejects.toThrow(MemoryOperationError);
+    });
+
+    it('rejects entry with empty role', async () => {
+      const entry = { ...makeEntry(), role: '' as MemoryRole };
+      await expect(memory.add(entry)).rejects.toThrow(MemoryOperationError);
+      await expect(memory.add(entry)).rejects.toThrow('entry.role must be a non-empty string');
+    });
+
+    it('rejects entry with empty namespace', async () => {
+      const entry = { ...makeEntry(), namespace: '' as MemoryNamespace };
+      await expect(memory.add(entry)).rejects.toThrow(MemoryOperationError);
+      await expect(memory.add(entry)).rejects.toThrow('entry.namespace must be a non-empty string');
+    });
+
+    it('rejects entry with empty createdAt', async () => {
+      const entry = { ...makeEntry(), createdAt: '' };
+      await expect(memory.add(entry)).rejects.toThrow(MemoryOperationError);
+      await expect(memory.add(entry)).rejects.toThrow('entry.createdAt must be a non-empty string');
     });
 
     it('stores entries with metadata', async () => {
@@ -436,6 +460,21 @@ describe('ShortTermMemory', () => {
         await mem.add(makeEntry({ id: `unlim-${i}` }));
       }
       expect(await mem.count()).toBe(5);
+    });
+
+    it('metadata filter returns no match when entry has no metadata', async () => {
+      await memory.add(makeEntry({ id: 'no-meta' }));
+      const result = await memory.query({ metadata: { key: 'value' } });
+      expect(result.total).toBe(0);
+    });
+
+    it('search respects limit option', async () => {
+      for (let i = 0; i < 5; i++) {
+        await memory.add(makeEntry({ id: `slimit-${i}`, content: 'matching content' }));
+      }
+      const result = await memory.search('matching', { limit: 2 });
+      expect(result.entries).toHaveLength(2);
+      expect(result.total).toBe(5);
     });
 
     it('query with all filters combined', async () => {
