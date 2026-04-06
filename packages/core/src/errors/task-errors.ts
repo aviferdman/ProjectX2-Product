@@ -31,6 +31,57 @@ export class TaskExecutionError extends Error {
   }
 }
 
+/**
+ * A single cycle found during circular dependency detection.
+ *
+ * The `path` contains task IDs forming the cycle, e.g. `['a', 'b', 'c', 'a']`
+ * where the last element repeats the first to close the loop.
+ */
+export interface DependencyCycle {
+  /** Task IDs forming the cycle (last ID equals the first). */
+  readonly path: readonly string[];
+}
+
+/**
+ * Thrown when circular dependencies are detected among tasks.
+ *
+ * Extends {@link TaskConfigError} with structured cycle information,
+ * including the exact cycle paths and all involved task IDs.
+ */
+export class CircularDependencyError extends TaskConfigError {
+  /** All cycles detected, each with its path of task IDs. */
+  public readonly cycles: readonly DependencyCycle[];
+
+  /** Unique set of task IDs involved in at least one cycle. */
+  public readonly involvedTaskIds: readonly string[];
+
+  constructor(cycles: DependencyCycle[]) {
+    const cycleDescriptions = cycles.map(
+      (c) => c.path.join(' → '),
+    );
+    const message =
+      cycles.length === 1
+        ? `Circular dependency detected: ${cycleDescriptions[0]}`
+        : `Circular dependencies detected:\n  ${cycleDescriptions.join('\n  ')}`;
+
+    super(message);
+    this.name = 'CircularDependencyError';
+    this.cycles = cycles;
+
+    const idSet = new Set<string>();
+    for (const cycle of cycles) {
+      // Skip the last element (it's the duplicate that closes the loop)
+      for (let i = 0; i < cycle.path.length - 1; i++) {
+        const id = cycle.path[i];
+        if (id !== undefined) {
+          idSet.add(id);
+        }
+      }
+    }
+    this.involvedTaskIds = [...idSet].sort();
+  }
+}
+
 /** Thrown when task execution exceeds the configured timeout. */
 export class TaskTimeoutError extends TaskExecutionError {
   public readonly timeoutMs: number;

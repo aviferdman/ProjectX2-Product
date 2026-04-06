@@ -16,6 +16,7 @@ export {
 } from './llm-errors.js';
 export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './task-errors.js';
 export {
+  ToolCompositionError,
   ToolConfigError,
   ToolExecutionError,
   ToolInputValidationError,

@@ -27,8 +27,10 @@ export {
   getSchedulerExecutionLevels,
   resolveTaskDependencies,
   schedulerTopologicalSort,
+  detectCircularDependencies,
+  assertNoCycles,
 } from './task/index.js';
-export type { TopologicalSortResult } from './task/index.js';
+export type { TopologicalSortResult, CircularDependencyCheckResult } from './task/index.js';
 export { TaskContextManager } from './task/index.js';
 export type {
   ContextMergeStrategy,
@@ -155,10 +157,13 @@ export type {
 export {
   ALLOW_ALL_POLICY,
   collectTools,
+  composeTool,
   createTool,
+  DEFAULT_MAX_COMPOSITION_DEPTH,
   defineTool,
   DENY_ALL_POLICY,
   hasTools,
+  isComposableTool,
   isValidTool,
   parseToolInput,
   PermissionManager,
@@ -172,7 +177,14 @@ export {
   validateToolPermissionPolicy,
   zodToToolSchema,
 } from './tool/index.js';
-export type { CreateToolOptions, DefineToolOptions, ToolDecoratorOptions } from './tool/index.js';
+export type {
+  ComposableTool,
+  ComposeToolOptions,
+  CreateToolOptions,
+  DefineToolOptions,
+  ToolContext,
+  ToolDecoratorOptions,
+} from './tool/index.js';
 
 // Built-in Tools — File
 export {
@@ -248,8 +260,13 @@ export {
   LLMRateLimitError,
   LLMStreamError,
 } from './errors/index.js';
-export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './errors/index.js';
 export {
+  TaskConfigError,
+  TaskExecutionError,
+  TaskTimeoutError,
+} from './errors/index.js';
+export {
+  ToolCompositionError,
   ToolConfigError,
   ToolExecutionError,
   ToolInputValidationError,
