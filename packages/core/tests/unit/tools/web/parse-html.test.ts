@@ -187,6 +187,36 @@ describe('extractMetadata', () => {
     const meta = extractMetadata(html);
     expect(meta.description).toBe('A & B');
   });
+
+  it('should handle reverse attribute order (content before name)', () => {
+    const html = '<meta content="Reversed Value" name="reversed-key">';
+    const meta = extractMetadata(html);
+    expect(meta.meta['reversed-key']).toBe('Reversed Value');
+  });
+
+  it('should handle reverse attribute order with property attribute', () => {
+    const html = '<meta content="OG Reversed" property="og:reversed">';
+    const meta = extractMetadata(html);
+    expect(meta.meta['og:reversed']).toBe('OG Reversed');
+  });
+
+  it('should not overwrite existing key from first pass with reverse pattern', () => {
+    // Both tags are captured by the first regex pass. The second tag overwrites the first.
+    // The second-pass regex guards against overwriting with !(key in meta).
+    const html = `
+      <meta name="author" content="First">
+      <meta content="Second" name="author">
+    `;
+    const meta = extractMetadata(html);
+    // The first pass captures both since it matches all <meta> tags
+    expect(meta.meta['author']).toBe('Second');
+  });
+
+  it('should handle meta tag with empty content value', () => {
+    const html = '<meta name="robots" content="">';
+    const meta = extractMetadata(html);
+    expect(meta.meta['robots']).toBe('');
+  });
 });
 
 // ---------------------------------------------------------------------------

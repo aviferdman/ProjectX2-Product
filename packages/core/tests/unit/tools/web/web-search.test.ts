@@ -218,4 +218,63 @@ describe('createWebSearchTool (mocked fetch)', () => {
     };
     expect(result.results).toHaveLength(0); // No results available but limit is valid
   });
+
+  it('should handle timeout via AbortController', async () => {
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error('The operation was aborted'));
+
+    const tool = createWebSearchTool({ timeoutMs: 100 });
+    await expect(tool.execute({ query: 'test' })).rejects.toThrow('Search timed out');
+  });
+
+  it('should handle abort signal with "abort" keyword', async () => {
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error('abort'));
+
+    const tool = createWebSearchTool();
+    await expect(tool.execute({ query: 'test' })).rejects.toThrow('Search timed out');
+  });
+
+  it('should handle non-Error rejection', async () => {
+    globalThis.fetch = vi.fn().mockRejectedValue('string error');
+
+    const tool = createWebSearchTool();
+    await expect(tool.execute({ query: 'test' })).rejects.toThrow('Web search failed');
+  });
+
+  it('should handle response with undefined RelatedTopics', async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({}),
+    });
+
+    const tool = createWebSearchTool();
+    const result = (await tool.execute({ query: 'test' })) as {
+      results: unknown[];
+      count: number;
+    };
+
+    expect(result.results).toHaveLength(0);
+    expect(result.count).toBe(0);
+  });
+
+  it('should clamp maxResults above HARD_MAX_RESULTS to the limit', async () => {
+    const topics = Array.from({ length: 60 }, (_, i) => ({
+      Text: `R${String(i)}`,
+      FirstURL: `https://example.com/${String(i)}`,
+      Result: `<a>R${String(i)}</a>R${String(i)}`,
+    }));
+
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ RelatedTopics: topics }),
+    });
+
+    const tool = createWebSearchTool();
+    const result = (await tool.execute({ query: 'test', maxResults: 100 })) as {
+      results: unknown[];
+      count: number;
+    };
+
+    // Should be capped at HARD_MAX_RESULTS (50)
+    expect(result.results.length).toBeLessThanOrEqual(50);
+  });
 });

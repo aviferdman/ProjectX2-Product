@@ -303,4 +303,34 @@ describe('createFetchUrlTool (mocked fetch)', () => {
   it('should report MAX_RESPONSE_SIZE constant correctly', () => {
     expect(MAX_RESPONSE_SIZE).toBe(5 * 1024 * 1024);
   });
+
+  it('should handle abort timeout error', async () => {
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error('The operation was aborted'));
+
+    const tool = createFetchUrlTool({ timeoutMs: 100 });
+    await expect(tool.execute({ url: 'https://example.com' })).rejects.toThrow('timed out');
+  });
+
+  it('should handle non-Error rejection', async () => {
+    globalThis.fetch = vi.fn().mockRejectedValue('string error');
+
+    const tool = createFetchUrlTool();
+    await expect(tool.execute({ url: 'https://example.com' })).rejects.toThrow('HTTP request failed');
+  });
+
+  it('should re-throw ToolExecutionError from maxSize check', async () => {
+    const largeBody = 'x'.repeat(200);
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      status: 200,
+      statusText: 'OK',
+      url: 'https://example.com/',
+      headers: { get: () => 'text/plain' },
+      text: () => Promise.resolve(largeBody),
+    });
+
+    const tool = createFetchUrlTool();
+    await expect(
+      tool.execute({ url: 'https://example.com', maxSize: 50 }),
+    ).rejects.toThrow(ToolExecutionError);
+  });
 });

@@ -1,5 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import * as childProcess from 'node:child_process';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import * as path from 'node:path';
 import * as os from 'node:os';
 import * as fs from 'node:fs';
@@ -350,6 +349,67 @@ describe('ExecCommandTool', () => {
       }) as import('../../../../src/tools/shell/types.js').ExecCommandOutput;
 
       expect(result.command).toBe('echo hello');
+    });
+  });
+
+  // -----------------------------------------------------------------------
+  // Buffer overflow
+  // -----------------------------------------------------------------------
+
+  describe('output size limits', () => {
+    it('should throw ToolExecutionError when output exceeds MAX_OUTPUT_SIZE', async () => {
+      // Generate output exceeding the 1MB maxBuffer limit
+      const cmd = process.platform === 'win32'
+        ? `node -e "process.stdout.write('x'.repeat(${String(MAX_OUTPUT_SIZE + 1024)}))"`
+        : `node -e "process.stdout.write('x'.repeat(${String(MAX_OUTPUT_SIZE + 1024)}))"`;
+
+      await expect(
+        tool.execute({ command: cmd }),
+      ).rejects.toThrow(ToolExecutionError);
+    }, 15_000);
+  });
+
+  // -----------------------------------------------------------------------
+  // Shell option
+  // -----------------------------------------------------------------------
+
+  describe('shell option', () => {
+    it('should execute with shell=false', async () => {
+      const result = await tool.execute({
+        command: 'node',
+        args: ['-e', 'console.log("no-shell")'],
+        shell: false,
+      }) as import('../../../../src/tools/shell/types.js').ExecCommandOutput;
+
+      expect(result.stdout.trim()).toBe('no-shell');
+      expect(result.exitCode).toBe(0);
+    });
+
+    it('should execute with a specific shell path', async () => {
+      const shellPath = process.platform === 'win32' ? 'cmd.exe' : '/bin/sh';
+      const result = await tool.execute({
+        command: 'echo shell-path',
+        shell: shellPath,
+      }) as import('../../../../src/tools/shell/types.js').ExecCommandOutput;
+
+      expect(result.stdout.trim()).toBe('shell-path');
+    });
+  });
+
+  // -----------------------------------------------------------------------
+  // Timeout edge cases
+  // -----------------------------------------------------------------------
+
+  describe('timeout edge cases', () => {
+    it('should clamp negative timeout to 0 (meaning no timeout)', async () => {
+      // Math.max(-100, 0) = 0, and timeout: 0 in Node.js means no timeout
+      const result = await tool.execute({
+        command: 'echo fast',
+        timeoutMs: -100,
+      }) as import('../../../../src/tools/shell/types.js').ExecCommandOutput;
+
+      expect(result.timedOut).toBe(false);
+      expect(result.exitCode).toBe(0);
     });
   });
 });
