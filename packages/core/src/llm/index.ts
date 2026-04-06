@@ -5,6 +5,13 @@
  */
 
 export { BaseLLMProvider } from './base-provider.js';
+export { createFallbackProvider, FallbackLLMProvider } from './fallback-provider.js';
+export type {
+  FallbackContext,
+  FallbackLLMProviderOptions,
+  FallbackStats,
+  OnFallbackCallback,
+} from './fallback-provider.js';
 export { ModelCatalog } from './model-catalog.js';
 export {
   createAnthropicProvider,
