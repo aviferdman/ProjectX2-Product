@@ -264,6 +264,26 @@ export {
 } from './deprecation/index.js';
 export type { DeprecationHandler, DeprecationInfo } from './deprecation/index.js';
 
+// Logging
+export {
+  BufferTransport,
+  ConsoleTransport,
+  createAgentLogger,
+  createCrewLogger,
+  createSilentLogger,
+  getLogLevelLabel,
+  Logger,
+  LogLevel,
+  maskSensitiveData,
+  parseLogLevel,
+} from './logging/index.js';
+export type {
+  LogContext,
+  LogEntry,
+  LoggerConfig,
+  LogTransport,
+} from './logging/index.js';
+
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
