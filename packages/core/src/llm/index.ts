@@ -13,6 +13,15 @@ export {
   OpenAIProvider,
 } from './providers/index.js';
 export { LLMProviderRegistry } from './provider-registry.js';
+export { RetryLLMProvider } from './retry-provider.js';
+export type { RetryLLMProviderOptions } from './retry-provider.js';
+export {
+  buildRetryConfig,
+  calculateDelay,
+  isRetryableError,
+  withRetry,
+} from './retry.js';
+export type { OnRetryCallback, RetryConfig, RetryContext } from './retry.js';
 export { DefaultLLMStreamResponse } from './stream-response.js';
 export { isStreamingProvider } from './type-guards.js';
 export {

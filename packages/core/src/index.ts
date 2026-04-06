@@ -32,9 +32,12 @@ export type {
 export {
   AnthropicProvider,
   BaseLLMProvider,
+  buildRetryConfig,
+  calculateDelay,
   createAnthropicProvider,
   createOpenAIProvider,
   DefaultLLMStreamResponse,
+  isRetryableError,
   isStreamingProvider,
   LLMMessageSchema,
   LLMMessagesSchema,
@@ -44,8 +47,16 @@ export {
   LLMRequestOptionsSchema,
   ModelCatalog,
   OpenAIProvider,
+  RetryLLMProvider,
   validateLLMMessages,
   validateLLMProviderConfig,
+  withRetry,
+} from './llm/index.js';
+export type {
+  OnRetryCallback,
+  RetryConfig,
+  RetryContext,
+  RetryLLMProviderOptions,
 } from './llm/index.js';
 
 // Types
