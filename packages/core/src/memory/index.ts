@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Memory module — barrel export.
  *
  * @packageDocumentation
@@ -15,6 +15,9 @@ export {
 export type { MemoryManagerConfig } from './memory-manager.js';
 
 export { MemorySearchBuilder } from './memory-search-builder.js';
+
+export { DEFAULT_READABLE_NAMESPACES, ScopedMemory } from './scoped-memory.js';
+export type { ScopedMemoryConfig } from './scoped-memory.js';
 
 export {
   exportMemory,

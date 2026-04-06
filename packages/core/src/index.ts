@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @crewspace/core — TypeScript-native agent orchestration framework
  *
  * @packageDocumentation
@@ -284,6 +284,24 @@ export type {
   LogTransport,
 } from './logging/index.js';
 
+// Performance Metrics
+export {
+  DEFAULT_MAX_METRICS,
+  MetricType,
+  PerformanceTimer,
+  PerformanceTracker,
+} from './logging/index.js';
+export type {
+  MetricTokenUsage,
+  PerformanceMetric,
+  PerformanceMetricInput,
+  PerformanceReport,
+  PerformanceSummary,
+  PerformanceTrackerConfig,
+  TimerStartInput,
+  TimerStopInput,
+} from './logging/index.js';
+
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
@@ -320,7 +338,8 @@ export {
 
 // Memory
 export { createMemoryEntry, generateMemoryId, MemoryManager, MemorySearchBuilder, ShortTermMemory, SqliteMemory } from './memory/index.js';
-export type { MemoryManagerConfig, SqliteMemoryConfig } from './memory/index.js';
+export { DEFAULT_READABLE_NAMESPACES, ScopedMemory } from './memory/index.js';
+export type { MemoryManagerConfig, ScopedMemoryConfig, SqliteMemoryConfig } from './memory/index.js';
 export {
   exportMemory,
   exportToJson,
