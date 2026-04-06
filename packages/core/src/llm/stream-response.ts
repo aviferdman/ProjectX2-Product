@@ -7,13 +7,8 @@
  * @packageDocumentation
  */
 
-import { LLMStreamError } from "../errors/llm-errors.js";
-import type {
-  LLMResponse,
-  LLMStreamChunk,
-  LLMStreamResponse,
-  TokenUsage,
-} from "../types/llm.js";
+import { LLMStreamError } from '../errors/llm-errors.js';
+import type { LLMResponse, LLMStreamChunk, LLMStreamResponse, TokenUsage } from '../types/llm.js';
 
 /**
  * Concrete stream response that wraps an async iterable of chunks.
@@ -59,7 +54,7 @@ export class DefaultLLMStreamResponse implements LLMStreamResponse {
     this._consumed = true;
 
     const parts: string[] = [];
-    let finishReason = "unknown";
+    let finishReason = 'unknown';
     let tokenUsage: TokenUsage = {
       promptTokens: 0,
       completionTokens: 0,
@@ -86,13 +81,13 @@ export class DefaultLLMStreamResponse implements LLMStreamResponse {
         this._provider,
         `Stream failed after ${String(chunkCount)} chunks: ${cause.message}`,
         chunkCount,
-        parts.join(""),
+        parts.join(''),
         cause,
       );
     }
 
     return {
-      content: parts.join(""),
+      content: parts.join(''),
       finishReason,
       tokenUsage,
     };
@@ -102,9 +97,9 @@ export class DefaultLLMStreamResponse implements LLMStreamResponse {
     if (this._consumed) {
       throw new LLMStreamError(
         this._provider,
-        "Stream has already been consumed. LLM streams are single-use.",
+        'Stream has already been consumed. LLM streams are single-use.',
         0,
-        "",
+        '',
       );
     }
   }

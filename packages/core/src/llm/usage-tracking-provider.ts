@@ -83,10 +83,7 @@ class TrackedStreamResponse implements LLMStreamResponse {
   private readonly _onComplete: (usage: TokenUsage) => void;
   private _consumed = false;
 
-  constructor(
-    inner: LLMStreamResponse,
-    onComplete: (usage: TokenUsage) => void,
-  ) {
+  constructor(inner: LLMStreamResponse, onComplete: (usage: TokenUsage) => void) {
     this._inner = inner;
     this._onComplete = onComplete;
   }
@@ -157,8 +154,7 @@ export class UsageTrackingProvider implements StreamingLLMProvider {
 
     // Resolve modelId
     const providedModelId = options?.modelId;
-    const innerModelId =
-      'modelId' in inner ? (inner as { modelId: string }).modelId : undefined;
+    const innerModelId = 'modelId' in inner ? (inner as { modelId: string }).modelId : undefined;
     this._modelId = providedModelId ?? innerModelId ?? 'unknown';
 
     this._tracker = options?.tracker ?? new TokenUsageTracker();

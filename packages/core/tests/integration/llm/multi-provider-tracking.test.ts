@@ -26,10 +26,7 @@ import { LLMRole } from '../../../src/types/llm.js';
 
 const TEST_MESSAGES: LLMMessage[] = [{ role: LLMRole.USER, content: 'Hello' }];
 
-function createMockProvider(opts: {
-  name: string;
-  modelId: string;
-}): StreamingLLMProvider & {
+function createMockProvider(opts: { name: string; modelId: string }): StreamingLLMProvider & {
   modelId: string;
   generateText: ReturnType<typeof vi.fn>;
   generateStream: ReturnType<typeof vi.fn>;
@@ -205,9 +202,16 @@ describe('Shared Tracker Across Multiple Providers', () => {
     await anthropicTracked.generateText(TEST_MESSAGES);
 
     const expectedOpenaiCost = ModelCatalog.estimateCost('gpt-4o', 1000, 500)!;
-    const expectedAnthropicCost = ModelCatalog.estimateCost('claude-3-5-sonnet-20241022', 1000, 500)!;
+    const expectedAnthropicCost = ModelCatalog.estimateCost(
+      'claude-3-5-sonnet-20241022',
+      1000,
+      500,
+    )!;
 
-    expect(sharedTracker.getTotalCost()).toBeCloseTo(expectedOpenaiCost + expectedAnthropicCost, 10);
+    expect(sharedTracker.getTotalCost()).toBeCloseTo(
+      expectedOpenaiCost + expectedAnthropicCost,
+      10,
+    );
   });
 });
 
@@ -234,7 +238,11 @@ describe('Mixed Text and Streaming Tracking', () => {
     base.generateStream.mockResolvedValue(
       createMockStream([
         { content: 'Stream' },
-        { content: '!', finishReason: 'stop', tokenUsage: { promptTokens: 20, completionTokens: 10, totalTokens: 30 } },
+        {
+          content: '!',
+          finishReason: 'stop',
+          tokenUsage: { promptTokens: 20, completionTokens: 10, totalTokens: 30 },
+        },
       ]),
     );
 
@@ -250,7 +258,11 @@ describe('Mixed Text and Streaming Tracking', () => {
     base.generateStream.mockResolvedValue(
       createMockStream([
         { content: 'Hello' },
-        { content: ' world', finishReason: 'stop', tokenUsage: { promptTokens: 15, completionTokens: 8, totalTokens: 23 } },
+        {
+          content: ' world',
+          finishReason: 'stop',
+          tokenUsage: { promptTokens: 15, completionTokens: 8, totalTokens: 23 },
+        },
       ]),
     );
 
@@ -285,10 +297,7 @@ describe('Mixed Text and Streaming Tracking', () => {
 
   it('does not record usage when stream has no tokenUsage in any chunk', async () => {
     base.generateStream.mockResolvedValue(
-      createMockStream([
-        { content: 'A' },
-        { content: 'B', finishReason: 'stop' },
-      ]),
+      createMockStream([{ content: 'A' }, { content: 'B', finishReason: 'stop' }]),
     );
 
     const stream = await tracked.generateStream(TEST_MESSAGES);
@@ -490,12 +499,8 @@ describe('Registry Integration', () => {
   });
 
   it('overrides an existing registration', () => {
-    registry.register('test', () =>
-      createMockProvider({ name: 'original', modelId: 'model-a' }),
-    );
-    registry.override('test', () =>
-      createMockProvider({ name: 'overridden', modelId: 'model-b' }),
-    );
+    registry.register('test', () => createMockProvider({ name: 'original', modelId: 'model-a' }));
+    registry.override('test', () => createMockProvider({ name: 'overridden', modelId: 'model-b' }));
 
     const provider = registry.create({ provider: 'test', modelId: 'model-b' });
 
@@ -503,9 +508,7 @@ describe('Registry Integration', () => {
   });
 
   it('unregisters a provider and has() returns false', () => {
-    registry.register('temp', () =>
-      createMockProvider({ name: 'temp', modelId: 'x' }),
-    );
+    registry.register('temp', () => createMockProvider({ name: 'temp', modelId: 'x' }));
 
     expect(registry.has('temp')).toBe(true);
 
@@ -605,14 +608,21 @@ describe('Report Generation', () => {
   it('generates correct report for multiple providers and requests', async () => {
     const sharedTracker = new TokenUsageTracker();
     const openaiBase = createMockProvider({ name: 'openai', modelId: 'gpt-4o' });
-    const anthropicBase = createMockProvider({ name: 'anthropic', modelId: 'claude-3-5-sonnet-20241022' });
+    const anthropicBase = createMockProvider({
+      name: 'anthropic',
+      modelId: 'claude-3-5-sonnet-20241022',
+    });
 
     const openai = new UsageTrackingProvider(openaiBase, { tracker: sharedTracker });
     const anthropic = new UsageTrackingProvider(anthropicBase, { tracker: sharedTracker });
 
     openaiBase.generateText
-      .mockResolvedValueOnce(okResponse('A', { promptTokens: 50, completionTokens: 20, totalTokens: 70 }))
-      .mockResolvedValueOnce(okResponse('B', { promptTokens: 60, completionTokens: 30, totalTokens: 90 }));
+      .mockResolvedValueOnce(
+        okResponse('A', { promptTokens: 50, completionTokens: 20, totalTokens: 70 }),
+      )
+      .mockResolvedValueOnce(
+        okResponse('B', { promptTokens: 60, completionTokens: 30, totalTokens: 90 }),
+      );
     anthropicBase.generateText.mockResolvedValue(
       okResponse('C', { promptTokens: 100, completionTokens: 40, totalTokens: 140 }),
     );
@@ -694,7 +704,11 @@ describe('Stream Tracking Edge Cases', () => {
   it('throws LLMStreamError when stream consumed twice via toResponse()', async () => {
     base.generateStream.mockResolvedValue(
       createMockStream([
-        { content: 'Hello', finishReason: 'stop', tokenUsage: { promptTokens: 5, completionTokens: 3, totalTokens: 8 } },
+        {
+          content: 'Hello',
+          finishReason: 'stop',
+          tokenUsage: { promptTokens: 5, completionTokens: 3, totalTokens: 8 },
+        },
       ]),
     );
 
@@ -726,9 +740,7 @@ describe('Stream Tracking Edge Cases', () => {
   it('fires usage callback exactly once for toResponse()', async () => {
     const tokens: TokenUsage = { promptTokens: 10, completionTokens: 5, totalTokens: 15 };
     base.generateStream.mockResolvedValue(
-      createMockStream([
-        { content: 'Hi', finishReason: 'stop', tokenUsage: tokens },
-      ]),
+      createMockStream([{ content: 'Hi', finishReason: 'stop', tokenUsage: tokens }]),
     );
 
     const stream = await tracked.generateStream(TEST_MESSAGES);
@@ -832,7 +844,11 @@ describe('Record Metadata', () => {
 
     base.generateStream.mockResolvedValue(
       createMockStream([
-        { content: 'Hi', finishReason: 'stop', tokenUsage: { promptTokens: 10, completionTokens: 5, totalTokens: 15 } },
+        {
+          content: 'Hi',
+          finishReason: 'stop',
+          tokenUsage: { promptTokens: 10, completionTokens: 5, totalTokens: 15 },
+        },
       ]),
     );
 

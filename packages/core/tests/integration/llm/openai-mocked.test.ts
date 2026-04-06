@@ -153,7 +153,11 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
         { content: 'The ' },
         { content: 'quick ' },
         { content: 'brown ' },
-        { content: 'fox', finish_reason: 'stop', usage: { prompt_tokens: 4, completion_tokens: 4, total_tokens: 8 } },
+        {
+          content: 'fox',
+          finish_reason: 'stop',
+          usage: { prompt_tokens: 4, completion_tokens: 4, total_tokens: 8 },
+        },
       ]);
       globalThis.fetch = vi.fn().mockResolvedValue(makeChunkedStreamResponse(sseText, 10));
 
@@ -292,7 +296,11 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
 
     it('should handle CJK characters delivered in tiny chunks', async () => {
       const sseText = makeSSELines([
-        { content: '日本語テスト', finish_reason: 'stop', usage: { prompt_tokens: 1, completion_tokens: 6, total_tokens: 7 } },
+        {
+          content: '日本語テスト',
+          finish_reason: 'stop',
+          usage: { prompt_tokens: 1, completion_tokens: 6, total_tokens: 7 },
+        },
       ]);
       globalThis.fetch = vi.fn().mockResolvedValue(makeChunkedStreamResponse(sseText, 5));
 
@@ -469,9 +477,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should use statusText when response body is empty on 500', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        new Response('', { status: 500, statusText: 'Server Down' }),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(new Response('', { status: 500, statusText: 'Server Down' }));
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -484,12 +492,19 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError with status 403 on Forbidden', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { message: 'You do not have access to this resource', type: 'permission_error' } },
-          403,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            {
+              error: {
+                message: 'You do not have access to this resource',
+                type: 'permission_error',
+              },
+            },
+            403,
+          ),
+        );
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -504,12 +519,14 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError with status 404 on Not Found', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { message: 'The model gpt-5 does not exist', type: 'invalid_request_error' } },
-          404,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            { error: { message: 'The model gpt-5 does not exist', type: 'invalid_request_error' } },
+            404,
+          ),
+        );
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -523,9 +540,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw generic LLMProviderError for non-standard status codes like 418', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: { message: "I'm a teapot" } }, 418),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: { message: "I'm a teapot" } }, 418));
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -541,9 +558,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError for status 422 Unprocessable Entity', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: { message: 'Unprocessable' } }, 422),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: { message: 'Unprocessable' } }, 422));
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -608,12 +625,19 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMAuthenticationError on 401 with JSON error body', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { message: 'Invalid API key provided: sk-test*****def.', type: 'invalid_api_key' } },
-          401,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            {
+              error: {
+                message: 'Invalid API key provided: sk-test*****def.',
+                type: 'invalid_api_key',
+              },
+            },
+            401,
+          ),
+        );
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -627,13 +651,13 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMRateLimitError with retryAfterMs parsed from retry-after header', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { message: 'Rate limit exceeded' } },
-          429,
-          { 'retry-after': '3.0' },
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse({ error: { message: 'Rate limit exceeded' } }, 429, {
+            'retry-after': '3.0',
+          }),
+        );
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -646,9 +670,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should handle error responses during streaming (non-200 on initial fetch)', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: { message: 'Rate limited' } }, 429),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: { message: 'Rate limited' } }, 429));
 
       const provider = new OpenAIProvider(makeConfig());
       await expect(provider.generateStream(SIMPLE_MESSAGES)).rejects.toThrow(LLMRateLimitError);
@@ -752,9 +776,11 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should include stream and stream_options in streaming request body', async () => {
-      const fetchMock = vi.fn().mockResolvedValue(
-        makeStreamResponse(makeSSELines([{ content: 'ok', finish_reason: 'stop' }])),
-      );
+      const fetchMock = vi
+        .fn()
+        .mockResolvedValue(
+          makeStreamResponse(makeSSELines([{ content: 'ok', finish_reason: 'stop' }])),
+        );
       globalThis.fetch = fetchMock;
 
       const provider = new OpenAIProvider(makeConfig());
@@ -863,7 +889,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should handle finish_reason of stop', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok', 'stop')));
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok', 'stop')));
 
       const provider = new OpenAIProvider(makeConfig());
       const result = await provider.generateText(SIMPLE_MESSAGES);
@@ -872,9 +900,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should handle finish_reason of length', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(makeChatResponse('truncated output', 'length')),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse(makeChatResponse('truncated output', 'length')));
 
       const provider = new OpenAIProvider(makeConfig());
       const result = await provider.generateText(SIMPLE_MESSAGES);
@@ -883,9 +911,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should handle finish_reason of content_filter', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(makeChatResponse('', 'content_filter')),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse(makeChatResponse('', 'content_filter')));
 
       const provider = new OpenAIProvider(makeConfig());
       const result = await provider.generateText(SIMPLE_MESSAGES);
@@ -918,7 +946,11 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
       const sseText = makeSSELines([
         { content: 'Hello, ' },
         { content: 'world! ' },
-        { content: 'How are you?', finish_reason: 'stop', usage: { prompt_tokens: 3, completion_tokens: 5, total_tokens: 8 } },
+        {
+          content: 'How are you?',
+          finish_reason: 'stop',
+          usage: { prompt_tokens: 3, completion_tokens: 5, total_tokens: 8 },
+        },
       ]);
       globalThis.fetch = vi.fn().mockResolvedValue(makeChunkedStreamResponse(sseText, 10));
 
@@ -933,7 +965,11 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
 
     it('should produce correct output when SSE text is delivered in 1-byte chunks', async () => {
       const sseText = makeSSELines([
-        { content: 'AB', finish_reason: 'stop', usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } },
+        {
+          content: 'AB',
+          finish_reason: 'stop',
+          usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+        },
       ]);
       globalThis.fetch = vi.fn().mockResolvedValue(makeChunkedStreamResponse(sseText, 1));
 
@@ -1004,7 +1040,11 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
       const sseText = makeSSELines([
         { content: 'Part1 ' },
         { content: 'Part2 ' },
-        { content: 'Part3', finish_reason: 'stop', usage: { prompt_tokens: 5, completion_tokens: 3, total_tokens: 8 } },
+        {
+          content: 'Part3',
+          finish_reason: 'stop',
+          usage: { prompt_tokens: 5, completion_tokens: 3, total_tokens: 8 },
+        },
       ]);
 
       globalThis.fetch = vi.fn().mockResolvedValue(makeChunkedStreamResponse(sseText, 20));
@@ -1031,7 +1071,9 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
 
   describe('createOpenAIProvider factory', () => {
     it('should create a functional provider that can make requests', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('factory ok')));
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse(makeChatResponse('factory ok')));
 
       const provider = createOpenAIProvider(makeConfig());
       const result = await provider.generateText(SIMPLE_MESSAGES);

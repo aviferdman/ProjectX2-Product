@@ -225,10 +225,7 @@ export function createListFilesTool(basePath: string): Tool {
         );
       }
 
-      const effectiveMax = Math.min(
-        Math.max(1, maxEntries),
-        HARD_MAX_ENTRIES,
-      );
+      const effectiveMax = Math.min(Math.max(1, maxEntries), HARD_MAX_ENTRIES);
 
       // Collect one extra so we know if the result is truncated
       const allEntries = await collectEntries(

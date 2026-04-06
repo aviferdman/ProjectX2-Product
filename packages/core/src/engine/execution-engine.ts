@@ -139,6 +139,7 @@ export class ExecutionEngine {
   private readonly _beforeHooks: BeforeTaskHook[];
   private readonly _afterHooks: AfterTaskHook[];
   private readonly _errorHooks: OnTaskErrorHook[];
+  private readonly _contextManager: TaskContextManager | undefined;
   private _status: EngineStatus;
   private _cancelled: boolean;
 

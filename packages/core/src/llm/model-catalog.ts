@@ -7,16 +7,16 @@
  * @packageDocumentation
  */
 
-import type { LLMModelInfo } from "../types/llm.js";
+import type { LLMModelInfo } from '../types/llm.js';
 
 // ---------------------------------------------------------------------------
 // OpenAI models
 // ---------------------------------------------------------------------------
 
 const GPT_4O: LLMModelInfo = {
-  modelId: "gpt-4o",
-  provider: "openai",
-  displayName: "GPT-4o",
+  modelId: 'gpt-4o',
+  provider: 'openai',
+  displayName: 'GPT-4o',
   maxContextTokens: 128_000,
   maxOutputTokens: 16_384,
   supportsStreaming: true,
@@ -25,9 +25,9 @@ const GPT_4O: LLMModelInfo = {
 };
 
 const GPT_4O_MINI: LLMModelInfo = {
-  modelId: "gpt-4o-mini",
-  provider: "openai",
-  displayName: "GPT-4o mini",
+  modelId: 'gpt-4o-mini',
+  provider: 'openai',
+  displayName: 'GPT-4o mini',
   maxContextTokens: 128_000,
   maxOutputTokens: 16_384,
   supportsStreaming: true,
@@ -36,9 +36,9 @@ const GPT_4O_MINI: LLMModelInfo = {
 };
 
 const GPT_4_TURBO: LLMModelInfo = {
-  modelId: "gpt-4-turbo",
-  provider: "openai",
-  displayName: "GPT-4 Turbo",
+  modelId: 'gpt-4-turbo',
+  provider: 'openai',
+  displayName: 'GPT-4 Turbo',
   maxContextTokens: 128_000,
   maxOutputTokens: 4_096,
   supportsStreaming: true,
@@ -51,9 +51,9 @@ const GPT_4_TURBO: LLMModelInfo = {
 // ---------------------------------------------------------------------------
 
 const CLAUDE_3_5_SONNET: LLMModelInfo = {
-  modelId: "claude-3-5-sonnet-20241022",
-  provider: "anthropic",
-  displayName: "Claude 3.5 Sonnet",
+  modelId: 'claude-3-5-sonnet-20241022',
+  provider: 'anthropic',
+  displayName: 'Claude 3.5 Sonnet',
   maxContextTokens: 200_000,
   maxOutputTokens: 8_192,
   supportsStreaming: true,
@@ -62,9 +62,9 @@ const CLAUDE_3_5_SONNET: LLMModelInfo = {
 };
 
 const CLAUDE_3_5_HAIKU: LLMModelInfo = {
-  modelId: "claude-3-5-haiku-20241022",
-  provider: "anthropic",
-  displayName: "Claude 3.5 Haiku",
+  modelId: 'claude-3-5-haiku-20241022',
+  provider: 'anthropic',
+  displayName: 'Claude 3.5 Haiku',
   maxContextTokens: 200_000,
   maxOutputTokens: 8_192,
   supportsStreaming: true,
@@ -73,9 +73,9 @@ const CLAUDE_3_5_HAIKU: LLMModelInfo = {
 };
 
 const CLAUDE_3_OPUS: LLMModelInfo = {
-  modelId: "claude-3-opus-20240229",
-  provider: "anthropic",
-  displayName: "Claude 3 Opus",
+  modelId: 'claude-3-opus-20240229',
+  provider: 'anthropic',
+  displayName: 'Claude 3 Opus',
   maxContextTokens: 200_000,
   maxOutputTokens: 4_096,
   supportsStreaming: true,
@@ -88,27 +88,27 @@ const CLAUDE_3_OPUS: LLMModelInfo = {
 // ---------------------------------------------------------------------------
 
 const LLAMA_3_1_8B: LLMModelInfo = {
-  modelId: "llama3.1:8b",
-  provider: "ollama",
-  displayName: "Llama 3.1 8B",
+  modelId: 'llama3.1:8b',
+  provider: 'ollama',
+  displayName: 'Llama 3.1 8B',
   maxContextTokens: 128_000,
   maxOutputTokens: 4_096,
   supportsStreaming: true,
 };
 
 const MISTRAL_7B: LLMModelInfo = {
-  modelId: "mistral:7b",
-  provider: "ollama",
-  displayName: "Mistral 7B",
+  modelId: 'mistral:7b',
+  provider: 'ollama',
+  displayName: 'Mistral 7B',
   maxContextTokens: 32_000,
   maxOutputTokens: 4_096,
   supportsStreaming: true,
 };
 
 const CODELLAMA_13B: LLMModelInfo = {
-  modelId: "codellama:13b",
-  provider: "ollama",
-  displayName: "Code Llama 13B",
+  modelId: 'codellama:13b',
+  provider: 'ollama',
+  displayName: 'Code Llama 13B',
   maxContextTokens: 16_000,
   maxOutputTokens: 4_096,
   supportsStreaming: true,
@@ -119,10 +119,7 @@ const CODELLAMA_13B: LLMModelInfo = {
 // ---------------------------------------------------------------------------
 
 /** All known models indexed by model ID. */
-const ALL_MODELS: ReadonlyMap<string, LLMModelInfo> = new Map<
-  string,
-  LLMModelInfo
->([
+const ALL_MODELS: ReadonlyMap<string, LLMModelInfo> = new Map<string, LLMModelInfo>([
   [GPT_4O.modelId, GPT_4O],
   [GPT_4O_MINI.modelId, GPT_4O_MINI],
   [GPT_4_TURBO.modelId, GPT_4_TURBO],
@@ -167,9 +164,7 @@ export const ModelCatalog = {
    * @returns Array of model info objects
    */
   getByProvider(provider: string): readonly LLMModelInfo[] {
-    return Array.from(ALL_MODELS.values()).filter(
-      (m) => m.provider === provider,
-    );
+    return Array.from(ALL_MODELS.values()).filter((m) => m.provider === provider);
   },
 
   /**
@@ -183,9 +178,7 @@ export const ModelCatalog = {
    * List all known provider names.
    */
   listProviders(): readonly string[] {
-    const providers = new Set(
-      Array.from(ALL_MODELS.values()).map((m) => m.provider),
-    );
+    const providers = new Set(Array.from(ALL_MODELS.values()).map((m) => m.provider));
     return Array.from(providers);
   },
 
@@ -220,10 +213,7 @@ export const ModelCatalog = {
   ): number | undefined {
     const info = ALL_MODELS.get(modelId);
     if (!info) return undefined;
-    if (
-      info.costPer1kInputTokens === undefined ||
-      info.costPer1kOutputTokens === undefined
-    ) {
+    if (info.costPer1kInputTokens === undefined || info.costPer1kOutputTokens === undefined) {
       return undefined;
     }
     return (

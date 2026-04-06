@@ -8,14 +8,8 @@
  * @packageDocumentation
  */
 
-import {
-  ToolPermissionError,
-} from '../errors/tool-errors.js';
-import type {
-  Tool,
-  ToolPermission,
-  ToolPermissionPolicy,
-} from '../types/tool.js';
+import { ToolPermissionError } from '../errors/tool-errors.js';
+import type { Tool, ToolPermission, ToolPermissionPolicy } from '../types/tool.js';
 
 // ---------------------------------------------------------------------------
 // Default policies

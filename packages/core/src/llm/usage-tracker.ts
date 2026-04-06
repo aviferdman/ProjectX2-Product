@@ -157,10 +157,7 @@ export class TokenUsageTracker {
    * @returns The created {@link UsageRecord} with generated ID, timestamp, and cost
    */
   record(input: UsageRecordInput): UsageRecord {
-    const costUsd = TokenUsageTracker.calculateCost(
-      input.modelId,
-      input.tokenUsage,
-    );
+    const costUsd = TokenUsageTracker.calculateCost(input.modelId, input.tokenUsage);
 
     const record: UsageRecord = {
       id: generateRecordId(),
@@ -289,14 +286,7 @@ export class TokenUsageTracker {
    * @param tokenUsage - Token counts from the response
    * @returns Cost in USD, or `undefined` if pricing data is unavailable
    */
-  static calculateCost(
-    modelId: string,
-    tokenUsage: TokenUsage,
-  ): number | undefined {
-    return ModelCatalog.estimateCost(
-      modelId,
-      tokenUsage.promptTokens,
-      tokenUsage.completionTokens,
-    );
+  static calculateCost(modelId: string, tokenUsage: TokenUsage): number | undefined {
+    return ModelCatalog.estimateCost(modelId, tokenUsage.promptTokens, tokenUsage.completionTokens);
   }
 }

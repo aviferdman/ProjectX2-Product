@@ -4,7 +4,7 @@
  * @packageDocumentation
  */
 
-import type { LLMProvider, StreamingLLMProvider } from "../types/llm.js";
+import type { LLMProvider, StreamingLLMProvider } from '../types/llm.js';
 
 /**
  * Check whether an LLM provider supports streaming.
@@ -25,10 +25,6 @@ import type { LLMProvider, StreamingLLMProvider } from "../types/llm.js";
  * }
  * ```
  */
-export function isStreamingProvider(
-  provider: LLMProvider,
-): provider is StreamingLLMProvider {
-  return (
-    typeof (provider as StreamingLLMProvider).generateStream === "function"
-  );
+export function isStreamingProvider(provider: LLMProvider): provider is StreamingLLMProvider {
+  return typeof (provider as StreamingLLMProvider).generateStream === 'function';
 }

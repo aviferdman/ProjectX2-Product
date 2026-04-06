@@ -13,7 +13,7 @@
  * @packageDocumentation
  */
 
-import { LLMProviderError } from "../errors/llm-errors.js";
+import { LLMProviderError } from '../errors/llm-errors.js';
 import type {
   LLMMessage,
   LLMProviderConfig,
@@ -21,8 +21,8 @@ import type {
   LLMResponse,
   LLMStreamResponse,
   StreamingLLMProvider,
-} from "../types/llm.js";
-import { LLMRole } from "../types/llm.js";
+} from '../types/llm.js';
+import { LLMRole } from '../types/llm.js';
 
 const DEFAULT_MAX_RETRIES = 3;
 const DEFAULT_TIMEOUT_MS = 30_000;
@@ -55,13 +55,10 @@ export abstract class BaseLLMProvider implements StreamingLLMProvider {
 
   constructor(config: LLMProviderConfig) {
     if (!config.provider || config.provider.trim().length === 0) {
-      throw new LLMProviderError(
-        config.provider || "unknown",
-        "Provider name must not be empty",
-      );
+      throw new LLMProviderError(config.provider || 'unknown', 'Provider name must not be empty');
     }
     if (!config.modelId || config.modelId.trim().length === 0) {
-      throw new LLMProviderError(config.provider, "Model ID must not be empty");
+      throw new LLMProviderError(config.provider, 'Model ID must not be empty');
     }
 
     this._config = config;
@@ -116,7 +113,7 @@ export abstract class BaseLLMProvider implements StreamingLLMProvider {
     throw new LLMProviderError(
       this.name,
       `Provider "${this.name}" does not support streaming. ` +
-        "Override _doGenerateStream() to enable it.",
+        'Override _doGenerateStream() to enable it.',
     );
   }
 
@@ -135,16 +132,16 @@ export abstract class BaseLLMProvider implements StreamingLLMProvider {
     const merged: Record<string, unknown> = {};
 
     const temperature = options.temperature ?? defaults.temperature;
-    if (temperature !== undefined) merged["temperature"] = temperature;
+    if (temperature !== undefined) merged['temperature'] = temperature;
 
     const maxTokens = options.maxTokens ?? defaults.maxTokens;
-    if (maxTokens !== undefined) merged["maxTokens"] = maxTokens;
+    if (maxTokens !== undefined) merged['maxTokens'] = maxTokens;
 
     const stopSequences = options.stopSequences ?? defaults.stopSequences;
-    if (stopSequences !== undefined) merged["stopSequences"] = stopSequences;
+    if (stopSequences !== undefined) merged['stopSequences'] = stopSequences;
 
     const signal = options.signal ?? defaults.signal;
-    if (signal !== undefined) merged["signal"] = signal;
+    if (signal !== undefined) merged['signal'] = signal;
 
     return merged as LLMRequestOptions;
   }
@@ -155,17 +152,15 @@ export abstract class BaseLLMProvider implements StreamingLLMProvider {
    */
   protected _validateMessages(messages: readonly LLMMessage[]): void {
     if (messages.length === 0) {
-      throw new LLMProviderError(this.name, "Messages array must not be empty");
+      throw new LLMProviderError(this.name, 'Messages array must not be empty');
     }
 
-    const hasContent = messages.some(
-      (m) => m.role === LLMRole.USER || m.role === LLMRole.SYSTEM,
-    );
+    const hasContent = messages.some((m) => m.role === LLMRole.USER || m.role === LLMRole.SYSTEM);
 
     if (!hasContent) {
       throw new LLMProviderError(
         this.name,
-        "Messages must contain at least one USER or SYSTEM message",
+        'Messages must contain at least one USER or SYSTEM message',
       );
     }
   }

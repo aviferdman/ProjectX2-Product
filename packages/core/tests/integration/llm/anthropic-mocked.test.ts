@@ -314,7 +314,9 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
       });
       globalThis.fetch = vi
         .fn()
-        .mockResolvedValue(new Response(stream, { status: 200, headers: { 'Content-Type': 'text/event-stream' } }));
+        .mockResolvedValue(
+          new Response(stream, { status: 200, headers: { 'Content-Type': 'text/event-stream' } }),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
       const result = await provider.generateStream(SIMPLE_MESSAGES);
@@ -569,14 +571,10 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError on network failure (TypeError)', async () => {
-      globalThis.fetch = vi
-        .fn()
-        .mockRejectedValue(new TypeError('Failed to fetch'));
+      globalThis.fetch = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'));
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMProviderError);
       expect((error as LLMProviderError).message).toContain('Network error');
@@ -618,17 +616,17 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw with overloaded message on status 529', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { type: 'overloaded_error', message: 'API is temporarily overloaded' } },
-          529,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            { error: { type: 'overloaded_error', message: 'API is temporarily overloaded' } },
+            529,
+          ),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMProviderError);
       expect((error as LLMProviderError).statusCode).toBe(529);
@@ -636,17 +634,17 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError with 403 status on forbidden', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { type: 'forbidden', message: 'You do not have permission' } },
-          403,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            { error: { type: 'forbidden', message: 'You do not have permission' } },
+            403,
+          ),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMProviderError);
       expect((error as LLMProviderError).statusCode).toBe(403);
@@ -654,17 +652,17 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError with 404 status on not found', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { type: 'not_found_error', message: 'Model claude-9 not found' } },
-          404,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            { error: { type: 'not_found_error', message: 'Model claude-9 not found' } },
+            404,
+          ),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMProviderError);
       expect((error as LLMProviderError).statusCode).toBe(404);
@@ -672,49 +670,44 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError for non-standard status codes', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: { message: 'I am a teapot' } }, 418),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: { message: 'I am a teapot' } }, 418));
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMProviderError);
       expect((error as LLMProviderError).statusCode).toBe(418);
     });
 
     it('should parse Retry-After header into retryAfterMs on rate limit', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { type: 'rate_limit_error', message: 'Too many requests' } },
-          429,
-          { 'retry-after': '3.5' },
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            { error: { type: 'rate_limit_error', message: 'Too many requests' } },
+            429,
+            { 'retry-after': '3.5' },
+          ),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMRateLimitError);
       expect((error as LLMRateLimitError).retryAfterMs).toBe(3500);
     });
 
     it('should handle rate limit without Retry-After header', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { type: 'rate_limit_error', message: 'Rate limited' } },
-          429,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse({ error: { type: 'rate_limit_error', message: 'Rate limited' } }, 429),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMRateLimitError);
       expect((error as LLMRateLimitError).retryAfterMs).toBeUndefined();
@@ -755,32 +748,32 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMAuthenticationError on 401', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(
-          { error: { type: 'authentication_error', message: 'Invalid API key provided' } },
-          401,
-        ),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse(
+            { error: { type: 'authentication_error', message: 'Invalid API key provided' } },
+            401,
+          ),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
-      await expect(provider.generateText(SIMPLE_MESSAGES)).rejects.toThrow(
-        LLMAuthenticationError,
-      );
+      await expect(provider.generateText(SIMPLE_MESSAGES)).rejects.toThrow(LLMAuthenticationError);
     });
 
     it('should throw on server errors (500, 502, 503) with Anthropic server error message', async () => {
       for (const status of [500, 502, 503]) {
-        globalThis.fetch = vi.fn().mockResolvedValue(
-          makeJsonResponse(
-            { error: { type: 'api_error', message: `Server error ${status}` } },
-            status,
-          ),
-        );
+        globalThis.fetch = vi
+          .fn()
+          .mockResolvedValue(
+            makeJsonResponse(
+              { error: { type: 'api_error', message: `Server error ${status}` } },
+              status,
+            ),
+          );
 
         const provider = new AnthropicProvider(makeConfig());
-        const error = await provider
-          .generateText(SIMPLE_MESSAGES)
-          .catch((e: unknown) => e);
+        const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
         expect(error).toBeInstanceOf(LLMProviderError);
         expect((error as LLMProviderError).statusCode).toBe(status);
@@ -789,14 +782,10 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     });
 
     it('should fallback to HTTP status text when error body is empty JSON', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({}, 500),
-      );
+      globalThis.fetch = vi.fn().mockResolvedValue(makeJsonResponse({}, 500));
 
       const provider = new AnthropicProvider(makeConfig());
-      const error = await provider
-        .generateText(SIMPLE_MESSAGES)
-        .catch((e: unknown) => e);
+      const error = await provider.generateText(SIMPLE_MESSAGES).catch((e: unknown) => e);
 
       expect(error).toBeInstanceOf(LLMProviderError);
       expect((error as LLMProviderError).message).toContain('HTTP 500');
@@ -906,8 +895,10 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
       const provider = new AnthropicProvider(makeConfig());
       await provider.generateText(SIMPLE_MESSAGES);
 
-      const headers = (fetchMock.mock.calls[0] as [string, RequestInit])[1]
-        .headers as Record<string, string>;
+      const headers = (fetchMock.mock.calls[0] as [string, RequestInit])[1].headers as Record<
+        string,
+        string
+      >;
 
       expect(headers['anthropic-version']).toBe('2023-06-01');
     });
@@ -949,9 +940,7 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
       const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeMessagesResponse('ok')));
       globalThis.fetch = fetchMock;
 
-      const provider = new AnthropicProvider(
-        makeConfig({ modelId: 'claude-3-haiku-20240307' }),
-      );
+      const provider = new AnthropicProvider(makeConfig({ modelId: 'claude-3-haiku-20240307' }));
       await provider.generateText(SIMPLE_MESSAGES);
 
       const body = JSON.parse(
@@ -988,9 +977,7 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
     it('should return empty string when no text content blocks exist', async () => {
       globalThis.fetch = vi.fn().mockResolvedValue(
         makeJsonResponse({
-          content: [
-            { type: 'tool_use', id: 'tool_1', name: 'search', input: { query: 'test' } },
-          ],
+          content: [{ type: 'tool_use', id: 'tool_1', name: 'search', input: { query: 'test' } }],
           stop_reason: 'tool_use',
           usage: { input_tokens: 10, output_tokens: 5 },
         }),
@@ -1132,9 +1119,11 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
         },
       });
 
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        new Response(stream, { status: 200, headers: { 'Content-Type': 'text/event-stream' } }),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          new Response(stream, { status: 200, headers: { 'Content-Type': 'text/event-stream' } }),
+        );
 
       const provider = new AnthropicProvider(makeConfig());
       const result = await provider.generateStream(SIMPLE_MESSAGES);
@@ -1163,8 +1152,10 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
       const provider = new AnthropicProvider(makeConfig());
       await provider.generateText(SIMPLE_MESSAGES);
 
-      const headers = (fetchMock.mock.calls[0] as [string, RequestInit])[1]
-        .headers as Record<string, string>;
+      const headers = (fetchMock.mock.calls[0] as [string, RequestInit])[1].headers as Record<
+        string,
+        string
+      >;
 
       expect(headers['x-api-key']).toBe(TEST_API_KEY);
       expect(headers['Authorization']).toBeUndefined();
@@ -1178,8 +1169,10 @@ describe('AnthropicProvider — integration (mocked HTTP)', () => {
       const provider = new AnthropicProvider({ provider: 'anthropic', modelId: TEST_MODEL });
       await provider.generateText(SIMPLE_MESSAGES);
 
-      const headers = (fetchMock.mock.calls[0] as [string, RequestInit])[1]
-        .headers as Record<string, string>;
+      const headers = (fetchMock.mock.calls[0] as [string, RequestInit])[1].headers as Record<
+        string,
+        string
+      >;
 
       expect(headers['x-api-key']).toBe('sk-ant-from-env');
     });

@@ -7,10 +7,7 @@
  * @packageDocumentation
  */
 
-import {
-  ToolConfigError,
-  ToolNotFoundError,
-} from '../errors/tool-errors.js';
+import { ToolConfigError, ToolNotFoundError } from '../errors/tool-errors.js';
 import type { Tool, ToolCategory, ToolPermission } from '../types/tool.js';
 
 // ---------------------------------------------------------------------------

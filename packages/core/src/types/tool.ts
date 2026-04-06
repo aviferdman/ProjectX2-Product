@@ -205,5 +205,9 @@ export interface ToolEventMap {
   /** Emitted when a tool execution fails. */
   'tool:execute:error': (toolName: string, error: Error) => void;
   /** Emitted when a permission check denies tool execution. */
-  'tool:permission:denied': (toolName: string, required: readonly ToolPermission[], denied: readonly ToolPermission[]) => void;
+  'tool:permission:denied': (
+    toolName: string,
+    required: readonly ToolPermission[],
+    denied: readonly ToolPermission[],
+  ) => void;
 }
