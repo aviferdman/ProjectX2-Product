@@ -30,7 +30,6 @@ function makeConfig(overrides?: Partial<LLMProviderConfig>): LLMProviderConfig {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function makeMessagesResponse(
   content: string,
   stopReason: string | null = 'end_turn',

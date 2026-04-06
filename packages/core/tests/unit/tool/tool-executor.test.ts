@@ -153,7 +153,7 @@ describe('ToolExecutor', () => {
       const executor = new ToolExecutor(new PermissionManager(ALLOW_ALL_POLICY));
       const tool = makeTool({
         execute: async () => {
-          throw 'string error'; // eslint-disable-line no-throw-literal
+          throw 'string error';
         },
       });
 

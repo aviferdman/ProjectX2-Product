@@ -11,9 +11,9 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // ESLint naming exceptions for ESM compatibility
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const __filename = fileURLToPath(import.meta.url);
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const __dirname = dirname(__filename);
 const PROJECT_ROOT = join(__dirname, '../../../..');
 const CORE_PACKAGE_ROOT = join(__dirname, '../..');

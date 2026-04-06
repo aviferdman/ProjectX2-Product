@@ -311,7 +311,7 @@ describe('TaskContextManager', () => {
       const task = createTask('t1', {
         dependencies: ['dep-a'],
         context: {
-          dependencyResults: { 'preexisting': 'old value' },
+          dependencyResults: { preexisting: 'old value' },
         },
       });
       const ctx = mgr.resolveContext(task);

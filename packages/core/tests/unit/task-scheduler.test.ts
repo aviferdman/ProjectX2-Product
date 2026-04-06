@@ -271,9 +271,7 @@ describe('dependency resolution errors', () => {
   it('should throw TaskConfigError for missing dependency', () => {
     const a = makeTask('a', ['nonexistent']);
     expect(() => topologicalSort([a])).toThrow(TaskConfigError);
-    expect(() => topologicalSort([a])).toThrow(
-      /Dependency "nonexistent" not found/,
-    );
+    expect(() => topologicalSort([a])).toThrow(/Dependency "nonexistent" not found/);
   });
 
   it('should throw TaskConfigError for self-dependency', () => {
@@ -415,6 +413,9 @@ describe('edge cases', () => {
     const y = makeTask('y', ['x']);
     const levels = getExecutionLevels([y, b, x, a]);
     // Level 0: a, x; Level 1: b, y
-    expect(levelIds(levels)).toEqual([['a', 'x'], ['b', 'y']]);
+    expect(levelIds(levels)).toEqual([
+      ['a', 'x'],
+      ['b', 'y'],
+    ]);
   });
 });

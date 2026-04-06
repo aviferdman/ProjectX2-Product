@@ -6,10 +6,7 @@ import {
   LLMProviderError,
   LLMRateLimitError,
 } from '../../../src/errors/llm-errors.js';
-import {
-  createFallbackProvider,
-  FallbackLLMProvider,
-} from '../../../src/llm/fallback-provider.js';
+import { createFallbackProvider, FallbackLLMProvider } from '../../../src/llm/fallback-provider.js';
 import type {
   LLMMessage,
   LLMProvider,
@@ -48,10 +45,7 @@ const tertiaryResponse: LLMResponse = {
 // Mock provider factories
 // ---------------------------------------------------------------------------
 
-function createMockProvider(
-  name: string,
-  overrides?: Partial<LLMProvider>,
-): LLMProvider {
+function createMockProvider(name: string, overrides?: Partial<LLMProvider>): LLMProvider {
   return {
     name,
     generateText: vi.fn().mockResolvedValue(successResponse),
@@ -89,20 +83,14 @@ function createMockStreamingProvider(
   };
 }
 
-function createFailingProvider(
-  name: string,
-  error: Error,
-): LLMProvider {
+function createFailingProvider(name: string, error: Error): LLMProvider {
   return {
     name,
     generateText: vi.fn().mockRejectedValue(error),
   };
 }
 
-function createFailingStreamingProvider(
-  name: string,
-  error: Error,
-): StreamingLLMProvider {
+function createFailingStreamingProvider(name: string, error: Error): StreamingLLMProvider {
   return {
     name,
     generateText: vi.fn().mockRejectedValue(error),
@@ -365,12 +353,7 @@ describe('FallbackLLMProvider', () => {
     });
 
     it('should NOT fall back on LLMContextLengthError by default', async () => {
-      const ctxError = new LLMContextLengthError(
-        'openai',
-        'Context too long',
-        10000,
-        4096,
-      );
+      const ctxError = new LLMContextLengthError('openai', 'Context too long', 10000, 4096);
       const primary = createFailingProvider('openai', ctxError);
       const secondary = createMockProvider('anthropic');
       const fallback = new FallbackLLMProvider([primary, secondary]);
@@ -670,9 +653,7 @@ describe('FallbackLLMProvider', () => {
       };
       const fallback = new FallbackLLMProvider([primary, secondary]);
 
-      await expect(fallback.generateText(validMessages)).rejects.toThrow(
-        'another string error',
-      );
+      await expect(fallback.generateText(validMessages)).rejects.toThrow('another string error');
     });
   });
 });

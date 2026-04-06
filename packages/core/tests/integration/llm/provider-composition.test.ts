@@ -804,7 +804,7 @@ describe('Stats and observability', () => {
   });
 
   it('circuit breaker reset clears consecutive failures and reopens circuit', async () => {
-    let currentTime = 0;
+    const currentTime = 0;
     const cb = new CircuitBreaker({ failureThreshold: 2, cooldownMs: 10_000 }, () => currentTime);
 
     cb.recordFailure();
@@ -905,7 +905,7 @@ describe('Full composition: CircuitBreaker + Retry + UsageTracking', () => {
   });
 
   it('resumes after CB half-open test succeeds through all layers', async () => {
-    let currentTime = 0;
+    const currentTime = 0;
     const base = createMockProvider();
 
     const trackResult = createUsageTrackingProvider(base, { modelId: 'mock-model' });

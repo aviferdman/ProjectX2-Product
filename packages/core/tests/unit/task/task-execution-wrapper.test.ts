@@ -37,7 +37,7 @@ function makeTask(
   });
 }
 
-function makeResult(taskId: string, output: string = `result-${taskId}`): TaskResult {
+function makeResult(taskId: string, output = `result-${taskId}`): TaskResult {
   return { output, agentId: 'test-agent', duration: 10 };
 }
 
@@ -142,9 +142,9 @@ describe('executeWithTimeout', () => {
 
   it('should throw TaskTimeoutError when execution exceeds timeout', async () => {
     const task = makeTask('slow');
-    await expect(
-      executeWithTimeout(delayRunner(500), task, {}, 50),
-    ).rejects.toThrow(TaskTimeoutError);
+    await expect(executeWithTimeout(delayRunner(500), task, {}, 50)).rejects.toThrow(
+      TaskTimeoutError,
+    );
   });
 
   it('should emit task:timeout event on timeout', async () => {
@@ -152,18 +152,18 @@ describe('executeWithTimeout', () => {
     const timeoutHandler = vi.fn();
     task.on('task:timeout', timeoutHandler);
 
-    await expect(
-      executeWithTimeout(delayRunner(500), task, {}, 50),
-    ).rejects.toThrow(TaskTimeoutError);
+    await expect(executeWithTimeout(delayRunner(500), task, {}, 50)).rejects.toThrow(
+      TaskTimeoutError,
+    );
 
     expect(timeoutHandler).toHaveBeenCalledWith('slow-events', 50);
   });
 
   it('should pass through runner errors without modification', async () => {
     const task = makeTask('error-task');
-    await expect(
-      executeWithTimeout(failingRunner('boom'), task, {}, 5000),
-    ).rejects.toThrow('boom: error-task');
+    await expect(executeWithTimeout(failingRunner('boom'), task, {}, 5000)).rejects.toThrow(
+      'boom: error-task',
+    );
   });
 
   it('should skip timeout when timeoutMs is 0', async () => {
@@ -659,7 +659,7 @@ describe('TaskExecutionWrapper', () => {
   describe('edge cases', () => {
     it('should handle non-Error throws from runner', async () => {
       const runner: TaskRunner = async () => {
-        throw 'string error'; // eslint-disable-line no-throw-literal
+        throw 'string error';
       };
 
       const wrapper = new TaskExecutionWrapper({ sleep: noSleep });

@@ -156,7 +156,7 @@ describe('DefaultLLMStreamResponse', () => {
       const stream = new DefaultLLMStreamResponse('test', asyncIterableFrom([{ content: 'data' }]));
 
       // First consumption
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       for await (const _chunk of stream) {
         // consume
       }
@@ -176,7 +176,6 @@ describe('DefaultLLMStreamResponse', () => {
     it('should throw when toResponse follows iteration', async () => {
       const stream = new DefaultLLMStreamResponse('test', asyncIterableFrom([{ content: 'data' }]));
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for await (const _chunk of stream) {
         // consume
       }

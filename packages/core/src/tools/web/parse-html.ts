@@ -157,6 +157,7 @@ export function createParseHtmlTool(): Tool {
       },
     },
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     async execute(input: unknown): Promise<ParseHtmlOutput> {
       const { html, extract } = input as ParseHtmlInput;
 
@@ -164,6 +165,7 @@ export function createParseHtmlTool(): Tool {
         throw new ToolExecutionError('parseHtml', 'input.html must be a non-empty string');
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!extract || !['text', 'links', 'metadata'].includes(extract)) {
         throw new ToolExecutionError(
           'parseHtml',

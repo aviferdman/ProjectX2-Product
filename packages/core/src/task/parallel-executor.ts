@@ -155,6 +155,7 @@ export function topologicalSort(tasks: readonly Task[]): Task[] {
 
   for (const task of tasks) {
     for (const depId of task.dependencies) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       adjacency.get(depId)!.push(task.id);
       inDegree.set(task.id, (inDegree.get(task.id) ?? 0) + 1);
     }
@@ -170,6 +171,7 @@ export function topologicalSort(tasks: readonly Task[]): Task[] {
 
   const sorted: Task[] = [];
   while (queue.length > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const current = queue.shift()!;
     const task = taskMap.get(current);
     if (task) {
@@ -234,6 +236,7 @@ export function getExecutionLevels(tasks: readonly Task[]): ExecutionLevel[] {
 
   function computeLevel(taskId: string): number {
     if (levelOf.has(taskId)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return levelOf.get(taskId)!;
     }
 
@@ -242,6 +245,7 @@ export function getExecutionLevels(tasks: readonly Task[]): ExecutionLevel[] {
     }
 
     visiting.add(taskId);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const task = taskMap.get(taskId)!;
     let maxDepLevel = -1;
 
@@ -427,6 +431,7 @@ export class ParallelExecutor {
 
     try {
       for (const level of levels) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (this._cancelled) {
           this._emit('run:cancelled');
           break;

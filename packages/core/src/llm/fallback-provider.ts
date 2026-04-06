@@ -305,6 +305,7 @@ export class FallbackLLMProvider implements StreamingLLMProvider {
 
     // All providers failed
     this._stats.totalFailures++;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     throw lastError!;
   }
 

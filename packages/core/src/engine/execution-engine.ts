@@ -18,7 +18,6 @@ import { EngineConfigError, EngineExecutionError } from '../errors/engine-errors
 import { TaskTimeoutError } from '../errors/task-errors.js';
 import type { Task } from '../task/task.js';
 import { TaskContextManager } from '../task/task-context-manager.js';
-import type { TaskContextManagerConfig } from '../task/task-context-manager.js';
 import type { TaskInput, TaskResult } from '../types/task.js';
 import { TaskStatus } from '../types/task.js';
 import type {

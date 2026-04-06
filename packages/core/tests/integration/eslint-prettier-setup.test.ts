@@ -216,8 +216,8 @@ describe('ESLint + Prettier Setup (TASK-003)', () => {
     it('should configure type-checked linting with tsconfig', () => {
       const eslintConfigPath = join(rootDir, 'eslint.config.mjs');
       const content = readFileSync(eslintConfigPath, 'utf-8');
-      expect(content).toContain('projectService: true');
       expect(content).toContain('tsconfigRootDir');
+      expect(content).toContain('project:');
     });
 
     it('should enforce explicit function return types', () => {

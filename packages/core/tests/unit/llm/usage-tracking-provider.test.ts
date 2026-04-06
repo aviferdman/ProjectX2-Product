@@ -47,7 +47,7 @@ function createMockStreamResponse(
   chunks: LLMStreamChunk[],
   finalResponse?: LLMResponse,
 ): LLMStreamResponse {
-  let iteratorCalled = false;
+  const iteratorCalled = false;
 
   return {
     async toResponse(): Promise<LLMResponse> {

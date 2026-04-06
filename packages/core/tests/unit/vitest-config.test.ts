@@ -4,9 +4,9 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 // Get the package root directory (2 levels up from tests/unit)
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const __filename = fileURLToPath(import.meta.url);
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const __dirname = dirname(__filename);
 const packageRoot = join(__dirname, '..', '..');
 

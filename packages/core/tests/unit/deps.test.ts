@@ -88,7 +88,6 @@ describe('Dependency Integration (TASK-006)', () => {
   });
 
   describe('EventEmitter3 (Event System)', () => {
-    /* eslint-disable @typescript-eslint/no-unsafe-return */
     it('should import EventEmitter3 successfully', () => {
       expect(EventEmitter).toBeDefined();
       expect(typeof EventEmitter).toBe('function');
@@ -234,7 +233,6 @@ describe('Dependency Integration (TASK-006)', () => {
 
       expect(emitter.listenerCount('test')).toBe(2);
     });
-    /* eslint-enable @typescript-eslint/no-unsafe-return */
   });
 
   describe('Combined Usage Scenarios', () => {
@@ -259,7 +257,6 @@ describe('Dependency Integration (TASK-006)', () => {
     });
 
     it('should create type-safe event-driven workflow', () => {
-      /* eslint-disable @typescript-eslint/restrict-template-expressions */
       interface WorkflowEvents {
         taskCreated: (task: { id: string; type: string }) => void;
         taskStarted: (taskId: string) => void;

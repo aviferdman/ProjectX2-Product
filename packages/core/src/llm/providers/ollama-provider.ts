@@ -124,6 +124,7 @@ export class OllamaProvider extends BaseLLMProvider {
     const data = (await response.json()) as OllamaChatResponse;
 
     return {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       content: data.message.content ?? '',
       finishReason: this._mapDoneReason(data.done_reason),
       tokenUsage: {
@@ -391,6 +392,7 @@ export class OllamaProvider extends BaseLLMProvider {
           if (chunk.done) {
             // Final chunk with token usage
             yield {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
               content: chunk.message.content ?? '',
               finishReason: this._mapDoneReason(chunk.done_reason),
               tokenUsage: {
@@ -403,6 +405,7 @@ export class OllamaProvider extends BaseLLMProvider {
           }
 
           yield {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             content: chunk.message.content ?? '',
           };
         }

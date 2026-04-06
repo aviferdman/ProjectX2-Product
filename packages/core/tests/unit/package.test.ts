@@ -4,10 +4,7 @@ import { join } from 'node:path';
 
 describe('Package Configuration (TASK-006)', () => {
   const packageJsonPath = join(__dirname, '../../package.json');
-  const packageJson = JSON.parse(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    readFileSync(packageJsonPath, 'utf-8'),
-  ) as Record<string, unknown>;
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8')) as Record<string, unknown>;
 
   describe('Package Metadata', () => {
     it('should have correct package name', () => {

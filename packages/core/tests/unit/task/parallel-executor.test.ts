@@ -30,7 +30,7 @@ function makeTask(id: string, deps: string[] = []): Task {
   });
 }
 
-function makeResult(taskId: string, output: string = `result-${taskId}`): TaskResult {
+function makeResult(taskId: string, output = `result-${taskId}`): TaskResult {
   return {
     output,
     agentId: 'test-agent',
@@ -542,6 +542,7 @@ describe('ParallelExecutor', () => {
 
     it('should include error in result before throwing', async () => {
       const executor = new ParallelExecutor({ errorPolicy: 'fail-fast' });
+      // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
       const completionResult = vi.fn<[ParallelExecutionResult], void>();
       executor.on('run:complete', completionResult);
 
@@ -751,6 +752,7 @@ describe('ParallelExecutor', () => {
     });
 
     it('should emit run:complete event', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
       const completeFn = vi.fn<[ParallelExecutionResult], void>();
       executor.on('run:complete', completeFn);
 

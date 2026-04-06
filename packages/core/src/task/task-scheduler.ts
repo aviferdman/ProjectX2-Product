@@ -112,18 +112,12 @@ export function resolveTaskDependencies(tasks: readonly Task[]): TopologicalSort
   for (const task of tasks) {
     for (const depId of task.dependencies) {
       if (!taskMap.has(depId)) {
-        throw new TaskConfigError(
-          `Dependency "${depId}" not found in task set`,
-          task.id,
-        );
+        throw new TaskConfigError(`Dependency "${depId}" not found in task set`, task.id);
       }
     }
     // Self-dependency check
     if (task.dependencies.includes(task.id)) {
-      throw new TaskConfigError(
-        `Task depends on itself`,
-        task.id,
-      );
+      throw new TaskConfigError(`Task depends on itself`, task.id);
     }
   }
 
@@ -159,6 +153,7 @@ export function resolveTaskDependencies(tasks: readonly Task[]): TopologicalSort
     const nextQueue: string[] = [];
 
     for (const taskId of queue) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const task = taskMap.get(taskId)!;
       sorted.push(task);
       currentLevel.push(task);
@@ -188,9 +183,7 @@ export function resolveTaskDependencies(tasks: readonly Task[]): TopologicalSort
       .map((t) => t.id)
       .sort();
 
-    throw new TaskConfigError(
-      `Circular dependency detected among tasks: ${cycleIds.join(', ')}`,
-    );
+    throw new TaskConfigError(`Circular dependency detected among tasks: ${cycleIds.join(', ')}`);
   }
 
   return { sorted, levels };

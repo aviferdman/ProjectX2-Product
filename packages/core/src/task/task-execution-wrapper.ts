@@ -195,7 +195,7 @@ export class TaskExecutionWrapper {
       const maxRetries = task.retries || this.defaultRetries;
 
       let lastError: Error | undefined;
-      const startTime = Date.now();
+      const _startTime = Date.now();
 
       for (let attempt = 0; attempt <= maxRetries; attempt++) {
         // Wait before retry (not on first attempt)

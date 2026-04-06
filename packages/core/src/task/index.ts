@@ -31,7 +31,4 @@ export {
   executeWithTimeout,
   TaskExecutionWrapper,
 } from './task-execution-wrapper.js';
-export type {
-  TaskExecutionWrapperConfig,
-  TaskRetryStats,
-} from './task-execution-wrapper.js';
+export type { TaskExecutionWrapperConfig, TaskRetryStats } from './task-execution-wrapper.js';
