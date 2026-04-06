@@ -24,12 +24,18 @@ import { MemoryNamespace, MemoryRole } from '../../src/types/memory.js';
 import type { MemoryEntry, MemoryProvider } from '../../src/types/memory.js';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> agent/developer/development-developer-c78
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
+<<<<<<< HEAD
 =======
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
 function makeEntry(overrides: Partial<MemoryEntry> = {}): MemoryEntry {
   return {
     id: overrides.id ?? generateMemoryId(),
@@ -42,6 +48,13 @@ function makeEntry(overrides: Partial<MemoryEntry> = {}): MemoryEntry {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+>>>>>>> agent/developer/development-developer-c78
 // ---------------------------------------------------------------------------
 // Integration Tests
 // ---------------------------------------------------------------------------
@@ -50,6 +63,7 @@ describe('TASK-053: Memory System Integration Tests', () => {
   describe('MemoryManager + ShortTermMemory end-to-end', () => {
     let manager: MemoryManager;
     let provider1: ShortTermMemory;
+<<<<<<< HEAD
 
     beforeEach(() => {
       provider1 = new ShortTermMemory();
@@ -75,6 +89,31 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect(fromP1).toBeDefined();
       expect(fromP1!.content).toBe('shared data');
 
+=======
+    let provider2: ShortTermMemory;
+
+    beforeEach(() => {
+      provider1 = new ShortTermMemory({ defaultNamespace: MemoryNamespace.AGENT });
+      provider2 = new ShortTermMemory({ defaultNamespace: MemoryNamespace.CREW });
+      // MemoryManager requires unique provider names, so we use a mock wrapper
+      const namedProvider2: MemoryProvider = { ...provider2, name: 'short-term-2' };
+      manager = new MemoryManager({ providers: [provider1, namedProvider2] });
+    });
+
+    it('fans out writes to all providers and reads from primary', async () => {
+      const entry = makeEntry({ content: 'shared data' });
+      await manager.add(entry);
+
+      // Both providers should have the entry
+      const fromP1 = await provider1.get(entry.id);
+      const fromP2 = await provider2.get(entry.id);
+      expect(fromP1).toBeDefined();
+      expect(fromP2).toBeDefined();
+      expect(fromP1!.content).toBe('shared data');
+      expect(fromP2!.content).toBe('shared data');
+
+      // Manager reads from primary (first provider)
+>>>>>>> agent/developer/development-developer-c78
       const fromManager = await manager.get(entry.id);
       expect(fromManager).toBeDefined();
       expect(fromManager!.content).toBe('shared data');
@@ -100,6 +139,7 @@ describe('TASK-053: Memory System Integration Tests', () => {
 
       const deleted = await manager.delete(entry.id);
       expect(deleted).toBe(true);
+<<<<<<< HEAD
       expect(await provider1.get(entry.id)).toBeUndefined();
 =======
       const fromP = await provider.get(entry.id);
@@ -124,16 +164,25 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect(await manager.delete(entry.id)).toBe(true);
       expect(await provider.get(entry.id)).toBeUndefined();
 >>>>>>> agent/developer/development-developer-c8
+=======
+
+      expect(await provider1.get(entry.id)).toBeUndefined();
+      expect(await provider2.get(entry.id)).toBeUndefined();
+>>>>>>> agent/developer/development-developer-c78
     });
 
     it('clears all providers', async () => {
       await manager.add(makeEntry());
       await manager.add(makeEntry());
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> agent/developer/development-developer-c78
 
       const cleared = await manager.clear();
       expect(cleared).toBeGreaterThanOrEqual(2);
       expect(await provider1.count()).toBe(0);
+<<<<<<< HEAD
     });
 
     it('emits events for add, delete, clear operations', async () => {
@@ -144,23 +193,37 @@ describe('TASK-053: Memory System Integration Tests', () => {
 
     it('emits events for operations', async () => {
 >>>>>>> agent/developer/development-developer-c8
+=======
+      expect(await provider2.count()).toBe(0);
+    });
+
+    it('emits events for add, delete, clear operations', async () => {
+>>>>>>> agent/developer/development-developer-c78
       const events: string[] = [];
       manager.on('memory:add', () => events.push('add'));
       manager.on('memory:delete', () => events.push('delete'));
       manager.on('memory:clear', () => events.push('clear'));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> agent/developer/development-developer-c8
+=======
+
+>>>>>>> agent/developer/development-developer-c78
       const entry = makeEntry();
       await manager.add(entry);
       await manager.delete(entry.id);
       await manager.add(makeEntry());
       await manager.clear();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> agent/developer/development-developer-c8
+=======
+
+>>>>>>> agent/developer/development-developer-c78
       expect(events).toEqual(['add', 'delete', 'add', 'clear']);
     });
   });
@@ -175,6 +238,7 @@ describe('TASK-053: Memory System Integration Tests', () => {
     beforeEach(() => {
       provider = new ShortTermMemory();
 <<<<<<< HEAD
+<<<<<<< HEAD
       agentA = new ScopedMemory({
         provider, namespace: MemoryNamespace.AGENT, ownerId: 'agent-a',
       });
@@ -186,12 +250,34 @@ describe('TASK-053: Memory System Integration Tests', () => {
       });
       globalScope = new ScopedMemory({
         provider, namespace: MemoryNamespace.GLOBAL, ownerId: 'system',
+=======
+      agentA = new ScopedMemory({
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'agent-a',
+      });
+      agentB = new ScopedMemory({
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'agent-b',
+      });
+      crewScope = new ScopedMemory({
+        provider,
+        namespace: MemoryNamespace.CREW,
+        ownerId: 'crew-1',
+      });
+      globalScope = new ScopedMemory({
+        provider,
+        namespace: MemoryNamespace.GLOBAL,
+        ownerId: 'system',
+>>>>>>> agent/developer/development-developer-c78
       });
     });
 
     it('agents can write and read their own entries', async () => {
       const entryA = makeEntry({ content: 'agent-a thought' });
       const entryB = makeEntry({ content: 'agent-b thought' });
+<<<<<<< HEAD
       await agentA.add(entryA);
       await agentB.add(entryB);
 
@@ -203,6 +289,24 @@ describe('TASK-053: Memory System Integration Tests', () => {
       const entryA = makeEntry({ content: 'private to A' });
       await agentA.add(entryA);
       expect(await agentB.get(entryA.id)).toBeUndefined();
+=======
+
+      await agentA.add(entryA);
+      await agentB.add(entryB);
+
+      const fromA = await agentA.get(entryA.id);
+      const fromB = await agentB.get(entryB.id);
+      expect(fromA).toBeDefined();
+      expect(fromB).toBeDefined();
+    });
+
+    it('agents cannot see each other\'s AGENT-scoped entries', async () => {
+      const entryA = makeEntry({ content: 'private to A' });
+      await agentA.add(entryA);
+
+      const fromB = await agentB.get(entryA.id);
+      expect(fromB).toBeUndefined();
+>>>>>>> agent/developer/development-developer-c78
     });
 
     it('agents can see CREW-scoped entries', async () => {
@@ -228,7 +332,13 @@ describe('TASK-053: Memory System Integration Tests', () => {
     it('crew scope cannot see AGENT-scoped entries', async () => {
       const agentEntry = makeEntry({ content: 'agent private' });
       await agentA.add(agentEntry);
+<<<<<<< HEAD
       expect(await crewScope.get(agentEntry.id)).toBeUndefined();
+=======
+
+      const fromCrew = await crewScope.get(agentEntry.id);
+      expect(fromCrew).toBeUndefined();
+>>>>>>> agent/developer/development-developer-c78
     });
 
     it('query across scopes returns correct visibility', async () => {
@@ -250,6 +360,7 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect(crewQuery.entries).toHaveLength(2);
       // Global sees GLOBAL only = 1
       expect(globalQuery.entries).toHaveLength(1);
+<<<<<<< HEAD
 =======
       agentA = new ScopedMemory({ provider, namespace: MemoryNamespace.AGENT, ownerId: 'agent-a' });
       agentB = new ScopedMemory({ provider, namespace: MemoryNamespace.AGENT, ownerId: 'agent-b' });
@@ -301,6 +412,8 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect((await crewScope.query()).entries).toHaveLength(2);
       expect((await globalScope.query()).entries).toHaveLength(1);
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
     });
 
     it('search across scopes returns correct results', async () => {
@@ -308,6 +421,9 @@ describe('TASK-053: Memory System Integration Tests', () => {
       await crewScope.add(makeEntry({ id: 'sc1', content: 'hello from crew' }));
       await globalScope.add(makeEntry({ id: 'sg1', content: 'hello from global' }));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> agent/developer/development-developer-c78
 
       const agentSearch = await agentA.search('hello');
       expect(agentSearch.entries).toHaveLength(3);
@@ -317,11 +433,14 @@ describe('TASK-053: Memory System Integration Tests', () => {
 
       const globalSearch = await globalScope.search('hello');
       expect(globalSearch.entries).toHaveLength(1);
+<<<<<<< HEAD
 =======
       expect((await agentA.search('hello')).entries).toHaveLength(3);
       expect((await crewScope.search('hello')).entries).toHaveLength(2);
       expect((await globalScope.search('hello')).entries).toHaveLength(1);
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
     });
   });
 
@@ -331,6 +450,7 @@ describe('TASK-053: Memory System Integration Tests', () => {
     beforeEach(async () => {
       memory = new ShortTermMemory();
       const now = Date.now();
+<<<<<<< HEAD
 <<<<<<< HEAD
 
       await memory.add(makeEntry({
@@ -351,6 +471,35 @@ describe('TASK-053: Memory System Integration Tests', () => {
       await memory.add(makeEntry({
         id: 'e4', content: 'tool result from file read',
         role: MemoryRole.TOOL, namespace: MemoryNamespace.GLOBAL,
+=======
+
+      await memory.add(makeEntry({
+        id: 'e1',
+        content: 'user question about TypeScript',
+        role: MemoryRole.USER,
+        namespace: MemoryNamespace.AGENT,
+        createdAt: new Date(now - 3000).toISOString(),
+      }));
+      await memory.add(makeEntry({
+        id: 'e2',
+        content: 'assistant response about TypeScript generics',
+        role: MemoryRole.ASSISTANT,
+        namespace: MemoryNamespace.AGENT,
+        createdAt: new Date(now - 2000).toISOString(),
+      }));
+      await memory.add(makeEntry({
+        id: 'e3',
+        content: 'system instruction for task',
+        role: MemoryRole.SYSTEM,
+        namespace: MemoryNamespace.CREW,
+        createdAt: new Date(now - 1000).toISOString(),
+      }));
+      await memory.add(makeEntry({
+        id: 'e4',
+        content: 'tool result from file read',
+        role: MemoryRole.TOOL,
+        namespace: MemoryNamespace.GLOBAL,
+>>>>>>> agent/developer/development-developer-c78
         createdAt: new Date(now).toISOString(),
       }));
     });
@@ -373,6 +522,10 @@ describe('TASK-053: Memory System Integration Tests', () => {
         .search('TypeScript');
 
       expect(result.entries).toHaveLength(2);
+<<<<<<< HEAD
+=======
+      // Ascending: oldest first
+>>>>>>> agent/developer/development-developer-c78
       expect(result.entries[0].id).toBe('e1');
       expect(result.entries[1].id).toBe('e2');
     });
@@ -381,11 +534,16 @@ describe('TASK-053: Memory System Integration Tests', () => {
       const result = await new MemorySearchBuilder(memory)
         .withRoles([MemoryRole.USER, MemoryRole.ASSISTANT])
         .execute();
+<<<<<<< HEAD
+=======
+
+>>>>>>> agent/developer/development-developer-c78
       expect(result.entries).toHaveLength(2);
     });
 
     it('offset + limit for pagination', async () => {
       const page1 = await new MemorySearchBuilder(memory)
+<<<<<<< HEAD
         .limit(2).offset(0).descending().execute();
       const page2 = await new MemorySearchBuilder(memory)
         .limit(2).offset(2).descending().execute();
@@ -430,13 +588,43 @@ describe('TASK-053: Memory System Integration Tests', () => {
 
   describe('Export/Import round-trip', () => {
 <<<<<<< HEAD
+=======
+        .limit(2)
+        .offset(0)
+        .descending()
+        .execute();
+
+      const page2 = await new MemorySearchBuilder(memory)
+        .limit(2)
+        .offset(2)
+        .descending()
+        .execute();
+
+      expect(page1.entries).toHaveLength(2);
+      expect(page2.entries).toHaveLength(2);
+
+      const allIds = [...page1.entries, ...page2.entries].map((e) => e.id);
+      expect(new Set(allIds).size).toBe(4);
+    });
+  });
+
+  describe('Export/Import round-trip with multiple providers', () => {
+>>>>>>> agent/developer/development-developer-c78
     it('exports from one provider and imports into another', async () => {
       const source = new ShortTermMemory();
       const target = new ShortTermMemory();
 
       await source.add(makeEntry({ id: 'x1', content: 'entry one' }));
       await source.add(makeEntry({ id: 'x2', content: 'entry two' }));
+<<<<<<< HEAD
       await source.add(makeEntry({ id: 'x3', content: 'entry three', namespace: MemoryNamespace.CREW }));
+=======
+      await source.add(makeEntry({
+        id: 'x3',
+        content: 'entry three',
+        namespace: MemoryNamespace.CREW,
+      }));
+>>>>>>> agent/developer/development-developer-c78
 
       const exported = await exportMemory(source);
       expect(exported.entries).toHaveLength(3);
@@ -444,7 +632,16 @@ describe('TASK-053: Memory System Integration Tests', () => {
       const result = await importMemory(target, exported);
       expect(result.imported).toBe(3);
       expect(result.skipped).toBe(0);
+<<<<<<< HEAD
       expect(await target.count()).toBe(3);
+=======
+      expect(result.errors).toHaveLength(0);
+
+      expect(await target.count()).toBe(3);
+      const entry = await target.get('x1');
+      expect(entry).toBeDefined();
+      expect(entry!.content).toBe('entry one');
+>>>>>>> agent/developer/development-developer-c78
     });
 
     it('exports with namespace filter', async () => {
@@ -460,7 +657,12 @@ describe('TASK-053: Memory System Integration Tests', () => {
     it('round-trips through JSON serialization', async () => {
       const source = new ShortTermMemory();
       await source.add(makeEntry({
+<<<<<<< HEAD
         id: 'j1', content: 'json round-trip',
+=======
+        id: 'j1',
+        content: 'json round-trip',
+>>>>>>> agent/developer/development-developer-c78
         metadata: { key: 'value', num: 42, flag: true },
       }));
 
@@ -483,6 +685,10 @@ describe('TASK-053: Memory System Integration Tests', () => {
 
       const exportData = await exportMemory(provider);
       const result = await importMemory(provider, exportData);
+<<<<<<< HEAD
+=======
+
+>>>>>>> agent/developer/development-developer-c78
       expect(result.skipped).toBe(1);
       expect(result.imported).toBe(0);
     });
@@ -509,17 +715,28 @@ describe('TASK-053: Memory System Integration Tests', () => {
       const manager = new MemoryManager({ providers: [provider] });
 
       const scopedAgent = new ScopedMemory({
+<<<<<<< HEAD
         provider: manager, namespace: MemoryNamespace.AGENT, ownerId: 'my-agent',
+=======
+        provider: manager,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'my-agent',
+>>>>>>> agent/developer/development-developer-c78
       });
 
       const entry = makeEntry({ content: 'scoped via manager' });
       await scopedAgent.add(entry);
 
+<<<<<<< HEAD
+=======
+      // Entry should be accessible via scoped memory
+>>>>>>> agent/developer/development-developer-c78
       const found = await scopedAgent.get(entry.id);
       expect(found).toBeDefined();
       expect(found!.namespace).toBe(MemoryNamespace.AGENT);
       expect(found!.metadata?.ownerId).toBe('my-agent');
 
+<<<<<<< HEAD
       const raw = await provider.get(entry.id);
       expect(raw).toBeDefined();
 =======
@@ -584,21 +801,34 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect(found!.metadata?.ownerId).toBe('my-agent');
       expect(await provider.get(entry.id)).toBeDefined();
 >>>>>>> agent/developer/development-developer-c8
+=======
+      // Entry should also exist in the underlying provider
+      const raw = await provider.get(entry.id);
+      expect(raw).toBeDefined();
+>>>>>>> agent/developer/development-developer-c78
     });
   });
 
   describe('createMemoryEntry helper', () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> agent/developer/development-developer-c78
     it('creates entry with all fields populated', () => {
       const entry = createMemoryEntry('hello', MemoryRole.USER);
       expect(entry.id).toMatch(/^mem_/);
       expect(entry.content).toBe('hello');
       expect(entry.role).toBe(MemoryRole.USER);
       expect(entry.namespace).toBe(MemoryNamespace.AGENT);
+<<<<<<< HEAD
+=======
+      expect(entry.createdAt).toBeTruthy();
+>>>>>>> agent/developer/development-developer-c78
       expect(Object.isFrozen(entry)).toBe(true);
     });
 
     it('creates entry with custom namespace and metadata', () => {
+<<<<<<< HEAD
       const entry = createMemoryEntry('hello', MemoryRole.SYSTEM, MemoryNamespace.GLOBAL, { source: 'test' });
       expect(entry.namespace).toBe(MemoryNamespace.GLOBAL);
       expect(entry.metadata).toEqual({ source: 'test' });
@@ -615,10 +845,21 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect(e.namespace).toBe(MemoryNamespace.GLOBAL);
       expect(e.metadata).toEqual({ src: 'test' });
 >>>>>>> agent/developer/development-developer-c8
+=======
+      const entry = createMemoryEntry(
+        'hello',
+        MemoryRole.SYSTEM,
+        MemoryNamespace.GLOBAL,
+        { source: 'test' },
+      );
+      expect(entry.namespace).toBe(MemoryNamespace.GLOBAL);
+      expect(entry.metadata).toEqual({ source: 'test' });
+>>>>>>> agent/developer/development-developer-c78
     });
   });
 
   describe('generateMemoryId uniqueness', () => {
+<<<<<<< HEAD
 <<<<<<< HEAD
     it('generates unique IDs under rapid successive calls', () => {
 =======
@@ -626,6 +867,13 @@ describe('TASK-053: Memory System Integration Tests', () => {
 >>>>>>> agent/developer/development-developer-c8
       const ids = new Set<string>();
       for (let i = 0; i < 1000; i++) ids.add(generateMemoryId());
+=======
+    it('generates unique IDs under rapid successive calls', () => {
+      const ids = new Set<string>();
+      for (let i = 0; i < 1000; i++) {
+        ids.add(generateMemoryId());
+      }
+>>>>>>> agent/developer/development-developer-c78
       expect(ids.size).toBe(1000);
     });
   });
@@ -633,25 +881,43 @@ describe('TASK-053: Memory System Integration Tests', () => {
   describe('Retention policy integration', () => {
     it('evicts oldest entries when maxEntries exceeded', async () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
       const memory = new ShortTermMemory({ retention: { maxEntries: 3 } });
+=======
+      const memory = new ShortTermMemory({
+        retention: { maxEntries: 3 },
+      });
+
+>>>>>>> agent/developer/development-developer-c78
       const evicted: MemoryEntry[][] = [];
       memory.on('memory:evict', (entries) => evicted.push(entries));
 
       for (let i = 0; i < 5; i++) {
         await memory.add(makeEntry({
+<<<<<<< HEAD
           id: `r${i}`, content: `entry-${i}`,
+=======
+          id: `r${i}`,
+          content: `entry-${i}`,
+>>>>>>> agent/developer/development-developer-c78
           createdAt: new Date(Date.now() + i * 100).toISOString(),
         }));
       }
 
       expect(await memory.count()).toBe(3);
       expect(evicted.length).toBeGreaterThan(0);
+<<<<<<< HEAD
+=======
+
+      // Oldest entries should have been evicted
+>>>>>>> agent/developer/development-developer-c78
       expect(await memory.get('r0')).toBeUndefined();
       expect(await memory.get('r1')).toBeUndefined();
       expect(await memory.get('r4')).toBeDefined();
     });
 
     it('evicts expired entries based on maxAge', async () => {
+<<<<<<< HEAD
       const memory = new ShortTermMemory({ retention: { maxAge: 100 } });
 
       await memory.add(makeEntry({
@@ -679,10 +945,31 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect(await m.get('old')).toBeUndefined();
       expect(await m.get('new')).toBeDefined();
 >>>>>>> agent/developer/development-developer-c8
+=======
+      const memory = new ShortTermMemory({
+        retention: { maxAge: 100 },
+      });
+
+      await memory.add(makeEntry({
+        id: 'old',
+        content: 'old entry',
+        createdAt: new Date(Date.now() - 200).toISOString(),
+      }));
+
+      // Adding a new entry should trigger expiration check
+      await memory.add(makeEntry({
+        id: 'new',
+        content: 'new entry',
+      }));
+
+      expect(await memory.get('old')).toBeUndefined();
+      expect(await memory.get('new')).toBeDefined();
+>>>>>>> agent/developer/development-developer-c78
     });
   });
 
   describe('ScopedMemory pagination across namespaces', () => {
+<<<<<<< HEAD
 <<<<<<< HEAD
     it('paginates merged results from multiple namespaces', async () => {
       const provider = new ShortTermMemory();
@@ -704,13 +991,52 @@ describe('TASK-053: Memory System Integration Tests', () => {
       for (let i = 0; i < 3; i++) {
         await crewScope.add(makeEntry({
           id: `c${i}`, content: `crew-${i}`,
+=======
+    it('paginates merged results from multiple namespaces', async () => {
+      const provider = new ShortTermMemory();
+      const scope = new ScopedMemory({
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'test-agent',
+      });
+
+      const now = Date.now();
+      // Add entries to different namespaces
+      for (let i = 0; i < 5; i++) {
+        await scope.add(makeEntry({
+          id: `a${i}`,
+          content: `agent-${i}`,
+          namespace: MemoryNamespace.AGENT,
+          createdAt: new Date(now + i * 100).toISOString(),
+        }));
+      }
+      // Add crew entries directly to provider
+      const crewScope = new ScopedMemory({
+        provider,
+        namespace: MemoryNamespace.CREW,
+        ownerId: 'crew-1',
+      });
+      for (let i = 0; i < 3; i++) {
+        await crewScope.add(makeEntry({
+          id: `c${i}`,
+          content: `crew-${i}`,
+          namespace: MemoryNamespace.CREW,
+>>>>>>> agent/developer/development-developer-c78
           createdAt: new Date(now + (i + 5) * 100).toISOString(),
         }));
       }
 
+<<<<<<< HEAD
       const all = await scope.query();
       expect(all.total).toBe(8);
 
+=======
+      // Agent scope should see all 8 entries (5 agent + 3 crew)
+      const all = await scope.query();
+      expect(all.total).toBe(8);
+
+      // Paginate
+>>>>>>> agent/developer/development-developer-c78
       const page1 = await scope.query({ limit: 3, offset: 0 });
       const page2 = await scope.query({ limit: 3, offset: 3 });
       const page3 = await scope.query({ limit: 3, offset: 6 });
@@ -719,11 +1045,21 @@ describe('TASK-053: Memory System Integration Tests', () => {
       expect(page2.entries).toHaveLength(3);
       expect(page3.entries).toHaveLength(2);
 
+<<<<<<< HEAD
       const allIds = [...page1.entries, ...page2.entries, ...page3.entries].map((e) => e.id);
+=======
+      // All entries should be unique across pages
+      const allIds = [
+        ...page1.entries,
+        ...page2.entries,
+        ...page3.entries,
+      ].map((e) => e.id);
+>>>>>>> agent/developer/development-developer-c78
       expect(new Set(allIds).size).toBe(8);
     });
   });
 });
+<<<<<<< HEAD
 =======
     it('paginates merged results', async () => {
       const provider = new ShortTermMemory();
@@ -747,3 +1083,5 @@ describe('TASK-053: Memory System Integration Tests', () => {
   });
 });
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78

@@ -1,5 +1,6 @@
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Crewspace — Research Crew Example (Web + File Tools)
  *
  * This example demonstrates how to build a multi-agent research crew that
@@ -17,6 +18,8 @@
  *   - Passing results between agents via dependency context
  *   - Subscribing to crew lifecycle events for progress tracking
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
  * Crewspace — Data Analysis Pipeline Example
  *
  * This example demonstrates how to build a multi-agent data analysis pipeline
@@ -34,22 +37,30 @@
  *   - Passing structured data between tasks via dependency context
  *   - Subscribing to crew lifecycle events for pipeline progress tracking
  *   - Realistic data processing workflow with validation and statistics
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
  *
  * Prerequisites:
  *   npm install @crewspace/core
  *
  * Usage:
 <<<<<<< HEAD
+<<<<<<< HEAD
  *   npx tsx examples/research-crew.ts
 =======
  *   npx tsx examples/data-analysis-pipeline.ts
 >>>>>>> agent/developer/development-developer-c8
+=======
+ *   npx tsx examples/data-analysis-pipeline.ts
+>>>>>>> agent/developer/development-developer-c78
  *
  * Note: This example uses a mock LLM provider for demonstration purposes.
  * Replace it with a real provider (OpenAI, Anthropic, Ollama) for production use.
  */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { Agent, Crew, createWebTools, createFileTools } from '@crewspace/core';
 import type { LLMProvider, LLMMessage, LLMResponse } from '@crewspace/core';
@@ -96,6 +107,8 @@ function createResearchMockProvider(): LLMProvider {
   return {
     name: 'research-mock',
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
 import {
   Agent,
   Crew,
@@ -305,30 +318,40 @@ const mockResponses: Record<string, string> = {
 function createAnalysisMockProvider(): LLMProvider {
   return {
     name: 'analysis-mock',
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
     async generateText(messages: readonly LLMMessage[]): Promise<LLMResponse> {
       const lastUserMessage = [...messages].reverse().find((m) => m.role === 'user');
       const content = lastUserMessage?.content?.toLowerCase() ?? '';
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       let response = mockResponses['search'];
       if (content.includes('analy') || content.includes('parse') || content.includes('fetch')) {
         response = mockResponses['analyze'];
       } else if (content.includes('report') || content.includes('write')) {
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
       let response = mockResponses['collect'];
       if (content.includes('clean') || content.includes('validat') || content.includes('enrich')) {
         response = mockResponses['clean'];
       } else if (content.includes('statistic') || content.includes('analyz') || content.includes('comput')) {
         response = mockResponses['analyze'];
       } else if (content.includes('report') || content.includes('summar') || content.includes('finding')) {
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
         response = mockResponses['report'];
       }
 
       return {
         content: response,
         tokenUsage: {
+<<<<<<< HEAD
 <<<<<<< HEAD
           promptTokens: messages.length * 50,
           completionTokens: 150,
@@ -338,6 +361,11 @@ function createAnalysisMockProvider(): LLMProvider {
           completionTokens: 180,
           totalTokens: messages.length * 60 + 180,
 >>>>>>> agent/developer/development-developer-c8
+=======
+          promptTokens: messages.length * 60,
+          completionTokens: 180,
+          totalTokens: messages.length * 60 + 180,
+>>>>>>> agent/developer/development-developer-c78
         },
         finishReason: 'stop',
       };
@@ -345,6 +373,7 @@ function createAnalysisMockProvider(): LLMProvider {
   };
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 // -- Create tools ------------------------------------------------------------
 
@@ -410,6 +439,8 @@ const researchCrew = new Crew({
       agentId: 'researcher',
       expectedOutput: 'A list of AI trends with brief descriptions and source URLs',
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
 // -- Create specialized agents -----------------------------------------------
 
 // 1. Data Collector — reads raw data from the source
@@ -488,11 +519,15 @@ const analysisCrew = new Crew({
       agentId: 'cleaner',
       dependencies: ['collect'],
       expectedOutput: 'Cleaning summary with issues found, validations passed, and columns added',
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
     },
     {
       id: 'analyze',
       description:
+<<<<<<< HEAD
 <<<<<<< HEAD
         'Analyze and parse the content from the discovered sources. ' +
         'Extract key findings, trends, and supporting data.',
@@ -510,6 +545,8 @@ const analysisCrew = new Crew({
       dependencies: ['analyze'],
       expectedOutput: 'A markdown report file saved to the output directory',
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
         'Compute statistical analysis on the cleaned dataset using the computeStats tool. ' +
         'Calculate totals, averages, per-region and per-product breakdowns. ' +
         'Identify the top-performing region and product, and detect sales trends.',
@@ -526,11 +563,15 @@ const analysisCrew = new Crew({
       agentId: 'reporter',
       dependencies: ['analyze'],
       expectedOutput: 'A formatted business report with findings and recommendations',
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
     },
   ],
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 // -- Subscribe to lifecycle events for progress tracking ---------------------
 
@@ -546,6 +587,8 @@ researchCrew.on('crew:task:start', (_crewId, taskId, agentId) => {
 
 researchCrew.on('crew:task:complete', (_crewId, taskId, result) => {
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
 // -- Subscribe to lifecycle events for pipeline progress tracking ------------
 
 console.log('=== Crewspace Data Analysis Pipeline ===\n');
@@ -565,13 +608,17 @@ analysisCrew.on('crew:task:start', (_crewId, taskId, agentId) => {
 });
 
 analysisCrew.on('crew:task:complete', (_crewId, taskId, result) => {
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
   const preview = result.output.split('\n')[0].slice(0, 80);
   console.log(`✓ Task "${taskId}" completed (${String(result.duration)}ms)`);
   console.log(`  Preview: ${preview}...`);
   console.log();
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 researchCrew.on('crew:task:error', (_crewId, taskId, error) => {
   console.error(`✗ Task "${taskId}" failed: ${String(error)}`);
@@ -589,6 +636,8 @@ const result = await researchCrew.run();
 
 console.log('\n=== Research Results ===\n');
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
 analysisCrew.on('crew:task:error', (_crewId, taskId, error) => {
   console.error(`✗ Task "${taskId}" failed: ${String(error)}`);
 });
@@ -604,7 +653,10 @@ const result = await analysisCrew.run();
 // -- Display results ---------------------------------------------------------
 
 console.log('\n=== Pipeline Results ===\n');
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
 console.log(`Success: ${String(result.success)}`);
 console.log(`Total duration: ${String(result.duration)}ms`);
 console.log(`Tasks completed: ${String(result.taskResults.size)}`);
@@ -622,17 +674,23 @@ for (const [taskId, taskResult] of result.taskResults) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // -- Show agent tool registrations -------------------------------------------
 
 console.log('\n=== Agent Tool Summary ===');
 for (const agent of [researcher, analyst, writer]) {
   const toolNames = Array.from(agent.tools.keys()).join(', ');
 =======
+=======
+>>>>>>> agent/developer/development-developer-c78
 // -- Show agent tool summary -------------------------------------------------
 
 console.log('\n=== Agent Tool Summary ===');
 for (const agent of [collector, cleaner, analyst, reporter]) {
   const toolNames = Array.from(agent.tools.keys()).join(', ') || '(no tools)';
+<<<<<<< HEAD
 >>>>>>> agent/developer/development-developer-c8
+=======
+>>>>>>> agent/developer/development-developer-c78
   console.log(`${agent.id}: [${toolNames}]`);
 }

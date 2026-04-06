@@ -195,7 +195,11 @@ export class ScopedMemory implements MemoryProvider {
       throw new MemoryOperationError(
         this.name,
         'delete',
+<<<<<<< HEAD
         `Cannot delete entry "${id}" -- not owned by this scope`,
+=======
+        `Cannot delete entry "${id}" — not owned by this scope`,
+>>>>>>> agent/developer/development-developer-c78
       );
     }
     return this._provider.delete(id);
@@ -214,7 +218,11 @@ export class ScopedMemory implements MemoryProvider {
       throw new MemoryOperationError(
         this.name,
         'clear',
+<<<<<<< HEAD
         `Cannot clear namespace "${target}" -- this scope only owns "${this._namespace}"`,
+=======
+        `Cannot clear namespace "${target}" — this scope only owns "${this._namespace}"`,
+>>>>>>> agent/developer/development-developer-c78
       );
     }
     return this._provider.clear(target);
@@ -267,6 +275,10 @@ export class ScopedMemory implements MemoryProvider {
     return { entries: visible, total: visible.length };
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> agent/developer/development-developer-c78
   /** Query across all readable namespaces and merge results. */
   private async _queryAcrossNamespaces(
     options?: MemoryQueryOptions,
@@ -336,4 +348,8 @@ export class ScopedMemory implements MemoryProvider {
 
     return { entries: paginated, total: allEntries.length };
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> agent/developer/development-developer-c78
