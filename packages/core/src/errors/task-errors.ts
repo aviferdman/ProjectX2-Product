@@ -72,7 +72,10 @@ export class CircularDependencyError extends TaskConfigError {
     for (const cycle of cycles) {
       // Skip the last element (it's the duplicate that closes the loop)
       for (let i = 0; i < cycle.path.length - 1; i++) {
-        idSet.add(cycle.path[i]);
+        const id = cycle.path[i];
+        if (id !== undefined) {
+          idSet.add(id);
+        }
       }
     }
     this.involvedTaskIds = [...idSet].sort();

@@ -324,7 +324,10 @@ function findCyclesWithDFS(taskMap: Map<string, Task>): CircularDependencyCheckR
   const involvedIds = new Set<string>();
   for (const cycle of cycles) {
     for (let i = 0; i < cycle.path.length - 1; i++) {
-      involvedIds.add(cycle.path[i]);
+      const id = cycle.path[i];
+      if (id !== undefined) {
+        involvedIds.add(id);
+      }
     }
   }
 
@@ -343,14 +346,14 @@ function dfsVisit(
   startId: string,
   taskMap: Map<string, Task>,
   color: Map<string, DFSColor>,
-  parent: Map<string, string | null>,
+  _parent: Map<string, string | null>,
   cycles: DependencyCycle[],
   seenCycleKeys: Set<string>,
 ): void {
   // Stack items: [taskId, index into its sorted dependencies]
-  const stack: Array<[string, number]> = [[startId, 0]];
+  const stack: Array<{ id: string; depIndex: number }> = [{ id: startId, depIndex: 0 }];
   color.set(startId, DFSColor.GRAY);
-  parent.set(startId, null);
+  _parent.set(startId, null);
 
   // Track the current DFS path for cycle extraction
   const pathSet = new Set<string>([startId]);
@@ -358,14 +361,19 @@ function dfsVisit(
 
   while (stack.length > 0) {
     const top = stack[stack.length - 1];
-    const taskId = top[0];
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const task = taskMap.get(taskId)!;
+    if (top === undefined) break;
+
+    const taskId = top.id;
+    const task = taskMap.get(taskId);
+    if (task === undefined) break;
+
     const deps = [...task.dependencies].sort();
 
-    if (top[1] < deps.length) {
-      const depId = deps[top[1]];
-      top[1]++;
+    if (top.depIndex < deps.length) {
+      const depId = deps[top.depIndex];
+      top.depIndex++;
+
+      if (depId === undefined) continue;
 
       const depColor = color.get(depId);
       if (depColor === DFSColor.GRAY && pathSet.has(depId)) {
@@ -373,8 +381,8 @@ function dfsVisit(
         extractCycle(depId, pathStack, cycles, seenCycleKeys);
       } else if (depColor === DFSColor.WHITE) {
         color.set(depId, DFSColor.GRAY);
-        parent.set(depId, taskId);
-        stack.push([depId, 0]);
+        _parent.set(depId, taskId);
+        stack.push({ id: depId, depIndex: 0 });
         pathStack.push(depId);
         pathSet.add(depId);
       }
@@ -409,10 +417,19 @@ function extractCycle(
   // Normalise cycle to a canonical form for deduplication:
   // rotate so the lexicographically smallest ID comes first
   const inner = cyclePath.slice(0, -1);
-  const minIdx = inner.indexOf(
-    inner.reduce((min, id) => (id < min ? id : min), inner[0]),
-  );
-  const rotated = [...inner.slice(minIdx), ...inner.slice(0, minIdx), inner[minIdx]];
+  let minIdx = 0;
+  for (let i = 1; i < inner.length; i++) {
+    const current = inner[i];
+    const smallest = inner[minIdx];
+    if (current !== undefined && smallest !== undefined && current < smallest) {
+      minIdx = i;
+    }
+  }
+  const rotated = [...inner.slice(minIdx), ...inner.slice(0, minIdx)];
+  const first = rotated[0];
+  if (first !== undefined) {
+    rotated.push(first);
+  }
   const key = rotated.join('→');
 
   if (!seenCycleKeys.has(key)) {
