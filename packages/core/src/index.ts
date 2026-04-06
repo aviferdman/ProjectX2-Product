@@ -33,7 +33,15 @@ export {
   BaseLLMProvider,
   DefaultLLMStreamResponse,
   isStreamingProvider,
+  LLMMessageSchema,
+  LLMMessagesSchema,
+  LLMModelInfoSchema,
+  LLMProviderConfigSchema,
   LLMProviderRegistry,
+  LLMRequestOptionsSchema,
+  ModelCatalog,
+  validateLLMMessages,
+  validateLLMProviderConfig,
 } from "./llm/index.js";
 
 // Types
