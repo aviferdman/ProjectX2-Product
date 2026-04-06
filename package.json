@@ -22,6 +22,7 @@
     "format:check": "prettier --check \"**/*.{ts,json}\"",
     "clean": "npm run clean --workspaces",
     "typecheck": "npm run typecheck --workspaces",
+    "version:check": "tsx scripts/check-versions.ts",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"

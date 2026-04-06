@@ -6,24 +6,9 @@
  */
 
 import { writeFileSync } from 'node:fs';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-export default function setup(): void {
-  const dir = dirname(fileURLToPath(import.meta.url));
-  const resultsPath = resolve(dir, '..', 'benchmark-results-detailed.jsonl');
-=======
-=======
->>>>>>> agent/developer/development-developer-c1
 import { resolve } from 'node:path';
 
 export default function setup(): void {
   const resultsPath = resolve(process.cwd(), 'benchmark-results-detailed.jsonl');
-<<<<<<< HEAD
->>>>>>> agent/developer/development-developer-c71
-=======
->>>>>>> agent/developer/development-developer-c1
   writeFileSync(resultsPath, '', 'utf-8');
 }

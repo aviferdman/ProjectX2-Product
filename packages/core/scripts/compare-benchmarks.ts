@@ -84,15 +84,7 @@ export function loadCurrentResults(filePath: string): CurrentResult[] {
 }
 
 // ---------------------------------------------------------------------------
-<<<<<<< HEAD
-<<<<<<< HEAD
 // Core comparison logic (pure - no I/O)
-=======
-// Core comparison logic (pure — no I/O)
->>>>>>> agent/developer/development-developer-c71
-=======
-// Core comparison logic (pure - no I/O)
->>>>>>> agent/developer/development-developer-c1
 // ---------------------------------------------------------------------------
 
 export function compareResults(

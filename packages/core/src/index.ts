@@ -302,6 +302,31 @@ export type {
   TimerStopInput,
 } from './logging/index.js';
 
+// Version
+export {
+  parseSemVer,
+  compareSemVer,
+  isValidSemVer,
+  formatSemVer,
+  bumpVersion,
+  parseChangelog,
+  formatChangelog,
+  findVersion,
+  getLatestVersion,
+  validateChangelog,
+  validateVersionConsistency,
+} from './version/index.js';
+export type {
+  SemVer,
+  BumpType,
+  ChangelogEntry,
+  ChangelogData,
+  ChangeCategory,
+  ChangelogValidationResult,
+  VersionConsistencyResult,
+  PackageVersionInfo,
+} from './version/index.js';
+
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
