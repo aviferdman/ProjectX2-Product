@@ -29,8 +29,8 @@
     "test:integration": "vitest run tests/integration",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "bench": "vitest run --config vitest.bench.config.ts",
-    "bench:ci": "vitest run --config vitest.bench.config.ts --reporter=json --outputFile=benchmark-results.json",
+    "bench": "node --input-type=commonjs -e \"require('fs').writeFileSync('benchmark-results-detailed.jsonl','')\" && vitest run --config vitest.bench.config.ts",
+    "bench:ci": "node --input-type=commonjs -e \"require('fs').writeFileSync('benchmark-results-detailed.jsonl','')\" && vitest run --config vitest.bench.config.ts --reporter=json --outputFile=benchmark-results.json",
     "bench:compare": "tsx scripts/compare-benchmarks.ts",
     "bench:report": "tsx scripts/generate-perf-report.ts",
     "bench:update-baseline": "tsx scripts/update-baseline.ts",
@@ -42,14 +42,19 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.15.3",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0"
   },
   "peerDependencies": {
+    "better-sqlite3": "^12.8.0",
     "typescript": ">=5.0.0"
   },
   "peerDependenciesMeta": {
+    "better-sqlite3": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }

@@ -295,8 +295,8 @@ export {
 } from './errors/index.js';
 
 // Memory
-export { createMemoryEntry, generateMemoryId, MemoryManager, ShortTermMemory } from './memory/index.js';
-export type { MemoryManagerConfig } from './memory/index.js';
+export { createMemoryEntry, generateMemoryId, MemoryManager, ShortTermMemory, SqliteMemory } from './memory/index.js';
+export type { MemoryManagerConfig, SqliteMemoryConfig } from './memory/index.js';
 
 // Types — Memory (re-export from types for convenience)
 export { MemoryNamespace, MemoryRole } from './types/index.js';

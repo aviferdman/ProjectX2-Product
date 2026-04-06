@@ -10,7 +10,6 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['benchmarks/**/*.bench.ts'],
-    globalSetup: ['./benchmarks/global-setup.ts'],
     testTimeout: 120_000,
     hookTimeout: 30_000,
     typecheck: {
