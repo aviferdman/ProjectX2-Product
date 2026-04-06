@@ -30,9 +30,12 @@
  * @packageDocumentation
  */
 
+import type { ZodType } from 'zod';
+
 import { ToolConfigError } from '../errors/tool-errors.js';
 import type { Tool, ToolCategory, ToolParameterSchema, ToolPermission } from '../types/tool.js';
-import { validateToolConfig } from './validation.js';
+import { zodToToolSchema } from './define-tool.js';
+import { parseToolInput, validateToolConfig } from './validation.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -54,6 +57,15 @@ export interface ToolDecoratorOptions {
   readonly permissions?: readonly ToolPermission[];
   /** JSON Schema for input. */
   readonly inputSchema?: ToolParameterSchema;
+  /**
+   * Optional Zod schema for runtime input validation.
+   *
+   * When provided, the collected tool's `execute` is wrapped to validate
+   * input via `parseToolInput` before calling the decorated method.
+   * The Zod schema is also auto-converted to a JSON Schema (`inputSchema`)
+   * if `inputSchema` is not explicitly provided.
+   */
+  readonly schema?: ZodType;
   /** JSON Schema for output. */
   readonly outputSchema?: ToolParameterSchema;
   /** Max execution time in ms. */
@@ -64,6 +76,7 @@ export interface ToolDecoratorOptions {
 interface StoredToolMeta extends ToolDecoratorOptions {
   readonly resolvedName: string;
   readonly methodName: string;
+  readonly zodSchema?: ZodType;
 }
 
 // ---------------------------------------------------------------------------
@@ -145,6 +158,7 @@ export function tool(options: ToolDecoratorOptions) {
       ...options,
       resolvedName,
       methodName,
+      zodSchema: options.schema,
     });
 
     return descriptor;
@@ -196,13 +210,18 @@ export function collectTools(instance: object): Tool[] {
     }
 
     const boundExecute = method.bind(instance) as (input: unknown) => Promise<unknown>;
+    const zodSchema = meta.zodSchema;
+
+    // Derive inputSchema from Zod schema when not explicitly provided
+    const inputSchema =
+      meta.inputSchema ?? (zodSchema ? zodToToolSchema(zodSchema) : undefined);
 
     const config = {
       name: meta.resolvedName,
       description: meta.description,
       ...(meta.category !== undefined && { category: meta.category }),
       ...(meta.permissions !== undefined && { permissions: meta.permissions }),
-      ...(meta.inputSchema !== undefined && { inputSchema: meta.inputSchema }),
+      ...(inputSchema !== undefined && { inputSchema }),
       ...(meta.outputSchema !== undefined && { outputSchema: meta.outputSchema }),
       ...(meta.timeout !== undefined && { timeout: meta.timeout }),
     };
@@ -216,7 +235,14 @@ export function collectTools(instance: object): Tool[] {
 
     const toolInstance: Tool = {
       ...config,
-      execute: boundExecute,
+      ...(zodSchema !== undefined && { inputZodSchema: zodSchema }),
+      async execute(input: unknown): Promise<unknown> {
+        if (zodSchema) {
+          const parsed = parseToolInput(meta.resolvedName, zodSchema, input);
+          return boundExecute(parsed);
+        }
+        return boundExecute(input);
+      },
     };
 
     tools.push(Object.freeze(toolInstance));
