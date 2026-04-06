@@ -15,6 +15,19 @@ export { Crew } from './crew/index.js';
 // Task
 export { Task } from './task/index.js';
 
+// Execution Engine
+export { ExecutionEngine } from './engine/index.js';
+export { EngineStatus, ExecutionStrategy } from './engine/index.js';
+export type {
+  AfterTaskHook,
+  BeforeTaskHook,
+  EngineEventMap,
+  EngineRunResult,
+  ExecutionEngineConfig,
+  OnTaskErrorHook,
+  TaskErrorPolicy,
+} from './engine/index.js';
+
 // Types
 export { AgentStatus, CrewStatus, LLMRole, TaskPriority, TaskStatus } from './types/index.js';
 export type {
@@ -39,4 +52,5 @@ export type {
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
+export { EngineConfigError, EngineExecutionError } from './errors/index.js';
 export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './errors/index.js';
