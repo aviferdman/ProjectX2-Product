@@ -83,7 +83,11 @@ export function loadCurrentResults(filePath: string): CurrentResult[] {
 }
 
 // ---------------------------------------------------------------------------
+<<<<<<< HEAD
 // Core comparison logic (pure - no I/O)
+=======
+// Core comparison logic (pure — no I/O)
+>>>>>>> agent/developer/development-developer-c69
 // ---------------------------------------------------------------------------
 
 export function compareResults(
@@ -178,6 +182,7 @@ export function formatComparisonTable(report: ComparisonReport): string {
   for (const entry of report.entries) {
     const icon =
       entry.status === 'pass'
+<<<<<<< HEAD
         ? '\u2705'
         : entry.status === 'improvement'
           ? '\ud83d\ude80'
@@ -189,6 +194,19 @@ export function formatComparisonTable(report: ComparisonReport): string {
 
     const baseline =
       entry.baselineP95 !== null ? `${entry.baselineP95.toFixed(3)}ms` : '\u2014';
+=======
+        ? '✅'
+        : entry.status === 'improvement'
+          ? '🚀'
+          : entry.status === 'warning'
+            ? '⚠️'
+            : entry.status === 'regression'
+              ? '❌'
+              : '🆕';
+
+    const baseline =
+      entry.baselineP95 !== null ? `${entry.baselineP95.toFixed(3)}ms` : '—';
+>>>>>>> agent/developer/development-developer-c69
     const current = `${entry.currentP95.toFixed(3)}ms`;
     const change =
       entry.changePercent !== null
@@ -204,17 +222,28 @@ export function formatComparisonTable(report: ComparisonReport): string {
   lines.push('');
   if (report.hasRegression) {
     lines.push(
+<<<<<<< HEAD
       '> \u274c **Regressions detected.** Performance degraded beyond the 15% threshold.',
+=======
+      '> ❌ **Regressions detected.** Performance degraded beyond the 15% threshold.',
+>>>>>>> agent/developer/development-developer-c69
     );
     lines.push(
       '> Fix regressions before merging, or update the baseline with team approval.',
     );
   } else if (report.hasWarning) {
     lines.push(
+<<<<<<< HEAD
       '> \u26a0\ufe0f **Warnings detected.** Performance degraded 5\u201315%. Please justify in PR description.',
     );
   } else {
     lines.push('> \u2705 **All benchmarks within acceptable range.**');
+=======
+      '> ⚠️ **Warnings detected.** Performance degraded 5–15%. Please justify in PR description.',
+    );
+  } else {
+    lines.push('> ✅ **All benchmarks within acceptable range.**');
+>>>>>>> agent/developer/development-developer-c69
   }
 
   return lines.join('\n');
@@ -293,4 +322,8 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
 const __filename = fileURLToPath(import.meta.url);
 if (process.argv[1] === __filename || process.argv[1]?.endsWith('compare-benchmarks.ts')) {
   process.exit(main());
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> agent/developer/development-developer-c69

@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "timestamp": "2026-04-06T15:55:00.000Z",
+  "entries": {
+    "Agent init (minimal config)": {
+      "p95Ms": 0.100,
+      "avgMs": 0.050,
+      "budget": 100
+    },
+    "Agent init (with backstory)": {
+      "p95Ms": 0.100,
+      "avgMs": 0.050,
+      "budget": 100
+    },
+    "Agent init (5 tools)": {
+      "p95Ms": 0.250,
+      "avgMs": 0.100,
+      "budget": 100
+    },
+    "Agent init (with LLM provider)": {
+      "p95Ms": 0.100,
+      "avgMs": 0.050,
+      "budget": 100
+    },
+    "Agent init (full config, 10 tools)": {
+      "p95Ms": 0.300,
+      "avgMs": 0.150,
+      "budget": 100
+    },
+    "Agent.buildSystemPrompt (10 tools)": {
+      "p95Ms": 0.025,
+      "avgMs": 0.010,
+      "budget": 100
+    },
+    "Memory add (empty store)": {
+      "p95Ms": 0.075,
+      "avgMs": 0.030,
+      "budget": 50
+    },
+    "Memory add (100 existing entries)": {
+      "p95Ms": 0.075,
+      "avgMs": 0.030,
+      "budget": 50
+    },
+    "Memory get (500 entries, lookup by ID)": {
+      "p95Ms": 0.010,
+      "avgMs": 0.005,
+      "budget": 50
+    },
+    "Memory get (miss, 500 entries)": {
+      "p95Ms": 0.010,
+      "avgMs": 0.005,
+      "budget": 50
+    },
+    "Memory query (500 entries, no filters)": {
+      "p95Ms": 5.000,
+      "avgMs": 2.500,
+      "budget": 50
+    },
+    "Memory query (500 entries, namespace filter)": {
+      "p95Ms": 5.000,
+      "avgMs": 2.500,
+      "budget": 50
+    },
+    "Memory query (500 entries, metadata filter)": {
+      "p95Ms": 5.000,
+      "avgMs": 2.500,
+      "budget": 50
+    },
+    "Memory search (500 entries, text match)": {
+      "p95Ms": 3.000,
+      "avgMs": 1.500,
+      "budget": 50
+    },
+    "Memory search (500 entries, no matches)": {
+      "p95Ms": 3.000,
+      "avgMs": 1.500,
+      "budget": 50
+    },
+    "Memory count (500 entries)": {
+      "p95Ms": 0.010,
+      "avgMs": 0.003,
+      "budget": 50
+    },
+    "Memory delete (from 2000 entries)": {
+      "p95Ms": 0.010,
+      "avgMs": 0.005,
+      "budget": 50
+    },
+    "Task init (minimal config)": {
+      "p95Ms": 0.100,
+      "avgMs": 0.050,
+      "budget": 100
+    },
+    "Task init (full config)": {
+      "p95Ms": 0.200,
+      "avgMs": 0.100,
+      "budget": 100
+    },
+    "Task state transitions (full lifecycle)": {
+      "p95Ms": 0.100,
+      "avgMs": 0.050,
+      "budget": 100
+    },
+    "Task.toTaskInput()": {
+      "p95Ms": 0.010,
+      "avgMs": 0.005,
+      "budget": 100
+    },
+    "Engine init (minimal config)": {
+      "p95Ms": 0.050,
+      "avgMs": 0.025,
+      "budget": 100
+    },
+    "Engine run (5 sequential tasks)": {
+      "p95Ms": 1.000,
+      "avgMs": 0.500,
+      "budget": 5000
+    },
+    "Engine run (10 sequential tasks)": {
+      "p95Ms": 1.500,
+      "avgMs": 0.750,
+      "budget": 5000
+    },
+    "Engine run (5 parallel tasks)": {
+      "p95Ms": 1.000,
+      "avgMs": 0.500,
+      "budget": 5000
+    },
+    "Engine run (5 tasks, dependency chain)": {
+      "p95Ms": 2.000,
+      "avgMs": 0.750,
+      "budget": 5000
+    },
+    "Engine run (5 tasks, before/after hooks)": {
+      "p95Ms": 1.500,
+      "avgMs": 0.500,
+      "budget": 5000
+    },
+    "Tool execute (simple, no validation)": {
+      "p95Ms": 0.025,
+      "avgMs": 0.010,
+      "budget": 50
+    },
+    "Tool execute (with Zod validation)": {
+      "p95Ms": 0.125,
+      "avgMs": 0.050,
+      "budget": 50
+    },
+    "Tool execute (complex schema validation)": {
+      "p95Ms": 0.200,
+      "avgMs": 0.075,
+      "budget": 50
+    },
+    "Tool execute (with registry, 21 tools)": {
+      "p95Ms": 0.020,
+      "avgMs": 0.010,
+      "budget": 50
+    },
+    "ToolExecutor construction": {
+      "p95Ms": 0.010,
+      "avgMs": 0.005,
+      "budget": 50
+    },
+    "ToolRegistry.register (to 1000 tools)": {
+      "p95Ms": 0.350,
+      "avgMs": 0.150,
+      "budget": 50
+    },
+    "ToolRegistry.get (100 tools)": {
+      "p95Ms": 0.005,
+      "avgMs": 0.002,
+      "budget": 50
+    }
+  }
+}
