@@ -4,8 +4,8 @@ import { Agent } from '../../src/agent/agent.js';
 import { Crew } from '../../src/crew/crew.js';
 import { CrewConfigError, CrewExecutionError } from '../../src/errors/crew-errors.js';
 import { CrewStatus } from '../../src/types/crew.js';
-import type { CrewRunResult, CrewTask } from '../../src/types/crew.js';
-import type { LLMProvider, LLMResponse, LLMMessage, TaskResult } from '../../src/types/index.js';
+import type { CrewRunResult } from '../../src/types/crew.js';
+import type { LLMProvider, LLMResponse, LLMMessage } from '../../src/types/index.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -69,7 +69,12 @@ describe('Crew', () => {
         agents: [agent1, agent2],
         tasks: [
           { id: 'task-1', description: 'First task', agentId: 'agent-1' },
-          { id: 'task-2', description: 'Second task', agentId: 'agent-2', dependencies: ['task-1'] },
+          {
+            id: 'task-2',
+            description: 'Second task',
+            agentId: 'agent-2',
+            dependencies: ['task-1'],
+          },
         ],
         verbose: true,
       });
@@ -83,28 +88,41 @@ describe('Crew', () => {
     it('should reject empty id', () => {
       const agent = createAgent('a');
       expect(
-        () => new Crew({ id: '', agents: [agent], tasks: [{ id: 't', description: 'x', agentId: 'a' }] }),
+        () =>
+          new Crew({
+            id: '',
+            agents: [agent],
+            tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+          }),
       ).toThrow(CrewConfigError);
     });
 
     it('should reject invalid id characters', () => {
       const agent = createAgent('a');
       expect(
-        () => new Crew({ id: 'bad crew!', agents: [agent], tasks: [{ id: 't', description: 'x', agentId: 'a' }] }),
+        () =>
+          new Crew({
+            id: 'bad crew!',
+            agents: [agent],
+            tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+          }),
       ).toThrow(CrewConfigError);
     });
 
     it('should reject empty agents array', () => {
       expect(
-        () => new Crew({ id: 'crew', agents: [], tasks: [{ id: 't', description: 'x', agentId: 'a' }] }),
+        () =>
+          new Crew({
+            id: 'crew',
+            agents: [],
+            tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+          }),
       ).toThrow(CrewConfigError);
     });
 
     it('should reject empty tasks array', () => {
       const agent = createAgent('a');
-      expect(
-        () => new Crew({ id: 'crew', agents: [agent], tasks: [] }),
-      ).toThrow(CrewConfigError);
+      expect(() => new Crew({ id: 'crew', agents: [agent], tasks: [] })).toThrow(CrewConfigError);
     });
 
     it('should reject duplicate agent ids', () => {
@@ -335,17 +353,29 @@ describe('Crew', () => {
       const executionOrder: string[] = [];
       const trackingProvider1: LLMProvider = {
         name: 'tracker-1',
-        generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(async () => {
-          executionOrder.push('task-1');
-          return { content: 'First', tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 }, finishReason: 'stop' };
-        }),
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async () => {
+            executionOrder.push('task-1');
+            return {
+              content: 'First',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
       };
       const trackingProvider2: LLMProvider = {
         name: 'tracker-2',
-        generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(async () => {
-          executionOrder.push('task-2');
-          return { content: 'Second', tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 }, finishReason: 'stop' };
-        }),
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async () => {
+            executionOrder.push('task-2');
+            return {
+              content: 'Second',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
       };
 
       const a1 = new Agent({ id: 'a1', role: 'R', goal: 'G', llmProvider: trackingProvider1 });
@@ -370,14 +400,25 @@ describe('Crew', () => {
       let capturedMessages: readonly LLMMessage[] = [];
       const secondProvider: LLMProvider = {
         name: 'capture',
-        generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(async (messages) => {
-          capturedMessages = messages;
-          return { content: 'Final', tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 }, finishReason: 'stop' };
-        }),
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async (messages) => {
+            capturedMessages = messages;
+            return {
+              content: 'Final',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
       };
 
       const a1 = createAgent('a1', 'Research results here');
-      const a2 = new Agent({ id: 'a2', role: 'Writer', goal: 'Write', llmProvider: secondProvider });
+      const a2 = new Agent({
+        id: 'a2',
+        role: 'Writer',
+        goal: 'Write',
+        llmProvider: secondProvider,
+      });
 
       const crew = new Crew({
         id: 'context-crew',
@@ -398,20 +439,28 @@ describe('Crew', () => {
     it('should throw if crew is already running', async () => {
       const slowProvider: LLMProvider = {
         name: 'slow',
-        generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(
-          () => new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({
-                content: 'done',
-                tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
-                finishReason: 'stop',
-              });
-            }, 100);
-          }),
-        ),
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(
+            () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve({
+                    content: 'done',
+                    tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+                    finishReason: 'stop',
+                  });
+                }, 100);
+              }),
+          ),
       };
 
-      const agent = new Agent({ id: 'slow-agent', role: 'R', goal: 'G', llmProvider: slowProvider });
+      const agent = new Agent({
+        id: 'slow-agent',
+        role: 'R',
+        goal: 'G',
+        llmProvider: slowProvider,
+      });
       const crew = new Crew({
         id: 'busy-crew',
         agents: [agent],
@@ -435,7 +484,12 @@ describe('Crew', () => {
           .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
           .mockRejectedValue(new Error('LLM unavailable')),
       };
-      const failAgent = new Agent({ id: 'fail-agent', role: 'R', goal: 'G', llmProvider: failProvider });
+      const failAgent = new Agent({
+        id: 'fail-agent',
+        role: 'R',
+        goal: 'G',
+        llmProvider: failProvider,
+      });
 
       const crew = new Crew({
         id: 'fail-crew',
@@ -454,7 +508,12 @@ describe('Crew', () => {
           .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
           .mockRejectedValue(new Error('Boom')),
       };
-      const failAgent = new Agent({ id: 'fail-a', role: 'R', goal: 'G', llmProvider: failProvider });
+      const failAgent = new Agent({
+        id: 'fail-a',
+        role: 'R',
+        goal: 'G',
+        llmProvider: failProvider,
+      });
 
       const crew = new Crew({
         id: 'err-crew',
@@ -518,22 +577,35 @@ describe('Crew', () => {
       let capturedMessages: readonly LLMMessage[] = [];
       const captureProvider: LLMProvider = {
         name: 'capture',
-        generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(async (messages) => {
-          capturedMessages = messages;
-          return { content: 'done', tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 }, finishReason: 'stop' };
-        }),
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async (messages) => {
+            capturedMessages = messages;
+            return {
+              content: 'done',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
       };
 
-      const agent = new Agent({ id: 'ctx-agent', role: 'R', goal: 'G', llmProvider: captureProvider });
+      const agent = new Agent({
+        id: 'ctx-agent',
+        role: 'R',
+        goal: 'G',
+        llmProvider: captureProvider,
+      });
       const crew = new Crew({
         id: 'ctx-crew',
         agents: [agent],
-        tasks: [{
-          id: 't',
-          description: 'Do it',
-          agentId: 'ctx-agent',
-          context: { key: 'value', num: 42 },
-        }],
+        tasks: [
+          {
+            id: 't',
+            description: 'Do it',
+            agentId: 'ctx-agent',
+            context: { key: 'value', num: 42 },
+          },
+        ],
       });
 
       await crew.run();
@@ -547,22 +619,35 @@ describe('Crew', () => {
       let capturedMessages: readonly LLMMessage[] = [];
       const captureProvider: LLMProvider = {
         name: 'capture',
-        generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(async (messages) => {
-          capturedMessages = messages;
-          return { content: 'done', tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 }, finishReason: 'stop' };
-        }),
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async (messages) => {
+            capturedMessages = messages;
+            return {
+              content: 'done',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
       };
 
-      const agent = new Agent({ id: 'eo-agent', role: 'R', goal: 'G', llmProvider: captureProvider });
+      const agent = new Agent({
+        id: 'eo-agent',
+        role: 'R',
+        goal: 'G',
+        llmProvider: captureProvider,
+      });
       const crew = new Crew({
         id: 'eo-crew',
         agents: [agent],
-        tasks: [{
-          id: 't',
-          description: 'Analyze data',
-          agentId: 'eo-agent',
-          expectedOutput: 'A bullet-point list',
-        }],
+        tasks: [
+          {
+            id: 't',
+            description: 'Analyze data',
+            agentId: 'eo-agent',
+            expectedOutput: 'A bullet-point list',
+          },
+        ],
       });
 
       await crew.run();
@@ -613,17 +698,20 @@ describe('Crew', () => {
     it('should throw when resetting a running crew', async () => {
       const slowProvider: LLMProvider = {
         name: 'slow',
-        generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(
-          () => new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({
-                content: 'done',
-                tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
-                finishReason: 'stop',
-              });
-            }, 100);
-          }),
-        ),
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(
+            () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve({
+                    content: 'done',
+                    tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+                    finishReason: 'stop',
+                  });
+                }, 100);
+              }),
+          ),
       };
 
       const agent = new Agent({ id: 'slow-a', role: 'R', goal: 'G', llmProvider: slowProvider });
@@ -634,7 +722,9 @@ describe('Crew', () => {
       });
 
       const runPromise = crew.run();
-      expect(() => crew.reset()).toThrow(CrewExecutionError);
+      expect(() => {
+        crew.reset();
+      }).toThrow(CrewExecutionError);
       await runPromise;
     });
 
@@ -803,10 +893,16 @@ describe('Crew', () => {
       function makeTrackingAgent(id: string): Agent {
         const provider: LLMProvider = {
           name: `tracker-${id}`,
-          generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(async () => {
-            executionOrder.push(id);
-            return { content: `Out:${id}`, tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 }, finishReason: 'stop' };
-          }),
+          generateText: vi
+            .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+            .mockImplementation(async () => {
+              executionOrder.push(id);
+              return {
+                content: `Out:${id}`,
+                tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+                finishReason: 'stop',
+              };
+            }),
         };
         return new Agent({ id, role: 'R', goal: 'G', llmProvider: provider });
       }
@@ -847,10 +943,16 @@ describe('Crew', () => {
       function makeTrackingAgent(id: string): Agent {
         const provider: LLMProvider = {
           name: `tracker-${id}`,
-          generateText: vi.fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>().mockImplementation(async () => {
-            executionOrder.push(id);
-            return { content: 'out', tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 }, finishReason: 'stop' };
-          }),
+          generateText: vi
+            .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+            .mockImplementation(async () => {
+              executionOrder.push(id);
+              return {
+                content: 'out',
+                tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+                finishReason: 'stop',
+              };
+            }),
         };
         return new Agent({ id, role: 'R', goal: 'G', llmProvider: provider });
       }

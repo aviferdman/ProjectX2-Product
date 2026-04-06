@@ -159,7 +159,9 @@ describe('Agent', () => {
       const tool = createMockTool('dup');
       agent.addTool(tool);
 
-      expect(() => agent.addTool(createMockTool('dup'))).toThrow(AgentConfigError);
+      expect(() => {
+        agent.addTool(createMockTool('dup'));
+      }).toThrow(AgentConfigError);
     });
 
     it('should remove a tool', () => {

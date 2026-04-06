@@ -217,8 +217,12 @@ describe('Task', () => {
 
     it('should throw TaskConfigError when assigning during RUNNING status', () => {
       task.setStatus(TaskStatus.RUNNING);
-      expect(() => task.assignAgent('agent-1')).toThrow(TaskConfigError);
-      expect(() => task.assignAgent('agent-1')).toThrow(/running/i);
+      expect(() => {
+        task.assignAgent('agent-1');
+      }).toThrow(TaskConfigError);
+      expect(() => {
+        task.assignAgent('agent-1');
+      }).toThrow(/running/i);
     });
 
     it('should allow reassignment after completion and reset', () => {
@@ -230,15 +234,21 @@ describe('Task', () => {
     });
 
     it('should throw TaskConfigError for empty agent id', () => {
-      expect(() => task.assignAgent('')).toThrow(TaskConfigError);
+      expect(() => {
+        task.assignAgent('');
+      }).toThrow(TaskConfigError);
     });
 
     it('should throw TaskConfigError for agent id with spaces', () => {
-      expect(() => task.assignAgent('my agent')).toThrow(TaskConfigError);
+      expect(() => {
+        task.assignAgent('my agent');
+      }).toThrow(TaskConfigError);
     });
 
     it('should throw TaskConfigError for agent id with special chars', () => {
-      expect(() => task.assignAgent('agent@#')).toThrow(TaskConfigError);
+      expect(() => {
+        task.assignAgent('agent@#');
+      }).toThrow(TaskConfigError);
     });
   });
 
@@ -308,28 +318,38 @@ describe('Task', () => {
 
     // Invalid transitions
     it('should throw on PENDING → COMPLETED', () => {
-      expect(() => task.setStatus(TaskStatus.COMPLETED)).toThrow(TaskConfigError);
+      expect(() => {
+        task.setStatus(TaskStatus.COMPLETED);
+      }).toThrow(TaskConfigError);
     });
 
     it('should throw on PENDING → FAILED', () => {
-      expect(() => task.setStatus(TaskStatus.FAILED)).toThrow(TaskConfigError);
+      expect(() => {
+        task.setStatus(TaskStatus.FAILED);
+      }).toThrow(TaskConfigError);
     });
 
     it('should throw on COMPLETED → RUNNING', () => {
       task.setStatus(TaskStatus.RUNNING);
       task.setStatus(TaskStatus.COMPLETED);
-      expect(() => task.setStatus(TaskStatus.RUNNING)).toThrow(TaskConfigError);
+      expect(() => {
+        task.setStatus(TaskStatus.RUNNING);
+      }).toThrow(TaskConfigError);
     });
 
     it('should throw on FAILED → RUNNING', () => {
       task.setStatus(TaskStatus.RUNNING);
       task.setStatus(TaskStatus.FAILED);
-      expect(() => task.setStatus(TaskStatus.RUNNING)).toThrow(TaskConfigError);
+      expect(() => {
+        task.setStatus(TaskStatus.RUNNING);
+      }).toThrow(TaskConfigError);
     });
 
     it('should throw on CANCELLED → RUNNING', () => {
       task.setStatus(TaskStatus.CANCELLED);
-      expect(() => task.setStatus(TaskStatus.RUNNING)).toThrow(TaskConfigError);
+      expect(() => {
+        task.setStatus(TaskStatus.RUNNING);
+      }).toThrow(TaskConfigError);
     });
 
     it('should include status names in error message', () => {
@@ -361,8 +381,12 @@ describe('Task', () => {
 
     it('should throw if not in RUNNING status', () => {
       const task = new Task(createValidConfig());
-      expect(() => task.complete(createMockResult())).toThrow(TaskConfigError);
-      expect(() => task.complete(createMockResult())).toThrow(/pending/);
+      expect(() => {
+        task.complete(createMockResult());
+      }).toThrow(TaskConfigError);
+      expect(() => {
+        task.complete(createMockResult());
+      }).toThrow(/pending/);
     });
   });
 
@@ -380,7 +404,9 @@ describe('Task', () => {
 
     it('should throw if not in RUNNING status', () => {
       const task = new Task(createValidConfig());
-      expect(() => task.fail(new Error('fail'))).toThrow(TaskConfigError);
+      expect(() => {
+        task.fail(new Error('fail'));
+      }).toThrow(TaskConfigError);
     });
   });
 
@@ -410,13 +436,17 @@ describe('Task', () => {
       const task = new Task(createValidConfig());
       task.setStatus(TaskStatus.RUNNING);
       task.setStatus(TaskStatus.COMPLETED);
-      expect(() => task.cancel()).toThrow(TaskConfigError);
+      expect(() => {
+        task.cancel();
+      }).toThrow(TaskConfigError);
     });
 
     it('should throw when cancelling an already CANCELLED task', () => {
       const task = new Task(createValidConfig());
       task.cancel();
-      expect(() => task.cancel()).toThrow(TaskConfigError);
+      expect(() => {
+        task.cancel();
+      }).toThrow(TaskConfigError);
     });
   });
 
@@ -453,7 +483,9 @@ describe('Task', () => {
     it('should throw when resetting a RUNNING task', () => {
       const task = new Task(createValidConfig());
       task.setStatus(TaskStatus.RUNNING);
-      expect(() => task.reset()).toThrow(TaskConfigError);
+      expect(() => {
+        task.reset();
+      }).toThrow(TaskConfigError);
     });
   });
 

@@ -30,9 +30,7 @@ const CrewTaskSchema = z.object({
     .regex(CREW_ID_PATTERN, 'Task id must be alphanumeric (dashes and underscores allowed)'),
   description: z.string().min(1, 'Task description must not be empty'),
   expectedOutput: z.string().optional(),
-  agentId: z
-    .string()
-    .min(1, 'Task agentId must not be empty'),
+  agentId: z.string().min(1, 'Task agentId must not be empty'),
   context: z.record(z.unknown()).optional(),
   dependencies: z.array(z.string()).optional(),
 });
@@ -43,9 +41,13 @@ const CrewConfigSchema = z.object({
     .min(1, 'Crew id must not be empty')
     .regex(CREW_ID_PATTERN, 'Crew id must be alphanumeric (dashes and underscores allowed)'),
   name: z.string().optional(),
-  agents: z.array(z.custom<Agent>(
-    (val) => typeof val === 'object' && val !== null && 'id' in val && 'execute' in val,
-  )).min(1, 'Crew must have at least one agent'),
+  agents: z
+    .array(
+      z.custom<Agent>(
+        (val) => typeof val === 'object' && val !== null && 'id' in val && 'execute' in val,
+      ),
+    )
+    .min(1, 'Crew must have at least one agent'),
   tasks: z.array(CrewTaskSchema).min(1, 'Crew must have at least one task'),
   verbose: z.boolean().optional(),
 });
@@ -132,10 +134,7 @@ export class Crew {
               );
             }
             if (depId === task.id) {
-              throw new CrewConfigError(
-                `Task "${task.id}" cannot depend on itself`,
-                parsed.id,
-              );
+              throw new CrewConfigError(`Task "${task.id}" cannot depend on itself`, parsed.id);
             }
           }
         }
@@ -258,11 +257,7 @@ export class Crew {
       for (const task of executionOrder) {
         const agent = this._agents.get(task.agentId);
         if (!agent) {
-          throw new CrewExecutionError(
-            this.id,
-            `Agent "${task.agentId}" not found`,
-            task.id,
-          );
+          throw new CrewExecutionError(this.id, `Agent "${task.agentId}" not found`, task.id);
         }
 
         this._emit('crew:task:start', this.id, task.id, task.agentId);
@@ -275,12 +270,7 @@ export class Crew {
         } catch (error) {
           const wrappedError = error instanceof Error ? error : new Error(String(error));
           this._emit('crew:task:error', this.id, task.id, wrappedError);
-          throw new CrewExecutionError(
-            this.id,
-            wrappedError.message,
-            task.id,
-            wrappedError,
-          );
+          throw new CrewExecutionError(this.id, wrappedError.message, task.id, wrappedError);
         }
       }
 
@@ -347,7 +337,11 @@ export class Crew {
       }
     }
 
-    const input: { description: string; expectedOutput?: string; context?: Record<string, unknown> } = {
+    const input: {
+      description: string;
+      expectedOutput?: string;
+      context?: Record<string, unknown>;
+    } = {
       description: task.description,
     };
 
@@ -380,7 +374,10 @@ export class Crew {
     for (const task of this._tasks) {
       if (task.dependencies) {
         for (const depId of task.dependencies) {
-          adjacency.get(depId)!.push(task.id);
+          const adj = adjacency.get(depId);
+          if (adj) {
+            adj.push(task.id);
+          }
           inDegree.set(task.id, (inDegree.get(task.id) ?? 0) + 1);
         }
       }
@@ -396,10 +393,16 @@ export class Crew {
 
     const sorted: CrewTask[] = [];
     while (queue.length > 0) {
-      const current = queue.shift()!;
-      sorted.push(taskMap.get(current)!);
+      const current = queue.shift();
+      if (current === undefined) break;
 
-      for (const neighbor of adjacency.get(current)!) {
+      const task = taskMap.get(current);
+      if (task) {
+        sorted.push(task);
+      }
+
+      const neighbors = adjacency.get(current) ?? [];
+      for (const neighbor of neighbors) {
         const newDegree = (inDegree.get(neighbor) ?? 0) - 1;
         inDegree.set(neighbor, newDegree);
         if (newDegree === 0) {

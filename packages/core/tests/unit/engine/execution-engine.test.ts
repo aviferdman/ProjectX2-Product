@@ -17,14 +17,14 @@
  * - Edge cases
  */
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { Agent } from '../../../src/agent/agent.js';
 import { ExecutionEngine } from '../../../src/engine/execution-engine.js';
 import { EngineStatus, ExecutionStrategy } from '../../../src/engine/types.js';
 import { EngineConfigError, EngineExecutionError } from '../../../src/errors/engine-errors.js';
 import { Task } from '../../../src/task/task.js';
-import type { LLMProvider, LLMResponse, TaskResult } from '../../../src/types/index.js';
+import type { LLMProvider, LLMResponse } from '../../../src/types/index.js';
 import { TaskPriority, TaskStatus } from '../../../src/types/index.js';
 
 // ---------------------------------------------------------------------------
@@ -51,7 +51,12 @@ function createAgent(id: string, response?: string): Agent {
 function createTask(
   id: string,
   agentId: string,
-  options?: { dependencies?: string[]; timeout?: number; retries?: number; priority?: TaskPriority },
+  options?: {
+    dependencies?: string[];
+    timeout?: number;
+    retries?: number;
+    priority?: TaskPriority;
+  },
 ): Task {
   return new Task({
     id,
@@ -113,7 +118,9 @@ describe('ExecutionEngine', () => {
     });
 
     it('should throw EngineConfigError for maxConcurrency exceeding upper bound', () => {
-      expect(() => new ExecutionEngine({ id: 'e', maxConcurrency: 101 })).toThrow(EngineConfigError);
+      expect(() => new ExecutionEngine({ id: 'e', maxConcurrency: 101 })).toThrow(
+        EngineConfigError,
+      );
     });
 
     it('should throw EngineConfigError for non-positive globalTimeout', () => {
@@ -223,21 +230,33 @@ describe('ExecutionEngine', () => {
         name: 'mock-1',
         generateText: vi.fn().mockImplementation(async () => {
           executionOrder.push('t1');
-          return { content: 'output-1', tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: 'output-1',
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       };
       const provider2: LLMProvider = {
         name: 'mock-2',
         generateText: vi.fn().mockImplementation(async () => {
           executionOrder.push('t2');
-          return { content: 'output-2', tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: 'output-2',
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       };
       const provider3: LLMProvider = {
         name: 'mock-3',
         generateText: vi.fn().mockImplementation(async () => {
           executionOrder.push('t3');
-          return { content: 'output-3', tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: 'output-3',
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       };
 
@@ -269,7 +288,11 @@ describe('ExecutionEngine', () => {
         name: 'mock-2',
         generateText: vi.fn().mockImplementation(async (messages: unknown[]) => {
           capturedMessages.push(...messages);
-          return { content: 'output-2', tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: 'output-2',
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       };
 
@@ -305,7 +328,11 @@ describe('ExecutionEngine', () => {
         generateText: vi.fn().mockImplementation(async () => {
           startTimes[id] = Date.now() - start;
           await new Promise((resolve) => setTimeout(resolve, 50));
-          return { content: `output-${id}`, tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: `output-${id}`,
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       });
 
@@ -342,7 +369,11 @@ describe('ExecutionEngine', () => {
         name: `mock-${id}`,
         generateText: vi.fn().mockImplementation(async () => {
           executionOrder.push(id);
-          return { content: `output-${id}`, tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: `output-${id}`,
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       });
 
@@ -379,7 +410,11 @@ describe('ExecutionEngine', () => {
           maxActive = Math.max(maxActive, currentActive);
           await new Promise((resolve) => setTimeout(resolve, 50));
           currentActive--;
-          return { content: `output-${id}`, tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: `output-${id}`,
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       });
 
@@ -416,7 +451,11 @@ describe('ExecutionEngine', () => {
           if (callCount < 3) {
             throw new Error(`Attempt ${String(callCount)} failed`);
           }
-          return { content: 'success on 3rd try', tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: 'success on 3rd try',
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       };
 
@@ -463,9 +502,9 @@ describe('ExecutionEngine', () => {
     it('should timeout individual tasks', async () => {
       const provider: LLMProvider = {
         name: 'mock',
-        generateText: vi.fn().mockImplementation(
-          async () => new Promise((resolve) => setTimeout(resolve, 5000)),
-        ),
+        generateText: vi
+          .fn()
+          .mockImplementation(async () => new Promise((resolve) => setTimeout(resolve, 5000))),
       };
 
       const agent = new Agent({ id: 'a1', role: 'R', goal: 'G' });
@@ -506,7 +545,11 @@ describe('ExecutionEngine', () => {
         generateText: vi.fn().mockImplementation(async () => {
           executedTasks.push('t1');
           await new Promise((resolve) => setTimeout(resolve, 100));
-          return { content: 'output', tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: 'output',
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       };
 
@@ -537,7 +580,11 @@ describe('ExecutionEngine', () => {
         name: 'mock',
         generateText: vi.fn().mockImplementation(async () => {
           await new Promise((resolve) => setTimeout(resolve, 100));
-          return { content: 'output', tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: 'output',
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       };
 
@@ -720,10 +767,18 @@ describe('ExecutionEngine', () => {
       engine.addAgent(createAgent('a1'));
       engine.addTask(createTask('t1', 'a1'));
 
-      engine.beforeTask(() => { hookLog.push('before-1'); });
-      engine.beforeTask(() => { hookLog.push('before-2'); });
-      engine.afterTask(() => { hookLog.push('after-1'); });
-      engine.afterTask(() => { hookLog.push('after-2'); });
+      engine.beforeTask(() => {
+        hookLog.push('before-1');
+      });
+      engine.beforeTask(() => {
+        hookLog.push('before-2');
+      });
+      engine.afterTask(() => {
+        hookLog.push('after-1');
+      });
+      engine.afterTask(() => {
+        hookLog.push('after-2');
+      });
 
       await engine.run();
 
@@ -820,7 +875,9 @@ describe('ExecutionEngine', () => {
       engine.addTask(createTask('t1', 'a1'));
       engine.addTask(createTask('t2', 'a1'));
 
-      engine.once('engine:task:start', () => { callCount++; });
+      engine.once('engine:task:start', () => {
+        callCount++;
+      });
 
       await engine.run();
 
@@ -830,7 +887,9 @@ describe('ExecutionEngine', () => {
     it('should support removing listeners', async () => {
       let callCount = 0;
 
-      const listener = (): void => { callCount++; };
+      const listener = (): void => {
+        callCount++;
+      };
       const engine = new ExecutionEngine({ id: 'off-test' });
       engine.addAgent(createAgent('a1'));
       engine.addTask(createTask('t1', 'a1'));
@@ -903,9 +962,9 @@ describe('ExecutionEngine', () => {
     it('should throw when run is called while already running', async () => {
       const provider: LLMProvider = {
         name: 'slow',
-        generateText: vi.fn().mockImplementation(
-          async () => new Promise((resolve) => setTimeout(resolve, 200)),
-        ),
+        generateText: vi
+          .fn()
+          .mockImplementation(async () => new Promise((resolve) => setTimeout(resolve, 200))),
       };
       const agent = new Agent({ id: 'a1', role: 'R', goal: 'G' });
       agent.setLLMProvider(provider);
@@ -923,9 +982,9 @@ describe('ExecutionEngine', () => {
     it('should prevent modifications while running', async () => {
       const provider: LLMProvider = {
         name: 'slow',
-        generateText: vi.fn().mockImplementation(
-          async () => new Promise((resolve) => setTimeout(resolve, 200)),
-        ),
+        generateText: vi
+          .fn()
+          .mockImplementation(async () => new Promise((resolve) => setTimeout(resolve, 200))),
       };
       const agent = new Agent({ id: 'a1', role: 'R', goal: 'G' });
       agent.setLLMProvider(provider);
@@ -942,7 +1001,9 @@ describe('ExecutionEngine', () => {
       expect(() => engine.addAgent(createAgent('a2'))).toThrow(EngineConfigError);
       expect(() => engine.removeTask('t1')).toThrow(EngineConfigError);
       expect(() => engine.removeAgent('a1')).toThrow(EngineConfigError);
-      expect(() => engine.reset()).toThrow(EngineConfigError);
+      expect(() => {
+        engine.reset();
+      }).toThrow(EngineConfigError);
 
       engine.cancel();
       await runPromise.catch(() => {});
@@ -968,9 +1029,9 @@ describe('ExecutionEngine', () => {
     it('should throw when resetting while running', async () => {
       const provider: LLMProvider = {
         name: 'slow',
-        generateText: vi.fn().mockImplementation(
-          async () => new Promise((resolve) => setTimeout(resolve, 200)),
-        ),
+        generateText: vi
+          .fn()
+          .mockImplementation(async () => new Promise((resolve) => setTimeout(resolve, 200))),
       };
       const agent = new Agent({ id: 'a1', role: 'R', goal: 'G' });
       agent.setLLMProvider(provider);
@@ -981,7 +1042,9 @@ describe('ExecutionEngine', () => {
       const runPromise = engine.run();
       await new Promise((resolve) => setTimeout(resolve, 10));
 
-      expect(() => engine.reset()).toThrow(EngineConfigError);
+      expect(() => {
+        engine.reset();
+      }).toThrow(EngineConfigError);
 
       engine.cancel();
       await runPromise.catch(() => {});
@@ -1105,7 +1168,11 @@ describe('ExecutionEngine', () => {
         name: `mock-${id}`,
         generateText: vi.fn().mockImplementation(async () => {
           executionOrder.push(id);
-          return { content: `output-${id}`, tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 }, finishReason: 'stop' };
+          return {
+            content: `output-${id}`,
+            tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+            finishReason: 'stop',
+          };
         }),
       });
 
