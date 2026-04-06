@@ -397,6 +397,46 @@ See [`EngineEventMap`](#engineeventmap) for all events emitted by the engine.
 
 ---
 
+### ParallelExecutor
+
+Executes a set of task runners in parallel with concurrency limits and configurable error policies.
+
+```typescript
+import { ParallelExecutor } from '@crewspace/core';
+
+const executor = new ParallelExecutor({
+  maxConcurrency: 3,
+  errorPolicy: 'continue',
+});
+
+const result = await executor.execute(runners);
+```
+
+#### Constructor
+
+```typescript
+new ParallelExecutor(config?: ParallelExecutorConfig)
+```
+
+#### ParallelExecutorConfig
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `maxConcurrency` | `number` | `Infinity` | Max parallel runners |
+| `errorPolicy` | `ParallelErrorPolicy` | `'fail-fast'` | `'fail-fast'` or `'continue'` |
+
+#### Methods
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `execute` | `(runners: TaskRunner[]): Promise<ParallelExecutionResult>` | Execute runners in parallel |
+| `on` | `<E>(event: E, listener): this` | Subscribe to an event |
+| `off` | `<E>(event: E, listener): this` | Unsubscribe from an event |
+
+See [`ParallelExecutorEventMap`](#engineeventmap) for events.
+
+---
+
 ## LLM Providers
 
 ### LLMProvider
