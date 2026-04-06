@@ -534,8 +534,8 @@ describe('TASK-007: CONTRIBUTING.md Existence Check', () => {
     expect(rootReadme).toContain('CONTRIBUTING.md');
   });
 
-  it('should note CONTRIBUTING.md is coming soon', () => {
+  it('should link to CONTRIBUTING.md in root README', () => {
     const rootReadme = readFileSync(join(PROJECT_ROOT, 'README.md'), 'utf-8');
-    expect(rootReadme).toMatch(/coming soon/i);
+    expect(rootReadme).toMatch(/\[.*\]\(.*CONTRIBUTING\.md\)/);
   });
 });
