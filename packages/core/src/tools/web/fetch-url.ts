@@ -48,6 +48,8 @@ export interface FetchUrlToolOptions {
   readonly userAgent?: string;
   /** Default request timeout in milliseconds. */
   readonly timeoutMs?: number;
+  /** Shared rate limiter instance. When set, each call consumes a token. */
+  readonly rateLimiter?: import('./rate-limiter.js').RateLimiter;
 }
 
 /**
@@ -59,6 +61,7 @@ export interface FetchUrlToolOptions {
 export function createFetchUrlTool(options?: FetchUrlToolOptions): Tool {
   const userAgent = options?.userAgent ?? DEFAULT_USER_AGENT;
   const defaultTimeout = options?.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const rateLimiter = options?.rateLimiter;
 
   return {
     name: 'fetchUrl',
@@ -108,6 +111,9 @@ export function createFetchUrlTool(options?: FetchUrlToolOptions): Tool {
       const { url, method, headers: requestHeaders, timeoutMs, maxSize } = parsed;
 
       validateUrl(url);
+
+      // Rate-limit check (throws ToolRateLimitError when exhausted)
+      rateLimiter?.consume('fetchUrl');
 
       const timeout = timeoutMs ?? defaultTimeout;
       const maxBodySize = maxSize ?? MAX_RESPONSE_SIZE;
