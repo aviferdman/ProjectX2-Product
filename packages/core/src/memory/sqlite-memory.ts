@@ -169,6 +169,7 @@ export class SqliteMemory implements MemoryProvider {
   // MemoryProvider implementation
   // -----------------------------------------------------------------------
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async add(entry: MemoryEntry): Promise<MemoryEntry> {
     this._ensureOpen();
     validateEntry(entry);
@@ -220,6 +221,7 @@ export class SqliteMemory implements MemoryProvider {
     return stored;
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async get(id: string): Promise<MemoryEntry | undefined> {
     this._ensureOpen();
     const row = this._db.prepare('SELECT * FROM memory_entries WHERE id = ?').get(id) as
@@ -229,6 +231,7 @@ export class SqliteMemory implements MemoryProvider {
     return row ? rowToEntry(row) : undefined;
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     this._ensureOpen();
     const limit = Math.min(options?.limit ?? DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT);
