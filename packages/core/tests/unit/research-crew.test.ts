@@ -39,24 +39,6 @@ function createMockLLMProvider(content?: string): LLMProvider {
   };
 }
 
-function createTaskAwareMockProvider(responses: Record<string, string>): LLMProvider {
-  return {
-    name: 'task-aware-mock',
-    generateText: vi
-      .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
-      .mockImplementation(async (messages) => {
-        const userMsg = [...messages].reverse().find((m) => m.role === 'user');
-        const content = userMsg?.content?.toLowerCase() ?? '';
-        const key = Object.keys(responses).find((k) => content.includes(k));
-        return {
-          content: key ? responses[key] : 'Default mock response',
-          tokenUsage: { promptTokens: 30, completionTokens: 40, totalTokens: 70 },
-          finishReason: 'stop',
-        };
-      }),
-  };
-}
-
 // ---------------------------------------------------------------------------
 // Example file validation
 // ---------------------------------------------------------------------------
