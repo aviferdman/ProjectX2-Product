@@ -31,7 +31,11 @@
     /* Build Performance */
     "composite": true,
     "incremental": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    /* Decorators — enables @tool and other TypeScript decorators */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false
   },
   "exclude": ["node_modules", "dist"]
 }

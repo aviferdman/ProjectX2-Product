@@ -152,9 +152,14 @@ export type {
 // Tool System
 export {
   ALLOW_ALL_POLICY,
+  collectTools,
+  createTool,
+  defineTool,
   DENY_ALL_POLICY,
+  hasTools,
   isValidTool,
   PermissionManager,
+  tool,
   ToolConfigSchema,
   ToolExecutor,
   ToolParameterSchemaSchema,
@@ -162,7 +167,9 @@ export {
   ToolRegistry,
   validateToolConfig,
   validateToolPermissionPolicy,
+  zodToToolSchema,
 } from './tool/index.js';
+export type { CreateToolOptions, DefineToolOptions, ToolDecoratorOptions } from './tool/index.js';
 
 // Built-in Tools — File
 export {
