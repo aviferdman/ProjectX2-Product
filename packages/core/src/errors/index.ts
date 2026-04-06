@@ -31,3 +31,4 @@ export {
   ToolTimeoutError,
 } from './tool-errors.js';
 export type { ToolValidationIssue } from './tool-errors.js';
+export { MemoryConfigError, MemoryOperationError, MemoryQueryError } from './memory-errors.js';

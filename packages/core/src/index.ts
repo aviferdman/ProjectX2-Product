@@ -277,3 +277,25 @@ export {
   ToolTimeoutError,
 } from './errors/index.js';
 export type { ToolValidationIssue } from './errors/index.js';
+export {
+  MemoryConfigError,
+  MemoryOperationError,
+  MemoryQueryError,
+} from './errors/index.js';
+
+// Memory
+export { createMemoryEntry, generateMemoryId, MemoryManager, ShortTermMemory } from './memory/index.js';
+export type { MemoryManagerConfig } from './memory/index.js';
+
+// Types — Memory (re-export from types for convenience)
+export { MemoryNamespace, MemoryRole } from './types/index.js';
+export type {
+  MemoryConfig,
+  MemoryEntry,
+  MemoryEventMap,
+  MemoryMetadata,
+  MemoryProvider,
+  MemoryQueryOptions,
+  MemoryQueryResult,
+  MemoryRetentionPolicy,
+} from './types/index.js';

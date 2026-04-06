@@ -36,3 +36,15 @@ export type {
   ToolPermissionPolicy,
   ToolResult,
 } from './tool.js';
+
+export { MemoryNamespace, MemoryRole } from './memory.js';
+export type {
+  MemoryConfig,
+  MemoryEntry,
+  MemoryEventMap,
+  MemoryMetadata,
+  MemoryProvider,
+  MemoryQueryOptions,
+  MemoryQueryResult,
+  MemoryRetentionPolicy,
+} from './memory.js';
