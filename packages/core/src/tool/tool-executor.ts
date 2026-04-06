@@ -112,11 +112,23 @@ export class ToolExecutor {
   // Events
   // -------------------------------------------------------------------------
 
+  /**
+   * Subscribe to a tool execution lifecycle event.
+   *
+   * @param event    - The event name to listen for
+   * @param listener - The callback to invoke when the event fires
+   */
   on<E extends keyof ToolEventMap>(event: E, listener: ToolEventMap[E]): this {
     this._emitter.on(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
+  /**
+   * Unsubscribe from a tool execution lifecycle event.
+   *
+   * @param event    - The event name to unsubscribe from
+   * @param listener - The callback to remove
+   */
   off<E extends keyof ToolEventMap>(event: E, listener: ToolEventMap[E]): this {
     this._emitter.off(event, listener as (...args: unknown[]) => void);
     return this;

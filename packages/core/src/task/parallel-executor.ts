@@ -357,6 +357,12 @@ export class ParallelExecutor {
   // Event system
   // -------------------------------------------------------------------------
 
+  /**
+   * Subscribe to an executor lifecycle event.
+   *
+   * @param event    - The event name to listen for
+   * @param listener - The callback to invoke when the event fires
+   */
   on<E extends keyof ParallelExecutorEventMap>(
     event: E,
     listener: ParallelExecutorEventMap[E],
@@ -365,6 +371,12 @@ export class ParallelExecutor {
     return this;
   }
 
+  /**
+   * Unsubscribe from an executor lifecycle event.
+   *
+   * @param event    - The event name to unsubscribe from
+   * @param listener - The callback to remove
+   */
   off<E extends keyof ParallelExecutorEventMap>(
     event: E,
     listener: ParallelExecutorEventMap[E],
@@ -373,6 +385,12 @@ export class ParallelExecutor {
     return this;
   }
 
+  /**
+   * Subscribe to an executor lifecycle event, automatically unsubscribing after the first invocation.
+   *
+   * @param event    - The event name to listen for
+   * @param listener - The callback to invoke once
+   */
   once<E extends keyof ParallelExecutorEventMap>(
     event: E,
     listener: ParallelExecutorEventMap[E],

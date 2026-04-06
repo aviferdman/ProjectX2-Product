@@ -144,10 +144,15 @@ private readonly _defaultNamespace: MemoryNamespace;
     return this;
   }
 
-  // -----------------------------------------------------------------------
-  // MemoryProvider implementation
-  // -----------------------------------------------------------------------
-
+  /**
+   * Add a memory entry to the in-memory store.
+   *
+   * Applies retention-based eviction (age and count) before inserting.
+   *
+   * @param entry - The memory entry to store
+   * @returns The stored (frozen) entry
+   * @throws {MemoryOperationError} If an entry with the same ID already exists
+   */
   async add(entry: MemoryEntry): Promise<MemoryEntry> {
     validateEntry(entry);
 
@@ -177,10 +182,22 @@ private readonly _defaultNamespace: MemoryNamespace;
     return stored;
   }
 
+  /**
+   * Retrieve a memory entry by its unique ID.
+   *
+   * @param id - The entry identifier
+   * @returns The entry, or `undefined` if not found
+   */
   async get(id: string): Promise<MemoryEntry | undefined> {
     return this._store.get(id);
   }
 
+  /**
+   * Query entries with optional filtering by namespace, role, limit, and offset.
+   *
+   * @param options - Query filter options
+   * @returns Matching entries and total count
+   */
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     const limit = Math.min(options?.limit ?? DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT);
     const offset = options?.offset ?? 0;
@@ -191,6 +208,13 @@ private readonly _defaultNamespace: MemoryNamespace;
     };
   }
 
+  /**
+   * Search entries by text content using case-insensitive substring matching.
+   *
+   * @param text    - The search string
+   * @param options - Optional query filters
+   * @returns Matching entries and total count
+   */
   async search(text: string, options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     if (!text || typeof text !== 'string') {
       return { entries: [], total: 0 };
@@ -210,6 +234,12 @@ private readonly _defaultNamespace: MemoryNamespace;
     };
   }
 
+  /**
+   * Delete a memory entry by ID.
+   *
+   * @param id - The entry identifier
+   * @returns `true` if the entry existed and was removed
+   */
   async delete(id: string): Promise<boolean> {
     const existed = this._store.delete(id);
     if (existed) {
@@ -222,6 +252,12 @@ private readonly _defaultNamespace: MemoryNamespace;
     return existed;
   }
 
+  /**
+   * Clear entries, optionally filtered by namespace.
+   *
+   * @param namespace - If provided, only clear entries in this namespace
+   * @returns The number of entries removed
+   */
   async clear(namespace?: MemoryNamespace): Promise<number> {
     if (namespace === undefined) {
       const count = this._store.size;
@@ -250,6 +286,12 @@ private readonly _defaultNamespace: MemoryNamespace;
     return toRemove.length;
   }
 
+  /**
+   * Count entries, optionally filtered by namespace.
+   *
+   * @param namespace - If provided, count only entries in this namespace
+   * @returns The entry count
+   */
   async count(namespace?: MemoryNamespace): Promise<number> {
     if (namespace === undefined) return this._store.size;
     let c = 0;

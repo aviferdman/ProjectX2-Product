@@ -108,16 +108,25 @@ export class MemoryManager implements MemoryProvider {
     return this._providers.find((p) => p.name === name);
   }
 
+  /** Subscribe to a memory lifecycle event. */
   on<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.on(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
+  /** Unsubscribe from a memory lifecycle event. */
   off<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.off(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
+  /**
+   * Store a memory entry across all registered providers.
+   *
+   * @param entry - The memory entry to store
+   * @returns The stored entry (as returned by the last successful provider)
+   * @throws {MemoryOperationError} If all providers fail
+   */
   async add(entry: MemoryEntry): Promise<MemoryEntry> {
     this._ensureProviders('add');
     let stored: MemoryEntry = entry;
@@ -140,6 +149,12 @@ export class MemoryManager implements MemoryProvider {
     return stored;
   }
 
+  /**
+   * Retrieve a memory entry by ID from the first provider that has it.
+   *
+   * @param id - The unique entry identifier
+   * @returns The entry, or `undefined` if not found in any provider
+   */
   async get(id: string): Promise<MemoryEntry | undefined> {
     for (const provider of this._providers) {
       const entry = await provider.get(id);
@@ -148,6 +163,12 @@ export class MemoryManager implements MemoryProvider {
     return undefined;
   }
 
+  /**
+   * Query memory entries from the primary provider with optional filtering.
+   *
+   * @param options - Query filters (namespace, limit, offset, sort order)
+   * @returns Matching entries and total count
+   */
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     if (this._providers.length === 0) return { entries: [], total: 0 };
     const primary = this._providers[0];
@@ -155,6 +176,13 @@ export class MemoryManager implements MemoryProvider {
     return primary.query(options);
   }
 
+  /**
+   * Search memory entries by text content via the primary provider.
+   *
+   * @param text    - The search query string
+   * @param options - Optional query filters
+   * @returns Matching entries and total count
+   */
   async search(text: string, options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     if (this._providers.length === 0) return { entries: [], total: 0 };
     const primary = this._providers[0];
@@ -162,6 +190,12 @@ export class MemoryManager implements MemoryProvider {
     return primary.search(text, options);
   }
 
+  /**
+   * Delete a memory entry by ID across all providers.
+   *
+   * @param id - The unique entry identifier
+   * @returns `true` if the entry was deleted from at least one provider
+   */
   async delete(id: string): Promise<boolean> {
     let deleted = false;
     for (const provider of this._providers) {
@@ -172,6 +206,12 @@ export class MemoryManager implements MemoryProvider {
     return deleted;
   }
 
+  /**
+   * Clear memory entries across all providers, optionally filtered by namespace.
+   *
+   * @param namespace - If provided, only entries in this namespace are cleared
+   * @returns Total number of entries removed
+   */
   async clear(namespace?: MemoryNamespace): Promise<number> {
     let total = 0;
     for (const provider of this._providers) {
@@ -181,6 +221,12 @@ export class MemoryManager implements MemoryProvider {
     return total;
   }
 
+  /**
+   * Count memory entries in the primary provider, optionally filtered by namespace.
+   *
+   * @param namespace - If provided, count only entries in this namespace
+   * @returns The entry count
+   */
   async count(namespace?: MemoryNamespace): Promise<number> {
     if (this._providers.length === 0) return 0;
     const primary = this._providers[0];

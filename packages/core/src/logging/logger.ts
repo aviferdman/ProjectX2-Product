@@ -110,8 +110,8 @@ export interface LogTransport {
 export class ConsoleTransport implements LogTransport {
   public readonly name = 'console';
 
+  /** Write a formatted log entry to the console (stderr for errors, stdout otherwise). */
   write(entry: LogEntry): void {
-    const parts: string[] = [
       `[${entry.timestamp}]`,
       `[${entry.levelLabel}]`,
     ];
@@ -150,8 +150,8 @@ export class BufferTransport implements LogTransport {
   public readonly name = 'buffer';
   private readonly _entries: LogEntry[] = [];
 
+  /** Append a log entry to the in-memory buffer. */
   write(entry: LogEntry): void {
-    this._entries.push(entry);
   }
 
   /** Get all buffered entries. */

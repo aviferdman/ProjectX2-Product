@@ -68,6 +68,16 @@ export abstract class BaseLLMProvider implements StreamingLLMProvider {
     this.timeout = config.timeout ?? DEFAULT_TIMEOUT_MS;
   }
 
+  /**
+   * Generate a complete text response from the given messages.
+   *
+   * Validates the message array, merges caller-provided options with defaults,
+   * and delegates to the provider-specific {@link _doGenerateText} implementation.
+   *
+   * @param messages - Conversation messages to send to the model
+   * @param options  - Optional request overrides (temperature, maxTokens, etc.)
+   * @returns The completed LLM response
+   */
   async generateText(
     messages: readonly LLMMessage[],
     options?: LLMRequestOptions,
@@ -77,6 +87,16 @@ export abstract class BaseLLMProvider implements StreamingLLMProvider {
     return this._doGenerateText(messages, merged);
   }
 
+  /**
+   * Generate a streaming response from the given messages.
+   *
+   * Validates the message array, merges caller-provided options with defaults,
+   * and delegates to the provider-specific {@link _doGenerateStream} implementation.
+   *
+   * @param messages - Conversation messages to send to the model
+   * @param options  - Optional request overrides (temperature, maxTokens, etc.)
+   * @returns A stream response that can be iterated or collected via `toResponse()`
+   */
   async generateStream(
     messages: readonly LLMMessage[],
     options?: LLMRequestOptions,

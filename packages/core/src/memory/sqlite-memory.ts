@@ -155,11 +155,13 @@ export class SqliteMemory implements MemoryProvider {
   // Event system
   // -----------------------------------------------------------------------
 
+  /** Subscribe to a memory lifecycle event. */
   on<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.on(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
+  /** Unsubscribe from a memory lifecycle event. */
   off<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.off(event, listener as (...args: unknown[]) => void);
     return this;
@@ -169,6 +171,16 @@ export class SqliteMemory implements MemoryProvider {
   // MemoryProvider implementation
   // -----------------------------------------------------------------------
 
+  /**
+   * Add a memory entry to the SQLite database.
+   *
+   * Applies retention-based eviction (age and count) before inserting.
+   * Also indexes the content in the FTS5 table for full-text search.
+   *
+   * @param entry - The memory entry to store
+   * @returns The stored (frozen) entry
+   * @throws {MemoryOperationError} If an entry with the same ID already exists
+   */
   // eslint-disable-next-line @typescript-eslint/require-await
   async add(entry: MemoryEntry): Promise<MemoryEntry> {
     this._ensureOpen();
@@ -221,6 +233,12 @@ export class SqliteMemory implements MemoryProvider {
     return stored;
   }
 
+  /**
+   * Retrieve a memory entry by its unique ID.
+   *
+   * @param id - The entry identifier
+   * @returns The entry, or `undefined` if not found
+   */
   // eslint-disable-next-line @typescript-eslint/require-await
   async get(id: string): Promise<MemoryEntry | undefined> {
     this._ensureOpen();
@@ -231,6 +249,12 @@ export class SqliteMemory implements MemoryProvider {
     return row ? rowToEntry(row) : undefined;
   }
 
+  /**
+   * Query entries with optional filtering, pagination, and sort order.
+   *
+   * @param options - Query filter options
+   * @returns Matching entries and total count
+   */
   // eslint-disable-next-line @typescript-eslint/require-await
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     this._ensureOpen();
@@ -254,6 +278,13 @@ export class SqliteMemory implements MemoryProvider {
     };
   }
 
+  /**
+   * Search entries by text content using FTS5 full-text search.
+   *
+   * @param text    - The search query string
+   * @param options - Optional query filters
+   * @returns Matching entries and total count
+   */
   async search(text: string, options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     this._ensureOpen();
     if (!text || typeof text !== 'string') {
@@ -293,6 +324,12 @@ export class SqliteMemory implements MemoryProvider {
     };
   }
 
+  /**
+   * Delete a memory entry by ID, removing it from both the main table and the FTS index.
+   *
+   * @param id - The entry identifier
+   * @returns `true` if the entry existed and was removed
+   */
   async delete(id: string): Promise<boolean> {
     this._ensureOpen();
 
@@ -306,6 +343,12 @@ export class SqliteMemory implements MemoryProvider {
     return false;
   }
 
+  /**
+   * Clear entries, optionally filtered by namespace.
+   *
+   * @param namespace - If provided, only clear entries in this namespace
+   * @returns The number of entries removed
+   */
   async clear(namespace?: MemoryNamespace): Promise<number> {
     this._ensureOpen();
 
@@ -334,6 +377,12 @@ export class SqliteMemory implements MemoryProvider {
     return count;
   }
 
+  /**
+   * Count entries, optionally filtered by namespace.
+   *
+   * @param namespace - If provided, count only entries in this namespace
+   * @returns The entry count
+   */
   async count(namespace?: MemoryNamespace): Promise<number> {
     this._ensureOpen();
 

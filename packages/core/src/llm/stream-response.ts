@@ -49,6 +49,15 @@ export class DefaultLLMStreamResponse implements LLMStreamResponse {
     return iterator;
   }
 
+  /**
+   * Consume the stream and collect all chunks into a single {@link LLMResponse}.
+   *
+   * This is a convenience method for callers who do not need to process
+   * chunks incrementally. The stream can only be consumed once.
+   *
+   * @returns The aggregated response with concatenated content and final token usage
+   * @throws {LLMStreamError} If the stream fails mid-way or has already been consumed
+   */
   async toResponse(): Promise<LLMResponse> {
     this._assertNotConsumed();
     this._consumed = true;
