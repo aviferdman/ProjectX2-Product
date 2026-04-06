@@ -976,4 +976,883 @@ describe('Crew', () => {
       expect(executionOrder).toEqual(['x', 'y', 'z']);
     });
   });
+
+  // =========================================================================
+  // Additional tests for TASK-017 — expanded Crew class coverage (>80%)
+  // =========================================================================
+
+  describe('construction — additional validation', () => {
+    it('should reject task with empty id', () => {
+      const agent = createAgent('a');
+      expect(
+        () =>
+          new Crew({
+            id: 'crew',
+            agents: [agent],
+            tasks: [{ id: '', description: 'Task', agentId: 'a' }],
+          }),
+      ).toThrow(CrewConfigError);
+    });
+
+    it('should reject task with invalid id characters', () => {
+      const agent = createAgent('a');
+      expect(
+        () =>
+          new Crew({
+            id: 'crew',
+            agents: [agent],
+            tasks: [{ id: 'bad task!', description: 'Task', agentId: 'a' }],
+          }),
+      ).toThrow(CrewConfigError);
+    });
+
+    it('should reject task with empty agentId', () => {
+      const agent = createAgent('a');
+      expect(
+        () =>
+          new Crew({
+            id: 'crew',
+            agents: [agent],
+            tasks: [{ id: 't', description: 'Task', agentId: '' }],
+          }),
+      ).toThrow(CrewConfigError);
+    });
+
+    it('should handle crew with many agents and tasks', () => {
+      const agents = Array.from({ length: 10 }, (_, i) => createAgent(`agent-${String(i)}`));
+      const tasks = agents.map((a, i) => ({
+        id: `task-${String(i)}`,
+        description: `Task ${String(i)}`,
+        agentId: a.id,
+      }));
+      const crew = new Crew({ id: 'large-crew', agents, tasks });
+      expect(crew.agents.size).toBe(10);
+      expect(crew.tasks).toHaveLength(10);
+    });
+
+    it('should accept task with empty dependencies array', () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'Task', agentId: 'a', dependencies: [] }],
+      });
+      expect(crew.tasks).toHaveLength(1);
+    });
+
+    it('should accept single agent handling multiple tasks', () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'crew',
+        agents: [agent],
+        tasks: [
+          { id: 't1', description: 'First', agentId: 'a' },
+          { id: 't2', description: 'Second', agentId: 'a' },
+          { id: 't3', description: 'Third', agentId: 'a', dependencies: ['t1', 't2'] },
+        ],
+      });
+      expect(crew.tasks).toHaveLength(3);
+    });
+
+    it('should accept task with duplicate entries in dependencies array', () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'crew',
+        agents: [agent],
+        tasks: [
+          { id: 't1', description: 'First', agentId: 'a' },
+          { id: 't2', description: 'Second', agentId: 'a', dependencies: ['t1', 't1'] },
+        ],
+      });
+      expect(crew.tasks).toHaveLength(2);
+    });
+
+    it('should default verbose to false when not specified', () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+      expect(crew.verbose).toBe(false);
+    });
+
+    it('should reject crew with id containing spaces', () => {
+      const agent = createAgent('a');
+      expect(
+        () =>
+          new Crew({
+            id: 'bad crew',
+            agents: [agent],
+            tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+          }),
+      ).toThrow(CrewConfigError);
+    });
+
+    it('should accept crew id with dashes and underscores', () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'my-crew_v2',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+      expect(crew.id).toBe('my-crew_v2');
+    });
+  });
+
+  describe('execution — error handling edge cases', () => {
+    it('should allow run after error state without explicit reset', async () => {
+      let callCount = 0;
+      const sometimesFailProvider: LLMProvider = {
+        name: 'sometimes-fail',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async () => {
+            callCount++;
+            if (callCount === 1) {
+              throw new Error('First call fails');
+            }
+            return {
+              content: 'Success',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
+      };
+
+      const agent = new Agent({
+        id: 'a',
+        role: 'R',
+        goal: 'G',
+        llmProvider: sometimesFailProvider,
+      });
+      const crew = new Crew({
+        id: 'retry-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      await expect(crew.run()).rejects.toThrow();
+      expect(crew.status).toBe(CrewStatus.ERROR);
+
+      const result = await crew.run();
+      expect(result.success).toBe(true);
+      expect(crew.status).toBe(CrewStatus.COMPLETED);
+    });
+
+    it('should handle non-Error thrown by mock agent execute', async () => {
+      const mockAgent = {
+        id: 'mock-a',
+        execute: vi.fn().mockRejectedValue('string error value'),
+      };
+
+      const crew = new Crew({
+        id: 'non-error-crew',
+        agents: [mockAgent as unknown as Agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'mock-a' }],
+      });
+
+      try {
+        await crew.run();
+        expect.fail('Should have thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(CrewExecutionError);
+        expect((error as CrewExecutionError).message).toContain('string error value');
+        expect((error as CrewExecutionError).taskId).toBe('t');
+      }
+    });
+
+    it('should stop execution when first task in sequence fails', async () => {
+      const failProvider: LLMProvider = {
+        name: 'fail',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockRejectedValue(new Error('Boom')),
+      };
+      const successProvider = createMockLLMProvider();
+
+      const failAgent = new Agent({
+        id: 'fail-a',
+        role: 'R',
+        goal: 'G',
+        llmProvider: failProvider,
+      });
+      const successAgent = new Agent({
+        id: 'ok-a',
+        role: 'R',
+        goal: 'G',
+        llmProvider: successProvider,
+      });
+
+      const crew = new Crew({
+        id: 'partial-crew',
+        agents: [failAgent, successAgent],
+        tasks: [
+          { id: 't1', description: 'Fails', agentId: 'fail-a' },
+          { id: 't2', description: 'Never runs', agentId: 'ok-a' },
+        ],
+      });
+
+      await expect(crew.run()).rejects.toThrow(CrewExecutionError);
+      expect(successProvider.generateText).not.toHaveBeenCalled();
+    });
+
+    it('should wrap error cause in CrewExecutionError', async () => {
+      const originalError = new Error('Root cause');
+      const failProvider: LLMProvider = {
+        name: 'fail',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockRejectedValue(originalError),
+      };
+
+      const agent = new Agent({ id: 'a', role: 'R', goal: 'G', llmProvider: failProvider });
+      const crew = new Crew({
+        id: 'cause-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      try {
+        await crew.run();
+        expect.fail('Should have thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(CrewExecutionError);
+        expect((error as CrewExecutionError).cause).toBeDefined();
+      }
+    });
+
+    it('should report correct crewId in execution error', async () => {
+      const failProvider: LLMProvider = {
+        name: 'fail',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockRejectedValue(new Error('Fail')),
+      };
+
+      const agent = new Agent({ id: 'a', role: 'R', goal: 'G', llmProvider: failProvider });
+      const crew = new Crew({
+        id: 'named-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      try {
+        await crew.run();
+        expect.fail('Should have thrown');
+      } catch (error) {
+        expect((error as CrewExecutionError).crewId).toBe('named-crew');
+      }
+    });
+
+    it('should only execute dependent task after all dependencies complete', async () => {
+      const executionOrder: string[] = [];
+      const failProvider: LLMProvider = {
+        name: 'fail',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async () => {
+            executionOrder.push('dep-b');
+            throw new Error('Dep B fails');
+          }),
+      };
+
+      const a1 = createAgent('a1', 'ok');
+      const a2 = new Agent({ id: 'a2', role: 'R', goal: 'G', llmProvider: failProvider });
+
+      const crew = new Crew({
+        id: 'dep-fail',
+        agents: [a1, a2],
+        tasks: [
+          { id: 'dep-a', description: 'First dep succeeds', agentId: 'a1' },
+          { id: 'dep-b', description: 'Second dep fails', agentId: 'a2' },
+        ],
+      });
+
+      try {
+        await crew.run();
+        expect.fail('Should have thrown');
+      } catch (error) {
+        expect((error as CrewExecutionError).taskId).toBe('dep-b');
+      }
+    });
+  });
+
+  describe('execution — context building', () => {
+    it('should not inject dependencyResults when task has empty deps array', async () => {
+      let capturedMessages: readonly LLMMessage[] = [];
+      const captureProvider: LLMProvider = {
+        name: 'capture',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async (messages) => {
+            capturedMessages = messages;
+            return {
+              content: 'done',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
+      };
+
+      const agent = new Agent({ id: 'a', role: 'R', goal: 'G', llmProvider: captureProvider });
+      const crew = new Crew({
+        id: 'empty-deps',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'Simple task', agentId: 'a', dependencies: [] }],
+      });
+
+      await crew.run();
+
+      const userMsg = capturedMessages.find((m) => m.role === 'user');
+      expect(userMsg).toBeDefined();
+      expect(userMsg!.content).not.toContain('dependencyResults');
+    });
+
+    it('should merge static context with dependency results', async () => {
+      let capturedMessages: readonly LLMMessage[] = [];
+      const secondProvider: LLMProvider = {
+        name: 'capture',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async (messages) => {
+            capturedMessages = messages;
+            return {
+              content: 'Final output',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
+      };
+
+      const a1 = createAgent('a1', 'Dep result');
+      const a2 = new Agent({ id: 'a2', role: 'R', goal: 'G', llmProvider: secondProvider });
+
+      const crew = new Crew({
+        id: 'merge-ctx',
+        agents: [a1, a2],
+        tasks: [
+          { id: 'dep', description: 'Dependency', agentId: 'a1' },
+          {
+            id: 'main',
+            description: 'Main task',
+            agentId: 'a2',
+            dependencies: ['dep'],
+            context: { staticKey: 'staticValue' },
+          },
+        ],
+      });
+
+      await crew.run();
+
+      const userMsg = capturedMessages.find((m) => m.role === 'user');
+      expect(userMsg).toBeDefined();
+      expect(userMsg!.content).toContain('staticKey');
+      expect(userMsg!.content).toContain('staticValue');
+      expect(userMsg!.content).toContain('dependencyResults');
+      expect(userMsg!.content).toContain('Dep result');
+    });
+
+    it('should inject multiple dependency results', async () => {
+      let capturedMessages: readonly LLMMessage[] = [];
+      const captureProvider: LLMProvider = {
+        name: 'capture',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async (messages) => {
+            capturedMessages = messages;
+            return {
+              content: 'Final',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
+      };
+
+      const a1 = createAgent('a1', 'Result-A');
+      const a2 = createAgent('a2', 'Result-B');
+      const a3 = new Agent({ id: 'a3', role: 'R', goal: 'G', llmProvider: captureProvider });
+
+      const crew = new Crew({
+        id: 'multi-dep',
+        agents: [a1, a2, a3],
+        tasks: [
+          { id: 'dep-a', description: 'First dep', agentId: 'a1' },
+          { id: 'dep-b', description: 'Second dep', agentId: 'a2' },
+          {
+            id: 'final',
+            description: 'Uses both',
+            agentId: 'a3',
+            dependencies: ['dep-a', 'dep-b'],
+          },
+        ],
+      });
+
+      await crew.run();
+
+      const userMsg = capturedMessages.find((m) => m.role === 'user');
+      expect(userMsg).toBeDefined();
+      expect(userMsg!.content).toContain('Result-A');
+      expect(userMsg!.content).toContain('Result-B');
+    });
+
+    it('should not include context key when task has no context or dependencies', async () => {
+      let capturedMessages: readonly LLMMessage[] = [];
+      const captureProvider: LLMProvider = {
+        name: 'capture',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async (messages) => {
+            capturedMessages = messages;
+            return {
+              content: 'done',
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
+      };
+
+      const agent = new Agent({ id: 'a', role: 'R', goal: 'G', llmProvider: captureProvider });
+      const crew = new Crew({
+        id: 'plain',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'Plain task', agentId: 'a' }],
+      });
+
+      await crew.run();
+
+      const userMsg = capturedMessages.find((m) => m.role === 'user');
+      expect(userMsg).toBeDefined();
+      expect(userMsg!.content).toBe('Plain task');
+    });
+  });
+
+  describe('topological sort — complex graphs', () => {
+    function makeTrackingAgent(id: string, executionOrder: string[]): Agent {
+      const provider: LLMProvider = {
+        name: `t-${id}`,
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(async () => {
+            executionOrder.push(id);
+            return {
+              content: `out-${id}`,
+              tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+              finishReason: 'stop',
+            };
+          }),
+      };
+      return new Agent({ id, role: 'R', goal: 'G', llmProvider: provider });
+    }
+
+    it('should handle a linear chain (A → B → C → D)', async () => {
+      const executionOrder: string[] = [];
+      const agents = ['a', 'b', 'c', 'd'].map((id) => makeTrackingAgent(id, executionOrder));
+
+      const crew = new Crew({
+        id: 'chain',
+        agents,
+        tasks: [
+          { id: 'td', description: 'D', agentId: 'd', dependencies: ['tc'] },
+          { id: 'tc', description: 'C', agentId: 'c', dependencies: ['tb'] },
+          { id: 'tb', description: 'B', agentId: 'b', dependencies: ['ta'] },
+          { id: 'ta', description: 'A', agentId: 'a' },
+        ],
+      });
+
+      const result = await crew.run();
+
+      expect(executionOrder).toEqual(['a', 'b', 'c', 'd']);
+      expect(result.taskResults.size).toBe(4);
+    });
+
+    it('should handle wide independent tasks', async () => {
+      const executionOrder: string[] = [];
+      const agents = Array.from({ length: 5 }, (_, i) =>
+        makeTrackingAgent(`a${String(i)}`, executionOrder),
+      );
+      const tasks = agents.map((a, i) => ({
+        id: `t${String(i)}`,
+        description: `Task ${String(i)}`,
+        agentId: a.id,
+      }));
+
+      const crew = new Crew({ id: 'wide', agents, tasks });
+      const result = await crew.run();
+
+      expect(result.success).toBe(true);
+      expect(result.taskResults.size).toBe(5);
+      expect(executionOrder).toHaveLength(5);
+    });
+
+    it('should handle complex multi-level DAG', async () => {
+      const executionOrder: string[] = [];
+      const ids = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'];
+      const agents = ids.map((id) => makeTrackingAgent(id, executionOrder));
+
+      //   a1  a2
+      //   |   |
+      //   b1  b2
+      //    \ / \
+      //    c1   c2
+      const crew = new Crew({
+        id: 'complex-dag',
+        agents,
+        tasks: [
+          { id: 'a1', description: 'A1', agentId: 'a1' },
+          { id: 'a2', description: 'A2', agentId: 'a2' },
+          { id: 'b1', description: 'B1', agentId: 'b1', dependencies: ['a1'] },
+          { id: 'b2', description: 'B2', agentId: 'b2', dependencies: ['a2'] },
+          { id: 'c1', description: 'C1', agentId: 'c1', dependencies: ['b1', 'b2'] },
+          { id: 'c2', description: 'C2', agentId: 'c2', dependencies: ['b2'] },
+        ],
+      });
+
+      const result = await crew.run();
+
+      expect(result.success).toBe(true);
+
+      const idxA1 = executionOrder.indexOf('a1');
+      const idxA2 = executionOrder.indexOf('a2');
+      const idxB1 = executionOrder.indexOf('b1');
+      const idxB2 = executionOrder.indexOf('b2');
+      const idxC1 = executionOrder.indexOf('c1');
+      const idxC2 = executionOrder.indexOf('c2');
+
+      expect(idxA1).toBeLessThan(idxB1);
+      expect(idxA2).toBeLessThan(idxB2);
+      expect(idxB1).toBeLessThan(idxC1);
+      expect(idxB2).toBeLessThan(idxC1);
+      expect(idxB2).toBeLessThan(idxC2);
+    });
+
+    it('should handle single task with no dependencies', async () => {
+      const executionOrder: string[] = [];
+      const agent = makeTrackingAgent('solo', executionOrder);
+
+      const crew = new Crew({
+        id: 'solo-crew',
+        agents: [agent],
+        tasks: [{ id: 'only-task', description: 'Only', agentId: 'solo' }],
+      });
+
+      const result = await crew.run();
+
+      expect(result.success).toBe(true);
+      expect(executionOrder).toEqual(['solo']);
+    });
+  });
+
+  describe('event details — extended', () => {
+    it('should emit crew:status-changed with correct status values', async () => {
+      const statusChanges: { crewId: string; status: CrewStatus }[] = [];
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'sc-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      crew.on('crew:status-changed', (crewId, status) => {
+        statusChanges.push({ crewId, status });
+      });
+
+      await crew.run();
+
+      expect(statusChanges).toEqual([
+        { crewId: 'sc-crew', status: CrewStatus.RUNNING },
+        { crewId: 'sc-crew', status: CrewStatus.COMPLETED },
+      ]);
+    });
+
+    it('should emit all events in correct order during successful run', async () => {
+      const events: string[] = [];
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'order-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      crew.on('crew:start', () => {
+        events.push('crew:start');
+      });
+      crew.on('crew:complete', () => {
+        events.push('crew:complete');
+      });
+      crew.on('crew:task:start', () => {
+        events.push('crew:task:start');
+      });
+      crew.on('crew:task:complete', () => {
+        events.push('crew:task:complete');
+      });
+      crew.on('crew:status-changed', (_id, status) => {
+        events.push(`status:${status}`);
+      });
+
+      await crew.run();
+
+      expect(events).toEqual([
+        'status:running',
+        'crew:start',
+        'crew:task:start',
+        'crew:task:complete',
+        'status:completed',
+        'crew:complete',
+      ]);
+    });
+
+    it('should emit all events in correct order during failed run', async () => {
+      const events: string[] = [];
+      const failProvider: LLMProvider = {
+        name: 'fail',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockRejectedValue(new Error('Boom')),
+      };
+      const agent = new Agent({ id: 'a', role: 'R', goal: 'G', llmProvider: failProvider });
+      const crew = new Crew({
+        id: 'fail-order',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      crew.on('crew:start', () => {
+        events.push('crew:start');
+      });
+      crew.on('crew:error', () => {
+        events.push('crew:error');
+      });
+      crew.on('crew:task:start', () => {
+        events.push('crew:task:start');
+      });
+      crew.on('crew:task:error', () => {
+        events.push('crew:task:error');
+      });
+      crew.on('crew:status-changed', (_id, status) => {
+        events.push(`status:${status}`);
+      });
+
+      await expect(crew.run()).rejects.toThrow();
+
+      expect(events).toEqual([
+        'status:running',
+        'crew:start',
+        'crew:task:start',
+        'crew:task:error',
+        'status:error',
+        'crew:error',
+      ]);
+    });
+
+    it('should support multiple listeners on same event', async () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'multi-listener',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      const listener1 = vi.fn();
+      const listener2 = vi.fn();
+      crew.on('crew:start', listener1);
+      crew.on('crew:start', listener2);
+
+      await crew.run();
+
+      expect(listener1).toHaveBeenCalledOnce();
+      expect(listener2).toHaveBeenCalledOnce();
+    });
+
+    it('should pass crew:task:complete result with correct shape', async () => {
+      const agent = createAgent('a', 'Expected output');
+      const crew = new Crew({
+        id: 'result-shape',
+        agents: [agent],
+        tasks: [{ id: 'my-task', description: 'Do it', agentId: 'a' }],
+      });
+
+      const taskResults: { crewId: string; taskId: string; output: string }[] = [];
+      crew.on('crew:task:complete', (crewId, taskId, result) => {
+        taskResults.push({ crewId, taskId, output: result.output });
+      });
+
+      await crew.run();
+
+      expect(taskResults).toEqual([
+        { crewId: 'result-shape', taskId: 'my-task', output: 'Expected output' },
+      ]);
+    });
+  });
+
+  describe('run result structure', () => {
+    it('should include correct duration measurement', async () => {
+      const delayProvider: LLMProvider = {
+        name: 'delay',
+        generateText: vi
+          .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
+          .mockImplementation(
+            () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve({
+                    content: 'done',
+                    tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+                    finishReason: 'stop',
+                  });
+                }, 50);
+              }),
+          ),
+      };
+
+      const agent = new Agent({ id: 'a', role: 'R', goal: 'G', llmProvider: delayProvider });
+      const crew = new Crew({
+        id: 'duration-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      const result = await crew.run();
+
+      expect(result.duration).toBeGreaterThanOrEqual(40);
+      expect(result.duration).toBeLessThan(5000);
+    });
+
+    it('should include task results with correct agent metadata', async () => {
+      const agent = createAgent('my-agent', 'My output');
+      const crew = new Crew({
+        id: 'meta-crew',
+        agents: [agent],
+        tasks: [{ id: 'my-task', description: 'x', agentId: 'my-agent' }],
+      });
+
+      const result = await crew.run();
+      const taskResult = result.taskResults.get('my-task');
+
+      expect(taskResult).toBeDefined();
+      expect(taskResult!.output).toBe('My output');
+      expect(taskResult!.agentId).toBe('my-agent');
+      expect(taskResult!.duration).toBeGreaterThanOrEqual(0);
+      expect(taskResult!.tokenUsage).toBeDefined();
+    });
+
+    it('should return all task results keyed by task id', async () => {
+      const a1 = createAgent('a1', 'Output-1');
+      const a2 = createAgent('a2', 'Output-2');
+      const a3 = createAgent('a3', 'Output-3');
+
+      const crew = new Crew({
+        id: 'results-crew',
+        agents: [a1, a2, a3],
+        tasks: [
+          { id: 'task-1', description: 'First', agentId: 'a1' },
+          { id: 'task-2', description: 'Second', agentId: 'a2' },
+          { id: 'task-3', description: 'Third', agentId: 'a3', dependencies: ['task-1'] },
+        ],
+      });
+
+      const result = await crew.run();
+
+      expect(result.taskResults.size).toBe(3);
+      expect(result.taskResults.get('task-1')!.output).toBe('Output-1');
+      expect(result.taskResults.get('task-2')!.output).toBe('Output-2');
+      expect(result.taskResults.get('task-3')!.output).toBe('Output-3');
+    });
+
+    it('should set crewId on the result', async () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'id-check',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      const result = await crew.run();
+      expect(result.crewId).toBe('id-check');
+    });
+  });
+
+  describe('read-only accessors', () => {
+    it('should expose agents as ReadonlyMap', () => {
+      const agent = createAgent('test-agent');
+      const crew = new Crew({
+        id: 'ro-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'test-agent' }],
+      });
+
+      const agents = crew.agents;
+      expect(agents.get('test-agent')).toBe(agent);
+      expect(agents.size).toBe(1);
+      expect(agents.has('test-agent')).toBe(true);
+      expect(agents.has('nonexistent')).toBe(false);
+    });
+
+    it('should expose tasks as readonly array preserving order', () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'ro-crew',
+        agents: [agent],
+        tasks: [
+          { id: 't1', description: 'First', agentId: 'a' },
+          { id: 't2', description: 'Second', agentId: 'a' },
+          { id: 't3', description: 'Third', agentId: 'a' },
+        ],
+      });
+
+      expect(crew.tasks).toHaveLength(3);
+      expect(crew.tasks[0]!.id).toBe('t1');
+      expect(crew.tasks[1]!.id).toBe('t2');
+      expect(crew.tasks[2]!.id).toBe('t3');
+    });
+
+    it('should expose status reflecting current lifecycle state', () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'status-check',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      expect(crew.status).toBe(CrewStatus.IDLE);
+    });
+  });
+
+  describe('idempotency and re-runs', () => {
+    it('should produce consistent results across multiple runs', async () => {
+      const agent = createAgent('a', 'Consistent output');
+      const crew = new Crew({
+        id: 'idempotent-crew',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      const result1 = await crew.run();
+      crew.reset();
+      const result2 = await crew.run();
+
+      expect(result1.taskResults.get('t')!.output).toBe(result2.taskResults.get('t')!.output);
+      expect(result1.success).toBe(result2.success);
+    });
+
+    it('should emit events on each run after reset', async () => {
+      const agent = createAgent('a');
+      const crew = new Crew({
+        id: 'rerun-events',
+        agents: [agent],
+        tasks: [{ id: 't', description: 'x', agentId: 'a' }],
+      });
+
+      const startCalls = vi.fn();
+      crew.on('crew:start', startCalls);
+
+      await crew.run();
+      crew.reset();
+      await crew.run();
+      crew.reset();
+      await crew.run();
+
+      expect(startCalls).toHaveBeenCalledTimes(3);
+    });
+  });
 });
