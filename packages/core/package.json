@@ -1,0 +1,72 @@
+{
+  "name": "@crewspace/core",
+  "version": "0.1.0",
+  "description": "Core agent orchestration framework for Crewspace — define and run multi-agent workflows in pure TypeScript",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean && rimraf dist",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "eventemitter3": "^5.0.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "rimraf": "^6.0.1"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "agent",
+    "orchestration",
+    "multi-agent",
+    "typescript",
+    "ai",
+    "llm",
+    "framework",
+    "crewspace",
+    "workflow",
+    "event-driven"
+  ],
+  "homepage": "https://github.com/aviferdman/ProjectX2-Product#readme",
+  "bugs": {
+    "url": "https://github.com/aviferdman/ProjectX2-Product/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aviferdman/ProjectX2-Product.git",
+    "directory": "packages/core"
+  }
+}
