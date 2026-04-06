@@ -38,4 +38,11 @@ export type {
   TaskResult,
 } from "./task.js";
 
-export type { Tool } from "./tool.js";
+export { ToolCategory, ToolPermission } from "./tool.js";
+export type {
+  Tool,
+  ToolEventMap,
+  ToolParameterSchema,
+  ToolPermissionPolicy,
+  ToolResult,
+} from "./tool.js";

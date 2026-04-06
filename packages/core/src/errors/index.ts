@@ -19,3 +19,10 @@ export {
   TaskExecutionError,
   TaskTimeoutError,
 } from "./task-errors.js";
+export {
+  ToolConfigError,
+  ToolExecutionError,
+  ToolNotFoundError,
+  ToolPermissionError,
+  ToolTimeoutError,
+} from "./tool-errors.js";
