@@ -39,6 +39,7 @@ export {
   createAnthropicProvider,
   createOpenAIProvider,
   createRetryProvider,
+  createUsageTrackingProvider,
   DefaultLLMStreamResponse,
   isRetryableError,
   isStreamingProvider,
@@ -51,6 +52,8 @@ export {
   ModelCatalog,
   OpenAIProvider,
   RetryLLMProvider,
+  TokenUsageTracker,
+  UsageTrackingProvider,
   validateLLMMessages,
   validateLLMProviderConfig,
   withRetry,
@@ -63,6 +66,12 @@ export type {
   RetryContext,
   RetryLLMProviderOptions,
   RetryStats,
+  UsageRecord,
+  UsageRecordInput,
+  UsageReport,
+  UsageSummary,
+  UsageTrackingProviderOptions,
+  UsageTrackingProviderResult,
 } from './llm/index.js';
 
 // Types
