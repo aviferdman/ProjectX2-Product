@@ -15,6 +15,7 @@ export {
   LLMStreamError,
 } from './llm-errors.js';
 export {
+<<<<<<< HEAD
   CircularDependencyError,
   TaskConfigError,
   TaskExecutionError,
@@ -22,6 +23,8 @@ export {
 } from './task-errors.js';
 export type { DependencyCycle } from './task-errors.js';
 export {
+=======
+>>>>>>> agent/developer/development-developer-c62
   ToolCompositionError,
   ToolConfigError,
   ToolExecutionError,
