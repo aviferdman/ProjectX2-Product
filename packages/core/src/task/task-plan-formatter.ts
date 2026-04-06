@@ -143,13 +143,15 @@ export function formatTaskPlanTree(
 
   // Render each level
   for (let levelIdx = 0; levelIdx < levels.length; levelIdx++) {
-    const level = levels[levelIdx]!;
+    const level = levels[levelIdx];
+    if (!level) continue;
     const levelLabel =
       level.length > 1 ? `Level ${String(levelIdx)} (parallel)` : `Level ${String(levelIdx)}`;
     lines.push(`${levelLabel}:`);
 
     for (let taskIdx = 0; taskIdx < level.length; taskIdx++) {
-      const task = level[taskIdx]!;
+      const task = level[taskIdx];
+      if (!task) continue;
       const isLast = taskIdx === level.length - 1;
       const prefix = ' '.repeat(indent);
       const connector = isLast ? BOX.last : BOX.branch;
@@ -264,7 +266,8 @@ export function formatTaskDependencyTree(
       .filter((d) => !visited.has(d.id));
 
     for (let i = 0; i < deps.length; i++) {
-      const dep = deps[i]!;
+      const dep = deps[i];
+      if (!dep) continue;
       const isLast = i === deps.length - 1;
       const connector = isLast ? BOX.last : BOX.branch;
       const nextPrefix = prefix + (isLast ? BOX.space : BOX.pipe);

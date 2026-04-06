@@ -534,7 +534,7 @@ describe('@tool decorator', () => {
 
   it('binds method to instance (preserves this)', async () => {
     class Stateful {
-      private prefix = 'PREFIX';
+      private readonly prefix = 'PREFIX';
 
       @tool({ description: 'Uses this' })
       async format(input: unknown): Promise<string> {
@@ -598,7 +598,6 @@ describe('@tool decorator', () => {
 
   it('throws ToolConfigError for invalid name at decoration time', () => {
     expect(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       class Bad {
         @tool({ name: '123bad', description: 'Invalid' })
         async method(_input: unknown): Promise<unknown> {
@@ -610,7 +609,6 @@ describe('@tool decorator', () => {
 
   it('throws ToolConfigError for empty description at decoration time', () => {
     expect(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       class Bad {
         @tool({ description: '' })
         async method(_input: unknown): Promise<unknown> {

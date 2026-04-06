@@ -44,7 +44,12 @@ function convertZodNode(node: ZodType): ToolParameterSchema {
       return withDescription(def, { type: 'boolean' });
     case 'ZodLiteral':
       return withDescription(def, {
-        type: typeof def['value'] === 'string' ? 'string' : typeof def['value'] === 'number' ? 'number' : 'string',
+        type:
+          typeof def['value'] === 'string'
+            ? 'string'
+            : typeof def['value'] === 'number'
+              ? 'number'
+              : 'string',
         enum: [def['value']],
       });
     case 'ZodEnum': {
@@ -53,7 +58,9 @@ function convertZodNode(node: ZodType): ToolParameterSchema {
     }
     case 'ZodNativeEnum': {
       const enumObj = def['values'] as Record<string, unknown>;
-      const values = Object.values(enumObj).filter((v) => typeof v === 'string' || typeof v === 'number');
+      const values = Object.values(enumObj).filter(
+        (v) => typeof v === 'string' || typeof v === 'number',
+      );
       return withDescription(def, { type: 'string', enum: values });
     }
     case 'ZodArray': {
@@ -96,13 +103,19 @@ function convertZodNode(node: ZodType): ToolParameterSchema {
     case 'ZodUnion': {
       const options = def['options'] as ZodType[];
       if (options.length === 1) {
-        return convertZodNode(options[0]!);
+        const firstOption = options[0];
+        if (firstOption) {
+          return convertZodNode(firstOption);
+        }
       }
       // Simple heuristic: if all options are the same primitive, use that type
       const types = options.map((o) => convertZodNode(o));
       const uniqueTypes = new Set(types.map((t) => t.type));
       if (uniqueTypes.size === 1) {
-        return { type: types[0]!.type };
+        const firstType = types[0];
+        if (firstType) {
+          return { type: firstType.type };
+        }
       }
       return { type: 'string', description: 'union type' };
     }
@@ -117,7 +130,9 @@ function convertZodNode(node: ZodType): ToolParameterSchema {
 /** @internal */
 function isOptionalZod(node: ZodType): boolean {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-  const typeName = ((node as any)._def as Record<string, unknown>)['typeName'] as string | undefined;
+  const typeName = ((node as any)._def as Record<string, unknown>)['typeName'] as
+    | string
+    | undefined;
   return typeName === 'ZodOptional' || typeName === 'ZodDefault';
 }
 
@@ -206,9 +221,7 @@ export interface DefineToolOptions<TInput, TOutput> {
  * });
  * ```
  */
-export function defineTool<TInput, TOutput>(
-  options: DefineToolOptions<TInput, TOutput>,
-): Tool {
+export function defineTool<TInput, TOutput>(options: DefineToolOptions<TInput, TOutput>): Tool {
   // Convert Zod schema to JSON Schema for the Tool interface
   const inputSchema = zodToToolSchema(options.schema);
 
@@ -246,7 +259,7 @@ export function defineTool<TInput, TOutput>(
     ...(options.outputSchema !== undefined && { outputSchema: options.outputSchema }),
     ...(options.timeout !== undefined && { timeout: options.timeout }),
     async execute(input: unknown): Promise<unknown> {
-      const parsed = zodSchema.parse(input) as TInput;
+      const parsed = zodSchema.parse(input);
       return userExecute(parsed);
     },
   };

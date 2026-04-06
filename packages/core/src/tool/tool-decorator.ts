@@ -82,7 +82,7 @@ interface StoredToolMeta extends ToolDecoratorOptions {
 const _toolMetadata = new WeakMap<object, StoredToolMeta[]>();
 
 /** @internal Get (or create) the metadata list for a given prototype. */
-function _getMetadataList(proto: object): StoredToolMeta[] {
+function getMetadataList(proto: object): StoredToolMeta[] {
   let list = _toolMetadata.get(proto);
   if (!list) {
     list = [];
@@ -139,8 +139,8 @@ export function tool(options: ToolDecoratorOptions) {
     }
 
     // Store metadata on the prototype.
-    const proto = _target as object;
-    const list = _getMetadataList(proto);
+    const proto = _target;
+    const list = getMetadataList(proto);
     list.push({
       ...options,
       resolvedName,
