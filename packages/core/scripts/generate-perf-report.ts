@@ -10,7 +10,11 @@
  * @packageDocumentation
  */
 
+<<<<<<< HEAD
 import { writeFileSync } from 'node:fs';
+=======
+import { readFileSync, writeFileSync } from 'node:fs';
+>>>>>>> agent/developer/development-developer-c71
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -122,6 +126,7 @@ export function generateReport(
 function trendIcon(trend: ReportEntry['trend']): string {
   switch (trend) {
     case 'faster':
+<<<<<<< HEAD
       return '\ud83d\ude80';
     case 'slower':
       return '\ud83d\udc22';
@@ -129,6 +134,15 @@ function trendIcon(trend: ReportEntry['trend']): string {
       return '\u2705';
     case 'new':
       return '\ud83c\udd95';
+=======
+      return '🚀';
+    case 'slower':
+      return '🐢';
+    case 'stable':
+      return '✅';
+    case 'new':
+      return '🆕';
+>>>>>>> agent/developer/development-developer-c71
   }
 }
 
@@ -145,7 +159,11 @@ function buildMarkdown(
   lines.push(`**Generated:** ${timestamp}`);
   lines.push(`**Total benchmarks:** ${String(totalBenchmarks)}`);
   lines.push(
+<<<<<<< HEAD
     `**Budget compliance:** ${allWithinBudget ? '\u2705 All within budget' : '\u274c Some benchmarks exceed budget'}`,
+=======
+    `**Budget compliance:** ${allWithinBudget ? '✅ All within budget' : '❌ Some benchmarks exceed budget'}`,
+>>>>>>> agent/developer/development-developer-c71
   );
   lines.push('');
   lines.push('---');
@@ -159,7 +177,11 @@ function buildMarkdown(
 
     for (const entry of entries) {
       const icon = trendIcon(entry.trend);
+<<<<<<< HEAD
       const status = entry.withinBudget ? '\u2705' : '\u274c';
+=======
+      const status = entry.withinBudget ? '✅' : '❌';
+>>>>>>> agent/developer/development-developer-c71
       lines.push(
         `| ${icon} | ${entry.name} | ${entry.avgMs.toFixed(3)}ms | ${entry.p95Ms.toFixed(3)}ms | ${String(entry.budget)}ms | ${status} |`,
       );
@@ -173,10 +195,17 @@ function buildMarkdown(
   lines.push('');
   lines.push('| Icon | Meaning |');
   lines.push('|------|---------|');
+<<<<<<< HEAD
   lines.push('| \ud83d\ude80 | Faster than baseline (>5% improvement) |');
   lines.push('| \u2705 | Stable (within \u00b15% of baseline) |');
   lines.push('| \ud83d\udc22 | Slower than baseline (>5% regression) |');
   lines.push('| \ud83c\udd95 | New benchmark (no baseline) |');
+=======
+  lines.push('| 🚀 | Faster than baseline (>5% improvement) |');
+  lines.push('| ✅ | Stable (within ±5% of baseline) |');
+  lines.push('| 🐢 | Slower than baseline (>5% regression) |');
+  lines.push('| 🆕 | New benchmark (no baseline) |');
+>>>>>>> agent/developer/development-developer-c71
   lines.push('');
   lines.push(
     '*Budgets are p95 latency thresholds. See CONTRIBUTING.md for performance policy.*',
@@ -261,4 +290,8 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
 const __filename = fileURLToPath(import.meta.url);
 if (process.argv[1] === __filename || process.argv[1]?.endsWith('generate-perf-report.ts')) {
   process.exit(main());
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> agent/developer/development-developer-c71
