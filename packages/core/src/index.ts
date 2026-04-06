@@ -30,7 +30,9 @@ export type {
 
 // LLM Provider
 export {
+  AnthropicProvider,
   BaseLLMProvider,
+  createAnthropicProvider,
   createOpenAIProvider,
   DefaultLLMStreamResponse,
   isStreamingProvider,

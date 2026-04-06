@@ -6,7 +6,12 @@
 
 export { BaseLLMProvider } from './base-provider.js';
 export { ModelCatalog } from './model-catalog.js';
-export { createOpenAIProvider, OpenAIProvider } from './providers/index.js';
+export {
+  createAnthropicProvider,
+  AnthropicProvider,
+  createOpenAIProvider,
+  OpenAIProvider,
+} from './providers/index.js';
 export { LLMProviderRegistry } from './provider-registry.js';
 export { DefaultLLMStreamResponse } from './stream-response.js';
 export { isStreamingProvider } from './type-guards.js';
