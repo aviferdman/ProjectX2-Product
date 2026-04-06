@@ -1,4 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as os from 'node:os';
 
 import { createProgram } from '../../src/program.js';
 import { CLI_VERSION } from '../../src/index.js';
@@ -69,34 +72,42 @@ describe('createProgram', () => {
 
 describe('argument parsing', () => {
   let program: ReturnType<typeof createProgram>;
+  let tmpDir: string;
 
   beforeEach(() => {
     program = createProgram();
     program.exitOverride();
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'crewspace-cli-test-'));
+  });
+
+  afterEach(() => {
+    if (fs.existsSync(tmpDir)) {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
   });
 
   it('should parse --verbose flag', async () => {
-    await program.parseAsync(['--verbose', 'init'], { from: 'user' });
+    await program.parseAsync(['--verbose', 'init', tmpDir], { from: 'user' });
     expect(program.opts()['verbose']).toBe(true);
   });
 
   it('should parse --quiet flag', async () => {
-    await program.parseAsync(['--quiet', 'init'], { from: 'user' });
+    await program.parseAsync(['--quiet', 'init', tmpDir], { from: 'user' });
     expect(program.opts()['quiet']).toBe(true);
   });
 
   it('should parse --config <path>', async () => {
-    await program.parseAsync(['--config', 'my.config.ts', 'init'], { from: 'user' });
+    await program.parseAsync(['--config', 'my.config.ts', 'init', tmpDir], { from: 'user' });
     expect(program.opts()['config']).toBe('my.config.ts');
   });
 
   it('should parse --log-level <level>', async () => {
-    await program.parseAsync(['--log-level', 'debug', 'init'], { from: 'user' });
+    await program.parseAsync(['--log-level', 'debug', 'init', tmpDir], { from: 'user' });
     expect(program.opts()['logLevel']).toBe('debug');
   });
 
   it('should parse --cwd <dir>', async () => {
-    await program.parseAsync(['--cwd', '/tmp/project', 'init'], { from: 'user' });
+    await program.parseAsync(['--cwd', '/tmp/project', 'init', tmpDir], { from: 'user' });
     expect(program.opts()['cwd']).toBe('/tmp/project');
   });
 
@@ -108,19 +119,20 @@ describe('argument parsing', () => {
 
   it('should parse init command with directory argument', async () => {
     const initCmd = program.commands.find((c) => c.name() === 'init')!;
-    await program.parseAsync(['init', 'my-project'], { from: 'user' });
-    expect(initCmd.args).toContain('my-project');
+    const dir = path.join(tmpDir, 'my-project');
+    await program.parseAsync(['init', dir], { from: 'user' });
+    expect(initCmd.args).toContain(dir);
   });
 
   it('should parse init --template option', async () => {
     const initCmd = program.commands.find((c) => c.name() === 'init')!;
-    await program.parseAsync(['init', '--template', 'minimal'], { from: 'user' });
+    await program.parseAsync(['init', '--template', 'minimal', tmpDir], { from: 'user' });
     expect(initCmd.opts()['template']).toBe('minimal');
   });
 
   it('should parse init --force option', async () => {
     const initCmd = program.commands.find((c) => c.name() === 'init')!;
-    await program.parseAsync(['init', '--force'], { from: 'user' });
+    await program.parseAsync(['init', '--force', tmpDir], { from: 'user' });
     expect(initCmd.opts()['force']).toBe(true);
   });
 
