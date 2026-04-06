@@ -24,6 +24,8 @@
     "typecheck": "npm run typecheck --workspaces",
     "version:check": "tsx scripts/check-versions.ts",
     "publish:prepare": "tsx scripts/prepare-publish.ts",
+    "release": "tsx scripts/release.ts",
+    "release:dry-run": "tsx scripts/release.ts --dry-run",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
