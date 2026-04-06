@@ -17,6 +17,8 @@ import type { Agent } from '../agent/agent.js';
 import { EngineConfigError, EngineExecutionError } from '../errors/engine-errors.js';
 import { TaskTimeoutError } from '../errors/task-errors.js';
 import type { Task } from '../task/task.js';
+import { TaskContextManager } from '../task/task-context-manager.js';
+import type { TaskContextManagerConfig } from '../task/task-context-manager.js';
 import type { TaskInput, TaskResult } from '../types/task.js';
 import { TaskStatus } from '../types/task.js';
 import type {
@@ -139,7 +141,7 @@ export class ExecutionEngine {
   private readonly _beforeHooks: BeforeTaskHook[];
   private readonly _afterHooks: AfterTaskHook[];
   private readonly _errorHooks: OnTaskErrorHook[];
-  private readonly _contextManager: TaskContextManager | undefined;
+  private readonly _contextManager: TaskContextManager;
   private _status: EngineStatus;
   private _cancelled: boolean;
 
@@ -160,6 +162,7 @@ export class ExecutionEngine {
       this._beforeHooks = [];
       this._afterHooks = [];
       this._errorHooks = [];
+      this._contextManager = new TaskContextManager(config.contextManager);
       this._status = EngineStatus.IDLE;
       this._cancelled = false;
     } catch (error) {
@@ -191,6 +194,11 @@ export class ExecutionEngine {
   /** Read-only view of registered agents. */
   get agents(): ReadonlyMap<string, Agent> {
     return this._agents;
+  }
+
+  /** The context manager used for dependency result propagation. */
+  get contextManager(): TaskContextManager {
+    return this._contextManager;
   }
 
   // -------------------------------------------------------------------------
@@ -345,6 +353,7 @@ export class ExecutionEngine {
 
     this._validateBeforeRun();
     this._cancelled = false;
+    this._contextManager.clear();
     this._setStatus(EngineStatus.RUNNING);
     this._emit('engine:start', this.id);
 
@@ -426,6 +435,7 @@ export class ExecutionEngine {
     }
     this._tasks.clear();
     this._agents.clear();
+    this._contextManager.clear();
     this._cancelled = false;
     this._setStatus(EngineStatus.IDLE);
   }
@@ -584,7 +594,7 @@ export class ExecutionEngine {
 
   private async _executeTask(
     task: Task,
-    completedResults: ReadonlyMap<string, TaskResult>,
+    _completedResults: ReadonlyMap<string, TaskResult>,
   ): Promise<TaskResult> {
     const agentId = task.agentId;
     if (!agentId) {
@@ -617,7 +627,7 @@ export class ExecutionEngine {
       }
 
       try {
-        const taskInput = this._buildTaskInput(task, completedResults);
+        const taskInput = this._contextManager.buildTaskInput(task);
         let result: TaskResult;
 
         if (task.timeout > 0) {
@@ -625,6 +635,9 @@ export class ExecutionEngine {
         } else {
           result = await agent.execute(taskInput);
         }
+
+        // Store result in context manager for downstream dependents
+        this._contextManager.setResult(task.id, result);
 
         task.complete(result);
         this._emit('engine:task:complete', this.id, task.id, result);
@@ -728,48 +741,6 @@ export class ExecutionEngine {
     for (const hook of this._errorHooks) {
       await hook(task, error);
     }
-  }
-
-  // -------------------------------------------------------------------------
-  // Task input building
-  // -------------------------------------------------------------------------
-
-  private _buildTaskInput(
-    task: Task,
-    completedResults: ReadonlyMap<string, TaskResult>,
-  ): TaskInput {
-    const context: Record<string, unknown> = { ...task.context };
-
-    if (task.dependencies.length > 0) {
-      const dependencyOutputs: Record<string, string> = {};
-      for (const depId of task.dependencies) {
-        const depResult = completedResults.get(depId);
-        if (depResult) {
-          dependencyOutputs[depId] = depResult.output;
-        }
-      }
-      if (Object.keys(dependencyOutputs).length > 0) {
-        context['dependencyResults'] = dependencyOutputs;
-      }
-    }
-
-    const input: {
-      description: string;
-      expectedOutput?: string;
-      context?: Record<string, unknown>;
-    } = {
-      description: task.description,
-    };
-
-    if (task.expectedOutput) {
-      input.expectedOutput = task.expectedOutput;
-    }
-
-    if (Object.keys(context).length > 0) {
-      input.context = context;
-    }
-
-    return input;
   }
 
   // -------------------------------------------------------------------------

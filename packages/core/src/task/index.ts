@@ -19,3 +19,9 @@ export {
   topologicalSort as schedulerTopologicalSort,
 } from './task-scheduler.js';
 export type { TopologicalSortResult } from './task-scheduler.js';
+export { TaskContextManager } from './task-context-manager.js';
+export type {
+  ContextMergeStrategy,
+  ContextTransformer,
+  TaskContextManagerConfig,
+} from './task-context-manager.js';
