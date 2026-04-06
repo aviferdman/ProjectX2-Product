@@ -75,7 +75,7 @@ export type {
 } from './llm/index.js';
 
 // Types
-export { AgentStatus, CrewStatus, LLMRole, TaskPriority, TaskStatus } from './types/index.js';
+export { AgentStatus, CrewStatus, LLMRole, TaskPriority, TaskStatus, ToolCategory, ToolPermission } from './types/index.js';
 export type {
   AgentConfig,
   AgentEventMap,
@@ -99,7 +99,50 @@ export type {
   TaskResult,
   TokenUsage,
   Tool,
+  ToolEventMap,
+  ToolParameterSchema,
+  ToolPermissionPolicy,
+  ToolResult,
 } from './types/index.js';
+
+// Tool System
+export {
+  ALLOW_ALL_POLICY,
+  DENY_ALL_POLICY,
+  isValidTool,
+  PermissionManager,
+  ToolConfigSchema,
+  ToolExecutor,
+  ToolParameterSchemaSchema,
+  ToolPermissionPolicySchema,
+  ToolRegistry,
+  validateToolConfig,
+  validateToolPermissionPolicy,
+} from './tool/index.js';
+
+// Built-in Tools
+export {
+  createFileTools,
+  createListFilesTool,
+  createReadFileTool,
+  createWriteFileTool,
+  DEFAULT_MAX_ENTRIES,
+  HARD_MAX_ENTRIES,
+  matchesPattern,
+  MAX_READ_SIZE,
+  MAX_WRITE_SIZE,
+} from './tools/index.js';
+export type {
+  FileEntry,
+  FileTools,
+  FileToolsOptions,
+  ListFilesInput,
+  ListFilesOutput,
+  ReadFileInput,
+  ReadFileOutput,
+  WriteFileInput,
+  WriteFileOutput,
+} from './tools/index.js';
 
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
@@ -113,3 +156,10 @@ export {
   LLMStreamError,
 } from './errors/index.js';
 export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './errors/index.js';
+export {
+  ToolConfigError,
+  ToolExecutionError,
+  ToolNotFoundError,
+  ToolPermissionError,
+  ToolTimeoutError,
+} from './errors/index.js';
