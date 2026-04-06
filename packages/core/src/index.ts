@@ -120,7 +120,7 @@ export {
   validateToolPermissionPolicy,
 } from './tool/index.js';
 
-// Built-in Tools
+// Built-in Tools — File
 export {
   createFileTools,
   createListFilesTool,
@@ -142,6 +142,39 @@ export type {
   ReadFileOutput,
   WriteFileInput,
   WriteFileOutput,
+} from './tools/index.js';
+
+// Built-in Tools — Web
+export {
+  createFetchUrlTool,
+  createParseHtmlTool,
+  createWebSearchTool,
+  createWebTools,
+  decodeHtmlEntities,
+  DEFAULT_MAX_RESULTS,
+  DEFAULT_TIMEOUT_MS,
+  DEFAULT_USER_AGENT,
+  extractLinks,
+  extractMetadata,
+  extractTitle,
+  HARD_MAX_RESULTS,
+  MAX_RESPONSE_SIZE,
+  stripTags,
+} from './tools/index.js';
+export type {
+  ExtractedLink,
+  FetchUrlInput,
+  FetchUrlOutput,
+  FetchUrlToolOptions,
+  HtmlMetadata,
+  ParseHtmlInput,
+  ParseHtmlOutput,
+  SearchResult,
+  WebSearchInput,
+  WebSearchOutput,
+  WebSearchToolOptions,
+  WebTools,
+  WebToolsOptions,
 } from './tools/index.js';
 
 // Errors
