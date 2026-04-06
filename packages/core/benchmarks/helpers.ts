@@ -7,8 +7,12 @@
  */
 
 import { appendFileSync } from 'node:fs';
+<<<<<<< HEAD
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+=======
+import { resolve } from 'node:path';
+>>>>>>> agent/developer/development-developer-c71
 
 import { Agent } from '../src/agent/agent.js';
 import { Task } from '../src/task/task.js';
@@ -25,8 +29,12 @@ import type { LLMProvider, LLMMessage, LLMResponse, Tool } from '../src/types/in
 // downstream regression detection and dashboard generation.
 // ---------------------------------------------------------------------------
 
+<<<<<<< HEAD
 const BENCH_DIR = dirname(fileURLToPath(import.meta.url));
 const RESULTS_FILE = resolve(BENCH_DIR, '..', 'benchmark-results-detailed.jsonl');
+=======
+const RESULTS_FILE = resolve(process.cwd(), 'benchmark-results-detailed.jsonl');
+>>>>>>> agent/developer/development-developer-c71
 
 function collectResult(result: BenchmarkResult): void {
   try {
