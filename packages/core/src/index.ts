@@ -177,6 +177,22 @@ export type {
   WebToolsOptions,
 } from './tools/index.js';
 
+// Built-in Tools — Shell
+export {
+  createExecCommandTool,
+  createShellTools,
+  DENIED_COMMANDS,
+  MAX_OUTPUT_SIZE,
+  MAX_TIMEOUT_MS,
+  SHELL_DEFAULT_TIMEOUT_MS,
+} from './tools/index.js';
+export type {
+  ExecCommandInput,
+  ExecCommandOutput,
+  ShellTools,
+  ShellToolsOptions,
+} from './tools/index.js';
+
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';

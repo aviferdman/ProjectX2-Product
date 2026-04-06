@@ -63,3 +63,19 @@ export type {
   WebTools,
   WebToolsOptions,
 } from './web/index.js';
+
+export {
+  createExecCommandTool,
+  createShellTools,
+  DEFAULT_TIMEOUT_MS as SHELL_DEFAULT_TIMEOUT_MS,
+  DENIED_COMMANDS,
+  MAX_OUTPUT_SIZE,
+  MAX_TIMEOUT_MS,
+} from './shell/index.js';
+
+export type {
+  ExecCommandInput,
+  ExecCommandOutput,
+  ShellTools,
+  ShellToolsOptions,
+} from './shell/index.js';
