@@ -160,6 +160,7 @@ export {
   DENY_ALL_POLICY,
   hasTools,
   isValidTool,
+  parseToolInput,
   PermissionManager,
   tool,
   ToolConfigSchema,
@@ -181,9 +182,12 @@ export {
   createWriteFileTool,
   DEFAULT_MAX_ENTRIES,
   HARD_MAX_ENTRIES,
+  ListFilesInputSchema,
   matchesPattern,
   MAX_READ_SIZE,
   MAX_WRITE_SIZE,
+  ReadFileInputSchema,
+  WriteFileInputSchema,
 } from './tools/index.js';
 export type {
   FileEntry,
@@ -210,9 +214,12 @@ export {
   extractLinks,
   extractMetadata,
   extractTitle,
+  FetchUrlInputSchema,
   HARD_MAX_RESULTS,
   MAX_RESPONSE_SIZE,
+  ParseHtmlInputSchema,
   stripTags,
+  WebSearchInputSchema,
 } from './tools/index.js';
 export type {
   ExtractedLink,
@@ -245,7 +252,9 @@ export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './errors/
 export {
   ToolConfigError,
   ToolExecutionError,
+  ToolInputValidationError,
   ToolNotFoundError,
   ToolPermissionError,
   ToolTimeoutError,
 } from './errors/index.js';
+export type { ToolValidationIssue } from './errors/index.js';

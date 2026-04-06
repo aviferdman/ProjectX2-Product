@@ -256,6 +256,7 @@ export function defineTool<TInput, TOutput>(options: DefineToolOptions<TInput, T
     ...(options.category !== undefined && { category: options.category }),
     ...(options.permissions !== undefined && { permissions: options.permissions }),
     inputSchema,
+    inputZodSchema: zodSchema,
     ...(options.outputSchema !== undefined && { outputSchema: options.outputSchema }),
     ...(options.timeout !== undefined && { timeout: options.timeout }),
     async execute(input: unknown): Promise<unknown> {

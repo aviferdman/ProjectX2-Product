@@ -10,6 +10,8 @@
  * @packageDocumentation
  */
 
+import type { ZodType } from 'zod';
+
 // ---------------------------------------------------------------------------
 // Enums
 // ---------------------------------------------------------------------------
@@ -133,6 +135,15 @@ export interface Tool {
    * and LLM providers can use it for function-calling parameter generation.
    */
   readonly inputSchema?: ToolParameterSchema;
+
+  /**
+   * Optional Zod schema for runtime input validation.
+   *
+   * When set, the {@link ToolExecutor} will parse input through this schema
+   * before calling `execute()`, providing structured validation errors.
+   * Tools created with {@link defineTool} set this automatically.
+   */
+  readonly inputZodSchema?: ZodType;
 
   /**
    * JSON Schema describing the output shape (informational — no runtime

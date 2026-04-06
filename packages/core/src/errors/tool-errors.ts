@@ -73,3 +73,25 @@ export class ToolTimeoutError extends Error {
     this.timeoutMs = timeoutMs;
   }
 }
+
+/** A single validation issue from Zod-based input validation. */
+export interface ToolValidationIssue {
+  /** Dot-delimited path to the invalid field (e.g. "path", "options.recursive"). */
+  readonly path: string;
+  /** Human-readable description of the issue. */
+  readonly message: string;
+  /** The Zod issue code (e.g. "invalid_type", "too_small"). */
+  readonly code: string;
+}
+
+/** Thrown when a tool's input fails Zod schema validation. */
+export class ToolInputValidationError extends ToolExecutionError {
+  public readonly issues: readonly ToolValidationIssue[];
+
+  constructor(toolName: string, issues: readonly ToolValidationIssue[]) {
+    const summary = issues.map((i) => (i.path ? `${i.path}: ${i.message}` : i.message)).join('; ');
+    super(toolName, `input validation failed: ${summary}`);
+    this.name = 'ToolInputValidationError';
+    this.issues = issues;
+  }
+}

@@ -10,7 +10,9 @@ import * as path from 'node:path';
 import { ToolExecutionError } from '../../errors/tool-errors.js';
 import type { Tool } from '../../types/tool.js';
 import { ToolCategory, ToolPermission } from '../../types/tool.js';
-import type { FileEntry, ListFilesInput, ListFilesOutput } from './types.js';
+import { parseToolInput } from '../../tool/validation.js';
+import { ListFilesInputSchema } from './schemas.js';
+import type { FileEntry, ListFilesOutput } from './types.js';
 import { DEFAULT_MAX_ENTRIES, HARD_MAX_ENTRIES } from './types.js';
 
 /**
@@ -170,6 +172,7 @@ export function createListFilesTool(basePath: string): Tool {
       },
       required: ['path'],
     },
+    inputZodSchema: ListFilesInputSchema,
     outputSchema: {
       type: 'object',
       properties: {
@@ -192,16 +195,9 @@ export function createListFilesTool(basePath: string): Tool {
     },
 
     async execute(input: unknown): Promise<ListFilesOutput> {
-      const {
-        path: dirPath,
-        pattern,
-        recursive = false,
-        maxEntries = DEFAULT_MAX_ENTRIES,
-      } = input as ListFilesInput;
-
-      if (!dirPath || typeof dirPath !== 'string') {
-        throw new ToolExecutionError('listFiles', 'input.path must be a non-empty string');
-      }
+      const parsed = parseToolInput('listFiles', ListFilesInputSchema, input);
+      const { path: dirPath, pattern, recursive, maxEntries } = parsed;
+      const effectiveMaxEntries = maxEntries ?? DEFAULT_MAX_ENTRIES;
 
       const resolvedPath = resolveSafePath(dirPath, resolvedBase);
 
@@ -226,7 +222,7 @@ export function createListFilesTool(basePath: string): Tool {
         );
       }
 
-      const effectiveMax = Math.min(Math.max(1, maxEntries), HARD_MAX_ENTRIES);
+      const effectiveMax = Math.min(Math.max(1, effectiveMaxEntries), HARD_MAX_ENTRIES);
 
       // Collect one extra so we know if the result is truncated
       const allEntries = await collectEntries(

@@ -20,6 +20,7 @@ export { ToolRegistry } from './tool-registry.js';
 
 export {
   isValidTool,
+  parseToolInput,
   ToolConfigSchema,
   ToolParameterSchemaSchema,
   ToolPermissionPolicySchema,

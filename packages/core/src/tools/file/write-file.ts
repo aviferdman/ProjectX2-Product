@@ -10,7 +10,9 @@ import * as path from 'node:path';
 import { ToolExecutionError } from '../../errors/tool-errors.js';
 import type { Tool } from '../../types/tool.js';
 import { ToolCategory, ToolPermission } from '../../types/tool.js';
-import type { WriteFileInput, WriteFileOutput } from './types.js';
+import { parseToolInput } from '../../tool/validation.js';
+import { WriteFileInputSchema } from './schemas.js';
+import type { WriteFileOutput } from './types.js';
 import { MAX_WRITE_SIZE } from './types.js';
 
 /**
@@ -55,6 +57,7 @@ export function createWriteFileTool(basePath: string): Tool {
       },
       required: ['path', 'content'],
     },
+    inputZodSchema: WriteFileInputSchema,
     outputSchema: {
       type: 'object',
       properties: {
@@ -66,15 +69,8 @@ export function createWriteFileTool(basePath: string): Tool {
     },
 
     async execute(input: unknown): Promise<WriteFileOutput> {
-      const { path: filePath, content, createDirectories = false } = input as WriteFileInput;
-
-      if (!filePath || typeof filePath !== 'string') {
-        throw new ToolExecutionError('writeFile', 'input.path must be a non-empty string');
-      }
-
-      if (typeof content !== 'string') {
-        throw new ToolExecutionError('writeFile', 'input.content must be a string');
-      }
+      const parsed = parseToolInput('writeFile', WriteFileInputSchema, input);
+      const { path: filePath, content, createDirectories } = parsed;
 
       const contentBytes = Buffer.byteLength(content, 'utf-8');
       if (contentBytes > MAX_WRITE_SIZE) {

@@ -9,7 +9,9 @@
 import { ToolExecutionError } from '../../errors/tool-errors.js';
 import type { Tool } from '../../types/tool.js';
 import { ToolCategory } from '../../types/tool.js';
-import type { ExtractedLink, HtmlMetadata, ParseHtmlInput, ParseHtmlOutput } from './types.js';
+import { parseToolInput } from '../../tool/validation.js';
+import { ParseHtmlInputSchema } from './schemas.js';
+import type { ExtractedLink, HtmlMetadata, ParseHtmlOutput } from './types.js';
 
 // ---------------------------------------------------------------------------
 // Extraction utilities
@@ -130,6 +132,7 @@ export function createParseHtmlTool(): Tool {
       },
       required: ['html', 'extract'],
     },
+    inputZodSchema: ParseHtmlInputSchema,
     outputSchema: {
       type: 'object',
       properties: {
@@ -159,19 +162,8 @@ export function createParseHtmlTool(): Tool {
 
     // eslint-disable-next-line @typescript-eslint/require-await
     async execute(input: unknown): Promise<ParseHtmlOutput> {
-      const { html, extract } = input as ParseHtmlInput;
-
-      if (!html || typeof html !== 'string') {
-        throw new ToolExecutionError('parseHtml', 'input.html must be a non-empty string');
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!extract || !['text', 'links', 'metadata'].includes(extract)) {
-        throw new ToolExecutionError(
-          'parseHtml',
-          "input.extract must be one of: 'text', 'links', 'metadata'",
-        );
-      }
+      const parsed = parseToolInput('parseHtml', ParseHtmlInputSchema, input);
+      const { html, extract } = parsed;
 
       switch (extract) {
         case 'text':

@@ -9,7 +9,9 @@
 import { ToolExecutionError } from '../../errors/tool-errors.js';
 import type { Tool } from '../../types/tool.js';
 import { ToolCategory, ToolPermission } from '../../types/tool.js';
-import type { SearchResult, WebSearchInput, WebSearchOutput } from './types.js';
+import { parseToolInput } from '../../tool/validation.js';
+import { WebSearchInputSchema } from './schemas.js';
+import type { SearchResult, WebSearchOutput } from './types.js';
 import { DEFAULT_TIMEOUT_MS, DEFAULT_USER_AGENT, HARD_MAX_RESULTS } from './types.js';
 
 // ---------------------------------------------------------------------------
@@ -108,6 +110,7 @@ export function createWebSearchTool(options?: WebSearchToolOptions): Tool {
       },
       required: ['query'],
     },
+    inputZodSchema: WebSearchInputSchema,
     outputSchema: {
       type: 'object',
       properties: {
@@ -130,11 +133,8 @@ export function createWebSearchTool(options?: WebSearchToolOptions): Tool {
     },
 
     async execute(input: unknown): Promise<WebSearchOutput> {
-      const { query, maxResults = 10 } = input as WebSearchInput;
-
-      if (!query || typeof query !== 'string') {
-        throw new ToolExecutionError('webSearch', 'input.query must be a non-empty string');
-      }
+      const parsed = parseToolInput('webSearch', WebSearchInputSchema, input);
+      const { query, maxResults = 10 } = parsed;
 
       const limit = Math.min(Math.max(1, maxResults), HARD_MAX_RESULTS);
 

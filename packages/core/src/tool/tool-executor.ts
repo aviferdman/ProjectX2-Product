@@ -11,8 +11,14 @@
  */
 
 import { EventEmitter } from 'eventemitter3';
+import { ZodError } from 'zod';
 
-import { ToolExecutionError, ToolTimeoutError } from '../errors/tool-errors.js';
+import {
+  ToolExecutionError,
+  ToolInputValidationError,
+  ToolTimeoutError,
+} from '../errors/tool-errors.js';
+import type { ToolValidationIssue } from '../errors/tool-errors.js';
 import type { Tool, ToolEventMap, ToolResult } from '../types/tool.js';
 import type { PermissionManager } from './permission-manager.js';
 
@@ -50,17 +56,23 @@ export class ToolExecutor {
   }
 
   /**
-   * Execute a tool with permission checking, timeout enforcement, and
-   * structured result wrapping.
+   * Execute a tool with permission checking, input validation, timeout
+   * enforcement, and structured result wrapping.
    *
    * @param tool  - The tool to execute
    * @param input - Input to pass to the tool
    * @returns A normalized {@link ToolResult}
    * @throws {ToolPermissionError} If the tool's permissions are denied
+   * @throws {ToolInputValidationError} If input fails Zod schema validation
    */
   async execute(tool: Tool, input: unknown): Promise<ToolResult> {
     // 1. Permission check (throws ToolPermissionError if denied)
     this._permissionManager.checkTool(tool);
+
+    // 2. Input validation (throws ToolInputValidationError if invalid)
+    if (tool.inputZodSchema) {
+      this._validateInput(tool.name, tool.inputZodSchema, input);
+    }
 
     this._emit('tool:execute:start', tool.name, input);
 
@@ -111,6 +123,26 @@ export class ToolExecutor {
   // -------------------------------------------------------------------------
   // Private helpers
   // -------------------------------------------------------------------------
+
+  private _validateInput(
+    toolName: string,
+    schema: import('zod').ZodType,
+    input: unknown,
+  ): void {
+    try {
+      schema.parse(input);
+    } catch (err: unknown) {
+      if (err instanceof ZodError) {
+        const issues: ToolValidationIssue[] = err.issues.map((issue) => ({
+          path: issue.path.map(String).join('.'),
+          message: issue.message,
+          code: issue.code,
+        }));
+        throw new ToolInputValidationError(toolName, issues);
+      }
+      throw err;
+    }
+  }
 
   private async _executeWithTimeout(
     tool: Tool,

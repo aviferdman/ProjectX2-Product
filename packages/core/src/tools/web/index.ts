@@ -21,6 +21,8 @@ export {
 export { createWebSearchTool } from './web-search.js';
 export type { WebSearchToolOptions } from './web-search.js';
 
+export { FetchUrlInputSchema, ParseHtmlInputSchema, WebSearchInputSchema } from './schemas.js';
+
 export {
   DEFAULT_MAX_RESULTS,
   DEFAULT_TIMEOUT_MS,

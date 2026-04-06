@@ -8,8 +8,10 @@
  * @packageDocumentation
  */
 
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 
+import { ToolInputValidationError } from '../errors/tool-errors.js';
+import type { ToolValidationIssue } from '../errors/tool-errors.js';
 import { ToolCategory, ToolPermission } from '../types/tool.js';
 
 // ---------------------------------------------------------------------------
@@ -136,4 +138,37 @@ export function isValidTool(value: unknown): value is {
     obj['description'].length > 0 &&
     typeof obj['execute'] === 'function'
   );
+}
+
+// ---------------------------------------------------------------------------
+// Tool input validation helper
+// ---------------------------------------------------------------------------
+
+/**
+ * Parse and validate tool input against a Zod schema.
+ *
+ * Wraps Zod validation errors into a {@link ToolInputValidationError}
+ * with structured issue details, providing a consistent error interface
+ * whether tools are called directly or through {@link ToolExecutor}.
+ *
+ * @param toolName - Tool name for error context
+ * @param schema   - Zod schema to validate against
+ * @param input    - Raw input to parse
+ * @returns The parsed and typed input
+ * @throws {ToolInputValidationError} If validation fails
+ */
+export function parseToolInput<T>(toolName: string, schema: z.ZodType<T>, input: unknown): T {
+  try {
+    return schema.parse(input);
+  } catch (err: unknown) {
+    if (err instanceof ZodError) {
+      const issues: ToolValidationIssue[] = err.issues.map((issue) => ({
+        path: issue.path.map(String).join('.'),
+        message: issue.message,
+        code: issue.code,
+      }));
+      throw new ToolInputValidationError(toolName, issues);
+    }
+    throw err;
+  }
 }

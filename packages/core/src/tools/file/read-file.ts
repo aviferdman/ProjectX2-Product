@@ -11,7 +11,9 @@ import * as path from 'node:path';
 import { ToolExecutionError } from '../../errors/tool-errors.js';
 import type { Tool } from '../../types/tool.js';
 import { ToolCategory, ToolPermission } from '../../types/tool.js';
-import type { ReadFileInput, ReadFileOutput } from './types.js';
+import { parseToolInput } from '../../tool/validation.js';
+import { ReadFileInputSchema } from './schemas.js';
+import type { ReadFileOutput } from './types.js';
 import { MAX_READ_SIZE } from './types.js';
 
 /**
@@ -61,6 +63,7 @@ export function createReadFileTool(basePath: string): Tool {
       },
       required: ['path'],
     },
+    inputZodSchema: ReadFileInputSchema,
     outputSchema: {
       type: 'object',
       properties: {
@@ -72,11 +75,8 @@ export function createReadFileTool(basePath: string): Tool {
     },
 
     async execute(input: unknown): Promise<ReadFileOutput> {
-      const { path: filePath, encoding = 'utf-8' } = input as ReadFileInput;
-
-      if (!filePath || typeof filePath !== 'string') {
-        throw new ToolExecutionError('readFile', 'input.path must be a non-empty string');
-      }
+      const parsed = parseToolInput('readFile', ReadFileInputSchema, input);
+      const { path: filePath, encoding } = parsed;
 
       const resolvedPath = resolveSafePath(filePath, resolvedBase);
 

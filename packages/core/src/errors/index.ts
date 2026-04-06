@@ -18,7 +18,9 @@ export { TaskConfigError, TaskExecutionError, TaskTimeoutError } from './task-er
 export {
   ToolConfigError,
   ToolExecutionError,
+  ToolInputValidationError,
   ToolNotFoundError,
   ToolPermissionError,
   ToolTimeoutError,
 } from './tool-errors.js';
+export type { ToolValidationIssue } from './tool-errors.js';

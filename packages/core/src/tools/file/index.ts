@@ -10,6 +10,7 @@ import type { FileTools, FileToolsOptions } from './types.js';
 
 export { createListFilesTool, matchesPattern } from './list-files.js';
 export { createReadFileTool } from './read-file.js';
+export { ListFilesInputSchema, ReadFileInputSchema, WriteFileInputSchema } from './schemas.js';
 export { createWriteFileTool } from './write-file.js';
 export { DEFAULT_MAX_ENTRIES, HARD_MAX_ENTRIES, MAX_READ_SIZE, MAX_WRITE_SIZE } from './types.js';
 export type {

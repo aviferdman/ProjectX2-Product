@@ -9,7 +9,9 @@
 import { ToolExecutionError } from '../../errors/tool-errors.js';
 import type { Tool } from '../../types/tool.js';
 import { ToolCategory, ToolPermission } from '../../types/tool.js';
-import type { FetchUrlInput, FetchUrlOutput } from './types.js';
+import { parseToolInput } from '../../tool/validation.js';
+import { FetchUrlInputSchema } from './schemas.js';
+import type { FetchUrlOutput } from './types.js';
 import { DEFAULT_TIMEOUT_MS, DEFAULT_USER_AGENT, MAX_RESPONSE_SIZE } from './types.js';
 
 // ---------------------------------------------------------------------------
@@ -87,6 +89,7 @@ export function createFetchUrlTool(options?: FetchUrlToolOptions): Tool {
       },
       required: ['url'],
     },
+    inputZodSchema: FetchUrlInputSchema,
     outputSchema: {
       type: 'object',
       properties: {
@@ -101,17 +104,14 @@ export function createFetchUrlTool(options?: FetchUrlToolOptions): Tool {
     },
 
     async execute(input: unknown): Promise<FetchUrlOutput> {
+      const parsed = parseToolInput('fetchUrl', FetchUrlInputSchema, input);
       const {
         url,
-        method = 'GET',
+        method,
         headers: requestHeaders,
         timeoutMs,
         maxSize,
-      } = input as FetchUrlInput;
-
-      if (!url || typeof url !== 'string') {
-        throw new ToolExecutionError('fetchUrl', 'input.url must be a non-empty string');
-      }
+      } = parsed;
 
       validateUrl(url);
 

@@ -11,9 +11,12 @@ export {
   createWriteFileTool,
   DEFAULT_MAX_ENTRIES,
   HARD_MAX_ENTRIES,
+  ListFilesInputSchema,
   matchesPattern,
   MAX_READ_SIZE,
   MAX_WRITE_SIZE,
+  ReadFileInputSchema,
+  WriteFileInputSchema,
 } from './file/index.js';
 
 export type {
@@ -40,9 +43,12 @@ export {
   extractLinks,
   extractMetadata,
   extractTitle,
+  FetchUrlInputSchema,
   HARD_MAX_RESULTS,
   MAX_RESPONSE_SIZE,
+  ParseHtmlInputSchema,
   stripTags,
+  WebSearchInputSchema,
 } from './web/index.js';
 
 export type { FetchUrlToolOptions, WebSearchToolOptions } from './web/index.js';
