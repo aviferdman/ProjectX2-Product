@@ -49,6 +49,41 @@ export type {
   Tool,
 } from './types/index.js';
 
+// Validation
+export {
+  AgentConfigSchema,
+  CrewConfigSchema,
+  CrewTaskSchema,
+  ExecutionEngineConfigSchema,
+  LLMRequestOptionsSchema,
+  TaskConfigSchema,
+  safeValidateAgentConfig,
+  safeValidateCrewConfig,
+  safeValidateCrewTask,
+  safeValidateEngineConfig,
+  safeValidateLLMRequestOptions,
+  safeValidateTaskConfig,
+  validateAgentConfig,
+  validateCrewConfig,
+  validateCrewTask,
+  validateEngineConfig,
+  validateLLMRequestOptions,
+  validateTaskConfig,
+  ValidationError,
+} from './validation/index.js';
+export type {
+  ValidatedAgentConfig,
+  ValidatedCrewConfig,
+  ValidatedCrewTask,
+  ValidatedExecutionEngineConfig,
+  ValidatedLLMRequestOptions,
+  ValidatedTaskConfig,
+  ValidationFailure,
+  ValidationIssue,
+  ValidationResult,
+  ValidationSuccess,
+} from './validation/index.js';
+
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
