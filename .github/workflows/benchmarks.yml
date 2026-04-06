@@ -34,10 +34,20 @@ jobs:
         run: npm run bench:ci --workspace=packages/core
         continue-on-error: false
 
+      - name: Check for performance regressions
+        run: npm run bench:compare --workspace=packages/core
+
+      - name: Generate performance report
+        if: always()
+        run: npm run bench:report --workspace=packages/core -- --output performance-report.md
+
       - name: Upload benchmark results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-results
-          path: packages/core/benchmark-results.json
+          path: |
+            packages/core/benchmark-results.json
+            packages/core/benchmark-results-detailed.jsonl
+            packages/core/performance-report.md
           retention-days: 90

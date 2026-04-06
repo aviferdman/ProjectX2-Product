@@ -110,6 +110,42 @@ describe('My Benchmarks', () => {
 - **5-15% regression**: Requires justification in PR description
 - **> 15% regression**: Must be fixed before merging, or budget updated with team approval
 
+### Regression Detection in CI
+
+The CI pipeline automatically compares benchmark results against a committed baseline (`packages/core/benchmarks/baseline.json`). If any benchmark's p95 latency regresses beyond 15%, the CI check fails.
+
+**Available scripts:**
+
+```bash
+# Run benchmarks and check for regressions against baseline
+npm run bench --workspace=packages/core
+npm run bench:compare --workspace=packages/core
+
+# Generate a performance dashboard report (markdown)
+npm run bench:report --workspace=packages/core
+
+# Update the baseline after intentional performance changes
+npm run bench --workspace=packages/core
+npm run bench:update-baseline --workspace=packages/core
+```
+
+**Updating the baseline:**
+
+When performance characteristics change intentionally (e.g., adding features that add overhead), update the baseline:
+
+1. Run benchmarks: `npm run bench --workspace=packages/core`
+2. Update baseline: `npm run bench:update-baseline --workspace=packages/core`
+3. Commit the updated `benchmarks/baseline.json`
+4. Document the reason in your PR description
+
+### Performance Dashboard
+
+A markdown performance report is generated on every CI run and uploaded as an artifact. The report includes:
+
+- Per-category benchmark results (Agent, Memory, Task, Engine, Tool)
+- Trend indicators compared to baseline (🚀 faster, ✅ stable, 🐢 slower, 🆕 new)
+- Budget compliance status
+
 Benchmark results are uploaded as CI artifacts for historical tracking. Compare results across runs to identify trends.
 
 ---

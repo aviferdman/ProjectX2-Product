@@ -6,6 +6,10 @@
  * @packageDocumentation
  */
 
+import { appendFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { Agent } from '../src/agent/agent.js';
 import { Task } from '../src/task/task.js';
 import { createMemoryEntry, ShortTermMemory } from '../src/memory/index.js';
@@ -15,6 +19,22 @@ import { ExecutionEngine } from '../src/engine/execution-engine.js';
 import { ExecutionStrategy } from '../src/engine/index.js';
 import { MemoryNamespace, MemoryRole, TaskPriority } from '../src/types/index.js';
 import type { LLMProvider, LLMMessage, LLMResponse, Tool } from '../src/types/index.js';
+
+// ---------------------------------------------------------------------------
+// Result collection — writes each benchmark result to a JSONL file for
+// downstream regression detection and dashboard generation.
+// ---------------------------------------------------------------------------
+
+const BENCH_DIR = dirname(fileURLToPath(import.meta.url));
+const RESULTS_FILE = resolve(BENCH_DIR, '..', 'benchmark-results-detailed.jsonl');
+
+function collectResult(result: BenchmarkResult): void {
+  try {
+    appendFileSync(RESULTS_FILE, JSON.stringify(result) + '\n', 'utf-8');
+  } catch {
+    // Best-effort — do not fail benchmarks if collection fails
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Performance budgets (max allowed time in milliseconds)
@@ -214,7 +234,7 @@ export async function measurePerformance(
   const p99Ms = timings[Math.floor(iterations * 0.99)]!;
   const opsPerSecond = 1000 / avgMs;
 
-  return {
+  const benchResult: BenchmarkResult = {
     name,
     iterations,
     totalMs,
@@ -228,6 +248,9 @@ export async function measurePerformance(
     budget: options.budget,
     withinBudget: p95Ms <= options.budget,
   };
+
+  collectResult(benchResult);
+  return benchResult;
 }
 
 export function formatResult(result: BenchmarkResult): string {
