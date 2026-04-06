@@ -73,12 +73,18 @@ afterEach(() => {
 
 describe('OpenAI full stack: Retry + UsageTracking + Provider', () => {
   it('should track usage on successful first attempt', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiChatResponse({ content: 'Hello!', promptTokens: 10, completionTokens: 5 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          openaiChatResponse({ content: 'Hello!', promptTokens: 10, completionTokens: 5 }),
+        ),
+      );
 
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
     const retry = createRetryProvider(tracked, { maxRetries: 3, jitter: 0, baseDelayMs: 10 });
 
     const result = await retry.generateText(SIMPLE_USER_MESSAGE);
@@ -92,18 +98,30 @@ describe('OpenAI full stack: Retry + UsageTracking + Provider', () => {
   });
 
   it('should retry on rate limit then track usage on success', async () => {
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(
-        jsonResponse(openaiErrorResponse({ message: 'Rate limited' }), 429, { 'retry-after': '0.01' }),
+        jsonResponse(openaiErrorResponse({ message: 'Rate limited' }), 429, {
+          'retry-after': '0.01',
+        }),
       )
       .mockResolvedValueOnce(
-        jsonResponse(openaiChatResponse({ content: 'Retry worked', promptTokens: 10, completionTokens: 5 })),
+        jsonResponse(
+          openaiChatResponse({ content: 'Retry worked', promptTokens: 10, completionTokens: 5 }),
+        ),
       );
     globalThis.fetch = fetchMock;
 
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
-    const retry = createRetryProvider(tracked, { maxRetries: 3, jitter: 0, baseDelayMs: 10, maxDelayMs: 50 });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
+    const retry = createRetryProvider(tracked, {
+      maxRetries: 3,
+      jitter: 0,
+      baseDelayMs: 10,
+      maxDelayMs: 50,
+    });
 
     const result = await retry.generateText(SIMPLE_USER_MESSAGE);
 
@@ -115,13 +133,20 @@ describe('OpenAI full stack: Retry + UsageTracking + Provider', () => {
   });
 
   it('should not track usage when all retries are exhausted', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500));
 
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
-    const retry = createRetryProvider(tracked, { maxRetries: 2, jitter: 0, baseDelayMs: 10, maxDelayMs: 20 });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
+    const retry = createRetryProvider(tracked, {
+      maxRetries: 2,
+      jitter: 0,
+      baseDelayMs: 10,
+      maxDelayMs: 20,
+    });
 
     await expect(retry.generateText(SIMPLE_USER_MESSAGE)).rejects.toThrow(LLMProviderError);
     expect(tracker.getRecords()).toHaveLength(0);
@@ -129,13 +154,15 @@ describe('OpenAI full stack: Retry + UsageTracking + Provider', () => {
   });
 
   it('should not retry authentication errors', async () => {
-    const fetchMock = vi.fn().mockResolvedValue(
-      jsonResponse(openaiErrorResponse({ message: 'Invalid key' }), 401),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(openaiErrorResponse({ message: 'Invalid key' }), 401));
     globalThis.fetch = fetchMock;
 
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
     const retry = createRetryProvider(tracked, { maxRetries: 3, jitter: 0, baseDelayMs: 10 });
 
     await expect(retry.generateText(SIMPLE_USER_MESSAGE)).rejects.toThrow(LLMAuthenticationError);
@@ -144,13 +171,24 @@ describe('OpenAI full stack: Retry + UsageTracking + Provider', () => {
   });
 
   it('should track usage for streamed responses via toResponse()', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(sseResponse(openaiSSEStream([
-      { content: 'Hello' }, { content: ' world' },
-      { content: '', finishReason: 'stop', usage: { prompt_tokens: 10, completion_tokens: 5, total_tokens: 15 } },
-    ])));
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          { content: 'Hello' },
+          { content: ' world' },
+          {
+            content: '',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 10, completion_tokens: 5, total_tokens: 15 },
+          },
+        ]),
+      ),
+    );
 
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
     const retry = createRetryProvider(tracked, { maxRetries: 2, jitter: 0, baseDelayMs: 10 });
 
     const stream = await retry.generateStream(SIMPLE_USER_MESSAGE);
@@ -163,13 +201,24 @@ describe('OpenAI full stack: Retry + UsageTracking + Provider', () => {
   });
 
   it('should track usage for streamed responses via async iteration', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(sseResponse(openaiSSEStream([
-      { content: 'chunk1' }, { content: 'chunk2' },
-      { content: '', finishReason: 'stop', usage: { prompt_tokens: 5, completion_tokens: 2, total_tokens: 7 } },
-    ])));
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          { content: 'chunk1' },
+          { content: 'chunk2' },
+          {
+            content: '',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 5, completion_tokens: 2, total_tokens: 7 },
+          },
+        ]),
+      ),
+    );
 
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
 
     const stream = await tracked.generateStream(SIMPLE_USER_MESSAGE);
     const chunks: LLMStreamChunk[] = [];
@@ -189,12 +238,18 @@ describe('OpenAI full stack: Retry + UsageTracking + Provider', () => {
 
 describe('Anthropic full stack: Retry + UsageTracking + Provider', () => {
   it('should track usage on successful first attempt', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(anthropicMessageResponse({ content: 'Hello!', inputTokens: 10, outputTokens: 5 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          anthropicMessageResponse({ content: 'Hello!', inputTokens: 10, outputTokens: 5 }),
+        ),
+      );
 
     const anthropic = new AnthropicProvider(anthropicConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, { modelId: 'claude-3-5-sonnet-20241022' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, {
+      modelId: 'claude-3-5-sonnet-20241022',
+    });
     const retry = createRetryProvider(tracked, { maxRetries: 3, jitter: 0, baseDelayMs: 10 });
 
     const result = await retry.generateText(SIMPLE_USER_MESSAGE);
@@ -206,16 +261,26 @@ describe('Anthropic full stack: Retry + UsageTracking + Provider', () => {
   });
 
   it('should retry on 500 server error then succeed', async () => {
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(jsonResponse(anthropicErrorResponse({ message: 'Server error' }), 500))
       .mockResolvedValueOnce(
-        jsonResponse(anthropicMessageResponse({ content: 'Back online', inputTokens: 8, outputTokens: 4 })),
+        jsonResponse(
+          anthropicMessageResponse({ content: 'Back online', inputTokens: 8, outputTokens: 4 }),
+        ),
       );
     globalThis.fetch = fetchMock;
 
     const anthropic = new AnthropicProvider(anthropicConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, { modelId: 'claude-3-5-sonnet-20241022' });
-    const retry = createRetryProvider(tracked, { maxRetries: 3, jitter: 0, baseDelayMs: 10, maxDelayMs: 50 });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, {
+      modelId: 'claude-3-5-sonnet-20241022',
+    });
+    const retry = createRetryProvider(tracked, {
+      maxRetries: 3,
+      jitter: 0,
+      baseDelayMs: 10,
+      maxDelayMs: 50,
+    });
 
     const result = await retry.generateText(SIMPLE_USER_MESSAGE);
 
@@ -226,11 +291,16 @@ describe('Anthropic full stack: Retry + UsageTracking + Provider', () => {
   });
 
   it('should track streaming usage from Anthropic provider', async () => {
-    const events = anthropicStreamEvents(['Hello', ' from ', 'Anthropic'], { inputTokens: 12, outputTokens: 6 });
+    const events = anthropicStreamEvents(['Hello', ' from ', 'Anthropic'], {
+      inputTokens: 12,
+      outputTokens: 6,
+    });
     globalThis.fetch = vi.fn().mockResolvedValue(sseResponse(anthropicSSEText(events)));
 
     const anthropic = new AnthropicProvider(anthropicConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, { modelId: 'claude-3-5-sonnet-20241022' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, {
+      modelId: 'claude-3-5-sonnet-20241022',
+    });
     const retry = createRetryProvider(tracked, { maxRetries: 2, jitter: 0, baseDelayMs: 10 });
 
     const stream = await retry.generateStream(SIMPLE_USER_MESSAGE);
@@ -249,9 +319,9 @@ describe('Anthropic full stack: Retry + UsageTracking + Provider', () => {
 
 describe('Circuit Breaker integration with real providers', () => {
   it('should open circuit after consecutive OpenAI failures', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500));
 
     const openai = new OpenAIProvider(openaiConfig());
     const retry = createRetryProvider(openai, {
@@ -268,14 +338,18 @@ describe('Circuit Breaker integration with real providers', () => {
   });
 
   it('should track stats correctly with circuit breaker and retry combined', async () => {
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(jsonResponse(openaiErrorResponse({ message: 'Error' }), 500))
       .mockResolvedValueOnce(jsonResponse(openaiChatResponse({ content: 'ok' })));
     globalThis.fetch = fetchMock;
 
     const openai = new OpenAIProvider(openaiConfig());
     const retry = createRetryProvider(openai, {
-      maxRetries: 3, jitter: 0, baseDelayMs: 10, maxDelayMs: 20,
+      maxRetries: 3,
+      jitter: 0,
+      baseDelayMs: 10,
+      maxDelayMs: 20,
       circuitBreaker: { failureThreshold: 5, cooldownMs: 60000 },
     });
 
@@ -295,19 +369,29 @@ describe('Shared UsageTracker across OpenAI and Anthropic', () => {
   it('should aggregate usage from both providers in a single tracker', async () => {
     const sharedTracker = new TokenUsageTracker();
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiChatResponse({ content: 'OpenAI', promptTokens: 20, completionTokens: 10 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          openaiChatResponse({ content: 'OpenAI', promptTokens: 20, completionTokens: 10 }),
+        ),
+      );
     const openaiTracked = new UsageTrackingProvider(new OpenAIProvider(openaiConfig()), {
-      modelId: 'gpt-4o', tracker: sharedTracker,
+      modelId: 'gpt-4o',
+      tracker: sharedTracker,
     });
     await openaiTracked.generateText(SIMPLE_USER_MESSAGE);
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(anthropicMessageResponse({ content: 'Anthropic', inputTokens: 15, outputTokens: 8 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          anthropicMessageResponse({ content: 'Anthropic', inputTokens: 15, outputTokens: 8 }),
+        ),
+      );
     const anthropicTracked = new UsageTrackingProvider(new AnthropicProvider(anthropicConfig()), {
-      modelId: 'claude-3-5-sonnet-20241022', tracker: sharedTracker,
+      modelId: 'claude-3-5-sonnet-20241022',
+      tracker: sharedTracker,
     });
     await anthropicTracked.generateText(SIMPLE_USER_MESSAGE);
 
@@ -322,20 +406,28 @@ describe('Shared UsageTracker across OpenAI and Anthropic', () => {
     const sharedTracker = new TokenUsageTracker();
 
     // Each call needs its own Response (body is consumed)
-    globalThis.fetch = vi.fn().mockImplementation(() =>
-      Promise.resolve(jsonResponse(openaiChatResponse({ content: 'Hi', promptTokens: 5, completionTokens: 2 }))),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockImplementation(() =>
+        Promise.resolve(
+          jsonResponse(openaiChatResponse({ content: 'Hi', promptTokens: 5, completionTokens: 2 })),
+        ),
+      );
     const openai = new UsageTrackingProvider(new OpenAIProvider(openaiConfig()), {
-      modelId: 'gpt-4o', tracker: sharedTracker,
+      modelId: 'gpt-4o',
+      tracker: sharedTracker,
     });
     await openai.generateText(SIMPLE_USER_MESSAGE);
     await openai.generateText(SIMPLE_USER_MESSAGE);
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(anthropicMessageResponse({ content: 'Hi', inputTokens: 10, outputTokens: 3 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(anthropicMessageResponse({ content: 'Hi', inputTokens: 10, outputTokens: 3 })),
+      );
     const anthropic = new UsageTrackingProvider(new AnthropicProvider(anthropicConfig()), {
-      modelId: 'claude-3-5-sonnet-20241022', tracker: sharedTracker,
+      modelId: 'claude-3-5-sonnet-20241022',
+      tracker: sharedTracker,
     });
     await anthropic.generateText(SIMPLE_USER_MESSAGE);
 
@@ -347,18 +439,31 @@ describe('Shared UsageTracker across OpenAI and Anthropic', () => {
   it('should track streaming and non-streaming usage together', async () => {
     const sharedTracker = new TokenUsageTracker();
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiChatResponse({ content: 'text', promptTokens: 10, completionTokens: 5 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          openaiChatResponse({ content: 'text', promptTokens: 10, completionTokens: 5 }),
+        ),
+      );
     const openaiTracked = new UsageTrackingProvider(new OpenAIProvider(openaiConfig()), {
-      modelId: 'gpt-4o', tracker: sharedTracker,
+      modelId: 'gpt-4o',
+      tracker: sharedTracker,
     });
     await openaiTracked.generateText(SIMPLE_USER_MESSAGE);
 
-    globalThis.fetch = vi.fn().mockResolvedValue(sseResponse(openaiSSEStream([
-      { content: 'stream' },
-      { content: '', finishReason: 'stop', usage: { prompt_tokens: 8, completion_tokens: 3, total_tokens: 11 } },
-    ])));
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          { content: 'stream' },
+          {
+            content: '',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 8, completion_tokens: 3, total_tokens: 11 },
+          },
+        ]),
+      ),
+    );
     await (await openaiTracked.generateStream(SIMPLE_USER_MESSAGE)).toResponse();
 
     expect(sharedTracker.getRecords()).toHaveLength(2);
@@ -380,7 +485,9 @@ describe('Provider Registry integration', () => {
     const openai = registry.create(openaiConfig());
     const retry = createRetryProvider(openai, { maxRetries: 1, jitter: 0, baseDelayMs: 10 });
 
-    globalThis.fetch = vi.fn().mockResolvedValue(jsonResponse(openaiChatResponse({ content: 'From registry' })));
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(openaiChatResponse({ content: 'From registry' })));
     const result = await retry.generateText(SIMPLE_USER_MESSAGE);
     expect(result.content).toBe('From registry');
   });
@@ -390,11 +497,17 @@ describe('Provider Registry integration', () => {
     registry.register('anthropic', createAnthropicProvider);
 
     const anthropic = registry.create(anthropicConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, { modelId: 'claude-3-5-sonnet-20241022' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(anthropic, {
+      modelId: 'claude-3-5-sonnet-20241022',
+    });
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(anthropicMessageResponse({ content: 'From registry', inputTokens: 5, outputTokens: 3 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          anthropicMessageResponse({ content: 'From registry', inputTokens: 5, outputTokens: 3 }),
+        ),
+      );
     const result = await tracked.generateText(SIMPLE_USER_MESSAGE);
     expect(result.content).toBe('From registry');
     expect(tracker.getRecords()).toHaveLength(1);
@@ -405,15 +518,24 @@ describe('Provider Registry integration', () => {
     registry.register('openai', createOpenAIProvider);
 
     const openai = registry.create(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
     const retry = createRetryProvider(tracked, {
-      maxRetries: 2, jitter: 0, baseDelayMs: 10,
+      maxRetries: 2,
+      jitter: 0,
+      baseDelayMs: 10,
       circuitBreaker: { failureThreshold: 5, cooldownMs: 60000 },
     });
 
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(jsonResponse(openaiErrorResponse({ message: 'Error' }), 500))
-      .mockResolvedValueOnce(jsonResponse(openaiChatResponse({ content: 'Success', promptTokens: 10, completionTokens: 5 })));
+      .mockResolvedValueOnce(
+        jsonResponse(
+          openaiChatResponse({ content: 'Success', promptTokens: 10, completionTokens: 5 }),
+        ),
+      );
     globalThis.fetch = fetchMock;
 
     const result = await retry.generateText(SIMPLE_USER_MESSAGE);
@@ -430,14 +552,24 @@ describe('Provider Registry integration', () => {
 
 describe('Retry callback integration', () => {
   it('should invoke onRetry callback with correct context for rate limit', async () => {
-    const fetchMock = vi.fn()
-      .mockResolvedValueOnce(jsonResponse(openaiErrorResponse({ message: 'Rate limited' }), 429, { 'retry-after': '0.01' }))
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse(openaiErrorResponse({ message: 'Rate limited' }), 429, {
+          'retry-after': '0.01',
+        }),
+      )
       .mockResolvedValueOnce(jsonResponse(openaiChatResponse({ content: 'ok' })));
     globalThis.fetch = fetchMock;
 
     const retryCallback = vi.fn();
     const openai = new OpenAIProvider(openaiConfig());
-    const retry = new RetryLLMProvider(openai, { maxRetries: 3, jitter: 0, baseDelayMs: 10, onRetry: retryCallback });
+    const retry = new RetryLLMProvider(openai, {
+      maxRetries: 3,
+      jitter: 0,
+      baseDelayMs: 10,
+      onRetry: retryCallback,
+    });
 
     await retry.generateText(SIMPLE_USER_MESSAGE);
 
@@ -448,7 +580,8 @@ describe('Retry callback integration', () => {
   });
 
   it('should invoke onRetry for each retry attempt during multiple server errors', async () => {
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(jsonResponse(openaiErrorResponse({ message: 'Error 1' }), 500))
       .mockResolvedValueOnce(jsonResponse(openaiErrorResponse({ message: 'Error 2' }), 502))
       .mockResolvedValueOnce(jsonResponse(openaiChatResponse({ content: 'Finally' })));
@@ -456,7 +589,13 @@ describe('Retry callback integration', () => {
 
     const retryCallback = vi.fn();
     const openai = new OpenAIProvider(openaiConfig());
-    const retry = new RetryLLMProvider(openai, { maxRetries: 3, jitter: 0, baseDelayMs: 10, maxDelayMs: 20, onRetry: retryCallback });
+    const retry = new RetryLLMProvider(openai, {
+      maxRetries: 3,
+      jitter: 0,
+      baseDelayMs: 10,
+      maxDelayMs: 20,
+      onRetry: retryCallback,
+    });
 
     const result = await retry.generateText(SIMPLE_USER_MESSAGE);
     expect(result.content).toBe('Finally');
@@ -474,17 +613,28 @@ describe('Multi-provider failover pattern', () => {
     const anthropic = new AnthropicProvider(anthropicConfig());
 
     // OpenAI fails
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500));
     let result: LLMResponse | undefined;
     try {
-      const openaiRetry = createRetryProvider(openai, { maxRetries: 1, jitter: 0, baseDelayMs: 10, maxDelayMs: 20 });
+      const openaiRetry = createRetryProvider(openai, {
+        maxRetries: 1,
+        jitter: 0,
+        baseDelayMs: 10,
+        maxDelayMs: 20,
+      });
       result = await openaiRetry.generateText(SIMPLE_USER_MESSAGE);
     } catch {
       // Fall back to Anthropic
       globalThis.fetch = vi.fn().mockResolvedValue(
-        jsonResponse(anthropicMessageResponse({ content: 'Fallback response', inputTokens: 10, outputTokens: 5 })),
+        jsonResponse(
+          anthropicMessageResponse({
+            content: 'Fallback response',
+            inputTokens: 10,
+            outputTokens: 5,
+          }),
+        ),
       );
       result = await anthropic.generateText(SIMPLE_USER_MESSAGE);
     }
@@ -496,23 +646,31 @@ describe('Multi-provider failover pattern', () => {
   it('should track usage across failover in shared tracker', async () => {
     const sharedTracker = new TokenUsageTracker();
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(openaiErrorResponse({ message: 'Server error' }), 500));
     const openai = new OpenAIProvider(openaiConfig());
-    const openaiTracked = new UsageTrackingProvider(openai, { modelId: 'gpt-4o', tracker: sharedTracker });
+    const openaiTracked = new UsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+      tracker: sharedTracker,
+    });
     const openaiRetry = createRetryProvider(openaiTracked, { maxRetries: 0 });
 
     let result: LLMResponse;
     try {
       result = await openaiRetry.generateText(SIMPLE_USER_MESSAGE);
     } catch {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        jsonResponse(anthropicMessageResponse({ content: 'Fallback', inputTokens: 10, outputTokens: 5 })),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          jsonResponse(
+            anthropicMessageResponse({ content: 'Fallback', inputTokens: 10, outputTokens: 5 }),
+          ),
+        );
       const anthropic = new AnthropicProvider(anthropicConfig());
       const anthropicTracked = new UsageTrackingProvider(anthropic, {
-        modelId: 'claude-3-5-sonnet-20241022', tracker: sharedTracker,
+        modelId: 'claude-3-5-sonnet-20241022',
+        tracker: sharedTracker,
       });
       result = await anthropicTracked.generateText(SIMPLE_USER_MESSAGE);
     }
@@ -533,12 +691,20 @@ describe('Multiple sequential requests', () => {
     globalThis.fetch = vi.fn().mockImplementation(() => {
       callCount++;
       return Promise.resolve(
-        jsonResponse(openaiChatResponse({ content: `Response ${callCount}`, promptTokens: 10, completionTokens: callCount })),
+        jsonResponse(
+          openaiChatResponse({
+            content: `Response ${callCount}`,
+            promptTokens: 10,
+            completionTokens: callCount,
+          }),
+        ),
       );
     });
 
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
 
     const results: LLMResponse[] = [];
     for (let i = 0; i < 10; i++) {
@@ -555,22 +721,40 @@ describe('Multiple sequential requests', () => {
 
   it('should handle alternating text and stream requests', async () => {
     const openai = new OpenAIProvider(openaiConfig());
-    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(openai, {
+      modelId: 'gpt-4o',
+    });
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiChatResponse({ content: 'text1', promptTokens: 5, completionTokens: 2 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          openaiChatResponse({ content: 'text1', promptTokens: 5, completionTokens: 2 }),
+        ),
+      );
     await tracked.generateText(SIMPLE_USER_MESSAGE);
 
-    globalThis.fetch = vi.fn().mockResolvedValue(sseResponse(openaiSSEStream([
-      { content: 'stream1' },
-      { content: '', finishReason: 'stop', usage: { prompt_tokens: 5, completion_tokens: 3, total_tokens: 8 } },
-    ])));
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          { content: 'stream1' },
+          {
+            content: '',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 5, completion_tokens: 3, total_tokens: 8 },
+          },
+        ]),
+      ),
+    );
     await (await tracked.generateStream(SIMPLE_USER_MESSAGE)).toResponse();
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiChatResponse({ content: 'text2', promptTokens: 5, completionTokens: 2 })),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(
+          openaiChatResponse({ content: 'text2', promptTokens: 5, completionTokens: 2 }),
+        ),
+      );
     await tracked.generateText(SIMPLE_USER_MESSAGE);
 
     expect(tracker.getRecords()).toHaveLength(3);
@@ -586,9 +770,9 @@ describe('Multiple sequential requests', () => {
 
 describe('Error propagation through composition layers', () => {
   it('should preserve error type through Retry + Tracking + Provider stack', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiErrorResponse({ message: 'Invalid key' }), 401),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse(openaiErrorResponse({ message: 'Invalid key' }), 401));
 
     const openai = new OpenAIProvider(openaiConfig());
     const { provider: tracked } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
@@ -600,15 +784,19 @@ describe('Error propagation through composition layers', () => {
   });
 
   it('should preserve RateLimitError metadata through composition', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      jsonResponse(openaiErrorResponse({ message: 'Rate limit' }), 429, { 'retry-after': '30' }),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse(openaiErrorResponse({ message: 'Rate limit' }), 429, { 'retry-after': '30' }),
+      );
 
     const openai = new OpenAIProvider(openaiConfig());
     const { provider: tracked } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
     const retry = createRetryProvider(tracked, { maxRetries: 0 });
 
-    const error = await retry.generateText(SIMPLE_USER_MESSAGE).catch((e: unknown) => e as LLMRateLimitError);
+    const error = await retry
+      .generateText(SIMPLE_USER_MESSAGE)
+      .catch((e: unknown) => e as LLMRateLimitError);
     expect(error).toBeInstanceOf(LLMRateLimitError);
     expect((error as LLMRateLimitError).retryAfterMs).toBe(30000);
   });
@@ -618,9 +806,16 @@ describe('Error propagation through composition layers', () => {
 
     const openai = new OpenAIProvider(openaiConfig());
     const { provider: tracked } = createUsageTrackingProvider(openai, { modelId: 'gpt-4o' });
-    const retry = createRetryProvider(tracked, { maxRetries: 1, jitter: 0, baseDelayMs: 10, maxDelayMs: 20 });
+    const retry = createRetryProvider(tracked, {
+      maxRetries: 1,
+      jitter: 0,
+      baseDelayMs: 10,
+      maxDelayMs: 20,
+    });
 
-    const error = await retry.generateText(SIMPLE_USER_MESSAGE).catch((e: unknown) => e as LLMProviderError);
+    const error = await retry
+      .generateText(SIMPLE_USER_MESSAGE)
+      .catch((e: unknown) => e as LLMProviderError);
     expect(error).toBeInstanceOf(LLMProviderError);
     expect(error.message).toContain('Network error');
   });

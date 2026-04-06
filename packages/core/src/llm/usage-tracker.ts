@@ -95,7 +95,7 @@ export interface UsageReport {
 let _nextId = 0;
 
 function generateRecordId(): string {
-  return `usage-${Date.now()}-${++_nextId}`;
+  return `usage-${String(Date.now())}-${String(++_nextId)}`;
 }
 
 function createEmptySummary(): UsageSummary {

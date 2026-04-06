@@ -49,10 +49,7 @@ function openaiSSEFinalChunk(
 // Anthropic SSE helpers
 // ---------------------------------------------------------------------------
 
-function anthropicSSEEvent(
-  eventType: string,
-  data: Record<string, unknown>,
-): string {
+function anthropicSSEEvent(eventType: string, data: Record<string, unknown>): string {
   return `event: ${eventType}\ndata: ${JSON.stringify(data)}\n\n`;
 }
 
@@ -131,10 +128,7 @@ function makeChunkedStreamResponse(sseText: string, chunkSize: number): Response
   });
 }
 
-function makeDelayedStreamResponse(
-  chunks: string[],
-  delayMs: number,
-): Response {
+function makeDelayedStreamResponse(chunks: string[], delayMs: number): Response {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
@@ -175,9 +169,7 @@ describe('Unicode and multibyte character handling', () => {
     });
 
     const sseText =
-      openaiSSEChunk('Hello 🌍') +
-      openaiSSEChunk(' 🎉🎊') +
-      openaiSSEFinalChunk(10, 3);
+      openaiSSEChunk('Hello 🌍') + openaiSSEChunk(' 🎉🎊') + openaiSSEFinalChunk(10, 3);
     const done = 'data: [DONE]\n\n';
 
     globalThis.fetch = vi.fn().mockResolvedValueOnce(makeStreamResponse(sseText + done));
@@ -215,9 +207,9 @@ describe('Unicode and multibyte character handling', () => {
       openaiSSEChunk('！') +
       openaiSSEFinalChunk(10, 3);
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeStreamResponse(sseText + 'data: [DONE]\n\n'),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeStreamResponse(sseText + 'data: [DONE]\n\n'));
 
     const stream = await provider.generateStream(USER_MSG);
     const response = await stream.toResponse();
@@ -246,15 +238,11 @@ describe('Unicode and multibyte character handling', () => {
       apiKey: OPENAI_KEY,
     });
 
-    const sseText =
-      openaiSSEChunk('🚀') +
-      openaiSSEFinalChunk(10, 1);
+    const sseText = openaiSSEChunk('🚀') + openaiSSEFinalChunk(10, 1);
     const full = sseText + 'data: [DONE]\n\n';
 
     // Use very small chunks to split multibyte at boundary
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeChunkedStreamResponse(full, 3),
-    );
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(makeChunkedStreamResponse(full, 3));
 
     const stream = await provider.generateStream(USER_MSG);
     const response = await stream.toResponse();
@@ -280,9 +268,9 @@ describe('AbortSignal cancellation', () => {
 
     controller.abort();
 
-    await expect(
-      provider.generateText(USER_MSG, { signal: controller.signal }),
-    ).rejects.toThrow(LLMProviderError);
+    await expect(provider.generateText(USER_MSG, { signal: controller.signal })).rejects.toThrow(
+      LLMProviderError,
+    );
   });
 
   it('should abort Anthropic text generation with AbortSignal', async () => {
@@ -298,9 +286,9 @@ describe('AbortSignal cancellation', () => {
     const controller = new AbortController();
     controller.abort();
 
-    await expect(
-      provider.generateText(USER_MSG, { signal: controller.signal }),
-    ).rejects.toThrow(/aborted/i);
+    await expect(provider.generateText(USER_MSG, { signal: controller.signal })).rejects.toThrow(
+      /aborted/i,
+    );
   });
 
   it('should pass AbortSignal to fetch for OpenAI streaming', async () => {
@@ -311,11 +299,13 @@ describe('AbortSignal cancellation', () => {
     });
 
     const controller = new AbortController();
-    const fetchMock = vi.fn().mockResolvedValueOnce(
-      makeStreamResponse(
-        openaiSSEChunk('Hello') + openaiSSEFinalChunk(10, 1) + 'data: [DONE]\n\n',
-      ),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        makeStreamResponse(
+          openaiSSEChunk('Hello') + openaiSSEFinalChunk(10, 1) + 'data: [DONE]\n\n',
+        ),
+      );
     globalThis.fetch = fetchMock;
 
     await provider.generateStream(USER_MSG, { signal: controller.signal });
@@ -448,9 +438,7 @@ describe('Delayed and chunked delivery', () => {
       'data: [DONE]\n\n',
     ];
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeDelayedStreamResponse(chunks, 10),
-    );
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(makeDelayedStreamResponse(chunks, 10));
 
     const stream = await provider.generateStream(USER_MSG);
     const response = await stream.toResponse();
@@ -465,15 +453,10 @@ describe('Delayed and chunked delivery', () => {
     });
 
     const sseText =
-      openaiSSEChunk('X') +
-      openaiSSEChunk('Y') +
-      openaiSSEFinalChunk(5, 2) +
-      'data: [DONE]\n\n';
+      openaiSSEChunk('X') + openaiSSEChunk('Y') + openaiSSEFinalChunk(5, 2) + 'data: [DONE]\n\n';
 
     // 1-byte chunks — every byte boundary
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeChunkedStreamResponse(sseText, 1),
-    );
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(makeChunkedStreamResponse(sseText, 1));
 
     const stream = await provider.generateStream(USER_MSG);
     const response = await stream.toResponse();
@@ -531,7 +514,8 @@ describe('Concurrent streaming from multiple providers', () => {
 
     const anthropicSSE = anthropicStreamSSE(['Anthropic', ' stream']);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(makeStreamResponse(openaiSSE))
       .mockResolvedValueOnce(makeStreamResponse(anthropicSSE));
 
@@ -567,7 +551,8 @@ describe('Concurrent streaming from multiple providers', () => {
       openaiSSEFinalChunk(10, 2) +
       'data: [DONE]\n\n';
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(
         new Response(JSON.stringify(textResponse), {
           status: 200,

@@ -4,10 +4,7 @@ import * as path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { ToolExecutionError } from '../../../../src/errors/tool-errors.js';
-import {
-  createListFilesTool,
-  matchesPattern,
-} from '../../../../src/tools/file/list-files.js';
+import { createListFilesTool, matchesPattern } from '../../../../src/tools/file/list-files.js';
 import { DEFAULT_MAX_ENTRIES, HARD_MAX_ENTRIES } from '../../../../src/tools/file/types.js';
 import { ToolCategory, ToolPermission } from '../../../../src/types/tool.js';
 

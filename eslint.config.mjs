@@ -25,6 +25,15 @@ export default tseslint.config(
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
 
+  // Override projectService from strictTypeChecked — use explicit project refs
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+      },
+    },
+  },
+
   // Disable ESLint rules that conflict with Prettier
   prettierConfig,
 
@@ -100,13 +109,6 @@ export default tseslint.config(
   // Test file overrides — relax some rules for tests
   {
     files: ['**/*.test.ts', '**/*.spec.ts', '**/tests/**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: false,
-        project: ['packages/*/tsconfig.test.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
     rules: {
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
@@ -120,6 +122,20 @@ export default tseslint.config(
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/naming-convention': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/only-throw-error': 'off',
+      '@typescript-eslint/prefer-optional-chain': 'off',
+      '@typescript-eslint/prefer-promise-reject-errors': 'off',
+      '@typescript-eslint/prefer-regexp-exec': 'off',
+      '@typescript-eslint/array-type': 'off',
+      '@typescript-eslint/consistent-indexed-object-style': 'off',
+      '@typescript-eslint/dot-notation': 'off',
       'no-console': 'off',
     },
   },

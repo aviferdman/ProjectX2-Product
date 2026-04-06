@@ -78,9 +78,9 @@ describe('ToolConfigSchema', () => {
   });
 
   it('should reject negative timeout', () => {
-    expect(() =>
-      ToolConfigSchema.parse({ name: 'tool', description: 'x', timeout: -1 }),
-    ).toThrow(ZodError);
+    expect(() => ToolConfigSchema.parse({ name: 'tool', description: 'x', timeout: -1 })).toThrow(
+      ZodError,
+    );
   });
 
   it('should reject timeout exceeding maximum', () => {
@@ -90,9 +90,9 @@ describe('ToolConfigSchema', () => {
   });
 
   it('should reject non-integer timeout', () => {
-    expect(() =>
-      ToolConfigSchema.parse({ name: 'tool', description: 'x', timeout: 1.5 }),
-    ).toThrow(ZodError);
+    expect(() => ToolConfigSchema.parse({ name: 'tool', description: 'x', timeout: 1.5 })).toThrow(
+      ZodError,
+    );
   });
 
   it('should accept timeout of 0', () => {
@@ -160,15 +160,11 @@ describe('ToolPermissionPolicySchema', () => {
   });
 
   it('should reject invalid defaultAction', () => {
-    expect(() =>
-      ToolPermissionPolicySchema.parse({ defaultAction: 'maybe' }),
-    ).toThrow(ZodError);
+    expect(() => ToolPermissionPolicySchema.parse({ defaultAction: 'maybe' })).toThrow(ZodError);
   });
 
   it('should reject missing defaultAction', () => {
-    expect(() =>
-      ToolPermissionPolicySchema.parse({}),
-    ).toThrow(ZodError);
+    expect(() => ToolPermissionPolicySchema.parse({})).toThrow(ZodError);
   });
 
   it('should reject invalid permission in allowed list', () => {

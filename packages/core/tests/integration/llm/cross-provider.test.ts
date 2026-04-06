@@ -258,13 +258,11 @@ describe('Cross-provider: error handling consistency', () => {
     expect(openaiErr).toBeInstanceOf(LLMRateLimitError);
     expect((openaiErr as LLMRateLimitError).retryAfterMs).toBe(5000);
 
-    globalThis.fetch = vi
-      .fn()
-      .mockResolvedValue(
-        jsonResponse(anthropicErrorResponse({ message: 'Rate limited' }), 429, {
-          'retry-after': '10',
-        }),
-      );
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      jsonResponse(anthropicErrorResponse({ message: 'Rate limited' }), 429, {
+        'retry-after': '10',
+      }),
+    );
     const anthropicErr = await new AnthropicProvider(anthropicConfig())
       .generateText(SIMPLE_USER_MESSAGE)
       .catch((e: unknown) => e as LLMRateLimitError);
@@ -384,21 +382,19 @@ describe('Cross-provider: error handling consistency', () => {
 
 describe('Cross-provider: streaming consistency', () => {
   it('should produce identical final content from streaming for both providers', async () => {
-    globalThis.fetch = vi
-      .fn()
-      .mockResolvedValue(
-        sseResponse(
-          openaiSSEStream([
-            { content: 'Hello ' },
-            { content: 'world' },
-            {
-              content: '',
-              finishReason: 'stop',
-              usage: { prompt_tokens: 5, completion_tokens: 2, total_tokens: 7 },
-            },
-          ]),
-        ),
-      );
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          { content: 'Hello ' },
+          { content: 'world' },
+          {
+            content: '',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 5, completion_tokens: 2, total_tokens: 7 },
+          },
+        ]),
+      ),
+    );
     const openaiResult = await (
       await new OpenAIProvider(openaiConfig()).generateStream(SIMPLE_USER_MESSAGE)
     ).toResponse();
@@ -418,22 +414,20 @@ describe('Cross-provider: streaming consistency', () => {
   });
 
   it('should yield chunks incrementally from both providers', async () => {
-    globalThis.fetch = vi
-      .fn()
-      .mockResolvedValue(
-        sseResponse(
-          openaiSSEStream([
-            { content: 'chunk1' },
-            { content: 'chunk2' },
-            { content: 'chunk3' },
-            {
-              content: '',
-              finishReason: 'stop',
-              usage: { prompt_tokens: 3, completion_tokens: 3, total_tokens: 6 },
-            },
-          ]),
-        ),
-      );
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          { content: 'chunk1' },
+          { content: 'chunk2' },
+          { content: 'chunk3' },
+          {
+            content: '',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 3, completion_tokens: 3, total_tokens: 6 },
+          },
+        ]),
+      ),
+    );
     const openaiChunks: LLMStreamChunk[] = [];
     for await (const chunk of await new OpenAIProvider(openaiConfig()).generateStream(
       SIMPLE_USER_MESSAGE,
@@ -660,19 +654,17 @@ describe('Cross-provider: provider-specific features', () => {
   });
 
   it('should set OpenAI stream_options in streaming requests', async () => {
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValue(
-        sseResponse(
-          openaiSSEStream([
-            {
-              content: 'Hi',
-              finishReason: 'stop',
-              usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
-            },
-          ]),
-        ),
-      );
+    const fetchMock = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          {
+            content: 'Hi',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+          },
+        ]),
+      ),
+    );
     globalThis.fetch = fetchMock;
     await new OpenAIProvider(openaiConfig()).generateStream(SIMPLE_USER_MESSAGE);
     const body = JSON.parse(
@@ -839,19 +831,17 @@ describe('Cross-provider: realistic API response shapes', () => {
 
 describe('Cross-provider: streaming finish reason normalization', () => {
   it('should normalize streaming stop from OpenAI', async () => {
-    globalThis.fetch = vi
-      .fn()
-      .mockResolvedValue(
-        sseResponse(
-          openaiSSEStream([
-            {
-              content: 'ok',
-              finishReason: 'stop',
-              usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
-            },
-          ]),
-        ),
-      );
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          {
+            content: 'ok',
+            finishReason: 'stop',
+            usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+          },
+        ]),
+      ),
+    );
     const result = await (
       await new OpenAIProvider(openaiConfig()).generateStream(SIMPLE_USER_MESSAGE)
     ).toResponse();
@@ -872,19 +862,17 @@ describe('Cross-provider: streaming finish reason normalization', () => {
   });
 
   it('should normalize streaming length from OpenAI', async () => {
-    globalThis.fetch = vi
-      .fn()
-      .mockResolvedValue(
-        sseResponse(
-          openaiSSEStream([
-            {
-              content: 'truncated',
-              finishReason: 'length',
-              usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
-            },
-          ]),
-        ),
-      );
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      sseResponse(
+        openaiSSEStream([
+          {
+            content: 'truncated',
+            finishReason: 'length',
+            usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+          },
+        ]),
+      ),
+    );
     const result = await (
       await new OpenAIProvider(openaiConfig()).generateStream(SIMPLE_USER_MESSAGE)
     ).toResponse();

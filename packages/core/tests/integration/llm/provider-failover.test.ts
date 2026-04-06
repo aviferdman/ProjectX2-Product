@@ -7,7 +7,10 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { OpenAIProvider, createOpenAIProvider } from '../../../src/llm/providers/openai-provider.js';
+import {
+  OpenAIProvider,
+  createOpenAIProvider,
+} from '../../../src/llm/providers/openai-provider.js';
 import {
   AnthropicProvider,
   createAnthropicProvider,
@@ -151,7 +154,8 @@ describe('Manual failover: OpenAI → Anthropic', () => {
 
     const fallback = new FallbackProvider([openai, anthropic]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(errorResponse(500, 'OpenAI is down'))
       .mockResolvedValueOnce(anthropicJsonResponse('Anthropic rescued!'));
 
@@ -174,7 +178,8 @@ describe('Manual failover: OpenAI → Anthropic', () => {
 
     const fallback = new FallbackProvider([openai, anthropic]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(errorResponse(429, 'Rate limited'))
       .mockResolvedValueOnce(anthropicJsonResponse('Fallback from rate limit'));
 
@@ -196,13 +201,9 @@ describe('Manual failover: OpenAI → Anthropic', () => {
 
     const fallback = new FallbackProvider([openai, anthropic]);
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      errorResponse(401, 'Invalid API key'),
-    );
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(errorResponse(401, 'Invalid API key'));
 
-    await expect(fallback.generateText(USER_MESSAGES)).rejects.toThrow(
-      LLMAuthenticationError,
-    );
+    await expect(fallback.generateText(USER_MESSAGES)).rejects.toThrow(LLMAuthenticationError);
     // Should not call Anthropic at all
     expect(globalThis.fetch).toHaveBeenCalledTimes(1);
   });
@@ -221,7 +222,8 @@ describe('Manual failover: OpenAI → Anthropic', () => {
 
     const fallback = new FallbackProvider([openai, anthropic]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(errorResponse(500, 'OpenAI down'))
       .mockResolvedValueOnce(errorResponse(503, 'Anthropic overloaded'));
 
@@ -256,7 +258,8 @@ describe('Failover with retry: retry each provider before falling back', () => {
 
     const fallback = new FallbackProvider([openaiRetry, anthropicRetry]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       // OpenAI: 2 failures (initial + 1 retry)
       .mockResolvedValueOnce(errorResponse(500, 'Down'))
       .mockResolvedValueOnce(errorResponse(500, 'Still down'))
@@ -292,7 +295,8 @@ describe('Failover with usage tracking', () => {
 
     const fallback = new FallbackProvider([openaiTracked, anthropicTracked]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(errorResponse(500, 'OpenAI down'))
       .mockResolvedValueOnce(anthropicJsonResponse('Fallback', 25));
 
@@ -325,7 +329,8 @@ describe('Registry-based provider creation with failover', () => {
 
     const fallback = new FallbackProvider([openai, anthropic]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(errorResponse(503, 'Overloaded'))
       .mockResolvedValueOnce(anthropicJsonResponse('Registry fallback'));
 
@@ -344,9 +349,7 @@ describe('Registry-based provider creation with failover', () => {
       apiKey: OPENAI_KEY,
     });
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      openaiJsonResponse('OpenAI only'),
-    );
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(openaiJsonResponse('OpenAI only'));
     const r1 = await openai.generateText(USER_MESSAGES);
     expect(r1.content).toBe('OpenAI only');
 
@@ -358,9 +361,7 @@ describe('Registry-based provider creation with failover', () => {
       apiKey: ANTHROPIC_KEY,
     });
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      anthropicJsonResponse('Anthropic added'),
-    );
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(anthropicJsonResponse('Anthropic added'));
     const r2 = await anthropic.generateText(USER_MESSAGES);
     expect(r2.content).toBe('Anthropic added');
   });
@@ -388,7 +389,8 @@ describe('Circuit breaker failover', () => {
     const fallback = new FallbackProvider([openaiRetry, anthropic]);
 
     // Fail OpenAI twice to open circuit
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(errorResponse(500, 'Down'))
       .mockResolvedValueOnce(anthropicJsonResponse('Fallback after 1st'))
       .mockResolvedValueOnce(errorResponse(500, 'Still down'))
@@ -398,9 +400,7 @@ describe('Circuit breaker failover', () => {
     await fallback.generateText(USER_MESSAGES);
 
     // Circuit should now be open — next request skips OpenAI entirely
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      anthropicJsonResponse('Direct to Anthropic'),
-    );
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(anthropicJsonResponse('Direct to Anthropic'));
 
     const response = await fallback.generateText(USER_MESSAGES);
     expect(response.content).toBe('Direct to Anthropic');
@@ -426,7 +426,8 @@ describe('Multiple model failover within same provider', () => {
 
     const fallback = new FallbackProvider([gpt4o, gpt4oMini]);
 
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(errorResponse(429, 'Rate limited'))
       .mockResolvedValueOnce(openaiJsonResponse('Mini to the rescue'));
 
@@ -458,7 +459,8 @@ describe('Network failure failover', () => {
 
     const fallback = new FallbackProvider([openai, anthropic]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockRejectedValueOnce(new Error('getaddrinfo ENOTFOUND api.openai.com'))
       .mockResolvedValueOnce(anthropicJsonResponse('Network fallback'));
 
@@ -480,7 +482,8 @@ describe('Network failure failover', () => {
 
     const fallback = new FallbackProvider([openai, anthropic]);
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockRejectedValueOnce(new Error('ENOTFOUND'))
       .mockRejectedValueOnce(new Error('ECONNREFUSED'));
 
@@ -495,9 +498,9 @@ describe('Provider factory error handling', () => {
       throw new Error('Factory exploded');
     });
 
-    expect(() =>
-      registry.create({ provider: 'broken', modelId: 'model', apiKey: 'key' }),
-    ).toThrow('Factory exploded');
+    expect(() => registry.create({ provider: 'broken', modelId: 'model', apiKey: 'key' })).toThrow(
+      'Factory exploded',
+    );
   });
 
   it('should handle provider that throws synchronously from constructor', () => {

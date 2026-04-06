@@ -72,7 +72,8 @@ async function collectEntries(
   const queue: string[] = [dirPath];
 
   while (queue.length > 0 && entries.length < hardLimit) {
-    const currentDir = queue.shift()!;
+    const currentDir = queue.shift();
+    if (!currentDir) break;
     let dirEntries: import('node:fs').Dirent[];
     try {
       dirEntries = await fsPromises.readdir(currentDir, { withFileTypes: true });

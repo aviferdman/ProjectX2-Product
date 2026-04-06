@@ -57,12 +57,14 @@ describe('createWebSearchTool (mocked fetch)', () => {
         {
           Text: 'TypeScript is a programming language',
           FirstURL: 'https://www.typescriptlang.org/',
-          Result: '<a href="https://www.typescriptlang.org/">TypeScript</a>TypeScript is a programming language',
+          Result:
+            '<a href="https://www.typescriptlang.org/">TypeScript</a>TypeScript is a programming language',
         },
         {
           Text: 'TypeScript documentation',
           FirstURL: 'https://www.typescriptlang.org/docs/',
-          Result: '<a href="https://www.typescriptlang.org/docs/">TS Docs</a>TypeScript documentation',
+          Result:
+            '<a href="https://www.typescriptlang.org/docs/">TS Docs</a>TypeScript documentation',
         },
       ],
     };

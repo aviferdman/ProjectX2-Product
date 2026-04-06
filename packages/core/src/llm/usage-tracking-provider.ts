@@ -103,7 +103,7 @@ class TrackedStreamResponse implements LLMStreamResponse {
     let consumed = false;
 
     // Capture `this._consumed` reference for the closure
-    const markConsumed = () => {
+    const markConsumed = (): void => {
       this._consumed = true;
     };
 

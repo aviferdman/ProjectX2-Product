@@ -492,19 +492,17 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMProviderError with status 403 on Forbidden', async () => {
-      globalThis.fetch = vi
-        .fn()
-        .mockResolvedValue(
-          makeJsonResponse(
-            {
-              error: {
-                message: 'You do not have access to this resource',
-                type: 'permission_error',
-              },
+      globalThis.fetch = vi.fn().mockResolvedValue(
+        makeJsonResponse(
+          {
+            error: {
+              message: 'You do not have access to this resource',
+              type: 'permission_error',
             },
-            403,
-          ),
-        );
+          },
+          403,
+        ),
+      );
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -625,19 +623,17 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMAuthenticationError on 401 with JSON error body', async () => {
-      globalThis.fetch = vi
-        .fn()
-        .mockResolvedValue(
-          makeJsonResponse(
-            {
-              error: {
-                message: 'Invalid API key provided: sk-test*****def.',
-                type: 'invalid_api_key',
-              },
+      globalThis.fetch = vi.fn().mockResolvedValue(
+        makeJsonResponse(
+          {
+            error: {
+              message: 'Invalid API key provided: sk-test*****def.',
+              type: 'invalid_api_key',
             },
-            401,
-          ),
-        );
+          },
+          401,
+        ),
+      );
 
       const provider = new OpenAIProvider(makeConfig());
       try {
@@ -651,13 +647,11 @@ describe('OpenAIProvider — integration (mocked HTTP)', () => {
     });
 
     it('should throw LLMRateLimitError with retryAfterMs parsed from retry-after header', async () => {
-      globalThis.fetch = vi
-        .fn()
-        .mockResolvedValue(
-          makeJsonResponse({ error: { message: 'Rate limit exceeded' } }, 429, {
-            'retry-after': '3.0',
-          }),
-        );
+      globalThis.fetch = vi.fn().mockResolvedValue(
+        makeJsonResponse({ error: { message: 'Rate limit exceeded' } }, 429, {
+          'retry-after': '3.0',
+        }),
+      );
 
       const provider = new OpenAIProvider(makeConfig());
       try {

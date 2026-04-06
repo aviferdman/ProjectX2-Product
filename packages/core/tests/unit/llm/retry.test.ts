@@ -323,40 +323,36 @@ describe('withRetry', () => {
       .fn()
       .mockRejectedValue(new LLMAuthenticationError('openai', 'Invalid key'));
 
-    await expect(
-      withRetry(operation, defaultConfig, { sleep: instantSleep }),
-    ).rejects.toThrow(LLMAuthenticationError);
+    await expect(withRetry(operation, defaultConfig, { sleep: instantSleep })).rejects.toThrow(
+      LLMAuthenticationError,
+    );
     expect(operation).toHaveBeenCalledTimes(1);
   });
 
   it('should throw immediately on context length error (non-retryable)', async () => {
-    const operation = vi
-      .fn()
-      .mockRejectedValue(new LLMContextLengthError('openai', 'Too long'));
+    const operation = vi.fn().mockRejectedValue(new LLMContextLengthError('openai', 'Too long'));
 
-    await expect(
-      withRetry(operation, defaultConfig, { sleep: instantSleep }),
-    ).rejects.toThrow(LLMContextLengthError);
+    await expect(withRetry(operation, defaultConfig, { sleep: instantSleep })).rejects.toThrow(
+      LLMContextLengthError,
+    );
     expect(operation).toHaveBeenCalledTimes(1);
   });
 
   it('should throw immediately on 400 client error (non-retryable)', async () => {
-    const operation = vi
-      .fn()
-      .mockRejectedValue(new LLMProviderError('openai', 'Bad request', 400));
+    const operation = vi.fn().mockRejectedValue(new LLMProviderError('openai', 'Bad request', 400));
 
-    await expect(
-      withRetry(operation, defaultConfig, { sleep: instantSleep }),
-    ).rejects.toThrow(LLMProviderError);
+    await expect(withRetry(operation, defaultConfig, { sleep: instantSleep })).rejects.toThrow(
+      LLMProviderError,
+    );
     expect(operation).toHaveBeenCalledTimes(1);
   });
 
   it('should throw immediately on non-LLM error (non-retryable)', async () => {
     const operation = vi.fn().mockRejectedValue(new TypeError('programming bug'));
 
-    await expect(
-      withRetry(operation, defaultConfig, { sleep: instantSleep }),
-    ).rejects.toThrow(TypeError);
+    await expect(withRetry(operation, defaultConfig, { sleep: instantSleep })).rejects.toThrow(
+      TypeError,
+    );
     expect(operation).toHaveBeenCalledTimes(1);
   });
 
@@ -371,9 +367,9 @@ describe('withRetry', () => {
     const operation = vi.fn();
     errors.forEach((err) => operation.mockRejectedValueOnce(err));
 
-    await expect(
-      withRetry(operation, defaultConfig, { sleep: instantSleep }),
-    ).rejects.toThrow('Rate limited 4 — final');
+    await expect(withRetry(operation, defaultConfig, { sleep: instantSleep })).rejects.toThrow(
+      'Rate limited 4 — final',
+    );
 
     // 1 initial + 3 retries = 4 total attempts
     expect(operation).toHaveBeenCalledTimes(4);
@@ -446,13 +442,11 @@ describe('withRetry', () => {
 
   it('should not retry when maxRetries is 0', async () => {
     const config: RetryConfig = { ...defaultConfig, maxRetries: 0 };
-    const operation = vi
-      .fn()
-      .mockRejectedValue(new LLMRateLimitError('openai', 'Rate limited'));
+    const operation = vi.fn().mockRejectedValue(new LLMRateLimitError('openai', 'Rate limited'));
 
-    await expect(
-      withRetry(operation, config, { sleep: instantSleep }),
-    ).rejects.toThrow(LLMRateLimitError);
+    await expect(withRetry(operation, config, { sleep: instantSleep })).rejects.toThrow(
+      LLMRateLimitError,
+    );
 
     expect(operation).toHaveBeenCalledTimes(1);
   });
@@ -477,9 +471,9 @@ describe('withRetry', () => {
       .mockRejectedValueOnce(new LLMRateLimitError('openai', 'Rate limited'))
       .mockRejectedValueOnce(new LLMAuthenticationError('openai', 'Key revoked'));
 
-    await expect(
-      withRetry(operation, defaultConfig, { sleep: instantSleep }),
-    ).rejects.toThrow(LLMAuthenticationError);
+    await expect(withRetry(operation, defaultConfig, { sleep: instantSleep })).rejects.toThrow(
+      LLMAuthenticationError,
+    );
 
     expect(operation).toHaveBeenCalledTimes(2);
   });
@@ -505,9 +499,9 @@ describe('withRetry', () => {
   it('should handle non-Error thrown values', async () => {
     const operation = vi.fn().mockRejectedValue('string error');
 
-    await expect(
-      withRetry(operation, defaultConfig, { sleep: instantSleep }),
-    ).rejects.toThrow('string error');
+    await expect(withRetry(operation, defaultConfig, { sleep: instantSleep })).rejects.toThrow(
+      'string error',
+    );
 
     expect(operation).toHaveBeenCalledTimes(1);
   });

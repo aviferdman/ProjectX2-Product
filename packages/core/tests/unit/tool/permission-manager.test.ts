@@ -90,8 +90,14 @@ describe('PermissionManager', () => {
         expect(err).toBeInstanceOf(ToolPermissionError);
         const permErr = err as ToolPermissionError;
         expect(permErr.toolName).toBe('myTool');
-        expect(permErr.deniedPermissions).toEqual([ToolPermission.FILE_READ, ToolPermission.NETWORK]);
-        expect(permErr.requiredPermissions).toEqual([ToolPermission.FILE_READ, ToolPermission.NETWORK]);
+        expect(permErr.deniedPermissions).toEqual([
+          ToolPermission.FILE_READ,
+          ToolPermission.NETWORK,
+        ]);
+        expect(permErr.requiredPermissions).toEqual([
+          ToolPermission.FILE_READ,
+          ToolPermission.NETWORK,
+        ]);
       }
     });
   });

@@ -4,10 +4,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import {
-  ToolCategory,
-  ToolPermission,
-} from '../../../src/types/tool.js';
+import { ToolCategory, ToolPermission } from '../../../src/types/tool.js';
 import type {
   Tool,
   ToolEventMap,

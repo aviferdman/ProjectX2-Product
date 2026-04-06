@@ -9,16 +9,16 @@ import * as path from 'path';
 function parseJsonWithComments(content: string): any {
   // Remove single-line comments
   const lines = content.split('\n');
-  const cleanedLines = lines.map(line => {
+  const cleanedLines = lines.map((line) => {
     // Find // outside of strings
     let inString = false;
     let stringChar = '';
     let commentStart = -1;
-    
+
     for (let i = 0; i < line.length; i++) {
       const char = line[i];
       const prevChar = i > 0 ? line[i - 1] : '';
-      
+
       if (!inString && (char === '"' || char === "'")) {
         inString = true;
         stringChar = char;
@@ -29,19 +29,19 @@ function parseJsonWithComments(content: string): any {
         break;
       }
     }
-    
+
     return commentStart >= 0 ? line.substring(0, commentStart) : line;
   });
-  
+
   let cleaned = cleanedLines.join('\n');
-  
+
   // Remove multi-line comments /* ... */
   // This regex avoids matching /* inside strings by only matching at word boundaries
   cleaned = cleaned.replace(/\/\*[\s\S]*?\*\//g, '');
-  
+
   // Remove trailing commas
   cleaned = cleaned.replace(/,(\s*[}\]])/g, '$1');
-  
+
   return JSON.parse(cleaned);
 }
 
@@ -76,7 +76,7 @@ describe('TypeScript Configuration', () => {
     it('should have enhanced strict type checking flags', () => {
       const config = parseJsonWithComments(fs.readFileSync(baseConfigPath, 'utf-8'));
       const opts = config.compilerOptions;
-      
+
       // Enhanced strict flags
       expect(opts.exactOptionalPropertyTypes).toBe(true);
       expect(opts.noUncheckedIndexedAccess).toBe(true);
@@ -90,7 +90,7 @@ describe('TypeScript Configuration', () => {
     it('should have proper module interop settings', () => {
       const config = parseJsonWithComments(fs.readFileSync(baseConfigPath, 'utf-8'));
       const opts = config.compilerOptions;
-      
+
       expect(opts.esModuleInterop).toBe(true);
       expect(opts.isolatedModules).toBe(true);
       expect(opts.resolveJsonModule).toBe(true);
@@ -100,7 +100,7 @@ describe('TypeScript Configuration', () => {
     it('should generate type definitions', () => {
       const config = parseJsonWithComments(fs.readFileSync(baseConfigPath, 'utf-8'));
       const opts = config.compilerOptions;
-      
+
       expect(opts.declaration).toBe(true);
       expect(opts.declarationMap).toBe(true);
       expect(opts.sourceMap).toBe(true);
@@ -164,8 +164,8 @@ describe('TypeScript Configuration', () => {
       expect(Array.isArray(config.include)).toBe(true);
       expect(config.include.length).toBeGreaterThan(0);
       // Should match src directory with .ts files
-      const hasSrcPattern = config.include.some((pattern: string) => 
-        pattern.includes('src') && pattern.includes('.ts')
+      const hasSrcPattern = config.include.some(
+        (pattern: string) => pattern.includes('src') && pattern.includes('.ts'),
       );
       expect(hasSrcPattern).toBe(true);
     });
@@ -176,8 +176,8 @@ describe('TypeScript Configuration', () => {
       expect(Array.isArray(config.exclude)).toBe(true);
       expect(config.exclude).toContain('tests');
       // Should exclude test patterns
-      const hasTestExclusions = config.exclude.some((pattern: string) => 
-        pattern.includes('.test.') || pattern.includes('.spec.')
+      const hasTestExclusions = config.exclude.some(
+        (pattern: string) => pattern.includes('.test.') || pattern.includes('.spec.'),
       );
       expect(hasTestExclusions).toBe(true);
     });
@@ -211,11 +211,11 @@ describe('TypeScript Configuration', () => {
       expect(config.include).toBeDefined();
       expect(Array.isArray(config.include)).toBe(true);
       // Should include both source and test files
-      const hasSrcPattern = config.include.some((pattern: string) => 
-        pattern.includes('src') && pattern.includes('.ts')
+      const hasSrcPattern = config.include.some(
+        (pattern: string) => pattern.includes('src') && pattern.includes('.ts'),
       );
-      const hasTestPattern = config.include.some((pattern: string) => 
-        pattern.includes('test') || pattern.includes('tests')
+      const hasTestPattern = config.include.some(
+        (pattern: string) => pattern.includes('test') || pattern.includes('tests'),
       );
       expect(hasSrcPattern).toBe(true);
       expect(hasTestPattern).toBe(true);
