@@ -394,3 +394,21 @@ export type {
   MemoryRetentionPolicy,
   MemorySortOrder,
 } from './types/index.js';
+
+// Runtime Compatibility
+export {
+  assertCompatible,
+  checkCompatibility,
+  detectRuntime,
+  getRuntimeVersion,
+  MIN_NODE_MAJOR,
+  parseVersion,
+  REQUIRED_GLOBALS,
+  REQUIRED_WEB_GLOBALS,
+} from './runtime/index.js';
+export type {
+  CompatCheck,
+  CompatReport,
+  RuntimeName,
+  RuntimeVersion,
+} from './runtime/index.js';
