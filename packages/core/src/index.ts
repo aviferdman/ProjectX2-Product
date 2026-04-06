@@ -261,12 +261,18 @@ export {
   LLMStreamError,
 } from './errors/index.js';
 export {
+<<<<<<< HEAD
   CircularDependencyError,
+=======
+>>>>>>> agent/developer/development-developer-c65
   TaskConfigError,
   TaskExecutionError,
   TaskTimeoutError,
 } from './errors/index.js';
+<<<<<<< HEAD
 export type { DependencyCycle } from './errors/index.js';
+=======
+>>>>>>> agent/developer/development-developer-c65
 export {
   ToolCompositionError,
   ToolConfigError,

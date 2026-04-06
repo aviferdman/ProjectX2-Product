@@ -248,7 +248,10 @@ describe('TASK-082: Getting Started Tutorial — Example File', () => {
 
 describe('TASK-082: Getting Started Tutorial — Functional Validation', () => {
   it('should run the core 10-line workflow end-to-end', async () => {
+<<<<<<< HEAD
     // The actual 10-line pattern from the tutorial
+=======
+>>>>>>> agent/developer/development-developer-c65
     const researcher = new Agent({
       id: 'researcher',
       role: 'Research Analyst',
@@ -372,7 +375,10 @@ describe('TASK-082: Getting Started Tutorial — Functional Validation', () => {
 
     await crew.run();
 
+<<<<<<< HEAD
     // The writer should receive the researcher's output as context
+=======
+>>>>>>> agent/developer/development-developer-c65
     const userMessage = writerMessages.find((m) => m.role === 'user');
     expect(userMessage?.content).toContain('AI trends: transformers, agents, RAG');
   });
@@ -400,7 +406,16 @@ describe('TASK-082: Getting Started Tutorial — Functional Validation', () => {
 
     await crew.run();
 
+<<<<<<< HEAD
     expect(events).toEqual(['crew:start', 'crew:task:start', 'crew:task:complete', 'crew:complete']);
+=======
+    expect(events).toEqual([
+      'crew:start',
+      'crew:task:start',
+      'crew:task:complete',
+      'crew:complete',
+    ]);
+>>>>>>> agent/developer/development-developer-c65
   });
 
   it('should report crew status transitions', async () => {
