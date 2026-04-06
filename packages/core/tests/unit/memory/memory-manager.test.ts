@@ -51,7 +51,7 @@ describe('MemoryManager', () => {
 
     it('accepts providers', () => {
       expect(manager.providers).toHaveLength(1);
-      expect(manager.providers[0].name).toBe('short-term');
+      expect(manager.providers[0]!.name).toBe('short-term');
     });
 
     it('sets default namespace', () => {

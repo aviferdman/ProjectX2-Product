@@ -152,9 +152,9 @@ describe('ShortTermMemory', () => {
 
       const result = await memory.query();
       expect(result.entries).toHaveLength(3);
-      expect(result.entries[0].id).toBe('q3');
-      expect(result.entries[1].id).toBe('q2');
-      expect(result.entries[2].id).toBe('q1');
+      expect(result.entries[0]!.id).toBe('q3');
+      expect(result.entries[1]!.id).toBe('q2');
+      expect(result.entries[2]!.id).toBe('q1');
       expect(result.total).toBe(3);
     });
 
@@ -253,7 +253,7 @@ describe('ShortTermMemory', () => {
 
       const result = await memory.search('weather', { namespace: MemoryNamespace.AGENT });
       expect(result.total).toBe(1);
-      expect(result.entries[0].id).toBe('sf1');
+      expect(result.entries[0]!.id).toBe('sf1');
     });
   });
 
@@ -357,7 +357,7 @@ describe('ShortTermMemory', () => {
       await mem.add(makeEntry({ id: 'ev3' }));
 
       expect(evicted).toHaveLength(1);
-      expect(evicted[0][0].id).toBe('ev1');
+      expect(evicted[0]![0]!.id).toBe('ev1');
     });
   });
 
@@ -388,7 +388,7 @@ describe('ShortTermMemory', () => {
 
       await memory.add(makeEntry({ id: 'ea1' }));
       expect(added).toHaveLength(1);
-      expect(added[0].id).toBe('ea1');
+      expect(added[0]!.id).toBe('ea1');
     });
 
     it('emits memory:delete on delete', async () => {
@@ -409,7 +409,7 @@ describe('ShortTermMemory', () => {
       await memory.clear();
 
       expect(cleared).toHaveLength(1);
-      expect(cleared[0]).toEqual([undefined, 2]);
+      expect(cleared[0]!).toEqual([undefined, 2]);
     });
 
     it('supports off() to remove listeners', async () => {
@@ -466,7 +466,7 @@ describe('ShortTermMemory', () => {
       });
 
       expect(result.total).toBe(1);
-      expect(result.entries[0].id).toBe('combo1');
+      expect(result.entries[0]!.id).toBe('combo1');
     });
   });
 });

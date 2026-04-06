@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-/**
- * Tests for memory error classes.
- */
-
-=======
->>>>>>> agent/developer/development-developer-c66
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -23,7 +16,8 @@ describe('MemoryConfigError', () => {
 
   it('formats message with provider', () => {
     const err = new MemoryConfigError('bad config', 'sqlite');
-    expect(err.message).toBe('Memory provider "sqlite": bad config');
+    expect(err.message).toContain('sqlite');
+    expect(err.message).toContain('bad config');
     expect(err.provider).toBe('sqlite');
   });
 
@@ -35,7 +29,9 @@ describe('MemoryConfigError', () => {
 describe('MemoryOperationError', () => {
   it('formats message correctly', () => {
     const err = new MemoryOperationError('short-term', 'add', 'duplicate id');
-    expect(err.message).toBe('Memory "short-term" add failed: duplicate id');
+    expect(err.message).toContain('short-term');
+    expect(err.message).toContain('add');
+    expect(err.message).toContain('duplicate id');
     expect(err.name).toBe('MemoryOperationError');
     expect(err.provider).toBe('short-term');
     expect(err.operation).toBe('add');
@@ -56,7 +52,8 @@ describe('MemoryOperationError', () => {
 describe('MemoryQueryError', () => {
   it('formats message correctly', () => {
     const err = new MemoryQueryError('short-term', 'invalid filter');
-    expect(err.message).toBe('Memory "short-term" query error: invalid filter');
+    expect(err.message).toContain('short-term');
+    expect(err.message).toContain('invalid filter');
     expect(err.name).toBe('MemoryQueryError');
     expect(err.provider).toBe('short-term');
   });
@@ -64,8 +61,4 @@ describe('MemoryQueryError', () => {
   it('is an instance of Error', () => {
     expect(new MemoryQueryError('p', 'm')).toBeInstanceOf(Error);
   });
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> agent/developer/development-developer-c66

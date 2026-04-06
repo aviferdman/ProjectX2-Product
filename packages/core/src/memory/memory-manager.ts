@@ -1,14 +1,6 @@
 /**
- * Memory manager — coordinates one or more {@link MemoryProvider}s.
+ * Memory manager - coordinates one or more MemoryProviders.
  *
-<<<<<<< HEAD
- * Provides a unified API for storing and retrieving entries across
- * multiple backends (e.g. short-term in-memory + long-term SQLite).
- * Entries are written to all registered providers; reads are served
- * by the first provider that returns a result (priority order).
- *
-=======
->>>>>>> agent/developer/development-developer-c66
  * @packageDocumentation
  */
 
@@ -25,13 +17,9 @@ import type {
 } from '../types/memory.js';
 import { MemoryNamespace, MemoryRole } from '../types/memory.js';
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 let _counter = 0;
 
-/** Generate a simple unique id (not cryptographically secure). */
+/** Generate a simple unique id. */
 export function generateMemoryId(): string {
   _counter++;
   const timestamp = Date.now().toString(36);
@@ -39,18 +27,7 @@ export function generateMemoryId(): string {
   return `mem_${timestamp}_${random}_${String(_counter)}`;
 }
 
-/**
- * Convenience factory to create a fully-populated {@link MemoryEntry}.
-<<<<<<< HEAD
- *
- * @param content   - The text content
- * @param role      - Author role
- * @param namespace - Namespace scope
- * @param metadata  - Optional metadata
- * @returns A frozen entry with an auto-generated id and timestamp
-=======
->>>>>>> agent/developer/development-developer-c66
- */
+/** Create a fully-populated MemoryEntry with auto-generated id. */
 export function createMemoryEntry(
   content: string,
   role: MemoryRole,
@@ -67,33 +44,12 @@ export function createMemoryEntry(
   });
 }
 
-// ---------------------------------------------------------------------------
-// MemoryManager
-// ---------------------------------------------------------------------------
-
-/**
- * Configuration for {@link MemoryManager}.
- */
+/** Configuration for MemoryManager. */
 export interface MemoryManagerConfig extends MemoryConfig {
-<<<<<<< HEAD
-  /**
-   * Memory providers in priority order. The first provider is treated
-   * as the "primary" — it is used for reads when multiple providers
-   * contain the same entry.
-   */
-=======
->>>>>>> agent/developer/development-developer-c66
   readonly providers?: readonly MemoryProvider[];
 }
 
-/**
- * Coordinates multiple memory providers behind a single interface.
-<<<<<<< HEAD
- *
-=======
->>>>>>> agent/developer/development-developer-c66
- * Writes fan out to all providers; reads use the first match.
- */
+/** Coordinates multiple memory providers behind a single interface. */
 export class MemoryManager implements MemoryProvider {
   public readonly name = 'manager';
 
@@ -106,10 +62,6 @@ export class MemoryManager implements MemoryProvider {
     this._defaultNamespace = config?.defaultNamespace ?? MemoryNamespace.AGENT;
     this._providers = config?.providers ? [...config.providers] : [];
 
-<<<<<<< HEAD
-    // Validate uniqueness of provider names
-=======
->>>>>>> agent/developer/development-developer-c66
     const names = new Set<string>();
     for (const p of this._providers) {
       if (names.has(p.name)) {
@@ -122,35 +74,17 @@ export class MemoryManager implements MemoryProvider {
     }
   }
 
-<<<<<<< HEAD
-  /** The default namespace used when entries don't specify one. */
-=======
->>>>>>> agent/developer/development-developer-c66
+  /** The default namespace for entries. */
   get defaultNamespace(): MemoryNamespace {
     return this._defaultNamespace;
   }
 
-<<<<<<< HEAD
-  /** The registered providers (read-only snapshot). */
-=======
->>>>>>> agent/developer/development-developer-c66
+  /** Registered providers (read-only snapshot). */
   get providers(): readonly MemoryProvider[] {
     return [...this._providers];
   }
 
-<<<<<<< HEAD
-  // -----------------------------------------------------------------------
-  // Provider management
-  // -----------------------------------------------------------------------
-
-  /**
-   * Register a new memory provider.
-   *
-   * @param provider - Provider to add
-   * @throws {MemoryConfigError} If a provider with the same name is already registered
-   */
-=======
->>>>>>> agent/developer/development-developer-c66
+  /** Register a new memory provider. */
   addProvider(provider: MemoryProvider): void {
     if (this._providers.some((p) => p.name === provider.name)) {
       throw new MemoryConfigError(
@@ -161,15 +95,7 @@ export class MemoryManager implements MemoryProvider {
     this._providers.push(provider);
   }
 
-<<<<<<< HEAD
-  /**
-   * Remove a provider by name.
-   *
-   * @param name - Provider name
-   * @returns true if the provider was found and removed
-   */
-=======
->>>>>>> agent/developer/development-developer-c66
+  /** Remove a provider by name. */
   removeProvider(name: string): boolean {
     const idx = this._providers.findIndex((p) => p.name === name);
     if (idx === -1) return false;
@@ -177,54 +103,25 @@ export class MemoryManager implements MemoryProvider {
     return true;
   }
 
-<<<<<<< HEAD
-  /**
-   * Get a provider by name.
-   *
-   * @param name - Provider name
-   * @returns The provider, or undefined if not found
-   */
-=======
->>>>>>> agent/developer/development-developer-c66
+  /** Get a provider by name. */
   getProvider(name: string): MemoryProvider | undefined {
     return this._providers.find((p) => p.name === name);
   }
 
-<<<<<<< HEAD
-  // -----------------------------------------------------------------------
-  // Event system
-  // -----------------------------------------------------------------------
-
-  /** Subscribe to a memory lifecycle event. */
-=======
->>>>>>> agent/developer/development-developer-c66
   on<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.on(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
-<<<<<<< HEAD
-  /** Unsubscribe from a memory lifecycle event. */
-=======
->>>>>>> agent/developer/development-developer-c66
   off<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.off(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
-<<<<<<< HEAD
-  // -----------------------------------------------------------------------
-  // MemoryProvider implementation (fan-out writes, first-match reads)
-  // -----------------------------------------------------------------------
-
-=======
->>>>>>> agent/developer/development-developer-c66
   async add(entry: MemoryEntry): Promise<MemoryEntry> {
     this._ensureProviders('add');
-
     let stored: MemoryEntry = entry;
     const errors: Error[] = [];
-
     for (const provider of this._providers) {
       try {
         stored = await provider.add(entry);
@@ -232,7 +129,6 @@ export class MemoryManager implements MemoryProvider {
         errors.push(err instanceof Error ? err : new Error(String(err)));
       }
     }
-
     if (errors.length === this._providers.length) {
       throw new MemoryOperationError(
         this.name,
@@ -240,7 +136,6 @@ export class MemoryManager implements MemoryProvider {
         `All providers failed: ${errors.map((e) => e.message).join('; ')}`,
       );
     }
-
     this._emit('memory:add', stored);
     return stored;
   }
@@ -254,21 +149,17 @@ export class MemoryManager implements MemoryProvider {
   }
 
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
-    if (this._providers.length === 0) {
-      return { entries: [], total: 0 };
-    }
-<<<<<<< HEAD
-    // Use the primary (first) provider for reads
-=======
->>>>>>> agent/developer/development-developer-c66
-    return this._providers[0].query(options);
+    if (this._providers.length === 0) return { entries: [], total: 0 };
+    const primary = this._providers[0];
+    if (!primary) return { entries: [], total: 0 };
+    return primary.query(options);
   }
 
   async search(text: string, options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
-    if (this._providers.length === 0) {
-      return { entries: [], total: 0 };
-    }
-    return this._providers[0].search(text, options);
+    if (this._providers.length === 0) return { entries: [], total: 0 };
+    const primary = this._providers[0];
+    if (!primary) return { entries: [], total: 0 };
+    return primary.search(text, options);
   }
 
   async delete(id: string): Promise<boolean> {
@@ -277,9 +168,7 @@ export class MemoryManager implements MemoryProvider {
       const result = await provider.delete(id);
       if (result) deleted = true;
     }
-    if (deleted) {
-      this._emit('memory:delete', id);
-    }
+    if (deleted) this._emit('memory:delete', id);
     return deleted;
   }
 
@@ -294,16 +183,11 @@ export class MemoryManager implements MemoryProvider {
 
   async count(namespace?: MemoryNamespace): Promise<number> {
     if (this._providers.length === 0) return 0;
-    return this._providers[0].count(namespace);
+    const primary = this._providers[0];
+    if (!primary) return 0;
+    return primary.count(namespace);
   }
 
-<<<<<<< HEAD
-  // -----------------------------------------------------------------------
-  // Internal helpers
-  // -----------------------------------------------------------------------
-
-=======
->>>>>>> agent/developer/development-developer-c66
   private _ensureProviders(operation: string): void {
     if (this._providers.length === 0) {
       throw new MemoryOperationError(
@@ -314,10 +198,6 @@ export class MemoryManager implements MemoryProvider {
     }
   }
 
-<<<<<<< HEAD
-  /** Type-safe event emission helper. */
-=======
->>>>>>> agent/developer/development-developer-c66
   private _emit<E extends keyof MemoryEventMap>(
     event: E,
     ...args: Parameters<MemoryEventMap[E]>
@@ -325,8 +205,4 @@ export class MemoryManager implements MemoryProvider {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this._emitter.emit as (event: string, ...args: any[]) => boolean)(event, ...args);
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> agent/developer/development-developer-c66

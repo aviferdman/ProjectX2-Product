@@ -104,7 +104,7 @@ export class ShortTermMemory implements MemoryProvider {
 
   private readonly _store: Map<string, MemoryEntry> = new Map();
   private readonly _insertionOrder: string[] = [];
-  private readonly _defaultNamespace: MemoryNamespace;
+private readonly _defaultNamespace: MemoryNamespace;
   private readonly _maxEntries: number;
   private readonly _maxAge: number;
   private readonly _emitter: EventEmitter<MemoryEventMap>;
@@ -120,6 +120,11 @@ export class ShortTermMemory implements MemoryProvider {
 
     this._maxEntries = retention?.maxEntries ?? DEFAULT_MAX_ENTRIES;
     this._maxAge = retention?.maxAge ?? 0;
+  }
+
+  /** The default namespace for entries. */
+  get defaultNamespace(): MemoryNamespace {
+    return this._defaultNamespace;
   }
 
   // -----------------------------------------------------------------------
