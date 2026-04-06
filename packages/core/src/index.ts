@@ -42,6 +42,8 @@ export {
   TaskExecutionWrapper,
 } from './task/index.js';
 export type { TaskExecutionWrapperConfig, TaskRetryStats } from './task/index.js';
+export { formatTaskDependencyTree, formatTaskList, formatTaskPlanTree } from './task/index.js';
+export type { FormatTaskPlanOptions } from './task/index.js';
 
 // Execution Engine
 export { ExecutionEngine } from './engine/index.js';
