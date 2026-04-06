@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /**
-=======
-﻿/**
->>>>>>> agent/developer/development-developer-c76
  * Scoped memory — namespace-aware wrapper around any MemoryProvider.
  *
  * Provides automatic namespace scoping with visibility rules:
@@ -32,11 +28,7 @@ import { MemoryNamespace } from '../types/memory.js';
 
 /**
  * Default readable namespaces for each scope level.
-<<<<<<< HEAD
  * The hierarchy flows: AGENT → CREW → GLOBAL.
-=======
- * The hierarchy flows: AGENT -> CREW -> GLOBAL.
->>>>>>> agent/developer/development-developer-c76
  */
 const DEFAULT_READABLE_NAMESPACES: Readonly<Record<MemoryNamespace, readonly MemoryNamespace[]>> = {
   [MemoryNamespace.AGENT]: [MemoryNamespace.AGENT, MemoryNamespace.CREW, MemoryNamespace.GLOBAL],
@@ -171,10 +163,7 @@ export class ScopedMemory implements MemoryProvider {
       return this._filterResult(result);
     }
 
-<<<<<<< HEAD
     // Query each readable namespace and merge results
-=======
->>>>>>> agent/developer/development-developer-c76
     return this._queryAcrossNamespaces(options);
   }
 
