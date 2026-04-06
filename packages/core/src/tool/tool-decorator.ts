@@ -213,8 +213,7 @@ export function collectTools(instance: object): Tool[] {
     const zodSchema = meta.zodSchema;
 
     // Derive inputSchema from Zod schema when not explicitly provided
-    const inputSchema =
-      meta.inputSchema ?? (zodSchema ? zodToToolSchema(zodSchema) : undefined);
+    const inputSchema = meta.inputSchema ?? (zodSchema ? zodToToolSchema(zodSchema) : undefined);
 
     const config = {
       name: meta.resolvedName,
@@ -238,7 +237,7 @@ export function collectTools(instance: object): Tool[] {
       ...(zodSchema !== undefined && { inputZodSchema: zodSchema }),
       async execute(input: unknown): Promise<unknown> {
         if (zodSchema) {
-          const parsed = parseToolInput(meta.resolvedName, zodSchema, input);
+          const parsed: unknown = parseToolInput(meta.resolvedName, zodSchema, input);
           return boundExecute(parsed);
         }
         return boundExecute(input);

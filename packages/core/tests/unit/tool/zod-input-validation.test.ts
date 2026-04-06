@@ -306,7 +306,10 @@ describe('@tool decorator with Zod schema', () => {
   });
 
   it('prefers explicit inputSchema over Zod-derived one', () => {
-    const explicit = { type: 'object' as const, properties: { custom: { type: 'string' as const } } };
+    const explicit = {
+      type: 'object' as const,
+      properties: { custom: { type: 'string' as const } },
+    };
 
     class ExplicitSchema {
       @tool({
@@ -476,7 +479,7 @@ describe('ToolExecutor with inputZodSchema', () => {
     expect(result.data).toEqual({ value: 42 });
   });
 
-  it('returns failure result for invalid input', async () => {
+  it('throws ToolInputValidationError for invalid input', async () => {
     const t = createTool({
       name: 'strictTool',
       description: 'Strict tool',
@@ -486,9 +489,9 @@ describe('ToolExecutor with inputZodSchema', () => {
       },
     });
 
-    const result = await executor.execute(t, { value: 'not-an-email' });
-    expect(result.success).toBe(false);
-    expect(result.error).toBeDefined();
+    await expect(executor.execute(t, { value: 'not-an-email' })).rejects.toThrow(
+      ToolInputValidationError,
+    );
   });
 
   it('works without inputZodSchema', async () => {

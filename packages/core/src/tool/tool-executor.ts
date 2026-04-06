@@ -124,11 +124,7 @@ export class ToolExecutor {
   // Private helpers
   // -------------------------------------------------------------------------
 
-  private _validateInput(
-    toolName: string,
-    schema: import('zod').ZodType,
-    input: unknown,
-  ): void {
+  private _validateInput(toolName: string, schema: import('zod').ZodType, input: unknown): void {
     try {
       schema.parse(input);
     } catch (err: unknown) {

@@ -89,7 +89,8 @@ export interface CreateToolOptions {
 export function createTool(options: CreateToolOptions): Tool {
   // Derive inputSchema from Zod schema when not explicitly provided
   const inputSchema =
-    options.inputSchema ?? (options.inputZodSchema ? zodToToolSchema(options.inputZodSchema) : undefined);
+    options.inputSchema ??
+    (options.inputZodSchema ? zodToToolSchema(options.inputZodSchema) : undefined);
 
   // Build config object for validation
   const configForValidation = {
@@ -129,7 +130,7 @@ export function createTool(options: CreateToolOptions): Tool {
     ...(options.timeout !== undefined && { timeout: options.timeout }),
     async execute(input: unknown): Promise<unknown> {
       if (zodSchema) {
-        const parsed = parseToolInput(options.name, zodSchema, input);
+        const parsed: unknown = parseToolInput(options.name, zodSchema, input);
         return userExecute(parsed);
       }
       return userExecute(input);

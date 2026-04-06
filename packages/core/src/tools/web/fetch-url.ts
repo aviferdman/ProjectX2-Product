@@ -105,13 +105,7 @@ export function createFetchUrlTool(options?: FetchUrlToolOptions): Tool {
 
     async execute(input: unknown): Promise<FetchUrlOutput> {
       const parsed = parseToolInput('fetchUrl', FetchUrlInputSchema, input);
-      const {
-        url,
-        method,
-        headers: requestHeaders,
-        timeoutMs,
-        maxSize,
-      } = parsed;
+      const { url, method, headers: requestHeaders, timeoutMs, maxSize } = parsed;
 
       validateUrl(url);
 
