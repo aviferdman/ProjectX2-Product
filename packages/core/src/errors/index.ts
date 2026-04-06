@@ -5,3 +5,4 @@
  */
 
 export { AgentConfigError, AgentExecutionError } from './agent-errors.js';
+export { CrewConfigError, CrewExecutionError } from './crew-errors.js';

@@ -9,11 +9,18 @@ export const VERSION = '0.1.0';
 // Agent
 export { Agent } from './agent/index.js';
 
+// Crew
+export { Crew } from './crew/index.js';
+
 // Types
-export { AgentStatus, LLMRole } from './types/index.js';
+export { AgentStatus, CrewStatus, LLMRole } from './types/index.js';
 export type {
   AgentConfig,
   AgentEventMap,
+  CrewConfig,
+  CrewEventMap,
+  CrewRunResult,
+  CrewTask,
   LLMMessage,
   LLMProvider,
   LLMRequestOptions,
@@ -26,3 +33,4 @@ export type {
 
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
+export { CrewConfigError, CrewExecutionError } from './errors/index.js';
