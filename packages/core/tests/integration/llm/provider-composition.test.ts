@@ -112,7 +112,9 @@ describe('RetryProvider wrapping UsageTrackingProvider', () => {
     base.generateText
       .mockRejectedValueOnce(new LLMRateLimitError('mock', 'rate limited'))
       .mockRejectedValueOnce(new LLMRateLimitError('mock', 'rate limited'))
-      .mockResolvedValueOnce(createMockResponse('Success', { promptTokens: 20, completionTokens: 10, totalTokens: 30 }));
+      .mockResolvedValueOnce(
+        createMockResponse('Success', { promptTokens: 20, completionTokens: 10, totalTokens: 30 }),
+      );
 
     const response = await retryProvider.generateText(TEST_MESSAGES);
 
@@ -144,7 +146,11 @@ describe('RetryProvider wrapping UsageTrackingProvider', () => {
 
     const chunks: LLMStreamChunk[] = [
       { content: 'Hi' },
-      { content: ' there', finishReason: 'stop', tokenUsage: { promptTokens: 8, completionTokens: 4, totalTokens: 12 } },
+      {
+        content: ' there',
+        finishReason: 'stop',
+        tokenUsage: { promptTokens: 8, completionTokens: 4, totalTokens: 12 },
+      },
     ];
     streamBase.generateStream
       .mockRejectedValueOnce(new LLMProviderError('mock', 'connection error', 502))
@@ -399,7 +405,9 @@ describe('Circuit Breaker + Retry integration', () => {
 
     // Next request should be rejected immediately
     base.generateText.mockClear();
-    await expect(retryWithCb.generateText(TEST_MESSAGES)).rejects.toThrow(/circuit breaker is open/i);
+    await expect(retryWithCb.generateText(TEST_MESSAGES)).rejects.toThrow(
+      /circuit breaker is open/i,
+    );
 
     expect(base.generateText).not.toHaveBeenCalled();
     expect(retryWithCb.stats.circuitBreakerRejections).toBe(1);
@@ -407,10 +415,7 @@ describe('Circuit Breaker + Retry integration', () => {
 
   it('allows a test request through in HALF_OPEN state and closes on success', async () => {
     let currentTime = 0;
-    const cb = new CircuitBreaker(
-      { failureThreshold: 1, cooldownMs: 1000 },
-      () => currentTime,
-    );
+    const cb = new CircuitBreaker({ failureThreshold: 1, cooldownMs: 1000 }, () => currentTime);
 
     cb.recordFailure();
     expect(cb.state).toBe(CircuitState.OPEN);
@@ -425,10 +430,7 @@ describe('Circuit Breaker + Retry integration', () => {
 
   it('reopens the circuit when a HALF_OPEN test request fails', async () => {
     let currentTime = 0;
-    const cb = new CircuitBreaker(
-      { failureThreshold: 1, cooldownMs: 1000 },
-      () => currentTime,
-    );
+    const cb = new CircuitBreaker({ failureThreshold: 1, cooldownMs: 1000 }, () => currentTime);
 
     cb.recordFailure();
     expect(cb.state).toBe(CircuitState.OPEN);
@@ -520,7 +522,11 @@ describe('Retry + Streaming composition', () => {
     const base = createMockStreamingProvider();
     const chunks: LLMStreamChunk[] = [
       { content: 'Hello' },
-      { content: ' world', finishReason: 'stop', tokenUsage: { promptTokens: 5, completionTokens: 3, totalTokens: 8 } },
+      {
+        content: ' world',
+        finishReason: 'stop',
+        tokenUsage: { promptTokens: 5, completionTokens: 3, totalTokens: 8 },
+      },
     ];
 
     base.generateStream
@@ -544,7 +550,9 @@ describe('Retry + Streaming composition', () => {
     const base = createMockProvider();
     const retryProvider = createRetryProvider(base, { maxRetries: 2 });
 
-    await expect(retryProvider.generateStream(TEST_MESSAGES)).rejects.toThrow(/does not support streaming/i);
+    await expect(retryProvider.generateStream(TEST_MESSAGES)).rejects.toThrow(
+      /does not support streaming/i,
+    );
   });
 
   it('tracks usage from a streamed response after connection retry', async () => {
@@ -577,7 +585,11 @@ describe('Retry + Streaming composition', () => {
   it('retries multiple connection failures before establishing a stream', async () => {
     const base = createMockStreamingProvider();
     const chunks: LLMStreamChunk[] = [
-      { content: 'Finally', finishReason: 'stop', tokenUsage: { promptTokens: 3, completionTokens: 1, totalTokens: 4 } },
+      {
+        content: 'Finally',
+        finishReason: 'stop',
+        tokenUsage: { promptTokens: 3, completionTokens: 1, totalTokens: 4 },
+      },
     ];
 
     base.generateStream
@@ -793,10 +805,7 @@ describe('Stats and observability', () => {
 
   it('circuit breaker reset clears consecutive failures and reopens circuit', async () => {
     let currentTime = 0;
-    const cb = new CircuitBreaker(
-      { failureThreshold: 2, cooldownMs: 10_000 },
-      () => currentTime,
-    );
+    const cb = new CircuitBreaker({ failureThreshold: 2, cooldownMs: 10_000 }, () => currentTime);
 
     cb.recordFailure();
     cb.recordFailure();
@@ -953,7 +962,9 @@ describe('Factory functions', () => {
     const base = createMockProvider();
     base.generateText.mockResolvedValue(createMockResponse('Factory composed'));
 
-    const { provider: tracked, tracker } = createUsageTrackingProvider(base, { modelId: 'mock-model' });
+    const { provider: tracked, tracker } = createUsageTrackingProvider(base, {
+      modelId: 'mock-model',
+    });
     const retry = createRetryProvider(tracked, { maxRetries: 2 });
 
     const response = await retry.generateText(TEST_MESSAGES);

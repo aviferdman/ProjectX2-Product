@@ -105,24 +105,24 @@ describe('createWriteFileTool', () => {
   it('should reject path traversal outside base directory', async () => {
     const tool = createWriteFileTool(tmpDir);
 
-    await expect(
-      tool.execute({ path: '../../escape.txt', content: 'bad' }),
-    ).rejects.toThrow(ToolExecutionError);
-    await expect(
-      tool.execute({ path: '../../escape.txt', content: 'bad' }),
-    ).rejects.toThrow('outside the allowed base directory');
+    await expect(tool.execute({ path: '../../escape.txt', content: 'bad' })).rejects.toThrow(
+      ToolExecutionError,
+    );
+    await expect(tool.execute({ path: '../../escape.txt', content: 'bad' })).rejects.toThrow(
+      'outside the allowed base directory',
+    );
   });
 
   it('should reject content exceeding MAX_WRITE_SIZE', async () => {
     const tool = createWriteFileTool(tmpDir);
     const largeContent = 'x'.repeat(MAX_WRITE_SIZE + 1);
 
-    await expect(
-      tool.execute({ path: 'large.txt', content: largeContent }),
-    ).rejects.toThrow(ToolExecutionError);
-    await expect(
-      tool.execute({ path: 'large.txt', content: largeContent }),
-    ).rejects.toThrow('exceeds maximum');
+    await expect(tool.execute({ path: 'large.txt', content: largeContent })).rejects.toThrow(
+      ToolExecutionError,
+    );
+    await expect(tool.execute({ path: 'large.txt', content: largeContent })).rejects.toThrow(
+      'exceeds maximum',
+    );
   });
 
   it('should handle empty content', async () => {

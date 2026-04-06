@@ -371,14 +371,12 @@ describe('OpenAIProvider', () => {
     });
 
     it('should throw when response has no choices', async () => {
-      globalThis.fetch = vi
-        .fn()
-        .mockResolvedValue(
-          makeJsonResponse({
-            choices: [],
-            usage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
-          }),
-        );
+      globalThis.fetch = vi.fn().mockResolvedValue(
+        makeJsonResponse({
+          choices: [],
+          usage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
+        }),
+      );
 
       const provider = new OpenAIProvider(makeConfig());
       await expect(

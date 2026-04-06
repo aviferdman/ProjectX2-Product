@@ -21,9 +21,7 @@ import { LLMRole } from '../../../src/types/llm.js';
 // Test fixtures
 // ---------------------------------------------------------------------------
 
-const validMessages: LLMMessage[] = [
-  { role: LLMRole.USER, content: 'Hello' },
-];
+const validMessages: LLMMessage[] = [{ role: LLMRole.USER, content: 'Hello' }];
 
 const successResponse: LLMResponse = {
   content: 'Hi there!',
@@ -229,16 +227,12 @@ describe('RetryLLMProvider', () => {
         jitter: 0,
       });
 
-      await expect(retry.generateText(validMessages)).rejects.toThrow(
-        LLMAuthenticationError,
-      );
+      await expect(retry.generateText(validMessages)).rejects.toThrow(LLMAuthenticationError);
       expect(generateText).toHaveBeenCalledTimes(1);
     });
 
     it('should exhaust retries and throw last error', async () => {
-      const generateText = vi
-        .fn()
-        .mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
+      const generateText = vi.fn().mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
 
       const inner = createMockProvider({ generateText });
       const retry = new RetryLLMProvider(inner, {
@@ -247,9 +241,7 @@ describe('RetryLLMProvider', () => {
         jitter: 0,
       });
 
-      await expect(retry.generateText(validMessages)).rejects.toThrow(
-        LLMRateLimitError,
-      );
+      await expect(retry.generateText(validMessages)).rejects.toThrow(LLMRateLimitError);
       // 1 initial + 2 retries = 3
       expect(generateText).toHaveBeenCalledTimes(3);
     });
@@ -370,9 +362,7 @@ describe('RetryLLMProvider', () => {
         jitter: 0,
       });
 
-      await expect(retry.generateStream(validMessages)).rejects.toThrow(
-        LLMAuthenticationError,
-      );
+      await expect(retry.generateStream(validMessages)).rejects.toThrow(LLMAuthenticationError);
       expect(generateStream).toHaveBeenCalledTimes(1);
     });
   });
@@ -445,9 +435,7 @@ describe('RetryLLMProvider', () => {
     });
 
     it('should track exhausted failures', async () => {
-      const generateText = vi
-        .fn()
-        .mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
+      const generateText = vi.fn().mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
 
       const inner = createMockProvider({ generateText });
       const retry = new RetryLLMProvider(inner, {
@@ -464,9 +452,7 @@ describe('RetryLLMProvider', () => {
     });
 
     it('should track non-retryable failures without retry attempts', async () => {
-      const generateText = vi
-        .fn()
-        .mockRejectedValue(new LLMAuthenticationError('mock', 'Bad key'));
+      const generateText = vi.fn().mockRejectedValue(new LLMAuthenticationError('mock', 'Bad key'));
 
       const inner = createMockProvider({ generateText });
       const retry = new RetryLLMProvider(inner, {
@@ -561,9 +547,7 @@ describe('RetryLLMProvider', () => {
     });
 
     it('should reject requests when circuit is open', async () => {
-      const generateText = vi
-        .fn()
-        .mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
+      const generateText = vi.fn().mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
 
       const inner = createMockProvider({ generateText });
       const retry = new RetryLLMProvider(inner, {
@@ -578,9 +562,7 @@ describe('RetryLLMProvider', () => {
       expect(retry.circuitBreaker!.state).toBe(CircuitState.OPEN);
 
       // Next request should be rejected by circuit breaker
-      await expect(retry.generateText(validMessages)).rejects.toThrow(
-        /Circuit breaker is open/,
-      );
+      await expect(retry.generateText(validMessages)).rejects.toThrow(/Circuit breaker is open/);
 
       expect(retry.stats.circuitBreakerRejections).toBe(1);
     });
@@ -597,9 +579,7 @@ describe('RetryLLMProvider', () => {
     });
 
     it('should record failure in circuit breaker only for retryable errors', async () => {
-      const generateText = vi
-        .fn()
-        .mockRejectedValue(new LLMAuthenticationError('mock', 'Bad key'));
+      const generateText = vi.fn().mockRejectedValue(new LLMAuthenticationError('mock', 'Bad key'));
 
       const inner = createMockProvider({ generateText });
       const retry = new RetryLLMProvider(inner, {
@@ -615,9 +595,7 @@ describe('RetryLLMProvider', () => {
     });
 
     it('should track circuit breaker rejections in stats', async () => {
-      const generateText = vi
-        .fn()
-        .mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
+      const generateText = vi.fn().mockRejectedValue(new LLMRateLimitError('mock', 'Rate limited'));
 
       const inner = createMockProvider({ generateText });
       const retry = new RetryLLMProvider(inner, {
@@ -646,9 +624,7 @@ describe('RetryLLMProvider', () => {
 
       await retry.generateStream(validMessages).catch(() => {}); // opens circuit
 
-      await expect(retry.generateStream(validMessages)).rejects.toThrow(
-        /Circuit breaker is open/,
-      );
+      await expect(retry.generateStream(validMessages)).rejects.toThrow(/Circuit breaker is open/);
     });
   });
 });

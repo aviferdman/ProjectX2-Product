@@ -59,7 +59,7 @@ describe('decodeHtmlEntities', () => {
   });
 
   it('should decode &#39;', () => {
-    expect(decodeHtmlEntities("it&#39;s")).toBe("it's");
+    expect(decodeHtmlEntities('it&#39;s')).toBe("it's");
   });
 
   it('should decode &nbsp;', () => {
@@ -240,9 +240,7 @@ describe('createParseHtmlTool', () => {
 
   it('should throw on empty html', async () => {
     const tool = createParseHtmlTool();
-    await expect(tool.execute({ html: '', extract: 'text' })).rejects.toThrow(
-      ToolExecutionError,
-    );
+    await expect(tool.execute({ html: '', extract: 'text' })).rejects.toThrow(ToolExecutionError);
   });
 
   it('should throw on missing html', async () => {
@@ -253,7 +251,7 @@ describe('createParseHtmlTool', () => {
   it('should throw on invalid extract mode', async () => {
     const tool = createParseHtmlTool();
     await expect(tool.execute({ html: '<p>test</p>', extract: 'invalid' })).rejects.toThrow(
-      "must be one of",
+      'must be one of',
     );
   });
 

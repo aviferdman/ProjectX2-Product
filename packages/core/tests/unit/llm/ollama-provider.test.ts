@@ -161,9 +161,7 @@ describe('OllamaProvider', () => {
       const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
-      const provider = new OllamaProvider(
-        makeConfig({ baseUrl: 'http://remote-ollama:11434' }),
-      );
+      const provider = new OllamaProvider(makeConfig({ baseUrl: 'http://remote-ollama:11434' }));
       void provider.generateText([{ role: LLMRole.USER, content: 'test' }]);
 
       const callArgs = fetchMock.mock.calls[0] as [string, RequestInit];
@@ -219,14 +217,12 @@ describe('OllamaProvider', () => {
     });
 
     it('should return correct LLMResponse from API', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(makeChatResponse('Hello!', 'stop', 20, 3)),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse(makeChatResponse('Hello!', 'stop', 20, 3)));
 
       const provider = new OllamaProvider(makeConfig());
-      const response = await provider.generateText([
-        { role: LLMRole.USER, content: 'Say hello' },
-      ]);
+      const response = await provider.generateText([{ role: LLMRole.USER, content: 'Say hello' }]);
 
       expect(response.content).toBe('Hello!');
       expect(response.finishReason).toBe('stop');
@@ -238,9 +234,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should pass temperature option', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(makeConfig());
@@ -256,9 +250,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should pass maxTokens as num_predict', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(makeConfig());
@@ -274,9 +266,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should pass stopSequences as stop', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(makeConfig());
@@ -292,9 +282,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should not include options object when no options provided', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(makeConfig());
@@ -307,9 +295,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should map all LLM roles correctly', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(makeConfig());
@@ -340,9 +326,7 @@ describe('OllamaProvider', () => {
       );
 
       const provider = new OllamaProvider(makeConfig());
-      const response = await provider.generateText([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const response = await provider.generateText([{ role: LLMRole.USER, content: 'test' }]);
 
       expect(response.tokenUsage).toEqual({
         promptTokens: 0,
@@ -360,22 +344,18 @@ describe('OllamaProvider', () => {
       );
 
       const provider = new OllamaProvider(makeConfig());
-      const response = await provider.generateText([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const response = await provider.generateText([{ role: LLMRole.USER, content: 'test' }]);
 
       expect(response.finishReason).toBe('stop');
     });
 
     it('should map length done_reason correctly', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse(makeChatResponse('truncated', 'length', 10, 100)),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse(makeChatResponse('truncated', 'length', 10, 100)));
 
       const provider = new OllamaProvider(makeConfig());
-      const response = await provider.generateText([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const response = await provider.generateText([{ role: LLMRole.USER, content: 'test' }]);
 
       expect(response.finishReason).toBe('length');
     });
@@ -393,9 +373,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should use defaultOptions from config', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(
@@ -414,9 +392,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should allow per-call options to override defaults', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(
@@ -445,7 +421,13 @@ describe('OllamaProvider', () => {
     it('should send correct streaming request', async () => {
       const ndjson = makeNDJSONLines([
         { content: 'Hello' },
-        { content: ' world', done: true, done_reason: 'stop', prompt_eval_count: 10, eval_count: 5 },
+        {
+          content: ' world',
+          done: true,
+          done_reason: 'stop',
+          prompt_eval_count: 10,
+          eval_count: 5,
+        },
       ]);
       const fetchMock = vi.fn().mockResolvedValue(makeStreamResponse(ndjson));
       globalThis.fetch = fetchMock;
@@ -468,9 +450,7 @@ describe('OllamaProvider', () => {
       globalThis.fetch = vi.fn().mockResolvedValue(makeStreamResponse(ndjson));
 
       const provider = new OllamaProvider(makeConfig());
-      const stream = await provider.generateStream([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const stream = await provider.generateStream([{ role: LLMRole.USER, content: 'test' }]);
 
       const chunks: LLMStreamChunk[] = [];
       for await (const chunk of stream) {
@@ -500,9 +480,7 @@ describe('OllamaProvider', () => {
       globalThis.fetch = vi.fn().mockResolvedValue(makeStreamResponse(ndjson));
 
       const provider = new OllamaProvider(makeConfig());
-      const stream = await provider.generateStream([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const stream = await provider.generateStream([{ role: LLMRole.USER, content: 'test' }]);
 
       const response = await stream.toResponse();
       expect(response.content).toBe('Hello world');
@@ -519,9 +497,7 @@ describe('OllamaProvider', () => {
       globalThis.fetch = vi.fn().mockResolvedValue(response);
 
       const provider = new OllamaProvider(makeConfig());
-      const stream = await provider.generateStream([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const stream = await provider.generateStream([{ role: LLMRole.USER, content: 'test' }]);
 
       await expect(stream.toResponse()).rejects.toThrow('Streaming response has no body');
     });
@@ -535,9 +511,7 @@ describe('OllamaProvider', () => {
       globalThis.fetch = vi.fn().mockResolvedValue(makeStreamResponse(ndjson));
 
       const provider = new OllamaProvider(makeConfig());
-      const stream = await provider.generateStream([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const stream = await provider.generateStream([{ role: LLMRole.USER, content: 'test' }]);
 
       const response = await stream.toResponse();
       expect(response.content).toBe('data');
@@ -545,7 +519,8 @@ describe('OllamaProvider', () => {
 
     it('should skip invalid JSON lines in NDJSON stream', async () => {
       const encoder = new TextEncoder();
-      const invalidNdjson = '{"message":{"role":"assistant","content":"Hello"},"done":false}\nnot-json\n{"message":{"role":"assistant","content":""},"done":true,"done_reason":"stop","prompt_eval_count":5,"eval_count":2}\n';
+      const invalidNdjson =
+        '{"message":{"role":"assistant","content":"Hello"},"done":false}\nnot-json\n{"message":{"role":"assistant","content":""},"done":true,"done_reason":"stop","prompt_eval_count":5,"eval_count":2}\n';
 
       const stream = new ReadableStream({
         start(controller) {
@@ -558,9 +533,7 @@ describe('OllamaProvider', () => {
       globalThis.fetch = vi.fn().mockResolvedValue(response);
 
       const provider = new OllamaProvider(makeConfig());
-      const streamResp = await provider.generateStream([
-        { role: LLMRole.USER, content: 'test' },
-      ]);
+      const streamResp = await provider.generateStream([{ role: LLMRole.USER, content: 'test' }]);
 
       const result = await streamResp.toResponse();
       expect(result.content).toBe('Hello');
@@ -574,9 +547,9 @@ describe('OllamaProvider', () => {
 
   describe('error handling', () => {
     it('should throw LLMProviderError with model guidance on 404', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: 'model "nonexistent" not found' }, 404),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: 'model "nonexistent" not found' }, 404));
 
       const provider = new OllamaProvider(makeConfig({ modelId: 'nonexistent' }));
       await expect(
@@ -585,9 +558,9 @@ describe('OllamaProvider', () => {
     });
 
     it('should throw LLMProviderError on 400', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: 'invalid request body' }, 400),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: 'invalid request body' }, 400));
 
       const provider = new OllamaProvider(makeConfig());
       await expect(
@@ -596,9 +569,11 @@ describe('OllamaProvider', () => {
     });
 
     it('should throw LLMRateLimitError on 429', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: 'too many requests' }, 429, { 'retry-after': '5' }),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          makeJsonResponse({ error: 'too many requests' }, 429, { 'retry-after': '5' }),
+        );
 
       const provider = new OllamaProvider(makeConfig());
       const error = await provider
@@ -610,9 +585,9 @@ describe('OllamaProvider', () => {
     });
 
     it('should throw LLMProviderError on 500', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: 'internal server error' }, 500),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: 'internal server error' }, 500));
 
       const provider = new OllamaProvider(makeConfig());
       await expect(
@@ -621,9 +596,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should throw LLMProviderError on 502', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: 'bad gateway' }, 502),
-      );
+      globalThis.fetch = vi.fn().mockResolvedValue(makeJsonResponse({ error: 'bad gateway' }, 502));
 
       const provider = new OllamaProvider(makeConfig());
       await expect(
@@ -632,9 +605,9 @@ describe('OllamaProvider', () => {
     });
 
     it('should throw LLMProviderError on 503', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: 'service unavailable' }, 503),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: 'service unavailable' }, 503));
 
       const provider = new OllamaProvider(makeConfig());
       await expect(
@@ -656,9 +629,9 @@ describe('OllamaProvider', () => {
     });
 
     it('should throw LLMProviderError on unknown status codes', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue(
-        makeJsonResponse({ error: 'unknown error' }, 418),
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockResolvedValue(makeJsonResponse({ error: 'unknown error' }, 418));
 
       const provider = new OllamaProvider(makeConfig());
       const error = await provider
@@ -705,9 +678,7 @@ describe('OllamaProvider', () => {
 
   describe('AbortSignal support', () => {
     it('should pass signal to fetch', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const controller = new AbortController();
@@ -734,9 +705,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should pass config through to provider', () => {
-      const provider = createOllamaProvider(
-        makeConfig({ maxRetries: 7, timeout: 120_000 }),
-      );
+      const provider = createOllamaProvider(makeConfig({ maxRetries: 7, timeout: 120_000 }));
       expect(provider.maxRetries).toBe(7);
       expect(provider.timeout).toBe(120_000);
     });
@@ -748,9 +717,7 @@ describe('OllamaProvider', () => {
 
   describe('model support', () => {
     it('should work with mistral model ID', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(makeConfig({ modelId: 'mistral:7b' }));
@@ -763,9 +730,7 @@ describe('OllamaProvider', () => {
     });
 
     it('should work with codellama model ID', async () => {
-      const fetchMock = vi
-        .fn()
-        .mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
+      const fetchMock = vi.fn().mockResolvedValue(makeJsonResponse(makeChatResponse('ok')));
       globalThis.fetch = fetchMock;
 
       const provider = new OllamaProvider(makeConfig({ modelId: 'codellama:13b' }));

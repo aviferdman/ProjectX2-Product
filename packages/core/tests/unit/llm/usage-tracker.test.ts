@@ -4,11 +4,7 @@
 
 import { describe, expect, it, beforeEach, vi, afterEach } from 'vitest';
 import { TokenUsageTracker } from '../../../src/llm/usage-tracker.js';
-import type {
-  UsageRecord,
-  UsageRecordInput,
-  UsageReport,
-} from '../../../src/llm/usage-tracker.js';
+import type { UsageRecord, UsageRecordInput, UsageReport } from '../../../src/llm/usage-tracker.js';
 import type { TokenUsage } from '../../../src/types/llm.js';
 
 // ---------------------------------------------------------------------------
@@ -73,10 +69,12 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should calculate cost using ModelCatalog for known models', () => {
-      const record = tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
-      }));
+      const record = tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
+        }),
+      );
 
       // gpt-4o: $0.0025/1k input + $0.01/1k output
       // (1000/1000)*0.0025 + (500/1000)*0.01 = 0.0025 + 0.005 = 0.0075
@@ -84,18 +82,22 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should return undefined cost for unknown models', () => {
-      const record = tracker.record(makeInput({
-        modelId: 'unknown-model',
-      }));
+      const record = tracker.record(
+        makeInput({
+          modelId: 'unknown-model',
+        }),
+      );
 
       expect(record.costUsd).toBeUndefined();
     });
 
     it('should return undefined cost for local models without pricing', () => {
-      const record = tracker.record(makeInput({
-        modelId: 'llama3.1:8b',
-        provider: 'ollama',
-      }));
+      const record = tracker.record(
+        makeInput({
+          modelId: 'llama3.1:8b',
+          provider: 'ollama',
+        }),
+      );
 
       expect(record.costUsd).toBeUndefined();
     });
@@ -233,15 +235,21 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should aggregate tokens across multiple requests', () => {
-      tracker.record(makeInput({
-        tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
-      }));
-      tracker.record(makeInput({
-        tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
-      }));
-      tracker.record(makeInput({
-        tokenUsage: { promptTokens: 300, completionTokens: 150, totalTokens: 450 },
-      }));
+      tracker.record(
+        makeInput({
+          tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          tokenUsage: { promptTokens: 300, completionTokens: 150, totalTokens: 450 },
+        }),
+      );
 
       const totals = tracker.getTotalTokens();
       expect(totals.promptTokens).toBe(600);
@@ -250,15 +258,19 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should aggregate tokens across different models', () => {
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'claude-3-5-sonnet-20241022',
-        provider: 'anthropic',
-        tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'claude-3-5-sonnet-20241022',
+          provider: 'anthropic',
+          tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
+        }),
+      );
 
       const totals = tracker.getTotalTokens();
       expect(totals.promptTokens).toBe(300);
@@ -278,15 +290,19 @@ describe('TokenUsageTracker', () => {
 
     it('should aggregate cost across multiple requests', () => {
       // gpt-4o: $0.0025/1k in, $0.01/1k out
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
+        }),
+      );
       // gpt-4o-mini: $0.00015/1k in, $0.0006/1k out
-      tracker.record(makeInput({
-        modelId: 'gpt-4o-mini',
-        tokenUsage: { promptTokens: 2000, completionTokens: 1000, totalTokens: 3000 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o-mini',
+          tokenUsage: { promptTokens: 2000, completionTokens: 1000, totalTokens: 3000 },
+        }),
+      );
 
       // gpt-4o cost: (1000/1000)*0.0025 + (500/1000)*0.01 = 0.0025 + 0.005 = 0.0075
       // gpt-4o-mini cost: (2000/1000)*0.00015 + (1000/1000)*0.0006 = 0.0003 + 0.0006 = 0.0009
@@ -295,25 +311,31 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should treat unknown model costs as 0', () => {
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'unknown-model',
-        tokenUsage: { promptTokens: 5000, completionTokens: 5000, totalTokens: 10000 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'unknown-model',
+          tokenUsage: { promptTokens: 5000, completionTokens: 5000, totalTokens: 10000 },
+        }),
+      );
 
       // Only gpt-4o cost counted
       expect(tracker.getTotalCost()).toBeCloseTo(0.0075, 6);
     });
 
     it('should handle local models (no cost) correctly', () => {
-      tracker.record(makeInput({
-        modelId: 'llama3.1:8b',
-        provider: 'ollama',
-        tokenUsage: { promptTokens: 5000, completionTokens: 2000, totalTokens: 7000 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'llama3.1:8b',
+          provider: 'ollama',
+          tokenUsage: { promptTokens: 5000, completionTokens: 2000, totalTokens: 7000 },
+        }),
+      );
 
       expect(tracker.getTotalCost()).toBe(0);
     });
@@ -339,14 +361,18 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should produce correct totals', () => {
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
+        }),
+      );
 
       const report = tracker.getReport();
       expect(report.totals.requests).toBe(2);
@@ -356,18 +382,24 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should produce per-model breakdown', () => {
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'gpt-4o-mini',
-        tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 300, completionTokens: 150, totalTokens: 450 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o-mini',
+          tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 300, completionTokens: 150, totalTokens: 450 },
+        }),
+      );
 
       const report = tracker.getReport();
       expect(report.byModel.size).toBe(2);
@@ -384,16 +416,20 @@ describe('TokenUsageTracker', () => {
     });
 
     it('should produce per-provider breakdown', () => {
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        provider: 'openai',
-        tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'claude-3-5-sonnet-20241022',
-        provider: 'anthropic',
-        tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          provider: 'openai',
+          tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'claude-3-5-sonnet-20241022',
+          provider: 'anthropic',
+          tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
+        }),
+      );
 
       const report = tracker.getReport();
       expect(report.byProvider.size).toBe(2);
@@ -421,10 +457,12 @@ describe('TokenUsageTracker', () => {
 
     it('should aggregate costs in per-model breakdown', () => {
       // gpt-4o: $0.0025/1k in, $0.01/1k out
-      tracker.record(makeInput({
-        modelId: 'gpt-4o',
-        tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
+        }),
+      );
 
       const report = tracker.getReport();
       const gpt4o = report.byModel.get('gpt-4o')!;
@@ -579,34 +617,52 @@ describe('TokenUsageTracker', () => {
   describe('multi-model aggregation', () => {
     it('should correctly aggregate across OpenAI and Anthropic models', () => {
       // 3 OpenAI requests
-      tracker.record(makeInput({
-        modelId: 'gpt-4o', provider: 'openai',
-        tokenUsage: { promptTokens: 500, completionTokens: 200, totalTokens: 700 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'gpt-4o-mini', provider: 'openai',
-        tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'gpt-4o', provider: 'openai',
-        tokenUsage: { promptTokens: 500, completionTokens: 200, totalTokens: 700 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          provider: 'openai',
+          tokenUsage: { promptTokens: 500, completionTokens: 200, totalTokens: 700 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o-mini',
+          provider: 'openai',
+          tokenUsage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'gpt-4o',
+          provider: 'openai',
+          tokenUsage: { promptTokens: 500, completionTokens: 200, totalTokens: 700 },
+        }),
+      );
 
       // 2 Anthropic requests
-      tracker.record(makeInput({
-        modelId: 'claude-3-5-sonnet-20241022', provider: 'anthropic',
-        tokenUsage: { promptTokens: 800, completionTokens: 400, totalTokens: 1200 },
-      }));
-      tracker.record(makeInput({
-        modelId: 'claude-3-5-haiku-20241022', provider: 'anthropic',
-        tokenUsage: { promptTokens: 2000, completionTokens: 1000, totalTokens: 3000 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'claude-3-5-sonnet-20241022',
+          provider: 'anthropic',
+          tokenUsage: { promptTokens: 800, completionTokens: 400, totalTokens: 1200 },
+        }),
+      );
+      tracker.record(
+        makeInput({
+          modelId: 'claude-3-5-haiku-20241022',
+          provider: 'anthropic',
+          tokenUsage: { promptTokens: 2000, completionTokens: 1000, totalTokens: 3000 },
+        }),
+      );
 
       // 1 Local (Ollama) request
-      tracker.record(makeInput({
-        modelId: 'llama3.1:8b', provider: 'ollama',
-        tokenUsage: { promptTokens: 3000, completionTokens: 1500, totalTokens: 4500 },
-      }));
+      tracker.record(
+        makeInput({
+          modelId: 'llama3.1:8b',
+          provider: 'ollama',
+          tokenUsage: { promptTokens: 3000, completionTokens: 1500, totalTokens: 4500 },
+        }),
+      );
 
       const report = tracker.getReport();
 

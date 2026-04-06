@@ -5,7 +5,11 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { ToolExecutionError, ToolPermissionError } from '../../../src/errors/tool-errors.js';
-import { PermissionManager, ALLOW_ALL_POLICY, DENY_ALL_POLICY } from '../../../src/tool/permission-manager.js';
+import {
+  PermissionManager,
+  ALLOW_ALL_POLICY,
+  DENY_ALL_POLICY,
+} from '../../../src/tool/permission-manager.js';
 import { ToolExecutor } from '../../../src/tool/tool-executor.js';
 import { ToolPermission } from '../../../src/types/tool.js';
 import type { Tool, ToolResult } from '../../../src/types/tool.js';

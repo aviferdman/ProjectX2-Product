@@ -2,10 +2,10 @@ import { describe, it, expect } from 'vitest';
 
 /**
  * Type Safety Tests
- * 
+ *
  * These tests verify that TypeScript strict mode is properly configured
  * by testing code patterns that should be caught by the compiler.
- * 
+ *
  * Note: These are runtime tests that verify type-safe code works correctly.
  * The actual type checking happens during compilation (npm run build).
  */
@@ -19,7 +19,7 @@ describe('Type Safety Enforcement', () => {
       }
 
       const user: User = { name: 'Alice' };
-      
+
       // Proper null checking
       const email = user.email ?? 'no-email@example.com';
       expect(email).toBe('no-email@example.com');
@@ -27,11 +27,11 @@ describe('Type Safety Enforcement', () => {
 
     it('should handle undefined in arrays safely', () => {
       const numbers = [1, 2, 3];
-      
+
       // With noUncheckedIndexedAccess, array access returns T | undefined
       const first = numbers[0];
       const outOfBounds = numbers[999];
-      
+
       expect(first).toBe(1);
       expect(outOfBounds).toBeUndefined();
     });
@@ -141,7 +141,7 @@ describe('Type Safety Enforcement', () => {
     it('should support class fields', () => {
       class Counter {
         count = 0; // ES2022 class field
-        
+
         increment() {
           this.count++;
         }
@@ -155,11 +155,11 @@ describe('Type Safety Enforcement', () => {
     it('should support private fields with #', () => {
       class Account {
         #balance = 0;
-        
+
         deposit(amount: number) {
           this.#balance += amount;
         }
-        
+
         getBalance() {
           return this.#balance;
         }
@@ -172,7 +172,7 @@ describe('Type Safety Enforcement', () => {
 
     it('should support .at() method on arrays', () => {
       const arr = [1, 2, 3, 4, 5];
-      
+
       expect(arr.at(0)).toBe(1);
       expect(arr.at(-1)).toBe(5);
       expect(arr.at(-2)).toBe(4);
@@ -180,7 +180,7 @@ describe('Type Safety Enforcement', () => {
 
     it('should support Object.hasOwn()', () => {
       const obj = { foo: 'bar' };
-      
+
       expect(Object.hasOwn(obj, 'foo')).toBe(true);
       expect(Object.hasOwn(obj, 'baz')).toBe(false);
     });
