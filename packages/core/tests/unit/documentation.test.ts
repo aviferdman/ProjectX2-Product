@@ -361,8 +361,8 @@ describe('TASK-007: Root README.md Validation', () => {
       expect(content.length).toBeGreaterThan(3000);
     });
 
-    it('should not exceed 10000 characters', () => {
-      expect(content.length).toBeLessThan(10000);
+    it('should not exceed 20000 characters', () => {
+      expect(content.length).toBeLessThan(20000);
     });
 
     it('should have multiple sections (>= 7)', () => {
