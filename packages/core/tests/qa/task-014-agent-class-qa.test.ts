@@ -60,7 +60,12 @@ function createMockTool(options?: {
   delay?: number;
   result?: unknown;
 }): Tool {
-  const { name = 'qa-tool', shouldFail = false, delay = 0, result = 'tool executed' } = options ?? {};
+  const {
+    name = 'qa-tool',
+    shouldFail = false,
+    delay = 0,
+    result = 'tool executed',
+  } = options ?? {};
 
   return {
     name,
@@ -212,7 +217,12 @@ describe('TASK-014 QA: Agent Class Implementation', () => {
   describe('Event Emission', () => {
     it('should emit agent:start and agent:complete events on successful execution', async () => {
       const provider = createMockLLMProvider();
-      const agent = new Agent({ id: 'event-test', role: 'Test', goal: 'Test', llmProvider: provider });
+      const agent = new Agent({
+        id: 'event-test',
+        role: 'Test',
+        goal: 'Test',
+        llmProvider: provider,
+      });
 
       const startListener = vi.fn();
       const completeListener = vi.fn();
@@ -230,7 +240,12 @@ describe('TASK-014 QA: Agent Class Implementation', () => {
 
     it('should emit agent:error event on execution failure', async () => {
       const provider = createMockLLMProvider({ shouldFail: true });
-      const agent = new Agent({ id: 'error-test', role: 'Test', goal: 'Test', llmProvider: provider });
+      const agent = new Agent({
+        id: 'error-test',
+        role: 'Test',
+        goal: 'Test',
+        llmProvider: provider,
+      });
 
       const errorListener = vi.fn();
       agent.on('agent:error', errorListener);
@@ -243,7 +258,12 @@ describe('TASK-014 QA: Agent Class Implementation', () => {
 
     it('should emit agent:status-changed events on status transitions', async () => {
       const provider = createMockLLMProvider();
-      const agent = new Agent({ id: 'status-test', role: 'Test', goal: 'Test', llmProvider: provider });
+      const agent = new Agent({
+        id: 'status-test',
+        role: 'Test',
+        goal: 'Test',
+        llmProvider: provider,
+      });
 
       const statusChanges: AgentStatus[] = [];
       agent.on('agent:status-changed', (agentId, status) => {
@@ -258,7 +278,12 @@ describe('TASK-014 QA: Agent Class Implementation', () => {
 
     it('should emit LLM lifecycle events', async () => {
       const provider = createMockLLMProvider();
-      const agent = new Agent({ id: 'llm-test', role: 'Test', goal: 'Test', llmProvider: provider });
+      const agent = new Agent({
+        id: 'llm-test',
+        role: 'Test',
+        goal: 'Test',
+        llmProvider: provider,
+      });
 
       const llmStartListener = vi.fn();
       const llmCompleteListener = vi.fn();
@@ -306,18 +331,18 @@ describe('TASK-014 QA: Agent Class Implementation', () => {
     });
 
     it('should reject maxIterations exceeding 100', () => {
-      expect(() => new Agent({ id: 'test', role: 'Test', goal: 'Test', maxIterations: 101 })).toThrow(
-        AgentConfigError,
-      );
+      expect(
+        () => new Agent({ id: 'test', role: 'Test', goal: 'Test', maxIterations: 101 }),
+      ).toThrow(AgentConfigError);
     });
 
     it('should reject non-positive maxIterations', () => {
       expect(() => new Agent({ id: 'test', role: 'Test', goal: 'Test', maxIterations: 0 })).toThrow(
         AgentConfigError,
       );
-      expect(() => new Agent({ id: 'test', role: 'Test', goal: 'Test', maxIterations: -1 })).toThrow(
-        AgentConfigError,
-      );
+      expect(
+        () => new Agent({ id: 'test', role: 'Test', goal: 'Test', maxIterations: -1 }),
+      ).toThrow(AgentConfigError);
     });
   });
 

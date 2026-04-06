@@ -17,11 +17,11 @@
 
 /** Role of a message participant in a conversation. */
 export enum LLMRole {
-  SYSTEM = "system",
-  USER = "user",
-  ASSISTANT = "assistant",
+  SYSTEM = 'system',
+  USER = 'user',
+  ASSISTANT = 'assistant',
   /** Used to return tool/function call results to the model. */
-  TOOL = "tool",
+  TOOL = 'tool',
 }
 
 // ---------------------------------------------------------------------------
@@ -133,10 +133,7 @@ export interface LLMProvider {
    * @param options  - Generation parameters
    * @returns The LLM response with content and usage metadata
    */
-  generateText(
-    messages: readonly LLMMessage[],
-    options?: LLMRequestOptions,
-  ): Promise<LLMResponse>;
+  generateText(messages: readonly LLMMessage[], options?: LLMRequestOptions): Promise<LLMResponse>;
 }
 
 /**

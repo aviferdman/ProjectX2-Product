@@ -110,7 +110,9 @@ export interface OpenAIErrorResponseOptions {
   code?: string;
 }
 
-export function openaiErrorResponse(opts: OpenAIErrorResponseOptions = {}): Record<string, unknown> {
+export function openaiErrorResponse(
+  opts: OpenAIErrorResponseOptions = {},
+): Record<string, unknown> {
   return {
     error: {
       message: opts.message ?? 'An error occurred',

@@ -51,15 +51,17 @@ function createMockStreamResponse(
 
   return {
     async toResponse(): Promise<LLMResponse> {
-      return finalResponse ?? {
-        content: chunks.map((c) => c.content).join(''),
-        finishReason: chunks[chunks.length - 1]?.finishReason ?? 'stop',
-        tokenUsage: chunks[chunks.length - 1]?.tokenUsage ?? {
-          promptTokens: 0,
-          completionTokens: 0,
-          totalTokens: 0,
-        },
-      };
+      return (
+        finalResponse ?? {
+          content: chunks.map((c) => c.content).join(''),
+          finishReason: chunks[chunks.length - 1]?.finishReason ?? 'stop',
+          tokenUsage: chunks[chunks.length - 1]?.tokenUsage ?? {
+            promptTokens: 0,
+            completionTokens: 0,
+            totalTokens: 0,
+          },
+        }
+      );
     },
     [Symbol.asyncIterator](): AsyncIterator<LLMStreamChunk> {
       let index = 0;
@@ -87,9 +89,7 @@ function createMockStreamingProvider(
   };
 }
 
-const TEST_MESSAGES: readonly LLMMessage[] = [
-  { role: LLMRole.USER, content: 'Hello' },
-];
+const TEST_MESSAGES: readonly LLMMessage[] = [{ role: LLMRole.USER, content: 'Hello' }];
 
 // ---------------------------------------------------------------------------
 // UsageTrackingProvider
@@ -290,10 +290,7 @@ describe('UsageTrackingProvider', () => {
         totalTokens: 225,
       };
       const streamResp = createMockStreamResponse(
-        [
-          { content: 'Hello ' },
-          { content: 'world', finishReason: 'stop', tokenUsage: finalUsage },
-        ],
+        [{ content: 'Hello ' }, { content: 'world', finishReason: 'stop', tokenUsage: finalUsage }],
         {
           content: 'Hello world',
           finishReason: 'stop',

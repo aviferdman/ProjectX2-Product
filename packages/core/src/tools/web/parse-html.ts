@@ -78,8 +78,7 @@ export function extractMetadata(html: string): HtmlMetadata {
   while ((metaMatch = metaPattern.exec(html)) !== null) {
     const tag = metaMatch[0];
     const nameAttr =
-      /name=["']([^"']+)["']/i.exec(tag)?.[1] ??
-      /property=["']([^"']+)["']/i.exec(tag)?.[1];
+      /name=["']([^"']+)["']/i.exec(tag)?.[1] ?? /property=["']([^"']+)["']/i.exec(tag)?.[1];
     const contentAttr = /content=["']([^"']*?)["']/i.exec(tag)?.[1];
 
     if (nameAttr && contentAttr !== undefined) {
@@ -88,7 +87,8 @@ export function extractMetadata(html: string): HtmlMetadata {
   }
 
   // Handle reverse attribute order: content before name
-  const metaPattern2 = /<meta\s[^>]*content\s*=\s*["']([^"']*)["'][^>]*(?:name|property)\s*=\s*["']([^"']*)["'][^>]*\/?>/gi;
+  const metaPattern2 =
+    /<meta\s[^>]*content\s*=\s*["']([^"']*)["'][^>]*(?:name|property)\s*=\s*["']([^"']*)["'][^>]*\/?>/gi;
   let match2: RegExpExecArray | null;
   while ((match2 = metaPattern2.exec(html)) !== null) {
     const value = match2[1];

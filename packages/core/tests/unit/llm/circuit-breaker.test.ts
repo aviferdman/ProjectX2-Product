@@ -230,12 +230,10 @@ describe('CircuitBreaker', () => {
   describe('onStateChange callback', () => {
     it('should fire on CLOSED → OPEN transition', () => {
       const transitions: Array<[CircuitState, CircuitState]> = [];
-      const cb = new CircuitBreaker(
-        {
-          failureThreshold: 2,
-          onStateChange: (from, to) => transitions.push([from, to]),
-        },
-      );
+      const cb = new CircuitBreaker({
+        failureThreshold: 2,
+        onStateChange: (from, to) => transitions.push([from, to]),
+      });
 
       cb.recordFailure();
       cb.recordFailure();

@@ -94,10 +94,7 @@ describe('Retry Mechanics', () => {
     const retryAfterMs = 5_000;
     const error = new LLMRateLimitError('mock', 'rate limited', retryAfterMs);
 
-    const operation = vi
-      .fn()
-      .mockRejectedValueOnce(error)
-      .mockResolvedValueOnce('ok');
+    const operation = vi.fn().mockRejectedValueOnce(error).mockResolvedValueOnce('ok');
 
     await withRetry(operation, config, { sleep: instantSleep, random: fixedRandom });
 
@@ -126,10 +123,7 @@ describe('Retry Mechanics', () => {
     const config = defaultRetryConfig({ maxRetries: 1 });
     const error = new LLMProviderError('mock', 'Service unavailable', 503);
 
-    const operation = vi
-      .fn()
-      .mockRejectedValueOnce(error)
-      .mockResolvedValueOnce('recovered');
+    const operation = vi.fn().mockRejectedValueOnce(error).mockResolvedValueOnce('recovered');
 
     const result = await withRetry(operation, config, { sleep: instantSleep });
 
@@ -144,9 +138,9 @@ describe('Retry Mechanics', () => {
 
     const operation = vi.fn().mockRejectedValue(error);
 
-    await expect(
-      withRetry(operation, config, { sleep: instantSleep, onRetry }),
-    ).rejects.toThrow(LLMAuthenticationError);
+    await expect(withRetry(operation, config, { sleep: instantSleep, onRetry })).rejects.toThrow(
+      LLMAuthenticationError,
+    );
 
     expect(operation).toHaveBeenCalledTimes(1);
     expect(onRetry).not.toHaveBeenCalled();
@@ -169,10 +163,7 @@ describe('Retry Mechanics', () => {
     const config = defaultRetryConfig({ maxRetries: 3 });
     const error = new LLMRateLimitError('mock', 'rate limited');
 
-    const operation = vi
-      .fn()
-      .mockRejectedValueOnce(error)
-      .mockResolvedValueOnce('success');
+    const operation = vi.fn().mockRejectedValueOnce(error).mockResolvedValueOnce('success');
 
     const result = await withRetry(operation, config, { sleep: instantSleep });
 
@@ -280,9 +271,9 @@ describe('Retry Mechanics', () => {
       .mockRejectedValueOnce(error2)
       .mockRejectedValueOnce(error3);
 
-    await expect(
-      withRetry(operation, config, { sleep: instantSleep }),
-    ).rejects.toThrow('rate limited 3');
+    await expect(withRetry(operation, config, { sleep: instantSleep })).rejects.toThrow(
+      'rate limited 3',
+    );
 
     expect(operation).toHaveBeenCalledTimes(3);
   });
@@ -767,9 +758,9 @@ describe('Real-World Failure Patterns', () => {
       .mockRejectedValueOnce(rateLimitError)
       .mockRejectedValueOnce(authError);
 
-    await expect(
-      withRetry(operation, config, { sleep: instantSleep }),
-    ).rejects.toThrow(LLMAuthenticationError);
+    await expect(withRetry(operation, config, { sleep: instantSleep })).rejects.toThrow(
+      LLMAuthenticationError,
+    );
 
     expect(operation).toHaveBeenCalledTimes(2);
   });
@@ -917,9 +908,7 @@ describe('Edge Cases', () => {
     const config = defaultRetryConfig({ maxRetries: 3 });
     const operation = vi.fn().mockRejectedValue(new TypeError('Cannot read property'));
 
-    await expect(
-      withRetry(operation, config, { sleep: instantSleep }),
-    ).rejects.toThrow(TypeError);
+    await expect(withRetry(operation, config, { sleep: instantSleep })).rejects.toThrow(TypeError);
 
     expect(operation).toHaveBeenCalledTimes(1);
   });
@@ -929,9 +918,9 @@ describe('Edge Cases', () => {
     const error = new LLMProviderError('mock', 'Unknown error');
     const operation = vi.fn().mockRejectedValue(error);
 
-    await expect(
-      withRetry(operation, config, { sleep: instantSleep }),
-    ).rejects.toThrow(LLMProviderError);
+    await expect(withRetry(operation, config, { sleep: instantSleep })).rejects.toThrow(
+      LLMProviderError,
+    );
 
     expect(operation).toHaveBeenCalledTimes(1);
   });

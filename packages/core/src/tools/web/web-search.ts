@@ -147,7 +147,9 @@ export function createWebSearchTool(options?: WebSearchToolOptions): Tool {
 
       const url = `${DDG_API_URL}?${params.toString()}`;
       const controller = new AbortController();
-      const timer = setTimeout(() => { controller.abort(); }, timeoutMs);
+      const timer = setTimeout(() => {
+        controller.abort();
+      }, timeoutMs);
 
       try {
         const response = await fetch(url, {
@@ -183,7 +185,10 @@ export function createWebSearchTool(options?: WebSearchToolOptions): Tool {
 
         const message = err instanceof Error ? err.message : String(err);
         if (message.includes('abort')) {
-          throw new ToolExecutionError('webSearch', `Search timed out after ${String(timeoutMs)}ms`);
+          throw new ToolExecutionError(
+            'webSearch',
+            `Search timed out after ${String(timeoutMs)}ms`,
+          );
         }
         throw new ToolExecutionError(
           'webSearch',

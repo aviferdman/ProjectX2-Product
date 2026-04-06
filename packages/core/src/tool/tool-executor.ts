@@ -12,10 +12,7 @@
 
 import { EventEmitter } from 'eventemitter3';
 
-import {
-  ToolExecutionError,
-  ToolTimeoutError,
-} from '../errors/tool-errors.js';
+import { ToolExecutionError, ToolTimeoutError } from '../errors/tool-errors.js';
 import type { Tool, ToolEventMap, ToolResult } from '../types/tool.js';
 import type { PermissionManager } from './permission-manager.js';
 
@@ -71,9 +68,10 @@ export class ToolExecutor {
     const timeoutMs = tool.timeout ?? DEFAULT_TIMEOUT_MS;
 
     try {
-      const data = timeoutMs > 0
-        ? await this._executeWithTimeout(tool, input, timeoutMs)
-        : await tool.execute(input);
+      const data =
+        timeoutMs > 0
+          ? await this._executeWithTimeout(tool, input, timeoutMs)
+          : await tool.execute(input);
 
       const result: ToolResult = {
         success: true,
@@ -131,7 +129,7 @@ export class ToolExecutor {
         },
         (error: unknown) => {
           clearTimeout(timer);
-          reject(error);
+          reject(error instanceof Error ? error : new Error(String(error)));
         },
       );
     });

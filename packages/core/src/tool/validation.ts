@@ -98,9 +98,7 @@ export const ToolPermissionPolicySchema = z.object({
  * @returns The parsed config
  * @throws {ZodError} If validation fails
  */
-export function validateToolConfig(
-  config: unknown,
-): z.infer<typeof ToolConfigSchema> {
+export function validateToolConfig(config: unknown): z.infer<typeof ToolConfigSchema> {
   return ToolConfigSchema.parse(config);
 }
 

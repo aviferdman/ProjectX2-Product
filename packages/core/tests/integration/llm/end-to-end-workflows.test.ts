@@ -6,7 +6,10 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { OpenAIProvider, createOpenAIProvider } from '../../../src/llm/providers/openai-provider.js';
+import {
+  OpenAIProvider,
+  createOpenAIProvider,
+} from '../../../src/llm/providers/openai-provider.js';
 import {
   AnthropicProvider,
   createAnthropicProvider,
@@ -85,7 +88,11 @@ function makeOpenAIStreamResponse(chunks: string[]): Response {
   lines.push(
     `data: ${JSON.stringify({
       choices: [{ delta: { content: '' }, finish_reason: 'stop' }],
-      usage: { prompt_tokens: 10, completion_tokens: chunks.length, total_tokens: 10 + chunks.length },
+      usage: {
+        prompt_tokens: 10,
+        completion_tokens: chunks.length,
+        total_tokens: 10 + chunks.length,
+      },
     })}`,
   );
   lines.push('');
@@ -128,9 +135,9 @@ describe('Registry → Provider creation → Text generation', () => {
       apiKey: OPENAI_KEY,
     }) as OpenAIProvider;
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse(openaiTextResponse('Registry works!')),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('Registry works!')));
 
     const response = await provider.generateText(USER_MESSAGES);
     expect(response.content).toBe('Registry works!');
@@ -148,9 +155,9 @@ describe('Registry → Provider creation → Text generation', () => {
       apiKey: ANTHROPIC_KEY,
     }) as AnthropicProvider;
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse(anthropicTextResponse('Claude from registry!')),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeJsonResponse(anthropicTextResponse('Claude from registry!')));
 
     const response = await provider.generateText(USER_MESSAGES);
     expect(response.content).toBe('Claude from registry!');
@@ -175,7 +182,8 @@ describe('Full lifecycle: create → request → track usage → generate report
     });
     const { provider, tracker } = createUsageTrackingProvider(openai);
 
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('First', 10, 5)))
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('Second', 20, 15)))
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('Third', 8, 3)));
@@ -210,7 +218,8 @@ describe('Full lifecycle: create → request → track usage → generate report
     const tracker = new TokenUsageTracker();
     const { provider } = createUsageTrackingProvider(anthropic, { tracker });
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(makeJsonResponse(anthropicTextResponse('Hello', 15, 10)))
       .mockResolvedValueOnce(makeJsonResponse(anthropicTextResponse('World', 20, 12)));
 
@@ -240,11 +249,10 @@ describe('Full lifecycle: create → request → track usage → generate report
     const { provider: openaiTracked } = createUsageTrackingProvider(openai, { tracker });
     const { provider: anthropicTracked } = createUsageTrackingProvider(anthropic, { tracker });
 
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('OpenAI response', 10, 5)))
-      .mockResolvedValueOnce(
-        makeJsonResponse(anthropicTextResponse('Anthropic response', 12, 8)),
-      );
+      .mockResolvedValueOnce(makeJsonResponse(anthropicTextResponse('Anthropic response', 12, 8)));
 
     globalThis.fetch = fetchMock;
 
@@ -272,16 +280,11 @@ describe('Full lifecycle with retry: create → fail → retry → succeed → t
       jitter: 0,
     });
 
-    globalThis.fetch = vi.fn()
-      .mockResolvedValueOnce(
-        makeJsonResponse({ error: { message: 'Server error' } }, 500),
-      )
-      .mockResolvedValueOnce(
-        makeJsonResponse({ error: { message: 'Server error' } }, 502),
-      )
-      .mockResolvedValueOnce(
-        makeJsonResponse(openaiTextResponse('Recovery!', 10, 5)),
-      );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeJsonResponse({ error: { message: 'Server error' } }, 500))
+      .mockResolvedValueOnce(makeJsonResponse({ error: { message: 'Server error' } }, 502))
+      .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('Recovery!', 10, 5)));
 
     const response = await retryProvider.generateText(USER_MESSAGES);
     expect(response.content).toBe('Recovery!');
@@ -308,9 +311,9 @@ describe('Full lifecycle with retry: create → fail → retry → succeed → t
       jitter: 0,
     });
 
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      makeJsonResponse({ error: { message: 'Down' } }, 500),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(makeJsonResponse({ error: { message: 'Down' } }, 500));
 
     await expect(retryProvider.generateText(USER_MESSAGES)).rejects.toThrow(LLMProviderError);
 
@@ -330,13 +333,11 @@ describe('Full lifecycle with retry: create → fail → retry → succeed → t
       jitter: 0,
     });
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse({ error: { message: 'Invalid API key' } }, 401),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeJsonResponse({ error: { message: 'Invalid API key' } }, 401));
 
-    await expect(retryProvider.generateText(USER_MESSAGES)).rejects.toThrow(
-      LLMAuthenticationError,
-    );
+    await expect(retryProvider.generateText(USER_MESSAGES)).rejects.toThrow(LLMAuthenticationError);
     expect(globalThis.fetch).toHaveBeenCalledTimes(1);
     expect(retryProvider.stats.totalRetryAttempts).toBe(0);
   });
@@ -351,9 +352,9 @@ describe('Full lifecycle with streaming', () => {
     });
     const { provider, tracker } = createUsageTrackingProvider(openai);
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeOpenAIStreamResponse(['Hello', ' ', 'world', '!']),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeOpenAIStreamResponse(['Hello', ' ', 'world', '!']));
 
     const stream = await provider.generateStream(USER_MESSAGES);
     const response = await stream.toResponse();
@@ -371,9 +372,9 @@ describe('Full lifecycle with streaming', () => {
     });
     const { provider, tracker } = createUsageTrackingProvider(openai);
 
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeOpenAIStreamResponse(['Chunk', '1', 'Chunk', '2']),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeOpenAIStreamResponse(['Chunk', '1', 'Chunk', '2']));
 
     const stream = await provider.generateStream(USER_MESSAGES);
     const chunks: LLMStreamChunk[] = [];
@@ -410,18 +411,16 @@ describe('Circuit breaker recovery workflow', () => {
     await expect(retryProvider.generateText(USER_MESSAGES)).rejects.toThrow();
 
     // Third request → circuit breaker rejects immediately
-    await expect(retryProvider.generateText(USER_MESSAGES)).rejects.toThrow(
-      /circuit breaker/i,
-    );
+    await expect(retryProvider.generateText(USER_MESSAGES)).rejects.toThrow(/circuit breaker/i);
     expect(retryProvider.stats.circuitBreakerRejections).toBe(1);
 
     // Wait for cooldown
     await new Promise((resolve) => setTimeout(resolve, 60));
 
     // Circuit is now half-open → next request is a probe
-    globalThis.fetch = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse(openaiTextResponse('Recovered!')),
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('Recovered!')));
 
     const response = await retryProvider.generateText(USER_MESSAGES);
     expect(response.content).toBe('Recovered!');
@@ -444,7 +443,8 @@ describe('Multi-model workflow with registry', () => {
       apiKey: OPENAI_KEY,
     });
 
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('GPT-4o says hi')))
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('Mini says hi')));
 
@@ -484,7 +484,8 @@ describe('Multi-model workflow with registry', () => {
       tracker,
     });
 
-    globalThis.fetch = vi.fn()
+    globalThis.fetch = vi
+      .fn()
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('response1', 100, 50)))
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('response2', 20, 10)));
 
@@ -512,7 +513,8 @@ describe('Decorator stacking: Retry(UsageTracking(Provider))', () => {
       jitter: 0,
     });
 
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(makeJsonResponse({ error: { message: 'Rate limited' } }, 429))
       .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('OK', 10, 5)));
 
@@ -538,9 +540,9 @@ describe('Custom base URL', () => {
       baseUrl: 'https://my-proxy.example.com/v1',
     });
 
-    const fetchMock = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse(openaiTextResponse('Proxied!')),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('Proxied!')));
     globalThis.fetch = fetchMock;
 
     await provider.generateText(USER_MESSAGES);
@@ -557,9 +559,9 @@ describe('Custom base URL', () => {
       baseUrl: 'https://my-proxy.example.com',
     });
 
-    const fetchMock = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse(anthropicTextResponse('Proxied!')),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(makeJsonResponse(anthropicTextResponse('Proxied!')));
     globalThis.fetch = fetchMock;
 
     await provider.generateText(USER_MESSAGES);
@@ -577,9 +579,7 @@ describe('Request options forwarding', () => {
       apiKey: OPENAI_KEY,
     });
 
-    const fetchMock = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse(openaiTextResponse('OK')),
-    );
+    const fetchMock = vi.fn().mockResolvedValueOnce(makeJsonResponse(openaiTextResponse('OK')));
     globalThis.fetch = fetchMock;
 
     await provider.generateText(USER_MESSAGES, {
@@ -601,9 +601,7 @@ describe('Request options forwarding', () => {
       apiKey: ANTHROPIC_KEY,
     });
 
-    const fetchMock = vi.fn().mockResolvedValueOnce(
-      makeJsonResponse(anthropicTextResponse('OK')),
-    );
+    const fetchMock = vi.fn().mockResolvedValueOnce(makeJsonResponse(anthropicTextResponse('OK')));
     globalThis.fetch = fetchMock;
 
     await provider.generateText(USER_MESSAGES, {

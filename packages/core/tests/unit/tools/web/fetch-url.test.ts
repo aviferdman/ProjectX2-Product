@@ -53,17 +53,23 @@ describe('createFetchUrlTool', () => {
 
   it('should throw on disallowed protocol', async () => {
     const tool = createFetchUrlTool();
-    await expect(tool.execute({ url: 'ftp://example.com' })).rejects.toThrow('Unsupported protocol');
+    await expect(tool.execute({ url: 'ftp://example.com' })).rejects.toThrow(
+      'Unsupported protocol',
+    );
   });
 
   it('should reject file:// protocol', async () => {
     const tool = createFetchUrlTool();
-    await expect(tool.execute({ url: 'file:///etc/passwd' })).rejects.toThrow('Unsupported protocol');
+    await expect(tool.execute({ url: 'file:///etc/passwd' })).rejects.toThrow(
+      'Unsupported protocol',
+    );
   });
 
   it('should throw on data: protocol', async () => {
     const tool = createFetchUrlTool();
-    await expect(tool.execute({ url: 'data:text/plain,hello' })).rejects.toThrow('Unsupported protocol');
+    await expect(tool.execute({ url: 'data:text/plain,hello' })).rejects.toThrow(
+      'Unsupported protocol',
+    );
   });
 
   it('should handle timeout via AbortController', async () => {
@@ -87,7 +93,9 @@ describe('createFetchUrlTool (mocked fetch)', () => {
 
   it('should fetch a URL and return response data', async () => {
     const mockBody = '<html><body>Hello World</body></html>';
-    const mockHeaders = { get: (name: string) => name === 'content-type' ? 'text/html; charset=utf-8' : null };
+    const mockHeaders = {
+      get: (name: string) => (name === 'content-type' ? 'text/html; charset=utf-8' : null),
+    };
     globalThis.fetch = vi.fn().mockResolvedValue({
       status: 200,
       statusText: 'OK',
@@ -126,7 +134,7 @@ describe('createFetchUrlTool (mocked fetch)', () => {
     const tool = createFetchUrlTool();
     await tool.execute({
       url: 'https://api.example.com/data',
-      headers: { 'Authorization': 'Bearer test-token', 'Accept': 'application/json' },
+      headers: { Authorization: 'Bearer test-token', Accept: 'application/json' },
     });
 
     const fetchCall = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0];
@@ -182,9 +190,9 @@ describe('createFetchUrlTool (mocked fetch)', () => {
     });
 
     const tool = createFetchUrlTool();
-    await expect(
-      tool.execute({ url: 'https://example.com', maxSize: 10 }),
-    ).rejects.toThrow('exceeds maximum');
+    await expect(tool.execute({ url: 'https://example.com', maxSize: 10 })).rejects.toThrow(
+      'exceeds maximum',
+    );
   });
 
   it('should handle non-OK HTTP status codes', async () => {

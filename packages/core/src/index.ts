@@ -75,7 +75,15 @@ export type {
 } from './llm/index.js';
 
 // Types
-export { AgentStatus, CrewStatus, LLMRole, TaskPriority, TaskStatus, ToolCategory, ToolPermission } from './types/index.js';
+export {
+  AgentStatus,
+  CrewStatus,
+  LLMRole,
+  TaskPriority,
+  TaskStatus,
+  ToolCategory,
+  ToolPermission,
+} from './types/index.js';
 export type {
   AgentConfig,
   AgentEventMap,

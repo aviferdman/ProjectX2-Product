@@ -118,7 +118,9 @@ export function createFetchUrlTool(options?: FetchUrlToolOptions): Tool {
       const timeout = timeoutMs ?? defaultTimeout;
       const maxBodySize = maxSize ?? MAX_RESPONSE_SIZE;
       const controller = new AbortController();
-      const timer = setTimeout(() => { controller.abort(); }, timeout);
+      const timer = setTimeout(() => {
+        controller.abort();
+      }, timeout);
 
       try {
         const response = await fetch(url, {

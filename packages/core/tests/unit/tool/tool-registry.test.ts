@@ -231,14 +231,12 @@ describe('ToolRegistry', () => {
   describe('getByPermission', () => {
     it('should return tools requiring the specified permission', () => {
       const registry = new ToolRegistry();
+      registry.register(makeTool('readFile', { permissions: [ToolPermission.FILE_READ] }));
+      registry.register(makeTool('webFetch', { permissions: [ToolPermission.NETWORK] }));
       registry.register(
-        makeTool('readFile', { permissions: [ToolPermission.FILE_READ] }),
-      );
-      registry.register(
-        makeTool('webFetch', { permissions: [ToolPermission.NETWORK] }),
-      );
-      registry.register(
-        makeTool('shellExec', { permissions: [ToolPermission.SHELL_EXEC, ToolPermission.ENV_ACCESS] }),
+        makeTool('shellExec', {
+          permissions: [ToolPermission.SHELL_EXEC, ToolPermission.ENV_ACCESS],
+        }),
       );
 
       const networkTools = registry.getByPermission(ToolPermission.NETWORK);

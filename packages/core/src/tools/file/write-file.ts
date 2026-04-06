@@ -66,11 +66,7 @@ export function createWriteFileTool(basePath: string): Tool {
     },
 
     async execute(input: unknown): Promise<WriteFileOutput> {
-      const {
-        path: filePath,
-        content,
-        createDirectories = false,
-      } = input as WriteFileInput;
+      const { path: filePath, content, createDirectories = false } = input as WriteFileInput;
 
       if (!filePath || typeof filePath !== 'string') {
         throw new ToolExecutionError('writeFile', 'input.path must be a non-empty string');

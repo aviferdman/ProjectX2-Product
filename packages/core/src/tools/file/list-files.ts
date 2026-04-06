@@ -72,7 +72,8 @@ async function collectEntries(
   const queue: string[] = [dirPath];
 
   while (queue.length > 0 && entries.length < hardLimit) {
-    const currentDir = queue.shift()!;
+    const currentDir = queue.shift();
+    if (!currentDir) break;
     let dirEntries: import('node:fs').Dirent[];
     try {
       dirEntries = await fsPromises.readdir(currentDir, { withFileTypes: true });
@@ -225,10 +226,7 @@ export function createListFilesTool(basePath: string): Tool {
         );
       }
 
-      const effectiveMax = Math.min(
-        Math.max(1, maxEntries),
-        HARD_MAX_ENTRIES,
-      );
+      const effectiveMax = Math.min(Math.max(1, maxEntries), HARD_MAX_ENTRIES);
 
       // Collect one extra so we know if the result is truncated
       const allEntries = await collectEntries(

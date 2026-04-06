@@ -45,10 +45,7 @@ export {
   stripTags,
 } from './web/index.js';
 
-export type {
-  FetchUrlToolOptions,
-  WebSearchToolOptions,
-} from './web/index.js';
+export type { FetchUrlToolOptions, WebSearchToolOptions } from './web/index.js';
 
 export type {
   ExtractedLink,

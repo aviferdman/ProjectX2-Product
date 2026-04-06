@@ -70,7 +70,9 @@ describe('TASK-015 QA: MIT LICENSE in @crewspace/core', () => {
     });
 
     it('should contain MIT license disclaimer', () => {
-      expect(licenseContent).toContain('THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND');
+      expect(licenseContent).toContain(
+        'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND',
+      );
       // Note: These may be on the same or next line in the file
       expect(licenseContent).toContain('IMPLIED');
       expect(licenseContent).toContain('MERCHANTABILITY');

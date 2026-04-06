@@ -8,12 +8,8 @@
  * @packageDocumentation
  */
 
-import { LLMProviderError } from "../errors/llm-errors.js";
-import type {
-  LLMProvider,
-  LLMProviderConfig,
-  LLMProviderFactory,
-} from "../types/llm.js";
+import { LLMProviderError } from '../errors/llm-errors.js';
+import type { LLMProvider, LLMProviderConfig, LLMProviderFactory } from '../types/llm.js';
 
 /**
  * A registry that maps provider names to their factory functions.
@@ -44,10 +40,7 @@ export class LLMProviderRegistry {
    */
   register(name: string, factory: LLMProviderFactory): void {
     if (this._factories.has(name)) {
-      throw new LLMProviderError(
-        name,
-        `Provider "${name}" is already registered`,
-      );
+      throw new LLMProviderError(name, `Provider "${name}" is already registered`);
     }
     this._factories.set(name, factory);
   }
@@ -98,7 +91,7 @@ export class LLMProviderRegistry {
   create(config: LLMProviderConfig): LLMProvider {
     const factory = this._factories.get(config.provider);
     if (!factory) {
-      const available = this.listProviders().join(", ") || "none";
+      const available = this.listProviders().join(', ') || 'none';
       throw new LLMProviderError(
         config.provider,
         `No factory registered for provider "${config.provider}". Available: [${available}]`,
@@ -118,31 +111,26 @@ export class LLMProviderRegistry {
    * @throws {LLMProviderError} If required environment variables are missing
    */
   createFromEnv(overrides?: Partial<LLMProviderConfig>): LLMProvider {
-    const provider =
-      overrides?.provider ?? process.env["CREWSPACE_LLM_PROVIDER"];
-    const modelId = overrides?.modelId ?? process.env["CREWSPACE_LLM_MODEL"];
+    const provider = overrides?.provider ?? process.env['CREWSPACE_LLM_PROVIDER'];
+    const modelId = overrides?.modelId ?? process.env['CREWSPACE_LLM_MODEL'];
 
     if (!provider) {
       throw new LLMProviderError(
-        "unknown",
-        "CREWSPACE_LLM_PROVIDER environment variable is not set",
+        'unknown',
+        'CREWSPACE_LLM_PROVIDER environment variable is not set',
       );
     }
     if (!modelId) {
-      throw new LLMProviderError(
-        provider,
-        "CREWSPACE_LLM_MODEL environment variable is not set",
-      );
+      throw new LLMProviderError(provider, 'CREWSPACE_LLM_MODEL environment variable is not set');
     }
 
     const apiKeyEnvMap: Record<string, string> = {
-      openai: "OPENAI_API_KEY",
-      anthropic: "ANTHROPIC_API_KEY",
+      openai: 'OPENAI_API_KEY',
+      anthropic: 'ANTHROPIC_API_KEY',
     };
 
     const apiKeyEnv = apiKeyEnvMap[provider];
-    const apiKey =
-      overrides?.apiKey ?? (apiKeyEnv ? process.env[apiKeyEnv] : undefined);
+    const apiKey = overrides?.apiKey ?? (apiKeyEnv ? process.env[apiKeyEnv] : undefined);
 
     const config: LLMProviderConfig = {
       provider,

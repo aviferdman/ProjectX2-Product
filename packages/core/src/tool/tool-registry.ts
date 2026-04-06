@@ -7,10 +7,7 @@
  * @packageDocumentation
  */
 
-import {
-  ToolConfigError,
-  ToolNotFoundError,
-} from '../errors/tool-errors.js';
+import { ToolConfigError, ToolNotFoundError } from '../errors/tool-errors.js';
 import type { Tool, ToolCategory, ToolPermission } from '../types/tool.js';
 
 // ---------------------------------------------------------------------------
@@ -115,9 +112,7 @@ export class ToolRegistry {
    * Return tools that require the specified permission.
    */
   getByPermission(permission: ToolPermission): readonly Tool[] {
-    return this.getAll().filter(
-      (t) => t.permissions !== undefined && t.permissions.includes(permission),
-    );
+    return this.getAll().filter((t) => t.permissions?.includes(permission) ?? false);
   }
 
   /** Remove all registered tools. */

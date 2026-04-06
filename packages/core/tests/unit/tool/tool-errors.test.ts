@@ -78,7 +78,10 @@ describe('ToolPermissionError', () => {
     );
     expect(error.message).toContain('shell:exec');
     expect(error.toolName).toBe('shellExec');
-    expect(error.requiredPermissions).toEqual([ToolPermission.SHELL_EXEC, ToolPermission.ENV_ACCESS]);
+    expect(error.requiredPermissions).toEqual([
+      ToolPermission.SHELL_EXEC,
+      ToolPermission.ENV_ACCESS,
+    ]);
     expect(error.deniedPermissions).toEqual([ToolPermission.SHELL_EXEC]);
     expect(error.name).toBe('ToolPermissionError');
   });
