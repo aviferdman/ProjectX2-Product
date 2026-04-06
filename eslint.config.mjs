@@ -7,7 +7,15 @@ import globals from 'globals';
 export default tseslint.config(
   // Global ignores
   {
-    ignores: ['**/dist/**', '**/node_modules/**', '**/coverage/**', '**/*.js', '**/*.mjs'],
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      '**/coverage/**',
+      '**/*.js',
+      '**/*.mjs',
+      'vitest.workspace.ts',
+      '**/vitest.config.ts',
+    ],
   },
 
   // Base ESLint recommended rules
@@ -28,7 +36,7 @@ export default tseslint.config(
         ...globals.node,
       },
       parserOptions: {
-        projectService: true,
+        project: ['./packages/*/tsconfig.json', './packages/*/tsconfig.test.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },

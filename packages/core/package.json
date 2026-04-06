@@ -23,7 +23,10 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean && rimraf dist",
     "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit -p tsconfig.test.json"
   },
