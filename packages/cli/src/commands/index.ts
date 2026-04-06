@@ -23,3 +23,10 @@ export {
 export type { RunnerOptions, RunResult, SupportedExtension } from './runner.js';
 export { registerValidateCommand } from './validate.js';
 export type { ValidateOptions } from './validate.js';
+export { validateWorkflowFile, formatValidationResult } from './validator.js';
+export type {
+  DiagnosticLevel,
+  ValidationDiagnostic,
+  ValidationResult,
+  ValidatorOptions,
+} from './validator.js';

@@ -1,13 +1,20 @@
 /**
  * `crewspace validate` — validate a Crewspace workflow file.
  *
- * This is a placeholder that registers the command structure.
- * Full implementation is tracked by TASK-057.
+ * Performs static analysis on a workflow file to check for:
+ * - File existence and supported extension (.ts, .mts, .js, .mjs)
+ * - Crewspace imports (@crewspace/core)
+ * - Agent / Crew instantiation patterns with required properties
+ * - Duplicate IDs across agents and tasks
+ * - Reference integrity (agentId → agent, dependencies → task)
+ * - (Strict mode) additional warnings for missing optional fields
  *
  * @packageDocumentation
  */
 
 import type { Command } from 'commander';
+
+import { validateWorkflowFile, formatValidationResult } from './validator.js';
 
 export interface ValidateOptions {
   readonly strict?: boolean;
@@ -18,9 +25,21 @@ export function registerValidateCommand(parent: Command): void {
     .command('validate <file>')
     .description('Validate a Crewspace workflow file')
     .option('--strict', 'Enable strict validation mode', false)
-    .action((_file: string, _options: ValidateOptions) => {
-      // Stub — full implementation in TASK-057
-      console.log('crewspace validate is not yet implemented.');
-      process.exitCode = 1;
+    .action((file: string, options: ValidateOptions) => {
+      const globalOpts = parent.opts();
+      const cwd = (globalOpts['cwd'] as string | undefined) ?? process.cwd();
+
+      const result = validateWorkflowFile({
+        file,
+        cwd,
+        strict: options.strict ?? false,
+      });
+
+      const output = formatValidationResult(result);
+      process.stdout.write(output);
+
+      if (!result.valid) {
+        process.exitCode = 1;
+      }
     });
 }
