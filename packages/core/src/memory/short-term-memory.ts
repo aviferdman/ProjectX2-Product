@@ -168,7 +168,7 @@ export class ShortTermMemory implements MemoryProvider {
       throw new MemoryOperationError(
         this.name,
         'add',
-        Entry with id "+$+{entry.id}" already exists,
+        `Entry with id "${entry.id}" already exists`,
       );
     }
 
