@@ -14,6 +14,8 @@ export { Crew } from './crew/index.js';
 
 // Task
 export { Task } from './task/index.js';
+export { getExecutionLevels, resolveTaskDependencies, topologicalSort } from './task/index.js';
+export type { TopologicalSortResult } from './task/index.js';
 
 // Execution Engine
 export { ExecutionEngine } from './engine/index.js';
