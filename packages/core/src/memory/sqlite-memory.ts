@@ -31,7 +31,7 @@ import type {
   MemoryQueryResult,
   MemoryRetentionPolicy,
 } from '../types/memory.js';
-import { MemoryNamespace } from '../types/memory.js';
+import { MemoryNamespace, MemoryRole } from '../types/memory.js';
 
 // ---------------------------------------------------------------------------
 // Types for better-sqlite3 (avoids hard dependency on @types/better-sqlite3)
@@ -235,6 +235,9 @@ export class SqliteMemory implements MemoryProvider {
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     this._ensureOpen();
     const limit = Math.min(options?.limit ?? DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT);
+    const offset = options?.offset ?? 0;
+    const sortOrder = options?.sortOrder ?? 'desc';
+    const orderDir = sortOrder === 'asc' ? 'ASC' : 'DESC';
     const { sql, params } = buildFilterQuery(options);
 
     const countResult = this._db
@@ -242,8 +245,8 @@ export class SqliteMemory implements MemoryProvider {
       .get(...params) as { cnt: number };
 
     const rows = this._db
-      .prepare(`SELECT * FROM memory_entries${sql} ORDER BY created_at DESC LIMIT ?`)
-      .all(...params, limit) as MemoryRow[];
+      .prepare(`SELECT * FROM memory_entries${sql} ORDER BY created_at ${orderDir} LIMIT ? OFFSET ?`)
+      .all(...params, limit, offset) as MemoryRow[];
 
     return {
       entries: rows.map(rowToEntry),
@@ -258,6 +261,9 @@ export class SqliteMemory implements MemoryProvider {
     }
 
     const limit = Math.min(options?.limit ?? DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT);
+    const offset = options?.offset ?? 0;
+    const sortOrder = options?.sortOrder ?? 'desc';
+    const orderDir = sortOrder === 'asc' ? 'ASC' : 'DESC';
     const { sql: filterSql, params: filterParams } = buildFilterQuery(options);
 
     // Escape FTS special characters and wrap in quotes for phrase matching
@@ -277,9 +283,9 @@ export class SqliteMemory implements MemoryProvider {
 
     const rows = this._db
       .prepare(
-        `SELECT memory_entries.* FROM memory_entries${ftsJoin}${ftsWhere} ORDER BY memory_entries.created_at DESC LIMIT ?`,
+        `SELECT memory_entries.* FROM memory_entries${ftsJoin}${ftsWhere} ORDER BY memory_entries.created_at ${orderDir} LIMIT ? OFFSET ?`,
       )
-      .all(...allParams, limit) as MemoryRow[];
+      .all(...allParams, limit, offset) as MemoryRow[];
 
     return {
       entries: rows.map(rowToEntry),
@@ -508,6 +514,14 @@ function buildFilterQuery(options?: MemoryQueryOptions): { sql: string; params: 
   if (options?.namespace) {
     conditions.push('namespace = ?');
     params.push(options.namespace);
+  }
+
+  // Role filtering: roles takes precedence over role
+  const roles = options?.roles ?? (options?.role ? [options.role] : undefined);
+  if (roles && roles.length > 0) {
+    const placeholders = roles.map(() => '?').join(', ');
+    conditions.push(`role IN (${placeholders})`);
+    params.push(...roles);
   }
 
   if (options?.after) {

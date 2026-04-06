@@ -319,7 +319,7 @@ export {
 } from './errors/index.js';
 
 // Memory
-export { createMemoryEntry, generateMemoryId, MemoryManager, ShortTermMemory, SqliteMemory } from './memory/index.js';
+export { createMemoryEntry, generateMemoryId, MemoryManager, MemorySearchBuilder, ShortTermMemory, SqliteMemory } from './memory/index.js';
 export type { MemoryManagerConfig, SqliteMemoryConfig } from './memory/index.js';
 export {
   exportMemory,
@@ -348,4 +348,5 @@ export type {
   MemoryQueryOptions,
   MemoryQueryResult,
   MemoryRetentionPolicy,
+  MemorySortOrder,
 } from './types/index.js';

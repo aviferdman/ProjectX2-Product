@@ -56,6 +56,9 @@ export interface MemoryEntry {
   readonly metadata?: MemoryMetadata;
 }
 
+/** Sort direction for query results. */
+export type MemorySortOrder = 'asc' | 'desc';
+
 /**
  * Options for querying / searching memory.
  */
@@ -70,6 +73,14 @@ export interface MemoryQueryOptions {
   readonly before?: string;
   /** Filter entries whose metadata matches all specified key-value pairs. */
   readonly metadata?: Readonly<Record<string, string | number | boolean>>;
+  /** Filter to a specific role. */
+  readonly role?: MemoryRole;
+  /** Filter to any of the specified roles. Takes precedence over `role` if both are set. */
+  readonly roles?: readonly MemoryRole[];
+  /** Number of entries to skip (for pagination). */
+  readonly offset?: number;
+  /** Sort direction by creation timestamp. Default: `'desc'` (newest first). */
+  readonly sortOrder?: MemorySortOrder;
 }
 
 /**

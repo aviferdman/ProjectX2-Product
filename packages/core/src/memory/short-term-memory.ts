@@ -20,8 +20,9 @@ import type {
   MemoryQueryOptions,
   MemoryQueryResult,
   MemoryRetentionPolicy,
+  MemorySortOrder,
 } from '../types/memory.js';
-import { MemoryNamespace } from '../types/memory.js';
+import { MemoryNamespace, MemoryRole } from '../types/memory.js';
 
 // ---------------------------------------------------------------------------
 // Defaults
@@ -182,9 +183,10 @@ private readonly _defaultNamespace: MemoryNamespace;
 
   async query(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     const limit = Math.min(options?.limit ?? DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT);
+    const offset = options?.offset ?? 0;
     const entries = this._filter(options);
     return {
-      entries: entries.slice(0, limit),
+      entries: entries.slice(offset, offset + limit),
       total: entries.length,
     };
   }
@@ -196,13 +198,14 @@ private readonly _defaultNamespace: MemoryNamespace;
 
     const lower = text.toLowerCase();
     const limit = Math.min(options?.limit ?? DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT);
+    const offset = options?.offset ?? 0;
 
     const filtered = this._filter(options).filter((e) =>
       e.content.toLowerCase().includes(lower),
     );
 
     return {
-      entries: filtered.slice(0, limit),
+      entries: filtered.slice(offset, offset + limit),
       total: filtered.length,
     };
   }
@@ -260,12 +263,19 @@ private readonly _defaultNamespace: MemoryNamespace;
   // Internal helpers
   // -----------------------------------------------------------------------
 
-  /** Return entries matching the given query options, sorted newest-first. */
+  /** Return entries matching the given query options, sorted by creation date. */
   private _filter(options?: MemoryQueryOptions): MemoryEntry[] {
     let entries = Array.from(this._store.values());
 
     if (options?.namespace) {
       entries = entries.filter((e) => e.namespace === options.namespace);
+    }
+
+    // Role filtering: roles takes precedence over role
+    const roles = options?.roles ?? (options?.role ? [options.role] : undefined);
+    if (roles && roles.length > 0) {
+      const roleSet = new Set<MemoryRole>(roles);
+      entries = entries.filter((e) => roleSet.has(e.role));
     }
 
     if (options?.after) {
@@ -283,8 +293,13 @@ private readonly _defaultNamespace: MemoryNamespace;
       entries = entries.filter((e) => matchesMetadata(e.metadata, meta));
     }
 
-    // Sort newest-first
-    entries.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    // Sort by creation date (default: newest-first)
+    const sortOrder: MemorySortOrder = options?.sortOrder ?? 'desc';
+    if (sortOrder === 'asc') {
+      entries.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    } else {
+      entries.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
 
     return entries;
   }

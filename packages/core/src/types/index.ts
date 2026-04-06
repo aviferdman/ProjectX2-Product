@@ -47,4 +47,5 @@ export type {
   MemoryQueryOptions,
   MemoryQueryResult,
   MemoryRetentionPolicy,
+  MemorySortOrder,
 } from './memory.js';

@@ -14,6 +14,8 @@ export {
 } from './memory-manager.js';
 export type { MemoryManagerConfig } from './memory-manager.js';
 
+export { MemorySearchBuilder } from './memory-search-builder.js';
+
 export {
   exportMemory,
   exportToJson,
