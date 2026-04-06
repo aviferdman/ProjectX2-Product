@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 /**
  * Tests for memory types — ensures enums and interfaces are exported correctly.
  */
 
+=======
+>>>>>>> agent/developer/development-developer-c66
 import { describe, expect, it } from 'vitest';
 
 import { MemoryNamespace, MemoryRole } from '../../../src/types/memory.js';
@@ -31,7 +34,11 @@ describe('MemoryRole enum', () => {
   });
 });
 
+<<<<<<< HEAD
 describe('Type contracts (compile-time verification)', () => {
+=======
+describe('Type contracts', () => {
+>>>>>>> agent/developer/development-developer-c66
   it('MemoryEntry satisfies the interface', () => {
     const entry: MemoryEntry = {
       id: 'test',
@@ -56,6 +63,7 @@ describe('Type contracts (compile-time verification)', () => {
     expect(entry.metadata?.agentId).toBe('a1');
   });
 
+<<<<<<< HEAD
   it('MemoryQueryOptions satisfies the interface', () => {
     const opts: MemoryQueryOptions = {
       namespace: MemoryNamespace.GLOBAL,
@@ -67,6 +75,8 @@ describe('Type contracts (compile-time verification)', () => {
     expect(opts.limit).toBe(10);
   });
 
+=======
+>>>>>>> agent/developer/development-developer-c66
   it('MemoryConfig satisfies the interface', () => {
     const config: MemoryConfig = {
       defaultNamespace: MemoryNamespace.CREW,
@@ -84,4 +94,8 @@ describe('Type contracts (compile-time verification)', () => {
     const result: MemoryQueryResult = { entries: [], total: 0 };
     expect(result.total).toBe(0);
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> agent/developer/development-developer-c66

@@ -1,11 +1,14 @@
 /**
  * Memory manager — coordinates one or more {@link MemoryProvider}s.
  *
+<<<<<<< HEAD
  * Provides a unified API for storing and retrieving entries across
  * multiple backends (e.g. short-term in-memory + long-term SQLite).
  * Entries are written to all registered providers; reads are served
  * by the first provider that returns a result (priority order).
  *
+=======
+>>>>>>> agent/developer/development-developer-c66
  * @packageDocumentation
  */
 
@@ -38,12 +41,15 @@ export function generateMemoryId(): string {
 
 /**
  * Convenience factory to create a fully-populated {@link MemoryEntry}.
+<<<<<<< HEAD
  *
  * @param content   - The text content
  * @param role      - Author role
  * @param namespace - Namespace scope
  * @param metadata  - Optional metadata
  * @returns A frozen entry with an auto-generated id and timestamp
+=======
+>>>>>>> agent/developer/development-developer-c66
  */
 export function createMemoryEntry(
   content: string,
@@ -69,17 +75,23 @@ export function createMemoryEntry(
  * Configuration for {@link MemoryManager}.
  */
 export interface MemoryManagerConfig extends MemoryConfig {
+<<<<<<< HEAD
   /**
    * Memory providers in priority order. The first provider is treated
    * as the "primary" — it is used for reads when multiple providers
    * contain the same entry.
    */
+=======
+>>>>>>> agent/developer/development-developer-c66
   readonly providers?: readonly MemoryProvider[];
 }
 
 /**
  * Coordinates multiple memory providers behind a single interface.
+<<<<<<< HEAD
  *
+=======
+>>>>>>> agent/developer/development-developer-c66
  * Writes fan out to all providers; reads use the first match.
  */
 export class MemoryManager implements MemoryProvider {
@@ -94,7 +106,10 @@ export class MemoryManager implements MemoryProvider {
     this._defaultNamespace = config?.defaultNamespace ?? MemoryNamespace.AGENT;
     this._providers = config?.providers ? [...config.providers] : [];
 
+<<<<<<< HEAD
     // Validate uniqueness of provider names
+=======
+>>>>>>> agent/developer/development-developer-c66
     const names = new Set<string>();
     for (const p of this._providers) {
       if (names.has(p.name)) {
@@ -107,16 +122,23 @@ export class MemoryManager implements MemoryProvider {
     }
   }
 
+<<<<<<< HEAD
   /** The default namespace used when entries don't specify one. */
+=======
+>>>>>>> agent/developer/development-developer-c66
   get defaultNamespace(): MemoryNamespace {
     return this._defaultNamespace;
   }
 
+<<<<<<< HEAD
   /** The registered providers (read-only snapshot). */
+=======
+>>>>>>> agent/developer/development-developer-c66
   get providers(): readonly MemoryProvider[] {
     return [...this._providers];
   }
 
+<<<<<<< HEAD
   // -----------------------------------------------------------------------
   // Provider management
   // -----------------------------------------------------------------------
@@ -127,6 +149,8 @@ export class MemoryManager implements MemoryProvider {
    * @param provider - Provider to add
    * @throws {MemoryConfigError} If a provider with the same name is already registered
    */
+=======
+>>>>>>> agent/developer/development-developer-c66
   addProvider(provider: MemoryProvider): void {
     if (this._providers.some((p) => p.name === provider.name)) {
       throw new MemoryConfigError(
@@ -137,12 +161,15 @@ export class MemoryManager implements MemoryProvider {
     this._providers.push(provider);
   }
 
+<<<<<<< HEAD
   /**
    * Remove a provider by name.
    *
    * @param name - Provider name
    * @returns true if the provider was found and removed
    */
+=======
+>>>>>>> agent/developer/development-developer-c66
   removeProvider(name: string): boolean {
     const idx = this._providers.findIndex((p) => p.name === name);
     if (idx === -1) return false;
@@ -150,36 +177,48 @@ export class MemoryManager implements MemoryProvider {
     return true;
   }
 
+<<<<<<< HEAD
   /**
    * Get a provider by name.
    *
    * @param name - Provider name
    * @returns The provider, or undefined if not found
    */
+=======
+>>>>>>> agent/developer/development-developer-c66
   getProvider(name: string): MemoryProvider | undefined {
     return this._providers.find((p) => p.name === name);
   }
 
+<<<<<<< HEAD
   // -----------------------------------------------------------------------
   // Event system
   // -----------------------------------------------------------------------
 
   /** Subscribe to a memory lifecycle event. */
+=======
+>>>>>>> agent/developer/development-developer-c66
   on<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.on(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
+<<<<<<< HEAD
   /** Unsubscribe from a memory lifecycle event. */
+=======
+>>>>>>> agent/developer/development-developer-c66
   off<E extends keyof MemoryEventMap>(event: E, listener: MemoryEventMap[E]): this {
     this._emitter.off(event, listener as (...args: unknown[]) => void);
     return this;
   }
 
+<<<<<<< HEAD
   // -----------------------------------------------------------------------
   // MemoryProvider implementation (fan-out writes, first-match reads)
   // -----------------------------------------------------------------------
 
+=======
+>>>>>>> agent/developer/development-developer-c66
   async add(entry: MemoryEntry): Promise<MemoryEntry> {
     this._ensureProviders('add');
 
@@ -218,7 +257,10 @@ export class MemoryManager implements MemoryProvider {
     if (this._providers.length === 0) {
       return { entries: [], total: 0 };
     }
+<<<<<<< HEAD
     // Use the primary (first) provider for reads
+=======
+>>>>>>> agent/developer/development-developer-c66
     return this._providers[0].query(options);
   }
 
@@ -255,10 +297,13 @@ export class MemoryManager implements MemoryProvider {
     return this._providers[0].count(namespace);
   }
 
+<<<<<<< HEAD
   // -----------------------------------------------------------------------
   // Internal helpers
   // -----------------------------------------------------------------------
 
+=======
+>>>>>>> agent/developer/development-developer-c66
   private _ensureProviders(operation: string): void {
     if (this._providers.length === 0) {
       throw new MemoryOperationError(
@@ -269,7 +314,10 @@ export class MemoryManager implements MemoryProvider {
     }
   }
 
+<<<<<<< HEAD
   /** Type-safe event emission helper. */
+=======
+>>>>>>> agent/developer/development-developer-c66
   private _emit<E extends keyof MemoryEventMap>(
     event: E,
     ...args: Parameters<MemoryEventMap[E]>
@@ -277,4 +325,8 @@ export class MemoryManager implements MemoryProvider {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this._emitter.emit as (event: string, ...args: any[]) => boolean)(event, ...args);
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> agent/developer/development-developer-c66

@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 /**
  * Tests for memory error classes.
  */
 
+=======
+>>>>>>> agent/developer/development-developer-c66
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -61,4 +64,8 @@ describe('MemoryQueryError', () => {
   it('is an instance of Error', () => {
     expect(new MemoryQueryError('p', 'm')).toBeInstanceOf(Error);
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> agent/developer/development-developer-c66
