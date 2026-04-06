@@ -249,6 +249,17 @@ export type {
   WebToolsOptions,
 } from './tools/index.js';
 
+// Deprecation
+export {
+  defaultDeprecationHandler,
+  deprecated,
+  deprecatedFunction,
+  DeprecationRegistry,
+  emitDeprecationWarning,
+  globalDeprecationRegistry,
+} from './deprecation/index.js';
+export type { DeprecationHandler, DeprecationInfo } from './deprecation/index.js';
+
 // Errors
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
