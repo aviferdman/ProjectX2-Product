@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Memory module — barrel export.
  *
  * @packageDocumentation

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @crewspace/core — TypeScript-native agent orchestration framework
  *
  * @packageDocumentation
@@ -282,6 +282,24 @@ export type {
   LogEntry,
   LoggerConfig,
   LogTransport,
+} from './logging/index.js';
+
+// Performance Metrics
+export {
+  DEFAULT_MAX_METRICS,
+  MetricType,
+  PerformanceTimer,
+  PerformanceTracker,
+} from './logging/index.js';
+export type {
+  MetricTokenUsage,
+  PerformanceMetric,
+  PerformanceMetricInput,
+  PerformanceReport,
+  PerformanceSummary,
+  PerformanceTrackerConfig,
+  TimerStartInput,
+  TimerStopInput,
 } from './logging/index.js';
 
 // Errors
