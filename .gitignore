@@ -30,6 +30,10 @@ npm-debug.log*
 # Package tarballs
 *.tgz
 
+# VitePress
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
 # Benchmark output (generated, not committed)
 benchmark-results-detailed.jsonl
 benchmark-results.json
