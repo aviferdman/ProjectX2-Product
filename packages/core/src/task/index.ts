@@ -32,3 +32,9 @@ export {
   TaskExecutionWrapper,
 } from './task-execution-wrapper.js';
 export type { TaskExecutionWrapperConfig, TaskRetryStats } from './task-execution-wrapper.js';
+export {
+  formatTaskDependencyTree,
+  formatTaskList,
+  formatTaskPlanTree,
+} from './task-plan-formatter.js';
+export type { FormatTaskPlanOptions } from './task-plan-formatter.js';
