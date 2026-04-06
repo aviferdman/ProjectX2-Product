@@ -320,7 +320,8 @@ export {
 
 // Memory
 export { createMemoryEntry, generateMemoryId, MemoryManager, MemorySearchBuilder, ShortTermMemory, SqliteMemory } from './memory/index.js';
-export type { MemoryManagerConfig, SqliteMemoryConfig } from './memory/index.js';
+export { DEFAULT_READABLE_NAMESPACES, ScopedMemory } from './memory/index.js';
+export type { MemoryManagerConfig, ScopedMemoryConfig, SqliteMemoryConfig } from './memory/index.js';
 export {
   exportMemory,
   exportToJson,
