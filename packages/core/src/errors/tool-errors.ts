@@ -74,6 +74,19 @@ export class ToolTimeoutError extends Error {
   }
 }
 
+/** Thrown when tool composition fails (e.g. max depth exceeded). */
+export class ToolCompositionError extends ToolExecutionError {
+  public readonly depth: number;
+  public readonly maxDepth: number;
+
+  constructor(toolName: string, message: string, depth: number, maxDepth: number) {
+    super(toolName, message);
+    this.name = 'ToolCompositionError';
+    this.depth = depth;
+    this.maxDepth = maxDepth;
+  }
+}
+
 /** A single validation issue from Zod-based input validation. */
 export interface ToolValidationIssue {
   /** Dot-delimited path to the invalid field (e.g. "path", "options.recursive"). */

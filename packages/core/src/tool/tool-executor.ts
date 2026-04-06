@@ -6,6 +6,7 @@
  * 2. Timeout enforcement
  * 3. Error wrapping into typed {@link ToolExecutionError}
  * 4. Result normalization into {@link ToolResult}
+ * 5. Automatic context wiring for composable tools
  *
  * @packageDocumentation
  */
@@ -14,13 +15,18 @@ import { EventEmitter } from 'eventemitter3';
 import { ZodError } from 'zod';
 
 import {
+  ToolCompositionError,
   ToolExecutionError,
   ToolInputValidationError,
   ToolTimeoutError,
 } from '../errors/tool-errors.js';
 import type { ToolValidationIssue } from '../errors/tool-errors.js';
 import type { Tool, ToolEventMap, ToolResult } from '../types/tool.js';
+import { isComposableTool } from './compose-tool.js';
+import type { ToolContext } from './tool-context.js';
+import { DEFAULT_MAX_COMPOSITION_DEPTH } from './tool-context.js';
 import type { PermissionManager } from './permission-manager.js';
+import type { ToolRegistry } from './tool-registry.js';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -33,7 +39,8 @@ const DEFAULT_TIMEOUT_MS = 0; // 0 means no timeout
 // ---------------------------------------------------------------------------
 
 /**
- * Safe tool executor with permission checks, timeouts, and event emission.
+ * Safe tool executor with permission checks, timeouts, event emission,
+ * and automatic context wiring for composable tools.
  *
  * @example
  * ```typescript
@@ -41,13 +48,32 @@ const DEFAULT_TIMEOUT_MS = 0; // 0 means no timeout
  * const result = await executor.execute(readFileTool, { path: '/tmp/data.txt' });
  * console.log(result.success, result.data);
  * ```
+ *
+ * @example
+ * ```typescript
+ * // With a registry for tool composition support
+ * const executor = new ToolExecutor(permissionManager, { registry });
+ * const result = await executor.execute(composedTool, { topic: 'AI' });
+ * ```
  */
 export class ToolExecutor {
   private readonly _permissionManager: PermissionManager;
   private readonly _emitter = new EventEmitter<ToolEventMap>();
+  private readonly _registry: ToolRegistry | undefined;
+  private readonly _maxCompositionDepth: number;
 
-  constructor(permissionManager: PermissionManager) {
+  constructor(
+    permissionManager: PermissionManager,
+    options?: {
+      /** Tool registry for resolving tool names in composition contexts. */
+      registry?: ToolRegistry;
+      /** Maximum nesting depth for tool composition (default: 10). */
+      maxCompositionDepth?: number;
+    },
+  ) {
     this._permissionManager = permissionManager;
+    this._registry = options?.registry;
+    this._maxCompositionDepth = options?.maxCompositionDepth ?? DEFAULT_MAX_COMPOSITION_DEPTH;
   }
 
   /** The active permission manager. */
@@ -55,9 +81,22 @@ export class ToolExecutor {
     return this._permissionManager;
   }
 
+  /** The tool registry (if configured). */
+  get registry(): ToolRegistry | undefined {
+    return this._registry;
+  }
+
+  /** Maximum composition depth. */
+  get maxCompositionDepth(): number {
+    return this._maxCompositionDepth;
+  }
+
   /**
    * Execute a tool with permission checking, input validation, timeout
    * enforcement, and structured result wrapping.
+   *
+   * Composable tools (created via {@link composeTool}) automatically
+   * receive a {@link ToolContext} wired to the executor's registry.
    *
    * @param tool  - The tool to execute
    * @param input - Input to pass to the tool
@@ -66,6 +105,33 @@ export class ToolExecutor {
    * @throws {ToolInputValidationError} If input fails Zod schema validation
    */
   async execute(tool: Tool, input: unknown): Promise<ToolResult> {
+    return this._executeAtDepth(tool, input, 0);
+  }
+
+  // -------------------------------------------------------------------------
+  // Events
+  // -------------------------------------------------------------------------
+
+  on<E extends keyof ToolEventMap>(event: E, listener: ToolEventMap[E]): this {
+    this._emitter.on(event, listener as (...args: unknown[]) => void);
+    return this;
+  }
+
+  off<E extends keyof ToolEventMap>(event: E, listener: ToolEventMap[E]): this {
+    this._emitter.off(event, listener as (...args: unknown[]) => void);
+    return this;
+  }
+
+  // -------------------------------------------------------------------------
+  // Private helpers
+  // -------------------------------------------------------------------------
+
+  /** @internal Execute a tool at a given composition depth. */
+  private async _executeAtDepth(
+    tool: Tool,
+    input: unknown,
+    depth: number,
+  ): Promise<ToolResult> {
     // 1. Permission check (throws ToolPermissionError if denied)
     this._permissionManager.checkTool(tool);
 
@@ -80,10 +146,21 @@ export class ToolExecutor {
     const timeoutMs = tool.timeout ?? DEFAULT_TIMEOUT_MS;
 
     try {
-      const data =
-        timeoutMs > 0
-          ? await this._executeWithTimeout(tool, input, timeoutMs)
-          : await tool.execute(input);
+      let data: unknown;
+
+      if (isComposableTool(tool)) {
+        const context = this._createContext(depth);
+        const executePromise = tool.executeComposed(input, context);
+        data =
+          timeoutMs > 0
+            ? await this._raceTimeout(tool.name, executePromise, timeoutMs)
+            : await executePromise;
+      } else {
+        data =
+          timeoutMs > 0
+            ? await this._executeWithTimeout(tool, input, timeoutMs)
+            : await tool.execute(input);
+      }
 
       const result: ToolResult = {
         success: true,
@@ -106,23 +183,48 @@ export class ToolExecutor {
     }
   }
 
-  // -------------------------------------------------------------------------
-  // Events
-  // -------------------------------------------------------------------------
+  /** @internal Create a ToolContext for a composable tool at the given depth. */
+  private _createContext(currentDepth: number): ToolContext {
+    const executor = this;
+    const maxDepth = this._maxCompositionDepth;
+    const nextDepth = currentDepth + 1;
 
-  on<E extends keyof ToolEventMap>(event: E, listener: ToolEventMap[E]): this {
-    this._emitter.on(event, listener as (...args: unknown[]) => void);
-    return this;
+    return {
+      depth: currentDepth,
+      maxDepth,
+
+      async callTool(toolName: string, input: unknown): Promise<ToolResult> {
+        if (nextDepth > maxDepth) {
+          throw new ToolCompositionError(
+            toolName,
+            `Maximum composition depth (${String(maxDepth)}) exceeded at depth ${String(nextDepth)}`,
+            nextDepth,
+            maxDepth,
+          );
+        }
+
+        if (!executor._registry) {
+          throw new ToolCompositionError(
+            toolName,
+            'Tool composition requires a ToolRegistry. Pass { registry } to the ToolExecutor constructor.',
+            nextDepth,
+            maxDepth,
+          );
+        }
+
+        const tool = executor._registry.get(toolName);
+        return executor._executeAtDepth(tool, input, nextDepth);
+      },
+
+      hasTool(toolName: string): boolean {
+        return executor._registry?.has(toolName) ?? false;
+      },
+
+      getToolNames(): readonly string[] {
+        return executor._registry?.getNames() ?? [];
+      },
+    };
   }
-
-  off<E extends keyof ToolEventMap>(event: E, listener: ToolEventMap[E]): this {
-    this._emitter.off(event, listener as (...args: unknown[]) => void);
-    return this;
-  }
-
-  // -------------------------------------------------------------------------
-  // Private helpers
-  // -------------------------------------------------------------------------
 
   private _validateInput(toolName: string, schema: import('zod').ZodType, input: unknown): void {
     try {
@@ -145,12 +247,20 @@ export class ToolExecutor {
     input: unknown,
     timeoutMs: number,
   ): Promise<unknown> {
+    return this._raceTimeout(tool.name, tool.execute(input), timeoutMs);
+  }
+
+  private async _raceTimeout(
+    toolName: string,
+    promise: Promise<unknown>,
+    timeoutMs: number,
+  ): Promise<unknown> {
     return new Promise<unknown>((resolve, reject) => {
       const timer = setTimeout(() => {
-        reject(new ToolTimeoutError(tool.name, timeoutMs));
+        reject(new ToolTimeoutError(toolName, timeoutMs));
       }, timeoutMs);
 
-      tool.execute(input).then(
+      promise.then(
         (result) => {
           clearTimeout(timer);
           resolve(result);
