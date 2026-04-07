@@ -394,6 +394,22 @@ export {
   MemoryQueryError,
 } from './errors/index.js';
 
+// Graceful Degradation
+export {
+  DefaultFailureClassifier,
+  FailureSeverity,
+  GracefulDegradationHandler,
+} from './errors/index.js';
+export type {
+  DegradationEventMap,
+  DegradationRecord,
+  DegradedResult,
+  FailureClassifier,
+  FailureContext,
+  FallbackProvider,
+  GracefulDegradationConfig,
+} from './errors/index.js';
+
 // Memory
 export { createMemoryEntry, generateMemoryId, MemoryManager, MemorySearchBuilder, ShortTermMemory, SqliteMemory } from './memory/index.js';
 export { DEFAULT_READABLE_NAMESPACES, ScopedMemory } from './memory/index.js';

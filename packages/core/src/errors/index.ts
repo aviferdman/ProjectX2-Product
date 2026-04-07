@@ -48,3 +48,19 @@ export {
 } from './tool-errors.js';
 export type { ToolValidationIssue } from './tool-errors.js';
 export { MemoryConfigError, MemoryOperationError, MemoryQueryError } from './memory-errors.js';
+
+// Graceful Degradation
+export {
+  DefaultFailureClassifier,
+  FailureSeverity,
+  GracefulDegradationHandler,
+} from './graceful-degradation.js';
+export type {
+  DegradationEventMap,
+  DegradationRecord,
+  DegradedResult,
+  FailureClassifier,
+  FailureContext,
+  FallbackProvider,
+  GracefulDegradationConfig,
+} from './graceful-degradation.js';
