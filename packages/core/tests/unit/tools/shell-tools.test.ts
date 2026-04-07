@@ -187,9 +187,7 @@ describe('createShellExecTool', () => {
 
   it('captures stderr', async () => {
     const tool = createShellExecTool(testDir);
-    const cmd = isWindows
-      ? 'echo error 1>&2'
-      : 'echo error >&2';
+    const cmd = isWindows ? 'echo error 1>&2' : 'echo error >&2';
     const result = (await tool.execute({ command: cmd })) as {
       exitCode: number | null;
       stdout: string;
@@ -227,9 +225,9 @@ describe('createShellExecTool', () => {
 
   it('rejects working directory outside base path', async () => {
     const tool = createShellExecTool(testDir);
-    await expect(
-      tool.execute({ command: 'echo hi', cwd: '../../..' }),
-    ).rejects.toThrow(/outside the allowed base directory/);
+    await expect(tool.execute({ command: 'echo hi', cwd: '../../..' })).rejects.toThrow(
+      /outside the allowed base directory/,
+    );
   });
 
   it('rejects invalid input (missing command)', async () => {

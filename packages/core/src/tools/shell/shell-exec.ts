@@ -13,11 +13,7 @@ import { ToolCategory, ToolPermission } from '../../types/tool.js';
 import { parseToolInput } from '../../tool/validation.js';
 import { ShellExecInputSchema } from './schemas.js';
 import type { ShellExecOutput } from './types.js';
-import {
-  DEFAULT_SHELL_TIMEOUT_MS,
-  DESTRUCTIVE_PATTERNS,
-  MAX_OUTPUT_SIZE,
-} from './types.js';
+import { DEFAULT_SHELL_TIMEOUT_MS, DESTRUCTIVE_PATTERNS, MAX_OUTPUT_SIZE } from './types.js';
 
 /**
  * Resolve a working directory against a base path and ensure it stays within bounds.
@@ -130,13 +126,7 @@ export function createShellExecTool(
 
     async execute(input: unknown): Promise<ShellExecOutput> {
       const parsed = parseToolInput('shellExec', ShellExecInputSchema, input);
-      const {
-        command,
-        cwd,
-        timeoutMs: inputTimeout,
-        env: inputEnv,
-        stdin,
-      } = parsed;
+      const { command, cwd, timeoutMs: inputTimeout, env: inputEnv, stdin } = parsed;
 
       const timeout = inputTimeout ?? defaultTimeoutMs;
       const workingDir = cwd ? resolveSafeCwd(cwd, resolvedBase) : resolvedBase;
@@ -151,40 +141,47 @@ export function createShellExecTool(
         const shell = isWindows ? 'cmd.exe' : '/bin/sh';
         const shellArgs = isWindows ? ['/c', command] : ['-c', command];
 
-        const child = execFile(shell, shellArgs, {
-          cwd: workingDir,
-          timeout,
-          maxBuffer: MAX_OUTPUT_SIZE,
-          env: inputEnv ? { ...process.env, ...inputEnv } : undefined,
-          killSignal: 'SIGTERM',
-        }, (error, stdout, stderr) => {
-          const durationMs = Date.now() - startTime;
-          const timedOut = error !== null && 'killed' in error && error.killed === true;
+        const child = execFile(
+          shell,
+          shellArgs,
+          {
+            cwd: workingDir,
+            timeout,
+            maxBuffer: MAX_OUTPUT_SIZE,
+            env: inputEnv ? { ...process.env, ...inputEnv } : undefined,
+            killSignal: 'SIGTERM',
+          },
+          (error, stdout, stderr) => {
+            const durationMs = Date.now() - startTime;
+            const timedOut = error !== null && 'killed' in error && error.killed;
 
-          if (error && !timedOut && error.code === undefined && !('killed' in error)) {
-            reject(
-              new ToolExecutionError(
-                'shellExec',
-                `Failed to execute command: ${error.message}`,
-                error,
-              ),
-            );
-            return;
-          }
+            if (error && !timedOut && error.code === undefined && !('killed' in error)) {
+              reject(
+                new ToolExecutionError(
+                  'shellExec',
+                  `Failed to execute command: ${error.message}`,
+                  error,
+                ),
+              );
+              return;
+            }
 
-          const exitCode = timedOut
-            ? null
-            : (error && 'code' in error ? (error as { code: number }).code : 0);
+            const exitCode = timedOut
+              ? null
+              : error && 'code' in error
+                ? (error as { code: number }).code
+                : 0;
 
-          resolve({
-            exitCode,
-            stdout: truncateOutput(stdout),
-            stderr: truncateOutput(stderr),
-            timedOut,
-            durationMs,
-            warnings,
-          });
-        });
+            resolve({
+              exitCode,
+              stdout: truncateOutput(stdout),
+              stderr: truncateOutput(stderr),
+              timedOut,
+              durationMs,
+              warnings,
+            });
+          },
+        );
 
         if (stdin && child.stdin) {
           child.stdin.write(stdin);

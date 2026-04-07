@@ -16,12 +16,7 @@ export {
   MAX_OUTPUT_SIZE,
   MAX_SHELL_TIMEOUT_MS,
 } from './types.js';
-export type {
-  ShellExecInput,
-  ShellExecOutput,
-  ShellTools,
-  ShellToolsOptions,
-} from './types.js';
+export type { ShellExecInput, ShellExecOutput, ShellTools, ShellToolsOptions } from './types.js';
 
 // ---------------------------------------------------------------------------
 // Re-imported for the factory below (avoid circular barrel issues)
