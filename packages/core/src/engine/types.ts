@@ -9,6 +9,7 @@
  */
 
 import type { Agent } from '../agent/agent.js';
+import type { DeadLetterQueueConfig } from '../task/dead-letter-queue.js';
 import type { Task } from '../task/task.js';
 import type { TaskResult } from '../types/task.js';
 
@@ -76,6 +77,17 @@ export interface ExecutionEngineConfig {
 
   /** Configuration for the task context manager (default: shallow-merge, output-only). */
   readonly contextManager?: TaskContextManagerConfig;
+
+  /**
+   * Optional dead-letter queue configuration.
+   *
+   * When provided, tasks that exhaust all retries are automatically enqueued
+   * into a {@link DeadLetterQueue} for later inspection or manual retry.
+   *
+   * Pass `true` for default DLQ settings, or a {@link DeadLetterQueueConfig}
+   * object for custom settings. Pass `false` or omit to disable.
+   */
+  readonly deadLetterQueue?: DeadLetterQueueConfig | boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -153,6 +165,9 @@ export interface EngineEventMap {
 
   /** Emitted when a task exceeds its timeout. */
   'engine:task:timeout': (engineId: string, taskId: string, timeoutMs: number) => void;
+
+  /** Emitted when a failed task is enqueued into the dead letter queue. */
+  'engine:task:dead-lettered': (engineId: string, taskId: string, error: Error, attempts: number) => void;
 
   /** Emitted when the engine status changes. */
   'engine:status-changed': (engineId: string, status: EngineStatus) => void;

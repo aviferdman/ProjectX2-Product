@@ -12,6 +12,7 @@
 
 import { TaskExecutionError, TaskTimeoutError } from '../errors/index.js';
 import type { TaskResult } from '../types/task.js';
+import type { DeadLetterQueue } from './dead-letter-queue.js';
 import type { Task } from './task.js';
 import type { TaskRunner } from './parallel-executor.js';
 
@@ -92,6 +93,14 @@ export interface TaskExecutionWrapperConfig {
    * Injectable random function (for testing). Defaults to `Math.random`.
    */
   readonly random?: () => number;
+
+  /**
+   * Optional dead-letter queue instance.
+   *
+   * When provided, tasks that exhaust all retries are automatically
+   * enqueued into this DLQ before the final error is thrown.
+   */
+  readonly deadLetterQueue?: DeadLetterQueue;
 }
 
 // ---------------------------------------------------------------------------
@@ -161,6 +170,7 @@ export class TaskExecutionWrapper {
   private readonly _isRetryable: (error: Error) => boolean;
   private readonly _sleep: (ms: number) => Promise<void>;
   private readonly _random: () => number;
+  private readonly _dlq: DeadLetterQueue | undefined;
 
   constructor(config?: TaskExecutionWrapperConfig) {
     this.defaultTimeoutMs = config?.defaultTimeoutMs ?? 0;
@@ -172,6 +182,7 @@ export class TaskExecutionWrapper {
     this._isRetryable = config?.isRetryable ?? (() => true);
     this._sleep = config?.sleep ?? defaultSleep;
     this._random = config?.random ?? Math.random;
+    this._dlq = config?.deadLetterQueue;
   }
 
   /**
@@ -227,16 +238,19 @@ export class TaskExecutionWrapper {
 
           // Timeout errors on the last attempt are thrown immediately
           if (lastError instanceof TaskTimeoutError && attempt >= maxRetries) {
+            this._enqueueToDLQ(task, lastError, attempt + 1, context);
             throw lastError;
           }
 
           // Non-retryable errors are thrown immediately
           if (!isRetryable(lastError)) {
+            this._enqueueToDLQ(task, lastError, attempt + 1, context);
             throw lastError;
           }
 
           // Out of retries — throw
           if (attempt >= maxRetries) {
+            this._enqueueToDLQ(task, lastError, attempt + 1, context);
             throw new TaskExecutionError(
               task.id,
               `Failed after ${String(attempt + 1)} attempt(s): ${lastError.message}`,
@@ -290,6 +304,18 @@ export class TaskExecutionWrapper {
     const deterministicPart = cappedDelay * (1 - jitter);
     const randomPart = cappedDelay * jitter * this._random();
     return Math.round(deterministicPart + randomPart);
+  }
+
+  /** Enqueue a task into the DLQ if one is configured. */
+  private _enqueueToDLQ(
+    task: Task,
+    error: Error,
+    attempts: number,
+    context: Readonly<Record<string, TaskResult>>,
+  ): void {
+    if (this._dlq) {
+      this._dlq.enqueue(task, error, { attempts, context });
+    }
   }
 
   private async _executeWithTimeout(

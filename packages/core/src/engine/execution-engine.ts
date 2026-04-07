@@ -16,6 +16,8 @@ import { z, ZodError } from 'zod';
 import type { Agent } from '../agent/agent.js';
 import { EngineConfigError, EngineExecutionError } from '../errors/engine-errors.js';
 import { TaskTimeoutError } from '../errors/task-errors.js';
+import { DeadLetterQueue } from '../task/dead-letter-queue.js';
+import type { DeadLetterQueueConfig } from '../task/dead-letter-queue.js';
 import type { Task } from '../task/task.js';
 import { TaskContextManager } from '../task/task-context-manager.js';
 import type { TaskInput, TaskResult } from '../types/task.js';
@@ -141,6 +143,7 @@ export class ExecutionEngine {
   private readonly _afterHooks: AfterTaskHook[];
   private readonly _errorHooks: OnTaskErrorHook[];
   private readonly _contextManager: TaskContextManager;
+  private readonly _dlq: DeadLetterQueue | undefined;
   private _status: EngineStatus;
   private _cancelled: boolean;
 
@@ -162,6 +165,7 @@ export class ExecutionEngine {
       this._afterHooks = [];
       this._errorHooks = [];
       this._contextManager = new TaskContextManager(config.contextManager);
+      this._dlq = this._createDLQ(config.deadLetterQueue);
       this._status = EngineStatus.IDLE;
       this._cancelled = false;
     } catch (error) {
@@ -198,6 +202,16 @@ export class ExecutionEngine {
   /** The context manager used for dependency result propagation. */
   get contextManager(): TaskContextManager {
     return this._contextManager;
+  }
+
+  /**
+   * The dead letter queue, or `undefined` if DLQ is not enabled.
+   *
+   * Tasks that exhaust all retries are automatically enqueued here
+   * when DLQ is configured via {@link ExecutionEngineConfig.deadLetterQueue}.
+   */
+  get deadLetterQueue(): DeadLetterQueue | undefined {
+    return this._dlq;
   }
 
   // -------------------------------------------------------------------------
@@ -661,6 +675,16 @@ export class ExecutionEngine {
     task.fail(finalError);
     this._emit('engine:task:error', this.id, task.id, finalError);
 
+    // Auto-enqueue into dead letter queue if configured
+    if (this._dlq) {
+      const attempts = task.retries + 1;
+      const context = Object.fromEntries(
+        [..._completedResults.entries()],
+      );
+      this._dlq.enqueue(task, finalError, { attempts, context });
+      this._emit('engine:task:dead-lettered', this.id, task.id, finalError, attempts);
+    }
+
     // Run error hooks
     await this._runErrorHooks(task, finalError);
 
@@ -944,6 +968,15 @@ export class ExecutionEngine {
   private _setStatus(status: EngineStatus): void {
     this._status = status;
     this._emit('engine:status-changed', this.id, status);
+  }
+
+  /** Create a DLQ from the config option (boolean or config object). */
+  private _createDLQ(
+    option: DeadLetterQueueConfig | boolean | undefined,
+  ): DeadLetterQueue | undefined {
+    if (!option) return undefined;
+    if (option === true) return new DeadLetterQueue();
+    return new DeadLetterQueue(option);
   }
 
   /** Type-safe event emission helper. */
