@@ -44,14 +44,16 @@ describe('Package Configuration (TASK-006)', () => {
     });
 
     it('should have valid exports configuration', () => {
-      expect(packageJson.exports).toBeDefined();
-      expect(packageJson.exports['.']).toBeDefined();
-      expect(packageJson.exports['.'].types).toBe('./dist/index.d.ts');
-      expect(packageJson.exports['.'].import).toBe('./dist/index.js');
+      const exports = packageJson.exports as Record<string, Record<string, string>>;
+      expect(exports).toBeDefined();
+      expect(exports['.']).toBeDefined();
+      expect(exports['.'].types).toBe('./dist/index.d.ts');
+      expect(exports['.'].import).toBe('./dist/index.js');
     });
 
     it('should not have require entry (ESM only)', () => {
-      expect(packageJson.exports['.'].require).toBeUndefined();
+      const exports = packageJson.exports as Record<string, Record<string, string>>;
+      expect(exports['.'].require).toBeUndefined();
     });
   });
 
@@ -71,36 +73,39 @@ describe('Package Configuration (TASK-006)', () => {
 
   describe('Engine Requirements', () => {
     it('should require Node.js 18 or higher', () => {
-      expect(packageJson.engines).toBeDefined();
-      expect(packageJson.engines.node).toBe('>=18.0.0');
+      const engines = packageJson.engines as Record<string, string>;
+      expect(engines).toBeDefined();
+      expect(engines.node).toBe('>=18.0.0');
     });
   });
 
   describe('Scripts', () => {
+    const scripts = packageJson.scripts as Record<string, string>;
+
     it('should have build script', () => {
-      expect(packageJson.scripts.build).toBe('tsc --build');
+      expect(scripts.build).toBe('tsc --build');
     });
 
     it('should have clean script with rimraf', () => {
-      expect(packageJson.scripts.clean).toBeTruthy();
-      expect(packageJson.scripts.clean).toContain('rimraf');
-      expect(packageJson.scripts.clean).toContain('dist');
+      expect(scripts.clean).toBeTruthy();
+      expect(scripts.clean).toContain('rimraf');
+      expect(scripts.clean).toContain('dist');
     });
 
     it('should have test scripts', () => {
-      expect(packageJson.scripts.test).toBe('vitest run');
-      expect(packageJson.scripts['test:unit']).toBe('vitest run tests/unit');
-      expect(packageJson.scripts['test:integration']).toBe('vitest run tests/integration');
-      expect(packageJson.scripts['test:watch']).toBe('vitest');
-      expect(packageJson.scripts['test:coverage']).toBe('vitest run --coverage');
+      expect(scripts.test).toBe('vitest run');
+      expect(scripts['test:unit']).toBe('vitest run tests/unit');
+      expect(scripts['test:integration']).toBe('vitest run tests/integration');
+      expect(scripts['test:watch']).toBe('vitest');
+      expect(scripts['test:coverage']).toBe('vitest run --coverage');
     });
 
     it('should have lint script', () => {
-      expect(packageJson.scripts.lint).toBe('eslint src/');
+      expect(scripts.lint).toBe('eslint src/');
     });
 
     it('should have typecheck script', () => {
-      expect(packageJson.scripts.typecheck).toBe('tsc --noEmit -p tsconfig.test.json');
+      expect(scripts.typecheck).toBe('tsc --noEmit -p tsconfig.test.json');
     });
   });
 
@@ -150,25 +155,29 @@ describe('Package Configuration (TASK-006)', () => {
 
   describe('Peer Dependencies', () => {
     it('should list TypeScript as peer dependency', () => {
-      expect(packageJson.peerDependencies).toBeDefined();
-      expect(packageJson.peerDependencies.typescript).toBe('>=5.0.0');
+      const peerDeps = packageJson.peerDependencies as Record<string, string>;
+      expect(peerDeps).toBeDefined();
+      expect(peerDeps.typescript).toBe('>=5.0.0');
     });
 
     it('should list better-sqlite3 as peer dependency', () => {
-      expect(packageJson.peerDependencies).toBeDefined();
-      expect(packageJson.peerDependencies['better-sqlite3']).toBeTruthy();
+      const peerDeps = packageJson.peerDependencies as Record<string, string>;
+      expect(peerDeps).toBeDefined();
+      expect(peerDeps['better-sqlite3']).toBeTruthy();
     });
 
     it('should mark TypeScript as optional peer dependency', () => {
-      expect(packageJson.peerDependenciesMeta).toBeDefined();
-      expect(packageJson.peerDependenciesMeta.typescript).toBeDefined();
-      expect(packageJson.peerDependenciesMeta.typescript.optional).toBe(true);
+      const meta = packageJson.peerDependenciesMeta as Record<string, Record<string, unknown>>;
+      expect(meta).toBeDefined();
+      expect(meta.typescript).toBeDefined();
+      expect(meta.typescript.optional).toBe(true);
     });
 
     it('should mark better-sqlite3 as optional peer dependency', () => {
-      expect(packageJson.peerDependenciesMeta).toBeDefined();
-      expect(packageJson.peerDependenciesMeta['better-sqlite3']).toBeDefined();
-      expect(packageJson.peerDependenciesMeta['better-sqlite3'].optional).toBe(true);
+      const meta = packageJson.peerDependenciesMeta as Record<string, Record<string, unknown>>;
+      expect(meta).toBeDefined();
+      expect(meta['better-sqlite3']).toBeDefined();
+      expect(meta['better-sqlite3'].optional).toBe(true);
     });
   });
 
@@ -187,25 +196,28 @@ describe('Package Configuration (TASK-006)', () => {
     ];
 
     it('should have all required keywords', () => {
-      expect(packageJson.keywords).toBeDefined();
+      const keywords = packageJson.keywords as string[];
+      expect(keywords).toBeDefined();
       requiredKeywords.forEach((keyword) => {
-        expect(packageJson.keywords).toContain(keyword);
+        expect(keywords).toContain(keyword);
       });
     });
 
     it('should have at least 10 keywords for discoverability', () => {
-      expect(packageJson.keywords.length).toBeGreaterThanOrEqual(10);
+      const keywords = packageJson.keywords as string[];
+      expect(keywords.length).toBeGreaterThanOrEqual(10);
     });
   });
 
   describe('Repository Configuration', () => {
     it('should have repository information', () => {
-      expect(packageJson.repository).toBeDefined();
-      expect(packageJson.repository.type).toBe('git');
-      expect(packageJson.repository.url).toBe(
+      const repository = packageJson.repository as Record<string, string>;
+      expect(repository).toBeDefined();
+      expect(repository.type).toBe('git');
+      expect(repository.url).toBe(
         'https://github.com/aviferdman/ProjectX2-Product.git',
       );
-      expect(packageJson.repository.directory).toBe('packages/core');
+      expect(repository.directory).toBe('packages/core');
     });
 
     it('should have homepage URL', () => {
@@ -213,8 +225,9 @@ describe('Package Configuration (TASK-006)', () => {
     });
 
     it('should have bugs URL', () => {
-      expect(packageJson.bugs).toBeDefined();
-      expect(packageJson.bugs.url).toBe('https://github.com/aviferdman/ProjectX2-Product/issues');
+      const bugs = packageJson.bugs as Record<string, string>;
+      expect(bugs).toBeDefined();
+      expect(bugs.url).toBe('https://github.com/aviferdman/ProjectX2-Product/issues');
     });
   });
 
