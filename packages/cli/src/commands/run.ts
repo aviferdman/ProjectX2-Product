@@ -10,7 +10,7 @@
 import * as fs from 'node:fs';
 import type { Command } from 'commander';
 
-import { executeWorkflow, parseTimeout, resolveWorkflowFile } from './runner.js';
+import { executeWorkflow, getRunCommand, parseTimeout, resolveWorkflowFile } from './runner.js';
 import { createLogger } from '../ui/index.js';
 import type { Verbosity } from '../ui/index.js';
 
@@ -33,6 +33,11 @@ export function registerRunCommand(parent: Command): void {
 
       const verbosity: Verbosity = quiet ? 'quiet' : verbose ? 'verbose' : 'normal';
       const logger = createLogger({ verbosity });
+
+      logger.debug(`Node.js version: ${process.version}`);
+      logger.debug(`Platform: ${process.platform} (${process.arch})`);
+      logger.debug(`Working directory: ${cwd}`);
+      logger.debug(`Watch mode: ${String(options.watch ?? false)}`);
 
       try {
         const timeout = parseTimeout(options.timeout);
@@ -60,7 +65,9 @@ async function runOnce(
   logger: ReturnType<typeof createLogger>,
 ): Promise<void> {
   const resolved = resolveWorkflowFile(file, cwd);
+  const { command, args } = getRunCommand(resolved);
   logger.debug(`Running workflow: ${resolved}`);
+  logger.debug(`Runtime: ${command} ${args.join(' ')}`);
   if (timeout !== undefined) {
     logger.debug(`Timeout: ${String(timeout)}ms`);
   }
@@ -68,6 +75,10 @@ async function runOnce(
   const spinner = logger.spinner('Running workflow…').start();
 
   const result = await executeWorkflow({ file, cwd, timeout });
+
+  logger.debug(`Process exited with code ${String(result.exitCode)}`);
+  logger.debug(`Duration: ${String(result.durationMs)}ms`);
+  logger.debug(`Timed out: ${String(result.timedOut)}`);
 
   if (result.timedOut) {
     spinner.fail(`Workflow timed out after ${String(timeout)}ms`);

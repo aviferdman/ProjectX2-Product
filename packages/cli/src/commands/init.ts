@@ -79,10 +79,28 @@ export function registerInitCommand(parent: Command): void {
       const template = options.template ?? 'default';
       const force = options.force ?? false;
 
+      logger.debug(`Target directory: ${targetDir}`);
+      logger.debug(`Template: ${template}`);
+      logger.debug(`Force overwrite: ${String(force)}`);
+      logger.debug(`Working directory: ${process.cwd()}`);
+
       try {
+        const startTime = Date.now();
         const spinner = logger.spinner('Scaffolding project…').start();
         const result = scaffoldProject({ directory: targetDir, template, force });
         spinner.stop();
+
+        const elapsed = Date.now() - startTime;
+        logger.debug(`Project scaffolded in ${String(elapsed)}ms`);
+        logger.debug(`Files created: ${String(result.filesCreated.length)}`);
+        logger.debug(`Files skipped: ${String(result.filesSkipped.length)}`);
+
+        for (const f of result.filesCreated) {
+          logger.debug(`  Created: ${f}`);
+        }
+        for (const f of result.filesSkipped) {
+          logger.debug(`  Skipped: ${f}`);
+        }
 
         const output = formatScaffoldResult(result, logger.colors);
         process.stdout.write(output);

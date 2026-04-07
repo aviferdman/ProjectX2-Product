@@ -35,6 +35,11 @@ export function registerValidateCommand(parent: Command): void {
       const verbosity: Verbosity = quiet ? 'quiet' : verbose ? 'verbose' : 'normal';
       const logger = createLogger({ verbosity });
 
+      logger.debug(`Validating file: ${file}`);
+      logger.debug(`Working directory: ${cwd}`);
+      logger.debug(`Strict mode: ${String(options.strict ?? false)}`);
+
+      const startTime = Date.now();
       const spinner = logger.spinner('Validating workflow…').start();
 
       const result = validateWorkflowFile({
@@ -42,6 +47,16 @@ export function registerValidateCommand(parent: Command): void {
         cwd,
         strict: options.strict ?? false,
       });
+
+      const elapsed = Date.now() - startTime;
+      logger.debug(`Validation completed in ${String(elapsed)}ms`);
+      logger.debug(`Resolved file: ${result.file}`);
+      logger.debug(`Errors: ${String(result.errorCount)}, Warnings: ${String(result.warningCount)}`);
+
+      for (const diag of result.diagnostics) {
+        const loc = diag.line !== undefined ? ` (line ${String(diag.line)})` : '';
+        logger.debug(`  [${diag.level}]${loc}: ${diag.message}`);
+      }
 
       if (result.valid) {
         spinner.succeed('Validation passed');
