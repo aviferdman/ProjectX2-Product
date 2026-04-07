@@ -102,8 +102,7 @@ export function detectRuntime(): RuntimeName {
   // Node.js sets `process.versions.node`.
   if (
     typeof process !== 'undefined' &&
-    process.versions != null &&
-    typeof process.versions['node'] === 'string'
+    process.versions !== null &&
   ) {
     return 'node';
   }

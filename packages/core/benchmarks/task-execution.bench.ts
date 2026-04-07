@@ -12,7 +12,6 @@ import { Task } from '../src/task/task.js';
 import { ExecutionEngine } from '../src/engine/execution-engine.js';
 import { ExecutionStrategy } from '../src/engine/index.js';
 import { TaskPriority, TaskStatus } from '../src/types/index.js';
-import type { LLMMessage, LLMProvider, LLMResponse } from '../src/types/index.js';
 import {
   PERFORMANCE_BUDGETS,
   createMockLLMProvider,

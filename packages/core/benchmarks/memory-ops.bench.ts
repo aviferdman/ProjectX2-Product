@@ -5,7 +5,7 @@
  * Budget: <50ms per operation.
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 import { createMemoryEntry, ShortTermMemory } from '../src/memory/index.js';
 import { MemoryNamespace, MemoryRole } from '../src/types/index.js';

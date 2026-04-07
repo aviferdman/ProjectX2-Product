@@ -12,7 +12,6 @@ import { ToolExecutor } from '../src/tool/tool-executor.js';
 import { ToolRegistry } from '../src/tool/tool-registry.js';
 import { createTool } from '../src/tool/create-tool.js';
 import { z } from 'zod';
-import type { Tool } from '../src/types/index.js';
 import {
   PERFORMANCE_BUDGETS,
   createMockTool,

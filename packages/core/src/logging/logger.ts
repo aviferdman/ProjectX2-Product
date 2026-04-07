@@ -178,7 +178,7 @@ const DEFAULT_MASK_PATTERNS: RegExp[] = [
   // API keys (sk-..., pk-..., key-...)
   /\b(sk|pk|key)-[A-Za-z0-9]{20,}\b/g,
   // Bearer tokens
-  /Bearer\s+[A-Za-z0-9._\-]+/gi,
+  /Bearer\s+[A-Za-z0-9._-]+/gi,
   // Generic long hex/base64 secrets (32+ chars)
   /\b[A-Fa-f0-9]{32,}\b/g,
   // Email addresses

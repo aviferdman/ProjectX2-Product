@@ -123,7 +123,7 @@ export function createBenchTask(
   });
 }
 
-export function createBenchMemory(entryCount = 0): ShortTermMemory {
+export function createBenchMemory(_entryCount = 0): ShortTermMemory {
   const memory = new ShortTermMemory({
     defaultNamespace: MemoryNamespace.AGENT,
   });

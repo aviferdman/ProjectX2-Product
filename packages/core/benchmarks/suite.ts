@@ -18,8 +18,6 @@
  */
 
 import { appendFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 // ---------------------------------------------------------------------------
 // Types

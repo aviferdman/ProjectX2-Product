@@ -1,0 +1,158 @@
+
+> @crewspace/core@0.1.0 lint
+> eslint src/
+
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\deprecation\deprecation.ts
+  48:3  warning  Unused eslint-disable directive (no problems were reported from 'no-console')
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\engine\checkpoint-manager.ts
+  195:11  warning  The two values in this comparison do not have a shared enum type  @typescript-eslint/no-unsafe-enum-comparison
+  198:18  warning  The two values in this comparison do not have a shared enum type  @typescript-eslint/no-unsafe-enum-comparison
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\engine\checkpoint-store.ts
+  284:27  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\errors\graceful-degradation.ts
+  353:9  warning  Unused eslint-disable directive (no problems were reported from 'no-console')
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\errors\task-errors.ts
+  72:44  warning  Invalid type "string | undefined" of template literal expression  @typescript-eslint/restrict-template-expressions
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\llm\fallback-provider.ts
+  200:12  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  272:24  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\logging\log-export.ts
+  171:57  warning  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  248:69  warning  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\logging\logger.ts
+   57:10  warning  Unnecessary conditional, expected left-hand side of `??` operator to be possibly null or undefined  @typescript-eslint/no-unnecessary-condition
+  127:7   warning  Unused eslint-disable directive (no problems were reported from 'no-console')
+  130:7   warning  Unused eslint-disable directive (no problems were reported from 'no-console')
+  138:7   warning  Unused eslint-disable directive (no problems were reported from 'no-console')
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\logging\performance-tracker.ts
+  222:31  warning  Forbidden non-null assertion                                  @typescript-eslint/no-non-null-assertion
+  224:10  warning  Forbidden non-null assertion                                  @typescript-eslint/no-non-null-assertion
+  224:42  warning  Forbidden non-null assertion                                  @typescript-eslint/no-non-null-assertion
+  272:20  warning  Forbidden non-null assertion                                  @typescript-eslint/no-non-null-assertion
+  273:20  warning  Forbidden non-null assertion                                  @typescript-eslint/no-non-null-assertion
+  285:18  warning  Type parameter K is used only once in the function signature  @typescript-eslint/no-unnecessary-type-parameters
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\memory\memory-export.ts
+   75:6   warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+   77:6   warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+   79:21  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+   81:26  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+   83:6   warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+  208:37  warning  Invalid type "number" of template literal expression                               @typescript-eslint/restrict-template-expressions
+  208:69  warning  Invalid type "1" of template literal expression                                    @typescript-eslint/restrict-template-expressions
+  225:57  warning  Unnecessary optional chain on a non-nullish value                                  @typescript-eslint/no-unnecessary-condition
+  291:10  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\memory\namespaced-memory-manager.ts
+   71:3  warning  The generic type arguments should be specified as part of the constructor type arguments                        @typescript-eslint/consistent-generic-constructors
+   72:3  warning  The generic type arguments should be specified as part of the constructor type arguments                        @typescript-eslint/consistent-generic-constructors
+   76:9  warning  Unnecessary conditional, value is always falsy                                                                  @typescript-eslint/no-unnecessary-condition
+  134:5  warning  Prefer using nullish coalescing operator (`??=`) instead of an assignment expression, as it is simpler to read  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\memory\scoped-memory.ts
+  80:9  warning  Unnecessary conditional, value is always falsy  @typescript-eslint/no-unnecessary-condition
+  86:9  warning  Unnecessary conditional, value is always falsy  @typescript-eslint/no-unnecessary-condition
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\memory\short-term-memory.ts
+   59:7   warning  Unnecessary conditional, value is always falsy                                            @typescript-eslint/no-unnecessary-condition
+   62:7   warning  Unnecessary conditional, value is always falsy                                            @typescript-eslint/no-unnecessary-condition
+  102:3   warning  The generic type arguments should be specified as part of the constructor type arguments  @typescript-eslint/consistent-generic-constructors
+  152:3   warning  Async method 'add' has no 'await' expression                                              @typescript-eslint/require-await
+  187:3   warning  Async method 'get' has no 'await' expression                                              @typescript-eslint/require-await
+  197:3   warning  Async method 'query' has no 'await' expression                                            @typescript-eslint/require-await
+  214:3   warning  Async method 'search' has no 'await' expression                                           @typescript-eslint/require-await
+  237:3   warning  Async method 'delete' has no 'await' expression                                           @typescript-eslint/require-await
+  255:3   warning  Async method 'clear' has no 'await' expression                                            @typescript-eslint/require-await
+  289:3   warning  Async method 'count' has no 'await' expression                                            @typescript-eslint/require-await
+  347:18  warning  Forbidden non-null assertion                                                              @typescript-eslint/no-non-null-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\memory\sqlite-memory.ts
+  287:3  warning  Async method 'search' has no 'await' expression  @typescript-eslint/require-await
+  332:3  warning  Async method 'delete' has no 'await' expression  @typescript-eslint/require-await
+  351:3  warning  Async method 'clear' has no 'await' expression   @typescript-eslint/require-await
+  385:3  warning  Async method 'count' has no 'await' expression   @typescript-eslint/require-await
+  535:7  warning  Unnecessary conditional, value is always falsy   @typescript-eslint/no-unnecessary-condition
+  538:7  warning  Unnecessary conditional, value is always falsy   @typescript-eslint/no-unnecessary-condition
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\metrics\complexity-analyzer.ts
+  190:36  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\metrics\metrics-collector.ts
+  117:31  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  119:10  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  119:42  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  378:14  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  379:14  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  387:12  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  388:12  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\metrics\performance-metrics-tracker.ts
+  199:31  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  201:10  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  201:42  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  260:20  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  261:20  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\runtime\runtime-compat.ts
+  106:29  warning  ["node"] is better written in dot notation            @typescript-eslint/dot-notation
+  142:43  warning  Unnecessary conditional, the types have no overlap    @typescript-eslint/no-unnecessary-condition
+  156:36  warning  ["node"] is better written in dot notation            @typescript-eslint/dot-notation
+  187:34  warning  Invalid type "18" of template literal expression      @typescript-eslint/restrict-template-expressions
+  191:27  warning  Invalid type "18" of template literal expression      @typescript-eslint/restrict-template-expressions
+  198:25  warning  Invalid type "18" of template literal expression      @typescript-eslint/restrict-template-expressions
+  202:73  warning  Invalid type "18" of template literal expression      @typescript-eslint/restrict-template-expressions
+  286:82  warning  Invalid type "number" of template literal expression  @typescript-eslint/restrict-template-expressions
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\task\dead-letter-queue.ts
+  141:3   warning  The generic type arguments should be specified as part of the constructor type arguments  @typescript-eslint/consistent-generic-constructors
+  400:13  warning  Array type using 'ReadonlyArray<T>' is forbidden. Use 'readonly T[]' instead              @typescript-eslint/array-type
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\task\task-scheduler.ts
+  352:16  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\testing\event-collector.ts
+   51:19  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+  122:19  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\testing\mock-llm-provider.ts
+  226:5   warning  Async method 'handler' has no 'await' expression  @typescript-eslint/require-await
+  280:62  warning  Async arrow function has no 'await' expression    @typescript-eslint/require-await
+  298:7   warning  Async generator method has no 'await' expression  @typescript-eslint/require-await
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\testing\mock-response-system.ts
+  151:17  warning  Forbidden non-null assertion                                                                                    @typescript-eslint/no-non-null-assertion
+  152:9   warning  The two values in this comparison do not have a shared enum type                                                @typescript-eslint/no-unsafe-enum-comparison
+  152:32  warning  The two values in this comparison do not have a shared enum type                                                @typescript-eslint/no-unsafe-enum-comparison
+  156:32  warning  Forbidden non-null assertion                                                                                    @typescript-eslint/no-non-null-assertion
+  220:28  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead                                                     @typescript-eslint/array-type
+  344:5   warning  Prefer using nullish coalescing operator (`??=`) instead of an assignment expression, as it is simpler to read  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\testing\mock-tool.ts
+  126:12  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\testing\workflow-assertions.ts
+  96:10  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\tool\compose-tool.ts
+  195:22  warning  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\version\changelog.ts
+  201:69  warning  Unnecessary conditional, value is always truthy  @typescript-eslint/no-unnecessary-condition
+
+C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\packages\core\src\version\semver.ts
+  61:19  warning  Invalid type "number" of template literal expression  @typescript-eslint/restrict-template-expressions
+  61:36  warning  Invalid type "number" of template literal expression  @typescript-eslint/restrict-template-expressions
+  61:53  warning  Invalid type "number" of template literal expression  @typescript-eslint/restrict-template-expressions
+
+Γ£û 94 problems (0 errors, 94 warnings)
+  0 errors and 27 warnings potentially fixable with the `--fix` option.
+

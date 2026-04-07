@@ -12,7 +12,7 @@
  * @packageDocumentation
  */
 
-import { writeFileSync, appendFileSync } from 'node:fs';
+import { appendFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
