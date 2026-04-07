@@ -365,7 +365,19 @@ export {
 export { createMemoryEntry, generateMemoryId, MemoryManager, MemorySearchBuilder, ShortTermMemory, SqliteMemory } from './memory/index.js';
 export { DEFAULT_READABLE_NAMESPACES, ScopedMemory } from './memory/index.js';
 export { GLOBAL_OWNER_ID, NamespacedMemoryManager } from './memory/index.js';
-export type { MemoryManagerConfig, NamespacedMemoryManagerConfig, ScopedMemoryConfig, SqliteMemoryConfig } from './memory/index.js';
+export { RetentionPolicyManager } from './memory/index.js';
+export type {
+  MemoryManagerConfig,
+  NamespacedMemoryManagerConfig,
+  NamespaceEvictionBreakdown,
+  NamespaceEvictionCount,
+  NamespaceRetentionPolicy,
+  RetentionEnforcementResult,
+  RetentionEvaluationResult,
+  RetentionPolicyManagerConfig,
+  ScopedMemoryConfig,
+  SqliteMemoryConfig,
+} from './memory/index.js';
 export {
   exportMemory,
   exportToJson,

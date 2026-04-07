@@ -22,6 +22,16 @@ export type { ScopedMemoryConfig } from './scoped-memory.js';
 export { GLOBAL_OWNER_ID, NamespacedMemoryManager } from './namespaced-memory-manager.js';
 export type { NamespacedMemoryManagerConfig } from './namespaced-memory-manager.js';
 
+export { RetentionPolicyManager } from './retention-policy-manager.js';
+export type {
+  NamespaceEvictionBreakdown,
+  NamespaceEvictionCount,
+  NamespaceRetentionPolicy,
+  RetentionEnforcementResult,
+  RetentionEvaluationResult,
+  RetentionPolicyManagerConfig,
+} from './retention-policy-manager.js';
+
 export {
   exportMemory,
   exportToJson,
