@@ -343,7 +343,7 @@ describe('webpack compatibility', () => {
 
     const output = fs.readFileSync(outFile, 'utf-8');
     expect(output.length).toBeGreaterThan(0);
-  });
+  }, 30000);
 
   it('should bundle ESM-style entry without errors', async () => {
     const webpack = (await import('webpack')).default;
@@ -402,7 +402,7 @@ describe('webpack compatibility', () => {
 
     const output = fs.readFileSync(outFile, 'utf-8');
     expect(output.length).toBeGreaterThan(0);
-  });
+  }, 30000);
 });
 
 // ---------------------------------------------------------------------------

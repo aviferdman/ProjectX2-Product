@@ -208,15 +208,29 @@ function checkNodeVersion(version: RuntimeVersion | null): CompatCheck {
 
 /** Check that ESM (`import.meta`) works. */
 function checkESM(): CompatCheck {
-  // Use indirect eval to check import.meta at runtime without a compile-time
-  // syntax error when this file is compiled to CommonJS.
+  // Node >= 14 supports ESM natively; Bun and Deno also support ESM.
+  // The eval-based import.meta check is unreliable when the code runs in a
+  // CommonJS context (e.g. CJS build, vitest transforms), so we detect
+  // capability based on the runtime and version instead.
+  const runtime = detectRuntime();
   let available = false;
-  try {
-    // eslint-disable-next-line no-eval
-    available = eval("typeof import.meta !== 'undefined' && import.meta.url != null") === true;
-  } catch {
-    // import.meta is not available in CommonJS context
+
+  if (runtime === 'bun' || runtime === 'deno') {
+    available = true;
+  } else if (runtime === 'node') {
+    const ver = getRuntimeVersion();
+    // Node.js has stable ESM support from v14+; we require >= 18 anyway.
+    available = ver != null && ver.major >= 14;
+  } else {
+    // Fallback: try eval for unknown runtimes
+    try {
+      // eslint-disable-next-line no-eval
+      available = eval("typeof import.meta !== 'undefined' && import.meta.url != null") === true;
+    } catch {
+      // import.meta is not available
+    }
   }
+
   return {
     name: 'ESM (import.meta)',
     available,

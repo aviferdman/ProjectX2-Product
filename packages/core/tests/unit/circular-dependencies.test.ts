@@ -107,7 +107,7 @@ describe('detectCircularDependencies — cycle detection', () => {
     ]);
     expect(result.hasCycles).toBe(true);
     expect(result.cycles.length).toBe(1);
-    expect(result.involvedTaskIds.sort()).toEqual(['a', 'b']);
+    expect([...result.involvedTaskIds].sort()).toEqual(['a', 'b']);
     // The cycle path should contain both nodes and close the loop
     const path = result.cycles[0].path;
     expect(path.length).toBe(3);
@@ -122,7 +122,7 @@ describe('detectCircularDependencies — cycle detection', () => {
     ]);
     expect(result.hasCycles).toBe(true);
     expect(result.cycles.length).toBe(1);
-    expect(result.involvedTaskIds.sort()).toEqual(['a', 'b', 'c']);
+    expect([...result.involvedTaskIds].sort()).toEqual(['a', 'b', 'c']);
     const path = result.cycles[0].path;
     expect(path.length).toBe(4);
     expect(path[0]).toBe(path[path.length - 1]);
@@ -136,7 +136,7 @@ describe('detectCircularDependencies — cycle detection', () => {
       makeTask('z', ['y']),
     ]);
     expect(result.hasCycles).toBe(true);
-    expect(result.involvedTaskIds.sort()).toEqual(['y', 'z']);
+    expect([...result.involvedTaskIds].sort()).toEqual(['y', 'z']);
     // x should not be involved
     expect(result.involvedTaskIds).not.toContain('x');
   });
@@ -152,7 +152,7 @@ describe('detectCircularDependencies — cycle detection', () => {
     ]);
     expect(result.hasCycles).toBe(true);
     expect(result.cycles.length).toBe(2);
-    expect(result.involvedTaskIds.sort()).toEqual(['a', 'b', 'c', 'd']);
+    expect([...result.involvedTaskIds].sort()).toEqual(['a', 'b', 'c', 'd']);
   });
 
   it('should detect cycle with non-cyclic tasks attached', () => {
@@ -163,7 +163,7 @@ describe('detectCircularDependencies — cycle detection', () => {
       makeTask('c', ['b']),
     ]);
     expect(result.hasCycles).toBe(true);
-    expect(result.involvedTaskIds.sort()).toEqual(['b', 'c']);
+    expect([...result.involvedTaskIds].sort()).toEqual(['b', 'c']);
   });
 });
 
@@ -264,7 +264,7 @@ describe('assertNoCycles', () => {
       const err = error as CircularDependencyError;
       expect(err).toBeInstanceOf(CircularDependencyError);
       expect(err.cycles.length).toBeGreaterThanOrEqual(1);
-      expect(err.involvedTaskIds.sort()).toEqual(['a', 'b', 'c']);
+      expect([...err.involvedTaskIds].sort()).toEqual(['a', 'b', 'c']);
       expect(err.message).toContain('Circular dependency detected');
       expect(err.message).toContain('→');
     }
@@ -347,7 +347,7 @@ describe('resolveTaskDependencies — CircularDependencyError integration', () =
     } catch (error) {
       const err = error as CircularDependencyError;
       expect(err.cycles.length).toBeGreaterThanOrEqual(1);
-      expect(err.involvedTaskIds.sort()).toEqual(['a', 'b']);
+      expect([...err.involvedTaskIds].sort()).toEqual(['a', 'b']);
       expect(err.message).toContain('→');
     }
   });
@@ -364,7 +364,7 @@ describe('resolveTaskDependencies — CircularDependencyError integration', () =
       expect(error).toBeInstanceOf(CircularDependencyError);
       const err = error as CircularDependencyError;
       expect(err.involvedTaskIds).not.toContain('x');
-      expect(err.involvedTaskIds.sort()).toEqual(['y', 'z']);
+      expect([...err.involvedTaskIds].sort()).toEqual(['y', 'z']);
     }
   });
 
@@ -435,6 +435,6 @@ describe('detectCircularDependencies — edge cases', () => {
       makeTask('y', ['x']),
     ]);
     expect(result.hasCycles).toBe(true);
-    expect(result.involvedTaskIds.sort()).toEqual(['x', 'y']);
+    expect([...result.involvedTaskIds].sort()).toEqual(['x', 'y']);
   });
 });

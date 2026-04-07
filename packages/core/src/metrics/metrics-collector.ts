@@ -97,6 +97,7 @@ export interface MetricsCollectorConfig {
 // Constants
 // ---------------------------------------------------------------------------
 
+/** Maximum number of execution-time measurements to retain before oldest are evicted. */
 export const DEFAULT_MAX_EXECUTION_TIME_MEASUREMENTS = 5000;
 
 // ---------------------------------------------------------------------------
@@ -308,6 +309,12 @@ export class MetricsCollector {
 // Execution time summary computation
 // ---------------------------------------------------------------------------
 
+/**
+ * Compute an aggregate summary from a list of execution-time measurements.
+ *
+ * Returns totals, averages, percentiles (p50/p95/p99), success/failure counts,
+ * and per-category breakdowns.
+ */
 export function computeExecutionTimeSummary(
   measurements: readonly ExecutionTimeMeasurement[],
 ): ExecutionTimeSummary {

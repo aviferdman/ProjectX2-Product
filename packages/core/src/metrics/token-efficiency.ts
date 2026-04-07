@@ -113,6 +113,7 @@ export interface TokenEfficiencyTrackerConfig {
 // Constants
 // ---------------------------------------------------------------------------
 
+/** Maximum number of token records to retain before oldest are evicted. */
 export const DEFAULT_MAX_TOKEN_RECORDS = 5000;
 
 // ---------------------------------------------------------------------------
@@ -223,6 +224,12 @@ export class TokenEfficiencyTracker {
 // Report computation
 // ---------------------------------------------------------------------------
 
+/**
+ * Compute an efficiency report from a list of token records.
+ *
+ * Returns totals, averages, prompt-to-completion ratio, throughput,
+ * cost estimates, and per-model breakdowns.
+ */
 export function computeTokenEfficiencyReport(
   records: readonly TokenRecord[],
 ): TokenEfficiencyReport {

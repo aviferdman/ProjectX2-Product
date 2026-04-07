@@ -10,6 +10,7 @@ Build, debug, and deploy multi-agent workflows in under 5 minutes.
 [![npm version](https://img.shields.io/npm/v/@crewspace/core)](https://www.npmjs.com/package/@crewspace/core)
 [![npm downloads](https://img.shields.io/npm/dm/@crewspace/core)](https://www.npmjs.com/package/@crewspace/core)
 [![npm license](https://img.shields.io/npm/l/@crewspace/core)](https://www.npmjs.com/package/@crewspace/core)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 

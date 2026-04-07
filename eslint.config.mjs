@@ -13,6 +13,7 @@ export default tseslint.config(
       '**/coverage/**',
       '**/*.js',
       '**/*.mjs',
+      '**/*.mts',
       'vitest.workspace.ts',
       '**/vitest.config.ts',
     ],

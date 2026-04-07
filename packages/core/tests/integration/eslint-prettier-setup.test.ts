@@ -52,40 +52,40 @@ describe('ESLint + Prettier Setup (TASK-003)', () => {
   });
 
   describe('Prettier Configuration', () => {
-    it('should enforce semicolons', () => {
+    // .prettierrc references a shared config package ("@crewspace/prettier-config").
+    // We resolve the actual config values from that package.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const resolvedConfig = require('@crewspace/prettier-config');
+    const config = resolvedConfig.default ?? resolvedConfig;
+
+    it('should reference shared config package', () => {
       const prettierrcPath = join(rootDir, '.prettierrc');
-      const config = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
+      const raw = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
+      expect(raw).toBe('@crewspace/prettier-config');
+    });
+
+    it('should enforce semicolons', () => {
       expect(config.semi).toBe(true);
     });
 
     it('should use single quotes', () => {
-      const prettierrcPath = join(rootDir, '.prettierrc');
-      const config = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
       expect(config.singleQuote).toBe(true);
     });
 
     it('should have printWidth of 100', () => {
-      const prettierrcPath = join(rootDir, '.prettierrc');
-      const config = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
       expect(config.printWidth).toBe(100);
     });
 
     it('should use 2 spaces for indentation', () => {
-      const prettierrcPath = join(rootDir, '.prettierrc');
-      const config = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
       expect(config.tabWidth).toBe(2);
       expect(config.useTabs).toBe(false);
     });
 
     it('should use trailing commas', () => {
-      const prettierrcPath = join(rootDir, '.prettierrc');
-      const config = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
       expect(config.trailingComma).toBe('all');
     });
 
     it('should use LF line endings', () => {
-      const prettierrcPath = join(rootDir, '.prettierrc');
-      const config = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
       expect(config.endOfLine).toBe('lf');
     });
   });
@@ -304,8 +304,10 @@ describe('ESLint + Prettier Setup (TASK-003)', () => {
     });
 
     it('should enforce single quotes per conventions', () => {
-      const prettierrcPath = join(rootDir, '.prettierrc');
-      const config = JSON.parse(readFileSync(prettierrcPath, 'utf-8'));
+      // .prettierrc references shared config; resolve from the package
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const resolvedConfig = require('@crewspace/prettier-config');
+      const config = resolvedConfig.default ?? resolvedConfig;
       expect(config.singleQuote).toBe(true);
     });
   });

@@ -85,7 +85,9 @@ export interface MemoryTrackerConfig {
 // Constants
 // ---------------------------------------------------------------------------
 
+/** Maximum number of memory measurements to retain before oldest are evicted. */
 export const DEFAULT_MAX_MEASUREMENTS = 1000;
+/** Heap growth threshold in bytes (1 MB) above which a measurement is flagged as a potential leak. */
 export const DEFAULT_LEAK_THRESHOLD_BYTES = 1_048_576; // 1 MB
 
 // ---------------------------------------------------------------------------
@@ -267,6 +269,12 @@ export class MemoryTracker {
 // Summary computation
 // ---------------------------------------------------------------------------
 
+/**
+ * Compute an aggregate summary from a list of memory measurements.
+ *
+ * Returns averages, peaks, and a count of suspected leaks (measurements
+ * whose heap-used delta exceeds `leakThresholdBytes`).
+ */
 export function computeMemorySummary(
   measurements: readonly MemoryMeasurement[],
   leakThresholdBytes: number = DEFAULT_LEAK_THRESHOLD_BYTES,

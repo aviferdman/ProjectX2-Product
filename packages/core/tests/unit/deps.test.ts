@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { z } from 'zod';
-import EventEmitter from 'eventemitter3';
+import { EventEmitter } from 'eventemitter3';
 
 describe('Dependency Integration (TASK-006)', () => {
   describe('Zod (Schema Validation)', () => {

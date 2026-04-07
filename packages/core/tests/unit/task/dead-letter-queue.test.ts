@@ -137,7 +137,7 @@ describe('DeadLetterQueue', () => {
     });
 
     it('emits dlq:enqueued event', () => {
-      const listener = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:enqueued']>>();
+      const listener = vi.fn<DeadLetterQueueEventMap['dlq:enqueued']>();
       dlq.on('dlq:enqueued', listener);
 
       const task = makeTask('t1');
@@ -172,8 +172,8 @@ describe('DeadLetterQueue', () => {
 
     it('emits dlq:overflow and dlq:discarded for dropped entry', () => {
       const small = new DeadLetterQueue({ maxSize: 1 });
-      const overflowFn = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:overflow']>>();
-      const discardFn = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:discarded']>>();
+      const overflowFn = vi.fn<DeadLetterQueueEventMap['dlq:overflow']>();
+      const discardFn = vi.fn<DeadLetterQueueEventMap['dlq:discarded']>();
       small.on('dlq:overflow', overflowFn);
       small.on('dlq:discarded', discardFn);
 
@@ -216,7 +216,7 @@ describe('DeadLetterQueue', () => {
     });
 
     it('emits dlq:discarded with reason "manual"', () => {
-      const listener = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:discarded']>>();
+      const listener = vi.fn<DeadLetterQueueEventMap['dlq:discarded']>();
       dlq.on('dlq:discarded', listener);
 
       dlq.enqueue(makeTask('t1'), new Error('e'));
@@ -243,7 +243,7 @@ describe('DeadLetterQueue', () => {
     });
 
     it('emits dlq:drained event', () => {
-      const listener = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:drained']>>();
+      const listener = vi.fn<DeadLetterQueueEventMap['dlq:drained']>();
       dlq.on('dlq:drained', listener);
 
       dlq.enqueue(makeTask('t1'), new Error('e'));
@@ -270,8 +270,8 @@ describe('DeadLetterQueue', () => {
     });
 
     it('emits dlq:retry and dlq:retry:success on success', async () => {
-      const retryFn = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:retry']>>();
-      const successFn = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:retry:success']>>();
+      const retryFn = vi.fn<DeadLetterQueueEventMap['dlq:retry']>();
+      const successFn = vi.fn<DeadLetterQueueEventMap['dlq:retry:success']>();
       dlq.on('dlq:retry', retryFn);
       dlq.on('dlq:retry:success', successFn);
 
@@ -295,8 +295,8 @@ describe('DeadLetterQueue', () => {
     });
 
     it('emits dlq:retry and dlq:retry:failure on failure', async () => {
-      const retryFn = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:retry']>>();
-      const failFn = vi.fn<Parameters<DeadLetterQueueEventMap['dlq:retry:failure']>>();
+      const retryFn = vi.fn<DeadLetterQueueEventMap['dlq:retry']>();
+      const failFn = vi.fn<DeadLetterQueueEventMap['dlq:retry:failure']>();
       dlq.on('dlq:retry', retryFn);
       dlq.on('dlq:retry:failure', failFn);
 
@@ -315,7 +315,7 @@ describe('DeadLetterQueue', () => {
 
     it('uses entry context when no override provided', async () => {
       const ctx = { dep: makeResult('dep') };
-      const capturedContext = vi.fn<[Task, Readonly<Record<string, TaskResult>>], Promise<TaskResult>>();
+      const capturedContext = vi.fn<(task: Task, context: Readonly<Record<string, TaskResult>>) => Promise<TaskResult>>();
       capturedContext.mockResolvedValue(makeResult('t1'));
 
       dlq.enqueue(makeTask('t1'), new Error('e'), { context: ctx });
@@ -327,7 +327,7 @@ describe('DeadLetterQueue', () => {
     it('uses override context when provided', async () => {
       const entryCtx = { dep: makeResult('dep') };
       const overrideCtx = { override: makeResult('override') };
-      const capturedContext = vi.fn<[Task, Readonly<Record<string, TaskResult>>], Promise<TaskResult>>();
+      const capturedContext = vi.fn<(task: Task, context: Readonly<Record<string, TaskResult>>) => Promise<TaskResult>>();
       capturedContext.mockResolvedValue(makeResult('t1'));
 
       dlq.enqueue(makeTask('t1'), new Error('e'), { context: entryCtx });

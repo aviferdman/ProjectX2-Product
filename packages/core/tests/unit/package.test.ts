@@ -36,7 +36,7 @@ describe('Package Configuration (TASK-006)', () => {
 
   describe('Entry Points', () => {
     it('should have correct main entry point', () => {
-      expect(packageJson.main).toBe('./dist/index.js');
+      expect(packageJson.main).toBe('./dist/cjs/index.js');
     });
 
     it('should have types definition', () => {
@@ -51,9 +51,9 @@ describe('Package Configuration (TASK-006)', () => {
       expect(exports['.'].import).toBe('./dist/index.js');
     });
 
-    it('should not have require entry (ESM only)', () => {
+    it('should have require entry for CJS consumers', () => {
       const exports = packageJson.exports as Record<string, Record<string, string>>;
-      expect(exports['.'].require).toBeUndefined();
+      expect(exports['.'].require).toBe('./dist/cjs/index.js');
     });
   });
 
@@ -83,7 +83,7 @@ describe('Package Configuration (TASK-006)', () => {
     const scripts = packageJson.scripts as Record<string, string>;
 
     it('should have build script', () => {
-      expect(scripts.build).toBe('tsc --build');
+      expect(scripts.build).toBe('tsc --build && node ../../scripts/build-cjs.js');
     });
 
     it('should have clean script with rimraf', () => {
@@ -146,10 +146,10 @@ describe('Package Configuration (TASK-006)', () => {
       expect(devDeps?.rimraf).toMatch(/^\^6\./);
     });
 
-    it('should have exactly 2 dev dependencies', () => {
+    it('should have expected dev dependencies', () => {
       const devDeps = packageJson.devDependencies as Record<string, string> | undefined;
       const devDepsCount = Object.keys(devDeps ?? {}).length;
-      expect(devDepsCount).toBe(4);
+      expect(devDepsCount).toBe(6);
     });
   });
 
