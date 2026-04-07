@@ -53,6 +53,12 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Policies',
+        items: [
+          { text: 'Deprecation Policy', link: '/guide/deprecation-policy' },
+        ],
+      },
+      {
         text: 'Performance',
         items: [
           { text: 'Benchmarks', link: '/guide/benchmarks' },

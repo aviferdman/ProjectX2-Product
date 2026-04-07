@@ -266,7 +266,9 @@ Crewspace follows [Semantic Versioning](https://semver.org/):
 - **MINOR**: New features, backward-compatible
 - **PATCH**: Bug fixes, backward-compatible
 
-See the deprecation utilities in `src/deprecation/` for safe API evolution patterns.
+All breaking changes go through a deprecation period before removal. See the full [Deprecation Policy](./docs/guide/deprecation-policy.md) for details on the deprecation lifecycle, runtime warnings, and migration guidelines.
+
+The deprecation utilities in `packages/core/src/deprecation/` provide runtime warnings, function wrappers, and method decorators for safe API evolution.
 
 ## Getting Help
 
