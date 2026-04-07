@@ -1,0 +1,25 @@
+title: ""
+labels: ["discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💬 General Discussion
+
+        Start a conversation about anything related to Crewspace — architecture decisions, best practices, roadmap thoughts, or community topics.
+
+  - type: textarea
+    id: topic
+    attributes:
+      label: Topic
+      description: What would you like to discuss?
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional Details
+      description: Any additional context, links, or references.
+    validations:
+      required: false

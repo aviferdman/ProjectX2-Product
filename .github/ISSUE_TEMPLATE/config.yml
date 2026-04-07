@@ -1,8 +1,14 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Ask a Question (GitHub Discussions)
+    url: https://github.com/aviferdman/ProjectX2-Product/discussions/categories/q-a
+    about: Ask questions and get answers from the Crewspace community
+  - name: Share an Idea (GitHub Discussions)
+    url: https://github.com/aviferdman/ProjectX2-Product/discussions/categories/ideas
+    about: Suggest features or improvements for Crewspace
   - name: Discord Community
     url: https://discord.gg/crewspace
-    about: Ask questions and get help from the Crewspace community
+    about: Join our Discord for real-time chat and support
   - name: Documentation
     url: https://crewspace.dev/docs
     about: Check the documentation for guides and API references

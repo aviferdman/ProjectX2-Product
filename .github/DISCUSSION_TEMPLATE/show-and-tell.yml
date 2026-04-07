@@ -1,0 +1,44 @@
+title: "[Show & Tell] "
+labels: ["showcase"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🎨 Show & Tell
+
+        Built something cool with Crewspace? Share it with the community!
+
+  - type: textarea
+    id: project
+    attributes:
+      label: Project Description
+      description: What did you build? Give us a brief overview.
+      placeholder: Describe your project and what it does.
+    validations:
+      required: true
+
+  - type: textarea
+    id: highlights
+    attributes:
+      label: Highlights
+      description: What Crewspace features did you use? Any interesting patterns or approaches?
+      placeholder: Share the key technical highlights.
+    validations:
+      required: false
+
+  - type: textarea
+    id: code-or-demo
+    attributes:
+      label: Code or Demo Link
+      description: Share a link to your code repository, demo, or relevant code snippets.
+      placeholder: https://github.com/...
+    validations:
+      required: false
+
+  - type: textarea
+    id: lessons
+    attributes:
+      label: Lessons Learned
+      description: What went well? What would you do differently?
+    validations:
+      required: false

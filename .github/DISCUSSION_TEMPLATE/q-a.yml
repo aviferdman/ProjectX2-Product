@@ -1,0 +1,67 @@
+title: "[Q&A] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💬 Ask a Question
+
+        Thanks for reaching out! Please fill in the details below so the community can help you effectively.
+
+        > **Tip:** Search existing discussions first — your question may already be answered.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: A clear and concise description of your question.
+      placeholder: What are you trying to understand or accomplish?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What are you trying to accomplish? Include relevant details about your use case.
+      placeholder: Describe the goal or scenario that led to this question.
+    validations:
+      required: false
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code Example
+      description: If applicable, share a minimal code example.
+      render: typescript
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of Crewspace does this relate to?
+      options:
+        - Agents
+        - Crews & Orchestration
+        - LLM Providers
+        - Tools
+        - Memory
+        - CLI
+        - Configuration
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Your environment details (if relevant).
+      placeholder: |
+        - Crewspace version: (e.g., 0.1.0)
+        - Node.js version: (e.g., 18.17.0)
+        - OS: (e.g., macOS 14.0, Ubuntu 22.04, Windows 11)
+    validations:
+      required: false
