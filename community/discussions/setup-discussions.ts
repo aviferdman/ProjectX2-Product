@@ -221,7 +221,9 @@ export function main(argv: string[] = process.argv.slice(2)): void {
   }
 
   if (args.dryRun) {
-    console.log('\n✅ Dry run complete — this is a setup checklist for enabling GitHub Discussions.');
+    console.log(
+      '\n✅ Dry run complete — this is a setup checklist for enabling GitHub Discussions.',
+    );
     return;
   }
 

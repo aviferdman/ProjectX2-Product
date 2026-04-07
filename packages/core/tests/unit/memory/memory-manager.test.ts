@@ -130,7 +130,9 @@ describe('MemoryManager', () => {
     it('throws when all providers fail', async () => {
       const failProvider: MemoryProvider = {
         name: 'fail',
-        add: async () => { throw new Error('boom'); },
+        add: async () => {
+          throw new Error('boom');
+        },
         get: async () => undefined,
         query: async () => ({ entries: [], total: 0 }),
         search: async () => ({ entries: [], total: 0 }),
@@ -146,7 +148,9 @@ describe('MemoryManager', () => {
     it('succeeds if at least one provider works', async () => {
       const failProvider: MemoryProvider = {
         name: 'fail',
-        add: async () => { throw new Error('boom'); },
+        add: async () => {
+          throw new Error('boom');
+        },
         get: async () => undefined,
         query: async () => ({ entries: [], total: 0 }),
         search: async () => ({ entries: [], total: 0 }),
@@ -316,12 +320,9 @@ describe('createMemoryEntry()', () => {
   });
 
   it('accepts custom namespace and metadata', () => {
-    const entry = createMemoryEntry(
-      'Data',
-      MemoryRole.ASSISTANT,
-      MemoryNamespace.GLOBAL,
-      { source: 'test' },
-    );
+    const entry = createMemoryEntry('Data', MemoryRole.ASSISTANT, MemoryNamespace.GLOBAL, {
+      source: 'test',
+    });
     expect(entry.namespace).toBe(MemoryNamespace.GLOBAL);
     expect(entry.metadata).toEqual({ source: 'test' });
   });

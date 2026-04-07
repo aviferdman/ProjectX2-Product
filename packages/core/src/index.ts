@@ -402,11 +402,7 @@ export {
   ToolTimeoutError,
 } from './errors/index.js';
 export type { ToolValidationIssue } from './errors/index.js';
-export {
-  MemoryConfigError,
-  MemoryOperationError,
-  MemoryQueryError,
-} from './errors/index.js';
+export { MemoryConfigError, MemoryOperationError, MemoryQueryError } from './errors/index.js';
 
 // Graceful Degradation
 export {
@@ -425,7 +421,14 @@ export type {
 } from './errors/index.js';
 
 // Memory
-export { createMemoryEntry, generateMemoryId, MemoryManager, MemorySearchBuilder, ShortTermMemory, SqliteMemory } from './memory/index.js';
+export {
+  createMemoryEntry,
+  generateMemoryId,
+  MemoryManager,
+  MemorySearchBuilder,
+  ShortTermMemory,
+  SqliteMemory,
+} from './memory/index.js';
 export { DEFAULT_READABLE_NAMESPACES, ScopedMemory } from './memory/index.js';
 export { GLOBAL_OWNER_ID, NamespacedMemoryManager } from './memory/index.js';
 export { RetentionPolicyManager } from './memory/index.js';
@@ -579,9 +582,4 @@ export {
   REQUIRED_GLOBALS,
   REQUIRED_WEB_GLOBALS,
 } from './runtime/index.js';
-export type {
-  CompatCheck,
-  CompatReport,
-  RuntimeName,
-  RuntimeVersion,
-} from './runtime/index.js';
+export type { CompatCheck, CompatReport, RuntimeName, RuntimeVersion } from './runtime/index.js';

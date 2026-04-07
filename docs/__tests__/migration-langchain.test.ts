@@ -51,7 +51,7 @@ describe('LangChain migration guide content', () => {
   it('should cover agent migration', () => {
     expect(content).toContain('Migrating Agents');
     expect(content).toContain('AgentExecutor');
-    expect(content).toContain("new Agent(");
+    expect(content).toContain('new Agent(');
   });
 
   it('should cover chain-to-crew migration', () => {
@@ -156,7 +156,9 @@ describe('LangChain migration guide structure', () => {
     for (const section of sections) {
       const index = content.indexOf(section);
       expect(index, `Section "${section}" should exist`).toBeGreaterThan(-1);
-      expect(index, `Section "${section}" should come after previous section`).toBeGreaterThan(lastIndex);
+      expect(index, `Section "${section}" should come after previous section`).toBeGreaterThan(
+        lastIndex,
+      );
       lastIndex = index;
     }
   });

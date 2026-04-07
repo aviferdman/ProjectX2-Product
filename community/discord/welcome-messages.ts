@@ -277,10 +277,7 @@ function isValidHexColor(color: string): boolean {
 /**
  * Validate a WelcomeMessageConfig independently.
  */
-function validateMessageConfig(
-  config: WelcomeMessageConfig,
-  label: string,
-): string[] {
+function validateMessageConfig(config: WelcomeMessageConfig, label: string): string[] {
   const issues: string[] = [];
 
   if (config.enabled && config.content.trim().length === 0) {
@@ -288,9 +285,7 @@ function validateMessageConfig(
   }
 
   if (config.content.length > MAX_CONTENT_LENGTH) {
-    issues.push(
-      `${label}: content exceeds maximum length of ${MAX_CONTENT_LENGTH} characters`,
-    );
+    issues.push(`${label}: content exceeds maximum length of ${MAX_CONTENT_LENGTH} characters`);
   }
 
   // Validate template variables
@@ -362,9 +357,7 @@ export function validateWelcomeConfig(
     if (serverConfig) {
       const roleNames = new Set(serverConfig.roles.map((r) => r.name));
       if (!roleNames.has(config.autoAssignRole)) {
-        issues.push(
-          `autoAssignRole "${config.autoAssignRole}" does not match any defined role`,
-        );
+        issues.push(`autoAssignRole "${config.autoAssignRole}" does not match any defined role`);
       }
     }
   }
@@ -378,11 +371,7 @@ export function validateWelcomeConfig(
  * Format a WelcomeConfig as a human-readable summary string.
  */
 export function formatWelcomeConfig(config: WelcomeConfig): string {
-  const lines: string[] = [
-    'Discord Welcome Messages Configuration',
-    '═'.repeat(45),
-    '',
-  ];
+  const lines: string[] = ['Discord Welcome Messages Configuration', '═'.repeat(45), ''];
 
   const ch = config.channelMessage;
   lines.push(`Channel Message: ${ch.enabled ? '✅ Enabled' : '❌ Disabled'}`);
@@ -405,9 +394,7 @@ export function formatWelcomeConfig(config: WelcomeConfig): string {
   }
 
   lines.push('');
-  lines.push(
-    `Auto-Assign Role: ${config.autoAssignRole ?? 'None'}`,
-  );
+  lines.push(`Auto-Assign Role: ${config.autoAssignRole ?? 'None'}`);
   lines.push('');
   lines.push('─'.repeat(45));
 

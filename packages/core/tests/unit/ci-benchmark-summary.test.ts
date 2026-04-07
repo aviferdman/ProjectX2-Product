@@ -11,7 +11,11 @@ import {
   formatAnnotation,
 } from '../../scripts/format-ci-summary.js';
 import type { CISummaryOptions } from '../../scripts/format-ci-summary.js';
-import type { Baseline, CurrentResult, ComparisonReport } from '../../scripts/compare-benchmarks.js';
+import type {
+  Baseline,
+  CurrentResult,
+  ComparisonReport,
+} from '../../scripts/compare-benchmarks.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -72,8 +76,8 @@ describe('generateBudgetAnnotations', () => {
   it('should generate annotations for exceeded budgets', () => {
     const results: CurrentResult[] = [
       makeResult('Agent init', 150, 100), // exceeds
-      makeResult('Memory add', 0.2, 50),  // within
-      makeResult('Tool exec', 75, 50),    // exceeds
+      makeResult('Memory add', 0.2, 50), // within
+      makeResult('Tool exec', 75, 50), // exceeds
     ];
 
     const annotations = generateBudgetAnnotations(results);
@@ -168,11 +172,46 @@ describe('generateAnnotations', () => {
   it('should handle mixed results', () => {
     const report: ComparisonReport = {
       entries: [
-        { name: 'OK', baselineP95: 1.0, currentP95: 1.0, changePercent: 0, budget: 100, status: 'pass' },
-        { name: 'Regressed', baselineP95: 1.0, currentP95: 2.0, changePercent: 100, budget: 100, status: 'regression' },
-        { name: 'Warned', baselineP95: 1.0, currentP95: 1.1, changePercent: 10, budget: 100, status: 'warning' },
-        { name: 'Improved', baselineP95: 1.0, currentP95: 0.5, changePercent: -50, budget: 100, status: 'improvement' },
-        { name: 'Brand New', baselineP95: null, currentP95: 0.5, changePercent: null, budget: 100, status: 'new' },
+        {
+          name: 'OK',
+          baselineP95: 1.0,
+          currentP95: 1.0,
+          changePercent: 0,
+          budget: 100,
+          status: 'pass',
+        },
+        {
+          name: 'Regressed',
+          baselineP95: 1.0,
+          currentP95: 2.0,
+          changePercent: 100,
+          budget: 100,
+          status: 'regression',
+        },
+        {
+          name: 'Warned',
+          baselineP95: 1.0,
+          currentP95: 1.1,
+          changePercent: 10,
+          budget: 100,
+          status: 'warning',
+        },
+        {
+          name: 'Improved',
+          baselineP95: 1.0,
+          currentP95: 0.5,
+          changePercent: -50,
+          budget: 100,
+          status: 'improvement',
+        },
+        {
+          name: 'Brand New',
+          baselineP95: null,
+          currentP95: 0.5,
+          changePercent: null,
+          budget: 100,
+          status: 'new',
+        },
       ],
       hasRegression: true,
       hasWarning: true,
@@ -265,9 +304,7 @@ describe('generateCISummary', () => {
 
   it('should show new benchmarks in collapsible section', () => {
     const baseline = makeBaseline({});
-    const results: CurrentResult[] = [
-      makeResult('New bench', 0.5, 100),
-    ];
+    const results: CurrentResult[] = [makeResult('New bench', 0.5, 100)];
 
     const summary = generateCISummary({ results, baseline });
 

@@ -163,8 +163,7 @@ export function composeTool<TInput = unknown, TOutput = unknown>(
   const zodSchema = options.schema;
 
   // Derive inputSchema from Zod schema when not explicitly provided
-  const inputSchema =
-    options.inputSchema ?? (zodSchema ? zodToToolSchema(zodSchema) : undefined);
+  const inputSchema = options.inputSchema ?? (zodSchema ? zodToToolSchema(zodSchema) : undefined);
 
   // Build config for validation (without execute)
   const configForValidation = {

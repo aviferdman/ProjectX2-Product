@@ -139,11 +139,7 @@ export class ToolExecutor {
   // -------------------------------------------------------------------------
 
   /** @internal Execute a tool at a given composition depth. */
-  private async _executeAtDepth(
-    tool: Tool,
-    input: unknown,
-    depth: number,
-  ): Promise<ToolResult> {
+  private async _executeAtDepth(tool: Tool, input: unknown, depth: number): Promise<ToolResult> {
     // 1. Permission check (throws ToolPermissionError if denied)
     this._permissionManager.checkTool(tool);
 

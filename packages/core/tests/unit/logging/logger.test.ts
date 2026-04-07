@@ -618,7 +618,9 @@ describe('Logger', () => {
       const entries: LogEntry[] = [];
       const custom: LogTransport = {
         name: 'custom',
-        write(entry) { entries.push(entry); },
+        write(entry) {
+          entries.push(entry);
+        },
       };
 
       const logger = new Logger({

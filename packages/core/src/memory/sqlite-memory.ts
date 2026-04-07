@@ -17,10 +17,7 @@
 
 import { EventEmitter } from 'eventemitter3';
 
-import {
-  MemoryConfigError,
-  MemoryOperationError,
-} from '../errors/memory-errors.js';
+import { MemoryConfigError, MemoryOperationError } from '../errors/memory-errors.js';
 import type {
   MemoryConfig,
   MemoryEntry,
@@ -269,7 +266,9 @@ export class SqliteMemory implements MemoryProvider {
       .get(...params) as { cnt: number };
 
     const rows = this._db
-      .prepare(`SELECT * FROM memory_entries${sql} ORDER BY created_at ${orderDir} LIMIT ? OFFSET ?`)
+      .prepare(
+        `SELECT * FROM memory_entries${sql} ORDER BY created_at ${orderDir} LIMIT ? OFFSET ?`,
+      )
       .all(...params, limit, offset) as MemoryRow[];
 
     return {

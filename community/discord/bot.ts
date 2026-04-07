@@ -159,10 +159,7 @@ export function validateBotConfig(config: BotConfig): {
     issues.push('A DiscordClient adapter is required');
   }
 
-  const welcomeValidation = validateWelcomeConfig(
-    config.welcomeConfig,
-    config.serverConfig,
-  );
+  const welcomeValidation = validateWelcomeConfig(config.welcomeConfig, config.serverConfig);
   if (!welcomeValidation.valid) {
     issues.push(...welcomeValidation.issues);
   }
@@ -181,8 +178,7 @@ function buildRenderedContent(
   context: WelcomeContext,
   target: 'channel' | 'dm',
 ): string {
-  const msgConfig =
-    target === 'channel' ? config.channelMessage : config.directMessage;
+  const msgConfig = target === 'channel' ? config.channelMessage : config.directMessage;
   const rendered = renderWelcomeMessage(msgConfig, context);
 
   const parts: string[] = [rendered.content];
@@ -208,11 +204,7 @@ export async function handleWelcome(
   config: BotConfig,
   sender: MessageSender,
 ): Promise<WelcomeResult> {
-  const context = buildWelcomeContext(
-    config.serverConfig,
-    member.displayName,
-    guild.memberCount,
-  );
+  const context = buildWelcomeContext(config.serverConfig, member.displayName, guild.memberCount);
 
   let channelMessageSent = false;
   let directMessageSent = false;
@@ -262,10 +254,7 @@ export function createBot(config: BotConfig): Bot {
   let running = false;
   const sender = config.sender ?? noopSender;
 
-  async function handleMemberJoin(
-    member: BotMember,
-    guild: BotGuild,
-  ): Promise<WelcomeResult> {
+  async function handleMemberJoin(member: BotMember, guild: BotGuild): Promise<WelcomeResult> {
     return handleWelcome(member, guild, config, sender);
   }
 

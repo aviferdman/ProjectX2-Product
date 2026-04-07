@@ -166,7 +166,9 @@ describe('TASK-093: Memory and Learning — ShortTermMemory Retention', () => {
   });
 
   it('should evict oldest entries when maxEntries is exceeded', async () => {
-    const e1 = await memory.add(createMemoryEntry('First entry', MemoryRole.USER, MemoryNamespace.AGENT));
+    const e1 = await memory.add(
+      createMemoryEntry('First entry', MemoryRole.USER, MemoryNamespace.AGENT),
+    );
     await memory.add(createMemoryEntry('Second entry', MemoryRole.USER, MemoryNamespace.AGENT));
     await memory.add(createMemoryEntry('Third entry', MemoryRole.USER, MemoryNamespace.AGENT));
 
@@ -203,16 +205,28 @@ describe('TASK-093: Memory and Learning — ShortTermMemory Retention', () => {
   });
 
   it('should search entries by text', async () => {
-    await memory.add(createMemoryEntry('TypeScript is great', MemoryRole.USER, MemoryNamespace.AGENT));
-    await memory.add(createMemoryEntry('JavaScript runs everywhere', MemoryRole.USER, MemoryNamespace.AGENT));
-    await memory.add(createMemoryEntry('TypeScript compiles to JavaScript', MemoryRole.ASSISTANT, MemoryNamespace.AGENT));
+    await memory.add(
+      createMemoryEntry('TypeScript is great', MemoryRole.USER, MemoryNamespace.AGENT),
+    );
+    await memory.add(
+      createMemoryEntry('JavaScript runs everywhere', MemoryRole.USER, MemoryNamespace.AGENT),
+    );
+    await memory.add(
+      createMemoryEntry(
+        'TypeScript compiles to JavaScript',
+        MemoryRole.ASSISTANT,
+        MemoryNamespace.AGENT,
+      ),
+    );
 
     const result = await memory.search('TypeScript');
     expect(result.total).toBe(2);
   });
 
   it('should delete entries by id', async () => {
-    const entry = await memory.add(createMemoryEntry('To delete', MemoryRole.USER, MemoryNamespace.AGENT));
+    const entry = await memory.add(
+      createMemoryEntry('To delete', MemoryRole.USER, MemoryNamespace.AGENT),
+    );
     expect(await memory.count()).toBe(1);
 
     const deleted = await memory.delete(entry.id);
@@ -243,17 +257,33 @@ describe('TASK-093: Memory and Learning — MemorySearchBuilder', () => {
       retention: { maxEntries: 100 },
     });
 
-    await memory.add(createMemoryEntry('User asked about React', MemoryRole.USER, MemoryNamespace.AGENT, { topic: 'frontend' }));
-    await memory.add(createMemoryEntry('Explained React hooks', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { topic: 'frontend' }));
-    await memory.add(createMemoryEntry('User asked about databases', MemoryRole.USER, MemoryNamespace.AGENT, { topic: 'backend' }));
-    await memory.add(createMemoryEntry('Explained SQL joins', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { topic: 'backend' }));
-    await memory.add(createMemoryEntry('System initialization complete', MemoryRole.SYSTEM, MemoryNamespace.AGENT));
+    await memory.add(
+      createMemoryEntry('User asked about React', MemoryRole.USER, MemoryNamespace.AGENT, {
+        topic: 'frontend',
+      }),
+    );
+    await memory.add(
+      createMemoryEntry('Explained React hooks', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, {
+        topic: 'frontend',
+      }),
+    );
+    await memory.add(
+      createMemoryEntry('User asked about databases', MemoryRole.USER, MemoryNamespace.AGENT, {
+        topic: 'backend',
+      }),
+    );
+    await memory.add(
+      createMemoryEntry('Explained SQL joins', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, {
+        topic: 'backend',
+      }),
+    );
+    await memory.add(
+      createMemoryEntry('System initialization complete', MemoryRole.SYSTEM, MemoryNamespace.AGENT),
+    );
   });
 
   it('should filter by role using withRole', async () => {
-    const result = await new MemorySearchBuilder(memory)
-      .withRole(MemoryRole.USER)
-      .execute();
+    const result = await new MemorySearchBuilder(memory).withRole(MemoryRole.USER).execute();
 
     expect(result.total).toBe(2);
     for (const entry of result.entries) {
@@ -270,10 +300,7 @@ describe('TASK-093: Memory and Learning — MemorySearchBuilder', () => {
   });
 
   it('should sort ascending (oldest first)', async () => {
-    const result = await new MemorySearchBuilder(memory)
-      .ascending()
-      .limit(5)
-      .execute();
+    const result = await new MemorySearchBuilder(memory).ascending().limit(5).execute();
 
     expect(result.entries.length).toBe(5);
     // First entry should be the oldest
@@ -284,9 +311,7 @@ describe('TASK-093: Memory and Learning — MemorySearchBuilder', () => {
   });
 
   it('should sort descending (newest first) by default', async () => {
-    const result = await new MemorySearchBuilder(memory)
-      .limit(5)
-      .execute();
+    const result = await new MemorySearchBuilder(memory).limit(5).execute();
 
     const timestamps = result.entries.map((e) => new Date(e.createdAt).getTime());
     for (let i = 1; i < timestamps.length; i++) {
@@ -295,9 +320,7 @@ describe('TASK-093: Memory and Learning — MemorySearchBuilder', () => {
   });
 
   it('should limit results', async () => {
-    const result = await new MemorySearchBuilder(memory)
-      .limit(2)
-      .execute();
+    const result = await new MemorySearchBuilder(memory).limit(2).execute();
 
     expect(result.entries).toHaveLength(2);
     expect(result.total).toBe(5);
@@ -492,7 +515,11 @@ describe('TASK-093: Memory and Learning — MemoryManager', () => {
       createMemoryEntry('Learning about Docker', MemoryRole.USER, MemoryNamespace.AGENT),
     );
     await manager.add(
-      createMemoryEntry('Docker containers are lightweight', MemoryRole.ASSISTANT, MemoryNamespace.AGENT),
+      createMemoryEntry(
+        'Docker containers are lightweight',
+        MemoryRole.ASSISTANT,
+        MemoryNamespace.AGENT,
+      ),
     );
 
     const result = await manager.search('Docker');
@@ -505,9 +532,7 @@ describe('TASK-093: Memory and Learning — MemoryManager', () => {
       addedEntries.push(entry);
     });
 
-    await manager.add(
-      createMemoryEntry('Event test', MemoryRole.USER, MemoryNamespace.AGENT),
-    );
+    await manager.add(createMemoryEntry('Event test', MemoryRole.USER, MemoryNamespace.AGENT));
 
     expect(addedEntries).toHaveLength(1);
     expect(addedEntries[0].content).toBe('Event test');
@@ -523,12 +548,8 @@ describe('TASK-093: Memory and Learning — MemoryManager', () => {
   });
 
   it('should clear entries across all providers', async () => {
-    await manager.add(
-      createMemoryEntry('Entry 1', MemoryRole.USER, MemoryNamespace.AGENT),
-    );
-    await manager.add(
-      createMemoryEntry('Entry 2', MemoryRole.USER, MemoryNamespace.AGENT),
-    );
+    await manager.add(createMemoryEntry('Entry 1', MemoryRole.USER, MemoryNamespace.AGENT));
+    await manager.add(createMemoryEntry('Entry 2', MemoryRole.USER, MemoryNamespace.AGENT));
 
     const cleared = await manager.clear();
     expect(cleared).toBeGreaterThanOrEqual(2);
@@ -582,7 +603,9 @@ describe('TASK-093: Memory and Learning — Agent with Memory', () => {
 
     // Store response in memory
     await agentMemory.add(
-      createMemoryEntry(result.output, MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { type: 'interaction' }),
+      createMemoryEntry(result.output, MemoryRole.ASSISTANT, MemoryNamespace.AGENT, {
+        type: 'interaction',
+      }),
     );
 
     expect(await agentMemory.count()).toBe(2);
@@ -596,7 +619,11 @@ describe('TASK-093: Memory and Learning — Agent with Memory', () => {
       createMemoryEntry('User asked about REST APIs', MemoryRole.USER, MemoryNamespace.AGENT),
     );
     await agentMemory.add(
-      createMemoryEntry('Explained REST API design patterns', MemoryRole.ASSISTANT, MemoryNamespace.AGENT),
+      createMemoryEntry(
+        'Explained REST API design patterns',
+        MemoryRole.ASSISTANT,
+        MemoryNamespace.AGENT,
+      ),
     );
     await agentMemory.add(
       createMemoryEntry('User asked about GraphQL', MemoryRole.USER, MemoryNamespace.AGENT),
@@ -616,9 +643,7 @@ describe('TASK-093: Memory and Learning — Agent with Memory', () => {
     ];
 
     for (const turn of turns) {
-      await agentMemory.add(
-        createMemoryEntry(turn.content, turn.role, MemoryNamespace.AGENT),
-      );
+      await agentMemory.add(createMemoryEntry(turn.content, turn.role, MemoryNamespace.AGENT));
     }
 
     expect(await agentMemory.count()).toBe(4);

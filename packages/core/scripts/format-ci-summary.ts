@@ -53,10 +53,7 @@ export interface CISummary {
 // Annotation formatting
 // ---------------------------------------------------------------------------
 
-export function formatAnnotation(
-  level: 'error' | 'warning' | 'notice',
-  message: string,
-): string {
+export function formatAnnotation(level: 'error' | 'warning' | 'notice', message: string): string {
   return `::${level}::${message}`;
 }
 
@@ -172,10 +169,7 @@ export function generateCISummary(options: CISummaryOptions): CISummary {
       for (const entry of [...regressions, ...warnings]) {
         const icon = entry.status === 'regression' ? '❌' : '⚠️';
         const baselineVal = entry.baselineP95 !== null ? `${entry.baselineP95.toFixed(3)}ms` : '—';
-        const change =
-          entry.changePercent !== null
-            ? `+${entry.changePercent.toFixed(1)}%`
-            : 'new';
+        const change = entry.changePercent !== null ? `+${entry.changePercent.toFixed(1)}%` : 'new';
         lines.push(
           `| ${icon} | ${entry.name} | ${baselineVal} | ${entry.currentP95.toFixed(3)}ms | ${change} |`,
         );
@@ -203,7 +197,9 @@ export function generateCISummary(options: CISummaryOptions): CISummary {
       lines.push(`<summary>🆕 ${String(newEntries.length)} new benchmark(s)</summary>`);
       lines.push('');
       for (const entry of newEntries) {
-        lines.push(`- **${entry.name}**: ${entry.currentP95.toFixed(3)}ms (budget: ${String(entry.budget)}ms)`);
+        lines.push(
+          `- **${entry.name}**: ${entry.currentP95.toFixed(3)}ms (budget: ${String(entry.budget)}ms)`,
+        );
       }
       lines.push('');
       lines.push('</details>');
@@ -294,7 +290,9 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
     try {
       baseline = loadBaseline(baselinePath);
     } catch {
-      console.log('Warning: Could not load baseline. Generating summary without regression analysis.');
+      console.log(
+        'Warning: Could not load baseline. Generating summary without regression analysis.',
+      );
     }
   }
 
@@ -303,9 +301,12 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
     baseline,
     commitSha: process.env['GITHUB_SHA'],
     runId: process.env['GITHUB_RUN_ID'],
-    runUrl: process.env['GITHUB_SERVER_URL'] && process.env['GITHUB_REPOSITORY'] && process.env['GITHUB_RUN_ID']
-      ? `${process.env['GITHUB_SERVER_URL']}/${process.env['GITHUB_REPOSITORY']}/actions/runs/${process.env['GITHUB_RUN_ID']}`
-      : undefined,
+    runUrl:
+      process.env['GITHUB_SERVER_URL'] &&
+      process.env['GITHUB_REPOSITORY'] &&
+      process.env['GITHUB_RUN_ID']
+        ? `${process.env['GITHUB_SERVER_URL']}/${process.env['GITHUB_REPOSITORY']}/actions/runs/${process.env['GITHUB_RUN_ID']}`
+        : undefined,
   });
 
   // Write to GITHUB_STEP_SUMMARY if available
@@ -323,7 +324,9 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
   }
 
   if (summary.hasRegression) {
-    console.log(`\n❌ ${String(summary.failCount)} benchmark(s) exceeded budget. ${String(summary.annotations.length)} annotation(s) emitted.`);
+    console.log(
+      `\n❌ ${String(summary.failCount)} benchmark(s) exceeded budget. ${String(summary.annotations.length)} annotation(s) emitted.`,
+    );
     return 1;
   }
 

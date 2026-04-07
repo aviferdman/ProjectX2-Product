@@ -27,12 +27,7 @@
  * Replace it with a real provider (OpenAI, Anthropic, Ollama) for production use.
  */
 
-import {
-  Agent,
-  Crew,
-  createTool,
-  ToolCategory,
-} from '@crewspace/core';
+import { Agent, Crew, createTool, ToolCategory } from '@crewspace/core';
 import type { LLMProvider, LLMMessage, LLMResponse } from '@crewspace/core';
 
 // -- Sample dataset (simulates a CSV data source) ----------------------------
@@ -47,16 +42,65 @@ interface SalesRecord {
 }
 
 const RAW_DATASET: readonly SalesRecord[] = [
-  { date: '2026-01-15', region: 'North', product: 'Widget A', units: 120, revenue: 2400, cost: 1200 },
-  { date: '2026-01-15', region: 'South', product: 'Widget B', units: 85, revenue: 2550, cost: 1275 },
-  { date: '2026-02-10', region: 'North', product: 'Widget A', units: 145, revenue: 2900, cost: 1450 },
+  {
+    date: '2026-01-15',
+    region: 'North',
+    product: 'Widget A',
+    units: 120,
+    revenue: 2400,
+    cost: 1200,
+  },
+  {
+    date: '2026-01-15',
+    region: 'South',
+    product: 'Widget B',
+    units: 85,
+    revenue: 2550,
+    cost: 1275,
+  },
+  {
+    date: '2026-02-10',
+    region: 'North',
+    product: 'Widget A',
+    units: 145,
+    revenue: 2900,
+    cost: 1450,
+  },
   { date: '2026-02-10', region: 'East', product: 'Widget C', units: 60, revenue: 1800, cost: 1080 },
-  { date: '2026-03-05', region: 'South', product: 'Widget A', units: 200, revenue: 4000, cost: 2000 },
+  {
+    date: '2026-03-05',
+    region: 'South',
+    product: 'Widget A',
+    units: 200,
+    revenue: 4000,
+    cost: 2000,
+  },
   { date: '2026-03-05', region: 'West', product: 'Widget B', units: 95, revenue: 2850, cost: 1425 },
-  { date: '2026-03-20', region: 'North', product: 'Widget C', units: 75, revenue: 2250, cost: 1350 },
-  { date: '2026-04-01', region: 'East', product: 'Widget A', units: 110, revenue: 2200, cost: 1100 },
+  {
+    date: '2026-03-20',
+    region: 'North',
+    product: 'Widget C',
+    units: 75,
+    revenue: 2250,
+    cost: 1350,
+  },
+  {
+    date: '2026-04-01',
+    region: 'East',
+    product: 'Widget A',
+    units: 110,
+    revenue: 2200,
+    cost: 1100,
+  },
   { date: '2026-04-01', region: 'West', product: 'Widget C', units: 50, revenue: 1500, cost: 900 },
-  { date: '2026-04-01', region: 'South', product: 'Widget B', units: 130, revenue: 3900, cost: 1950 },
+  {
+    date: '2026-04-01',
+    region: 'South',
+    product: 'Widget B',
+    units: 130,
+    revenue: 3900,
+    cost: 1950,
+  },
 ];
 
 // -- Custom tools for data operations ----------------------------------------
@@ -92,7 +136,7 @@ const cleanDataTool = createTool({
     const cleaned = RAW_DATASET.map((row) => ({
       ...row,
       profit: row.revenue - row.cost,
-      margin: Number(((row.revenue - row.cost) / row.revenue * 100).toFixed(1)),
+      margin: Number((((row.revenue - row.cost) / row.revenue) * 100).toFixed(1)),
     }));
 
     const issuesFound = 0; // Clean demo dataset has no issues
@@ -243,9 +287,17 @@ function createAnalysisMockProvider(): LLMProvider {
       let response = mockResponses['collect'];
       if (content.includes('clean') || content.includes('validat') || content.includes('enrich')) {
         response = mockResponses['clean'];
-      } else if (content.includes('statistic') || content.includes('analyz') || content.includes('comput')) {
+      } else if (
+        content.includes('statistic') ||
+        content.includes('analyz') ||
+        content.includes('comput')
+      ) {
         response = mockResponses['analyze'];
-      } else if (content.includes('report') || content.includes('summar') || content.includes('finding')) {
+      } else if (
+        content.includes('report') ||
+        content.includes('summar') ||
+        content.includes('finding')
+      ) {
         response = mockResponses['report'];
       }
 

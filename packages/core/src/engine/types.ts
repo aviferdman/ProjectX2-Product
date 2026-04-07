@@ -167,7 +167,12 @@ export interface EngineEventMap {
   'engine:task:timeout': (engineId: string, taskId: string, timeoutMs: number) => void;
 
   /** Emitted when a failed task is enqueued into the dead letter queue. */
-  'engine:task:dead-lettered': (engineId: string, taskId: string, error: Error, attempts: number) => void;
+  'engine:task:dead-lettered': (
+    engineId: string,
+    taskId: string,
+    error: Error,
+    attempts: number,
+  ) => void;
 
   /** Emitted when the engine status changes. */
   'engine:status-changed': (engineId: string, status: EngineStatus) => void;

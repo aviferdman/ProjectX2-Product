@@ -3,10 +3,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
 
-import {
-  validateWorkflowFile,
-  formatValidationResult,
-} from '../../src/commands/validator.js';
+import { validateWorkflowFile, formatValidationResult } from '../../src/commands/validator.js';
 import { createProgram } from '../../src/program.js';
 
 // ---------------------------------------------------------------------------
@@ -288,9 +285,7 @@ describe('validateWorkflowFile', () => {
     const result = validateWorkflowFile({ file: 'no-imports.ts', cwd: tmpDir });
     expect(result.valid).toBe(true);
     expect(result.warningCount).toBeGreaterThanOrEqual(1);
-    expect(result.diagnostics.some((d) => d.message.includes('@crewspace/core import'))).toBe(
-      true,
-    );
+    expect(result.diagnostics.some((d) => d.message.includes('@crewspace/core import'))).toBe(true);
   });
 
   it('should not warn for import from @crewspace/core', () => {
@@ -331,9 +326,7 @@ describe('validateWorkflowFile', () => {
     writeFile(tmpDir, 'bad.ts', MISSING_AGENT_ID);
     const result = validateWorkflowFile({ file: 'bad.ts', cwd: tmpDir });
     expect(result.valid).toBe(false);
-    expect(result.diagnostics.some((d) => d.message.includes('missing required "id"'))).toBe(
-      true,
-    );
+    expect(result.diagnostics.some((d) => d.message.includes('missing required "id"'))).toBe(true);
   });
 
   it('should error when Agent is missing role', () => {
@@ -360,9 +353,7 @@ describe('validateWorkflowFile', () => {
     writeFile(tmpDir, 'dup.ts', DUPLICATE_IDS);
     const result = validateWorkflowFile({ file: 'dup.ts', cwd: tmpDir });
     expect(result.valid).toBe(false);
-    expect(result.diagnostics.some((d) => d.message.includes('Duplicate id "agent-a"'))).toBe(
-      true,
-    );
+    expect(result.diagnostics.some((d) => d.message.includes('Duplicate id "agent-a"'))).toBe(true);
   });
 
   // -- Crew required fields ---------------------------------------------------
@@ -391,9 +382,9 @@ describe('validateWorkflowFile', () => {
     writeFile(tmpDir, 'bad-ref.ts', BAD_AGENT_REF);
     const result = validateWorkflowFile({ file: 'bad-ref.ts', cwd: tmpDir });
     expect(result.valid).toBe(false);
-    expect(
-      result.diagnostics.some((d) => d.message.includes('agentId "nonexistent-agent"')),
-    ).toBe(true);
+    expect(result.diagnostics.some((d) => d.message.includes('agentId "nonexistent-agent"'))).toBe(
+      true,
+    );
   });
 
   it('should error when task dependency references nonexistent task', () => {
@@ -410,28 +401,20 @@ describe('validateWorkflowFile', () => {
   it('should warn about missing backstory in strict mode', () => {
     writeFile(tmpDir, 'strict.ts', STRICT_MISSING_BACKSTORY);
     const result = validateWorkflowFile({ file: 'strict.ts', cwd: tmpDir, strict: true });
-    expect(
-      result.diagnostics.some((d) => d.message.includes('backstory')),
-    ).toBe(true);
+    expect(result.diagnostics.some((d) => d.message.includes('backstory'))).toBe(true);
   });
 
   it('should warn about missing llmProvider in strict mode', () => {
     writeFile(tmpDir, 'strict.ts', STRICT_MISSING_BACKSTORY);
     const result = validateWorkflowFile({ file: 'strict.ts', cwd: tmpDir, strict: true });
-    expect(
-      result.diagnostics.some((d) => d.message.includes('llmProvider')),
-    ).toBe(true);
+    expect(result.diagnostics.some((d) => d.message.includes('llmProvider'))).toBe(true);
   });
 
   it('should not warn about backstory/llmProvider without strict mode', () => {
     writeFile(tmpDir, 'normal.ts', STRICT_MISSING_BACKSTORY);
     const result = validateWorkflowFile({ file: 'normal.ts', cwd: tmpDir, strict: false });
-    expect(
-      result.diagnostics.some((d) => d.message.includes('backstory')),
-    ).toBe(false);
-    expect(
-      result.diagnostics.some((d) => d.message.includes('llmProvider')),
-    ).toBe(false);
+    expect(result.diagnostics.some((d) => d.message.includes('backstory'))).toBe(false);
+    expect(result.diagnostics.some((d) => d.message.includes('llmProvider'))).toBe(false);
   });
 
   // -- Line numbers -----------------------------------------------------------
@@ -483,9 +466,9 @@ const agent = new Agent({
 `;
     writeFile(tmpDir, 'workflow.js', jsWorkflow);
     const result = validateWorkflowFile({ file: 'workflow.js', cwd: tmpDir });
-    expect(
-      result.diagnostics.some((d) => d.message.includes('@crewspace/core import')),
-    ).toBe(false);
+    expect(result.diagnostics.some((d) => d.message.includes('@crewspace/core import'))).toBe(
+      false,
+    );
   });
 });
 
@@ -583,10 +566,9 @@ describe('validate command integration', () => {
     const program = createProgram();
     program.exitOverride();
 
-    await program.parseAsync(
-      ['validate', '--cwd', tmpDir, path.join(tmpDir, 'valid.ts')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['validate', '--cwd', tmpDir, path.join(tmpDir, 'valid.ts')], {
+      from: 'user',
+    });
     expect(process.exitCode).not.toBe(1);
   });
 
@@ -603,10 +585,9 @@ describe('validate command integration', () => {
     const program = createProgram();
     program.exitOverride();
 
-    await program.parseAsync(
-      ['validate', '--cwd', tmpDir, path.join(tmpDir, 'empty.ts')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['validate', '--cwd', tmpDir, path.join(tmpDir, 'empty.ts')], {
+      from: 'user',
+    });
     expect(process.exitCode).toBe(1);
   });
 
@@ -615,10 +596,9 @@ describe('validate command integration', () => {
     const program = createProgram();
     program.exitOverride();
 
-    await program.parseAsync(
-      ['validate', '--cwd', tmpDir, path.join(tmpDir, 'bad.ts')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['validate', '--cwd', tmpDir, path.join(tmpDir, 'bad.ts')], {
+      from: 'user',
+    });
     expect(process.exitCode).toBe(1);
   });
 
@@ -628,10 +608,9 @@ describe('validate command integration', () => {
     program.exitOverride();
 
     const validateCmd = program.commands.find((c) => c.name() === 'validate')!;
-    await program.parseAsync(
-      ['validate', '--strict', path.join(tmpDir, 'strict.ts')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['validate', '--strict', path.join(tmpDir, 'strict.ts')], {
+      from: 'user',
+    });
     expect(validateCmd.opts()['strict']).toBe(true);
   });
 
@@ -641,10 +620,9 @@ describe('validate command integration', () => {
     program.exitOverride();
 
     process.exitCode = 0;
-    await program.parseAsync(
-      ['validate', '--cwd', tmpDir, path.join(tmpDir, 'warn.ts')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['validate', '--cwd', tmpDir, path.join(tmpDir, 'warn.ts')], {
+      from: 'user',
+    });
     expect(process.exitCode).not.toBe(1);
   });
 });

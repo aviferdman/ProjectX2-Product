@@ -7,9 +7,7 @@ import type { FlatConfig } from '../types.js';
  * in agent orchestration code — unsafe assignments, unchecked returns,
  * and loose boolean expressions.
  */
-export function strict(options: {
-  readonly files?: string[];
-}): FlatConfig[] {
+export function strict(options: { readonly files?: string[] }): FlatConfig[] {
   const files = options.files ?? ['**/*.ts'];
 
   return [

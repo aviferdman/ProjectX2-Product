@@ -188,7 +188,10 @@ export class MemoryTracker {
    * @param fn - The operation to measure
    * @returns The measurement result and the operation's return value
    */
-  async measure<T>(label: string, fn: () => T | Promise<T>): Promise<MemoryMeasurement & { result: T }> {
+  async measure<T>(
+    label: string,
+    fn: () => T | Promise<T>,
+  ): Promise<MemoryMeasurement & { result: T }> {
     this._tryGC();
 
     const before = captureMemorySnapshot();
@@ -259,7 +262,11 @@ export class MemoryTracker {
   }
 
   private _tryGC(): void {
-    if (this._forceGC && typeof globalThis !== 'undefined' && typeof (globalThis as Record<string, unknown>)['gc'] === 'function') {
+    if (
+      this._forceGC &&
+      typeof globalThis !== 'undefined' &&
+      typeof (globalThis as Record<string, unknown>)['gc'] === 'function'
+    ) {
       ((globalThis as Record<string, unknown>)['gc'] as () => void)();
     }
   }

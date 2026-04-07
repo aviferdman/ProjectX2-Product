@@ -34,7 +34,7 @@ const cjsDir = path.join(cwd, 'dist', 'cjs');
 if (fs.existsSync(cjsDir)) {
   fs.writeFileSync(
     path.join(cjsDir, 'package.json'),
-    JSON.stringify({ type: 'commonjs' }, null, 2) + '\n'
+    JSON.stringify({ type: 'commonjs' }, null, 2) + '\n',
   );
   console.log('CJS build complete: dist/cjs/');
 } else {

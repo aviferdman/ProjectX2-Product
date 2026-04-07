@@ -6,10 +6,7 @@ import {
   parseArgs,
   main,
 } from '../setup-discussions.js';
-import {
-  DISCUSSIONS_CONFIG,
-  DISCUSSION_CATEGORIES,
-} from '../discussions-config.js';
+import { DISCUSSIONS_CONFIG, DISCUSSION_CATEGORIES } from '../discussions-config.js';
 
 // ── generateSetupPlan ──────────────────────────────────────────────
 

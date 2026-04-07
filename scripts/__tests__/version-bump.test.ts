@@ -164,7 +164,9 @@ describe('version-bump', () => {
       const result = updatePackageJson(tempDir, 'packages/core', '0.2.0', false);
       expect(result.error).toBeNull();
 
-      const content = JSON.parse(readFileSync(join(tempDir, 'packages/core/package.json'), 'utf-8'));
+      const content = JSON.parse(
+        readFileSync(join(tempDir, 'packages/core/package.json'), 'utf-8'),
+      );
       expect(content.version).toBe('0.2.0');
     });
 
@@ -179,7 +181,9 @@ describe('version-bump', () => {
 
       updatePackageJson(tempDir, 'packages/core', '0.2.0', true);
 
-      const content = JSON.parse(readFileSync(join(tempDir, 'packages/core/package.json'), 'utf-8'));
+      const content = JSON.parse(
+        readFileSync(join(tempDir, 'packages/core/package.json'), 'utf-8'),
+      );
       expect(content.version).toBe('0.1.0');
     });
 
@@ -199,7 +203,14 @@ describe('version-bump', () => {
         exportFile: 'src/index.ts',
       });
 
-      const result = updateVersionExport(tempDir, 'packages/core', 'src/index.ts', 'VERSION', '0.2.0', false);
+      const result = updateVersionExport(
+        tempDir,
+        'packages/core',
+        'src/index.ts',
+        'VERSION',
+        '0.2.0',
+        false,
+      );
       expect(result.error).toBeNull();
 
       const content = readFileSync(join(tempDir, 'packages/core/src/index.ts'), 'utf-8');
@@ -215,7 +226,14 @@ describe('version-bump', () => {
         exportFile: 'src/index.ts',
       });
 
-      const result = updateVersionExport(tempDir, 'packages/cli', 'src/index.ts', 'CLI_VERSION', '0.2.0', false);
+      const result = updateVersionExport(
+        tempDir,
+        'packages/cli',
+        'src/index.ts',
+        'CLI_VERSION',
+        '0.2.0',
+        false,
+      );
       expect(result.error).toBeNull();
 
       const content = readFileSync(join(tempDir, 'packages/cli/src/index.ts'), 'utf-8');
@@ -238,7 +256,14 @@ describe('version-bump', () => {
     });
 
     it('returns error when file is missing', () => {
-      const result = updateVersionExport(tempDir, 'packages/missing', 'src/index.ts', 'VERSION', '0.2.0', false);
+      const result = updateVersionExport(
+        tempDir,
+        'packages/missing',
+        'src/index.ts',
+        'VERSION',
+        '0.2.0',
+        false,
+      );
       expect(result.error).toContain('not found');
     });
 
@@ -247,7 +272,14 @@ describe('version-bump', () => {
       mkdirSync(pkgDir, { recursive: true });
       writeFileSync(join(pkgDir, 'index.ts'), 'export const FOO = 42;\n');
 
-      const result = updateVersionExport(tempDir, 'packages/core', 'src/index.ts', 'VERSION', '0.2.0', false);
+      const result = updateVersionExport(
+        tempDir,
+        'packages/core',
+        'src/index.ts',
+        'VERSION',
+        '0.2.0',
+        false,
+      );
       expect(result.error).toContain('No "VERSION" export found');
     });
   });
@@ -281,7 +313,9 @@ describe('version-bump', () => {
       expect(result.updatedFiles).toHaveLength(4); // 2 package.json + 2 index.ts
 
       // Verify files were updated
-      const coreJson = JSON.parse(readFileSync(join(tempDir, 'packages/core/package.json'), 'utf-8'));
+      const coreJson = JSON.parse(
+        readFileSync(join(tempDir, 'packages/core/package.json'), 'utf-8'),
+      );
       expect(coreJson.version).toBe('0.2.0');
 
       const cliJson = JSON.parse(readFileSync(join(tempDir, 'packages/cli/package.json'), 'utf-8'));

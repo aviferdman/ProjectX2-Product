@@ -61,9 +61,7 @@ const storeArtifactTool = defineTool({
   description: 'Store a named artifact (file, data, result) produced during task execution',
   schema: z.object({
     name: z.string().describe('Artifact name or filename'),
-    type: z
-      .enum(['code', 'data', 'config', 'document', 'report'])
-      .describe('Type of artifact'),
+    type: z.enum(['code', 'data', 'config', 'document', 'report']).describe('Type of artifact'),
     content: z.string().describe('The artifact content or a summary of it'),
   }),
   async execute({ name, type, content }) {
@@ -83,9 +81,7 @@ const qualityCheckTool = defineTool({
   description: 'Run a quality check against an artifact to verify correctness and completeness',
   schema: z.object({
     artifactName: z.string().describe('Name of the artifact to check'),
-    criteria: z
-      .array(z.string())
-      .describe('List of quality criteria to evaluate'),
+    criteria: z.array(z.string()).describe('List of quality criteria to evaluate'),
   }),
   async execute({ artifactName, criteria }) {
     const results = criteria.map((criterion, i) => {
@@ -380,8 +376,7 @@ const taskCompletionCrew = new Crew({
         'Work through the entire plan autonomously without stopping.',
       agentId: 'executor',
       dependencies: ['plan'],
-      expectedOutput:
-        'An execution report listing all completed sub-tasks and produced artifacts',
+      expectedOutput: 'An execution report listing all completed sub-tasks and produced artifacts',
     },
     {
       id: 'validate',

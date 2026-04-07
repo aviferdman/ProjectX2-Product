@@ -86,7 +86,11 @@ function createReviewMockProvider(): LLMProvider {
       let response = mockResponses['scan'];
       if (content.includes('review') || content.includes('analy') || content.includes('read')) {
         response = mockResponses['review'];
-      } else if (content.includes('report') || content.includes('compil') || content.includes('write')) {
+      } else if (
+        content.includes('report') ||
+        content.includes('compil') ||
+        content.includes('write')
+      ) {
         response = mockResponses['report'];
       }
 

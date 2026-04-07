@@ -680,8 +680,8 @@ describe('TASK-088: Customer Support Bot — Edge Cases', () => {
       tools: [createLookupCustomerTool()],
     });
 
-    await expect(
-      agent.execute({ description: 'Help me', context: {} }),
-    ).rejects.toThrow('No LLM provider configured');
+    await expect(agent.execute({ description: 'Help me', context: {} })).rejects.toThrow(
+      'No LLM provider configured',
+    );
   });
 });

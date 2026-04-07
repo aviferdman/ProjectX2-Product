@@ -742,10 +742,7 @@ describe('Integration: full agent workflow with helpers', () => {
       'crew:complete',
     ]);
 
-    expectEventOrder(crewEvents.eventNames, [
-      'crew:start',
-      'crew:complete',
-    ]);
+    expectEventOrder(crewEvents.eventNames, ['crew:start', 'crew:complete']);
   });
 
   it('should track execution order in parallel-like workflows', async () => {
@@ -760,7 +757,12 @@ describe('Integration: full agent workflow with helpers', () => {
       agents: [agent1, agent2],
       tasks: [
         { id: 'research', description: 'Find data', agentId: 'researcher' },
-        { id: 'analyze', description: 'Analyze data', agentId: 'analyst', dependencies: ['research'] },
+        {
+          id: 'analyze',
+          description: 'Analyze data',
+          agentId: 'analyst',
+          dependencies: ['research'],
+        },
       ],
     });
 

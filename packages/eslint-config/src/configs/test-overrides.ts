@@ -12,9 +12,7 @@ const DEFAULT_TEST_FILES = [
  * Tests often need `any`, unbound methods, and loose typing
  * for mocks and assertions.
  */
-export function testOverrides(options?: {
-  readonly testFiles?: string[];
-}): FlatConfig[] {
+export function testOverrides(options?: { readonly testFiles?: string[] }): FlatConfig[] {
   const files = options?.testFiles ?? DEFAULT_TEST_FILES;
 
   return [

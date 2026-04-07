@@ -160,7 +160,13 @@ export function runVersionBump(options: VersionBumpOptions): VersionBumpResult {
   const updatedFiles: string[] = [];
 
   if (packages.length === 0) {
-    return { success: false, fromVersion: '', toVersion: '', updatedFiles: [], errors: ['No packages configured'] };
+    return {
+      success: false,
+      fromVersion: '',
+      toVersion: '',
+      updatedFiles: [],
+      errors: ['No packages configured'],
+    };
   }
 
   // Read current version from the first package
@@ -176,7 +182,10 @@ export function runVersionBump(options: VersionBumpOptions): VersionBumpResult {
   }
 
   // Compute target version
-  const { version: targetVersion, error: computeError } = computeTargetVersion(currentVersion, options);
+  const { version: targetVersion, error: computeError } = computeTargetVersion(
+    currentVersion,
+    options,
+  );
   if (!targetVersion || computeError) {
     return {
       success: false,
@@ -270,7 +279,15 @@ export function parseBumpArgs(argv: string[]): {
   let preid: string | undefined;
   let dryRun = false;
 
-  const validBumps = new Set<string>(['major', 'minor', 'patch', 'premajor', 'preminor', 'prepatch', 'prerelease']);
+  const validBumps = new Set<string>([
+    'major',
+    'minor',
+    'patch',
+    'premajor',
+    'preminor',
+    'prepatch',
+    'prerelease',
+  ]);
 
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--bump' && argv[i + 1]) {

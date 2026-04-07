@@ -66,18 +66,19 @@ describe('ShortTermMemory', () => {
     });
 
     it('throws on invalid maxEntries', () => {
-      expect(() => new ShortTermMemory({ retention: { maxEntries: -1 } }))
-        .toThrow(MemoryConfigError);
+      expect(() => new ShortTermMemory({ retention: { maxEntries: -1 } })).toThrow(
+        MemoryConfigError,
+      );
     });
 
     it('throws on non-integer maxEntries', () => {
-      expect(() => new ShortTermMemory({ retention: { maxEntries: 1.5 } }))
-        .toThrow(MemoryConfigError);
+      expect(() => new ShortTermMemory({ retention: { maxEntries: 1.5 } })).toThrow(
+        MemoryConfigError,
+      );
     });
 
     it('throws on negative maxAge', () => {
-      expect(() => new ShortTermMemory({ retention: { maxAge: -100 } }))
-        .toThrow(MemoryConfigError);
+      expect(() => new ShortTermMemory({ retention: { maxAge: -100 } })).toThrow(MemoryConfigError);
     });
   });
 
@@ -100,19 +101,15 @@ describe('ShortTermMemory', () => {
       const entry = makeEntry({ id: 'dup' });
       await memory.add(entry);
 
-      await expect(memory.add(makeEntry({ id: 'dup' }))).rejects.toThrow(
-        MemoryOperationError,
-      );
+      await expect(memory.add(makeEntry({ id: 'dup' }))).rejects.toThrow(MemoryOperationError);
     });
 
     it('validates entry fields', async () => {
-      await expect(
-        memory.add({ ...makeEntry(), id: '' }),
-      ).rejects.toThrow(MemoryOperationError);
+      await expect(memory.add({ ...makeEntry(), id: '' })).rejects.toThrow(MemoryOperationError);
 
-      await expect(
-        memory.add({ ...makeEntry(), content: '' }),
-      ).rejects.toThrow(MemoryOperationError);
+      await expect(memory.add({ ...makeEntry(), content: '' })).rejects.toThrow(
+        MemoryOperationError,
+      );
     });
 
     it('rejects entry with empty role', async () => {
@@ -264,16 +261,20 @@ describe('ShortTermMemory', () => {
     });
 
     it('combines search with query filters', async () => {
-      await memory.add(makeEntry({
-        id: 'sf1',
-        content: 'Weather in New York',
-        namespace: MemoryNamespace.AGENT,
-      }));
-      await memory.add(makeEntry({
-        id: 'sf2',
-        content: 'Weather in London',
-        namespace: MemoryNamespace.CREW,
-      }));
+      await memory.add(
+        makeEntry({
+          id: 'sf1',
+          content: 'Weather in New York',
+          namespace: MemoryNamespace.AGENT,
+        }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'sf2',
+          content: 'Weather in London',
+          namespace: MemoryNamespace.CREW,
+        }),
+      );
 
       const result = await memory.search('weather', { namespace: MemoryNamespace.AGENT });
       expect(result.total).toBe(1);
@@ -478,24 +479,30 @@ describe('ShortTermMemory', () => {
     });
 
     it('query with all filters combined', async () => {
-      await memory.add(makeEntry({
-        id: 'combo1',
-        namespace: MemoryNamespace.AGENT,
-        createdAt: '2024-06-15T00:00:00Z',
-        metadata: { tag: 'important' },
-      }));
-      await memory.add(makeEntry({
-        id: 'combo2',
-        namespace: MemoryNamespace.AGENT,
-        createdAt: '2024-03-01T00:00:00Z',
-        metadata: { tag: 'important' },
-      }));
-      await memory.add(makeEntry({
-        id: 'combo3',
-        namespace: MemoryNamespace.CREW,
-        createdAt: '2024-06-15T00:00:00Z',
-        metadata: { tag: 'important' },
-      }));
+      await memory.add(
+        makeEntry({
+          id: 'combo1',
+          namespace: MemoryNamespace.AGENT,
+          createdAt: '2024-06-15T00:00:00Z',
+          metadata: { tag: 'important' },
+        }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'combo2',
+          namespace: MemoryNamespace.AGENT,
+          createdAt: '2024-03-01T00:00:00Z',
+          metadata: { tag: 'important' },
+        }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'combo3',
+          namespace: MemoryNamespace.CREW,
+          createdAt: '2024-06-15T00:00:00Z',
+          metadata: { tag: 'important' },
+        }),
+      );
 
       const result = await memory.query({
         namespace: MemoryNamespace.AGENT,

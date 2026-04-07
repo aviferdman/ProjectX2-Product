@@ -39,9 +39,7 @@ function makeSizeInfo(overrides: Partial<PackageSizeInfo> = {}): PackageSizeInfo
   };
 }
 
-function makeBaseline(
-  packages: Record<string, PackageSizeInfo>,
-): BundleSizeBaseline {
+function makeBaseline(packages: Record<string, PackageSizeInfo>): BundleSizeBaseline {
   return { version: 1, timestamp: '2026-01-01T00:00:00.000Z', packages };
 }
 
@@ -95,7 +93,7 @@ describe('buildPackageSizeInfo', () => {
   it('should handle files with no recognized extension', () => {
     const files = {
       'README.md': 2000,
-      'LICENSE': 1000,
+      LICENSE: 1000,
       'index.js': 500,
     };
 
@@ -683,9 +681,12 @@ describe('parseArgs', () => {
 
   it('should handle multiple flags together', () => {
     const options = parseArgs([
-      '--threshold', '10',
-      '--package-names', 'core',
-      '--budget', '256',
+      '--threshold',
+      '10',
+      '--package-names',
+      'core',
+      '--budget',
+      '256',
       '--update-baseline',
     ]);
 

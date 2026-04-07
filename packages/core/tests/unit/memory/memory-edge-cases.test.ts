@@ -12,10 +12,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { ShortTermMemory } from '../../../src/memory/short-term-memory.js';
-import {
-  MemoryManager,
-  generateMemoryId,
-} from '../../../src/memory/memory-manager.js';
+import { MemoryManager, generateMemoryId } from '../../../src/memory/memory-manager.js';
 import { MemorySearchBuilder } from '../../../src/memory/memory-search-builder.js';
 import { ScopedMemory } from '../../../src/memory/scoped-memory.js';
 import { exportMemory, importMemory, parseExportJson } from '../../../src/memory/memory-export.js';
@@ -66,7 +63,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
   describe('exportMemory error handling', () => {
     it('throws MemoryOperationError when provider.query() fails', async () => {
       const failingProvider = createMockProvider('failing', {
-        query: vi.fn(async () => { throw new Error('query exploded'); }),
+        query: vi.fn(async () => {
+          throw new Error('query exploded');
+        }),
         count: vi.fn(async () => 0),
       });
 
@@ -76,7 +75,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
 
     it('handles non-Error thrown by provider.query()', async () => {
       const failingProvider = createMockProvider('failing', {
-        query: vi.fn(async () => { throw 'string error'; }),
+        query: vi.fn(async () => {
+          throw 'string error';
+        }),
         count: vi.fn(async () => 0),
       });
 
@@ -91,7 +92,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
   describe('MemoryManager add() error handling', () => {
     it('handles non-Error thrown by provider', async () => {
       const throwingProvider = createMockProvider('thrower', {
-        add: vi.fn(async () => { throw 'not an error object'; }),
+        add: vi.fn(async () => {
+          throw 'not an error object';
+        }),
       });
       const manager = new MemoryManager({ providers: [throwingProvider] });
 
@@ -100,7 +103,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
 
     it('succeeds when first provider fails but second succeeds', async () => {
       const failProvider = createMockProvider('fail', {
-        add: vi.fn(async () => { throw new Error('fail'); }),
+        add: vi.fn(async () => {
+          throw new Error('fail');
+        }),
       });
       const successProvider = new ShortTermMemory();
       const manager = new MemoryManager({ providers: [failProvider, successProvider] });
@@ -161,7 +166,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
   describe('MemorySearchBuilder error handling', () => {
     it('wraps non-Error thrown by provider in execute()', async () => {
       const failingProvider = createMockProvider('fail', {
-        query: vi.fn(async () => { throw 'string error from query'; }),
+        query: vi.fn(async () => {
+          throw 'string error from query';
+        }),
       });
 
       const builder = new MemorySearchBuilder(failingProvider);
@@ -171,7 +178,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
 
     it('wraps non-Error thrown by provider in search()', async () => {
       const failingProvider = createMockProvider('fail', {
-        search: vi.fn(async () => { throw 42; }),
+        search: vi.fn(async () => {
+          throw 42;
+        }),
       });
 
       const builder = new MemorySearchBuilder(failingProvider);
@@ -182,7 +191,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('passes through MemoryQueryError without wrapping in execute()', async () => {
       const original = new MemoryQueryError('provider', 'original error');
       const failingProvider = createMockProvider('fail', {
-        query: vi.fn(async () => { throw original; }),
+        query: vi.fn(async () => {
+          throw original;
+        }),
       });
 
       const builder = new MemorySearchBuilder(failingProvider);
@@ -192,7 +203,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('passes through MemoryQueryError without wrapping in search()', async () => {
       const original = new MemoryQueryError('provider', 'original error');
       const failingProvider = createMockProvider('fail', {
-        search: vi.fn(async () => { throw original; }),
+        search: vi.fn(async () => {
+          throw original;
+        }),
       });
 
       const builder = new MemorySearchBuilder(failingProvider);
@@ -207,43 +220,47 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('throws MemoryConfigError when namespace is falsy', () => {
       const provider = new ShortTermMemory();
       expect(
-        () => new ScopedMemory({
-          provider,
-          namespace: '' as unknown as MemoryNamespace,
-          ownerId: 'test',
-        }),
+        () =>
+          new ScopedMemory({
+            provider,
+            namespace: '' as unknown as MemoryNamespace,
+            ownerId: 'test',
+          }),
       ).toThrow(MemoryConfigError);
     });
 
     it('throws MemoryConfigError when namespace is undefined', () => {
       const provider = new ShortTermMemory();
       expect(
-        () => new ScopedMemory({
-          provider,
-          namespace: undefined as unknown as MemoryNamespace,
-          ownerId: 'test',
-        }),
+        () =>
+          new ScopedMemory({
+            provider,
+            namespace: undefined as unknown as MemoryNamespace,
+            ownerId: 'test',
+          }),
       ).toThrow(MemoryConfigError);
     });
 
     it('throws MemoryConfigError when ownerId is empty', () => {
       const provider = new ShortTermMemory();
       expect(
-        () => new ScopedMemory({
-          provider,
-          namespace: MemoryNamespace.AGENT,
-          ownerId: '',
-        }),
+        () =>
+          new ScopedMemory({
+            provider,
+            namespace: MemoryNamespace.AGENT,
+            ownerId: '',
+          }),
       ).toThrow(MemoryConfigError);
     });
 
     it('throws MemoryConfigError when provider is missing', () => {
       expect(
-        () => new ScopedMemory({
-          provider: undefined as unknown as MemoryProvider,
-          namespace: MemoryNamespace.AGENT,
-          ownerId: 'test',
-        }),
+        () =>
+          new ScopedMemory({
+            provider: undefined as unknown as MemoryProvider,
+            namespace: MemoryNamespace.AGENT,
+            ownerId: 'test',
+          }),
       ).toThrow(MemoryConfigError);
     });
   });
@@ -252,10 +269,14 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('throws when deleting entry owned by different scope', async () => {
       const provider = new ShortTermMemory();
       const scopeA = new ScopedMemory({
-        provider, namespace: MemoryNamespace.AGENT, ownerId: 'agent-a',
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'agent-a',
       });
       const scopeB = new ScopedMemory({
-        provider, namespace: MemoryNamespace.AGENT, ownerId: 'agent-b',
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'agent-b',
       });
 
       const entry = makeEntry({ id: 'owned-by-a', content: 'private' });
@@ -267,7 +288,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('returns false when deleting non-existent entry', async () => {
       const provider = new ShortTermMemory();
       const scope = new ScopedMemory({
-        provider, namespace: MemoryNamespace.AGENT, ownerId: 'test',
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'test',
       });
       expect(await scope.delete('nonexistent')).toBe(false);
     });
@@ -275,7 +298,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('throws when clearing a non-owned namespace', async () => {
       const provider = new ShortTermMemory();
       const scope = new ScopedMemory({
-        provider, namespace: MemoryNamespace.AGENT, ownerId: 'test',
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'test',
       });
       await expect(scope.clear(MemoryNamespace.CREW)).rejects.toThrow(MemoryOperationError);
     });
@@ -283,7 +308,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('allows clearing own namespace explicitly', async () => {
       const provider = new ShortTermMemory();
       const scope = new ScopedMemory({
-        provider, namespace: MemoryNamespace.AGENT, ownerId: 'test',
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'test',
       });
       await scope.add(makeEntry({ content: 'data' }));
       const cleared = await scope.clear(MemoryNamespace.AGENT);
@@ -295,19 +322,25 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('returns 0 for non-readable namespace', async () => {
       const provider = new ShortTermMemory();
       const globalScope = new ScopedMemory({
-        provider, namespace: MemoryNamespace.GLOBAL, ownerId: 'system',
+        provider,
+        namespace: MemoryNamespace.GLOBAL,
+        ownerId: 'system',
       });
       expect(await globalScope.count(MemoryNamespace.AGENT)).toBe(0);
     });
 
     it('sums counts across all readable namespaces', async () => {
       const provider = new ShortTermMemory();
-      await provider.add(makeEntry({ id: 'a1', namespace: MemoryNamespace.AGENT, metadata: { ownerId: 'agent-1' } }));
+      await provider.add(
+        makeEntry({ id: 'a1', namespace: MemoryNamespace.AGENT, metadata: { ownerId: 'agent-1' } }),
+      );
       await provider.add(makeEntry({ id: 'c1', namespace: MemoryNamespace.CREW }));
       await provider.add(makeEntry({ id: 'g1', namespace: MemoryNamespace.GLOBAL }));
 
       const agentScope = new ScopedMemory({
-        provider, namespace: MemoryNamespace.AGENT, ownerId: 'agent-1',
+        provider,
+        namespace: MemoryNamespace.AGENT,
+        ownerId: 'agent-1',
       });
       expect(await agentScope.count()).toBe(3);
     });
@@ -317,7 +350,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('query returns empty for non-readable namespace filter', async () => {
       const provider = new ShortTermMemory();
       const globalScope = new ScopedMemory({
-        provider, namespace: MemoryNamespace.GLOBAL, ownerId: 'system',
+        provider,
+        namespace: MemoryNamespace.GLOBAL,
+        ownerId: 'system',
       });
       const result = await globalScope.query({ namespace: MemoryNamespace.AGENT });
       expect(result).toEqual({ entries: [], total: 0 });
@@ -326,7 +361,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('search returns empty for non-readable namespace filter', async () => {
       const provider = new ShortTermMemory();
       const globalScope = new ScopedMemory({
-        provider, namespace: MemoryNamespace.GLOBAL, ownerId: 'system',
+        provider,
+        namespace: MemoryNamespace.GLOBAL,
+        ownerId: 'system',
       });
       const result = await globalScope.search('anything', { namespace: MemoryNamespace.AGENT });
       expect(result).toEqual({ entries: [], total: 0 });
@@ -373,11 +410,15 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
 
   describe('ShortTermMemory constructor validation', () => {
     it('throws on negative maxEntries', () => {
-      expect(() => new ShortTermMemory({ retention: { maxEntries: -1 } })).toThrow(MemoryConfigError);
+      expect(() => new ShortTermMemory({ retention: { maxEntries: -1 } })).toThrow(
+        MemoryConfigError,
+      );
     });
 
     it('throws on non-integer maxEntries', () => {
-      expect(() => new ShortTermMemory({ retention: { maxEntries: 1.5 } })).toThrow(MemoryConfigError);
+      expect(() => new ShortTermMemory({ retention: { maxEntries: 1.5 } })).toThrow(
+        MemoryConfigError,
+      );
     });
 
     it('throws on negative maxAge', () => {
@@ -408,7 +449,13 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('rejects entries missing required fields', async () => {
       const memory = new ShortTermMemory();
       await expect(
-        memory.add({ id: '', content: 'test', role: MemoryRole.USER, namespace: MemoryNamespace.AGENT, createdAt: new Date().toISOString() }),
+        memory.add({
+          id: '',
+          content: 'test',
+          role: MemoryRole.USER,
+          namespace: MemoryNamespace.AGENT,
+          createdAt: new Date().toISOString(),
+        }),
       ).rejects.toThrow();
     });
 
@@ -454,7 +501,13 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
         providerName: 'test',
         entries: [
           makeEntry({ id: 'good1', content: 'valid' }),
-          { id: '', content: 'invalid', role: 'user', namespace: 'agent', createdAt: '' } as unknown as MemoryEntry,
+          {
+            id: '',
+            content: 'invalid',
+            role: 'user',
+            namespace: 'agent',
+            createdAt: '',
+          } as unknown as MemoryEntry,
           makeEntry({ id: 'good2', content: 'also valid' }),
         ],
         totalEntries: 3,
@@ -476,7 +529,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
       await manager.add(makeEntry({ namespace: MemoryNamespace.CREW }));
 
       let clearedNs: MemoryNamespace | undefined;
-      manager.on('memory:clear', (ns) => { clearedNs = ns; });
+      manager.on('memory:clear', (ns) => {
+        clearedNs = ns;
+      });
       await manager.clear(MemoryNamespace.AGENT);
       expect(clearedNs).toBe(MemoryNamespace.AGENT);
     });
@@ -484,7 +539,9 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('supports off() to unsubscribe from events', () => {
       const manager = new MemoryManager();
       let called = false;
-      const listener = () => { called = true; };
+      const listener = () => {
+        called = true;
+      };
       manager.on('memory:add', listener);
       manager.off('memory:add', listener);
       expect(called).toBe(false);
@@ -517,9 +574,30 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
       const memory = new ShortTermMemory();
       const now = Date.now();
 
-      await memory.add(makeEntry({ id: 'q1', role: MemoryRole.USER, namespace: MemoryNamespace.AGENT, createdAt: new Date(now - 2000).toISOString() }));
-      await memory.add(makeEntry({ id: 'q2', role: MemoryRole.ASSISTANT, namespace: MemoryNamespace.AGENT, createdAt: new Date(now - 1000).toISOString() }));
-      await memory.add(makeEntry({ id: 'q3', role: MemoryRole.USER, namespace: MemoryNamespace.CREW, createdAt: new Date(now).toISOString() }));
+      await memory.add(
+        makeEntry({
+          id: 'q1',
+          role: MemoryRole.USER,
+          namespace: MemoryNamespace.AGENT,
+          createdAt: new Date(now - 2000).toISOString(),
+        }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'q2',
+          role: MemoryRole.ASSISTANT,
+          namespace: MemoryNamespace.AGENT,
+          createdAt: new Date(now - 1000).toISOString(),
+        }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'q3',
+          role: MemoryRole.USER,
+          namespace: MemoryNamespace.CREW,
+          createdAt: new Date(now).toISOString(),
+        }),
+      );
 
       const result = await memory.query({
         role: MemoryRole.USER,
@@ -535,11 +613,28 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
       const memory = new ShortTermMemory();
       const now = Date.now();
 
-      await memory.add(makeEntry({ id: 'r1', role: MemoryRole.USER, createdAt: new Date(now - 2000).toISOString() }));
-      await memory.add(makeEntry({ id: 'r2', role: MemoryRole.ASSISTANT, createdAt: new Date(now - 1000).toISOString() }));
-      await memory.add(makeEntry({ id: 'r3', role: MemoryRole.SYSTEM, createdAt: new Date(now).toISOString() }));
+      await memory.add(
+        makeEntry({
+          id: 'r1',
+          role: MemoryRole.USER,
+          createdAt: new Date(now - 2000).toISOString(),
+        }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'r2',
+          role: MemoryRole.ASSISTANT,
+          createdAt: new Date(now - 1000).toISOString(),
+        }),
+      );
+      await memory.add(
+        makeEntry({ id: 'r3', role: MemoryRole.SYSTEM, createdAt: new Date(now).toISOString() }),
+      );
 
-      const result = await memory.query({ roles: [MemoryRole.USER, MemoryRole.SYSTEM], sortOrder: 'asc' });
+      const result = await memory.query({
+        roles: [MemoryRole.USER, MemoryRole.SYSTEM],
+        sortOrder: 'asc',
+      });
       expect(result.entries).toHaveLength(2);
       expect(result.entries[0].id).toBe('r1');
       expect(result.entries[1].id).toBe('r3');

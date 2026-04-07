@@ -678,9 +678,7 @@ export class ExecutionEngine {
     // Auto-enqueue into dead letter queue if configured
     if (this._dlq) {
       const attempts = task.retries + 1;
-      const context = Object.fromEntries(
-        [..._completedResults.entries()],
-      );
+      const context = Object.fromEntries([..._completedResults.entries()]);
       this._dlq.enqueue(task, finalError, { attempts, context });
       this._emit('engine:task:dead-lettered', this.id, task.id, finalError, attempts);
     }

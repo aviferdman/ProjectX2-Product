@@ -39,14 +39,54 @@ async function seedEntries(memory: ShortTermMemory): Promise<MemoryEntry[]> {
   const entries: MemoryEntry[] = [];
 
   const configs = [
-    { role: MemoryRole.USER, namespace: MemoryNamespace.AGENT, content: 'User message 1', minutes: 0 },
-    { role: MemoryRole.ASSISTANT, namespace: MemoryNamespace.AGENT, content: 'Assistant reply 1', minutes: 1 },
-    { role: MemoryRole.SYSTEM, namespace: MemoryNamespace.CREW, content: 'System prompt', minutes: 2 },
-    { role: MemoryRole.USER, namespace: MemoryNamespace.AGENT, content: 'User message 2', minutes: 3 },
-    { role: MemoryRole.TOOL, namespace: MemoryNamespace.GLOBAL, content: 'Tool result', minutes: 4 },
-    { role: MemoryRole.ASSISTANT, namespace: MemoryNamespace.AGENT, content: 'Assistant reply 2', minutes: 5 },
-    { role: MemoryRole.USER, namespace: MemoryNamespace.CREW, content: 'User message 3', minutes: 6 },
-    { role: MemoryRole.SYSTEM, namespace: MemoryNamespace.GLOBAL, content: 'Global system note', minutes: 7 },
+    {
+      role: MemoryRole.USER,
+      namespace: MemoryNamespace.AGENT,
+      content: 'User message 1',
+      minutes: 0,
+    },
+    {
+      role: MemoryRole.ASSISTANT,
+      namespace: MemoryNamespace.AGENT,
+      content: 'Assistant reply 1',
+      minutes: 1,
+    },
+    {
+      role: MemoryRole.SYSTEM,
+      namespace: MemoryNamespace.CREW,
+      content: 'System prompt',
+      minutes: 2,
+    },
+    {
+      role: MemoryRole.USER,
+      namespace: MemoryNamespace.AGENT,
+      content: 'User message 2',
+      minutes: 3,
+    },
+    {
+      role: MemoryRole.TOOL,
+      namespace: MemoryNamespace.GLOBAL,
+      content: 'Tool result',
+      minutes: 4,
+    },
+    {
+      role: MemoryRole.ASSISTANT,
+      namespace: MemoryNamespace.AGENT,
+      content: 'Assistant reply 2',
+      minutes: 5,
+    },
+    {
+      role: MemoryRole.USER,
+      namespace: MemoryNamespace.CREW,
+      content: 'User message 3',
+      minutes: 6,
+    },
+    {
+      role: MemoryRole.SYSTEM,
+      namespace: MemoryNamespace.GLOBAL,
+      content: 'Global system note',
+      minutes: 7,
+    },
   ];
 
   for (const cfg of configs) {
@@ -185,7 +225,7 @@ describe('Enhanced MemoryQueryOptions', () => {
       expect(page3.entries).toHaveLength(2); // only 2 remaining
 
       // All entries are unique (no overlap)
-      const allIds = [...page1.entries, ...page2.entries, ...page3.entries].map(e => e.id);
+      const allIds = [...page1.entries, ...page2.entries, ...page3.entries].map((e) => e.id);
       expect(new Set(allIds).size).toBe(8);
     });
   });
@@ -219,7 +259,7 @@ describe('Enhanced MemoryQueryOptions', () => {
       const defaultOrder = await memory.query({ limit: 100 });
       const descExplicit = await memory.query({ limit: 100, sortOrder: 'desc' });
 
-      expect(descExplicit.entries.map(e => e.id)).toEqual(defaultOrder.entries.map(e => e.id));
+      expect(descExplicit.entries.map((e) => e.id)).toEqual(defaultOrder.entries.map((e) => e.id));
     });
   });
 
@@ -395,9 +435,7 @@ describe('MemorySearchBuilder', () => {
     });
 
     it('filters by role', async () => {
-      const result = await new MemorySearchBuilder(memory)
-        .withRole(MemoryRole.ASSISTANT)
-        .execute();
+      const result = await new MemorySearchBuilder(memory).withRole(MemoryRole.ASSISTANT).execute();
 
       expect(result.total).toBe(2);
       for (const entry of result.entries) {
@@ -414,28 +452,19 @@ describe('MemorySearchBuilder', () => {
     });
 
     it('paginates with limit + offset', async () => {
-      const page1 = await new MemorySearchBuilder(memory)
-        .limit(3)
-        .offset(0)
-        .execute();
+      const page1 = await new MemorySearchBuilder(memory).limit(3).offset(0).execute();
 
-      const page2 = await new MemorySearchBuilder(memory)
-        .limit(3)
-        .offset(3)
-        .execute();
+      const page2 = await new MemorySearchBuilder(memory).limit(3).offset(3).execute();
 
       expect(page1.entries).toHaveLength(3);
       expect(page2.entries).toHaveLength(3);
 
-      const allIds = [...page1.entries, ...page2.entries].map(e => e.id);
+      const allIds = [...page1.entries, ...page2.entries].map((e) => e.id);
       expect(new Set(allIds).size).toBe(6); // no overlaps
     });
 
     it('sorts ascending', async () => {
-      const result = await new MemorySearchBuilder(memory)
-        .ascending()
-        .limit(100)
-        .execute();
+      const result = await new MemorySearchBuilder(memory).ascending().limit(100).execute();
 
       for (let i = 1; i < result.entries.length; i++) {
         const prev = new Date(result.entries[i - 1].createdAt).getTime();
@@ -458,8 +487,7 @@ describe('MemorySearchBuilder', () => {
 
   describe('search()', () => {
     it('searches by text', async () => {
-      const result = await new MemorySearchBuilder(memory)
-        .search('reply');
+      const result = await new MemorySearchBuilder(memory).search('reply');
 
       expect(result.total).toBe(2);
       for (const entry of result.entries) {
@@ -484,24 +512,16 @@ describe('MemorySearchBuilder', () => {
     });
 
     it('searches with ascending sort', async () => {
-      const result = await new MemorySearchBuilder(memory)
-        .ascending()
-        .limit(100)
-        .search('reply');
+      const result = await new MemorySearchBuilder(memory).ascending().limit(100).search('reply');
 
       expect(result.entries[0].content).toBe('Assistant reply 1');
       expect(result.entries[1].content).toBe('Assistant reply 2');
     });
 
     it('searches with pagination', async () => {
-      const all = await new MemorySearchBuilder(memory)
-        .limit(100)
-        .search('message');
+      const all = await new MemorySearchBuilder(memory).limit(100).search('message');
 
-      const page = await new MemorySearchBuilder(memory)
-        .limit(1)
-        .offset(1)
-        .search('message');
+      const page = await new MemorySearchBuilder(memory).limit(1).offset(1).search('message');
 
       expect(page.total).toBe(all.total);
       expect(page.entries).toHaveLength(1);
@@ -514,45 +534,63 @@ describe('MemorySearchBuilder', () => {
       // Create a mock provider that throws
       const badProvider = {
         name: 'bad',
-        add: async () => { throw new Error('fail'); },
+        add: async () => {
+          throw new Error('fail');
+        },
         get: async () => undefined,
-        query: async () => { throw new Error('query failed'); },
-        search: async () => { throw new Error('search failed'); },
+        query: async () => {
+          throw new Error('query failed');
+        },
+        search: async () => {
+          throw new Error('search failed');
+        },
         delete: async () => false,
         clear: async () => 0,
         count: async () => 0,
       };
 
-      await expect(
-        new MemorySearchBuilder(badProvider).execute()
-      ).rejects.toThrow(MemoryQueryError);
+      await expect(new MemorySearchBuilder(badProvider).execute()).rejects.toThrow(
+        MemoryQueryError,
+      );
     });
 
     it('wraps provider errors in MemoryQueryError on search', async () => {
       const badProvider = {
         name: 'bad',
-        add: async () => { throw new Error('fail'); },
+        add: async () => {
+          throw new Error('fail');
+        },
         get: async () => undefined,
-        query: async () => { throw new Error('query failed'); },
-        search: async () => { throw new Error('search failed'); },
+        query: async () => {
+          throw new Error('query failed');
+        },
+        search: async () => {
+          throw new Error('search failed');
+        },
         delete: async () => false,
         clear: async () => 0,
         count: async () => 0,
       };
 
-      await expect(
-        new MemorySearchBuilder(badProvider).search('test')
-      ).rejects.toThrow(MemoryQueryError);
+      await expect(new MemorySearchBuilder(badProvider).search('test')).rejects.toThrow(
+        MemoryQueryError,
+      );
     });
 
     it('passes through MemoryQueryError without wrapping', async () => {
       const original = new MemoryQueryError('test', 'original error');
       const badProvider = {
         name: 'bad',
-        add: async () => { throw new Error('fail'); },
+        add: async () => {
+          throw new Error('fail');
+        },
         get: async () => undefined,
-        query: async () => { throw original; },
-        search: async () => { throw original; },
+        query: async () => {
+          throw original;
+        },
+        search: async () => {
+          throw original;
+        },
         delete: async () => false,
         clear: async () => 0,
         count: async () => 0,

@@ -65,17 +65,34 @@ const searchKnowledgeBaseTool = defineTool({
     // In production this would query a vector DB / search index
     const articles = [
       { id: 'KB-101', title: 'How to reset your password', tags: ['password', 'login', 'account'] },
-      { id: 'KB-102', title: 'Understanding your billing cycle', tags: ['billing', 'payment', 'invoice'] },
+      {
+        id: 'KB-102',
+        title: 'Understanding your billing cycle',
+        tags: ['billing', 'payment', 'invoice'],
+      },
       { id: 'KB-103', title: 'Upgrading your plan', tags: ['plan', 'upgrade', 'pricing'] },
-      { id: 'KB-104', title: 'API rate limits explained', tags: ['api', 'rate limit', 'technical'] },
-      { id: 'KB-105', title: 'Troubleshooting integration errors', tags: ['integration', 'error', 'technical'] },
+      {
+        id: 'KB-104',
+        title: 'API rate limits explained',
+        tags: ['api', 'rate limit', 'technical'],
+      },
+      {
+        id: 'KB-105',
+        title: 'Troubleshooting integration errors',
+        tags: ['integration', 'error', 'technical'],
+      },
     ];
     const q = query.toLowerCase();
     const matches = articles.filter(
       (a) => a.title.toLowerCase().includes(q) || a.tags.some((t) => q.includes(t)),
     );
     const limit = maxResults ?? 3;
-    return matches.slice(0, limit).map((a) => `[${a.id}] ${a.title}`).join('\n') || 'No matching articles found';
+    return (
+      matches
+        .slice(0, limit)
+        .map((a) => `[${a.id}] ${a.title}`)
+        .join('\n') || 'No matching articles found'
+    );
   },
 });
 
@@ -122,14 +139,14 @@ const mockResponses: Record<string, string> = {
     '## Support Response Draft\n\n' +
     'Hi Alice,\n\n' +
     'Thank you for reaching out about the charge on your latest invoice. ' +
-    'I\'ve looked into your account and here\'s what I found:\n\n' +
+    "I've looked into your account and here's what I found:\n\n" +
     'The charge appears to be related to a mid-cycle proration adjustment. ' +
     'When plan features are updated during a billing cycle, the difference is ' +
     'prorated and applied to your next invoice.\n\n' +
     'For a detailed breakdown of how billing works, please see our guide: ' +
     '[Understanding your billing cycle (KB-102)]\n\n' +
     'If you believe this charge is incorrect or have additional questions, ' +
-    'please don\'t hesitate to reply to this message. I\'m happy to help!\n\n' +
+    "please don't hesitate to reply to this message. I'm happy to help!\n\n" +
     'Best regards,\n' +
     'Support Team\n\n' +
     '---\n' +
@@ -144,9 +161,18 @@ function createSupportMockProvider(): LLMProvider {
       const content = lastUserMessage?.content?.toLowerCase() ?? '';
 
       let response = mockResponses['triage'];
-      if (content.includes('knowledge') || content.includes('search') || content.includes('article')) {
+      if (
+        content.includes('knowledge') ||
+        content.includes('search') ||
+        content.includes('article')
+      ) {
         response = mockResponses['knowledge'];
-      } else if (content.includes('resolution') || content.includes('draft') || content.includes('reply') || content.includes('respond')) {
+      } else if (
+        content.includes('resolution') ||
+        content.includes('draft') ||
+        content.includes('reply') ||
+        content.includes('respond')
+      ) {
         response = mockResponses['resolution'];
       }
 
@@ -186,7 +212,7 @@ const knowledgeAgent = new Agent({
   backstory:
     'You are a support knowledge expert with deep familiarity with the help center. ' +
     'You find the most relevant articles, extract key information, and summarize how ' +
-    'each article addresses the customer\'s specific issue.',
+    "each article addresses the customer's specific issue.",
   tools: [searchKnowledgeBaseTool],
   llmProvider: createSupportMockProvider(),
 });
@@ -221,13 +247,14 @@ const supportCrew = new Crew({
         'Look up the customer, classify the issue category and priority, ' +
         'and summarize the situation for the next agent.',
       agentId: 'triage',
-      expectedOutput: 'Triage summary with category, priority, customer context, and recommended action',
+      expectedOutput:
+        'Triage summary with category, priority, customer context, and recommended action',
     },
     {
       id: 'knowledge-search',
       description:
         'Search the knowledge base for articles relevant to the triaged issue. ' +
-        'Find help articles that address the customer\'s concern and summarize ' +
+        "Find help articles that address the customer's concern and summarize " +
         'the key information from each matching article.',
       agentId: 'knowledge',
       dependencies: ['triage'],
@@ -241,7 +268,8 @@ const supportCrew = new Crew({
         'personalized, empathetic reply. Create a support ticket for tracking.',
       agentId: 'resolution',
       dependencies: ['triage', 'knowledge-search'],
-      expectedOutput: 'A polished support response ready to send to the customer, plus a ticket reference',
+      expectedOutput:
+        'A polished support response ready to send to the customer, plus a ticket reference',
     },
   ],
 });

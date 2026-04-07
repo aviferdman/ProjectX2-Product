@@ -95,9 +95,7 @@ describe('resolveWorkflowFile', () => {
   });
 
   it('should throw if the file does not exist', () => {
-    expect(() => resolveWorkflowFile('nonexistent.ts', tmpDir)).toThrow(
-      'Workflow file not found',
-    );
+    expect(() => resolveWorkflowFile('nonexistent.ts', tmpDir)).toThrow('Workflow file not found');
   });
 
   it('should throw if the path is a directory', () => {
@@ -115,9 +113,7 @@ describe('resolveWorkflowFile', () => {
 
   it('should throw on file with no extension', () => {
     writeFile(tmpDir, 'Makefile', 'all:');
-    expect(() => resolveWorkflowFile('Makefile', tmpDir)).toThrow(
-      'Unsupported file extension',
-    );
+    expect(() => resolveWorkflowFile('Makefile', tmpDir)).toThrow('Unsupported file extension');
   });
 });
 
@@ -232,11 +228,7 @@ describe('executeWorkflow', () => {
   });
 
   it('should report timedOut when process exceeds timeout', async () => {
-    writeFile(
-      tmpDir,
-      'slow.js',
-      'setTimeout(() => { process.exit(0); }, 30000);',
-    );
+    writeFile(tmpDir, 'slow.js', 'setTimeout(() => { process.exit(0); }, 30000);');
     const result = await executeWorkflow({
       file: 'slow.js',
       cwd: tmpDir,
@@ -247,16 +239,16 @@ describe('executeWorkflow', () => {
   });
 
   it('should reject if file does not exist', async () => {
-    await expect(
-      executeWorkflow({ file: 'nope.js', cwd: tmpDir }),
-    ).rejects.toThrow('Workflow file not found');
+    await expect(executeWorkflow({ file: 'nope.js', cwd: tmpDir })).rejects.toThrow(
+      'Workflow file not found',
+    );
   });
 
   it('should reject on unsupported extension', async () => {
     writeFile(tmpDir, 'script.py', 'print("hi")');
-    await expect(
-      executeWorkflow({ file: 'script.py', cwd: tmpDir }),
-    ).rejects.toThrow('Unsupported file extension');
+    await expect(executeWorkflow({ file: 'script.py', cwd: tmpDir })).rejects.toThrow(
+      'Unsupported file extension',
+    );
   });
 
   it('should track duration in durationMs', async () => {
@@ -290,10 +282,9 @@ describe('run command integration', () => {
     const runCmd = program.commands.find((c) => c.name() === 'run')!;
     writeFile(tmpDir, 'workflow.js', 'process.exit(0);');
 
-    await program.parseAsync(
-      ['run', '--cwd', tmpDir, path.join(tmpDir, 'workflow.js')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['run', '--cwd', tmpDir, path.join(tmpDir, 'workflow.js')], {
+      from: 'user',
+    });
 
     expect(runCmd.args).toContain(path.join(tmpDir, 'workflow.js'));
   });
@@ -314,10 +305,9 @@ describe('run command integration', () => {
 
     writeFile(tmpDir, 'bad.py', 'print("hi")');
     const origExitCode = process.exitCode;
-    await program.parseAsync(
-      ['run', '--cwd', tmpDir, path.join(tmpDir, 'bad.py')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['run', '--cwd', tmpDir, path.join(tmpDir, 'bad.py')], {
+      from: 'user',
+    });
     expect(process.exitCode).toBe(1);
     process.exitCode = origExitCode;
   });
@@ -328,10 +318,9 @@ describe('run command integration', () => {
 
     writeFile(tmpDir, 'fail.js', 'process.exit(3);');
     const origExitCode = process.exitCode;
-    await program.parseAsync(
-      ['run', '--cwd', tmpDir, path.join(tmpDir, 'fail.js')],
-      { from: 'user' },
-    );
+    await program.parseAsync(['run', '--cwd', tmpDir, path.join(tmpDir, 'fail.js')], {
+      from: 'user',
+    });
     expect(process.exitCode).toBe(3);
     process.exitCode = origExitCode;
   });

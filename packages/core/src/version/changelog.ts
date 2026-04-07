@@ -6,13 +6,7 @@
 import { isValidSemVer } from './semver.js';
 
 /** Valid change categories per Keep a Changelog. */
-export type ChangeCategory =
-  | 'Added'
-  | 'Changed'
-  | 'Deprecated'
-  | 'Removed'
-  | 'Fixed'
-  | 'Security';
+export type ChangeCategory = 'Added' | 'Changed' | 'Deprecated' | 'Removed' | 'Fixed' | 'Security';
 
 const VALID_CATEGORIES: ReadonlySet<string> = new Set<ChangeCategory>([
   'Added',
@@ -99,10 +93,9 @@ export function parseChangelog(content: string): ChangelogData {
       const item = itemMatch[1]?.trim();
       if (item) {
         const existing = currentEntry.changes[currentCategory] ?? [];
-        (currentEntry as unknown as { changes: Record<string, string[]> }).changes[currentCategory] = [
-          ...existing,
-          item,
-        ];
+        (currentEntry as unknown as { changes: Record<string, string[]> }).changes[
+          currentCategory
+        ] = [...existing, item];
       }
       continue;
     }
@@ -137,7 +130,14 @@ export function formatChangelog(data: ChangelogData): string {
     lines.push(`## [${entry.version}]${datePart}`);
     lines.push('');
 
-    const categories: ChangeCategory[] = ['Added', 'Changed', 'Deprecated', 'Removed', 'Fixed', 'Security'];
+    const categories: ChangeCategory[] = [
+      'Added',
+      'Changed',
+      'Deprecated',
+      'Removed',
+      'Fixed',
+      'Security',
+    ];
     for (const cat of categories) {
       const items = entry.changes[cat];
       if (items && items.length > 0) {

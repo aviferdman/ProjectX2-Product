@@ -81,10 +81,17 @@ export interface MockResponseRule {
    * The response content to return when the rule matches.
    * Can be a static string or a dynamic handler.
    */
-  readonly response?: string | ((messages: readonly LLMMessage[], options?: LLMRequestOptions) => string | Promise<string>);
+  readonly response?:
+    | string
+    | ((messages: readonly LLMMessage[], options?: LLMRequestOptions) => string | Promise<string>);
 
   /** Full LLM response override (takes precedence over `response`). */
-  readonly fullResponse?: LLMResponse | ((messages: readonly LLMMessage[], options?: LLMRequestOptions) => LLMResponse | Promise<LLMResponse>);
+  readonly fullResponse?:
+    | LLMResponse
+    | ((
+        messages: readonly LLMMessage[],
+        options?: LLMRequestOptions,
+      ) => LLMResponse | Promise<LLMResponse>);
 
   /** If set, throw this error instead of returning a response. */
   readonly error?: Error | (() => Error);
@@ -407,7 +414,7 @@ export class MockLLMResponseSystem {
       } else if (this._strictMode) {
         throw new Error(
           `MockLLMResponseSystem: No matching rule for messages (strict mode). ` +
-          `Last message: "${getLastUserContent(messages).slice(0, 100)}"`,
+            `Last message: "${getLastUserContent(messages).slice(0, 100)}"`,
         );
       } else {
         response = {

@@ -478,7 +478,10 @@ export class PerformanceMetricsTracker {
     // Group by category
     const categoryGroups = new Map<ApiCallCategory, ApiCallRecord[]>();
     // Group by endpoint
-    const endpointGroups = new Map<string, { category: ApiCallCategory; records: ApiCallRecord[] }>();
+    const endpointGroups = new Map<
+      string,
+      { category: ApiCallCategory; records: ApiCallRecord[] }
+    >();
 
     for (const r of this._records) {
       // Category grouping
@@ -525,9 +528,8 @@ export class PerformanceMetricsTracker {
       }
     }
 
-    const overallWindowMs = startTime !== undefined && endTime !== undefined
-      ? Math.max(endTime - startTime, 1)
-      : 0;
+    const overallWindowMs =
+      startTime !== undefined && endTime !== undefined ? Math.max(endTime - startTime, 1) : 0;
 
     const overallRate: CallRate = {
       windowMs: overallWindowMs,
@@ -619,9 +621,7 @@ export class ApiCallTimer {
     const durationMs = endTime - this._startTime;
 
     const mergedMetadata =
-      this._metadata || extra?.metadata
-        ? { ...this._metadata, ...extra?.metadata }
-        : undefined;
+      this._metadata || extra?.metadata ? { ...this._metadata, ...extra?.metadata } : undefined;
 
     return this._tracker.recordApiCall({
       category: this._category,

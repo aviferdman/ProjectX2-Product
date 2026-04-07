@@ -127,9 +127,7 @@ export class LCAgentExecutor {
 
   async invoke(input: string, context?: string): Promise<LCAgentResult> {
     // Build message array (mirrors LangChain prompt template formatting)
-    const messages: LCMessage[] = [
-      { role: 'system', content: this._buildSystemMessage() },
-    ];
+    const messages: LCMessage[] = [{ role: 'system', content: this._buildSystemMessage() }];
 
     if (context) {
       messages.push({ role: 'human', content: `Context from previous steps:\n${context}` });
@@ -143,9 +141,7 @@ export class LCAgentExecutor {
 
   private _buildSystemMessage(): string {
     // LangChain serializes available tools into the system prompt
-    const toolDescriptions = this._tools
-      .map((t) => `- ${t.name}: ${t.description}`)
-      .join('\n');
+    const toolDescriptions = this._tools.map((t) => `- ${t.name}: ${t.description}`).join('\n');
 
     return (
       `${this._systemPrompt}\n\n` +

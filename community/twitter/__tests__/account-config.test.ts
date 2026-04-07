@@ -227,10 +227,7 @@ describe('validateNoDuplicateCategories', () => {
   it('detects duplicate category names', () => {
     const config: TwitterAccountConfig = {
       ...ACCOUNT_CONFIG,
-      contentCategories: [
-        CONTENT_CATEGORIES[0]!,
-        CONTENT_CATEGORIES[0]!,
-      ],
+      contentCategories: [CONTENT_CATEGORIES[0]!, CONTENT_CATEGORIES[0]!],
     };
     const result = validateNoDuplicateCategories(config);
     expect(result.valid).toBe(false);

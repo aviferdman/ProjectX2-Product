@@ -241,10 +241,7 @@ describe('init command verbose output', () => {
     }) as typeof process.stdout.write;
 
     try {
-      await program.parseAsync(
-        ['--verbose', 'init', projectDir],
-        { from: 'user' },
-      );
+      await program.parseAsync(['--verbose', 'init', projectDir], { from: 'user' });
     } finally {
       process.stdout.write = stdoutWrite;
     }

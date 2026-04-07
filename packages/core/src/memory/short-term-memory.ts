@@ -54,11 +54,7 @@ function validateEntry(entry: MemoryEntry): void {
     throw new MemoryOperationError('short-term', 'add', 'entry.id must be a non-empty string');
   }
   if (!entry.content || typeof entry.content !== 'string') {
-    throw new MemoryOperationError(
-      'short-term',
-      'add',
-      'entry.content must be a non-empty string',
-    );
+    throw new MemoryOperationError('short-term', 'add', 'entry.content must be a non-empty string');
   }
   if (!entry.role || typeof entry.role !== 'string') {
     throw new MemoryOperationError('short-term', 'add', 'entry.role must be a non-empty string');
@@ -105,7 +101,7 @@ export class ShortTermMemory implements MemoryProvider {
 
   private readonly _store: Map<string, MemoryEntry> = new Map();
   private readonly _insertionOrder: string[] = [];
-private readonly _defaultNamespace: MemoryNamespace;
+  private readonly _defaultNamespace: MemoryNamespace;
   private readonly _maxEntries: number;
   private readonly _maxAge: number;
   private readonly _emitter: EventEmitter<MemoryEventMap>;
@@ -224,9 +220,7 @@ private readonly _defaultNamespace: MemoryNamespace;
     const limit = Math.min(options?.limit ?? DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT);
     const offset = options?.offset ?? 0;
 
-    const filtered = this._filter(options).filter((e) =>
-      e.content.toLowerCase().includes(lower),
-    );
+    const filtered = this._filter(options).filter((e) => e.content.toLowerCase().includes(lower));
 
     return {
       entries: filtered.slice(offset, offset + limit),

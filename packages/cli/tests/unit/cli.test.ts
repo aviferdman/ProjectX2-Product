@@ -112,9 +112,7 @@ describe('argument parsing', () => {
   });
 
   it('should throw on unknown options', async () => {
-    await expect(
-      program.parseAsync(['--does-not-exist'], { from: 'user' }),
-    ).rejects.toThrow();
+    await expect(program.parseAsync(['--does-not-exist'], { from: 'user' })).rejects.toThrow();
   });
 
   it('should parse init command with directory argument', async () => {
@@ -193,9 +191,7 @@ describe('resolveLogLevel', () => {
   });
 
   it('should throw on invalid log level', () => {
-    expect(() => resolveLogLevel({ logLevel: 'banana' })).toThrow(
-      'Invalid log level "banana"',
-    );
+    expect(() => resolveLogLevel({ logLevel: 'banana' })).toThrow('Invalid log level "banana"');
   });
 
   it('should default to "info"', () => {
@@ -217,9 +213,7 @@ describe('resolveConfigPath', () => {
 
   it('should fall back to default config in cwd', () => {
     const cwd = '/home/user/project';
-    expect(resolveConfigPath(undefined, cwd)).toBe(
-      path.join(cwd, 'crewspace.config.ts'),
-    );
+    expect(resolveConfigPath(undefined, cwd)).toBe(path.join(cwd, 'crewspace.config.ts'));
   });
 });
 

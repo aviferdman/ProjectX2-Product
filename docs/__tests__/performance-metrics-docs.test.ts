@@ -18,7 +18,9 @@ describe('Performance Metrics guide page', () => {
 
   it('should document the quick start with import', () => {
     const content = readFileSync(filePath, 'utf-8');
-    expect(content).toContain("import { PerformanceMetricsTracker, ApiCallCategory } from '@crewspace/core'");
+    expect(content).toContain(
+      "import { PerformanceMetricsTracker, ApiCallCategory } from '@crewspace/core'",
+    );
   });
 
   it('should document all API call categories', () => {
@@ -115,7 +117,9 @@ describe('API reference — PerformanceMetricsTracker section', () => {
 
   it('should document the constructor with config type', () => {
     const content = readFileSync(filePath, 'utf-8');
-    expect(content).toContain('new PerformanceMetricsTracker(config?: PerformanceMetricsTrackerConfig)');
+    expect(content).toContain(
+      'new PerformanceMetricsTracker(config?: PerformanceMetricsTrackerConfig)',
+    );
   });
 
   it('should document all public methods', () => {
@@ -197,14 +201,10 @@ describe('VitePress sidebar includes Performance Metrics', () => {
     const config = (await import(configPath)).default;
     const sidebar = config.themeConfig?.sidebar;
 
-    const perfSection = sidebar.find(
-      (s: { text: string }) => s.text === 'Performance',
-    );
+    const perfSection = sidebar.find((s: { text: string }) => s.text === 'Performance');
     expect(perfSection).toBeDefined();
 
-    const itemTexts = perfSection.items.map(
-      (item: { text: string }) => item.text,
-    );
+    const itemTexts = perfSection.items.map((item: { text: string }) => item.text);
     expect(itemTexts).toContain('Performance Metrics');
 
     const perfMetricsItem = perfSection.items.find(

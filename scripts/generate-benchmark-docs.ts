@@ -79,7 +79,13 @@ export function categorize(name: string): string {
   if (name.startsWith('Task')) return 'Task Lifecycle';
   if (name.startsWith('Engine')) return 'Execution Engine';
   if (name.startsWith('Tool')) return 'Tool System';
-  if (name.includes('Workflow') || name.includes('Crewspace:') || name.includes('LangChain') || name.includes('CrewAI')) return 'Cross-Framework Comparison';
+  if (
+    name.includes('Workflow') ||
+    name.includes('Crewspace:') ||
+    name.includes('LangChain') ||
+    name.includes('CrewAI')
+  )
+    return 'Cross-Framework Comparison';
   return 'Other';
 }
 
@@ -146,8 +152,12 @@ function generateCategoryTable(group: CategoryGroup): string {
 
   lines.push(`### ${group.name}`);
   lines.push('');
-  lines.push('| Benchmark | Avg (ms) | p50 (ms) | p95 (ms) | p99 (ms) | Ops/sec | Budget (ms) | Status |');
-  lines.push('|-----------|----------|----------|----------|----------|---------|-------------|--------|');
+  lines.push(
+    '| Benchmark | Avg (ms) | p50 (ms) | p95 (ms) | p99 (ms) | Ops/sec | Budget (ms) | Status |',
+  );
+  lines.push(
+    '|-----------|----------|----------|----------|----------|---------|-------------|--------|',
+  );
 
   for (const r of group.results) {
     const status = statusIcon(r.withinBudget);
@@ -161,9 +171,7 @@ function generateCategoryTable(group: CategoryGroup): string {
 }
 
 function generateComparisonSummary(results: readonly DetailedResult[]): string {
-  const frameworks = results.filter(
-    (r) => r.name.includes('Workflow'),
-  );
+  const frameworks = results.filter((r) => r.name.includes('Workflow'));
 
   if (frameworks.length === 0) return '';
 
@@ -171,7 +179,9 @@ function generateComparisonSummary(results: readonly DetailedResult[]): string {
   lines.push('### Framework Overhead Comparison');
   lines.push('');
   lines.push('The following table shows the overhead of each framework running an identical');
-  lines.push('3-task "Research Assistant" workflow with mock LLM responses (zero network latency).');
+  lines.push(
+    '3-task "Research Assistant" workflow with mock LLM responses (zero network latency).',
+  );
   lines.push('');
   lines.push('| Framework | Avg (ms) | p95 (ms) | Ops/sec | Budget (ms) | Status |');
   lines.push('|-----------|----------|----------|---------|-------------|--------|');
@@ -212,7 +222,9 @@ export function generateBenchmarkDocs(
   lines.push('');
   lines.push(`- **Total benchmarks:** ${String(totalBenchmarks)}`);
   lines.push(`- **Passing:** ${String(passingCount)} / ${String(totalBenchmarks)}`);
-  lines.push(`- **Budget compliance:** ${allPassing ? '✅ All within budget' : '❌ Some benchmarks exceed budget'}`);
+  lines.push(
+    `- **Budget compliance:** ${allPassing ? '✅ All within budget' : '❌ Some benchmarks exceed budget'}`,
+  );
   if (baseline) {
     lines.push(`- **Baseline timestamp:** ${baseline.timestamp}`);
   }
@@ -225,9 +237,15 @@ export function generateBenchmarkDocs(
   lines.push('');
   lines.push('Each benchmark follows a rigorous, repeatable protocol:');
   lines.push('');
-  lines.push('1. **Setup** — Initialize fixtures (agents, tasks, memory stores) once before measurement.');
-  lines.push('2. **Warmup** — Execute 10 warm-up iterations (discarded) to allow JIT compilation and cache warming.');
-  lines.push('3. **Measured runs** — Execute 1,000–10,000 iterations (depending on operation cost), recording `performance.now()` timestamps for each run.');
+  lines.push(
+    '1. **Setup** — Initialize fixtures (agents, tasks, memory stores) once before measurement.',
+  );
+  lines.push(
+    '2. **Warmup** — Execute 10 warm-up iterations (discarded) to allow JIT compilation and cache warming.',
+  );
+  lines.push(
+    '3. **Measured runs** — Execute 1,000–10,000 iterations (depending on operation cost), recording `performance.now()` timestamps for each run.',
+  );
   lines.push('4. **Statistical analysis** — Sort all timings and compute:');
   lines.push('   - **Average (mean)** — Sum of all timings divided by iteration count.');
   lines.push('   - **p50 (median)** — 50th percentile latency; represents typical performance.');
@@ -245,12 +263,22 @@ export function generateBenchmarkDocs(
   lines.push('');
   lines.push('| Category | Budget | Rationale |');
   lines.push('|----------|--------|-----------|');
-  lines.push('| Agent initialization | 100 ms | Agents are created at startup; must be fast enough for interactive use. |');
-  lines.push('| Task initialization | 100 ms | Tasks are created dynamically; budget matches agent init. |');
-  lines.push('| Memory operations | 50 ms | Memory is accessed on every agent turn; must be low-latency. |');
-  lines.push('| Tool invocation | 50 ms | Tool overhead must be negligible compared to tool execution time. |');
+  lines.push(
+    '| Agent initialization | 100 ms | Agents are created at startup; must be fast enough for interactive use. |',
+  );
+  lines.push(
+    '| Task initialization | 100 ms | Tasks are created dynamically; budget matches agent init. |',
+  );
+  lines.push(
+    '| Memory operations | 50 ms | Memory is accessed on every agent turn; must be low-latency. |',
+  );
+  lines.push(
+    '| Tool invocation | 50 ms | Tool overhead must be negligible compared to tool execution time. |',
+  );
   lines.push('| Engine initialization | 100 ms | Engine is created once per workflow. |');
-  lines.push('| Engine execution (workflow) | 5,000 ms | Full workflow execution including task scheduling overhead. |');
+  lines.push(
+    '| Engine execution (workflow) | 5,000 ms | Full workflow execution including task scheduling overhead. |',
+  );
   lines.push('');
   lines.push('### Regression Detection');
   lines.push('');
@@ -258,13 +286,17 @@ export function generateBenchmarkDocs(
   lines.push('`packages/core/benchmarks/baseline.json`). The CI pipeline flags:');
   lines.push('');
   lines.push('- **Warning** (>5% regression) — PR description must justify the change.');
-  lines.push('- **Regression** (>15% regression) — PR is blocked until fixed or baseline is updated with team approval.');
+  lines.push(
+    '- **Regression** (>15% regression) — PR is blocked until fixed or baseline is updated with team approval.',
+  );
   lines.push('- **Improvement** (>5% faster) — Automatically noted in the CI summary.');
   lines.push('');
   lines.push('### Environment');
   lines.push('');
   lines.push('- **Runtime:** Node.js 18+ with V8 JIT compilation');
-  lines.push('- **LLM providers:** Mock providers with zero network latency (isolates framework overhead)');
+  lines.push(
+    '- **LLM providers:** Mock providers with zero network latency (isolates framework overhead)',
+  );
   lines.push('- **Test runner:** Vitest with custom `measurePerformance()` harness');
   lines.push('- **Timing:** `performance.now()` high-resolution timestamps');
   lines.push('');

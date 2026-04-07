@@ -60,7 +60,7 @@ describe('TASK-081: Quick Start Guide Completeness', () => {
   });
 
   it('should show Crew creation with task dependency model', () => {
-    expect(content).toContain("new Crew({");
+    expect(content).toContain('new Crew({');
     expect(content).toContain('agentId:');
     expect(content).toContain('crew.run()');
     expect(content).toContain('taskResults');

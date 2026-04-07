@@ -87,15 +87,21 @@ describe('semver', () => {
 
   describe('formatSemver', () => {
     it('formats standard version', () => {
-      expect(formatSemver({ major: 1, minor: 2, patch: 3, prerelease: [], build: [] })).toBe('1.2.3');
+      expect(formatSemver({ major: 1, minor: 2, patch: 3, prerelease: [], build: [] })).toBe(
+        '1.2.3',
+      );
     });
 
     it('formats version with prerelease', () => {
-      expect(formatSemver({ major: 1, minor: 0, patch: 0, prerelease: ['beta', '1'], build: [] })).toBe('1.0.0-beta.1');
+      expect(
+        formatSemver({ major: 1, minor: 0, patch: 0, prerelease: ['beta', '1'], build: [] }),
+      ).toBe('1.0.0-beta.1');
     });
 
     it('formats version with build metadata', () => {
-      expect(formatSemver({ major: 1, minor: 0, patch: 0, prerelease: [], build: ['abc'] })).toBe('1.0.0+abc');
+      expect(formatSemver({ major: 1, minor: 0, patch: 0, prerelease: [], build: ['abc'] })).toBe(
+        '1.0.0+abc',
+      );
     });
 
     it('roundtrips through parse and format', () => {

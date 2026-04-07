@@ -703,9 +703,9 @@ describe('TASK-085: Research Crew — Edge Cases', () => {
       tools: [webToolBundle.webSearch],
     });
 
-    await expect(
-      agent.execute({ description: 'Search for AI trends' }),
-    ).rejects.toThrow('No LLM provider configured');
+    await expect(agent.execute({ description: 'Search for AI trends' })).rejects.toThrow(
+      'No LLM provider configured',
+    );
   });
 
   it('should handle a single-task research crew', async () => {

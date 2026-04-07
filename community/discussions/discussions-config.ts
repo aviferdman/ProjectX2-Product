@@ -79,7 +79,7 @@ export const DISCUSSION_CATEGORIES: readonly DiscussionCategory[] = [
     templateFile: 'show-and-tell.yml',
     labels: ['showcase'],
     welcomeMessage:
-      'Built something with Crewspace? We\'d love to see it! Share your project, demo, or code.',
+      "Built something with Crewspace? We'd love to see it! Share your project, demo, or code.",
   },
   {
     name: 'General',
@@ -101,10 +101,7 @@ export const MODERATION_SETTINGS: ModerationSettings = {
   requireApprovalForFirstPost: false,
   autoLockAfterDays: null,
   allowedReactions: ['👍', '👎', '❤️', '🎉', '🚀', '👀'],
-  pinnedDiscussions: [
-    'Welcome to Crewspace Discussions!',
-    'How to ask a good question',
-  ],
+  pinnedDiscussions: ['Welcome to Crewspace Discussions!', 'How to ask a good question'],
 } as const;
 
 // ── Contact Links ──────────────────────────────────────────────────

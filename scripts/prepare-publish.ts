@@ -37,7 +37,15 @@ export interface PublishValidationOptions {
   dryRun?: boolean;
 }
 
-const REQUIRED_PACKAGE_FIELDS = ['name', 'version', 'description', 'license', 'main', 'types', 'files'] as const;
+const REQUIRED_PACKAGE_FIELDS = [
+  'name',
+  'version',
+  'description',
+  'license',
+  'main',
+  'types',
+  'files',
+] as const;
 
 const REQUIRED_PACKAGE_FILES = ['README.md', 'LICENSE'] as const;
 
@@ -149,7 +157,10 @@ export function validatePackage(
 /**
  * Validate the CHANGELOG has an entry for the given version.
  */
-export function validateChangelog(version: string, rootDir: string): { valid: boolean; errors: string[]; warnings: string[] } {
+export function validateChangelog(
+  version: string,
+  rootDir: string,
+): { valid: boolean; errors: string[]; warnings: string[] } {
   const errors: string[] = [];
   const warnings: string[] = [];
   const changelogPath = join(rootDir, 'CHANGELOG.md');
@@ -190,14 +201,16 @@ export function validatePublish(options: PublishValidationOptions): {
     return {
       valid: false,
       results: [],
-      changelogResult: { valid: false, errors: [`Invalid tag format: "${options.tag}". Expected "v<semver>"`], warnings: [] },
+      changelogResult: {
+        valid: false,
+        errors: [`Invalid tag format: "${options.tag}". Expected "v<semver>"`],
+        warnings: [],
+      },
       tagVersion: null,
     };
   }
 
-  const results = options.packages.map((pkg) =>
-    validatePackage(pkg, tagVersion, options.rootDir),
-  );
+  const results = options.packages.map((pkg) => validatePackage(pkg, tagVersion, options.rootDir));
 
   const changelogResult = validateChangelog(tagVersion, options.rootDir);
 
@@ -252,7 +265,9 @@ export function formatValidationOutput(validation: ReturnType<typeof validatePub
   }
 
   lines.push('');
-  lines.push(validation.valid ? '✓ Ready to publish' : '✗ Validation failed — fix errors before publishing');
+  lines.push(
+    validation.valid ? '✓ Ready to publish' : '✗ Validation failed — fix errors before publishing',
+  );
 
   return lines.join('\n');
 }

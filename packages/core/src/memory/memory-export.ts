@@ -277,11 +277,7 @@ export function parseExportJson(json: string): MemoryExportData {
   try {
     parsed = JSON.parse(json);
   } catch {
-    throw new MemoryOperationError(
-      'unknown',
-      'import',
-      'Failed to parse JSON: invalid syntax',
-    );
+    throw new MemoryOperationError('unknown', 'import', 'Failed to parse JSON: invalid syntax');
   }
 
   if (!isValidExportData(parsed)) {

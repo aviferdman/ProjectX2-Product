@@ -349,18 +349,22 @@ describe('TokenEfficiencyTracker', () => {
     });
 
     it('should return aggregated report', () => {
-      tracker.record(makeTokenInput({
-        promptTokens: 200,
-        completionTokens: 100,
-        totalTokens: 300,
-        durationMs: 1500,
-      }));
-      tracker.record(makeTokenInput({
-        promptTokens: 100,
-        completionTokens: 50,
-        totalTokens: 150,
-        durationMs: 500,
-      }));
+      tracker.record(
+        makeTokenInput({
+          promptTokens: 200,
+          completionTokens: 100,
+          totalTokens: 300,
+          durationMs: 1500,
+        }),
+      );
+      tracker.record(
+        makeTokenInput({
+          promptTokens: 100,
+          completionTokens: 50,
+          totalTokens: 150,
+          durationMs: 500,
+        }),
+      );
 
       const report = tracker.getReport();
       expect(report.operationCount).toBe(2);

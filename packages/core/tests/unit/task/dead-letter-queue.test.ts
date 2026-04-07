@@ -14,10 +14,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Task } from '../../../src/task/task.js';
-import {
-  DeadLetterQueue,
-  DEFAULT_DLQ_MAX_SIZE,
-} from '../../../src/task/dead-letter-queue.js';
+import { DeadLetterQueue, DEFAULT_DLQ_MAX_SIZE } from '../../../src/task/dead-letter-queue.js';
 import type {
   DeadLetterEntry,
   DeadLetterQueueEventMap,
@@ -279,7 +276,10 @@ describe('DeadLetterQueue', () => {
       await dlq.retry('t1', successRunner());
 
       expect(retryFn).toHaveBeenCalledWith('t1', 3);
-      expect(successFn).toHaveBeenCalledWith('t1', expect.objectContaining({ output: 'result-t1' }));
+      expect(successFn).toHaveBeenCalledWith(
+        't1',
+        expect.objectContaining({ output: 'result-t1' }),
+      );
     });
 
     it('fails and updates entry with new error', async () => {
@@ -315,7 +315,8 @@ describe('DeadLetterQueue', () => {
 
     it('uses entry context when no override provided', async () => {
       const ctx = { dep: makeResult('dep') };
-      const capturedContext = vi.fn<(task: Task, context: Readonly<Record<string, TaskResult>>) => Promise<TaskResult>>();
+      const capturedContext =
+        vi.fn<(task: Task, context: Readonly<Record<string, TaskResult>>) => Promise<TaskResult>>();
       capturedContext.mockResolvedValue(makeResult('t1'));
 
       dlq.enqueue(makeTask('t1'), new Error('e'), { context: ctx });
@@ -327,7 +328,8 @@ describe('DeadLetterQueue', () => {
     it('uses override context when provided', async () => {
       const entryCtx = { dep: makeResult('dep') };
       const overrideCtx = { override: makeResult('override') };
-      const capturedContext = vi.fn<(task: Task, context: Readonly<Record<string, TaskResult>>) => Promise<TaskResult>>();
+      const capturedContext =
+        vi.fn<(task: Task, context: Readonly<Record<string, TaskResult>>) => Promise<TaskResult>>();
       capturedContext.mockResolvedValue(makeResult('t1'));
 
       dlq.enqueue(makeTask('t1'), new Error('e'), { context: entryCtx });
@@ -338,7 +340,7 @@ describe('DeadLetterQueue', () => {
 
     it('handles non-Error throws from runner', async () => {
       const badRunner: TaskRunner = async () => {
-        throw 'string error';  // eslint-disable-line no-throw-literal
+        throw 'string error'; // eslint-disable-line no-throw-literal
       };
 
       dlq.enqueue(makeTask('t1'), new Error('original'));
@@ -413,21 +415,25 @@ describe('DeadLetterQueue', () => {
       const json = dlq.toJSON();
       expect(json).toHaveLength(2);
 
-      expect(json[0]).toEqual(expect.objectContaining({
-        taskId: 't1',
-        description: 'First',
-        error: 'fail1',
-        attempts: 2,
-        metadata: { source: 'test' },
-      }));
+      expect(json[0]).toEqual(
+        expect.objectContaining({
+          taskId: 't1',
+          description: 'First',
+          error: 'fail1',
+          attempts: 2,
+          metadata: { source: 'test' },
+        }),
+      );
       expect(json[0]!.enqueuedAt).toBeTruthy();
 
-      expect(json[1]).toEqual(expect.objectContaining({
-        taskId: 't2',
-        description: 'Second',
-        error: 'fail2',
-        attempts: 1,
-      }));
+      expect(json[1]).toEqual(
+        expect.objectContaining({
+          taskId: 't2',
+          description: 'Second',
+          error: 'fail2',
+          attempts: 1,
+        }),
+      );
       expect(json[1]!.metadata).toBeUndefined();
     });
   });

@@ -329,7 +329,9 @@ export function formatSuiteMarkdown(suiteResult: BenchmarkSuiteResult): string {
   lines.push('');
   lines.push(`**Timestamp:** ${suiteResult.timestamp}`);
   lines.push(`**Total benchmarks:** ${String(suiteResult.results.length)}`);
-  lines.push(`**Passed:** ${String(suiteResult.passCount)} | **Failed:** ${String(suiteResult.failCount)}`);
+  lines.push(
+    `**Passed:** ${String(suiteResult.passCount)} | **Failed:** ${String(suiteResult.failCount)}`,
+  );
   lines.push(`**Total duration:** ${suiteResult.totalDurationMs.toFixed(0)}ms`);
   lines.push(
     `**Budget compliance:** ${suiteResult.allWithinBudget ? '\u2705 All within budget' : '\u274c Some benchmarks exceed budget'}`,
@@ -385,7 +387,9 @@ export function formatRegressionMarkdown(report: RegressionReport): string {
         : 'new';
     const budget = `${String(entry.budget)}ms`;
 
-    lines.push(`| ${icon} ${entry.status} | ${entry.name} | ${baseline} | ${current} | ${change} | ${budget} |`);
+    lines.push(
+      `| ${icon} ${entry.status} | ${entry.name} | ${baseline} | ${current} | ${change} | ${budget} |`,
+    );
   }
 
   lines.push('');

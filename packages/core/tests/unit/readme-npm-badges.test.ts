@@ -21,22 +21,16 @@ beforeAll(() => {
 
 describe('TASK-115: npm badges in README', () => {
   it('should have an npm version badge linking to npmjs.com', () => {
-    expect(content).toContain(
-      '[![npm version](https://img.shields.io/npm/v/@crewspace/core)]',
-    );
+    expect(content).toContain('[![npm version](https://img.shields.io/npm/v/@crewspace/core)]');
     expect(content).toContain('https://www.npmjs.com/package/@crewspace/core');
   });
 
   it('should have an npm downloads badge linking to npmjs.com', () => {
-    expect(content).toContain(
-      '[![npm downloads](https://img.shields.io/npm/dm/@crewspace/core)]',
-    );
+    expect(content).toContain('[![npm downloads](https://img.shields.io/npm/dm/@crewspace/core)]');
   });
 
   it('should have an npm license badge linking to npmjs.com', () => {
-    expect(content).toContain(
-      '[![npm license](https://img.shields.io/npm/l/@crewspace/core)]',
-    );
+    expect(content).toContain('[![npm license](https://img.shields.io/npm/l/@crewspace/core)]');
   });
 
   it('should place npm badges in the header badge section', () => {

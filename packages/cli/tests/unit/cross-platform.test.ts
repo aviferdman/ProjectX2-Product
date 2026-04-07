@@ -16,11 +16,7 @@ import * as os from 'node:os';
 import { resolveConfigPath, resolveLogLevel } from '../../src/options.js';
 import { createProgram } from '../../src/program.js';
 import { scaffoldProject } from '../../src/commands/scaffold.js';
-import {
-  resolveWorkflowFile,
-  getRunCommand,
-  executeWorkflow,
-} from '../../src/commands/runner.js';
+import { resolveWorkflowFile, getRunCommand, executeWorkflow } from '../../src/commands/runner.js';
 import { validateWorkflowFile } from '../../src/commands/validator.js';
 
 // ---------------------------------------------------------------------------

@@ -350,7 +350,9 @@ describe('release', () => {
       });
 
       expect(result.success).toBe(false);
-      expect(result.steps.some((s) => s.name === 'tag-not-exists' && s.status === 'fail')).toBe(true);
+      expect(result.steps.some((s) => s.name === 'tag-not-exists' && s.status === 'fail')).toBe(
+        true,
+      );
     });
   });
 
@@ -433,9 +435,7 @@ describe('release', () => {
           success: false,
           version: '0.1.0',
           tag: 'v0.1.0',
-          steps: [
-            { name: 'publish-validation', status: 'fail', message: 'Version mismatch' },
-          ],
+          steps: [{ name: 'publish-validation', status: 'fail', message: 'Version mismatch' }],
         },
         false,
       );
@@ -450,9 +450,7 @@ describe('release', () => {
           success: true,
           version: '0.1.0',
           tag: 'v0.1.0',
-          steps: [
-            { name: 'push-tag', status: 'skip', message: 'Skipped push' },
-          ],
+          steps: [{ name: 'push-tag', status: 'skip', message: 'Skipped push' }],
         },
         false,
       );

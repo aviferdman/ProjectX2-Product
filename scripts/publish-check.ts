@@ -71,14 +71,22 @@ export function checkDistOutput(pkgDir: string): CheckItem[] {
   if (existsSync(indexDts)) {
     checks.push({ name: 'dist-index-dts', status: 'pass', message: 'dist/index.d.ts exists' });
   } else {
-    checks.push({ name: 'dist-index-dts', status: 'fail', message: 'dist/index.d.ts not found — type declarations missing' });
+    checks.push({
+      name: 'dist-index-dts',
+      status: 'fail',
+      message: 'dist/index.d.ts not found — type declarations missing',
+    });
   }
 
   const indexMap = join(distDir, 'index.js.map');
   if (existsSync(indexMap)) {
     checks.push({ name: 'dist-sourcemaps', status: 'pass', message: 'Source maps present' });
   } else {
-    checks.push({ name: 'dist-sourcemaps', status: 'warn', message: 'Source maps not found (optional but recommended)' });
+    checks.push({
+      name: 'dist-sourcemaps',
+      status: 'warn',
+      message: 'Source maps not found (optional but recommended)',
+    });
   }
 
   return checks;
@@ -147,25 +155,51 @@ export function checkPackageMetadata(pkgDir: string): CheckItem[] {
     checks.push({ name: 'not-private', status: 'pass', message: 'Package is not private' });
   }
 
-  const requiredFields = ['name', 'version', 'description', 'license', 'main', 'types', 'files', 'repository', 'keywords'] as const;
+  const requiredFields = [
+    'name',
+    'version',
+    'description',
+    'license',
+    'main',
+    'types',
+    'files',
+    'repository',
+    'keywords',
+  ] as const;
   for (const field of requiredFields) {
     if (pkgJson[field]) {
       checks.push({ name: `field-${field}`, status: 'pass', message: `"${field}" field present` });
     } else {
-      checks.push({ name: `field-${field}`, status: 'fail', message: `Missing required field: "${field}"` });
+      checks.push({
+        name: `field-${field}`,
+        status: 'fail',
+        message: `Missing required field: "${field}"`,
+      });
     }
   }
 
   if (pkgJson['exports']) {
     checks.push({ name: 'field-exports', status: 'pass', message: '"exports" field configured' });
   } else {
-    checks.push({ name: 'field-exports', status: 'warn', message: 'No "exports" field — consumers may have import issues' });
+    checks.push({
+      name: 'field-exports',
+      status: 'warn',
+      message: 'No "exports" field — consumers may have import issues',
+    });
   }
 
   if (pkgJson['engines']) {
-    checks.push({ name: 'field-engines', status: 'pass', message: '"engines" field specifies Node.js requirement' });
+    checks.push({
+      name: 'field-engines',
+      status: 'pass',
+      message: '"engines" field specifies Node.js requirement',
+    });
   } else {
-    checks.push({ name: 'field-engines', status: 'warn', message: 'No "engines" field — Node.js version requirement not specified' });
+    checks.push({
+      name: 'field-engines',
+      status: 'warn',
+      message: 'No "engines" field — Node.js version requirement not specified',
+    });
   }
 
   return checks;
@@ -189,11 +223,23 @@ export function checkVersionConsistency(
     const content = readFileSync(versionFilePath, 'utf-8');
     const match = /export const (?:CLI_)?VERSION = '([^']+)'/.exec(content);
     if (match?.[1] === version) {
-      checks.push({ name: 'version-export-match', status: 'pass', message: `VERSION export matches package.json (${version})` });
+      checks.push({
+        name: 'version-export-match',
+        status: 'pass',
+        message: `VERSION export matches package.json (${version})`,
+      });
     } else if (match?.[1]) {
-      checks.push({ name: 'version-export-match', status: 'fail', message: `VERSION export "${match[1]}" does not match package.json "${version}"` });
+      checks.push({
+        name: 'version-export-match',
+        status: 'fail',
+        message: `VERSION export "${match[1]}" does not match package.json "${version}"`,
+      });
     } else {
-      checks.push({ name: 'version-export-match', status: 'warn', message: 'No VERSION export found in source' });
+      checks.push({
+        name: 'version-export-match',
+        status: 'warn',
+        message: 'No VERSION export found in source',
+      });
     }
   }
 
@@ -201,9 +247,17 @@ export function checkVersionConsistency(
   if (existsSync(changelogPath)) {
     const content = readFileSync(changelogPath, 'utf-8');
     if (content.includes(`## [${version}]`)) {
-      checks.push({ name: 'changelog-entry', status: 'pass', message: `CHANGELOG.md has entry for ${version}` });
+      checks.push({
+        name: 'changelog-entry',
+        status: 'pass',
+        message: `CHANGELOG.md has entry for ${version}`,
+      });
     } else {
-      checks.push({ name: 'changelog-entry', status: 'fail', message: `CHANGELOG.md has no entry for ${version}` });
+      checks.push({
+        name: 'changelog-entry',
+        status: 'fail',
+        message: `CHANGELOG.md has no entry for ${version}`,
+      });
     }
   } else {
     checks.push({ name: 'changelog-entry', status: 'fail', message: 'CHANGELOG.md not found' });
@@ -215,7 +269,11 @@ export function checkVersionConsistency(
 /**
  * Simulate npm pack to check what files would be included.
  */
-export function checkPackContents(pkgDir: string): { checks: CheckItem[]; files: string[]; estimatedSize: string } {
+export function checkPackContents(pkgDir: string): {
+  checks: CheckItem[];
+  files: string[];
+  estimatedSize: string;
+} {
   const checks: CheckItem[] = [];
   let files: string[] = [];
   let estimatedSize = 'unknown';
@@ -238,37 +296,75 @@ export function checkPackContents(pkgDir: string): { checks: CheckItem[]; files:
       files = packInfo.files.map((f) => f.path);
       estimatedSize = formatSize(packInfo.unpackedSize);
 
-      checks.push({ name: 'pack-success', status: 'pass', message: `npm pack succeeds (${files.length} files, ${estimatedSize} unpacked)` });
+      checks.push({
+        name: 'pack-success',
+        status: 'pass',
+        message: `npm pack succeeds (${files.length} files, ${estimatedSize} unpacked)`,
+      });
 
       const sourceFiles = files.filter((f) => f.endsWith('.ts') && !f.endsWith('.d.ts'));
       if (sourceFiles.length > 0) {
-        checks.push({ name: 'no-source-leak', status: 'fail', message: `TypeScript source files in package: ${sourceFiles.join(', ')}` });
+        checks.push({
+          name: 'no-source-leak',
+          status: 'fail',
+          message: `TypeScript source files in package: ${sourceFiles.join(', ')}`,
+        });
       } else {
-        checks.push({ name: 'no-source-leak', status: 'pass', message: 'No TypeScript source files in package' });
+        checks.push({
+          name: 'no-source-leak',
+          status: 'pass',
+          message: 'No TypeScript source files in package',
+        });
       }
 
-      const testFiles = files.filter((f) => f.includes('.test.') || f.includes('.spec.') || f.includes('__tests__'));
+      const testFiles = files.filter(
+        (f) => f.includes('.test.') || f.includes('.spec.') || f.includes('__tests__'),
+      );
       if (testFiles.length > 0) {
-        checks.push({ name: 'no-test-leak', status: 'fail', message: `Test files in package: ${testFiles.join(', ')}` });
+        checks.push({
+          name: 'no-test-leak',
+          status: 'fail',
+          message: `Test files in package: ${testFiles.join(', ')}`,
+        });
       } else {
         checks.push({ name: 'no-test-leak', status: 'pass', message: 'No test files in package' });
       }
 
       const distFiles = files.filter((f) => f.startsWith('dist/'));
       if (distFiles.length > 0) {
-        checks.push({ name: 'dist-included', status: 'pass', message: `${distFiles.length} dist files included` });
+        checks.push({
+          name: 'dist-included',
+          status: 'pass',
+          message: `${distFiles.length} dist files included`,
+        });
       } else {
-        checks.push({ name: 'dist-included', status: 'fail', message: 'No dist/ files in package' });
+        checks.push({
+          name: 'dist-included',
+          status: 'fail',
+          message: 'No dist/ files in package',
+        });
       }
 
       if (packInfo.unpackedSize > 5 * 1024 * 1024) {
-        checks.push({ name: 'size-check', status: 'warn', message: `Package is large: ${estimatedSize}` });
+        checks.push({
+          name: 'size-check',
+          status: 'warn',
+          message: `Package is large: ${estimatedSize}`,
+        });
       } else {
-        checks.push({ name: 'size-check', status: 'pass', message: `Package size reasonable: ${estimatedSize}` });
+        checks.push({
+          name: 'size-check',
+          status: 'pass',
+          message: `Package size reasonable: ${estimatedSize}`,
+        });
       }
     }
   } catch {
-    checks.push({ name: 'pack-success', status: 'warn', message: 'Could not run npm pack --dry-run (build may be required first)' });
+    checks.push({
+      name: 'pack-success',
+      status: 'warn',
+      message: 'Could not run npm pack --dry-run (build may be required first)',
+    });
   }
 
   return { checks, files, estimatedSize };
@@ -284,7 +380,9 @@ export function runPublishCheck(options: PublishCheckOptions): PublishCheckResul
   if (!existsSync(pkgJsonPath)) {
     return {
       passed: false,
-      checks: [{ name: 'package-json', status: 'fail', message: `package.json not found at ${pkgDir}` }],
+      checks: [
+        { name: 'package-json', status: 'fail', message: `package.json not found at ${pkgDir}` },
+      ],
       packageName: 'unknown',
       packageVersion: 'unknown',
       tarballFiles: [],
@@ -302,7 +400,13 @@ export function runPublishCheck(options: PublishCheckOptions): PublishCheckResul
     } catch {
       return {
         passed: false,
-        checks: [{ name: 'build', status: 'fail', message: 'Build failed — fix build errors before publishing' }],
+        checks: [
+          {
+            name: 'build',
+            status: 'fail',
+            message: 'Build failed — fix build errors before publishing',
+          },
+        ],
         packageName,
         packageVersion,
         tarballFiles: [],

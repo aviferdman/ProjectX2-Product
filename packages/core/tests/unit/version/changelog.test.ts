@@ -187,9 +187,7 @@ describe('validateChangelog', () => {
     const data: ChangelogData = {
       title: 'Changelog',
       description: '',
-      entries: [
-        { version: '1.0.0', date: '2026-01-01', changes: { Added: ['Something'] } },
-      ],
+      entries: [{ version: '1.0.0', date: '2026-01-01', changes: { Added: ['Something'] } }],
     };
     const result = validateChangelog(data);
     expect(result.warnings).toContain('Changelog has no [Unreleased] section');

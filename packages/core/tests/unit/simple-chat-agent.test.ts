@@ -205,9 +205,7 @@ describe('TASK-084: Simple Chat Agent — Functional Validation', () => {
     // The second call should include the history as context
     const generateText = provider.generateText as ReturnType<typeof vi.fn>;
     const secondCallMessages = generateText.mock.calls[1][0] as readonly LLMMessage[];
-    const userMessage = secondCallMessages.find(
-      (m: LLMMessage) => m.role === LLMRole.USER,
-    );
+    const userMessage = secondCallMessages.find((m: LLMMessage) => m.role === LLMRole.USER);
     expect(userMessage?.content).toContain('Tell me more');
     expect(userMessage?.content).toContain('conversationHistory');
   });

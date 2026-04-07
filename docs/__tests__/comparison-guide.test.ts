@@ -91,15 +91,12 @@ describe('Comparison guide structure', () => {
   });
 
   it('should have "when to choose" guidance for each comparison', () => {
-    const whenToChooseCount = (content.match(/### When to choose/g) || [])
-      .length;
+    const whenToChooseCount = (content.match(/### When to choose/g) || []).length;
     expect(whenToChooseCount).toBe(3);
   });
 
   it('should have code comparison sections for each framework', () => {
-    const codeComparisonCount = (
-      content.match(/### Code comparison/g) || []
-    ).length;
+    const codeComparisonCount = (content.match(/### Code comparison/g) || []).length;
     expect(codeComparisonCount).toBe(3);
   });
 });

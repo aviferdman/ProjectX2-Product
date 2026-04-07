@@ -1,10 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { Task } from '../../src/task/task.js';
-import {
-  detectCircularDependencies,
-  assertNoCycles,
-} from '../../src/task/task-scheduler.js';
+import { detectCircularDependencies, assertNoCycles } from '../../src/task/task-scheduler.js';
 import type { CircularDependencyCheckResult } from '../../src/task/task-scheduler.js';
 import { resolveTaskDependencies } from '../../src/task/task-scheduler.js';
 import { CircularDependencyError, TaskConfigError } from '../../src/errors/index.js';
@@ -47,11 +44,7 @@ describe('detectCircularDependencies — acyclic graphs', () => {
   });
 
   it('should return no cycles for independent tasks', () => {
-    const result = detectCircularDependencies([
-      makeTask('a'),
-      makeTask('b'),
-      makeTask('c'),
-    ]);
+    const result = detectCircularDependencies([makeTask('a'), makeTask('b'), makeTask('c')]);
     expect(result.hasCycles).toBe(false);
   });
 
@@ -101,10 +94,7 @@ describe('detectCircularDependencies — cycle detection', () => {
   });
 
   it('should detect a simple two-node cycle', () => {
-    const result = detectCircularDependencies([
-      makeTask('a', ['b']),
-      makeTask('b', ['a']),
-    ]);
+    const result = detectCircularDependencies([makeTask('a', ['b']), makeTask('b', ['a'])]);
     expect(result.hasCycles).toBe(true);
     expect(result.cycles.length).toBe(1);
     expect([...result.involvedTaskIds].sort()).toEqual(['a', 'b']);
@@ -197,10 +187,7 @@ describe('detectCircularDependencies — cycle path structure', () => {
   });
 
   it('should not produce duplicate cycles', () => {
-    const result = detectCircularDependencies([
-      makeTask('a', ['b']),
-      makeTask('b', ['a']),
-    ]);
+    const result = detectCircularDependencies([makeTask('a', ['b']), makeTask('b', ['a'])]);
     expect(result.cycles.length).toBe(1);
   });
 });
@@ -231,11 +218,7 @@ describe('detectCircularDependencies — validation errors', () => {
 describe('assertNoCycles', () => {
   it('should not throw for acyclic graph', () => {
     expect(() =>
-      assertNoCycles([
-        makeTask('a'),
-        makeTask('b', ['a']),
-        makeTask('c', ['b']),
-      ]),
+      assertNoCycles([makeTask('a'), makeTask('b', ['a']), makeTask('c', ['b'])]),
     ).not.toThrow();
   });
 
@@ -244,21 +227,14 @@ describe('assertNoCycles', () => {
   });
 
   it('should throw CircularDependencyError for cyclic graph', () => {
-    expect(() =>
-      assertNoCycles([
-        makeTask('a', ['b']),
-        makeTask('b', ['a']),
-      ]),
-    ).toThrow(CircularDependencyError);
+    expect(() => assertNoCycles([makeTask('a', ['b']), makeTask('b', ['a'])])).toThrow(
+      CircularDependencyError,
+    );
   });
 
   it('should include cycle paths in the error', () => {
     try {
-      assertNoCycles([
-        makeTask('a', ['b']),
-        makeTask('b', ['c']),
-        makeTask('c', ['a']),
-      ]);
+      assertNoCycles([makeTask('a', ['b']), makeTask('b', ['c']), makeTask('c', ['a'])]);
       expect.fail('Should have thrown');
     } catch (error) {
       const err = error as CircularDependencyError;
@@ -297,19 +273,14 @@ describe('CircularDependencyError', () => {
   });
 
   it('should format multiple cycles message', () => {
-    const err = new CircularDependencyError([
-      { path: ['a', 'b', 'a'] },
-      { path: ['c', 'd', 'c'] },
-    ]);
+    const err = new CircularDependencyError([{ path: ['a', 'b', 'a'] }, { path: ['c', 'd', 'c'] }]);
     expect(err.message).toContain('Circular dependencies detected:');
     expect(err.message).toContain('a → b → a');
     expect(err.message).toContain('c → d → c');
   });
 
   it('should provide involved task IDs sorted', () => {
-    const err = new CircularDependencyError([
-      { path: ['c', 'b', 'a', 'c'] },
-    ]);
+    const err = new CircularDependencyError([{ path: ['c', 'b', 'a', 'c'] }]);
     expect(err.involvedTaskIds).toEqual(['a', 'b', 'c']);
   });
 
@@ -418,7 +389,12 @@ describe('detectCircularDependencies — edge cases', () => {
   it('should handle 100 acyclic tasks efficiently', () => {
     const tasks: Task[] = [];
     for (let i = 0; i < 100; i++) {
-      tasks.push(makeTask(`t${String(i).padStart(3, '0')}`, i > 0 ? [`t${String(i - 1).padStart(3, '0')}`] : []));
+      tasks.push(
+        makeTask(
+          `t${String(i).padStart(3, '0')}`,
+          i > 0 ? [`t${String(i - 1).padStart(3, '0')}`] : [],
+        ),
+      );
     }
     const result = detectCircularDependencies(tasks);
     expect(result.hasCycles).toBe(false);

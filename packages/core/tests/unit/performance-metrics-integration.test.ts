@@ -15,10 +15,18 @@ import { fileURLToPath } from 'node:url';
 
 import { Agent } from '../../src/agent/agent.js';
 import { Crew } from '../../src/crew/crew.js';
-import { PerformanceMetricsTracker, ApiCallCategory, MetricsCollector } from '../../src/metrics/index.js';
+import {
+  PerformanceMetricsTracker,
+  ApiCallCategory,
+  MetricsCollector,
+} from '../../src/metrics/index.js';
 import { _resetApiCallIdCounter } from '../../src/metrics/performance-metrics-tracker.js';
 import type { LLMProvider, LLMMessage, LLMResponse, TaskResult } from '../../src/types/index.js';
-import type { PerformanceMetricsReport, UnifiedMetricsReport, ApiCallSummary } from '../../src/metrics/index.js';
+import type {
+  PerformanceMetricsReport,
+  UnifiedMetricsReport,
+  ApiCallSummary,
+} from '../../src/metrics/index.js';
 
 const currentFilename = fileURLToPath(import.meta.url);
 const currentDirname = dirname(currentFilename);
@@ -162,11 +170,11 @@ describe('TASK-123: Performance Metrics Integration — Example File', () => {
   });
 
   it('should import Agent, Crew, and metrics from @crewspace/core', () => {
-    expect(content).toContain("Agent");
-    expect(content).toContain("Crew");
-    expect(content).toContain("PerformanceMetricsTracker");
-    expect(content).toContain("MetricsCollector");
-    expect(content).toContain("ApiCallCategory");
+    expect(content).toContain('Agent');
+    expect(content).toContain('Crew');
+    expect(content).toContain('PerformanceMetricsTracker');
+    expect(content).toContain('MetricsCollector');
+    expect(content).toContain('ApiCallCategory');
   });
 
   it('should demonstrate attaching metrics to an Agent', () => {
@@ -344,7 +352,12 @@ describe('TASK-123: Attach MetricsCollector to Crew', () => {
       agents: [agent],
       tasks: [
         { id: 'task-a', description: 'First task', agentId: 'crew-agent' },
-        { id: 'task-b', description: 'Second task', agentId: 'crew-agent', dependencies: ['task-a'] },
+        {
+          id: 'task-b',
+          description: 'Second task',
+          agentId: 'crew-agent',
+          dependencies: ['task-a'],
+        },
       ],
     });
 
@@ -617,7 +630,12 @@ describe('TASK-123: End-to-end Agent + Crew Metrics', () => {
       agents: [agent1, agent2],
       tasks: [
         { id: 'task-alpha', description: 'Alpha task', agentId: 'alpha' },
-        { id: 'task-beta', description: 'Beta task', agentId: 'beta', dependencies: ['task-alpha'] },
+        {
+          id: 'task-beta',
+          description: 'Beta task',
+          agentId: 'beta',
+          dependencies: ['task-alpha'],
+        },
       ],
     });
 

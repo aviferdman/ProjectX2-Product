@@ -92,7 +92,9 @@ describe('runScenario()', () => {
     const scenario: BenchmarkScenario = {
       name: 'counter',
       category: 'Test',
-      fn: () => { count++; },
+      fn: () => {
+        count++;
+      },
       iterations: 50,
       warmup: 5,
       budget: 100,
@@ -113,7 +115,9 @@ describe('runScenario()', () => {
     const scenario: BenchmarkScenario = {
       name: 'defaults',
       category: 'Test',
-      fn: () => { count++; },
+      fn: () => {
+        count++;
+      },
       budget: 100,
     };
 
@@ -128,9 +132,15 @@ describe('runScenario()', () => {
     const scenario: BenchmarkScenario = {
       name: 'lifecycle',
       category: 'Test',
-      fn: () => { calls.push('fn'); },
-      setup: () => { calls.push('setup'); },
-      teardown: () => { calls.push('teardown'); },
+      fn: () => {
+        calls.push('fn');
+      },
+      setup: () => {
+        calls.push('setup');
+      },
+      teardown: () => {
+        calls.push('teardown');
+      },
       iterations: 2,
       warmup: 1,
       budget: 100,
@@ -148,7 +158,9 @@ describe('runScenario()', () => {
     const scenario: BenchmarkScenario = {
       name: 'stats',
       category: 'Test',
-      fn: () => { /* noop */ },
+      fn: () => {
+        /* noop */
+      },
       iterations: 100,
       warmup: 5,
       budget: 1000,
@@ -172,7 +184,9 @@ describe('runScenario()', () => {
     const scenario: BenchmarkScenario = {
       name: 'slow',
       category: 'Test',
-      fn: async () => { await new Promise((r) => setTimeout(r, 5)); },
+      fn: async () => {
+        await new Promise((r) => setTimeout(r, 5));
+      },
       iterations: 10,
       warmup: 1,
       budget: 0.001, // impossibly tight budget
@@ -282,10 +296,10 @@ describe('checkRegressions()', () => {
 
   it('should handle multiple results with mixed statuses', () => {
     const results = [
-      makeResult('stable-bench', 1.0),  // pass
-      makeResult('fast-bench', 1.5),     // improvement (-25%)
-      makeResult('slow-bench', 1.2),     // regression (+20%)
-      makeResult('unknown', 0.5),        // new
+      makeResult('stable-bench', 1.0), // pass
+      makeResult('fast-bench', 1.5), // improvement (-25%)
+      makeResult('slow-bench', 1.2), // regression (+20%)
+      makeResult('unknown', 0.5), // new
     ];
     const report = checkRegressions(results, baseline);
 
@@ -482,7 +496,9 @@ describe('BenchmarkSuite', () => {
         {
           name: 'fail',
           category: 'T',
-          fn: async () => { await new Promise((r) => setTimeout(r, 5)); },
+          fn: async () => {
+            await new Promise((r) => setTimeout(r, 5));
+          },
           budget: 0.001,
         },
       ]);
@@ -643,22 +659,27 @@ describe('formatScenarioResult()', () => {
 describe('formatSuiteMarkdown()', () => {
   it('should produce valid markdown with headers and tables', () => {
     const categories = new Map([
-      ['Agent', [{
-        name: 'Agent init',
-        category: 'Agent',
-        iterations: 100,
-        totalMs: 10,
-        avgMs: 0.1,
-        minMs: 0.05,
-        maxMs: 0.2,
-        p50Ms: 0.08,
-        p95Ms: 0.15,
-        p99Ms: 0.18,
-        stdDevMs: 0.03,
-        opsPerSecond: 10000,
-        budget: 100,
-        withinBudget: true,
-      }]],
+      [
+        'Agent',
+        [
+          {
+            name: 'Agent init',
+            category: 'Agent',
+            iterations: 100,
+            totalMs: 10,
+            avgMs: 0.1,
+            minMs: 0.05,
+            maxMs: 0.2,
+            p50Ms: 0.08,
+            p95Ms: 0.15,
+            p99Ms: 0.18,
+            stdDevMs: 0.03,
+            opsPerSecond: 10000,
+            budget: 100,
+            withinBudget: true,
+          },
+        ],
+      ],
     ]);
 
     const suiteResult = {
@@ -704,9 +725,30 @@ describe('formatRegressionMarkdown()', () => {
   it('should produce a markdown table with statuses', () => {
     const report: RegressionReport = {
       entries: [
-        { name: 'bench-a', currentP95: 1.0, baselineP95: 1.0, changePercent: 0, budget: 100, status: 'pass' },
-        { name: 'bench-b', currentP95: 0.5, baselineP95: 1.0, changePercent: -50, budget: 100, status: 'improvement' },
-        { name: 'bench-c', currentP95: 2.0, baselineP95: null, changePercent: null, budget: 100, status: 'new' },
+        {
+          name: 'bench-a',
+          currentP95: 1.0,
+          baselineP95: 1.0,
+          changePercent: 0,
+          budget: 100,
+          status: 'pass',
+        },
+        {
+          name: 'bench-b',
+          currentP95: 0.5,
+          baselineP95: 1.0,
+          changePercent: -50,
+          budget: 100,
+          status: 'improvement',
+        },
+        {
+          name: 'bench-c',
+          currentP95: 2.0,
+          baselineP95: null,
+          changePercent: null,
+          budget: 100,
+          status: 'new',
+        },
       ],
       hasRegression: false,
       hasWarning: false,
@@ -725,7 +767,14 @@ describe('formatRegressionMarkdown()', () => {
   it('should show regression message when regressions exist', () => {
     const report: RegressionReport = {
       entries: [
-        { name: 'slow', currentP95: 5.0, baselineP95: 1.0, changePercent: 400, budget: 10, status: 'regression' },
+        {
+          name: 'slow',
+          currentP95: 5.0,
+          baselineP95: 1.0,
+          changePercent: 400,
+          budget: 10,
+          status: 'regression',
+        },
       ],
       hasRegression: true,
       hasWarning: false,
@@ -739,7 +788,14 @@ describe('formatRegressionMarkdown()', () => {
   it('should show warning message when only warnings exist', () => {
     const report: RegressionReport = {
       entries: [
-        { name: 'warn', currentP95: 1.1, baselineP95: 1.0, changePercent: 10, budget: 100, status: 'warning' },
+        {
+          name: 'warn',
+          currentP95: 1.1,
+          baselineP95: 1.0,
+          changePercent: 10,
+          budget: 100,
+          status: 'warning',
+        },
       ],
       hasRegression: false,
       hasWarning: true,

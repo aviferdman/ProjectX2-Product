@@ -302,8 +302,8 @@ function computeComplexityScore(input: ScoreInput): number {
 
   // Weighted composite
   const score =
-    taskScore * 0.20 +
-    agentScore * 0.10 +
+    taskScore * 0.2 +
+    agentScore * 0.1 +
     depthScore * 0.25 +
     widthScore * 0.15 +
     toolScore * 0.15 +

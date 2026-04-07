@@ -87,10 +87,7 @@ export class CheckpointManager {
    * @param metadata - Optional user-defined metadata to attach
    * @returns The persisted checkpoint data
    */
-  createCheckpoint(
-    engine: ExecutionEngine,
-    metadata?: Record<string, unknown>,
-  ): CheckpointData {
+  createCheckpoint(engine: ExecutionEngine, metadata?: Record<string, unknown>): CheckpointData {
     const tasks: CheckpointTaskState[] = [];
 
     for (const [, task] of engine.tasks) {

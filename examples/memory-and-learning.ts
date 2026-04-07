@@ -50,9 +50,7 @@ import type { LLMProvider, LLMMessage, LLMResponse, MemoryEntry } from '@crewspa
 
 // -- Mock LLM provider (replace with createOpenAIProvider() for real use) ----
 
-function createMemoryAwareMockProvider(
-  memoryProvider: ShortTermMemory,
-): LLMProvider {
+function createMemoryAwareMockProvider(memoryProvider: ShortTermMemory): LLMProvider {
   return {
     name: 'memory-aware-mock',
     async generateText(messages: readonly LLMMessage[]): Promise<LLMResponse> {
@@ -66,9 +64,7 @@ function createMemoryAwareMockProvider(
       let content: string;
       if (query.includes('remember') || query.includes('recall')) {
         if (hasMemories) {
-          const recalled = searchResult.entries
-            .map((e) => `- ${e.content}`)
-            .join('\n');
+          const recalled = searchResult.entries.map((e) => `- ${e.content}`).join('\n');
           content = `I recall the following from our past interactions:\n${recalled}`;
         } else {
           content = "I don't have any relevant memories about that topic yet.";
@@ -143,19 +139,44 @@ shortTermMemory.on('memory:clear', (_ns: MemoryNamespace | undefined, count: num
 // Add entries using the helper function
 console.log('Adding entries to short-term memory:');
 const entry1 = await shortTermMemory.add(
-  createMemoryEntry('The user prefers TypeScript over JavaScript', MemoryRole.SYSTEM, MemoryNamespace.AGENT, { topic: 'preferences' }),
+  createMemoryEntry(
+    'The user prefers TypeScript over JavaScript',
+    MemoryRole.SYSTEM,
+    MemoryNamespace.AGENT,
+    { topic: 'preferences' },
+  ),
 );
 const entry2 = await shortTermMemory.add(
-  createMemoryEntry('User asked about building REST APIs with Express', MemoryRole.USER, MemoryNamespace.AGENT, { topic: 'apis' }),
+  createMemoryEntry(
+    'User asked about building REST APIs with Express',
+    MemoryRole.USER,
+    MemoryNamespace.AGENT,
+    { topic: 'apis' },
+  ),
 );
 const entry3 = await shortTermMemory.add(
-  createMemoryEntry('Explained async/await patterns in Node.js', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { topic: 'patterns' }),
+  createMemoryEntry(
+    'Explained async/await patterns in Node.js',
+    MemoryRole.ASSISTANT,
+    MemoryNamespace.AGENT,
+    { topic: 'patterns' },
+  ),
 );
 const entry4 = await shortTermMemory.add(
-  createMemoryEntry('User is working on a microservices architecture', MemoryRole.USER, MemoryNamespace.AGENT, { topic: 'architecture' }),
+  createMemoryEntry(
+    'User is working on a microservices architecture',
+    MemoryRole.USER,
+    MemoryNamespace.AGENT,
+    { topic: 'architecture' },
+  ),
 );
 const entry5 = await shortTermMemory.add(
-  createMemoryEntry('Discussed database connection pooling strategies', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { topic: 'database' }),
+  createMemoryEntry(
+    'Discussed database connection pooling strategies',
+    MemoryRole.ASSISTANT,
+    MemoryNamespace.AGENT,
+    { topic: 'database' },
+  ),
 );
 
 console.log(`\nTotal entries: ${String(await shortTermMemory.count())}`);
@@ -163,7 +184,12 @@ console.log(`\nTotal entries: ${String(await shortTermMemory.count())}`);
 // Adding a 6th entry triggers eviction of the oldest (retention: maxEntries=5)
 console.log('\nAdding 6th entry (triggers eviction):');
 await shortTermMemory.add(
-  createMemoryEntry('User wants to learn about Docker containerization', MemoryRole.USER, MemoryNamespace.AGENT, { topic: 'devops' }),
+  createMemoryEntry(
+    'User wants to learn about Docker containerization',
+    MemoryRole.USER,
+    MemoryNamespace.AGENT,
+    { topic: 'devops' },
+  ),
 );
 
 console.log(`Total entries after eviction: ${String(await shortTermMemory.count())}`);
@@ -247,19 +273,33 @@ const crewMemory = new ScopedMemory({
 
 // Agent A stores a finding
 const agentAEntry = await agentAMemory.add(
-  createMemoryEntry('Found a critical security vulnerability in the auth module', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { severity: 'high' }),
+  createMemoryEntry(
+    'Found a critical security vulnerability in the auth module',
+    MemoryRole.ASSISTANT,
+    MemoryNamespace.AGENT,
+    { severity: 'high' },
+  ),
 );
 console.log(`Agent Alpha stored: "${agentAEntry.content}"`);
 
 // Agent B stores a different finding
 const agentBEntry = await agentBMemory.add(
-  createMemoryEntry('Performance benchmarks show 3x improvement after caching', MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { severity: 'info' }),
+  createMemoryEntry(
+    'Performance benchmarks show 3x improvement after caching',
+    MemoryRole.ASSISTANT,
+    MemoryNamespace.AGENT,
+    { severity: 'info' },
+  ),
 );
 console.log(`Agent Beta stored: "${agentBEntry.content}"`);
 
 // Crew stores shared knowledge
 const crewEntry = await crewMemory.add(
-  createMemoryEntry('Project deadline is next Friday — prioritize critical items', MemoryRole.SYSTEM, MemoryNamespace.CREW),
+  createMemoryEntry(
+    'Project deadline is next Friday — prioritize critical items',
+    MemoryRole.SYSTEM,
+    MemoryNamespace.CREW,
+  ),
 );
 console.log(`Crew stored: "${crewEntry.content}"`);
 
@@ -314,10 +354,18 @@ manager.on('memory:add', (entry: MemoryEntry) => {
 // Add through the manager — goes to ALL providers
 console.log('Storing through MemoryManager (replicates to all providers):');
 await manager.add(
-  createMemoryEntry('Important learning: Always validate user input on the server', MemoryRole.SYSTEM, MemoryNamespace.GLOBAL),
+  createMemoryEntry(
+    'Important learning: Always validate user input on the server',
+    MemoryRole.SYSTEM,
+    MemoryNamespace.GLOBAL,
+  ),
 );
 await manager.add(
-  createMemoryEntry('Pattern: Use middleware for cross-cutting concerns', MemoryRole.ASSISTANT, MemoryNamespace.GLOBAL),
+  createMemoryEntry(
+    'Pattern: Use middleware for cross-cutting concerns',
+    MemoryRole.ASSISTANT,
+    MemoryNamespace.GLOBAL,
+  ),
 );
 
 // Both providers have the entries
@@ -380,7 +428,9 @@ async function interact(userMessage: string): Promise<string> {
 
   // Store the assistant response in memory
   await agentMemory.add(
-    createMemoryEntry(result.output, MemoryRole.ASSISTANT, MemoryNamespace.AGENT, { type: 'interaction' }),
+    createMemoryEntry(result.output, MemoryRole.ASSISTANT, MemoryNamespace.AGENT, {
+      type: 'interaction',
+    }),
   );
 
   return result.output;
@@ -402,7 +452,9 @@ console.log(`Total entries in agent memory: ${String(finalCount)}`);
 console.log(`\nAll stored entries (oldest first):`);
 for (const entry of allEntries.entries) {
   const roleIcon = entry.role === MemoryRole.USER ? '👤' : '🤖';
-  console.log(`  ${roleIcon} [${entry.role}] ${entry.content.slice(0, 70)}${entry.content.length > 70 ? '...' : ''}`);
+  console.log(
+    `  ${roleIcon} [${entry.role}] ${entry.content.slice(0, 70)}${entry.content.length > 70 ? '...' : ''}`,
+  );
 }
 
 // Show event summary

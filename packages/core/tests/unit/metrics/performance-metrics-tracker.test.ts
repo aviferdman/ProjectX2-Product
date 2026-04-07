@@ -49,7 +49,9 @@ function makeApiCallInput(overrides?: Partial<ApiCallInput>): ApiCallInput {
   };
 }
 
-function createTracker(overrides?: Partial<PerformanceMetricsTrackerConfig>): PerformanceMetricsTracker {
+function createTracker(
+  overrides?: Partial<PerformanceMetricsTrackerConfig>,
+): PerformanceMetricsTracker {
   return new PerformanceMetricsTracker({
     now: fakeClock,
     ...overrides,
@@ -89,18 +91,30 @@ describe('computeApiCallSummary', () => {
   it('computes correct statistics for a set of records', () => {
     const records: ApiCallRecord[] = [
       {
-        id: 'r1', category: ApiCallCategory.LLM, endpoint: 'gpt-4o',
-        durationMs: 100, success: true, timestamp: 1000,
+        id: 'r1',
+        category: ApiCallCategory.LLM,
+        endpoint: 'gpt-4o',
+        durationMs: 100,
+        success: true,
+        timestamp: 1000,
         tokenUsage: { promptTokens: 50, completionTokens: 30, totalTokens: 80 },
       },
       {
-        id: 'r2', category: ApiCallCategory.LLM, endpoint: 'gpt-4o',
-        durationMs: 300, success: true, timestamp: 2000,
+        id: 'r2',
+        category: ApiCallCategory.LLM,
+        endpoint: 'gpt-4o',
+        durationMs: 300,
+        success: true,
+        timestamp: 2000,
         tokenUsage: { promptTokens: 100, completionTokens: 70, totalTokens: 170 },
       },
       {
-        id: 'r3', category: ApiCallCategory.LLM, endpoint: 'gpt-4o',
-        durationMs: 200, success: false, timestamp: 3000,
+        id: 'r3',
+        category: ApiCallCategory.LLM,
+        endpoint: 'gpt-4o',
+        durationMs: 200,
+        success: false,
+        timestamp: 3000,
         errorMessage: 'rate limited',
       },
     ];
@@ -124,8 +138,12 @@ describe('computeApiCallSummary', () => {
   it('handles records without token usage', () => {
     const records: ApiCallRecord[] = [
       {
-        id: 'r1', category: ApiCallCategory.TOOL, endpoint: 'search',
-        durationMs: 100, success: true, timestamp: 1000,
+        id: 'r1',
+        category: ApiCallCategory.TOOL,
+        endpoint: 'search',
+        durationMs: 100,
+        success: true,
+        timestamp: 1000,
       },
     ];
     const summary = computeApiCallSummary(records);
@@ -182,11 +200,13 @@ describe('PerformanceMetricsTracker', () => {
 
     it('records a failed API call', () => {
       const tracker = createTracker();
-      const record = tracker.recordApiCall(makeApiCallInput({
-        success: false,
-        errorMessage: 'timeout',
-        statusCode: 504,
-      }));
+      const record = tracker.recordApiCall(
+        makeApiCallInput({
+          success: false,
+          errorMessage: 'timeout',
+          statusCode: 504,
+        }),
+      );
 
       expect(record.success).toBe(false);
       expect(record.errorMessage).toBe('timeout');
@@ -195,9 +215,11 @@ describe('PerformanceMetricsTracker', () => {
 
     it('records token usage', () => {
       const tracker = createTracker();
-      const record = tracker.recordApiCall(makeApiCallInput({
-        tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
-      }));
+      const record = tracker.recordApiCall(
+        makeApiCallInput({
+          tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
+        }),
+      );
 
       expect(record.tokenUsage).toEqual({
         promptTokens: 100,
@@ -208,9 +230,11 @@ describe('PerformanceMetricsTracker', () => {
 
     it('records metadata', () => {
       const tracker = createTracker();
-      const record = tracker.recordApiCall(makeApiCallInput({
-        metadata: { model: 'gpt-4o', temperature: 0.7 },
-      }));
+      const record = tracker.recordApiCall(
+        makeApiCallInput({
+          metadata: { model: 'gpt-4o', temperature: 0.7 },
+        }),
+      );
 
       expect(record.metadata).toEqual({ model: 'gpt-4o', temperature: 0.7 });
     });
@@ -351,14 +375,10 @@ describe('PerformanceMetricsTracker', () => {
     it('times a successful async operation', async () => {
       const tracker = createTracker();
 
-      const result = await tracker.timeApiCall(
-        ApiCallCategory.TOOL,
-        'web-search',
-        async () => {
-          advanceClock(150);
-          return 'search results';
-        },
-      );
+      const result = await tracker.timeApiCall(ApiCallCategory.TOOL, 'web-search', async () => {
+        advanceClock(150);
+        return 'search results';
+      });
 
       expect(result).toBe('search results');
       expect(tracker.recordCount).toBe(1);
@@ -386,14 +406,10 @@ describe('PerformanceMetricsTracker', () => {
     it('times a synchronous operation', async () => {
       const tracker = createTracker();
 
-      const result = await tracker.timeApiCall(
-        ApiCallCategory.CUSTOM,
-        'cache-lookup',
-        () => {
-          advanceClock(10);
-          return 42;
-        },
-      );
+      const result = await tracker.timeApiCall(ApiCallCategory.CUSTOM, 'cache-lookup', () => {
+        advanceClock(10);
+        return 42;
+      });
 
       expect(result).toBe(42);
       expect(tracker.recordCount).toBe(1);
@@ -409,13 +425,21 @@ describe('PerformanceMetricsTracker', () => {
 
     beforeEach(() => {
       tracker = createTracker();
-      tracker.recordApiCall(makeApiCallInput({ category: ApiCallCategory.LLM, endpoint: 'gpt-4o' }));
+      tracker.recordApiCall(
+        makeApiCallInput({ category: ApiCallCategory.LLM, endpoint: 'gpt-4o' }),
+      );
       advanceClock(100);
-      tracker.recordApiCall(makeApiCallInput({ category: ApiCallCategory.TOOL, endpoint: 'web-search' }));
+      tracker.recordApiCall(
+        makeApiCallInput({ category: ApiCallCategory.TOOL, endpoint: 'web-search' }),
+      );
       advanceClock(100);
-      tracker.recordApiCall(makeApiCallInput({ category: ApiCallCategory.LLM, endpoint: 'claude-3' }));
+      tracker.recordApiCall(
+        makeApiCallInput({ category: ApiCallCategory.LLM, endpoint: 'claude-3' }),
+      );
       advanceClock(100);
-      tracker.recordApiCall(makeApiCallInput({ category: ApiCallCategory.LLM, endpoint: 'gpt-4o' }));
+      tracker.recordApiCall(
+        makeApiCallInput({ category: ApiCallCategory.LLM, endpoint: 'gpt-4o' }),
+      );
     });
 
     it('getRecords returns all records', () => {
@@ -558,27 +582,33 @@ describe('PerformanceMetricsTracker', () => {
     it('generates a full report with all breakdowns', () => {
       const tracker = createTracker();
 
-      tracker.recordApiCall(makeApiCallInput({
-        category: ApiCallCategory.LLM,
-        endpoint: 'gpt-4o',
-        durationMs: 200,
-        tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
-      }));
+      tracker.recordApiCall(
+        makeApiCallInput({
+          category: ApiCallCategory.LLM,
+          endpoint: 'gpt-4o',
+          durationMs: 200,
+          tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 },
+        }),
+      );
       advanceClock(1000);
 
-      tracker.recordApiCall(makeApiCallInput({
-        category: ApiCallCategory.TOOL,
-        endpoint: 'web-search',
-        durationMs: 100,
-      }));
+      tracker.recordApiCall(
+        makeApiCallInput({
+          category: ApiCallCategory.TOOL,
+          endpoint: 'web-search',
+          durationMs: 100,
+        }),
+      );
       advanceClock(1000);
 
-      tracker.recordApiCall(makeApiCallInput({
-        category: ApiCallCategory.LLM,
-        endpoint: 'claude-3',
-        durationMs: 300,
-        tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
-      }));
+      tracker.recordApiCall(
+        makeApiCallInput({
+          category: ApiCallCategory.LLM,
+          endpoint: 'claude-3',
+          durationMs: 300,
+          tokenUsage: { promptTokens: 200, completionTokens: 100, totalTokens: 300 },
+        }),
+      );
 
       const report = tracker.getReport();
 

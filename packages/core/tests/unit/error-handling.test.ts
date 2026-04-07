@@ -46,7 +46,11 @@ import {
 describe('CrewspaceError', () => {
   // We need a concrete subclass since CrewspaceError is abstract
   class TestError extends CrewspaceError {
-    constructor(message: string, code: ErrorCode, options?: { cause?: Error; isRetryable?: boolean }) {
+    constructor(
+      message: string,
+      code: ErrorCode,
+      options?: { cause?: Error; isRetryable?: boolean },
+    ) {
       super(message, code, options);
       this.name = 'TestError';
     }
@@ -442,7 +446,11 @@ describe('Tool errors', () => {
   });
 
   it('ToolPermissionError should have TOOL_PERMISSION code', () => {
-    const err = new ToolPermissionError('search', ['read', 'write'] as never[], ['write'] as never[]);
+    const err = new ToolPermissionError(
+      'search',
+      ['read', 'write'] as never[],
+      ['write'] as never[],
+    );
     expect(err.code).toBe(ErrorCode.TOOL_PERMISSION);
   });
 

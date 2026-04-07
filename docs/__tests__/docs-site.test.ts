@@ -18,8 +18,7 @@ describe('VitePress docs site configuration', () => {
   });
 
   it('should define nav items', async () => {
-    const config = (await import(join(docsRoot, '.vitepress', 'config.mts')))
-      .default;
+    const config = (await import(join(docsRoot, '.vitepress', 'config.mts'))).default;
     const nav = config.themeConfig?.nav;
 
     expect(nav).toBeDefined();
@@ -32,25 +31,21 @@ describe('VitePress docs site configuration', () => {
   });
 
   it('should define sidebar sections', async () => {
-    const config = (await import(join(docsRoot, '.vitepress', 'config.mts')))
-      .default;
+    const config = (await import(join(docsRoot, '.vitepress', 'config.mts'))).default;
     const sidebar = config.themeConfig?.sidebar;
 
     expect(sidebar).toBeDefined();
     expect(Array.isArray(sidebar)).toBe(true);
     expect(sidebar.length).toBeGreaterThanOrEqual(2);
 
-    const sectionTexts = sidebar.map(
-      (section: { text: string }) => section.text,
-    );
+    const sectionTexts = sidebar.map((section: { text: string }) => section.text);
     expect(sectionTexts).toContain('Introduction');
     expect(sectionTexts).toContain('Guide');
     expect(sectionTexts).toContain('Reference');
   });
 
   it('should enable local search', async () => {
-    const config = (await import(join(docsRoot, '.vitepress', 'config.mts')))
-      .default;
+    const config = (await import(join(docsRoot, '.vitepress', 'config.mts'))).default;
     expect(config.themeConfig?.search?.provider).toBe('local');
   });
 });
@@ -108,8 +103,7 @@ describe('VitePress docs content', () => {
 
 describe('VitePress docs sidebar links', () => {
   it('all sidebar links should point to existing docs files', async () => {
-    const config = (await import(join(docsRoot, '.vitepress', 'config.mts')))
-      .default;
+    const config = (await import(join(docsRoot, '.vitepress', 'config.mts'))).default;
     const sidebar = config.themeConfig?.sidebar;
 
     const links: string[] = [];

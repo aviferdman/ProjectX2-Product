@@ -52,9 +52,7 @@ export interface CircularDependencyCheckResult {
  * // result.cycles[0].path === ['a', 'c', 'b', 'a']
  * ```
  */
-export function detectCircularDependencies(
-  tasks: readonly Task[],
-): CircularDependencyCheckResult {
+export function detectCircularDependencies(tasks: readonly Task[]): CircularDependencyCheckResult {
   if (tasks.length === 0) {
     return { hasCycles: false, cycles: [], involvedTaskIds: [] };
   }

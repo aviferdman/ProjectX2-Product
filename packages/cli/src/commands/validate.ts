@@ -51,7 +51,9 @@ export function registerValidateCommand(parent: Command): void {
       const elapsed = Date.now() - startTime;
       logger.debug(`Validation completed in ${String(elapsed)}ms`);
       logger.debug(`Resolved file: ${result.file}`);
-      logger.debug(`Errors: ${String(result.errorCount)}, Warnings: ${String(result.warningCount)}`);
+      logger.debug(
+        `Errors: ${String(result.errorCount)}, Warnings: ${String(result.warningCount)}`,
+      );
 
       for (const diag of result.diagnostics) {
         const loc = diag.line !== undefined ? ` (line ${String(diag.line)})` : '';

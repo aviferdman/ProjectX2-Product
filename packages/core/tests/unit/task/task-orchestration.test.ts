@@ -1002,8 +1002,12 @@ describe('Task Orchestration & Dependency Handling', () => {
       engine.addTask(createTask('t1', 'a1'));
       engine.addTask(createTask('t2', 'a1', { dependencies: ['t1'] }));
 
-      engine.beforeTask((t) => { hookLog.push(`before:${t.id}`); });
-      engine.afterTask((t) => { hookLog.push(`after:${t.id}`); });
+      engine.beforeTask((t) => {
+        hookLog.push(`before:${t.id}`);
+      });
+      engine.afterTask((t) => {
+        hookLog.push(`after:${t.id}`);
+      });
 
       await engine.run();
 
@@ -1029,7 +1033,9 @@ describe('Task Orchestration & Dependency Handling', () => {
       engine.addTask(createTask('parent', 'a-fail'));
       engine.addTask(createTask('child', 'a-ok', { dependencies: ['parent'] }));
 
-      engine.onTaskError((t) => { errorLog.push(`error:${t.id}`); });
+      engine.onTaskError((t) => {
+        errorLog.push(`error:${t.id}`);
+      });
 
       await engine.run();
 

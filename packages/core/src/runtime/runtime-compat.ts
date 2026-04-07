@@ -78,12 +78,7 @@ export const REQUIRED_GLOBALS = [
  * APIs that should be available globally in Node ≥ 18 (via `--experimental-fetch`
  * which became stable in 18.0) and Bun.
  */
-export const REQUIRED_WEB_GLOBALS = [
-  'fetch',
-  'Request',
-  'Response',
-  'Headers',
-] as const;
+export const REQUIRED_WEB_GLOBALS = ['fetch', 'Request', 'Response', 'Headers'] as const;
 
 // ---------------------------------------------------------------------------
 // Detection helpers
@@ -176,7 +171,9 @@ function checkGlobal(name: string, hint?: string): CompatCheck {
   return {
     name,
     available,
-    hint: available ? undefined : (hint ?? `Global "${name}" is not available. Upgrade your runtime.`),
+    hint: available
+      ? undefined
+      : (hint ?? `Global "${name}" is not available. Upgrade your runtime.`),
   };
 }
 
@@ -250,9 +247,7 @@ function checkNodeProtocol(): CompatCheck {
     return {
       name: 'node: protocol imports',
       available,
-      hint: available
-        ? undefined
-        : 'node: protocol imports are required for built-in file tools.',
+      hint: available ? undefined : 'node: protocol imports are required for built-in file tools.',
     };
   } catch {
     return {

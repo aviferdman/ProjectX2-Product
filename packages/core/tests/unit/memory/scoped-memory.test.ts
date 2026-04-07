@@ -98,10 +98,7 @@ describe('TASK-050: ScopedMemory — Memory Namespaces', () => {
         namespace: MemoryNamespace.CREW,
         ownerId: 'crew-1',
       });
-      expect(scoped.readableNamespaces).toEqual([
-        MemoryNamespace.CREW,
-        MemoryNamespace.GLOBAL,
-      ]);
+      expect(scoped.readableNamespaces).toEqual([MemoryNamespace.CREW, MemoryNamespace.GLOBAL]);
     });
 
     it('should use default readable namespaces for GLOBAL scope', () => {
@@ -176,9 +173,7 @@ describe('TASK-050: ScopedMemory — Memory Namespaces', () => {
     });
 
     it('should define GLOBAL hierarchy as GLOBAL only', () => {
-      expect(DEFAULT_READABLE_NAMESPACES[MemoryNamespace.GLOBAL]).toEqual([
-        MemoryNamespace.GLOBAL,
-      ]);
+      expect(DEFAULT_READABLE_NAMESPACES[MemoryNamespace.GLOBAL]).toEqual([MemoryNamespace.GLOBAL]);
     });
   });
 
@@ -260,9 +255,7 @@ describe('TASK-050: ScopedMemory — Memory Namespaces', () => {
         ownerId: 'agent-1',
       });
 
-      const stored = await scoped.add(
-        createMemoryEntry('my data', MemoryRole.USER),
-      );
+      const stored = await scoped.add(createMemoryEntry('my data', MemoryRole.USER));
       const retrieved = await scoped.get(stored.id);
 
       expect(retrieved).toBeDefined();
@@ -570,9 +563,7 @@ describe('TASK-050: ScopedMemory — Memory Namespaces', () => {
 
       const result = await agent1.search('hello');
       // Should only find agent-1's entry from AGENT namespace
-      const agentEntries = result.entries.filter(
-        (e) => e.namespace === MemoryNamespace.AGENT,
-      );
+      const agentEntries = result.entries.filter((e) => e.namespace === MemoryNamespace.AGENT);
       expect(agentEntries).toHaveLength(1);
       expect(agentEntries[0]!.metadata?.ownerId).toBe('agent-1');
     });
@@ -684,9 +675,7 @@ describe('TASK-050: ScopedMemory — Memory Namespaces', () => {
         ownerId: 'agent-1',
       });
 
-      await expect(agentScoped.clear(MemoryNamespace.CREW)).rejects.toThrow(
-        MemoryOperationError,
-      );
+      await expect(agentScoped.clear(MemoryNamespace.CREW)).rejects.toThrow(MemoryOperationError);
     });
 
     it('should accept explicit owned namespace argument', async () => {

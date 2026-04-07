@@ -73,7 +73,8 @@ const factLookupTool = defineTool({
     const facts: Record<string, string> = {
       'speed of light': '299,792,458 meters per second (approximately 3 × 10⁸ m/s)',
       'earth population': 'Approximately 8.1 billion people as of 2026',
-      'compound interest formula': 'A = P(1 + r/n)^(nt) where P=principal, r=rate, n=compounds/year, t=years',
+      'compound interest formula':
+        'A = P(1 + r/n)^(nt) where P=principal, r=rate, n=compounds/year, t=years',
       'pythagorean theorem': 'a² + b² = c² for right triangles',
       'gdp growth': 'Global GDP growth averages approximately 3% per year',
       'distance earth to moon': 'Approximately 384,400 km (238,855 miles)',
@@ -332,8 +333,7 @@ const reasoningCrew = new Crew({
         'before moving to the next step.',
       agentId: 'reasoner',
       dependencies: ['decompose'],
-      expectedOutput:
-        'A detailed step-by-step reasoning chain with labeled intermediate results',
+      expectedOutput: 'A detailed step-by-step reasoning chain with labeled intermediate results',
     },
     {
       id: 'verify',
@@ -344,8 +344,7 @@ const reasoningCrew = new Crew({
         'or logical gaps.',
       agentId: 'verifier',
       dependencies: ['reason'],
-      expectedOutput:
-        'A verification report confirming or correcting the reasoning chain',
+      expectedOutput: 'A verification report confirming or correcting the reasoning chain',
     },
     {
       id: 'synthesize',

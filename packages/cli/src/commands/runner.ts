@@ -90,9 +90,7 @@ export function parseTimeout(value: string | undefined): number | undefined {
 
   const parsed = Number(value);
   if (!Number.isFinite(parsed) || parsed <= 0 || !Number.isInteger(parsed)) {
-    throw new Error(
-      `Invalid timeout "${value}". Must be a positive integer (milliseconds).`,
-    );
+    throw new Error(`Invalid timeout "${value}". Must be a positive integer (milliseconds).`);
   }
 
   return parsed;
@@ -111,9 +109,8 @@ export async function executeWorkflow(options: RunnerOptions): Promise<RunResult
 
   return new Promise<RunResult>((resolve, reject) => {
     // On Windows with shell: true, paths with spaces need quoting
-    const spawnArgs = process.platform === 'win32'
-      ? args.map((a) => (a.includes(' ') ? `"${a}"` : a))
-      : args;
+    const spawnArgs =
+      process.platform === 'win32' ? args.map((a) => (a.includes(' ') ? `"${a}"` : a)) : args;
 
     const child = spawn(command, spawnArgs, {
       cwd: options.cwd,

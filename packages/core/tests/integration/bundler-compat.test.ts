@@ -97,9 +97,7 @@ const EXPECTED_SYMBOLS = [
 beforeAll(() => {
   // Verify dist exists (build must have been run)
   if (!fs.existsSync(DIST_DIR)) {
-    throw new Error(
-      `dist/ not found at ${DIST_DIR}. Run "npm run build" in packages/core first.`,
-    );
+    throw new Error(`dist/ not found at ${DIST_DIR}. Run "npm run build" in packages/core first.`);
   }
   tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'crewspace-bundler-test-'));
 });
@@ -130,7 +128,24 @@ describe('esbuild compatibility', () => {
       platform: 'node',
       target: 'node18',
       // Mark node built-ins as external so esbuild doesn't try to polyfill them
-      external: ['node:*', 'fs', 'path', 'os', 'crypto', 'events', 'stream', 'util', 'url', 'http', 'https', 'net', 'tls', 'child_process', 'worker_threads', 'better-sqlite3'],
+      external: [
+        'node:*',
+        'fs',
+        'path',
+        'os',
+        'crypto',
+        'events',
+        'stream',
+        'util',
+        'url',
+        'http',
+        'https',
+        'net',
+        'tls',
+        'child_process',
+        'worker_threads',
+        'better-sqlite3',
+      ],
       logLevel: 'silent',
       write: true,
     });
@@ -161,7 +176,24 @@ describe('esbuild compatibility', () => {
       format: 'cjs',
       platform: 'node',
       target: 'node18',
-      external: ['node:*', 'fs', 'path', 'os', 'crypto', 'events', 'stream', 'util', 'url', 'http', 'https', 'net', 'tls', 'child_process', 'worker_threads', 'better-sqlite3'],
+      external: [
+        'node:*',
+        'fs',
+        'path',
+        'os',
+        'crypto',
+        'events',
+        'stream',
+        'util',
+        'url',
+        'http',
+        'https',
+        'net',
+        'tls',
+        'child_process',
+        'worker_threads',
+        'better-sqlite3',
+      ],
       logLevel: 'silent',
       write: true,
     });
@@ -191,16 +223,31 @@ describe('esbuild compatibility', () => {
       format: 'esm',
       platform: 'node',
       target: 'node18',
-      external: ['node:*', 'fs', 'path', 'os', 'crypto', 'events', 'stream', 'util', 'url', 'http', 'https', 'net', 'tls', 'child_process', 'worker_threads', 'better-sqlite3'],
+      external: [
+        'node:*',
+        'fs',
+        'path',
+        'os',
+        'crypto',
+        'events',
+        'stream',
+        'util',
+        'url',
+        'http',
+        'https',
+        'net',
+        'tls',
+        'child_process',
+        'worker_threads',
+        'better-sqlite3',
+      ],
       logLevel: 'silent',
       write: true,
     });
 
     // The runtime-compat module intentionally uses eval() to detect
     // import.meta availability — allow this known "direct-eval" warning.
-    const unexpectedWarnings = result.warnings.filter(
-      (w) => w.id !== 'direct-eval',
-    );
+    const unexpectedWarnings = result.warnings.filter((w) => w.id !== 'direct-eval');
     expect(unexpectedWarnings).toHaveLength(0);
   });
 });
@@ -233,9 +280,21 @@ describe('Vite compatibility', () => {
         rollupOptions: {
           external: [
             /^node:/,
-            'fs', 'path', 'os', 'crypto', 'events', 'stream',
-            'util', 'url', 'http', 'https', 'net', 'tls',
-            'child_process', 'worker_threads', 'better-sqlite3',
+            'fs',
+            'path',
+            'os',
+            'crypto',
+            'events',
+            'stream',
+            'util',
+            'url',
+            'http',
+            'https',
+            'net',
+            'tls',
+            'child_process',
+            'worker_threads',
+            'better-sqlite3',
           ],
         },
       },
@@ -270,9 +329,21 @@ describe('Vite compatibility', () => {
         rollupOptions: {
           external: [
             /^node:/,
-            'fs', 'path', 'os', 'crypto', 'events', 'stream',
-            'util', 'url', 'http', 'https', 'net', 'tls',
-            'child_process', 'worker_threads', 'better-sqlite3',
+            'fs',
+            'path',
+            'os',
+            'crypto',
+            'events',
+            'stream',
+            'util',
+            'url',
+            'http',
+            'https',
+            'net',
+            'tls',
+            'child_process',
+            'worker_threads',
+            'better-sqlite3',
           ],
         },
       },
@@ -281,9 +352,7 @@ describe('Vite compatibility', () => {
 
     // Vite may output .cjs for CJS format
     const possibleFiles = ['bundle.cjs', 'bundle.js'];
-    const outFile = possibleFiles
-      .map((f) => path.join(outDir, f))
-      .find((f) => fs.existsSync(f));
+    const outFile = possibleFiles.map((f) => path.join(outDir, f)).find((f) => fs.existsSync(f));
     expect(outFile).toBeDefined();
 
     const output = fs.readFileSync(outFile!, 'utf-8');
@@ -319,9 +388,21 @@ describe('webpack compatibility', () => {
           target: 'node',
           externals: [
             /^node:/,
-            'fs', 'path', 'os', 'crypto', 'events', 'stream',
-            'util', 'url', 'http', 'https', 'net', 'tls',
-            'child_process', 'worker_threads', 'better-sqlite3',
+            'fs',
+            'path',
+            'os',
+            'crypto',
+            'events',
+            'stream',
+            'util',
+            'url',
+            'http',
+            'https',
+            'net',
+            'tls',
+            'child_process',
+            'worker_threads',
+            'better-sqlite3',
           ],
           resolve: {
             extensions: ['.js', '.cjs', '.mjs', '.json'],
@@ -368,9 +449,21 @@ describe('webpack compatibility', () => {
           },
           externals: [
             /^node:/,
-            'fs', 'path', 'os', 'crypto', 'events', 'stream',
-            'util', 'url', 'http', 'https', 'net', 'tls',
-            'child_process', 'worker_threads', 'better-sqlite3',
+            'fs',
+            'path',
+            'os',
+            'crypto',
+            'events',
+            'stream',
+            'util',
+            'url',
+            'http',
+            'https',
+            'net',
+            'tls',
+            'child_process',
+            'worker_threads',
+            'better-sqlite3',
           ],
           resolve: {
             extensions: ['.js', '.mjs', '.cjs', '.json'],
@@ -410,9 +503,7 @@ describe('webpack compatibility', () => {
 // ---------------------------------------------------------------------------
 describe('package.json exports compatibility', () => {
   it('should have valid exports field for bundler resolution', () => {
-    const pkgJson = JSON.parse(
-      fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'),
-    );
+    const pkgJson = JSON.parse(fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'));
 
     // Main entry points should exist
     expect(pkgJson.exports['.']).toBeDefined();
@@ -435,25 +526,19 @@ describe('package.json exports compatibility', () => {
   });
 
   it('should have "sideEffects: false" for tree-shaking', () => {
-    const pkgJson = JSON.parse(
-      fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'),
-    );
+    const pkgJson = JSON.parse(fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'));
 
     expect(pkgJson.sideEffects).toBe(false);
   });
 
   it('should have "type: module" for ESM support', () => {
-    const pkgJson = JSON.parse(
-      fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'),
-    );
+    const pkgJson = JSON.parse(fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'));
 
     expect(pkgJson.type).toBe('module');
   });
 
   it('should have testing subpath export', () => {
-    const pkgJson = JSON.parse(
-      fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'),
-    );
+    const pkgJson = JSON.parse(fs.readFileSync(path.join(PKG_ROOT, 'package.json'), 'utf-8'));
 
     expect(pkgJson.exports['./testing']).toBeDefined();
     const testingExport = pkgJson.exports['./testing'];
@@ -483,7 +568,24 @@ describe('tree-shaking support', () => {
       platform: 'node',
       target: 'node18',
       treeShaking: true,
-      external: ['node:*', 'fs', 'path', 'os', 'crypto', 'events', 'stream', 'util', 'url', 'http', 'https', 'net', 'tls', 'child_process', 'worker_threads', 'better-sqlite3'],
+      external: [
+        'node:*',
+        'fs',
+        'path',
+        'os',
+        'crypto',
+        'events',
+        'stream',
+        'util',
+        'url',
+        'http',
+        'https',
+        'net',
+        'tls',
+        'child_process',
+        'worker_threads',
+        'better-sqlite3',
+      ],
       logLevel: 'silent',
       write: true,
     });
@@ -505,7 +607,24 @@ console.log(VERSION, Agent);
       platform: 'node',
       target: 'node18',
       treeShaking: true,
-      external: ['node:*', 'fs', 'path', 'os', 'crypto', 'events', 'stream', 'util', 'url', 'http', 'https', 'net', 'tls', 'child_process', 'worker_threads', 'better-sqlite3'],
+      external: [
+        'node:*',
+        'fs',
+        'path',
+        'os',
+        'crypto',
+        'events',
+        'stream',
+        'util',
+        'url',
+        'http',
+        'https',
+        'net',
+        'tls',
+        'child_process',
+        'worker_threads',
+        'better-sqlite3',
+      ],
       logLevel: 'silent',
       write: true,
     });

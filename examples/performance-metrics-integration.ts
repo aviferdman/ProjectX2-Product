@@ -236,7 +236,9 @@ function visualizePerformanceReport(report: PerformanceMetricsReport): void {
     const maxCalls = Math.max(...[...report.byCategory.values()].map((s) => s.totalCalls));
     for (const [category, summary] of report.byCategory) {
       const bar = renderBar(summary.totalCalls, maxCalls, 20);
-      console.log(`  ${category.padEnd(10)} ${bar} ${String(summary.totalCalls)} calls (${summary.avgDurationMs.toFixed(0)}ms avg)`);
+      console.log(
+        `  ${category.padEnd(10)} ${bar} ${String(summary.totalCalls)} calls (${summary.avgDurationMs.toFixed(0)}ms avg)`,
+      );
     }
   }
 
@@ -244,7 +246,9 @@ function visualizePerformanceReport(report: PerformanceMetricsReport): void {
     console.log('\n  By Endpoint');
     console.log(`  ${'─'.repeat(50)}`);
     for (const [endpoint, breakdown] of report.byEndpoint) {
-      console.log(`  ${endpoint}: ${String(breakdown.summary.totalCalls)} calls, ${breakdown.summary.avgDurationMs.toFixed(0)}ms avg [${breakdown.category}]`);
+      console.log(
+        `  ${endpoint}: ${String(breakdown.summary.totalCalls)} calls, ${breakdown.summary.avgDurationMs.toFixed(0)}ms avg [${breakdown.category}]`,
+      );
     }
   }
 }
@@ -272,7 +276,9 @@ function visualizeUnifiedReport(report: UnifiedMetricsReport): void {
     const maxDuration = Math.max(...[...et.byCategory.values()].map((c) => c.totalMs));
     for (const [, cat] of et.byCategory) {
       const bar = renderBar(cat.totalMs, maxDuration, 20);
-      console.log(`  ${cat.category.padEnd(10)} ${bar} ${cat.totalMs.toFixed(0)}ms total (${String(cat.count)} ops)`);
+      console.log(
+        `  ${cat.category.padEnd(10)} ${bar} ${cat.totalMs.toFixed(0)}ms total (${String(cat.count)} ops)`,
+      );
     }
   }
 

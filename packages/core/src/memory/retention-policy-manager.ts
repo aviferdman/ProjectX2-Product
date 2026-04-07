@@ -86,16 +86,12 @@ export interface NamespaceEvictionCount {
 function validatePolicy(policy: MemoryRetentionPolicy, label: string): void {
   if (policy.maxEntries !== undefined) {
     if (!Number.isInteger(policy.maxEntries) || policy.maxEntries < 0) {
-      throw new MemoryConfigError(
-        `${label}.maxEntries must be a non-negative integer`,
-      );
+      throw new MemoryConfigError(`${label}.maxEntries must be a non-negative integer`);
     }
   }
   if (policy.maxAge !== undefined) {
     if (!Number.isFinite(policy.maxAge) || policy.maxAge < 0) {
-      throw new MemoryConfigError(
-        `${label}.maxAge must be a non-negative number`,
-      );
+      throw new MemoryConfigError(`${label}.maxAge must be a non-negative number`);
     }
   }
 }
@@ -151,9 +147,7 @@ export class RetentionPolicyManager {
       const seen = new Set<MemoryNamespace>();
       for (const nsp of config.namespacePolicies) {
         if (seen.has(nsp.namespace)) {
-          throw new MemoryConfigError(
-            `Duplicate namespace policy for "${nsp.namespace}"`,
-          );
+          throw new MemoryConfigError(`Duplicate namespace policy for "${nsp.namespace}"`);
         }
         seen.add(nsp.namespace);
         validatePolicy(nsp.policy, `namespacePolicies[${nsp.namespace}]`);
@@ -208,10 +202,7 @@ export class RetentionPolicyManager {
    * @param provider - The memory provider to evaluate
    * @param now - Optional current time (ms since epoch) for testing
    */
-  async evaluate(
-    provider: MemoryProvider,
-    now?: number,
-  ): Promise<RetentionEvaluationResult> {
+  async evaluate(provider: MemoryProvider, now?: number): Promise<RetentionEvaluationResult> {
     const currentTime = now ?? Date.now();
     const namespaceBreakdown: NamespaceEvictionBreakdown[] = [];
     let totalCountEvictable = 0;
@@ -220,12 +211,7 @@ export class RetentionPolicyManager {
     if (this._namespacePolicies.size > 0) {
       // Evaluate per-namespace policies
       for (const [namespace, policy] of this._namespacePolicies) {
-        const breakdown = await this._evaluateNamespace(
-          provider,
-          namespace,
-          policy,
-          currentTime,
-        );
+        const breakdown = await this._evaluateNamespace(provider, namespace, policy, currentTime);
         namespaceBreakdown.push(breakdown);
         totalCountEvictable += breakdown.countEvictable;
         totalTimeEvictable += breakdown.timeEvictable;
@@ -261,10 +247,7 @@ export class RetentionPolicyManager {
    * @param provider - The memory provider to enforce policies on
    * @param now - Optional current time (ms since epoch) for testing
    */
-  async enforce(
-    provider: MemoryProvider,
-    now?: number,
-  ): Promise<RetentionEnforcementResult> {
+  async enforce(provider: MemoryProvider, now?: number): Promise<RetentionEnforcementResult> {
     const currentTime = now ?? Date.now();
     const nsBreakdown: NamespaceEvictionCount[] = [];
     let totalEvicted = 0;
@@ -272,12 +255,7 @@ export class RetentionPolicyManager {
     if (this._namespacePolicies.size > 0) {
       // Enforce per-namespace policies
       for (const [namespace, policy] of this._namespacePolicies) {
-        const evicted = await this._enforceNamespace(
-          provider,
-          namespace,
-          policy,
-          currentTime,
-        );
+        const evicted = await this._enforceNamespace(provider, namespace, policy, currentTime);
         nsBreakdown.push({ namespace, evicted });
         totalEvicted += evicted;
       }
@@ -361,10 +339,7 @@ export class RetentionPolicyManager {
     };
   }
 
-  private async _countUniqueEvictable(
-    provider: MemoryProvider,
-    now: number,
-  ): Promise<number> {
+  private async _countUniqueEvictable(provider: MemoryProvider, now: number): Promise<number> {
     const evictableIds = new Set<string>();
 
     // Collect evictable from namespace policies
@@ -404,9 +379,7 @@ export class RetentionPolicyManager {
 
     // Count-based evictable
     if (policy.maxEntries && policy.maxEntries > 0) {
-      const count = namespace
-        ? await provider.count(namespace)
-        : await provider.count();
+      const count = namespace ? await provider.count(namespace) : await provider.count();
       if (count > policy.maxEntries) {
         const excess = count - policy.maxEntries;
         const result = await provider.query({
@@ -446,10 +419,7 @@ export class RetentionPolicyManager {
     return totalEvicted;
   }
 
-  private async _enforceGlobal(
-    provider: MemoryProvider,
-    now: number,
-  ): Promise<number> {
+  private async _enforceGlobal(provider: MemoryProvider, now: number): Promise<number> {
     let totalEvicted = 0;
 
     // Time-based eviction first
@@ -500,9 +470,7 @@ export class RetentionPolicyManager {
     maxEntries: number,
     namespace?: MemoryNamespace,
   ): Promise<number> {
-    const currentCount = namespace
-      ? await provider.count(namespace)
-      : await provider.count();
+    const currentCount = namespace ? await provider.count(namespace) : await provider.count();
 
     if (currentCount <= maxEntries) return 0;
 

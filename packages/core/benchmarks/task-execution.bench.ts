@@ -270,8 +270,12 @@ describe('ExecutionEngine Benchmarks', () => {
         });
         engine.addAgent(createFastAgent('agent-1'));
 
-        engine.beforeTask(() => { /* noop */ });
-        engine.afterTask(() => { /* noop */ });
+        engine.beforeTask(() => {
+          /* noop */
+        });
+        engine.afterTask(() => {
+          /* noop */
+        });
 
         for (let i = 0; i < 5; i++) {
           engine.addTask(

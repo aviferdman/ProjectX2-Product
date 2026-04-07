@@ -17,12 +17,7 @@ export {
   parseLogLevel,
 } from './logger.js';
 
-export type {
-  LogContext,
-  LogEntry,
-  LoggerConfig,
-  LogTransport,
-} from './logger.js';
+export type { LogContext, LogEntry, LoggerConfig, LogTransport } from './logger.js';
 
 // Log Export
 export {

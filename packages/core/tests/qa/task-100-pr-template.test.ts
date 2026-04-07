@@ -14,11 +14,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PROJECT_ROOT = join(__dirname, '../../../..');
-const PR_TEMPLATE_PATH = join(
-  PROJECT_ROOT,
-  '.github',
-  'PULL_REQUEST_TEMPLATE.md',
-);
+const PR_TEMPLATE_PATH = join(PROJECT_ROOT, '.github', 'PULL_REQUEST_TEMPLATE.md');
 
 describe('TASK-100: PR Template Exists', () => {
   it('should have .github/PULL_REQUEST_TEMPLATE.md', () => {

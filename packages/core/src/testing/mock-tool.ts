@@ -78,21 +78,23 @@ export function createMockTool(
     handler,
   } = options;
 
-  const execute = vi.fn<(input: unknown) => Promise<unknown>>().mockImplementation(async (input) => {
-    if (delayMs > 0) {
-      await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
-    }
+  const execute = vi
+    .fn<(input: unknown) => Promise<unknown>>()
+    .mockImplementation(async (input) => {
+      if (delayMs > 0) {
+        await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
+      }
 
-    if (error) {
-      throw error;
-    }
+      if (error) {
+        throw error;
+      }
 
-    if (handler) {
-      return handler(input);
-    }
+      if (handler) {
+        return handler(input);
+      }
 
-    return result;
-  });
+      return result;
+    });
 
   return {
     name,

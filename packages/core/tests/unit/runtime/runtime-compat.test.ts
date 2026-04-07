@@ -367,9 +367,7 @@ describe('Runtime API surface — Node.js built-in modules (node: protocol)', ()
     expect(typeof crypto.randomUUID).toBe('function');
     // Verify it actually produces a UUID v4 format
     const uuid = crypto.randomUUID();
-    expect(uuid).toMatch(
-      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
-    );
+    expect(uuid).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
   });
 
   it('node:events can be imported', async () => {

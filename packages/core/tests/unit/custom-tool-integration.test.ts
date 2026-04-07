@@ -21,7 +21,13 @@ import { ToolRegistry } from '../../src/tool/tool-registry.js';
 import { ToolExecutor } from '../../src/tool/tool-executor.js';
 import { PermissionManager, ALLOW_ALL_POLICY } from '../../src/tool/permission-manager.js';
 import { ToolCategory, ToolPermission } from '../../src/types/tool.js';
-import type { LLMProvider, LLMResponse, LLMMessage, Tool, ToolResult } from '../../src/types/index.js';
+import type {
+  LLMProvider,
+  LLMResponse,
+  LLMMessage,
+  Tool,
+  ToolResult,
+} from '../../src/types/index.js';
 
 const currentFilename = fileURLToPath(import.meta.url);
 const currentDirname = dirname(currentFilename);
@@ -435,12 +441,16 @@ describe('TASK-092: Custom Tool Integration — ToolRegistry', () => {
     name: 'toolA',
     description: 'Tool A',
     schema: z.object({}),
-    async execute() { return 'a'; },
+    async execute() {
+      return 'a';
+    },
   });
   const toolB = createTool({
     name: 'toolB',
     description: 'Tool B',
-    async execute() { return 'b'; },
+    async execute() {
+      return 'b';
+    },
   });
 
   beforeEach(() => {
@@ -535,14 +545,18 @@ describe('TASK-092: Custom Tool Integration — Agent Tool Registration', () => 
     description: 'Custom tool one',
     category: ToolCategory.CUSTOM,
     schema: z.object({ input: z.string() }),
-    async execute({ input }) { return `result: ${input}`; },
+    async execute({ input }) {
+      return `result: ${input}`;
+    },
   });
 
   const customTool2 = createTool({
     name: 'customTwo',
     description: 'Custom tool two',
     category: ToolCategory.DATA,
-    async execute() { return 'done'; },
+    async execute() {
+      return 'done';
+    },
   });
 
   it('should register custom tools via constructor', () => {
@@ -669,7 +683,9 @@ describe('TASK-092: Custom Tool Integration — Crew End-to-End', () => {
       name: 'echo',
       description: 'Echo input back',
       schema: z.object({ message: z.string() }),
-      async execute({ message }) { return message; },
+      async execute({ message }) {
+        return message;
+      },
     });
 
     const agent = new Agent({
@@ -709,7 +725,9 @@ describe('TASK-092: Custom Tool Integration — Validation', () => {
         name: '',
         description: 'Bad tool',
         schema: z.object({}),
-        async execute() { return null; },
+        async execute() {
+          return null;
+        },
       }),
     ).toThrow();
   });
@@ -720,7 +738,9 @@ describe('TASK-092: Custom Tool Integration — Validation', () => {
         name: 'has spaces',
         description: 'Bad tool',
         schema: z.object({}),
-        async execute() { return null; },
+        async execute() {
+          return null;
+        },
       }),
     ).toThrow();
   });
@@ -730,7 +750,9 @@ describe('TASK-092: Custom Tool Integration — Validation', () => {
       createTool({
         name: '',
         description: 'Bad tool',
-        async execute() { return null; },
+        async execute() {
+          return null;
+        },
       }),
     ).toThrow();
   });
@@ -740,7 +762,9 @@ describe('TASK-092: Custom Tool Integration — Validation', () => {
       composeTool({
         name: '',
         description: 'Bad tool',
-        async execute() { return null; },
+        async execute() {
+          return null;
+        },
       }),
     ).toThrow();
   });

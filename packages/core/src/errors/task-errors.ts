@@ -11,10 +11,7 @@ export class TaskConfigError extends CrewspaceError {
   public readonly taskId: string | undefined;
 
   constructor(message: string, taskId?: string) {
-    super(
-      taskId ? `Task "${taskId}": ${message}` : message,
-      ErrorCode.TASK_CONFIG,
-    );
+    super(taskId ? `Task "${taskId}": ${message}` : message, ErrorCode.TASK_CONFIG);
     this.name = 'TaskConfigError';
     this.taskId = taskId;
   }
@@ -31,11 +28,9 @@ export class TaskExecutionError extends CrewspaceError {
 
   constructor(taskId: string, message: string, agentId?: string, cause?: Error) {
     const agentCtx = agentId ? ` (agent "${agentId}")` : '';
-    super(
-      `Task "${taskId}"${agentCtx} execution failed: ${message}`,
-      ErrorCode.TASK_EXECUTION,
-      { cause },
-    );
+    super(`Task "${taskId}"${agentCtx} execution failed: ${message}`, ErrorCode.TASK_EXECUTION, {
+      cause,
+    });
     this.name = 'TaskExecutionError';
     this.taskId = taskId;
     this.agentId = agentId;
@@ -71,9 +66,7 @@ export class CircularDependencyError extends TaskConfigError {
   public readonly involvedTaskIds: readonly string[];
 
   constructor(cycles: DependencyCycle[]) {
-    const cycleDescriptions = cycles.map(
-      (c) => c.path.join(' → '),
-    );
+    const cycleDescriptions = cycles.map((c) => c.path.join(' → '));
     const message =
       cycles.length === 1
         ? `Circular dependency detected: ${cycleDescriptions[0]}`

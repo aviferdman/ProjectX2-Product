@@ -257,8 +257,7 @@ export class ScopedMemory implements MemoryProvider {
 
   /** Check if an entry belongs to this owner. */
   private _isOwned(entry: MemoryEntry): boolean {
-    return entry.namespace === this._namespace &&
-      entry.metadata?.['ownerId'] === this._ownerId;
+    return entry.namespace === this._namespace && entry.metadata?.['ownerId'] === this._ownerId;
   }
 
   /** Filter a query result to only include visible entries. */
@@ -268,9 +267,7 @@ export class ScopedMemory implements MemoryProvider {
   }
 
   /** Query across all readable namespaces and merge results. */
-  private async _queryAcrossNamespaces(
-    options?: MemoryQueryOptions,
-  ): Promise<MemoryQueryResult> {
+  private async _queryAcrossNamespaces(options?: MemoryQueryOptions): Promise<MemoryQueryResult> {
     const allEntries: MemoryEntry[] = [];
 
     for (const ns of this._readableNamespaces) {

@@ -164,10 +164,7 @@ describe('MockLLMResponseSystem', () => {
       });
 
       const provider = system.toProvider();
-      const response = await provider.generateText([
-        systemMsg('Be a counter'),
-        userMsg('count'),
-      ]);
+      const response = await provider.generateText([systemMsg('Be a counter'), userMsg('count')]);
       expect(response.content).toBe('You sent 2 messages');
     });
 
@@ -195,7 +192,11 @@ describe('MockLLMResponseSystem', () => {
         match: 'dynamic-full',
         fullResponse: (msgs) => ({
           content: `Dynamic: ${msgs.length} messages`,
-          tokenUsage: { promptTokens: msgs.length, completionTokens: 1, totalTokens: msgs.length + 1 },
+          tokenUsage: {
+            promptTokens: msgs.length,
+            completionTokens: 1,
+            totalTokens: msgs.length + 1,
+          },
           finishReason: 'stop',
         }),
       });
@@ -275,9 +276,9 @@ describe('MockLLMResponseSystem', () => {
       system.addRule({ match: /^specific$/i, response: 'Specific' });
 
       const provider = system.toProvider();
-      await expect(
-        provider.generateText([userMsg('unrelated query')]),
-      ).rejects.toThrow('No matching rule');
+      await expect(provider.generateText([userMsg('unrelated query')])).rejects.toThrow(
+        'No matching rule',
+      );
     });
 
     it('should not throw in non-strict mode for unmatched queries', async () => {
@@ -615,7 +616,7 @@ describe('MockLLMResponseSystem', () => {
       system.addRule({ match: /research/i, response: 'Found 3 papers on AI' });
       system.addRule({ match: /summarize/i, response: 'Summary: key findings are...' });
       system.addRule({ match: /translate/i, response: 'Translated: Bonjour le monde' });
-      system.setDefaultResponse('I don\'t understand');
+      system.setDefaultResponse("I don't understand");
 
       const provider = system.toProvider();
 

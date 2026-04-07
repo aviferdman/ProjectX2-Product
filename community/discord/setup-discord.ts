@@ -116,11 +116,7 @@ export function formatSetupPlan(plan: SetupPlan): string {
 
   for (const action of plan.actions) {
     const icon =
-      action.type === 'create-role'
-        ? '👤'
-        : action.type === 'create-category'
-          ? '📁'
-          : '💬';
+      action.type === 'create-role' ? '👤' : action.type === 'create-category' ? '📁' : '💬';
     lines.push(`  ${icon} ${action.type}: ${action.name}`);
 
     if (action.type === 'create-channel') {
@@ -211,7 +207,9 @@ export function main(argv: string[] = process.argv.slice(2)): void {
     return;
   }
 
-  console.log(`\n🚀 Would apply to guild ${args.guildId} (API integration pending discord.js setup)`);
+  console.log(
+    `\n🚀 Would apply to guild ${args.guildId} (API integration pending discord.js setup)`,
+  );
   console.log('   Install discord.js and run this script to apply changes.');
 }
 

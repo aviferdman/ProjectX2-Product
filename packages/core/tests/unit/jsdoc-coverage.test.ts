@@ -92,9 +92,39 @@ describe('TASK-018: JSDoc coverage — public class methods', () => {
   const requiredMethods: Record<string, string[]> = {
     'llm/base-provider.ts': ['generateText', 'generateStream'],
     'llm/stream-response.ts': ['toResponse'],
-    'memory/memory-manager.ts': ['on', 'off', 'add', 'get', 'query', 'search', 'delete', 'clear', 'count'],
-    'memory/short-term-memory.ts': ['on', 'off', 'add', 'get', 'query', 'search', 'delete', 'clear', 'count'],
-    'memory/sqlite-memory.ts': ['on', 'off', 'add', 'get', 'query', 'search', 'delete', 'clear', 'count'],
+    'memory/memory-manager.ts': [
+      'on',
+      'off',
+      'add',
+      'get',
+      'query',
+      'search',
+      'delete',
+      'clear',
+      'count',
+    ],
+    'memory/short-term-memory.ts': [
+      'on',
+      'off',
+      'add',
+      'get',
+      'query',
+      'search',
+      'delete',
+      'clear',
+      'count',
+    ],
+    'memory/sqlite-memory.ts': [
+      'on',
+      'off',
+      'add',
+      'get',
+      'query',
+      'search',
+      'delete',
+      'clear',
+      'count',
+    ],
     'task/parallel-executor.ts': ['on', 'off', 'once'],
     'tool/tool-executor.ts': ['on', 'off', 'execute'],
     'logging/logger.ts': ['write'],
@@ -108,9 +138,7 @@ describe('TASK-018: JSDoc coverage — public class methods', () => {
     for (const method of methods) {
       it(`${relPath} — ${method}() should have JSDoc`, () => {
         // Find the method declaration line(s) — must be actual method implementations (not interface sigs)
-        const methodPattern = new RegExp(
-          `^\\s+(?:public\\s+)?(?:async\\s+)?${method}\\s*[<(]`,
-        );
+        const methodPattern = new RegExp(`^\\s+(?:public\\s+)?(?:async\\s+)?${method}\\s*[<(]`);
         let found = false;
         let anyDocumented = false;
 

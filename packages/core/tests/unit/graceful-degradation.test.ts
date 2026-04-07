@@ -37,21 +37,17 @@ describe('DefaultFailureClassifier', () => {
       expect(classifier.classify(new TaskConfigError('bad config', 'task-1'))).toBe(
         FailureSeverity.CRITICAL,
       );
-      expect(classifier.classify(new AgentConfigError('bad agent'))).toBe(
-        FailureSeverity.CRITICAL,
-      );
+      expect(classifier.classify(new AgentConfigError('bad agent'))).toBe(FailureSeverity.CRITICAL);
       expect(classifier.classify(new EngineConfigError('bad engine'))).toBe(
         FailureSeverity.CRITICAL,
       );
-      expect(classifier.classify(new CrewConfigError('bad crew'))).toBe(
-        FailureSeverity.CRITICAL,
-      );
+      expect(classifier.classify(new CrewConfigError('bad crew'))).toBe(FailureSeverity.CRITICAL);
     });
 
     it('should classify authentication errors as critical', () => {
-      expect(
-        classifier.classify(new LLMAuthenticationError('openai', 'Invalid API key')),
-      ).toBe(FailureSeverity.CRITICAL);
+      expect(classifier.classify(new LLMAuthenticationError('openai', 'Invalid API key'))).toBe(
+        FailureSeverity.CRITICAL,
+      );
     });
 
     it('should classify unknown non-Crewspace errors as critical', () => {
@@ -62,9 +58,9 @@ describe('DefaultFailureClassifier', () => {
 
   describe('non-critical errors', () => {
     it('should classify tool execution errors as non-critical', () => {
-      expect(
-        classifier.classify(new ToolExecutionError('search', 'API down')),
-      ).toBe(FailureSeverity.NON_CRITICAL);
+      expect(classifier.classify(new ToolExecutionError('search', 'API down'))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
     });
 
     it('should classify tool timeout errors as non-critical', () => {
@@ -74,9 +70,9 @@ describe('DefaultFailureClassifier', () => {
     });
 
     it('should classify LLM rate limit errors as non-critical', () => {
-      expect(
-        classifier.classify(new LLMRateLimitError('openai', 'Too many requests', 1000)),
-      ).toBe(FailureSeverity.NON_CRITICAL);
+      expect(classifier.classify(new LLMRateLimitError('openai', 'Too many requests', 1000))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
     });
 
     it('should classify LLM stream errors as non-critical', () => {
@@ -409,9 +405,7 @@ describe('GracefulDegradationHandler', () => {
 
   describe('classify', () => {
     it('should expose classifier directly', () => {
-      expect(handler.classify(new ToolExecutionError('t', 'e'))).toBe(
-        FailureSeverity.NON_CRITICAL,
-      );
+      expect(handler.classify(new ToolExecutionError('t', 'e'))).toBe(FailureSeverity.NON_CRITICAL);
       expect(handler.classify(new TaskConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
     });
   });

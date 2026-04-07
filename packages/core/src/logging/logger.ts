@@ -112,10 +112,7 @@ export class ConsoleTransport implements LogTransport {
 
   /** Write a formatted log entry to the console (stderr for errors, stdout otherwise). */
   write(entry: LogEntry): void {
-    const parts = [
-      `[${entry.timestamp}]`,
-      `[${entry.levelLabel}]`,
-    ];
+    const parts = [`[${entry.timestamp}]`, `[${entry.levelLabel}]`];
 
     // Add context fields
     if (entry.context.agentId) parts.push(`[agent:${entry.context.agentId}]`);

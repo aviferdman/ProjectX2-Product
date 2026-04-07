@@ -90,7 +90,12 @@ describe('Cross-component error propagation', () => {
   it('should preserve context through Engine → Task → Tool chain', () => {
     const toolErr = new ToolExecutionError('web-search', 'rate limited');
     const taskErr = new TaskExecutionError('research-task', 'tool failed', 'analyst', toolErr);
-    const engineErr = new EngineExecutionError('main-engine', 'task failed', 'research-task', taskErr);
+    const engineErr = new EngineExecutionError(
+      'main-engine',
+      'task failed',
+      'research-task',
+      taskErr,
+    );
 
     const chain = getErrorChain(engineErr);
     expect(chain).toHaveLength(3);
@@ -272,7 +277,12 @@ describe('Graceful degradation error scenarios', () => {
     const configErr = new AgentConfigError('missing role');
 
     await expect(
-      handler.execute(() => { throw configErr; }, { fallback: 'default' }),
+      handler.execute(
+        () => {
+          throw configErr;
+        },
+        { fallback: 'default' },
+      ),
     ).rejects.toThrow(configErr);
 
     expect(handler.degradationCount).toBe(0);
@@ -282,9 +292,14 @@ describe('Graceful degradation error scenarios', () => {
     const handler = new GracefulDegradationHandler();
     const toolErr = new ToolExecutionError('search', 'network error');
 
-    const result = await handler.execute(() => { throw toolErr; }, {
-      fallback: 'cached-result',
-    });
+    const result = await handler.execute(
+      () => {
+        throw toolErr;
+      },
+      {
+        fallback: 'cached-result',
+      },
+    );
 
     expect(result.degraded).toBe(true);
     expect(result.value).toBe('cached-result');
@@ -296,9 +311,14 @@ describe('Graceful degradation error scenarios', () => {
     const handler = new GracefulDegradationHandler();
     const toolErr = new ToolTimeoutError('web-fetch', 5000);
 
-    const result = await handler.execute(() => { throw toolErr; }, {
-      fallback: (err) => `Fallback: ${err.message}`,
-    });
+    const result = await handler.execute(
+      () => {
+        throw toolErr;
+      },
+      {
+        fallback: (err) => `Fallback: ${err.message}`,
+      },
+    );
 
     expect(result.degraded).toBe(true);
     expect(result.value).toContain('web-fetch');
@@ -308,7 +328,9 @@ describe('Graceful degradation error scenarios', () => {
     const handler = new GracefulDegradationHandler();
 
     const result = await handler.execute(
-      () => { throw new ToolExecutionError('db', 'connection lost'); },
+      () => {
+        throw new ToolExecutionError('db', 'connection lost');
+      },
       {
         fallback: async () => {
           return 'async-fallback-value';
@@ -325,7 +347,9 @@ describe('Graceful degradation error scenarios', () => {
     const ctx = { operationId: 'fetch-data', operationType: 'tool', metadata: { attempt: 1 } };
 
     const result = await handler.execute(
-      () => { throw new ToolExecutionError('fetch', 'error'); },
+      () => {
+        throw new ToolExecutionError('fetch', 'error');
+      },
       {
         fallback: (_err, context) => `op:${context?.operationId}`,
         context: ctx,
@@ -341,7 +365,9 @@ describe('Graceful degradation error scenarios', () => {
     handler.on('degradation:fallback', listener);
 
     await handler.execute(
-      () => { throw new ToolExecutionError('search', 'fail'); },
+      () => {
+        throw new ToolExecutionError('search', 'fail');
+      },
       { fallback: 'default' },
     );
 
@@ -358,7 +384,12 @@ describe('Graceful degradation error scenarios', () => {
 
     const authErr = new LLMAuthenticationError('openai', 'invalid key');
     await expect(
-      handler.execute(() => { throw authErr; }, { fallback: 'default' }),
+      handler.execute(
+        () => {
+          throw authErr;
+        },
+        { fallback: 'default' },
+      ),
     ).rejects.toThrow();
 
     expect(listener).toHaveBeenCalledOnce();
@@ -383,7 +414,12 @@ describe('Graceful degradation error scenarios', () => {
 
     // Plain string thrown — normalizeError wraps it; plain Error → CRITICAL
     await expect(
-      handler.execute(() => { throw 'string error'; }, { fallback: 'default' }),
+      handler.execute(
+        () => {
+          throw 'string error';
+        },
+        { fallback: 'default' },
+      ),
     ).rejects.toThrow();
   });
 
@@ -392,7 +428,9 @@ describe('Graceful degradation error scenarios', () => {
 
     for (let i = 0; i < 5; i++) {
       await handler.execute(
-        () => { throw new ToolExecutionError('tool', `error-${i}`); },
+        () => {
+          throw new ToolExecutionError('tool', `error-${i}`);
+        },
         { fallback: 'default', context: { operationId: `op-${i}` } },
       );
     }
@@ -412,7 +450,9 @@ describe('Graceful degradation error scenarios', () => {
 
     // Even auth errors become non-critical with custom classifier
     const result = await handler.execute(
-      () => { throw new LLMAuthenticationError('p', 'bad key'); },
+      () => {
+        throw new LLMAuthenticationError('p', 'bad key');
+      },
       { fallback: 'override' },
     );
 
@@ -445,7 +485,9 @@ describe('Graceful degradation error scenarios', () => {
     const handler = new GracefulDegradationHandler();
 
     await handler.execute(
-      () => { throw new ToolExecutionError('t', 'err'); },
+      () => {
+        throw new ToolExecutionError('t', 'err');
+      },
       { fallback: 'x' },
     );
     expect(handler.degradationCount).toBe(1);
@@ -465,15 +507,21 @@ describe('Graceful degradation error scenarios', () => {
     const handler = new GracefulDegradationHandler();
 
     const r1 = await handler.execute(
-      () => { throw new ToolExecutionError('t1', 'fail'); },
+      () => {
+        throw new ToolExecutionError('t1', 'fail');
+      },
       { fallback: 'fallback-1' },
     );
     const r2 = await handler.execute(
-      () => { throw new ToolTimeoutError('t2', 3000); },
+      () => {
+        throw new ToolTimeoutError('t2', 3000);
+      },
       { fallback: 'fallback-2' },
     );
     const r3 = await handler.execute(
-      () => { throw new LLMRateLimitError('openai', 'rate limit', 5000); },
+      () => {
+        throw new LLMRateLimitError('openai', 'rate limit', 5000);
+      },
       { fallback: 'fallback-3' },
     );
 
@@ -493,7 +541,9 @@ describe('Graceful degradation error scenarios', () => {
     const handler = new GracefulDegradationHandler({ verbose: true });
 
     await handler.execute(
-      () => { throw new ToolExecutionError('search', 'timeout'); },
+      () => {
+        throw new ToolExecutionError('search', 'timeout');
+      },
       { fallback: 'default', context: { operationId: 'my-op' } },
     );
 
@@ -690,14 +740,14 @@ describe('Error serialization (toJSON)', () => {
   });
 
   it('should serialize CircularDependencyError with cycle details', () => {
-    const cycles = [
-      { path: ['a', 'b', 'c', 'a'] },
-      { path: ['d', 'e', 'd'] },
-    ];
+    const cycles = [{ path: ['a', 'b', 'c', 'a'] }, { path: ['d', 'e', 'd'] }];
     const err = new CircularDependencyError(cycles);
     const json = err.toJSON();
 
-    expect(json.details['cycles']).toEqual([['a', 'b', 'c', 'a'], ['d', 'e', 'd']]);
+    expect(json.details['cycles']).toEqual([
+      ['a', 'b', 'c', 'a'],
+      ['d', 'e', 'd'],
+    ]);
     expect(json.details['involvedTaskIds']).toEqual(['a', 'b', 'c', 'd', 'e']);
   });
 
@@ -738,7 +788,9 @@ describe('Concurrent error handling scenarios', () => {
 
     const promises = Array.from({ length: 10 }, (_, i) =>
       handler.execute(
-        () => { throw new ToolExecutionError(`tool-${i}`, 'fail'); },
+        () => {
+          throw new ToolExecutionError(`tool-${i}`, 'fail');
+        },
         { fallback: `fallback-${i}`, context: { operationId: `op-${i}` } },
       ),
     );
@@ -759,12 +811,16 @@ describe('Concurrent error handling scenarios', () => {
     const results = await Promise.allSettled([
       handler.execute(() => 'success-1', { fallback: 'fb-1' }),
       handler.execute(
-        () => { throw new ToolExecutionError('t', 'fail'); },
+        () => {
+          throw new ToolExecutionError('t', 'fail');
+        },
         { fallback: 'fb-2' },
       ),
       handler.execute(() => 'success-3', { fallback: 'fb-3' }),
       handler.execute(
-        () => { throw new AgentConfigError('critical!'); },
+        () => {
+          throw new AgentConfigError('critical!');
+        },
         { fallback: 'fb-4' },
       ),
     ]);
@@ -928,10 +984,7 @@ describe('Error message formatting', () => {
   });
 
   it('CircularDependencyError with multiple cycles', () => {
-    const err = new CircularDependencyError([
-      { path: ['a', 'b', 'a'] },
-      { path: ['c', 'd', 'c'] },
-    ]);
+    const err = new CircularDependencyError([{ path: ['a', 'b', 'a'] }, { path: ['c', 'd', 'c'] }]);
     expect(err.message).toContain('a \u2192 b \u2192 a');
     expect(err.message).toContain('c \u2192 d \u2192 c');
   });
@@ -987,7 +1040,9 @@ describe('hasErrorCode edge cases', () => {
   });
 
   it('should return false for objects that look like errors but are not', () => {
-    expect(hasErrorCode({ code: ErrorCode.AGENT_CONFIG, message: 'test' }, ErrorCode.AGENT_CONFIG)).toBe(false);
+    expect(
+      hasErrorCode({ code: ErrorCode.AGENT_CONFIG, message: 'test' }, ErrorCode.AGENT_CONFIG),
+    ).toBe(false);
   });
 
   it('should match ToolCompositionError with TOOL_COMPOSITION code', () => {
@@ -1083,15 +1138,17 @@ describe('Graceful degradation cascading operations', () => {
 
     // Stage 1: tool fails, uses fallback
     const stage1 = await handler.execute(
-      () => { throw new ToolExecutionError('web-search', 'timeout'); },
+      () => {
+        throw new ToolExecutionError('web-search', 'timeout');
+      },
       { fallback: 'cached search results', context: { operationId: 'stage-1' } },
     );
 
     // Stage 2: uses stage1 result (which is fallback), succeeds
-    const stage2 = await handler.execute(
-      () => `Analyzed: ${stage1.value}`,
-      { fallback: 'analysis unavailable', context: { operationId: 'stage-2' } },
-    );
+    const stage2 = await handler.execute(() => `Analyzed: ${stage1.value}`, {
+      fallback: 'analysis unavailable',
+      context: { operationId: 'stage-2' },
+    });
 
     expect(stage1.degraded).toBe(true);
     expect(stage2.degraded).toBe(false);
@@ -1110,7 +1167,9 @@ describe('Graceful degradation cascading operations', () => {
 
       // Stage 2: critical error - should stop pipeline
       await handler.execute(
-        () => { throw new LLMAuthenticationError('openai', 'invalid key'); },
+        () => {
+          throw new LLMAuthenticationError('openai', 'invalid key');
+        },
         { fallback: 'fb2' },
       );
       results.push('should-not-reach');
@@ -1127,15 +1186,21 @@ describe('Graceful degradation cascading operations', () => {
 
     const stages = await Promise.all([
       handler.execute(
-        () => { throw new ToolTimeoutError('search', 5000); },
+        () => {
+          throw new ToolTimeoutError('search', 5000);
+        },
         { fallback: 'cached', context: { operationId: 'search' } },
       ),
       handler.execute(
-        () => { throw new MemoryQueryError('redis', 'connection refused'); },
+        () => {
+          throw new MemoryQueryError('redis', 'connection refused');
+        },
         { fallback: [], context: { operationId: 'memory' } },
       ),
       handler.execute(
-        () => { throw new LLMRateLimitError('openai', 'limit', 2000); },
+        () => {
+          throw new LLMRateLimitError('openai', 'limit', 2000);
+        },
         { fallback: 'default summary', context: { operationId: 'summarize' } },
       ),
     ]);
@@ -1143,7 +1208,9 @@ describe('Graceful degradation cascading operations', () => {
     expect(stages.every((s) => s.degraded)).toBe(true);
     expect(handler.degradationCount).toBe(3);
     expect(handler.history.map((h) => h.context?.operationId)).toEqual([
-      'search', 'memory', 'summarize',
+      'search',
+      'memory',
+      'summarize',
     ]);
   });
 });
@@ -1264,7 +1331,9 @@ describe('Graceful degradation event listener management', () => {
     handler.off('degradation:fallback', listener);
 
     await handler.execute(
-      () => { throw new ToolExecutionError('t', 'err'); },
+      () => {
+        throw new ToolExecutionError('t', 'err');
+      },
       { fallback: 'default' },
     );
 
@@ -1279,7 +1348,9 @@ describe('Graceful degradation event listener management', () => {
     handler.on('degradation:fallback', listener2);
 
     await handler.execute(
-      () => { throw new ToolExecutionError('t', 'err'); },
+      () => {
+        throw new ToolExecutionError('t', 'err');
+      },
       { fallback: 'default' },
     );
 
@@ -1307,7 +1378,9 @@ describe('Graceful degradation event listener management', () => {
 
     const ctx = { operationId: 'test-op', operationType: 'tool' };
     await handler.execute(
-      () => { throw new ToolTimeoutError('search', 5000); },
+      () => {
+        throw new ToolTimeoutError('search', 5000);
+      },
       { fallback: 'default', context: ctx },
     );
 

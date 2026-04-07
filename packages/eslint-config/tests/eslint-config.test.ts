@@ -1,11 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  crewspaceConfig,
-  recommended,
-  strict,
-  testOverrides,
-  ignores,
-} from '../src/index.js';
+import { crewspaceConfig, recommended, strict, testOverrides, ignores } from '../src/index.js';
 import type { CrewspaceConfigOptions, FlatConfig } from '../src/types.js';
 
 /** Helper: find the last config entry that has the given rule defined (last wins in flat config). */
@@ -19,7 +13,11 @@ function findRuleInConfigs(
     if (
       options?.excludeTestFiles &&
       Array.isArray(config.files) &&
-      config.files.some((f) => typeof f === 'string' && (f.includes('.test.') || f.includes('.spec.') || f.includes('tests/')))
+      config.files.some(
+        (f) =>
+          typeof f === 'string' &&
+          (f.includes('.test.') || f.includes('.spec.') || f.includes('tests/')),
+      )
     ) {
       continue;
     }
@@ -33,9 +31,7 @@ function findRuleInConfigs(
 
 /** Helper: check if ignores config contains a pattern. */
 function hasIgnorePattern(configs: FlatConfig[], pattern: string): boolean {
-  return configs.some(
-    (c) => Array.isArray(c.ignores) && c.ignores.includes(pattern),
-  );
+  return configs.some((c) => Array.isArray(c.ignores) && c.ignores.includes(pattern));
 }
 
 describe('@crewspace/eslint-config', () => {
@@ -61,25 +57,27 @@ describe('@crewspace/eslint-config', () => {
 
     it('includes recommended async-safety rules', () => {
       const configs = crewspaceConfig();
-      const rules = findRuleInConfigs(configs, '@typescript-eslint/no-floating-promises', { excludeTestFiles: true });
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/no-floating-promises', {
+        excludeTestFiles: true,
+      });
       expect(rules).toBeDefined();
       expect(rules!['@typescript-eslint/no-floating-promises']).toBe('error');
     });
 
     it('includes no-misused-promises rule', () => {
       const configs = crewspaceConfig();
-      const rules = findRuleInConfigs(configs, '@typescript-eslint/no-misused-promises', { excludeTestFiles: true });
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/no-misused-promises', {
+        excludeTestFiles: true,
+      });
       expect(rules).toBeDefined();
       expect(rules!['@typescript-eslint/no-misused-promises']).toBe('error');
     });
 
     it('includes explicit-function-return-type rule', () => {
       const configs = crewspaceConfig();
-      const rules = findRuleInConfigs(
-        configs,
-        '@typescript-eslint/explicit-function-return-type',
-        { excludeTestFiles: true },
-      );
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/explicit-function-return-type', {
+        excludeTestFiles: true,
+      });
       expect(rules).toBeDefined();
       const rule = rules!['@typescript-eslint/explicit-function-return-type'];
       expect(Array.isArray(rule)).toBe(true);
@@ -88,13 +86,17 @@ describe('@crewspace/eslint-config', () => {
 
     it('includes naming convention rules', () => {
       const configs = crewspaceConfig();
-      const rules = findRuleInConfigs(configs, '@typescript-eslint/naming-convention', { excludeTestFiles: true });
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/naming-convention', {
+        excludeTestFiles: true,
+      });
       expect(rules).toBeDefined();
     });
 
     it('includes prefer-readonly rule', () => {
       const configs = crewspaceConfig();
-      const rules = findRuleInConfigs(configs, '@typescript-eslint/prefer-readonly', { excludeTestFiles: true });
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/prefer-readonly', {
+        excludeTestFiles: true,
+      });
       expect(rules).toBeDefined();
       expect(rules!['@typescript-eslint/prefer-readonly']).toBe('error');
     });
@@ -134,10 +136,7 @@ describe('@crewspace/eslint-config', () => {
 
     it('does not include strict rules by default', () => {
       const configs = crewspaceConfig();
-      const rules = findRuleInConfigs(
-        configs,
-        '@typescript-eslint/switch-exhaustiveness-check',
-      );
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/switch-exhaustiveness-check');
       // switch-exhaustiveness-check is only in the strict config overlay
       // It may be undefined or not 'error' from the base configs
       if (rules) {
@@ -148,11 +147,9 @@ describe('@crewspace/eslint-config', () => {
 
     it('includes strict rules when strict: true', () => {
       const configs = crewspaceConfig({ strict: true });
-      const rules = findRuleInConfigs(
-        configs,
-        '@typescript-eslint/switch-exhaustiveness-check',
-        { excludeTestFiles: true },
-      );
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/switch-exhaustiveness-check', {
+        excludeTestFiles: true,
+      });
       expect(rules).toBeDefined();
       expect(rules!['@typescript-eslint/switch-exhaustiveness-check']).toBe('error');
     });
@@ -259,10 +256,7 @@ describe('@crewspace/eslint-config', () => {
 
     it('includes switch-exhaustiveness-check', () => {
       const configs = strict({});
-      const rules = findRuleInConfigs(
-        configs,
-        '@typescript-eslint/switch-exhaustiveness-check',
-      );
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/switch-exhaustiveness-check');
       expect(rules).toBeDefined();
       expect(rules!['@typescript-eslint/switch-exhaustiveness-check']).toBe('error');
     });
@@ -276,10 +270,7 @@ describe('@crewspace/eslint-config', () => {
 
     it('includes strict-boolean-expressions', () => {
       const configs = strict({});
-      const rules = findRuleInConfigs(
-        configs,
-        '@typescript-eslint/strict-boolean-expressions',
-      );
+      const rules = findRuleInConfigs(configs, '@typescript-eslint/strict-boolean-expressions');
       expect(rules).toBeDefined();
       const boolRule = rules!['@typescript-eslint/strict-boolean-expressions'] as [
         string,

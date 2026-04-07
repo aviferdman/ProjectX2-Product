@@ -318,7 +318,8 @@ export function computeTokenEfficiencyReport(
     totalTokens,
     totalPromptTokens,
     totalCompletionTokens,
-    promptToCompletionRatio: totalCompletionTokens > 0 ? totalPromptTokens / totalCompletionTokens : 0,
+    promptToCompletionRatio:
+      totalCompletionTokens > 0 ? totalPromptTokens / totalCompletionTokens : 0,
     avgTokensPerOperation: totalTokens / records.length,
     avgTokensPerSecond: totalDurationMs > 0 ? (totalTokens / totalDurationMs) * 1000 : 0,
     avgPromptTokensPerOp: totalPromptTokens / records.length,

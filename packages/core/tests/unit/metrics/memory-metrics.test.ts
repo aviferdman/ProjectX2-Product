@@ -112,10 +112,18 @@ describe('computeMemoryDelta', () => {
 
   it('should compute all delta fields independently', () => {
     const before = makeSnapshot({
-      rss: 100, heapTotal: 80, heapUsed: 50, external: 10, arrayBuffers: 5,
+      rss: 100,
+      heapTotal: 80,
+      heapUsed: 50,
+      external: 10,
+      arrayBuffers: 5,
     });
     const after = makeSnapshot({
-      rss: 200, heapTotal: 90, heapUsed: 70, external: 15, arrayBuffers: 8,
+      rss: 200,
+      heapTotal: 90,
+      heapUsed: 70,
+      external: 15,
+      arrayBuffers: 8,
     });
     const delta = computeMemoryDelta(before, after);
 

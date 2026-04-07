@@ -11,10 +11,29 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // @ts-ignore TS6059 - file is outside package rootDir (community package)
-import { DEFAULT_WELCOME_CONFIG, WELCOME_VARIABLES, MAX_CONTENT_LENGTH, MAX_EMBED_DESCRIPTION_LENGTH, MAX_EMBED_FIELDS, renderTemplate, renderEmbed, renderWelcomeMessage, extractVariables, extractMessageVariables, validateWelcomeConfig, formatWelcomeConfig, buildWelcomeContext } from '../../../../community/discord/welcome-messages.js';
+import {
+  DEFAULT_WELCOME_CONFIG,
+  WELCOME_VARIABLES,
+  MAX_CONTENT_LENGTH,
+  MAX_EMBED_DESCRIPTION_LENGTH,
+  MAX_EMBED_FIELDS,
+  renderTemplate,
+  renderEmbed,
+  renderWelcomeMessage,
+  extractVariables,
+  extractMessageVariables,
+  validateWelcomeConfig,
+  formatWelcomeConfig,
+  buildWelcomeContext,
+} from '../../../../community/discord/welcome-messages.js';
 
 // @ts-ignore TS6059 - file is outside package rootDir (community package)
-import type { WelcomeConfig, WelcomeContext, WelcomeEmbed, WelcomeMessageConfig } from '../../../../community/discord/welcome-messages.js';
+import type {
+  WelcomeConfig,
+  WelcomeContext,
+  WelcomeEmbed,
+  WelcomeMessageConfig,
+} from '../../../../community/discord/welcome-messages.js';
 
 // @ts-ignore TS6059 - file is outside package rootDir (community package)
 import { SERVER_CONFIG } from '../../../../community/discord/server-config.js';
@@ -193,9 +212,7 @@ describe('TASK-103: Embed rendering', () => {
       title: 'Title',
       description: 'Desc',
       color: '#000000',
-      fields: [
-        { name: 'Rules: #{rulesChannel}', value: 'Read #{rulesChannel}', inline: true },
-      ],
+      fields: [{ name: 'Rules: #{rulesChannel}', value: 'Read #{rulesChannel}', inline: true }],
     };
     const rendered = renderEmbed(embed, context);
     expect(rendered.fields[0]!.name).toBe('Rules: #rules');
@@ -515,7 +532,9 @@ describe('TASK-103: Welcome config validation', () => {
     };
     const result = validateWelcomeConfig(config);
     expect(result.valid).toBe(false);
-    expect(result.issues.some((i) => i.includes('autoAssignRole must not be an empty string'))).toBe(true);
+    expect(
+      result.issues.some((i) => i.includes('autoAssignRole must not be an empty string')),
+    ).toBe(true);
   });
 
   it('should fail for non-existent autoAssignRole when server config provided', () => {

@@ -270,10 +270,7 @@ export function comparePackageSizes(
     }
 
     const changeBytes = currentInfo.totalBytes - baseInfo.totalBytes;
-    const changePercent =
-      baseInfo.totalBytes > 0
-        ? (changeBytes / baseInfo.totalBytes) * 100
-        : 0;
+    const changePercent = baseInfo.totalBytes > 0 ? (changeBytes / baseInfo.totalBytes) * 100 : 0;
 
     let status: PackageSizeStatus;
     if (changePercent > regressionThreshold) {
@@ -362,9 +359,7 @@ export function formatBundleSizeTable(report: BundleSizeReport): string {
   if (report.totalBaselineBytes !== null) {
     const totalChange = report.totalCurrentBytes - report.totalBaselineBytes;
     const sign = totalChange >= 0 ? '+' : '';
-    lines.push(
-      `**Total change:** ${sign}${formatBytes(totalChange)}`,
-    );
+    lines.push(`**Total change:** ${sign}${formatBytes(totalChange)}`);
   }
   lines.push('');
   lines.push('| Status | Package | Baseline | Current | Change | Budget |');
@@ -382,13 +377,13 @@ export function formatBundleSizeTable(report: BundleSizeReport): string {
               ? '❌'
               : '🆕';
 
-    const baseline =
-      entry.baselineTotal !== null ? formatBytes(entry.baselineTotal) : '—';
+    const baseline = entry.baselineTotal !== null ? formatBytes(entry.baselineTotal) : '—';
     const current = formatBytes(entry.currentTotal);
     const change = formatChange(entry.changeBytes, entry.changePercent);
-    const budget = entry.budgetBytes !== null
-      ? `${entry.withinBudget ? '✅' : '❌'} ${formatBytes(entry.budgetBytes)}`
-      : '—';
+    const budget =
+      entry.budgetBytes !== null
+        ? `${entry.withinBudget ? '✅' : '❌'} ${formatBytes(entry.budgetBytes)}`
+        : '—';
 
     lines.push(
       `| ${icon} ${entry.status} | ${entry.packageName} | ${baseline} | ${current} | ${change} | ${budget} |`,
@@ -403,7 +398,9 @@ export function formatBundleSizeTable(report: BundleSizeReport): string {
     if (changedFiles.length === 0) continue;
 
     lines.push('<details>');
-    lines.push(`<summary>📦 ${entry.packageName} — ${String(changedFiles.length)} file(s) changed</summary>`);
+    lines.push(
+      `<summary>📦 ${entry.packageName} — ${String(changedFiles.length)} file(s) changed</summary>`,
+    );
     lines.push('');
     lines.push('| Status | File | Baseline | Current | Change |');
     lines.push('|--------|------|:--------:|:-------:|:------:|');
@@ -431,10 +428,14 @@ export function formatBundleSizeTable(report: BundleSizeReport): string {
   }
 
   if (report.hasRegression) {
-    lines.push('> ❌ **Bundle size regression detected.** Size increased beyond the 15% threshold or budget exceeded.');
+    lines.push(
+      '> ❌ **Bundle size regression detected.** Size increased beyond the 15% threshold or budget exceeded.',
+    );
     lines.push('> Review file changes and tree-shake unused code before merging.');
   } else if (report.hasWarning) {
-    lines.push('> ⚠️ **Bundle size warning.** Size increased 5–15%. Please justify in PR description.');
+    lines.push(
+      '> ⚠️ **Bundle size warning.** Size increased 5–15%. Please justify in PR description.',
+    );
   } else {
     lines.push('> ✅ **All packages within acceptable size range.**');
   }
@@ -543,7 +544,9 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
       continue;
     }
     current[pkgName] = scanPackage(pkgDir);
-    console.log(`  ${pkgName}: ${formatBytes(current[pkgName]!.totalBytes)} (${String(current[pkgName]!.fileCount)} files)`);
+    console.log(
+      `  ${pkgName}: ${formatBytes(current[pkgName]!.totalBytes)} (${String(current[pkgName]!.fileCount)} files)`,
+    );
   }
   console.log('');
 

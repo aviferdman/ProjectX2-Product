@@ -39,10 +39,7 @@ export class ToolRateLimitError extends ToolExecutionError {
   public readonly retryAfterMs: number;
 
   constructor(toolName: string, retryAfterMs: number) {
-    super(
-      toolName,
-      `Rate limit exceeded. Try again in ${String(Math.ceil(retryAfterMs))}ms`,
-    );
+    super(toolName, `Rate limit exceeded. Try again in ${String(Math.ceil(retryAfterMs))}ms`);
     this.name = 'ToolRateLimitError';
     this.retryAfterMs = retryAfterMs;
   }
@@ -123,10 +120,7 @@ export class RateLimiter {
 
     if (elapsed <= 0) return;
 
-    this._tokens = Math.min(
-      this._maxTokens,
-      this._tokens + elapsed * this._refillRatePerMs,
-    );
+    this._tokens = Math.min(this._maxTokens, this._tokens + elapsed * this._refillRatePerMs);
     this._lastRefillTime = now;
   }
 }

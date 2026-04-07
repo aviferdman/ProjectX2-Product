@@ -13,7 +13,13 @@ import { z, ZodError } from 'zod';
 
 import { TaskConfigError } from '../errors/index.js';
 import type { CrewTask } from '../types/crew.js';
-import type { RetryPolicy, TaskConfig, TaskEventMap, TaskInput, TaskResult } from '../types/task.js';
+import type {
+  RetryPolicy,
+  TaskConfig,
+  TaskEventMap,
+  TaskInput,
+  TaskResult,
+} from '../types/task.js';
 import { TaskPriority, TaskStatus } from '../types/task.js';
 
 // ---------------------------------------------------------------------------
@@ -24,16 +30,20 @@ const TASK_ID_PATTERN = /^[a-zA-Z0-9_-]+$/;
 const MAX_RETRIES_UPPER_BOUND = 10;
 const MAX_TIMEOUT_MS = 600_000; // 10 minutes
 
-const RetryPolicySchema = z.object({
-  baseDelayMs: z.number().int().positive('baseDelayMs must be positive').optional(),
-  maxDelayMs: z.number().int().positive('maxDelayMs must be positive').optional(),
-  backoffMultiplier: z.number().positive('backoffMultiplier must be positive').optional(),
-  jitter: z.number().min(0, 'jitter must be ≥ 0').max(1, 'jitter must be ≤ 1').optional(),
-  isRetryable: z.custom<(error: Error) => boolean>(
-    (val) => val === undefined || typeof val === 'function',
-    'isRetryable must be a function',
-  ).optional(),
-}).strict().optional();
+const RetryPolicySchema = z
+  .object({
+    baseDelayMs: z.number().int().positive('baseDelayMs must be positive').optional(),
+    maxDelayMs: z.number().int().positive('maxDelayMs must be positive').optional(),
+    backoffMultiplier: z.number().positive('backoffMultiplier must be positive').optional(),
+    jitter: z.number().min(0, 'jitter must be ≥ 0').max(1, 'jitter must be ≤ 1').optional(),
+    isRetryable: z
+      .custom<
+        (error: Error) => boolean
+      >((val) => val === undefined || typeof val === 'function', 'isRetryable must be a function')
+      .optional(),
+  })
+  .strict()
+  .optional();
 
 const TaskConfigSchema = z.object({
   id: z

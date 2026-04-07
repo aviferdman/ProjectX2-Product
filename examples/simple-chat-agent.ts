@@ -28,13 +28,12 @@ import { LLMRole } from '@crewspace/core';
 // -- Mock LLM provider (replace with createOpenAIProvider() for real use) ----
 
 const mockResponses: Record<string, string> = {
-  hello: 'Hello! I\'m your friendly AI assistant. How can I help you today?',
+  hello: "Hello! I'm your friendly AI assistant. How can I help you today?",
   'what can you do':
     'I can help you with a variety of tasks! I can answer questions, help with writing, brainstorm ideas, explain concepts, and much more. What would you like to work on?',
-  'tell me a joke':
-    'Why do programmers prefer dark mode? Because light attracts bugs! 🐛',
+  'tell me a joke': 'Why do programmers prefer dark mode? Because light attracts bugs! 🐛',
   default:
-    'That\'s an interesting question! Let me think about that... I\'d be happy to help you explore this topic further.',
+    "That's an interesting question! Let me think about that... I'd be happy to help you explore this topic further.",
 };
 
 function createChatMockProvider(): LLMProvider {
@@ -49,7 +48,11 @@ function createChatMockProvider(): LLMProvider {
 
       return {
         content,
-        tokenUsage: { promptTokens: messages.length * 15, completionTokens: 25, totalTokens: messages.length * 15 + 25 },
+        tokenUsage: {
+          promptTokens: messages.length * 15,
+          completionTokens: 25,
+          totalTokens: messages.length * 15 + 25,
+        },
         finishReason: 'stop',
       };
     },

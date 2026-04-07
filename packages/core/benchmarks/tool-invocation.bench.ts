@@ -7,10 +7,7 @@
 
 import { describe, it, expect } from 'vitest';
 
-import {
-  PermissionManager,
-  ALLOW_ALL_POLICY,
-} from '../src/tool/permission-manager.js';
+import { PermissionManager, ALLOW_ALL_POLICY } from '../src/tool/permission-manager.js';
 import { ToolExecutor } from '../src/tool/tool-executor.js';
 import { ToolRegistry } from '../src/tool/tool-registry.js';
 import { createTool } from '../src/tool/create-tool.js';

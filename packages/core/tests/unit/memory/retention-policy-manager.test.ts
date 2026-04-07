@@ -71,30 +71,28 @@ describe('RetentionPolicyManager', () => {
     });
 
     it('throws on invalid default maxEntries', () => {
-      expect(
-        () => new RetentionPolicyManager({ defaultPolicy: { maxEntries: -1 } }),
-      ).toThrow(MemoryConfigError);
+      expect(() => new RetentionPolicyManager({ defaultPolicy: { maxEntries: -1 } })).toThrow(
+        MemoryConfigError,
+      );
     });
 
     it('throws on non-integer default maxEntries', () => {
-      expect(
-        () => new RetentionPolicyManager({ defaultPolicy: { maxEntries: 1.5 } }),
-      ).toThrow(MemoryConfigError);
+      expect(() => new RetentionPolicyManager({ defaultPolicy: { maxEntries: 1.5 } })).toThrow(
+        MemoryConfigError,
+      );
     });
 
     it('throws on invalid default maxAge', () => {
-      expect(
-        () => new RetentionPolicyManager({ defaultPolicy: { maxAge: -100 } }),
-      ).toThrow(MemoryConfigError);
+      expect(() => new RetentionPolicyManager({ defaultPolicy: { maxAge: -100 } })).toThrow(
+        MemoryConfigError,
+      );
     });
 
     it('throws on invalid namespace policy maxEntries', () => {
       expect(
         () =>
           new RetentionPolicyManager({
-            namespacePolicies: [
-              { namespace: MemoryNamespace.AGENT, policy: { maxEntries: -5 } },
-            ],
+            namespacePolicies: [{ namespace: MemoryNamespace.AGENT, policy: { maxEntries: -5 } }],
           }),
       ).toThrow(MemoryConfigError);
     });
@@ -129,9 +127,7 @@ describe('RetentionPolicyManager', () => {
     it('returns namespace-specific policy when available', () => {
       const manager = new RetentionPolicyManager({
         defaultPolicy: { maxEntries: 100 },
-        namespacePolicies: [
-          { namespace: MemoryNamespace.AGENT, policy: { maxEntries: 50 } },
-        ],
+        namespacePolicies: [{ namespace: MemoryNamespace.AGENT, policy: { maxEntries: 50 } }],
       });
       expect(manager.getPolicyForNamespace(MemoryNamespace.AGENT)).toEqual({ maxEntries: 50 });
     });
@@ -139,9 +135,7 @@ describe('RetentionPolicyManager', () => {
     it('falls back to default when no namespace policy exists', () => {
       const manager = new RetentionPolicyManager({
         defaultPolicy: { maxEntries: 100 },
-        namespacePolicies: [
-          { namespace: MemoryNamespace.AGENT, policy: { maxEntries: 50 } },
-        ],
+        namespacePolicies: [{ namespace: MemoryNamespace.AGENT, policy: { maxEntries: 50 } }],
       });
       expect(manager.getPolicyForNamespace(MemoryNamespace.CREW)).toEqual({ maxEntries: 100 });
     });
@@ -269,9 +263,7 @@ describe('RetentionPolicyManager', () => {
 
     it('evicts per-namespace when namespace policies are set', async () => {
       const manager = new RetentionPolicyManager({
-        namespacePolicies: [
-          { namespace: MemoryNamespace.AGENT, policy: { maxEntries: 2 } },
-        ],
+        namespacePolicies: [{ namespace: MemoryNamespace.AGENT, policy: { maxEntries: 2 } }],
       });
 
       // Add 4 agent entries
@@ -362,7 +354,9 @@ describe('RetentionPolicyManager', () => {
       const now = Date.now();
       await memory.add(makeEntry({ id: 'old1', createdAt: new Date(now - 120_000).toISOString() }));
       await memory.add(makeEntry({ id: 'old2', createdAt: new Date(now - 90_000).toISOString() }));
-      await memory.add(makeEntry({ id: 'fresh1', createdAt: new Date(now - 10_000).toISOString() }));
+      await memory.add(
+        makeEntry({ id: 'fresh1', createdAt: new Date(now - 10_000).toISOString() }),
+      );
 
       const result = await manager.enforce(memory, now);
       expect(result.totalEvicted).toBe(2);
@@ -373,9 +367,7 @@ describe('RetentionPolicyManager', () => {
 
     it('evicts expired entries per-namespace', async () => {
       const manager = new RetentionPolicyManager({
-        namespacePolicies: [
-          { namespace: MemoryNamespace.AGENT, policy: { maxAge: 60_000 } },
-        ],
+        namespacePolicies: [{ namespace: MemoryNamespace.AGENT, policy: { maxAge: 60_000 } }],
       });
 
       const now = Date.now();
@@ -456,9 +448,7 @@ describe('RetentionPolicyManager', () => {
     it('combines namespace and global policies', async () => {
       const manager = new RetentionPolicyManager({
         defaultPolicy: { maxEntries: 10 },
-        namespacePolicies: [
-          { namespace: MemoryNamespace.AGENT, policy: { maxEntries: 2 } },
-        ],
+        namespacePolicies: [{ namespace: MemoryNamespace.AGENT, policy: { maxEntries: 2 } }],
       });
 
       // 5 agent entries, limit 2 → evict 3
@@ -626,11 +616,33 @@ describe('RetentionPolicyManager', () => {
         ],
       });
 
-      await memory.add(makeEntry({ id: 'a1', namespace: MemoryNamespace.AGENT, createdAt: '2024-01-01T00:00:00Z' }));
-      await memory.add(makeEntry({ id: 'a2', namespace: MemoryNamespace.AGENT, createdAt: '2024-01-02T00:00:00Z' }));
-      await memory.add(makeEntry({ id: 'c1', namespace: MemoryNamespace.CREW, createdAt: '2024-01-01T00:00:00Z' }));
-      await memory.add(makeEntry({ id: 'c2', namespace: MemoryNamespace.CREW, createdAt: '2024-01-02T00:00:00Z' }));
-      await memory.add(makeEntry({ id: 'g1', namespace: MemoryNamespace.GLOBAL, createdAt: '2024-01-01T00:00:00Z' }));
+      await memory.add(
+        makeEntry({
+          id: 'a1',
+          namespace: MemoryNamespace.AGENT,
+          createdAt: '2024-01-01T00:00:00Z',
+        }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'a2',
+          namespace: MemoryNamespace.AGENT,
+          createdAt: '2024-01-02T00:00:00Z',
+        }),
+      );
+      await memory.add(
+        makeEntry({ id: 'c1', namespace: MemoryNamespace.CREW, createdAt: '2024-01-01T00:00:00Z' }),
+      );
+      await memory.add(
+        makeEntry({ id: 'c2', namespace: MemoryNamespace.CREW, createdAt: '2024-01-02T00:00:00Z' }),
+      );
+      await memory.add(
+        makeEntry({
+          id: 'g1',
+          namespace: MemoryNamespace.GLOBAL,
+          createdAt: '2024-01-01T00:00:00Z',
+        }),
+      );
 
       const result = await manager.enforce(memory);
       expect(result.totalEvicted).toBe(2); // 1 from agent, 1 from crew

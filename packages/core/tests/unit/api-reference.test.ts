@@ -648,7 +648,7 @@ describe('TASK-083: API Reference Documentation', () => {
     });
 
     it('should show Agent creation example', () => {
-      expect(content).toContain("new Agent({");
+      expect(content).toContain('new Agent({');
       expect(content).toContain("id: 'researcher'");
     });
 
@@ -694,9 +694,17 @@ describe('TASK-083: API Reference Documentation', () => {
 
     it('should document all public enums from index.ts', () => {
       const enums = [
-        'AgentStatus', 'CrewStatus', 'TaskStatus', 'TaskPriority',
-        'EngineStatus', 'ExecutionStrategy', 'LLMRole',
-        'ToolPermission', 'ToolCategory', 'MemoryNamespace', 'MemoryRole',
+        'AgentStatus',
+        'CrewStatus',
+        'TaskStatus',
+        'TaskPriority',
+        'EngineStatus',
+        'ExecutionStrategy',
+        'LLMRole',
+        'ToolPermission',
+        'ToolCategory',
+        'MemoryNamespace',
+        'MemoryRole',
       ];
       for (const e of enums) {
         expect(content).toContain(e);
@@ -705,9 +713,15 @@ describe('TASK-083: API Reference Documentation', () => {
 
     it('should document key configuration interfaces', () => {
       const interfaces = [
-        'AgentConfig', 'CrewConfig', 'CrewTask', 'TaskConfig',
-        'ExecutionEngineConfig', 'LLMProviderConfig', 'LLMRequestOptions',
-        'MemoryConfig', 'ToolPermissionPolicy',
+        'AgentConfig',
+        'CrewConfig',
+        'CrewTask',
+        'TaskConfig',
+        'ExecutionEngineConfig',
+        'LLMProviderConfig',
+        'LLMRequestOptions',
+        'MemoryConfig',
+        'ToolPermissionPolicy',
       ];
       for (const iface of interfaces) {
         expect(content).toContain(iface);
@@ -716,8 +730,12 @@ describe('TASK-083: API Reference Documentation', () => {
 
     it('should document all event maps', () => {
       const eventMaps = [
-        'AgentEventMap', 'CrewEventMap', 'TaskEventMap',
-        'EngineEventMap', 'ToolEventMap', 'MemoryEventMap',
+        'AgentEventMap',
+        'CrewEventMap',
+        'TaskEventMap',
+        'EngineEventMap',
+        'ToolEventMap',
+        'MemoryEventMap',
       ];
       for (const em of eventMaps) {
         expect(content).toContain(em);
@@ -726,8 +744,12 @@ describe('TASK-083: API Reference Documentation', () => {
 
     it('should document all LLM data types', () => {
       const types = [
-        'LLMMessage', 'LLMResponse', 'LLMStreamChunk',
-        'LLMStreamResponse', 'LLMModelInfo', 'TokenUsage',
+        'LLMMessage',
+        'LLMResponse',
+        'LLMStreamChunk',
+        'LLMStreamResponse',
+        'LLMModelInfo',
+        'TokenUsage',
       ];
       for (const t of types) {
         expect(content).toContain(t);
@@ -736,16 +758,31 @@ describe('TASK-083: API Reference Documentation', () => {
 
     it('should document all error classes', () => {
       const errors = [
-        'AgentConfigError', 'AgentExecutionError',
-        'CrewConfigError', 'CrewExecutionError',
-        'TaskConfigError', 'TaskExecutionError', 'TaskTimeoutError', 'CircularDependencyError',
-        'EngineConfigError', 'EngineExecutionError',
-        'LLMProviderError', 'LLMRateLimitError', 'LLMAuthenticationError',
-        'LLMContextLengthError', 'LLMStreamError',
-        'ToolConfigError', 'ToolNotFoundError', 'ToolExecutionError',
-        'ToolPermissionError', 'ToolTimeoutError', 'ToolCompositionError',
+        'AgentConfigError',
+        'AgentExecutionError',
+        'CrewConfigError',
+        'CrewExecutionError',
+        'TaskConfigError',
+        'TaskExecutionError',
+        'TaskTimeoutError',
+        'CircularDependencyError',
+        'EngineConfigError',
+        'EngineExecutionError',
+        'LLMProviderError',
+        'LLMRateLimitError',
+        'LLMAuthenticationError',
+        'LLMContextLengthError',
+        'LLMStreamError',
+        'ToolConfigError',
+        'ToolNotFoundError',
+        'ToolExecutionError',
+        'ToolPermissionError',
+        'ToolTimeoutError',
+        'ToolCompositionError',
         'ToolInputValidationError',
-        'MemoryConfigError', 'MemoryOperationError', 'MemoryQueryError',
+        'MemoryConfigError',
+        'MemoryOperationError',
+        'MemoryQueryError',
       ];
       for (const err of errors) {
         expect(content).toContain(err);

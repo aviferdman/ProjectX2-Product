@@ -189,9 +189,9 @@ export class CheckpointStore {
   get(checkpointId: string): CheckpointData | undefined {
     this._ensureOpen();
 
-    const row = this._db
-      .prepare('SELECT * FROM checkpoints WHERE id = ?')
-      .get(checkpointId) as CheckpointRow | undefined;
+    const row = this._db.prepare('SELECT * FROM checkpoints WHERE id = ?').get(checkpointId) as
+      | CheckpointRow
+      | undefined;
 
     if (!row) {
       return undefined;
@@ -287,9 +287,7 @@ export class CheckpointStore {
         this._db.prepare('DELETE FROM checkpoint_tasks WHERE checkpoint_id = ?').run(row.id);
       }
 
-      const result = this._db
-        .prepare('DELETE FROM checkpoints WHERE engine_id = ?')
-        .run(engineId);
+      const result = this._db.prepare('DELETE FROM checkpoints WHERE engine_id = ?').run(engineId);
       return result.changes;
     };
 
@@ -354,7 +352,9 @@ export class CheckpointStore {
       status: tr.status,
       agentId: tr.agent_id ?? undefined,
       dependencies: JSON.parse(tr.dependencies) as string[],
-      result: tr.result ? (JSON.parse(tr.result) as import('../types/task.js').TaskResult) : undefined,
+      result: tr.result
+        ? (JSON.parse(tr.result) as import('../types/task.js').TaskResult)
+        : undefined,
       errorMessage: tr.error_message ?? undefined,
     }));
 

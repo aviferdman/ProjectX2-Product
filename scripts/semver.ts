@@ -15,7 +15,14 @@ export interface SemverVersion {
   build: string[];
 }
 
-export type BumpType = 'major' | 'minor' | 'patch' | 'premajor' | 'preminor' | 'prepatch' | 'prerelease';
+export type BumpType =
+  | 'major'
+  | 'minor'
+  | 'patch'
+  | 'premajor'
+  | 'preminor'
+  | 'prepatch'
+  | 'prerelease';
 
 /**
  * Full semver 2.0.0 regex pattern.
@@ -139,31 +146,67 @@ export function bumpVersion(version: string, bump: BumpType, prereleaseTag?: str
 
   switch (bump) {
     case 'major':
-      return formatSemver({ major: parsed.major + 1, minor: 0, patch: 0, prerelease: [], build: [] });
+      return formatSemver({
+        major: parsed.major + 1,
+        minor: 0,
+        patch: 0,
+        prerelease: [],
+        build: [],
+      });
 
     case 'minor':
-      return formatSemver({ major: parsed.major, minor: parsed.minor + 1, patch: 0, prerelease: [], build: [] });
+      return formatSemver({
+        major: parsed.major,
+        minor: parsed.minor + 1,
+        patch: 0,
+        prerelease: [],
+        build: [],
+      });
 
     case 'patch':
       // If current version has a prerelease, just drop it (1.2.3-beta.1 → 1.2.3)
       if (parsed.prerelease.length > 0) {
         return formatSemver({ ...parsed, prerelease: [], build: [] });
       }
-      return formatSemver({ major: parsed.major, minor: parsed.minor, patch: parsed.patch + 1, prerelease: [], build: [] });
+      return formatSemver({
+        major: parsed.major,
+        minor: parsed.minor,
+        patch: parsed.patch + 1,
+        prerelease: [],
+        build: [],
+      });
 
     case 'premajor': {
       const pre = prereleaseTag ? [prereleaseTag, '0'] : ['0'];
-      return formatSemver({ major: parsed.major + 1, minor: 0, patch: 0, prerelease: pre, build: [] });
+      return formatSemver({
+        major: parsed.major + 1,
+        minor: 0,
+        patch: 0,
+        prerelease: pre,
+        build: [],
+      });
     }
 
     case 'preminor': {
       const pre = prereleaseTag ? [prereleaseTag, '0'] : ['0'];
-      return formatSemver({ major: parsed.major, minor: parsed.minor + 1, patch: 0, prerelease: pre, build: [] });
+      return formatSemver({
+        major: parsed.major,
+        minor: parsed.minor + 1,
+        patch: 0,
+        prerelease: pre,
+        build: [],
+      });
     }
 
     case 'prepatch': {
       const pre = prereleaseTag ? [prereleaseTag, '0'] : ['0'];
-      return formatSemver({ major: parsed.major, minor: parsed.minor, patch: parsed.patch + 1, prerelease: pre, build: [] });
+      return formatSemver({
+        major: parsed.major,
+        minor: parsed.minor,
+        patch: parsed.patch + 1,
+        prerelease: pre,
+        build: [],
+      });
     }
 
     case 'prerelease': {
@@ -185,7 +228,13 @@ export function bumpVersion(version: string, bump: BumpType, prereleaseTag?: str
       }
       // No existing prerelease → bump patch and add prerelease
       const pre = prereleaseTag ? [prereleaseTag, '0'] : ['0'];
-      return formatSemver({ major: parsed.major, minor: parsed.minor, patch: parsed.patch + 1, prerelease: pre, build: [] });
+      return formatSemver({
+        major: parsed.major,
+        minor: parsed.minor,
+        patch: parsed.patch + 1,
+        prerelease: pre,
+        build: [],
+      });
     }
 
     default:

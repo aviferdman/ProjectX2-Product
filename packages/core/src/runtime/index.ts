@@ -14,9 +14,4 @@ export {
   REQUIRED_GLOBALS,
   REQUIRED_WEB_GLOBALS,
 } from './runtime-compat.js';
-export type {
-  CompatCheck,
-  CompatReport,
-  RuntimeName,
-  RuntimeVersion,
-} from './runtime-compat.js';
+export type { CompatCheck, CompatReport, RuntimeName, RuntimeVersion } from './runtime-compat.js';

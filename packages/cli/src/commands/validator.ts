@@ -206,7 +206,8 @@ export function validateWorkflowFile(options: ValidatorOptions): ValidationResul
   if (agentMatches.length === 0 && crewMatches.length === 0) {
     diagnostics.push({
       level: 'warning',
-      message: 'No Agent or Crew instantiation found. Expected at least one new Agent() or new Crew().',
+      message:
+        'No Agent or Crew instantiation found. Expected at least one new Agent() or new Crew().',
     });
   }
 
@@ -217,17 +218,29 @@ export function validateWorkflowFile(options: ValidatorOptions): ValidationResul
     const region = content.slice(match.index, match.index + 500);
 
     if (!ID_PROPERTY_RE.test(region)) {
-      diagnostics.push({ level: 'error', message: 'Agent is missing required "id" property', line: lineNum });
+      diagnostics.push({
+        level: 'error',
+        message: 'Agent is missing required "id" property',
+        line: lineNum,
+      });
     }
     // Reset lastIndex for stateless use
     ID_PROPERTY_RE.lastIndex = 0;
 
     if (!ROLE_PROPERTY_RE.test(region)) {
-      diagnostics.push({ level: 'error', message: 'Agent is missing required "role" property', line: lineNum });
+      diagnostics.push({
+        level: 'error',
+        message: 'Agent is missing required "role" property',
+        line: lineNum,
+      });
     }
 
     if (!GOAL_PROPERTY_RE.test(region)) {
-      diagnostics.push({ level: 'error', message: 'Agent is missing required "goal" property', line: lineNum });
+      diagnostics.push({
+        level: 'error',
+        message: 'Agent is missing required "goal" property',
+        line: lineNum,
+      });
     }
 
     if (options.strict) {
@@ -254,16 +267,28 @@ export function validateWorkflowFile(options: ValidatorOptions): ValidationResul
     const region = content.slice(match.index, match.index + 2000);
 
     if (!ID_PROPERTY_RE.test(region)) {
-      diagnostics.push({ level: 'error', message: 'Crew is missing required "id" property', line: lineNum });
+      diagnostics.push({
+        level: 'error',
+        message: 'Crew is missing required "id" property',
+        line: lineNum,
+      });
     }
     ID_PROPERTY_RE.lastIndex = 0;
 
     if (!AGENTS_ARRAY_RE.test(region)) {
-      diagnostics.push({ level: 'error', message: 'Crew is missing required "agents" array', line: lineNum });
+      diagnostics.push({
+        level: 'error',
+        message: 'Crew is missing required "agents" array',
+        line: lineNum,
+      });
     }
 
     if (!TASKS_ARRAY_RE.test(region)) {
-      diagnostics.push({ level: 'error', message: 'Crew is missing required "tasks" array', line: lineNum });
+      diagnostics.push({
+        level: 'error',
+        message: 'Crew is missing required "tasks" array',
+        line: lineNum,
+      });
     }
   }
 

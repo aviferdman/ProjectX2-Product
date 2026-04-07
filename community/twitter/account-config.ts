@@ -66,7 +66,7 @@ export const CONTENT_CATEGORIES: readonly ContentCategory[] = [
     frequency: 'on-event',
     examples: [
       '🎉 Crewspace v{version} is out! {highlights} — upgrade now: npm install @crewspace/core@{version}',
-      '🆕 What\'s new in Crewspace v{version}: {summary}. Full changelog: {link}',
+      "🆕 What's new in Crewspace v{version}: {summary}. Full changelog: {link}",
     ],
   },
   {
@@ -105,7 +105,7 @@ export const CONTENT_CATEGORIES: readonly ContentCategory[] = [
     hashtags: ['#AIagents', '#LLM'],
     frequency: 'biweekly',
     examples: [
-      '🌐 The AI agent ecosystem is growing fast. Here\'s how Crewspace fits in: {link}',
+      "🌐 The AI agent ecosystem is growing fast. Here's how Crewspace fits in: {link}",
       '📊 Interesting thread on multi-agent architectures — our take: {summary}',
     ],
   },

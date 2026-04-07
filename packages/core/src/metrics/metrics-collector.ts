@@ -11,7 +11,12 @@
 import { MemoryTracker } from './memory-metrics.js';
 import type { MemoryMeasurement, MemorySummary, MemoryTrackerConfig } from './memory-metrics.js';
 import { TokenEfficiencyTracker } from './token-efficiency.js';
-import type { TokenRecord, TokenRecordInput, TokenEfficiencyReport, TokenEfficiencyTrackerConfig } from './token-efficiency.js';
+import type {
+  TokenRecord,
+  TokenRecordInput,
+  TokenEfficiencyReport,
+  TokenEfficiencyTrackerConfig,
+} from './token-efficiency.js';
 import { analyzeComplexity } from './complexity-analyzer.js';
 import type { WorkflowDescriptor, ComplexityReport } from './complexity-analyzer.js';
 
@@ -159,7 +164,8 @@ export class MetricsCollector {
   private _lastComplexityReport: ComplexityReport | null = null;
 
   constructor(config?: MetricsCollectorConfig) {
-    this._maxExecutionTimes = config?.maxExecutionTimeMeasurements ?? DEFAULT_MAX_EXECUTION_TIME_MEASUREMENTS;
+    this._maxExecutionTimes =
+      config?.maxExecutionTimeMeasurements ?? DEFAULT_MAX_EXECUTION_TIME_MEASUREMENTS;
     this._now = config?.now ?? (() => performance.now());
     this._memoryTracker = new MemoryTracker(config?.memoryTrackerConfig);
     this._tokenTracker = new TokenEfficiencyTracker(config?.tokenTrackerConfig);
@@ -234,7 +240,10 @@ export class MetricsCollector {
   }
 
   /** Measure memory consumed by an operation. */
-  async measureMemory<T>(label: string, fn: () => T | Promise<T>): Promise<MemoryMeasurement & { result: T }> {
+  async measureMemory<T>(
+    label: string,
+    fn: () => T | Promise<T>,
+  ): Promise<MemoryMeasurement & { result: T }> {
     return this._memoryTracker.measure(label, fn);
   }
 

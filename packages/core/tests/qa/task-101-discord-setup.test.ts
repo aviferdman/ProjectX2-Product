@@ -11,10 +11,27 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // @ts-ignore TS6059 - file is outside package rootDir (community package)
-import { SERVER_CONFIG, ROLES, CATEGORIES, getAllChannels, getChannelNames, getRoleNames, validateNoDuplicateChannels, validateNoDuplicateRoles, validateRequiredChannels, validateServerConfig } from '../../../../community/discord/server-config.js';
+import {
+  SERVER_CONFIG,
+  ROLES,
+  CATEGORIES,
+  getAllChannels,
+  getChannelNames,
+  getRoleNames,
+  validateNoDuplicateChannels,
+  validateNoDuplicateRoles,
+  validateRequiredChannels,
+  validateServerConfig,
+} from '../../../../community/discord/server-config.js';
 
 // @ts-ignore TS6059 - file is outside package rootDir (community package)
-import { generateSetupPlan, formatSetupPlan, formatRoleSummary, formatChannelSummary, parseArgs } from '../../../../community/discord/setup-discord.js';
+import {
+  generateSetupPlan,
+  formatSetupPlan,
+  formatRoleSummary,
+  formatChannelSummary,
+  parseArgs,
+} from '../../../../community/discord/setup-discord.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -247,8 +264,22 @@ describe('TASK-101: Validation functions', () => {
     const badConfig = {
       ...SERVER_CONFIG,
       roles: [
-        { name: 'Admin', color: '#FF0000', permissions: ['ADMINISTRATOR'], mentionable: true, hoist: true, description: 'Admin' },
-        { name: 'Admin', color: '#00FF00', permissions: ['SEND_MESSAGES'], mentionable: false, hoist: false, description: 'Another admin' },
+        {
+          name: 'Admin',
+          color: '#FF0000',
+          permissions: ['ADMINISTRATOR'],
+          mentionable: true,
+          hoist: true,
+          description: 'Admin',
+        },
+        {
+          name: 'Admin',
+          color: '#00FF00',
+          permissions: ['SEND_MESSAGES'],
+          mentionable: false,
+          hoist: false,
+          description: 'Another admin',
+        },
       ],
     };
     const result = validateNoDuplicateRoles(badConfig);

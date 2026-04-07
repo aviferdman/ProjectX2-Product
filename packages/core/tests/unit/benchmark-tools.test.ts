@@ -70,7 +70,7 @@ describe('compareResults', () => {
       'Agent init': { p95Ms: 1.0, avgMs: 0.5, budget: 100 },
     });
     const current: CurrentResult[] = [
-      makeResult('Agent init', 1.20, 100), // 20% regression
+      makeResult('Agent init', 1.2, 100), // 20% regression
     ];
 
     const report = compareResults(baseline, current);
@@ -85,7 +85,7 @@ describe('compareResults', () => {
       'Task init': { p95Ms: 1.0, avgMs: 0.5, budget: 100 },
     });
     const current: CurrentResult[] = [
-      makeResult('Task init', 1.10, 100), // 10% regression
+      makeResult('Task init', 1.1, 100), // 10% regression
     ];
 
     const report = compareResults(baseline, current);
@@ -101,7 +101,7 @@ describe('compareResults', () => {
       'Memory get': { p95Ms: 1.0, avgMs: 0.5, budget: 50 },
     });
     const current: CurrentResult[] = [
-      makeResult('Memory get', 0.80, 50), // 20% improvement
+      makeResult('Memory get', 0.8, 50), // 20% improvement
     ];
 
     const report = compareResults(baseline, current);
@@ -141,10 +141,10 @@ describe('compareResults', () => {
       'Bench C': { p95Ms: 1.0, avgMs: 0.5, budget: 100 },
     });
     const current: CurrentResult[] = [
-      makeResult('Bench A', 0.50, 100), // improvement
-      makeResult('Bench B', 1.10, 100), // warning
-      makeResult('Bench C', 1.30, 100), // regression
-      makeResult('Bench D', 0.50, 100), // new
+      makeResult('Bench A', 0.5, 100), // improvement
+      makeResult('Bench B', 1.1, 100), // warning
+      makeResult('Bench C', 1.3, 100), // regression
+      makeResult('Bench D', 0.5, 100), // new
     ];
 
     const report = compareResults(baseline, current);

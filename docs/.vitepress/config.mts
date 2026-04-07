@@ -2,8 +2,7 @@ import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'Crewspace',
-  description:
-    'TypeScript-native agent orchestration framework with visual canvas',
+  description: 'TypeScript-native agent orchestration framework with visual canvas',
   base: '/',
 
   // Existing docs reference files outside the docs directory (examples/, README)
@@ -58,9 +57,7 @@ export default defineConfig({
       },
       {
         text: 'Policies',
-        items: [
-          { text: 'Deprecation Policy', link: '/guide/deprecation-policy' },
-        ],
+        items: [{ text: 'Deprecation Policy', link: '/guide/deprecation-policy' }],
       },
       {
         text: 'Performance',
@@ -87,8 +84,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern:
-        'https://github.com/aviferdman/ProjectX2-Product/edit/main/docs/:path',
+      pattern: 'https://github.com/aviferdman/ProjectX2-Product/edit/main/docs/:path',
       text: 'Edit this page on GitHub',
     },
 

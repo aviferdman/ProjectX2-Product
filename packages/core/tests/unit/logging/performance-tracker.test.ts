@@ -160,16 +160,47 @@ describe('PerformanceTracker', () => {
   describe('query methods', () => {
     beforeEach(() => {
       tracker.record(
-        makeMetricInput({ type: MetricType.ENGINE_RUN, engineId: 'eng-1', startTime: 0, endTime: 1000, durationMs: 1000 }),
+        makeMetricInput({
+          type: MetricType.ENGINE_RUN,
+          engineId: 'eng-1',
+          startTime: 0,
+          endTime: 1000,
+          durationMs: 1000,
+        }),
       );
       tracker.record(
-        makeMetricInput({ type: MetricType.TASK_EXECUTION, engineId: 'eng-1', taskId: 'task-a', agentId: 'agent-1', startTime: 0, endTime: 300, durationMs: 300 }),
+        makeMetricInput({
+          type: MetricType.TASK_EXECUTION,
+          engineId: 'eng-1',
+          taskId: 'task-a',
+          agentId: 'agent-1',
+          startTime: 0,
+          endTime: 300,
+          durationMs: 300,
+        }),
       );
       tracker.record(
-        makeMetricInput({ type: MetricType.LLM_CALL, engineId: 'eng-1', taskId: 'task-a', agentId: 'agent-1', startTime: 50, endTime: 250, durationMs: 200 }),
+        makeMetricInput({
+          type: MetricType.LLM_CALL,
+          engineId: 'eng-1',
+          taskId: 'task-a',
+          agentId: 'agent-1',
+          startTime: 50,
+          endTime: 250,
+          durationMs: 200,
+        }),
       );
       tracker.record(
-        makeMetricInput({ type: MetricType.TOOL_CALL, engineId: 'eng-1', taskId: 'task-b', agentId: 'agent-2', toolId: 'search', startTime: 300, endTime: 500, durationMs: 200 }),
+        makeMetricInput({
+          type: MetricType.TOOL_CALL,
+          engineId: 'eng-1',
+          taskId: 'task-b',
+          agentId: 'agent-2',
+          toolId: 'search',
+          startTime: 300,
+          endTime: 500,
+          durationMs: 200,
+        }),
       );
     });
 
@@ -731,9 +762,7 @@ describe('PerformanceTracker integration', () => {
   });
 
   it('tracks failures alongside successes', () => {
-    tracker.record(
-      makeMetricInput({ type: MetricType.LLM_CALL, durationMs: 100, success: true }),
-    );
+    tracker.record(makeMetricInput({ type: MetricType.LLM_CALL, durationMs: 100, success: true }));
     tracker.record(
       makeMetricInput({
         type: MetricType.LLM_CALL,
@@ -742,9 +771,7 @@ describe('PerformanceTracker integration', () => {
         errorMessage: 'Rate limit exceeded',
       }),
     );
-    tracker.record(
-      makeMetricInput({ type: MetricType.LLM_CALL, durationMs: 150, success: true }),
-    );
+    tracker.record(makeMetricInput({ type: MetricType.LLM_CALL, durationMs: 150, success: true }));
 
     const report = tracker.getReport();
     const llm = report.byType.get('llm-call')!;

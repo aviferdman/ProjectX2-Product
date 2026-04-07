@@ -250,10 +250,7 @@ describe('FileTransport', () => {
 
     // mkdir called only once (on first write)
     expect(mkdirSync).toHaveBeenCalledTimes(1);
-    expect(mkdirSync).toHaveBeenCalledWith(
-      expect.any(String),
-      { recursive: true },
-    );
+    expect(mkdirSync).toHaveBeenCalledWith(expect.any(String), { recursive: true });
   });
 
   it('skips mkdir when disabled', () => {
@@ -288,8 +285,8 @@ describe('FileTransport', () => {
     logger.warn('warning');
 
     expect(appendFile).toHaveBeenCalledTimes(2);
-    expect((appendFile.mock.calls[0]![1] as string)).toContain('logged to file');
-    expect((appendFile.mock.calls[1]![1] as string)).toContain('warning');
+    expect(appendFile.mock.calls[0]![1] as string).toContain('logged to file');
+    expect(appendFile.mock.calls[1]![1] as string).toContain('warning');
   });
 });
 
@@ -420,10 +417,7 @@ describe('exportLogsToFile', () => {
 describe('exportLogsToStdout', () => {
   it('exports entries as text by default', () => {
     const written: string[] = [];
-    const entries = [
-      makeEntry({ message: 'first' }),
-      makeEntry({ message: 'second' }),
-    ];
+    const entries = [makeEntry({ message: 'first' }), makeEntry({ message: 'second' })];
 
     const count = exportLogsToStdout(entries, {
       _write: (data) => written.push(data),

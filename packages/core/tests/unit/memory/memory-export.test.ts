@@ -12,9 +12,7 @@ import {
   MEMORY_EXPORT_VERSION,
   MAX_EXPORT_ENTRIES,
 } from '../../../src/memory/memory-export.js';
-import type {
-  MemoryExportData,
-} from '../../../src/memory/memory-export.js';
+import type { MemoryExportData } from '../../../src/memory/memory-export.js';
 import { ShortTermMemory } from '../../../src/memory/short-term-memory.js';
 import { MemoryManager } from '../../../src/memory/memory-manager.js';
 import { createMemoryEntry } from '../../../src/memory/memory-manager.js';
@@ -107,9 +105,7 @@ describe('exportMemory', () => {
   });
 
   it('includes metadata in exported entries', async () => {
-    await memory.add(
-      makeEntry({ id: 'meta-1', metadata: { agentId: 'agent-42', priority: 1 } }),
-    );
+    await memory.add(makeEntry({ id: 'meta-1', metadata: { agentId: 'agent-42', priority: 1 } }));
     const data = await exportMemory(memory);
 
     expect(data.entries[0]!.metadata).toEqual({ agentId: 'agent-42', priority: 1 });
@@ -199,9 +195,7 @@ describe('importMemory', () => {
       version: 1,
       exportedAt: new Date().toISOString(),
       providerName: 'short-term',
-      entries: [
-        makeEntry({ id: 'existing-2', content: 'Duplicate' }),
-      ],
+      entries: [makeEntry({ id: 'existing-2', content: 'Duplicate' })],
       totalEntries: 1,
     };
 
@@ -220,9 +214,7 @@ describe('importMemory', () => {
       version: 1,
       exportedAt: new Date().toISOString(),
       providerName: 'short-term',
-      entries: [
-        makeEntry({ id: 'new-1', content: 'New entry' }),
-      ],
+      entries: [makeEntry({ id: 'new-1', content: 'New entry' })],
       totalEntries: 1,
     };
 
@@ -245,7 +237,13 @@ describe('importMemory', () => {
       entries: [
         makeEntry({ id: 'valid-1' }),
         // Invalid: missing content
-        { id: 'bad-1', content: '', role: MemoryRole.USER, namespace: MemoryNamespace.AGENT, createdAt: new Date().toISOString() } as MemoryEntry,
+        {
+          id: 'bad-1',
+          content: '',
+          role: MemoryRole.USER,
+          namespace: MemoryNamespace.AGENT,
+          createdAt: new Date().toISOString(),
+        } as MemoryEntry,
         makeEntry({ id: 'valid-2' }),
       ],
       totalEntries: 3,
@@ -274,9 +272,7 @@ describe('importMemory', () => {
       totalEntries: 0,
     };
 
-    await expect(importMemory(memory, futureExport)).rejects.toThrow(
-      /Unsupported export version/,
-    );
+    await expect(importMemory(memory, futureExport)).rejects.toThrow(/Unsupported export version/);
   });
 
   it('preserves entry metadata during import', async () => {

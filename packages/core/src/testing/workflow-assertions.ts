@@ -59,7 +59,10 @@ export function expectAgentError(agent: Agent): void {
 /**
  * Assert that a crew run completed successfully with results for all expected tasks.
  */
-export function expectCrewSuccess(result: CrewRunResult, expectedTaskIds?: readonly string[]): void {
+export function expectCrewSuccess(
+  result: CrewRunResult,
+  expectedTaskIds?: readonly string[],
+): void {
   expect(result.success).toBe(true);
   expect(result.duration).toBeGreaterThanOrEqual(0);
   expect(result.crewId).toBeTruthy();

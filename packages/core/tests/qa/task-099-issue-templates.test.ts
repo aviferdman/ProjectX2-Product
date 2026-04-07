@@ -22,7 +22,10 @@ function parseFrontmatter(content: string): Record<string, string> {
   for (const line of match[1].split('\n')) {
     const idx = line.indexOf(':');
     if (idx > 0) {
-      result[line.slice(0, idx).trim()] = line.slice(idx + 1).trim().replace(/^["']|["']$/g, '');
+      result[line.slice(0, idx).trim()] = line
+        .slice(idx + 1)
+        .trim()
+        .replace(/^["']|["']$/g, '');
     }
   }
   return result;
@@ -227,7 +230,7 @@ describe('TASK-099: Question Template', () => {
       expect(content).toMatch(/## Context/i);
     });
 
-    it('should have a What I\'ve Tried section', () => {
+    it("should have a What I've Tried section", () => {
       expect(content).toMatch(/## What I.*Tried/i);
     });
 

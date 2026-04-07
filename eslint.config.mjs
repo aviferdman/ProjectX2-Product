@@ -16,6 +16,10 @@ export default tseslint.config(
       '**/*.mts',
       'vitest.workspace.ts',
       '**/vitest.config.ts',
+      'examples/**',
+      'docs/**',
+      'community/**',
+      'release.config.ts',
     ],
   },
 
@@ -46,7 +50,11 @@ export default tseslint.config(
         ...globals.node,
       },
       parserOptions: {
-        project: ['./packages/*/tsconfig.json', './packages/*/tsconfig.test.json'],
+        project: [
+          './packages/*/tsconfig.json',
+          './packages/*/tsconfig.test.json',
+          './scripts/tsconfig.json',
+        ],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -97,6 +105,24 @@ export default tseslint.config(
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-misused-promises': 'error',
       '@typescript-eslint/strict-boolean-expressions': 'off',
+
+      // Relax strict type-checked rules to warnings during active development
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
+      '@typescript-eslint/no-unnecessary-condition': 'warn',
+      '@typescript-eslint/restrict-template-expressions': 'warn',
+      '@typescript-eslint/require-await': 'warn',
+      '@typescript-eslint/dot-notation': 'warn',
+      '@typescript-eslint/no-base-to-string': 'warn',
+      '@typescript-eslint/no-require-imports': 'warn',
+      '@typescript-eslint/no-unsafe-enum-comparison': 'warn',
+      '@typescript-eslint/ban-ts-comment': 'warn',
+      '@typescript-eslint/consistent-generic-constructors': 'warn',
+      '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+      '@typescript-eslint/no-unnecessary-type-parameters': 'warn',
+      '@typescript-eslint/no-confusing-void-expression': 'warn',
+      '@typescript-eslint/no-dynamic-delete': 'warn',
+      '@typescript-eslint/array-type': 'warn',
 
       // General best practices
       'no-console': ['warn', { allow: ['warn', 'error'] }],

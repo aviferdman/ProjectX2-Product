@@ -76,7 +76,9 @@ describe('categorize', () => {
 
   it('should categorize cross-framework comparison benchmarks', () => {
     expect(categorize('Crewspace: Research Assistant Workflow')).toBe('Cross-Framework Comparison');
-    expect(categorize('LangChain.js: Research Assistant Workflow')).toBe('Cross-Framework Comparison');
+    expect(categorize('LangChain.js: Research Assistant Workflow')).toBe(
+      'Cross-Framework Comparison',
+    );
     expect(categorize('CrewAI: Research Assistant Workflow')).toBe('Cross-Framework Comparison');
   });
 
@@ -145,7 +147,12 @@ describe('generateBenchmarkDocs', () => {
     makeResult({ name: 'Memory add (empty store)', avgMs: 0.009, p95Ms: 0.012, budget: 50 }),
     makeResult({ name: 'Task init (minimal config)', avgMs: 0.01, p95Ms: 0.017, budget: 100 }),
     makeResult({ name: 'Engine init (minimal config)', avgMs: 0.005, p95Ms: 0.006, budget: 100 }),
-    makeResult({ name: 'Tool execute (simple, no validation)', avgMs: 0.002, p95Ms: 0.003, budget: 50 }),
+    makeResult({
+      name: 'Tool execute (simple, no validation)',
+      avgMs: 0.002,
+      p95Ms: 0.003,
+      budget: 50,
+    }),
     makeResult({
       name: 'Crewspace: Research Assistant Workflow',
       avgMs: 0.2,
@@ -227,7 +234,12 @@ describe('generateBenchmarkDocs', () => {
 
   it('should show failure status when benchmarks exceed budget', () => {
     const failingResults = [
-      makeResult({ name: 'Agent init (minimal config)', p95Ms: 200, budget: 100, withinBudget: false }),
+      makeResult({
+        name: 'Agent init (minimal config)',
+        p95Ms: 200,
+        budget: 100,
+        withinBudget: false,
+      }),
     ];
 
     const md = generateBenchmarkDocs(failingResults);

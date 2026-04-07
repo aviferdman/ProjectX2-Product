@@ -44,10 +44,7 @@ export type {
 } from './token-efficiency.js';
 
 // Complexity Analysis
-export {
-  analyzeComplexity,
-  gradeComplexity,
-} from './complexity-analyzer.js';
+export { analyzeComplexity, gradeComplexity } from './complexity-analyzer.js';
 export type {
   AgentDescriptor,
   ComplexityGrade,

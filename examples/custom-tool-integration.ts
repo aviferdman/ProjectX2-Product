@@ -183,9 +183,8 @@ const infraAuditTool = composeTool({
       disk: diskResult.data,
       system: metricsResult.data,
       auditedAt: new Date().toISOString(),
-      overallStatus: healthResult.success && diskResult.success && metricsResult.success
-        ? 'pass'
-        : 'fail',
+      overallStatus:
+        healthResult.success && diskResult.success && metricsResult.success ? 'pass' : 'fail',
     };
   },
 });
@@ -242,7 +241,9 @@ const auditResult = await executor.execute(infraAuditTool, {
   host: 'web-server-01',
   diskPath: '/var/data',
 });
-console.log(`   Overall: ${String((auditResult.data as Record<string, unknown>)?.['overallStatus'])}`);
+console.log(
+  `   Overall: ${String((auditResult.data as Record<string, unknown>)?.['overallStatus'])}`,
+);
 
 // ============================================================================
 // 5. Agent integration — custom tools in a Crew

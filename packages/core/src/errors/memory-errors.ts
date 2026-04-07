@@ -30,11 +30,9 @@ export class MemoryOperationError extends CrewspaceError {
   public readonly operation: string;
 
   constructor(provider: string, operation: string, message: string, cause?: Error) {
-    super(
-      `Memory "${provider}" ${operation} failed: ${message}`,
-      ErrorCode.MEMORY_OPERATION,
-      { cause },
-    );
+    super(`Memory "${provider}" ${operation} failed: ${message}`, ErrorCode.MEMORY_OPERATION, {
+      cause,
+    });
     this.name = 'MemoryOperationError';
     this.provider = provider;
     this.operation = operation;
@@ -50,10 +48,7 @@ export class MemoryQueryError extends CrewspaceError {
   public readonly provider: string;
 
   constructor(provider: string, message: string) {
-    super(
-      `Memory "${provider}" query error: ${message}`,
-      ErrorCode.MEMORY_QUERY,
-    );
+    super(`Memory "${provider}" query error: ${message}`, ErrorCode.MEMORY_QUERY);
     this.name = 'MemoryQueryError';
     this.provider = provider;
   }

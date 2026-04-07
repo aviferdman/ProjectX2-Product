@@ -65,11 +65,7 @@ function makeMockAgent(id: string): Agent {
   });
 }
 
-function makeMockTask(
-  id: string,
-  agentId: string,
-  deps: string[] = [],
-): Task {
+function makeMockTask(id: string, agentId: string, deps: string[] = []): Task {
   return new Task({
     id,
     description: `Task ${id}`,
@@ -529,9 +525,7 @@ describe('TASK-069: CheckpointManager — High-level checkpoint/resume API', () 
       expect(plan.pendingTaskIds).toContain('task-b');
       expect(plan.pendingTaskIds).toContain('task-c');
       expect(plan.completedResults.size).toBe(1);
-      expect(plan.completedResults.get('task-a')).toEqual(
-        makeTaskResult('agent-1', 'Done A'),
-      );
+      expect(plan.completedResults.get('task-a')).toEqual(makeTaskResult('agent-1', 'Done A'));
     });
 
     it('should return undefined for non-existent checkpoint', () => {
@@ -631,12 +625,8 @@ describe('TASK-069: CheckpointManager — High-level checkpoint/resume API', () 
     });
 
     it('should get latest checkpoint via getLatestCheckpoint', () => {
-      manager.store.save(
-        makeCheckpointData({ id: 'cp-1', createdAt: '2025-01-01T00:00:00.000Z' }),
-      );
-      manager.store.save(
-        makeCheckpointData({ id: 'cp-2', createdAt: '2025-06-01T00:00:00.000Z' }),
-      );
+      manager.store.save(makeCheckpointData({ id: 'cp-1', createdAt: '2025-01-01T00:00:00.000Z' }));
+      manager.store.save(makeCheckpointData({ id: 'cp-2', createdAt: '2025-06-01T00:00:00.000Z' }));
 
       const latest = manager.getLatestCheckpoint('test-engine');
       expect(latest!.id).toBe('cp-2');

@@ -143,14 +143,18 @@ describe('TASK-090: Multi-Step Reasoning — Functional Validation', () => {
       id: 'decomposer',
       role: 'Problem Decomposition Specialist',
       goal: 'Break down complex problems into sub-problems',
-      llmProvider: createMockLLMProvider('Sub-problem 1: calculate base cost\nSub-problem 2: add overhead'),
+      llmProvider: createMockLLMProvider(
+        'Sub-problem 1: calculate base cost\nSub-problem 2: add overhead',
+      ),
     });
 
     const reasoner = new Agent({
       id: 'reasoner',
       role: 'Step-by-Step Reasoning Engine',
       goal: 'Work through each sub-problem with explicit logic',
-      llmProvider: createMockLLMProvider('Step 1: 500 × $2,000 = $1,000,000\nStep 2: $1,000,000 × 1.08 = $1,080,000'),
+      llmProvider: createMockLLMProvider(
+        'Step 1: 500 × $2,000 = $1,000,000\nStep 2: $1,000,000 × 1.08 = $1,080,000',
+      ),
     });
 
     const verifier = new Agent({
@@ -434,8 +438,7 @@ describe('TASK-090: Multi-Step Reasoning — Tool Validation', () => {
 
   it('should define a fact lookup tool that retrieves known facts', async () => {
     const facts: Record<string, string> = {
-      'compound interest formula':
-        'A = P(1 + r/n)^(nt)',
+      'compound interest formula': 'A = P(1 + r/n)^(nt)',
     };
 
     const lookupTool = defineTool({

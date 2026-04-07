@@ -119,7 +119,8 @@ describe('LangChain.js Shim', () => {
 
   describe('LCAgentExecutor', () => {
     it('should format system prompt with tools and invoke model', async () => {
-      let capturedMessages: readonly import('../../benchmarks/comparison/langchain-shim.js').LCMessage[] = [];
+      let capturedMessages: readonly import('../../benchmarks/comparison/langchain-shim.js').LCMessage[] =
+        [];
       const model = new LCChatModel('test', async (messages) => {
         capturedMessages = messages;
         return {
@@ -131,7 +132,9 @@ describe('LangChain.js Shim', () => {
       const tool = new LCTool({
         name: 'search',
         description: 'Search tool',
-        async func() { return 'result'; },
+        async func() {
+          return 'result';
+        },
       });
 
       const executor = new LCAgentExecutor({
@@ -244,7 +247,9 @@ describe('CrewAI Shim', () => {
       const tool = new CATool({
         name: 'test',
         description: 'Test tool',
-        async func(input) { return `Result: ${input}`; },
+        async func(input) {
+          return `Result: ${input}`;
+        },
       });
 
       expect(tool.name).toBe('test');
@@ -267,7 +272,9 @@ describe('CrewAI Shim', () => {
       const tool = new CATool({
         name: 'search',
         description: 'Search tool',
-        async func() { return 'found'; },
+        async func() {
+          return 'found';
+        },
       });
 
       const agent = new CAAgent({

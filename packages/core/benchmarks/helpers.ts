@@ -57,10 +57,7 @@ export const PERFORMANCE_BUDGETS = {
 // Mock factories
 // ---------------------------------------------------------------------------
 
-export function createMockLLMProvider(
-  latencyMs = 0,
-  response?: Partial<LLMResponse>,
-): LLMProvider {
+export function createMockLLMProvider(latencyMs = 0, response?: Partial<LLMResponse>): LLMProvider {
   return {
     name: 'bench-mock-provider',
     async generateText(_messages: readonly LLMMessage[]): Promise<LLMResponse> {
@@ -135,10 +132,7 @@ export function createBenchMemory(entryCount = 0): ShortTermMemory {
   return memory;
 }
 
-export async function populateMemory(
-  memory: ShortTermMemory,
-  count: number,
-): Promise<string[]> {
+export async function populateMemory(memory: ShortTermMemory, count: number): Promise<string[]> {
   const ids: string[] = [];
   for (let i = 0; i < count; i++) {
     const entry = createMemoryEntry(
@@ -163,9 +157,7 @@ export function createBenchEngine(
   options?: { strategy?: 'sequential' | 'parallel' },
 ): { engine: ExecutionEngine; taskIds: string[] } {
   const strategy =
-    options?.strategy === 'parallel'
-      ? ExecutionStrategy.PARALLEL
-      : ExecutionStrategy.SEQUENTIAL;
+    options?.strategy === 'parallel' ? ExecutionStrategy.PARALLEL : ExecutionStrategy.SEQUENTIAL;
 
   const engine = new ExecutionEngine({ id, strategy });
   const agent = createBenchAgent('bench-agent', { llmLatencyMs: 0 });
@@ -269,11 +261,24 @@ export function formatResult(result: BenchmarkResult): string {
 
 function randomContent(): string {
   const words = [
-    'agent', 'task', 'memory', 'tool', 'engine', 'benchmark',
-    'performance', 'orchestration', 'workflow', 'execution',
-    'parallel', 'sequential', 'context', 'provider', 'result',
+    'agent',
+    'task',
+    'memory',
+    'tool',
+    'engine',
+    'benchmark',
+    'performance',
+    'orchestration',
+    'workflow',
+    'execution',
+    'parallel',
+    'sequential',
+    'context',
+    'provider',
+    'result',
   ];
   const count = 5 + Math.floor(Math.random() * 15);
-  return Array.from({ length: count }, () => words[Math.floor(Math.random() * words.length)])
-    .join(' ');
+  return Array.from({ length: count }, () => words[Math.floor(Math.random() * words.length)]).join(
+    ' ',
+  );
 }

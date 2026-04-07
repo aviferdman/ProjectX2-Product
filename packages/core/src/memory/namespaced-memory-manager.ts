@@ -42,9 +42,7 @@ export interface NamespacedMemoryManagerConfig {
    * Optional custom readable-namespace mappings.
    * Passed through to each {@link ScopedMemory} instance.
    */
-  readonly readableNamespaces?: Partial<
-    Record<MemoryNamespace, readonly MemoryNamespace[]>
-  >;
+  readonly readableNamespaces?: Partial<Record<MemoryNamespace, readonly MemoryNamespace[]>>;
 }
 
 // ---------------------------------------------------------------------------
@@ -67,18 +65,16 @@ export const GLOBAL_OWNER_ID = '__global__';
  */
 export class NamespacedMemoryManager {
   private readonly _provider: MemoryProvider;
-  private readonly _readableNamespaces: Partial<
-    Record<MemoryNamespace, readonly MemoryNamespace[]>
-  > | undefined;
+  private readonly _readableNamespaces:
+    | Partial<Record<MemoryNamespace, readonly MemoryNamespace[]>>
+    | undefined;
   private readonly _agentScopes: Map<string, ScopedMemory> = new Map();
   private readonly _crewScopes: Map<string, ScopedMemory> = new Map();
   private _globalScope: ScopedMemory | undefined;
 
   constructor(config: NamespacedMemoryManagerConfig) {
     if (!config.provider) {
-      throw new MemoryConfigError(
-        'NamespacedMemoryManager requires a provider',
-      );
+      throw new MemoryConfigError('NamespacedMemoryManager requires a provider');
     }
     this._provider = config.provider;
     this._readableNamespaces = config.readableNamespaces;
@@ -136,10 +132,7 @@ export class NamespacedMemoryManager {
    */
   global(): ScopedMemory {
     if (!this._globalScope) {
-      this._globalScope = this._createScoped(
-        MemoryNamespace.GLOBAL,
-        GLOBAL_OWNER_ID,
-      );
+      this._globalScope = this._createScoped(MemoryNamespace.GLOBAL, GLOBAL_OWNER_ID);
     }
     return this._globalScope;
   }
@@ -214,10 +207,7 @@ export class NamespacedMemoryManager {
   // Internal helpers
   // -----------------------------------------------------------------------
 
-  private _createScoped(
-    namespace: MemoryNamespace,
-    ownerId: string,
-  ): ScopedMemory {
+  private _createScoped(namespace: MemoryNamespace, ownerId: string): ScopedMemory {
     const config: ScopedMemoryConfig = {
       provider: this._provider,
       namespace,
@@ -231,9 +221,7 @@ export class NamespacedMemoryManager {
 
   private _validateOwnerId(id: string, label: string): void {
     if (!id || typeof id !== 'string') {
-      throw new MemoryConfigError(
-        `${label} must be a non-empty string`,
-      );
+      throw new MemoryConfigError(`${label} must be a non-empty string`);
     }
   }
 }

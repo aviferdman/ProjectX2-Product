@@ -123,10 +123,7 @@ describe('github-release', () => {
 
     it('handles version heading without date', () => {
       const changelogPath = join(tempDir, 'CHANGELOG.md');
-      writeFileSync(
-        changelogPath,
-        `# Changelog\n\n## [1.0.0]\n\n### Added\n- Big release\n`,
-      );
+      writeFileSync(changelogPath, `# Changelog\n\n## [1.0.0]\n\n### Added\n- Big release\n`);
 
       const notes = extractReleaseNotes(changelogPath, '1.0.0');
       expect(notes).not.toBeNull();
@@ -463,9 +460,12 @@ describe('github-release', () => {
 
     it('parses all flags together', () => {
       const args = parseGitHubReleaseArgs([
-        '--tag', 'v1.0.0',
-        '--repo', 'test/repo',
-        '--token', 'tok',
+        '--tag',
+        'v1.0.0',
+        '--repo',
+        'test/repo',
+        '--token',
+        'tok',
         '--dry-run',
         '--draft',
       ]);

@@ -227,11 +227,24 @@ function createContentMockProvider(): LLMProvider {
       const content = lastUserMessage?.content?.toLowerCase() ?? '';
 
       let response = mockResponses['research'];
-      if (content.includes('outline') || content.includes('structure') || content.includes('plan')) {
+      if (
+        content.includes('outline') ||
+        content.includes('structure') ||
+        content.includes('plan')
+      ) {
         response = mockResponses['outline'];
-      } else if (content.includes('write') || content.includes('draft') || content.includes('article')) {
+      } else if (
+        content.includes('write') ||
+        content.includes('draft') ||
+        content.includes('article')
+      ) {
         response = mockResponses['write'];
-      } else if (content.includes('edit') || content.includes('polish') || content.includes('review') || content.includes('refine')) {
+      } else if (
+        content.includes('edit') ||
+        content.includes('polish') ||
+        content.includes('review') ||
+        content.includes('refine')
+      ) {
         response = mockResponses['edit'];
       }
 

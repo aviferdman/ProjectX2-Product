@@ -51,8 +51,12 @@ function makeExecutionTimeInput(overrides?: Partial<ExecutionTimeInput>): Execut
 function makeWorkflow(overrides?: Partial<WorkflowDescriptor>): WorkflowDescriptor {
   return {
     id: overrides?.id ?? 'wf-1',
-    agents: overrides?.agents ?? [{ id: 'agent-1', toolCount: 2, hasLLMProvider: true, hasBackstory: false }],
-    tasks: overrides?.tasks ?? [{ id: 'task-1', agentId: 'agent-1', dependencies: [], hasTimeout: false, hasRetry: false }],
+    agents: overrides?.agents ?? [
+      { id: 'agent-1', toolCount: 2, hasLLMProvider: true, hasBackstory: false },
+    ],
+    tasks: overrides?.tasks ?? [
+      { id: 'task-1', agentId: 'agent-1', dependencies: [], hasTimeout: false, hasRetry: false },
+    ],
     strategy: overrides?.strategy ?? 'sequential',
     hasHooks: overrides?.hasHooks ?? false,
   };
@@ -385,17 +389,24 @@ describe('MetricsCollector', () => {
     });
 
     it('should overwrite previous report', () => {
-      collector.analyzeWorkflow(makeWorkflow({ agents: [{ id: 'a', toolCount: 0, hasLLMProvider: true, hasBackstory: false }], tasks: [{ id: 't', agentId: 'a', dependencies: [], hasTimeout: false, hasRetry: false }] }));
+      collector.analyzeWorkflow(
+        makeWorkflow({
+          agents: [{ id: 'a', toolCount: 0, hasLLMProvider: true, hasBackstory: false }],
+          tasks: [{ id: 't', agentId: 'a', dependencies: [], hasTimeout: false, hasRetry: false }],
+        }),
+      );
       const r1 = collector.getComplexityReport()!;
       expect(r1.taskCount).toBe(1);
 
-      collector.analyzeWorkflow(makeWorkflow({
-        agents: [{ id: 'a', toolCount: 0, hasLLMProvider: true, hasBackstory: false }],
-        tasks: [
-          { id: 't1', agentId: 'a', dependencies: [], hasTimeout: false, hasRetry: false },
-          { id: 't2', agentId: 'a', dependencies: [], hasTimeout: false, hasRetry: false },
-        ],
-      }));
+      collector.analyzeWorkflow(
+        makeWorkflow({
+          agents: [{ id: 'a', toolCount: 0, hasLLMProvider: true, hasBackstory: false }],
+          tasks: [
+            { id: 't1', agentId: 'a', dependencies: [], hasTimeout: false, hasRetry: false },
+            { id: 't2', agentId: 'a', dependencies: [], hasTimeout: false, hasRetry: false },
+          ],
+        }),
+      );
       const r2 = collector.getComplexityReport()!;
       expect(r2.taskCount).toBe(2);
     });

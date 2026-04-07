@@ -65,10 +65,7 @@ export class MemoryManager implements MemoryProvider {
     const names = new Set<string>();
     for (const p of this._providers) {
       if (names.has(p.name)) {
-        throw new MemoryConfigError(
-          `Duplicate provider name "${p.name}"`,
-          'manager',
-        );
+        throw new MemoryConfigError(`Duplicate provider name "${p.name}"`, 'manager');
       }
       names.add(p.name);
     }
@@ -87,10 +84,7 @@ export class MemoryManager implements MemoryProvider {
   /** Register a new memory provider. */
   addProvider(provider: MemoryProvider): void {
     if (this._providers.some((p) => p.name === provider.name)) {
-      throw new MemoryConfigError(
-        `Provider "${provider.name}" is already registered`,
-        'manager',
-      );
+      throw new MemoryConfigError(`Provider "${provider.name}" is already registered`, 'manager');
     }
     this._providers.push(provider);
   }

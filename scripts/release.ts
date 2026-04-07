@@ -79,7 +79,10 @@ export function checkWorkingTree(rootDir: string): ReleaseStepResult {
 /**
  * Check that the current branch is main (or allowed release branch).
  */
-export function checkBranch(rootDir: string, allowedBranches: string[] = ['main']): ReleaseStepResult {
+export function checkBranch(
+  rootDir: string,
+  allowedBranches: string[] = ['main'],
+): ReleaseStepResult {
   try {
     const branch = execSync('git rev-parse --abbrev-ref HEAD', {
       cwd: rootDir,
@@ -208,7 +211,12 @@ export function checkBuildOutput(rootDir: string, packages: PackageInfo[]): Rele
 /**
  * Create a git tag for the release.
  */
-export function createTag(tag: string, version: string, rootDir: string, dryRun: boolean): ReleaseStepResult {
+export function createTag(
+  tag: string,
+  version: string,
+  rootDir: string,
+  dryRun: boolean,
+): ReleaseStepResult {
   if (dryRun) {
     return {
       name: 'create-tag',
@@ -243,7 +251,12 @@ export function createTag(tag: string, version: string, rootDir: string, dryRun:
 /**
  * Push the git tag to the remote to trigger the publish workflow.
  */
-export function pushTag(tag: string, rootDir: string, dryRun: boolean, skipPush: boolean): ReleaseStepResult {
+export function pushTag(
+  tag: string,
+  rootDir: string,
+  dryRun: boolean,
+  skipPush: boolean,
+): ReleaseStepResult {
   if (dryRun) {
     return {
       name: 'push-tag',
@@ -364,12 +377,16 @@ export function formatReleaseOutput(result: ReleaseResult, dryRun: boolean): str
 
   if (result.success) {
     if (dryRun) {
-      lines.push('✓ Dry run passed — release is ready. Run without --dry-run to create the release.');
+      lines.push(
+        '✓ Dry run passed — release is ready. Run without --dry-run to create the release.',
+      );
     } else {
       lines.push(`✓ Release ${result.tag} created successfully!`);
       lines.push('');
       lines.push('The publish workflow will run automatically on GitHub Actions.');
-      lines.push('Monitor the workflow at: https://github.com/aviferdman/ProjectX2-Product/actions');
+      lines.push(
+        'Monitor the workflow at: https://github.com/aviferdman/ProjectX2-Product/actions',
+      );
     }
   } else {
     lines.push('✗ Release failed — fix the errors above before retrying.');
@@ -381,7 +398,11 @@ export function formatReleaseOutput(result: ReleaseResult, dryRun: boolean): str
 /**
  * Parse CLI arguments for the release script.
  */
-export function parseReleaseArgs(argv: string[]): { version: string; dryRun: boolean; skipPush: boolean } {
+export function parseReleaseArgs(argv: string[]): {
+  version: string;
+  dryRun: boolean;
+  skipPush: boolean;
+} {
   let version = '';
   let dryRun = false;
   let skipPush = false;
@@ -429,7 +450,11 @@ function main(): void {
     },
   ];
 
-  console.log(args.dryRun ? '\n🔍 Running release validation (dry run)...\n' : '\n🚀 Starting release process...\n');
+  console.log(
+    args.dryRun
+      ? '\n🔍 Running release validation (dry run)...\n'
+      : '\n🚀 Starting release process...\n',
+  );
 
   const result = runRelease({
     version: args.version,

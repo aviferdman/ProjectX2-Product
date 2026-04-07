@@ -110,24 +110,21 @@ export class LangChainWorkflowRunner implements ComparisonWorkflowRunner {
       name: 'researcher',
       model,
       tools: createSearchTools(),
-      systemPrompt:
-        `You are a ${ALL_AGENTS[0]!.role}. ${ALL_AGENTS[0]!.goal}\n\n${ALL_AGENTS[0]!.backstory}`,
+      systemPrompt: `You are a ${ALL_AGENTS[0]!.role}. ${ALL_AGENTS[0]!.goal}\n\n${ALL_AGENTS[0]!.backstory}`,
     });
 
     const analystExec = new LCAgentExecutor({
       name: 'analyst',
       model,
       tools: createAnalysisTools(),
-      systemPrompt:
-        `You are a ${ALL_AGENTS[1]!.role}. ${ALL_AGENTS[1]!.goal}\n\n${ALL_AGENTS[1]!.backstory}`,
+      systemPrompt: `You are a ${ALL_AGENTS[1]!.role}. ${ALL_AGENTS[1]!.goal}\n\n${ALL_AGENTS[1]!.backstory}`,
     });
 
     const writerExec = new LCAgentExecutor({
       name: 'writer',
       model,
       tools: createWriterTools(),
-      systemPrompt:
-        `You are a ${ALL_AGENTS[2]!.role}. ${ALL_AGENTS[2]!.goal}\n\n${ALL_AGENTS[2]!.backstory}`,
+      systemPrompt: `You are a ${ALL_AGENTS[2]!.role}. ${ALL_AGENTS[2]!.goal}\n\n${ALL_AGENTS[2]!.backstory}`,
     });
 
     // Chain them with RunnableSequence (LCEL pipe pattern)

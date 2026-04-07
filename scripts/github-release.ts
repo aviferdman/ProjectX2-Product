@@ -105,7 +105,11 @@ function trimBlankLines(lines: string[]): string[] {
  * Build the release body including version header, release notes, and
  * a link to the npm package.
  */
-export function buildReleaseBody(version: string, releaseNotes: string | null, packages: string[]): string {
+export function buildReleaseBody(
+  version: string,
+  releaseNotes: string | null,
+  packages: string[],
+): string {
   const sections: string[] = [];
 
   if (releaseNotes) {
@@ -125,7 +129,9 @@ export function buildReleaseBody(version: string, releaseNotes: string | null, p
 
   sections.push('');
   sections.push('---');
-  sections.push(`*Full changelog: [CHANGELOG.md](https://github.com/aviferdman/ProjectX2-Product/blob/v${version}/CHANGELOG.md)*`);
+  sections.push(
+    `*Full changelog: [CHANGELOG.md](https://github.com/aviferdman/ProjectX2-Product/blob/v${version}/CHANGELOG.md)*`,
+  );
 
   return sections.join('\n');
 }
@@ -140,7 +146,9 @@ export function isPreRelease(version: string): boolean {
 /**
  * Create a GitHub release using the GitHub REST API.
  */
-export async function createGitHubRelease(options: GitHubReleaseOptions): Promise<GitHubReleaseResult> {
+export async function createGitHubRelease(
+  options: GitHubReleaseOptions,
+): Promise<GitHubReleaseResult> {
   const { tag, rootDir, repo, token, dryRun = false, draft = false } = options;
 
   const version = tag.startsWith('v') ? tag.slice(1) : tag;
@@ -272,14 +280,18 @@ async function main(): Promise<void> {
   const args = parseGitHubReleaseArgs(process.argv.slice(2));
 
   if (!args.tag) {
-    console.error('Usage: github-release.ts --tag <tag> [--repo owner/repo] [--token TOKEN] [--dry-run] [--draft]');
+    console.error(
+      'Usage: github-release.ts --tag <tag> [--repo owner/repo] [--token TOKEN] [--dry-run] [--draft]',
+    );
     console.error('');
     console.error('Environment variables: GITHUB_TOKEN, GITHUB_REPOSITORY');
     process.exit(1);
   }
 
   if (!args.repo) {
-    console.error('ERROR: No repository specified. Set GITHUB_REPOSITORY or pass --repo owner/repo');
+    console.error(
+      'ERROR: No repository specified. Set GITHUB_REPOSITORY or pass --repo owner/repo',
+    );
     process.exit(1);
   }
 
@@ -290,7 +302,9 @@ async function main(): Promise<void> {
 
   const ROOT = resolve(import.meta.dirname ?? '.', '..');
 
-  console.log(args.dryRun ? '\n🔍 GitHub release dry run...\n' : '\n🚀 Creating GitHub release...\n');
+  console.log(
+    args.dryRun ? '\n🔍 GitHub release dry run...\n' : '\n🚀 Creating GitHub release...\n',
+  );
 
   const result = await createGitHubRelease({
     tag: args.tag,

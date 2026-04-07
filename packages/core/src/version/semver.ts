@@ -12,7 +12,14 @@ export interface SemVer {
 }
 
 /** Version bump type. */
-export type BumpType = 'major' | 'minor' | 'patch' | 'premajor' | 'preminor' | 'prepatch' | 'prerelease';
+export type BumpType =
+  | 'major'
+  | 'minor'
+  | 'patch'
+  | 'premajor'
+  | 'preminor'
+  | 'prepatch'
+  | 'prerelease';
 
 const SEMVER_REGEX =
   /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
@@ -123,7 +130,12 @@ export function bumpVersion(version: SemVer, type: BumpType): SemVer {
     case 'preminor':
       return { major: version.major, minor: version.minor + 1, patch: 0, prerelease: ['0'] };
     case 'prepatch':
-      return { major: version.major, minor: version.minor, patch: version.patch + 1, prerelease: ['0'] };
+      return {
+        major: version.major,
+        minor: version.minor,
+        patch: version.patch + 1,
+        prerelease: ['0'],
+      };
     case 'prerelease': {
       const pre = version.prerelease ?? [];
       if (pre.length === 0) {
@@ -134,9 +146,19 @@ export function bumpVersion(version: SemVer, type: BumpType): SemVer {
       if (last !== undefined && /^\d+$/.test(last)) {
         const newPre = [...pre];
         newPre[lastIdx] = String(parseInt(last, 10) + 1);
-        return { major: version.major, minor: version.minor, patch: version.patch, prerelease: newPre };
+        return {
+          major: version.major,
+          minor: version.minor,
+          patch: version.patch,
+          prerelease: newPre,
+        };
       }
-      return { major: version.major, minor: version.minor, patch: version.patch, prerelease: [...pre, '0'] };
+      return {
+        major: version.major,
+        minor: version.minor,
+        patch: version.patch,
+        prerelease: [...pre, '0'],
+      };
     }
   }
 }

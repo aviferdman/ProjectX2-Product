@@ -108,9 +108,7 @@ export class StdoutTransport implements LogTransport {
   /** Write a log entry to process.stdout. */
   write(entry: LogEntry): void {
     const line =
-      this._format === 'json'
-        ? formatLogEntryAsJson(entry)
-        : formatLogEntryAsText(entry);
+      this._format === 'json' ? formatLogEntryAsJson(entry) : formatLogEntryAsText(entry);
 
     process.stdout.write(line + '\n');
   }
@@ -187,9 +185,7 @@ export class FileTransport implements LogTransport {
     }
 
     const line =
-      this._format === 'json'
-        ? formatLogEntryAsJson(entry)
-        : formatLogEntryAsText(entry);
+      this._format === 'json' ? formatLogEntryAsJson(entry) : formatLogEntryAsText(entry);
 
     this._appendFile(this._filePath, line + '\n');
   }
@@ -256,13 +252,9 @@ export function exportLogsToFile(
     mkdirFn(dirname(filePath), { recursive: true });
   }
 
-  const filtered =
-    minLevel !== undefined
-      ? entries.filter((e) => e.level >= minLevel)
-      : entries;
+  const filtered = minLevel !== undefined ? entries.filter((e) => e.level >= minLevel) : entries;
 
-  const formatter =
-    format === 'json' ? formatLogEntryAsJson : formatLogEntryAsText;
+  const formatter = format === 'json' ? formatLogEntryAsJson : formatLogEntryAsText;
 
   const content = filtered.map((e) => formatter(e)).join('\n') + (filtered.length > 0 ? '\n' : '');
 
@@ -311,13 +303,9 @@ export function exportLogsToStdout(
   const minLevel = options?.minLevel;
   const writeFn = options?._write ?? ((data: string) => process.stdout.write(data));
 
-  const filtered =
-    minLevel !== undefined
-      ? entries.filter((e) => e.level >= minLevel)
-      : entries;
+  const filtered = minLevel !== undefined ? entries.filter((e) => e.level >= minLevel) : entries;
 
-  const formatter =
-    format === 'json' ? formatLogEntryAsJson : formatLogEntryAsText;
+  const formatter = format === 'json' ? formatLogEntryAsJson : formatLogEntryAsText;
 
   for (const entry of filtered) {
     writeFn(formatter(entry) + '\n');

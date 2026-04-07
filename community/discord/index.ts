@@ -64,12 +64,7 @@ export type {
 } from './welcome-messages.js';
 
 // Bot
-export {
-  createBot,
-  handleWelcome,
-  validateBotConfig,
-  noopSender,
-} from './bot.js';
+export { createBot, handleWelcome, validateBotConfig, noopSender } from './bot.js';
 
 export type {
   BotMember,

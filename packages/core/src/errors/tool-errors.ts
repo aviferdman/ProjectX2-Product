@@ -12,10 +12,7 @@ export class ToolConfigError extends CrewspaceError {
   public readonly toolName: string | undefined;
 
   constructor(message: string, toolName?: string) {
-    super(
-      toolName ? `Tool "${toolName}": ${message}` : message,
-      ErrorCode.TOOL_CONFIG,
-    );
+    super(toolName ? `Tool "${toolName}": ${message}` : message, ErrorCode.TOOL_CONFIG);
     this.name = 'ToolConfigError';
     this.toolName = toolName;
   }
@@ -30,10 +27,7 @@ export class ToolNotFoundError extends CrewspaceError {
   public readonly toolName: string;
 
   constructor(toolName: string) {
-    super(
-      `Tool "${toolName}" is not registered`,
-      ErrorCode.TOOL_NOT_FOUND,
-    );
+    super(`Tool "${toolName}" is not registered`, ErrorCode.TOOL_NOT_FOUND);
     this.name = 'ToolNotFoundError';
     this.toolName = toolName;
   }
@@ -48,11 +42,7 @@ export class ToolExecutionError extends CrewspaceError {
   public readonly toolName: string;
 
   constructor(toolName: string, message: string, cause?: Error) {
-    super(
-      `Tool "${toolName}" execution failed: ${message}`,
-      ErrorCode.TOOL_EXECUTION,
-      { cause },
-    );
+    super(`Tool "${toolName}" execution failed: ${message}`, ErrorCode.TOOL_EXECUTION, { cause });
     this.name = 'ToolExecutionError';
     this.toolName = toolName;
   }
@@ -99,11 +89,9 @@ export class ToolTimeoutError extends CrewspaceError {
   public readonly timeoutMs: number;
 
   constructor(toolName: string, timeoutMs: number) {
-    super(
-      `Tool "${toolName}" exceeded timeout of ${String(timeoutMs)}ms`,
-      ErrorCode.TOOL_TIMEOUT,
-      { isRetryable: true },
-    );
+    super(`Tool "${toolName}" exceeded timeout of ${String(timeoutMs)}ms`, ErrorCode.TOOL_TIMEOUT, {
+      isRetryable: true,
+    });
     this.name = 'ToolTimeoutError';
     this.toolName = toolName;
     this.timeoutMs = timeoutMs;

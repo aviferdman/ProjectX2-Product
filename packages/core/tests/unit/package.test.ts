@@ -214,9 +214,7 @@ describe('Package Configuration (TASK-006)', () => {
       const repository = packageJson.repository as Record<string, string>;
       expect(repository).toBeDefined();
       expect(repository.type).toBe('git');
-      expect(repository.url).toBe(
-        'https://github.com/aviferdman/ProjectX2-Product.git',
-      );
+      expect(repository.url).toBe('https://github.com/aviferdman/ProjectX2-Product.git');
       expect(repository.directory).toBe('packages/core');
     });
 

@@ -229,10 +229,7 @@ describe('prepare-publish', () => {
     });
 
     it('fails when changelog title is missing', () => {
-      writeFileSync(
-        join(tempDir, 'CHANGELOG.md'),
-        '## [Unreleased]\n\n## [0.1.0] - 2026-04-06\n',
-      );
+      writeFileSync(join(tempDir, 'CHANGELOG.md'), '## [Unreleased]\n\n## [0.1.0] - 2026-04-06\n');
       const result = validateChangelog('0.1.0', tempDir);
       expect(result.valid).toBe(false);
       expect(result.errors).toContainEqual(expect.stringContaining('missing title'));

@@ -55,9 +55,7 @@ describe('Agent Initialization Benchmarks', () => {
   });
 
   it('should create an agent with tools within budget', async () => {
-    const tools: Tool[] = Array.from({ length: 5 }, (_, i) =>
-      createMockTool(`tool-${String(i)}`),
-    );
+    const tools: Tool[] = Array.from({ length: 5 }, (_, i) => createMockTool(`tool-${String(i)}`));
 
     const result = await measurePerformance(
       'Agent init (5 tools)',
@@ -97,9 +95,7 @@ describe('Agent Initialization Benchmarks', () => {
   });
 
   it('should create a fully-configured agent within budget', async () => {
-    const tools: Tool[] = Array.from({ length: 10 }, (_, i) =>
-      createMockTool(`tool-${String(i)}`),
-    );
+    const tools: Tool[] = Array.from({ length: 10 }, (_, i) => createMockTool(`tool-${String(i)}`));
     const provider = createMockLLMProvider();
 
     const result = await measurePerformance(
@@ -125,9 +121,7 @@ describe('Agent Initialization Benchmarks', () => {
   });
 
   it('should build system prompt within budget', async () => {
-    const tools: Tool[] = Array.from({ length: 10 }, (_, i) =>
-      createMockTool(`tool-${String(i)}`),
-    );
+    const tools: Tool[] = Array.from({ length: 10 }, (_, i) => createMockTool(`tool-${String(i)}`));
     const agent = new Agent({
       id: 'bench-prompt',
       role: 'Senior Research Analyst',

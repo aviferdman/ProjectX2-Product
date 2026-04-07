@@ -9,10 +9,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 
 import { TaskTimeoutError } from '../../../src/errors/index.js';
-import {
-  TaskTimeoutGuard,
-  withTimeoutGuard,
-} from '../../../src/task/task-timeout-guard.js';
+import { TaskTimeoutGuard, withTimeoutGuard } from '../../../src/task/task-timeout-guard.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -95,9 +92,9 @@ describe('TaskTimeoutGuard', () => {
 
     it('should throw TaskTimeoutError when function exceeds timeout', async () => {
       guard = new TaskTimeoutGuard();
-      await expect(
-        guard.execute(abortableDelay(500, 'late'), 50, 'slow-task'),
-      ).rejects.toThrow(TaskTimeoutError);
+      await expect(guard.execute(abortableDelay(500, 'late'), 50, 'slow-task')).rejects.toThrow(
+        TaskTimeoutError,
+      );
     });
 
     it('should include taskId and timeoutMs in TaskTimeoutError', async () => {
@@ -135,9 +132,7 @@ describe('TaskTimeoutGuard', () => {
 
     it('should pass through non-timeout errors', async () => {
       guard = new TaskTimeoutGuard();
-      await expect(
-        guard.execute(failing('boom'), 5_000, 'err-task'),
-      ).rejects.toThrow('boom');
+      await expect(guard.execute(failing('boom'), 5_000, 'err-task')).rejects.toThrow('boom');
     });
 
     it('should use defaultTimeoutMs when timeoutMs is not provided', async () => {
@@ -161,17 +156,17 @@ describe('TaskTimeoutGuard', () => {
 
     it('should throw when timeout exceeds maxTimeoutMs', async () => {
       guard = new TaskTimeoutGuard({ maxTimeoutMs: 1_000 });
-      await expect(
-        guard.execute(immediate('x'), 5_000, 'over-max'),
-      ).rejects.toThrow(/exceeds maximum/);
+      await expect(guard.execute(immediate('x'), 5_000, 'over-max')).rejects.toThrow(
+        /exceeds maximum/,
+      );
     });
 
     it('should throw when guard is disposed', async () => {
       guard = new TaskTimeoutGuard();
       guard.dispose();
-      await expect(
-        guard.execute(immediate('x'), 1_000, 'after-dispose'),
-      ).rejects.toThrow('TaskTimeoutGuard has been disposed');
+      await expect(guard.execute(immediate('x'), 1_000, 'after-dispose')).rejects.toThrow(
+        'TaskTimeoutGuard has been disposed',
+      );
     });
 
     it('should handle non-Error throw from function', async () => {
@@ -375,9 +370,9 @@ describe('TaskTimeoutGuard', () => {
       const expired = vi.fn();
       guard.on('timeout:expired', expired);
 
-      await expect(
-        guard.execute(abortableDelay(500, 'x'), 50, 'expire-task'),
-      ).rejects.toThrow(TaskTimeoutError);
+      await expect(guard.execute(abortableDelay(500, 'x'), 50, 'expire-task')).rejects.toThrow(
+        TaskTimeoutError,
+      );
 
       expect(expired).toHaveBeenCalledWith('expire-task', 50);
     });
@@ -387,9 +382,9 @@ describe('TaskTimeoutGuard', () => {
       const errorHandler = vi.fn();
       guard.on('timeout:error', errorHandler);
 
-      await expect(
-        guard.execute(failing('oops'), 1_000, 'error-event-task'),
-      ).rejects.toThrow('oops');
+      await expect(guard.execute(failing('oops'), 1_000, 'error-event-task')).rejects.toThrow(
+        'oops',
+      );
 
       expect(errorHandler).toHaveBeenCalledWith('error-event-task', expect.any(Error));
     });
@@ -481,15 +476,15 @@ describe('withTimeoutGuard', () => {
   });
 
   it('should throw TaskTimeoutError when function exceeds timeout', async () => {
-    await expect(
-      withTimeoutGuard(abortableDelay(500, 'x'), 50, 'wt-slow'),
-    ).rejects.toThrow(TaskTimeoutError);
+    await expect(withTimeoutGuard(abortableDelay(500, 'x'), 50, 'wt-slow')).rejects.toThrow(
+      TaskTimeoutError,
+    );
   });
 
   it('should pass through errors from function', async () => {
-    await expect(
-      withTimeoutGuard(failing('standalone-err'), 1_000, 'wt-err'),
-    ).rejects.toThrow('standalone-err');
+    await expect(withTimeoutGuard(failing('standalone-err'), 1_000, 'wt-err')).rejects.toThrow(
+      'standalone-err',
+    );
   });
 
   it('should abort the signal on timeout', async () => {

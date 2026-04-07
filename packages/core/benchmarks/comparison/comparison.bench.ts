@@ -15,11 +15,7 @@ import { describe, it, expect } from 'vitest';
 import { CrewspaceWorkflowRunner } from './crewspace-workflow.js';
 import { LangChainWorkflowRunner } from './langchain-workflow.js';
 import { CrewAIWorkflowRunner } from './crewai-workflow.js';
-import {
-  measurePerformance,
-  formatResult,
-  PERFORMANCE_BUDGETS,
-} from '../helpers.js';
+import { measurePerformance, formatResult, PERFORMANCE_BUDGETS } from '../helpers.js';
 import type { ComparisonWorkflowRunner, WorkflowResult } from './workflow-spec.js';
 
 // ---------------------------------------------------------------------------

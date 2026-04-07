@@ -11,10 +11,7 @@ export class EngineConfigError extends CrewspaceError {
   public readonly engineId: string | undefined;
 
   constructor(message: string, engineId?: string) {
-    super(
-      engineId ? `Engine "${engineId}": ${message}` : message,
-      ErrorCode.ENGINE_CONFIG,
-    );
+    super(engineId ? `Engine "${engineId}": ${message}` : message, ErrorCode.ENGINE_CONFIG);
     this.name = 'EngineConfigError';
     this.engineId = engineId;
   }
