@@ -46,3 +46,11 @@ export type {
   TaskTimeoutGuardConfig,
   TaskTimeoutGuardEventMap,
 } from './task-timeout-guard.js';
+export { DeadLetterQueue, DEFAULT_DLQ_MAX_SIZE } from './dead-letter-queue.js';
+export type {
+  DeadLetterEntry,
+  DeadLetterEnqueueOptions,
+  DeadLetterQueueConfig,
+  DeadLetterQueueEventMap,
+  DLQOverflowPolicy,
+} from './dead-letter-queue.js';
