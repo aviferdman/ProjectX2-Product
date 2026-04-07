@@ -83,12 +83,15 @@ jobs:
       - name: Verify dist output
         run: |
           test -d packages/core/dist || (echo "ERROR: packages/core/dist not found" && exit 1)
+          test -d packages/cli/dist || (echo "ERROR: packages/cli/dist not found" && exit 1)
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: packages/core/dist/
+          path: |
+            packages/core/dist/
+            packages/cli/dist/
           retention-days: 1
 
   publish:
@@ -111,22 +114,30 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-output
-          path: packages/core/dist/
+          path: packages/
 
       - name: Verify package contents
-        run: npm pack --dry-run --workspace=packages/core
+        run: |
+          npm pack --dry-run --workspace=packages/core
+          npm pack --dry-run --workspace=packages/cli
 
       - name: Publish @crewspace/core
         run: npm publish --workspace=packages/core --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Verify published package
+      - name: Publish @crewspace/cli
+        run: npm publish --workspace=packages/cli --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify published packages
         run: |
           PACKAGE_VERSION=$(node -p "require('./packages/core/package.json').version")
           echo "Published @crewspace/core@${PACKAGE_VERSION}"
           sleep 10
           npm view @crewspace/core@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
+          npm view @crewspace/cli@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
 
   github-release:
     name: Create GitHub Release

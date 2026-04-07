@@ -93,4 +93,5 @@ jobs:
       - name: Verify dist output exists
         run: |
           test -d packages/core/dist || (echo "ERROR: packages/core/dist not found" && exit 1)
+          test -d packages/cli/dist || (echo "ERROR: packages/cli/dist not found" && exit 1)
           echo "Build output verified successfully"

@@ -51,6 +51,11 @@ const releaseConfig: ReleaseConfig = {
       name: '@crewspace/core',
       versionExport: 'src/index.ts',
     },
+    {
+      path: 'packages/cli',
+      name: '@crewspace/cli',
+      versionExport: 'src/index.ts',
+    },
   ],
   tagFormat: 'v${version}',
 };

@@ -187,7 +187,7 @@ export function checkVersionConsistency(
   const versionFilePath = join(pkgDir, versionExportFile);
   if (existsSync(versionFilePath)) {
     const content = readFileSync(versionFilePath, 'utf-8');
-    const match = /export const VERSION = '([^']+)'/.exec(content);
+    const match = /export const (?:CLI_)?VERSION = '([^']+)'/.exec(content);
     if (match?.[1] === version) {
       checks.push({ name: 'version-export-match', status: 'pass', message: `VERSION export matches package.json (${version})` });
     } else if (match?.[1]) {

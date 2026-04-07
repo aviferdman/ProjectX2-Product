@@ -103,7 +103,7 @@ export function validatePackage(
   const versionExportPath = join(pkgDir, packageInfo.versionExport);
   if (existsSync(versionExportPath)) {
     const content = readFileSync(versionExportPath, 'utf-8');
-    const versionMatch = /export const VERSION = '([^']+)'/.exec(content);
+    const versionMatch = /export const (?:CLI_)?VERSION = '([^']+)'/.exec(content);
     if (versionMatch?.[1]) {
       if (versionMatch[1] !== packageVersion) {
         errors.push(
@@ -290,6 +290,11 @@ function main(): void {
     {
       path: 'packages/core',
       name: '@crewspace/core',
+      versionExport: 'src/index.ts',
+    },
+    {
+      path: 'packages/cli',
+      name: '@crewspace/cli',
       versionExport: 'src/index.ts',
     },
   ];

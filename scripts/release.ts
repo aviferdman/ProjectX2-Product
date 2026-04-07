@@ -422,6 +422,11 @@ function main(): void {
       name: '@crewspace/core',
       versionExport: 'src/index.ts',
     },
+    {
+      path: 'packages/cli',
+      name: '@crewspace/cli',
+      versionExport: 'src/index.ts',
+    },
   ];
 
   console.log(args.dryRun ? '\n🔍 Running release validation (dry run)...\n' : '\n🚀 Starting release process...\n');

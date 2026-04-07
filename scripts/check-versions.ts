@@ -27,7 +27,8 @@ function main(): void {
     /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
 
   const packages = [
-    { path: 'packages/core', versionExportFile: 'src/index.ts' },
+    { path: 'packages/core', versionExportFile: 'src/index.ts', versionExportName: 'VERSION' },
+    { path: 'packages/cli', versionExportFile: 'src/index.ts', versionExportName: 'CLI_VERSION' },
   ];
 
   for (const pkg of packages) {
@@ -51,7 +52,8 @@ function main(): void {
     const versionFile = join(ROOT, pkg.path, pkg.versionExportFile);
     if (existsSync(versionFile)) {
       const content = readFileSync(versionFile, 'utf-8');
-      const match = /export const VERSION = '([^']+)'/.exec(content);
+      const exportName = pkg.versionExportName ?? 'VERSION';
+      const match = new RegExp(`export const ${exportName} = '([^']+)'`).exec(content);
       if (match) {
         const exportedVersion = match[1];
         if (exportedVersion !== pkgJson.version) {

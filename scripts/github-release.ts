@@ -147,7 +147,7 @@ export async function createGitHubRelease(options: GitHubReleaseOptions): Promis
   const changelogPath = join(rootDir, 'CHANGELOG.md');
 
   const releaseNotes = extractReleaseNotes(changelogPath, version);
-  const body = buildReleaseBody(version, releaseNotes, ['@crewspace/core']);
+  const body = buildReleaseBody(version, releaseNotes, ['@crewspace/core', '@crewspace/cli']);
   const preRelease = options.preRelease ?? isPreRelease(version);
 
   if (dryRun) {
