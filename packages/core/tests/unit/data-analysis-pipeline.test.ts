@@ -50,11 +50,39 @@ interface SalesRecord {
 }
 
 const SAMPLE_DATASET: readonly SalesRecord[] = [
-  { date: '2026-01-15', region: 'North', product: 'Widget A', units: 120, revenue: 2400, cost: 1200 },
-  { date: '2026-01-15', region: 'South', product: 'Widget B', units: 85, revenue: 2550, cost: 1275 },
-  { date: '2026-02-10', region: 'North', product: 'Widget A', units: 145, revenue: 2900, cost: 1450 },
+  {
+    date: '2026-01-15',
+    region: 'North',
+    product: 'Widget A',
+    units: 120,
+    revenue: 2400,
+    cost: 1200,
+  },
+  {
+    date: '2026-01-15',
+    region: 'South',
+    product: 'Widget B',
+    units: 85,
+    revenue: 2550,
+    cost: 1275,
+  },
+  {
+    date: '2026-02-10',
+    region: 'North',
+    product: 'Widget A',
+    units: 145,
+    revenue: 2900,
+    cost: 1450,
+  },
   { date: '2026-02-10', region: 'East', product: 'Widget C', units: 60, revenue: 1800, cost: 1080 },
-  { date: '2026-03-05', region: 'South', product: 'Widget A', units: 200, revenue: 4000, cost: 2000 },
+  {
+    date: '2026-03-05',
+    region: 'South',
+    product: 'Widget A',
+    units: 200,
+    revenue: 4000,
+    cost: 2000,
+  },
 ];
 
 // Custom data tools (mirrors the example pattern)
@@ -114,7 +142,14 @@ function createComputeStatsTool() {
       }
 
       return {
-        summary: { totalRecords: SAMPLE_DATASET.length, totalUnits, totalRevenue, totalCost, totalProfit, avgMargin },
+        summary: {
+          totalRecords: SAMPLE_DATASET.length,
+          totalUnits,
+          totalRevenue,
+          totalCost,
+          totalProfit,
+          avgMargin,
+        },
         byRegion: Object.fromEntries(regionMap),
         topRegion: [...regionMap.entries()].sort((a, b) => b[1].revenue - a[1].revenue)[0]?.[0],
         trend: 'upward',
@@ -434,9 +469,24 @@ describe('TASK-087: Data Analysis Pipeline — Functional Validation', () => {
       agents: [collector, cleaner, analyst, reporter],
       tasks: [
         { id: 'collect', description: 'Load raw data', agentId: 'collector' },
-        { id: 'clean', description: 'Clean the data', agentId: 'cleaner', dependencies: ['collect'] },
-        { id: 'analyze', description: 'Compute statistics', agentId: 'analyst', dependencies: ['clean'] },
-        { id: 'report', description: 'Write the report', agentId: 'reporter', dependencies: ['analyze'] },
+        {
+          id: 'clean',
+          description: 'Clean the data',
+          agentId: 'cleaner',
+          dependencies: ['collect'],
+        },
+        {
+          id: 'analyze',
+          description: 'Compute statistics',
+          agentId: 'analyst',
+          dependencies: ['clean'],
+        },
+        {
+          id: 'report',
+          description: 'Write the report',
+          agentId: 'reporter',
+          dependencies: ['analyze'],
+        },
       ],
     });
 
@@ -457,7 +507,12 @@ describe('TASK-087: Data Analysis Pipeline — Functional Validation', () => {
         { id: 'collect', description: 'Load raw data', agentId: 'collector' },
         { id: 'clean', description: 'Clean data', agentId: 'cleaner', dependencies: ['collect'] },
         { id: 'analyze', description: 'Analyze data', agentId: 'analyst', dependencies: ['clean'] },
-        { id: 'report', description: 'Write report', agentId: 'reporter', dependencies: ['analyze'] },
+        {
+          id: 'report',
+          description: 'Write report',
+          agentId: 'reporter',
+          dependencies: ['analyze'],
+        },
       ],
     });
 
@@ -500,7 +555,12 @@ describe('TASK-087: Data Analysis Pipeline — Functional Validation', () => {
       agents: [collector, captureCleaner, analyst, reporter],
       tasks: [
         { id: 'collect', description: 'Load raw data', agentId: 'collector' },
-        { id: 'clean', description: 'Clean the dataset', agentId: 'cleaner', dependencies: ['collect'] },
+        {
+          id: 'clean',
+          description: 'Clean the dataset',
+          agentId: 'cleaner',
+          dependencies: ['collect'],
+        },
         { id: 'analyze', description: 'Analyze', agentId: 'analyst', dependencies: ['clean'] },
         { id: 'report', description: 'Report', agentId: 'reporter', dependencies: ['analyze'] },
       ],

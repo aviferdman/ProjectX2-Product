@@ -69,10 +69,7 @@ describe('check-semver-compliance', () => {
     });
 
     it('de-duplicates symbols', () => {
-      const source = [
-        `export { Foo } from './a.js';`,
-        `export { Foo } from './b.js';`,
-      ].join('\n');
+      const source = [`export { Foo } from './a.js';`, `export { Foo } from './b.js';`].join('\n');
       const result = extractExports(source);
       expect(result).toEqual([{ name: 'Foo', typeOnly: false }]);
     });
@@ -184,9 +181,7 @@ describe('check-semver-compliance', () => {
     });
 
     it('handles empty baseline (fresh project)', () => {
-      const current: ExportEntry[] = [
-        { name: 'Foo', typeOnly: false },
-      ];
+      const current: ExportEntry[] = [{ name: 'Foo', typeOnly: false }];
       const result = compareExports([], current);
       expect(result.breaking).toEqual([]);
       expect(result.added).toEqual(['Foo']);

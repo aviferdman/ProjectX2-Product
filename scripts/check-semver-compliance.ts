@@ -101,7 +101,10 @@ export function extractExports(source: string): ExportEntry[] {
   let match: RegExpExecArray | null;
   while ((match = reExportBlock.exec(source)) !== null) {
     const typeOnly = match[1] != null;
-    const symbols = match[2]!.split(',').map((s) => s.trim()).filter(Boolean);
+    const symbols = match[2]!
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
     for (const sym of symbols) {
       // Handle `Foo as Bar` — track the exported name (Bar)
       const parts = sym.split(/\s+as\s+/);
@@ -266,10 +269,7 @@ function readPackageVersion(pkgDir: string): string {
  * Pre-1.0: minor bump required (0.x.0 → 0.x+1.0)
  * Post-1.0: major bump required (x.0.0 → x+1.0.0)
  */
-export function isBreakingBumpRequired(
-  oldVersion: string,
-  newVersion: string,
-): boolean {
+export function isBreakingBumpRequired(oldVersion: string, newVersion: string): boolean {
   const old = parseSimpleVersion(oldVersion);
   const cur = parseSimpleVersion(newVersion);
   if (!old || !cur) return true; // err on side of caution
@@ -327,8 +327,7 @@ function main(): void {
     const baseline = readBaseline(pkg.baselineFile);
     if (!baseline) {
       console.log(
-        `   ⚠  No baseline found at ${pkg.baselineFile}. ` +
-        `Run with --update to create one.\n`,
+        `   ⚠  No baseline found at ${pkg.baselineFile}. ` + `Run with --update to create one.\n`,
       );
       continue;
     }
@@ -360,11 +359,11 @@ function main(): void {
     if (!dryRun) {
       console.log(
         `\n   ❌ FAIL: Breaking changes detected without baseline update.` +
-        `\n      Current version: ${currentVersion}` +
-        `\n      To acknowledge a breaking change:` +
-        `\n        1. Bump the version (minor for pre-1.0, major for post-1.0)` +
-        `\n        2. Run: npx tsx scripts/check-semver-compliance.ts --update` +
-        `\n        3. Commit the updated baseline\n`,
+          `\n      Current version: ${currentVersion}` +
+          `\n      To acknowledge a breaking change:` +
+          `\n        1. Bump the version (minor for pre-1.0, major for post-1.0)` +
+          `\n        2. Run: npx tsx scripts/check-semver-compliance.ts --update` +
+          `\n        3. Commit the updated baseline\n`,
       );
       hasFailure = true;
     } else {
