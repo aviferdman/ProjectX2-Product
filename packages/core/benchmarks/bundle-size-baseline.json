@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "timestamp": "2026-04-07T00:00:00.000Z",
+  "packages": {
+    "core": {
+      "totalBytes": 1504390,
+      "jsBytes": 590838,
+      "dtsBytes": 516834,
+      "mapBytes": 396718,
+      "fileCount": 424,
+      "files": {}
+    },
+    "cli": {
+      "totalBytes": 113034,
+      "jsBytes": 46217,
+      "dtsBytes": 29507,
+      "mapBytes": 37310,
+      "fileCount": 68,
+      "files": {}
+    }
+  }
+}

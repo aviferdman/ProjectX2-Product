@@ -35,6 +35,8 @@
     "bench:report": "tsx scripts/generate-perf-report.ts",
     "bench:ci-summary": "tsx scripts/format-ci-summary.ts",
     "bench:update-baseline": "tsx scripts/update-baseline.ts",
+    "bundle:analyze": "tsx scripts/bundle-size-analysis.ts",
+    "bundle:update-baseline": "tsx scripts/bundle-size-analysis.ts --update-baseline",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit -p tsconfig.test.json"
   },
