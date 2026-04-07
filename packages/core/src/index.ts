@@ -528,6 +528,41 @@ export type {
   WorkflowDescriptor,
 } from './metrics/index.js';
 
+// Testing Helpers
+export {
+  AgentEventCollector,
+  createCapturingMockLLMProvider,
+  createMockLLMProvider,
+  createMockStreamingProvider,
+  createMockTool,
+  createSequenceMockLLMProvider,
+  createTestAgent,
+  createTestCrew,
+  createTestTask,
+  createTrackingMockLLMProvider,
+  createTrackingMockTool,
+  CrewEventCollector,
+  DEFAULT_MOCK_TOKEN_USAGE,
+  expectAgentError,
+  expectAgentIdle,
+  expectAgentOutput,
+  expectAgentStatus,
+  expectCrewStatus,
+  expectCrewSuccess,
+  expectEventOrder,
+  expectEventsContain,
+  expectTaskOutput,
+} from './testing/index.js';
+export type {
+  CollectedEvent,
+  MockLLMProviderOptions,
+  MockStreamingProviderOptions,
+  MockToolOptions,
+  TestAgentOptions,
+  TestCrewOptions,
+  TestTaskOptions,
+} from './testing/index.js';
+
 // Runtime Compatibility
 export {
   assertCompatible,
