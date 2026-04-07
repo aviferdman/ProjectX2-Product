@@ -50,6 +50,10 @@ export default defineConfig({
         text: 'Comparisons',
         items: [
           { text: 'Framework Comparison', link: '/guide/comparison' },
+          {
+            text: 'Migrating from LangChain',
+            link: '/guide/migration-langchain',
+          },
         ],
       },
       {
