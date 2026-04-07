@@ -395,6 +395,48 @@ export type {
   MemorySortOrder,
 } from './types/index.js';
 
+// Metrics
+export {
+  analyzeComplexity,
+  captureMemorySnapshot,
+  computeExecutionTimeSummary,
+  computeMemoryDelta,
+  computeMemorySummary,
+  computeTokenEfficiencyReport,
+  DEFAULT_LEAK_THRESHOLD_BYTES,
+  DEFAULT_MAX_EXECUTION_TIME_MEASUREMENTS,
+  DEFAULT_MAX_MEASUREMENTS,
+  DEFAULT_MAX_TOKEN_RECORDS,
+  formatBytes,
+  gradeComplexity,
+  MemoryTracker,
+  MetricsCollector,
+  TokenEfficiencyTracker,
+} from './metrics/index.js';
+export type {
+  AgentDescriptor,
+  CategoryTimeSummary,
+  ComplexityGrade,
+  ComplexityReport,
+  ExecutionTimeInput,
+  ExecutionTimeMeasurement,
+  ExecutionTimeSummary,
+  MemoryDelta,
+  MemoryMeasurement,
+  MemorySnapshot,
+  MemorySummary,
+  MemoryTrackerConfig,
+  MetricsCollectorConfig,
+  TaskDescriptor,
+  TokenEfficiencyReport,
+  TokenEfficiencyTrackerConfig,
+  TokenRecord,
+  TokenRecordInput,
+  TokenTypeBreakdown,
+  UnifiedMetricsReport,
+  WorkflowDescriptor,
+} from './metrics/index.js';
+
 // Runtime Compatibility
 export {
   assertCompatible,
