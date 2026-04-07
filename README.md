@@ -7,7 +7,9 @@
 Build, debug, and deploy multi-agent workflows in under 5 minutes.
 
 [![CI](https://github.com/aviferdman/ProjectX2-Product/actions/workflows/ci.yml/badge.svg)](https://github.com/aviferdman/ProjectX2-Product/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![npm version](https://img.shields.io/npm/v/@crewspace/core)](https://www.npmjs.com/package/@crewspace/core)
+[![npm downloads](https://img.shields.io/npm/dm/@crewspace/core)](https://www.npmjs.com/package/@crewspace/core)
+[![npm license](https://img.shields.io/npm/l/@crewspace/core)](https://www.npmjs.com/package/@crewspace/core)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
