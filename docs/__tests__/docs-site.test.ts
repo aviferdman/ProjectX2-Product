@@ -85,6 +85,7 @@ describe('VitePress docs content', () => {
 
   const guidePages = [
     { file: 'core-concepts.md', expectedContent: 'Core Concepts' },
+    { file: 'architecture.md', expectedContent: 'Architecture Deep Dive' },
     { file: 'agents.md', expectedContent: 'Agents' },
     { file: 'tasks-and-crews.md', expectedContent: 'Tasks' },
     { file: 'tools.md', expectedContent: 'Tool System' },

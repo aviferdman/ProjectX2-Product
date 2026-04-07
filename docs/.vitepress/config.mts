@@ -39,6 +39,7 @@ export default defineConfig({
         text: 'Guide',
         items: [
           { text: 'Core Concepts', link: '/guide/core-concepts' },
+          { text: 'Architecture Deep Dive', link: '/guide/architecture' },
           { text: 'Agents', link: '/guide/agents' },
           { text: 'Tasks & Crews', link: '/guide/tasks-and-crews' },
           { text: 'Tool System', link: '/guide/tools' },
