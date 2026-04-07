@@ -208,8 +208,15 @@ function checkNodeVersion(version: RuntimeVersion | null): CompatCheck {
 
 /** Check that ESM (`import.meta`) works. */
 function checkESM(): CompatCheck {
-  // If this module loaded, ESM is working. But we do a typeof check as a signal.
-  const available = typeof import.meta !== 'undefined' && import.meta.url != null;
+  // Use indirect eval to check import.meta at runtime without a compile-time
+  // syntax error when this file is compiled to CommonJS.
+  let available = false;
+  try {
+    // eslint-disable-next-line no-eval
+    available = eval("typeof import.meta !== 'undefined' && import.meta.url != null") === true;
+  } catch {
+    // import.meta is not available in CommonJS context
+  }
   return {
     name: 'ESM (import.meta)',
     available,

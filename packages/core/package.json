@@ -4,16 +4,21 @@
   "description": "Core agent orchestration framework for Crewspace — define and run multi-agent workflows in pure TypeScript",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/index.js"
     },
     "./testing": {
       "types": "./dist/testing/index.d.ts",
-      "import": "./dist/testing/index.js"
+      "import": "./dist/testing/index.js",
+      "require": "./dist/cjs/testing/index.js",
+      "default": "./dist/testing/index.js"
     }
   },
   "files": [
@@ -26,7 +31,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc --build && node ../../scripts/build-cjs.js",
     "clean": "tsc --build --clean && rimraf dist",
     "test": "vitest run",
     "test:unit": "vitest run tests/unit",
