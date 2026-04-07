@@ -24,6 +24,8 @@
     "typecheck": "npm run typecheck --workspaces",
     "version:check": "tsx scripts/check-versions.ts",
     "version:bump": "tsx scripts/version-bump.ts",
+    "semver:check": "tsx scripts/check-semver-compliance.ts",
+    "semver:update": "tsx scripts/check-semver-compliance.ts --update",
     "publish:prepare": "tsx scripts/prepare-publish.ts",
     "release": "tsx scripts/release.ts",
     "release:dry-run": "tsx scripts/release.ts --dry-run",

@@ -1,0 +1,1918 @@
+{
+  "package": "@crewspace/core",
+  "generatedAt": "2026-04-07T20:19:22.860Z",
+  "exports": [
+    {
+      "name": "ActiveGuardInfo",
+      "typeOnly": true
+    },
+    {
+      "name": "AfterTaskHook",
+      "typeOnly": true
+    },
+    {
+      "name": "Agent",
+      "typeOnly": false
+    },
+    {
+      "name": "AgentConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "AgentConfigError",
+      "typeOnly": false
+    },
+    {
+      "name": "AgentDescriptor",
+      "typeOnly": true
+    },
+    {
+      "name": "AgentEventCollector",
+      "typeOnly": false
+    },
+    {
+      "name": "AgentEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "AgentExecutionError",
+      "typeOnly": false
+    },
+    {
+      "name": "AgentStatus",
+      "typeOnly": false
+    },
+    {
+      "name": "AggregateCrewspaceError",
+      "typeOnly": false
+    },
+    {
+      "name": "ALLOW_ALL_POLICY",
+      "typeOnly": false
+    },
+    {
+      "name": "analyzeComplexity",
+      "typeOnly": false
+    },
+    {
+      "name": "AnthropicProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "ApiCallCategory",
+      "typeOnly": false
+    },
+    {
+      "name": "ApiCallInput",
+      "typeOnly": true
+    },
+    {
+      "name": "ApiCallRecord",
+      "typeOnly": true
+    },
+    {
+      "name": "ApiCallSummary",
+      "typeOnly": true
+    },
+    {
+      "name": "ApiCallTimer",
+      "typeOnly": false
+    },
+    {
+      "name": "ApiCallTimerStopInput",
+      "typeOnly": true
+    },
+    {
+      "name": "assertCompatible",
+      "typeOnly": false
+    },
+    {
+      "name": "assertNoCycles",
+      "typeOnly": false
+    },
+    {
+      "name": "BaseLLMProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "BeforeTaskHook",
+      "typeOnly": true
+    },
+    {
+      "name": "BufferTransport",
+      "typeOnly": false
+    },
+    {
+      "name": "buildRetryConfig",
+      "typeOnly": false
+    },
+    {
+      "name": "BumpType",
+      "typeOnly": true
+    },
+    {
+      "name": "bumpVersion",
+      "typeOnly": false
+    },
+    {
+      "name": "calculateDelay",
+      "typeOnly": false
+    },
+    {
+      "name": "calculateTaskRetryDelay",
+      "typeOnly": false
+    },
+    {
+      "name": "CallRate",
+      "typeOnly": true
+    },
+    {
+      "name": "captureMemorySnapshot",
+      "typeOnly": false
+    },
+    {
+      "name": "CategoryBreakdown",
+      "typeOnly": true
+    },
+    {
+      "name": "CategoryTimeSummary",
+      "typeOnly": true
+    },
+    {
+      "name": "ChangeCategory",
+      "typeOnly": true
+    },
+    {
+      "name": "ChangelogData",
+      "typeOnly": true
+    },
+    {
+      "name": "ChangelogEntry",
+      "typeOnly": true
+    },
+    {
+      "name": "ChangelogValidationResult",
+      "typeOnly": true
+    },
+    {
+      "name": "checkCompatibility",
+      "typeOnly": false
+    },
+    {
+      "name": "CheckpointData",
+      "typeOnly": true
+    },
+    {
+      "name": "CheckpointManager",
+      "typeOnly": false
+    },
+    {
+      "name": "CheckpointStatus",
+      "typeOnly": true
+    },
+    {
+      "name": "CheckpointStore",
+      "typeOnly": false
+    },
+    {
+      "name": "CheckpointStoreConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "CheckpointTaskState",
+      "typeOnly": true
+    },
+    {
+      "name": "CircuitBreaker",
+      "typeOnly": false
+    },
+    {
+      "name": "CircuitBreakerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "CircuitBreakerSnapshot",
+      "typeOnly": true
+    },
+    {
+      "name": "CircuitState",
+      "typeOnly": false
+    },
+    {
+      "name": "CircularDependencyCheckResult",
+      "typeOnly": true
+    },
+    {
+      "name": "CircularDependencyError",
+      "typeOnly": false
+    },
+    {
+      "name": "CollectedEvent",
+      "typeOnly": true
+    },
+    {
+      "name": "collectTools",
+      "typeOnly": false
+    },
+    {
+      "name": "compareSemVer",
+      "typeOnly": false
+    },
+    {
+      "name": "CompatCheck",
+      "typeOnly": true
+    },
+    {
+      "name": "CompatReport",
+      "typeOnly": true
+    },
+    {
+      "name": "ComplexityGrade",
+      "typeOnly": true
+    },
+    {
+      "name": "ComplexityReport",
+      "typeOnly": true
+    },
+    {
+      "name": "ComposableTool",
+      "typeOnly": true
+    },
+    {
+      "name": "composeTool",
+      "typeOnly": false
+    },
+    {
+      "name": "ComposeToolOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "computeApiCallSummary",
+      "typeOnly": false
+    },
+    {
+      "name": "computeExecutionTimeSummary",
+      "typeOnly": false
+    },
+    {
+      "name": "computeMemoryDelta",
+      "typeOnly": false
+    },
+    {
+      "name": "computeMemorySummary",
+      "typeOnly": false
+    },
+    {
+      "name": "computeTokenEfficiencyReport",
+      "typeOnly": false
+    },
+    {
+      "name": "ConsoleTransport",
+      "typeOnly": false
+    },
+    {
+      "name": "ContextMergeStrategy",
+      "typeOnly": true
+    },
+    {
+      "name": "ContextTransformer",
+      "typeOnly": true
+    },
+    {
+      "name": "createAgentLogger",
+      "typeOnly": false
+    },
+    {
+      "name": "createAnthropicProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createCapturingMockLLMProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createCrewLogger",
+      "typeOnly": false
+    },
+    {
+      "name": "createFallbackProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createFetchUrlTool",
+      "typeOnly": false
+    },
+    {
+      "name": "createFileTools",
+      "typeOnly": false
+    },
+    {
+      "name": "createListFilesTool",
+      "typeOnly": false
+    },
+    {
+      "name": "createMemoryEntry",
+      "typeOnly": false
+    },
+    {
+      "name": "createMockLLMProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createMockStreamingProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createMockTool",
+      "typeOnly": false
+    },
+    {
+      "name": "createOllamaProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createOpenAIProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createParseHtmlTool",
+      "typeOnly": false
+    },
+    {
+      "name": "createReadFileTool",
+      "typeOnly": false
+    },
+    {
+      "name": "createRetryProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createSequenceMockLLMProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createSilentLogger",
+      "typeOnly": false
+    },
+    {
+      "name": "createTestAgent",
+      "typeOnly": false
+    },
+    {
+      "name": "createTestCrew",
+      "typeOnly": false
+    },
+    {
+      "name": "createTestTask",
+      "typeOnly": false
+    },
+    {
+      "name": "createTool",
+      "typeOnly": false
+    },
+    {
+      "name": "CreateToolOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "createTrackingMockLLMProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createTrackingMockTool",
+      "typeOnly": false
+    },
+    {
+      "name": "createUsageTrackingProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "createWebSearchTool",
+      "typeOnly": false
+    },
+    {
+      "name": "createWebTools",
+      "typeOnly": false
+    },
+    {
+      "name": "createWriteFileTool",
+      "typeOnly": false
+    },
+    {
+      "name": "Crew",
+      "typeOnly": false
+    },
+    {
+      "name": "CrewConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "CrewConfigError",
+      "typeOnly": false
+    },
+    {
+      "name": "CrewEventCollector",
+      "typeOnly": false
+    },
+    {
+      "name": "CrewEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "CrewExecutionError",
+      "typeOnly": false
+    },
+    {
+      "name": "CrewRunResult",
+      "typeOnly": true
+    },
+    {
+      "name": "CrewspaceError",
+      "typeOnly": false
+    },
+    {
+      "name": "CrewStatus",
+      "typeOnly": false
+    },
+    {
+      "name": "CrewTask",
+      "typeOnly": true
+    },
+    {
+      "name": "DeadLetterEnqueueOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "DeadLetterEntry",
+      "typeOnly": true
+    },
+    {
+      "name": "DeadLetterQueue",
+      "typeOnly": false
+    },
+    {
+      "name": "DeadLetterQueueConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "DeadLetterQueueEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "decodeHtmlEntities",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_DLQ_MAX_SIZE",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_LEAK_THRESHOLD_BYTES",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_COMPOSITION_DEPTH",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_ENTRIES",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_EXECUTION_TIME_MEASUREMENTS",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_MEASUREMENTS",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_METRICS",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_RECORDS",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_RESULTS",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MAX_TOKEN_RECORDS",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_MOCK_TOKEN_USAGE",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_RATE_LIMIT",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_READABLE_NAMESPACES",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_TIMEOUT_MS",
+      "typeOnly": false
+    },
+    {
+      "name": "DEFAULT_USER_AGENT",
+      "typeOnly": false
+    },
+    {
+      "name": "defaultDeprecationHandler",
+      "typeOnly": false
+    },
+    {
+      "name": "DefaultFailureClassifier",
+      "typeOnly": false
+    },
+    {
+      "name": "DefaultLLMStreamResponse",
+      "typeOnly": false
+    },
+    {
+      "name": "defineTool",
+      "typeOnly": false
+    },
+    {
+      "name": "DefineToolOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "DegradationEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "DegradationRecord",
+      "typeOnly": true
+    },
+    {
+      "name": "DegradedResult",
+      "typeOnly": true
+    },
+    {
+      "name": "DENY_ALL_POLICY",
+      "typeOnly": false
+    },
+    {
+      "name": "DependencyCycle",
+      "typeOnly": true
+    },
+    {
+      "name": "deprecated",
+      "typeOnly": false
+    },
+    {
+      "name": "deprecatedFunction",
+      "typeOnly": false
+    },
+    {
+      "name": "DeprecationHandler",
+      "typeOnly": true
+    },
+    {
+      "name": "DeprecationInfo",
+      "typeOnly": true
+    },
+    {
+      "name": "DeprecationRegistry",
+      "typeOnly": false
+    },
+    {
+      "name": "detectCircularDependencies",
+      "typeOnly": false
+    },
+    {
+      "name": "detectRuntime",
+      "typeOnly": false
+    },
+    {
+      "name": "DLQOverflowPolicy",
+      "typeOnly": true
+    },
+    {
+      "name": "emitDeprecationWarning",
+      "typeOnly": false
+    },
+    {
+      "name": "EndpointBreakdown",
+      "typeOnly": true
+    },
+    {
+      "name": "EngineConfigError",
+      "typeOnly": false
+    },
+    {
+      "name": "EngineEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "EngineExecutionError",
+      "typeOnly": false
+    },
+    {
+      "name": "EngineRunResult",
+      "typeOnly": true
+    },
+    {
+      "name": "EngineStatus",
+      "typeOnly": false
+    },
+    {
+      "name": "ErrorCode",
+      "typeOnly": false
+    },
+    {
+      "name": "executeWithRetry",
+      "typeOnly": false
+    },
+    {
+      "name": "executeWithTimeout",
+      "typeOnly": false
+    },
+    {
+      "name": "ExecutionEngine",
+      "typeOnly": false
+    },
+    {
+      "name": "ExecutionEngineConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "ExecutionLevel",
+      "typeOnly": true
+    },
+    {
+      "name": "ExecutionStrategy",
+      "typeOnly": false
+    },
+    {
+      "name": "ExecutionTimeInput",
+      "typeOnly": true
+    },
+    {
+      "name": "ExecutionTimeMeasurement",
+      "typeOnly": true
+    },
+    {
+      "name": "ExecutionTimeSummary",
+      "typeOnly": true
+    },
+    {
+      "name": "expectAgentError",
+      "typeOnly": false
+    },
+    {
+      "name": "expectAgentIdle",
+      "typeOnly": false
+    },
+    {
+      "name": "expectAgentOutput",
+      "typeOnly": false
+    },
+    {
+      "name": "expectAgentStatus",
+      "typeOnly": false
+    },
+    {
+      "name": "expectCrewStatus",
+      "typeOnly": false
+    },
+    {
+      "name": "expectCrewSuccess",
+      "typeOnly": false
+    },
+    {
+      "name": "expectEventOrder",
+      "typeOnly": false
+    },
+    {
+      "name": "expectEventsContain",
+      "typeOnly": false
+    },
+    {
+      "name": "expectTaskOutput",
+      "typeOnly": false
+    },
+    {
+      "name": "exportLogsToFile",
+      "typeOnly": false
+    },
+    {
+      "name": "ExportLogsToFileOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "exportLogsToStdout",
+      "typeOnly": false
+    },
+    {
+      "name": "ExportLogsToStdoutOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "exportMemory",
+      "typeOnly": false
+    },
+    {
+      "name": "ExportMemoryOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "exportToJson",
+      "typeOnly": false
+    },
+    {
+      "name": "ExtractedLink",
+      "typeOnly": true
+    },
+    {
+      "name": "extractLinks",
+      "typeOnly": false
+    },
+    {
+      "name": "extractMetadata",
+      "typeOnly": false
+    },
+    {
+      "name": "extractTitle",
+      "typeOnly": false
+    },
+    {
+      "name": "FailureClassifier",
+      "typeOnly": true
+    },
+    {
+      "name": "FailureContext",
+      "typeOnly": true
+    },
+    {
+      "name": "FailureSeverity",
+      "typeOnly": false
+    },
+    {
+      "name": "FallbackContext",
+      "typeOnly": true
+    },
+    {
+      "name": "FallbackLLMProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "FallbackLLMProviderOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "FallbackProvider",
+      "typeOnly": true
+    },
+    {
+      "name": "FallbackStats",
+      "typeOnly": true
+    },
+    {
+      "name": "FetchUrlInput",
+      "typeOnly": true
+    },
+    {
+      "name": "FetchUrlInputSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "FetchUrlOutput",
+      "typeOnly": true
+    },
+    {
+      "name": "FetchUrlToolOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "FileEntry",
+      "typeOnly": true
+    },
+    {
+      "name": "FileTools",
+      "typeOnly": true
+    },
+    {
+      "name": "FileToolsOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "FileTransport",
+      "typeOnly": false
+    },
+    {
+      "name": "FileTransportConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "findVersion",
+      "typeOnly": false
+    },
+    {
+      "name": "formatBytes",
+      "typeOnly": false
+    },
+    {
+      "name": "formatChangelog",
+      "typeOnly": false
+    },
+    {
+      "name": "formatErrorForLog",
+      "typeOnly": false
+    },
+    {
+      "name": "formatLogEntryAsJson",
+      "typeOnly": false
+    },
+    {
+      "name": "formatLogEntryAsText",
+      "typeOnly": false
+    },
+    {
+      "name": "formatSemVer",
+      "typeOnly": false
+    },
+    {
+      "name": "formatTaskDependencyTree",
+      "typeOnly": false
+    },
+    {
+      "name": "formatTaskList",
+      "typeOnly": false
+    },
+    {
+      "name": "FormatTaskPlanOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "formatTaskPlanTree",
+      "typeOnly": false
+    },
+    {
+      "name": "FormattedError",
+      "typeOnly": true
+    },
+    {
+      "name": "generateMemoryId",
+      "typeOnly": false
+    },
+    {
+      "name": "getErrorChain",
+      "typeOnly": false
+    },
+    {
+      "name": "getExecutionLevels",
+      "typeOnly": false
+    },
+    {
+      "name": "getLatestVersion",
+      "typeOnly": false
+    },
+    {
+      "name": "getLogLevelLabel",
+      "typeOnly": false
+    },
+    {
+      "name": "getRuntimeVersion",
+      "typeOnly": false
+    },
+    {
+      "name": "getSchedulerExecutionLevels",
+      "typeOnly": false
+    },
+    {
+      "name": "GLOBAL_OWNER_ID",
+      "typeOnly": false
+    },
+    {
+      "name": "globalDeprecationRegistry",
+      "typeOnly": false
+    },
+    {
+      "name": "GracefulDegradationConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "GracefulDegradationHandler",
+      "typeOnly": false
+    },
+    {
+      "name": "gradeComplexity",
+      "typeOnly": false
+    },
+    {
+      "name": "HARD_MAX_ENTRIES",
+      "typeOnly": false
+    },
+    {
+      "name": "HARD_MAX_RESULTS",
+      "typeOnly": false
+    },
+    {
+      "name": "hasErrorCode",
+      "typeOnly": false
+    },
+    {
+      "name": "hasTools",
+      "typeOnly": false
+    },
+    {
+      "name": "HtmlMetadata",
+      "typeOnly": true
+    },
+    {
+      "name": "importMemory",
+      "typeOnly": false
+    },
+    {
+      "name": "ImportMemoryOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "isComposableTool",
+      "typeOnly": false
+    },
+    {
+      "name": "isCrewspaceError",
+      "typeOnly": false
+    },
+    {
+      "name": "isRetryableError",
+      "typeOnly": false
+    },
+    {
+      "name": "isStreamingProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "isValidSemVer",
+      "typeOnly": false
+    },
+    {
+      "name": "isValidTool",
+      "typeOnly": false
+    },
+    {
+      "name": "ListFilesInput",
+      "typeOnly": true
+    },
+    {
+      "name": "ListFilesInputSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "ListFilesOutput",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMAuthenticationError",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMContextLengthError",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMMessage",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMMessageSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMMessagesSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMModelInfo",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMModelInfoSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMProvider",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMProviderConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMProviderConfigSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMProviderError",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMProviderFactory",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMProviderRegistry",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMRateLimitError",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMRequestOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMRequestOptionsSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMResponse",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMRole",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMStreamChunk",
+      "typeOnly": true
+    },
+    {
+      "name": "LLMStreamError",
+      "typeOnly": false
+    },
+    {
+      "name": "LLMStreamResponse",
+      "typeOnly": true
+    },
+    {
+      "name": "LogContext",
+      "typeOnly": true
+    },
+    {
+      "name": "LogEntry",
+      "typeOnly": true
+    },
+    {
+      "name": "LogExportFormat",
+      "typeOnly": true
+    },
+    {
+      "name": "Logger",
+      "typeOnly": false
+    },
+    {
+      "name": "LoggerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "LogLevel",
+      "typeOnly": false
+    },
+    {
+      "name": "LogTransport",
+      "typeOnly": true
+    },
+    {
+      "name": "maskSensitiveData",
+      "typeOnly": false
+    },
+    {
+      "name": "matchesPattern",
+      "typeOnly": false
+    },
+    {
+      "name": "MAX_EXPORT_ENTRIES",
+      "typeOnly": false
+    },
+    {
+      "name": "MAX_READ_SIZE",
+      "typeOnly": false
+    },
+    {
+      "name": "MAX_RESPONSE_SIZE",
+      "typeOnly": false
+    },
+    {
+      "name": "MAX_WRITE_SIZE",
+      "typeOnly": false
+    },
+    {
+      "name": "MEMORY_EXPORT_VERSION",
+      "typeOnly": false
+    },
+    {
+      "name": "MemoryConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryConfigError",
+      "typeOnly": false
+    },
+    {
+      "name": "MemoryDelta",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryEntry",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryExportData",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryImportError",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryImportResult",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryManager",
+      "typeOnly": false
+    },
+    {
+      "name": "MemoryManagerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryMeasurement",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryMetadata",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryNamespace",
+      "typeOnly": false
+    },
+    {
+      "name": "MemoryOperationError",
+      "typeOnly": false
+    },
+    {
+      "name": "MemoryProvider",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryQueryError",
+      "typeOnly": false
+    },
+    {
+      "name": "MemoryQueryOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryQueryResult",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryRetentionPolicy",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryRole",
+      "typeOnly": false
+    },
+    {
+      "name": "MemorySearchBuilder",
+      "typeOnly": false
+    },
+    {
+      "name": "MemorySnapshot",
+      "typeOnly": true
+    },
+    {
+      "name": "MemorySortOrder",
+      "typeOnly": true
+    },
+    {
+      "name": "MemorySummary",
+      "typeOnly": true
+    },
+    {
+      "name": "MemoryTracker",
+      "typeOnly": false
+    },
+    {
+      "name": "MemoryTrackerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "MetricsCollector",
+      "typeOnly": false
+    },
+    {
+      "name": "MetricsCollectorConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "MetricTokenUsage",
+      "typeOnly": true
+    },
+    {
+      "name": "MetricType",
+      "typeOnly": false
+    },
+    {
+      "name": "MIN_NODE_MAJOR",
+      "typeOnly": false
+    },
+    {
+      "name": "MockLLMCall",
+      "typeOnly": true
+    },
+    {
+      "name": "MockLLMProviderOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "MockLLMResponseSystem",
+      "typeOnly": false
+    },
+    {
+      "name": "MockLLMResponseSystemConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "MockResponseMatcher",
+      "typeOnly": true
+    },
+    {
+      "name": "MockResponseRule",
+      "typeOnly": true
+    },
+    {
+      "name": "MockStreamingProviderOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "MockToolOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "ModelCatalog",
+      "typeOnly": false
+    },
+    {
+      "name": "NamespacedMemoryManager",
+      "typeOnly": false
+    },
+    {
+      "name": "NamespacedMemoryManagerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "NamespaceEvictionBreakdown",
+      "typeOnly": true
+    },
+    {
+      "name": "NamespaceEvictionCount",
+      "typeOnly": true
+    },
+    {
+      "name": "NamespaceRetentionPolicy",
+      "typeOnly": true
+    },
+    {
+      "name": "normalizeError",
+      "typeOnly": false
+    },
+    {
+      "name": "OllamaProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "OnFallbackCallback",
+      "typeOnly": true
+    },
+    {
+      "name": "OnRetryCallback",
+      "typeOnly": true
+    },
+    {
+      "name": "OnTaskErrorHook",
+      "typeOnly": true
+    },
+    {
+      "name": "OpenAIProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "OperationTokenUsage",
+      "typeOnly": true
+    },
+    {
+      "name": "PackageVersionInfo",
+      "typeOnly": true
+    },
+    {
+      "name": "ParallelErrorPolicy",
+      "typeOnly": true
+    },
+    {
+      "name": "ParallelExecutionResult",
+      "typeOnly": true
+    },
+    {
+      "name": "ParallelExecutor",
+      "typeOnly": false
+    },
+    {
+      "name": "ParallelExecutorConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "ParallelExecutorEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "parseChangelog",
+      "typeOnly": false
+    },
+    {
+      "name": "parseExportJson",
+      "typeOnly": false
+    },
+    {
+      "name": "ParseHtmlInput",
+      "typeOnly": true
+    },
+    {
+      "name": "ParseHtmlInputSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "ParseHtmlOutput",
+      "typeOnly": true
+    },
+    {
+      "name": "parseLogLevel",
+      "typeOnly": false
+    },
+    {
+      "name": "parseSemVer",
+      "typeOnly": false
+    },
+    {
+      "name": "parseToolInput",
+      "typeOnly": false
+    },
+    {
+      "name": "parseVersion",
+      "typeOnly": false
+    },
+    {
+      "name": "PerformanceMetric",
+      "typeOnly": true
+    },
+    {
+      "name": "PerformanceMetricInput",
+      "typeOnly": true
+    },
+    {
+      "name": "PerformanceMetricsReport",
+      "typeOnly": true
+    },
+    {
+      "name": "PerformanceMetricsTracker",
+      "typeOnly": false
+    },
+    {
+      "name": "PerformanceMetricsTrackerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "PerformanceReport",
+      "typeOnly": true
+    },
+    {
+      "name": "PerformanceSummary",
+      "typeOnly": true
+    },
+    {
+      "name": "PerformanceTimer",
+      "typeOnly": false
+    },
+    {
+      "name": "PerformanceTracker",
+      "typeOnly": false
+    },
+    {
+      "name": "PerformanceTrackerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "PermissionManager",
+      "typeOnly": false
+    },
+    {
+      "name": "RateLimiter",
+      "typeOnly": false
+    },
+    {
+      "name": "RateLimiterConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "ReadFileInput",
+      "typeOnly": true
+    },
+    {
+      "name": "ReadFileInputSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "ReadFileOutput",
+      "typeOnly": true
+    },
+    {
+      "name": "REQUIRED_GLOBALS",
+      "typeOnly": false
+    },
+    {
+      "name": "REQUIRED_WEB_GLOBALS",
+      "typeOnly": false
+    },
+    {
+      "name": "resolveTaskDependencies",
+      "typeOnly": false
+    },
+    {
+      "name": "ResumePlan",
+      "typeOnly": true
+    },
+    {
+      "name": "RetentionEnforcementResult",
+      "typeOnly": true
+    },
+    {
+      "name": "RetentionEvaluationResult",
+      "typeOnly": true
+    },
+    {
+      "name": "RetentionPolicyManager",
+      "typeOnly": false
+    },
+    {
+      "name": "RetentionPolicyManagerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "RetryConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "RetryContext",
+      "typeOnly": true
+    },
+    {
+      "name": "RetryLLMProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "RetryLLMProviderOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "RetryPolicy",
+      "typeOnly": true
+    },
+    {
+      "name": "RetryStats",
+      "typeOnly": true
+    },
+    {
+      "name": "RuntimeName",
+      "typeOnly": true
+    },
+    {
+      "name": "RuntimeVersion",
+      "typeOnly": true
+    },
+    {
+      "name": "schedulerTopologicalSort",
+      "typeOnly": false
+    },
+    {
+      "name": "ScopedMemory",
+      "typeOnly": false
+    },
+    {
+      "name": "ScopedMemoryConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "SearchResult",
+      "typeOnly": true
+    },
+    {
+      "name": "SemVer",
+      "typeOnly": true
+    },
+    {
+      "name": "SerializedError",
+      "typeOnly": true
+    },
+    {
+      "name": "ShortTermMemory",
+      "typeOnly": false
+    },
+    {
+      "name": "SqliteMemory",
+      "typeOnly": false
+    },
+    {
+      "name": "SqliteMemoryConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "StdoutTransport",
+      "typeOnly": false
+    },
+    {
+      "name": "StdoutTransportConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "StreamingLLMProvider",
+      "typeOnly": true
+    },
+    {
+      "name": "stripTags",
+      "typeOnly": false
+    },
+    {
+      "name": "Task",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskConfigError",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskContextManager",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskContextManagerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskDescriptor",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskErrorPolicy",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskExecutionError",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskExecutionWrapper",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskExecutionWrapperConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskInput",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskPriority",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskResult",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskRetryStats",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskRunner",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskStatus",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskTimeoutError",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskTimeoutGuard",
+      "typeOnly": false
+    },
+    {
+      "name": "TaskTimeoutGuardConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "TaskTimeoutGuardEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "TestAgentOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "TestCrewOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "TestTaskOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "TimerStartInput",
+      "typeOnly": true
+    },
+    {
+      "name": "TimerStopInput",
+      "typeOnly": true
+    },
+    {
+      "name": "TokenEfficiencyReport",
+      "typeOnly": true
+    },
+    {
+      "name": "TokenEfficiencyTracker",
+      "typeOnly": false
+    },
+    {
+      "name": "TokenEfficiencyTrackerConfig",
+      "typeOnly": true
+    },
+    {
+      "name": "TokenRecord",
+      "typeOnly": true
+    },
+    {
+      "name": "TokenRecordInput",
+      "typeOnly": true
+    },
+    {
+      "name": "TokenTypeBreakdown",
+      "typeOnly": true
+    },
+    {
+      "name": "TokenUsage",
+      "typeOnly": true
+    },
+    {
+      "name": "TokenUsageTracker",
+      "typeOnly": false
+    },
+    {
+      "name": "tool",
+      "typeOnly": false
+    },
+    {
+      "name": "Tool",
+      "typeOnly": true
+    },
+    {
+      "name": "ToolCategory",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolCompositionError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolConfigError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolConfigSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolContext",
+      "typeOnly": true
+    },
+    {
+      "name": "ToolDecoratorOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "ToolEventMap",
+      "typeOnly": true
+    },
+    {
+      "name": "ToolExecutionError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolExecutor",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolInputValidationError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolNotFoundError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolParameterSchema",
+      "typeOnly": true
+    },
+    {
+      "name": "ToolParameterSchemaSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolPermission",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolPermissionError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolPermissionPolicy",
+      "typeOnly": true
+    },
+    {
+      "name": "ToolPermissionPolicySchema",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolRateLimitError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolRegistry",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolResult",
+      "typeOnly": true
+    },
+    {
+      "name": "ToolTimeoutError",
+      "typeOnly": false
+    },
+    {
+      "name": "ToolValidationIssue",
+      "typeOnly": true
+    },
+    {
+      "name": "topologicalSort",
+      "typeOnly": false
+    },
+    {
+      "name": "TopologicalSortResult",
+      "typeOnly": true
+    },
+    {
+      "name": "UnifiedMetricsReport",
+      "typeOnly": true
+    },
+    {
+      "name": "UsageRecord",
+      "typeOnly": true
+    },
+    {
+      "name": "UsageRecordInput",
+      "typeOnly": true
+    },
+    {
+      "name": "UsageReport",
+      "typeOnly": true
+    },
+    {
+      "name": "UsageSummary",
+      "typeOnly": true
+    },
+    {
+      "name": "UsageTrackingProvider",
+      "typeOnly": false
+    },
+    {
+      "name": "UsageTrackingProviderOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "UsageTrackingProviderResult",
+      "typeOnly": true
+    },
+    {
+      "name": "validateChangelog",
+      "typeOnly": false
+    },
+    {
+      "name": "validateLLMMessages",
+      "typeOnly": false
+    },
+    {
+      "name": "validateLLMProviderConfig",
+      "typeOnly": false
+    },
+    {
+      "name": "validateToolConfig",
+      "typeOnly": false
+    },
+    {
+      "name": "validateToolPermissionPolicy",
+      "typeOnly": false
+    },
+    {
+      "name": "validateVersionConsistency",
+      "typeOnly": false
+    },
+    {
+      "name": "VERSION",
+      "typeOnly": false
+    },
+    {
+      "name": "VersionConsistencyResult",
+      "typeOnly": true
+    },
+    {
+      "name": "WebSearchInput",
+      "typeOnly": true
+    },
+    {
+      "name": "WebSearchInputSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "WebSearchOutput",
+      "typeOnly": true
+    },
+    {
+      "name": "WebSearchToolOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "WebTools",
+      "typeOnly": true
+    },
+    {
+      "name": "WebToolsOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "withRetry",
+      "typeOnly": false
+    },
+    {
+      "name": "withTimeoutGuard",
+      "typeOnly": false
+    },
+    {
+      "name": "WorkflowDescriptor",
+      "typeOnly": true
+    },
+    {
+      "name": "WriteFileInput",
+      "typeOnly": true
+    },
+    {
+      "name": "WriteFileInputSchema",
+      "typeOnly": false
+    },
+    {
+      "name": "WriteFileOutput",
+      "typeOnly": true
+    },
+    {
+      "name": "zodToToolSchema",
+      "typeOnly": false
+    }
+  ]
+}

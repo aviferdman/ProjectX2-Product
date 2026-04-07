@@ -270,6 +270,20 @@ All breaking changes go through a deprecation period before removal. See the ful
 
 The deprecation utilities in `packages/core/src/deprecation/` provide runtime warnings, function wrappers, and method decorators for safe API evolution.
 
+### CI Semver Enforcement
+
+The CI pipeline includes an automated semver compliance check (`npm run semver:check`) that compares the current public API surface against a committed baseline. If exports are removed or changed in a way that breaks consumers, the check fails.
+
+To acknowledge an intentional breaking change:
+
+1. Bump the version appropriately (minor for pre-1.0, major for post-1.0)
+2. Run `npm run semver:update` to regenerate the baseline
+3. Commit the updated baseline alongside the breaking change
+
+### Safe API Evolution
+
+For patterns and examples on how to evolve the API without breaking consumers, see the [API Evolution Patterns](./docs/guide/api-evolution-patterns.md) guide.
+
 ## Getting Help
 
 - **Discord:** Join us on [Discord](https://discord.gg/crewspace) — the `#help` forum and `#contributing` channel are great places to ask questions

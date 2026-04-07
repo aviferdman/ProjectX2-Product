@@ -1,0 +1,74 @@
+{
+  "package": "@crewspace/cli",
+  "generatedAt": "2026-04-07T20:19:22.865Z",
+  "exports": [
+    {
+      "name": "CLI_VERSION",
+      "typeOnly": false
+    },
+    {
+      "name": "CLIOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "ColorOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "colors",
+      "typeOnly": false
+    },
+    {
+      "name": "ColorTheme",
+      "typeOnly": true
+    },
+    {
+      "name": "createColorTheme",
+      "typeOnly": false
+    },
+    {
+      "name": "createLogger",
+      "typeOnly": false
+    },
+    {
+      "name": "createProgram",
+      "typeOnly": false
+    },
+    {
+      "name": "createSpinner",
+      "typeOnly": false
+    },
+    {
+      "name": "GlobalOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "Logger",
+      "typeOnly": true
+    },
+    {
+      "name": "LoggerOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "resolveConfigPath",
+      "typeOnly": false
+    },
+    {
+      "name": "resolveLogLevel",
+      "typeOnly": false
+    },
+    {
+      "name": "Spinner",
+      "typeOnly": true
+    },
+    {
+      "name": "SpinnerOptions",
+      "typeOnly": true
+    },
+    {
+      "name": "Verbosity",
+      "typeOnly": true
+    }
+  ]
+}
