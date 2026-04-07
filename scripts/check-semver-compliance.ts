@@ -100,7 +100,7 @@ export function extractExports(source: string): ExportEntry[] {
   const reExportBlock = /export\s+(type\s+)?\{([^}]+)\}\s+from\s+['"][^'"]+['"]/g;
   let match: RegExpExecArray | null;
   while ((match = reExportBlock.exec(source)) !== null) {
-    const typeOnly = match[1] != null;
+    const typeOnly = match[1] !== undefined;
     const symbols = match[2]!
       .split(',')
       .map((s) => s.trim())
@@ -351,7 +351,7 @@ function main(): void {
     // Check whether the version has been bumped appropriately
     const pkgDir = pkg.entryPoint.split('/').slice(0, 2).join('/');
     const currentVersion = readPackageVersion(pkgDir);
-    const baselineVersion = baseline.exports.length > 0 ? currentVersion : '0.0.0';
+    const _baselineVersion = baseline.exports.length > 0 ? currentVersion : '0.0.0';
 
     // In a real CI scenario we'd compare against the base branch version.
     // For now, we flag the breaking changes and require the developer to
