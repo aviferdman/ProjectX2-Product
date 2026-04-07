@@ -552,10 +552,15 @@ export {
   expectEventOrder,
   expectEventsContain,
   expectTaskOutput,
+  MockLLMResponseSystem,
 } from './testing/index.js';
 export type {
   CollectedEvent,
+  MockLLMCall,
   MockLLMProviderOptions,
+  MockLLMResponseSystemConfig,
+  MockResponseMatcher,
+  MockResponseRule,
   MockStreamingProviderOptions,
   MockToolOptions,
   TestAgentOptions,

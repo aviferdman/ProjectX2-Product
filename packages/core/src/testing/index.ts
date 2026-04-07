@@ -33,6 +33,15 @@ export type {
   MockStreamingProviderOptions,
 } from './mock-llm-provider.js';
 
+// Mock LLM response system
+export { MockLLMResponseSystem } from './mock-response-system.js';
+export type {
+  MockLLMCall,
+  MockLLMResponseSystemConfig,
+  MockResponseMatcher,
+  MockResponseRule,
+} from './mock-response-system.js';
+
 // Mock tools
 export {
   createMockTool,
