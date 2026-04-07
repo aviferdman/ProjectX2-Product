@@ -8,6 +8,14 @@ export default defineWorkspace([
   'packages/*',
   {
     test: {
+      name: 'community',
+      root: './community',
+      include: ['**/__tests__/**/*.test.ts', '**/*.test.ts'],
+      environment: 'node',
+    },
+  },
+  {
+    test: {
       name: 'scripts',
       root: './scripts',
       include: ['__tests__/**/*.test.ts'],
