@@ -71,6 +71,52 @@ All server configuration is defined in [`server-config.ts`](./server-config.ts).
 
 The configuration is validated at runtime — the setup script will reject invalid configs (duplicate channels, missing required channels, etc.).
 
+## Automated Welcome Messages
+
+When a new member joins the server, two automated messages are sent:
+
+### Channel Welcome Message
+Posted in `#welcome` — visible to all members:
+- Greets the new member by name
+- Shows current member count
+- Points to `#rules` and `#introductions`
+- Includes a rich embed with quick-start links
+
+### Direct Message
+Sent privately to the new member:
+- Personalized greeting
+- Links to documentation, GitHub, and contributing guide
+
+### Auto-Assign Role
+New members are automatically assigned the **Community** role upon joining.
+
+### Configuration
+
+Welcome message templates use `{variable}` placeholders that are resolved at runtime:
+
+| Variable | Description |
+|----------|-------------|
+| `{username}` | The new member's display name |
+| `{server}` | Server name (Crewspace) |
+| `{memberCount}` | Current member count |
+| `{rulesChannel}` | Name of the rules channel |
+| `{introChannel}` | Name of the introductions channel |
+
+The default configuration is defined in [`welcome-messages.ts`](./welcome-messages.ts). To customize:
+
+1. Edit the `DEFAULT_WELCOME_CONFIG` export or create a new `WelcomeConfig`
+2. Use `validateWelcomeConfig()` to check for issues
+3. Use `renderWelcomeMessage()` to resolve templates at runtime
+
+### Preview
+
+```bash
+npx tsx -e "
+  import { DEFAULT_WELCOME_CONFIG, formatWelcomeConfig } from './community/discord/welcome-messages.js';
+  console.log(formatWelcomeConfig(DEFAULT_WELCOME_CONFIG));
+"
+```
+
 ## Invite Link
 
 Once the server is created, share this invite link with the community:
