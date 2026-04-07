@@ -70,3 +70,25 @@ export type {
   MetricsCollectorConfig,
   UnifiedMetricsReport,
 } from './metrics-collector.js';
+
+// Performance Metrics Tracker (duration, tokens, API calls)
+export {
+  ApiCallCategory,
+  ApiCallTimer,
+  computeApiCallSummary,
+  DEFAULT_MAX_RECORDS,
+  PerformanceMetricsTracker,
+  _resetApiCallIdCounter,
+} from './performance-metrics-tracker.js';
+export type {
+  ApiCallInput,
+  ApiCallRecord,
+  ApiCallSummary,
+  ApiCallTimerStopInput,
+  CallRate,
+  CategoryBreakdown,
+  EndpointBreakdown,
+  OperationTokenUsage,
+  PerformanceMetricsReport,
+  PerformanceMetricsTrackerConfig,
+} from './performance-metrics-tracker.js';
