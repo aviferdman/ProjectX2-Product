@@ -212,8 +212,8 @@ function randomInRange(min: number, max: number): number {
 export class MockLLMResponseSystem {
   private readonly _name: string;
   private _defaultContent: string;
-  private _defaultTokenUsage: TokenUsage;
-  private _defaultFinishReason: string;
+  private readonly _defaultTokenUsage: TokenUsage;
+  private readonly _defaultFinishReason: string;
   private _latency: readonly [number, number] | undefined;
   private _strictMode: boolean;
 

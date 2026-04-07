@@ -423,6 +423,7 @@ describe('TASK-090: Multi-Step Reasoning — Tool Validation', () => {
         const sanitized = expression.replace(/[^0-9+\-*/().% ]/g, '');
         if (sanitized.length === 0) return 'Error: Invalid expression';
         try {
+          // eslint-disable-next-line @typescript-eslint/no-implied-eval
           const result = new Function(`return (${sanitized})`)() as number;
           return `${expression} = ${String(result)}`;
         } catch {

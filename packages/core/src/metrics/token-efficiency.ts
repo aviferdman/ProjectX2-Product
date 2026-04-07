@@ -123,7 +123,7 @@ export const DEFAULT_MAX_TOKEN_RECORDS = 5000;
 let _nextTokenRecordId = 0;
 
 /** @internal Reset ID counter (for tests). */
-export function _resetTokenRecordIdCounter(): void {
+export function resetTokenRecordIdCounter(): void {
   _nextTokenRecordId = 0;
 }
 

@@ -33,7 +33,7 @@ export {
   computeTokenEfficiencyReport,
   DEFAULT_MAX_TOKEN_RECORDS,
   TokenEfficiencyTracker,
-  _resetTokenRecordIdCounter,
+  resetTokenRecordIdCounter,
 } from './token-efficiency.js';
 export type {
   TokenEfficiencyReport,
@@ -75,7 +75,7 @@ export {
   computeApiCallSummary,
   DEFAULT_MAX_RECORDS,
   PerformanceMetricsTracker,
-  _resetApiCallIdCounter,
+  resetApiCallIdCounter,
 } from './performance-metrics-tracker.js';
 export type {
   ApiCallInput,

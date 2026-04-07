@@ -103,6 +103,7 @@ export function detectRuntime(): RuntimeName {
   if (
     typeof process !== 'undefined' &&
     process.versions !== null &&
+    typeof process.versions['node'] === 'string'
   ) {
     return 'node';
   }
@@ -138,7 +139,7 @@ export function getRuntimeVersion(): RuntimeVersion | null {
   switch (runtime) {
     case 'bun': {
       const raw =
-        typeof process !== 'undefined' && process.versions != null
+        typeof process !== 'undefined' && process.versions !== null
           ? (process.versions as Record<string, string | undefined>)['bun']
           : undefined;
       return raw ? parseVersion(raw) : null;
@@ -216,7 +217,7 @@ function checkESM(): CompatCheck {
   } else if (runtime === 'node') {
     const ver = getRuntimeVersion();
     // Node.js has stable ESM support from v14+; we require >= 18 anyway.
-    available = ver != null && ver.major >= 14;
+    available = ver !== null && ver.major >= 14;
   } else {
     // Fallback: try eval for unknown runtimes
     try {

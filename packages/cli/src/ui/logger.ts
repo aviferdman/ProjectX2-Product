@@ -87,7 +87,7 @@ export function createLogger(options?: LoggerOptions): Logger {
 
     debug(message: string) {
       if (!isVerbose) return;
-      write(stdout, `${theme.dim(`[debug] ${message}`)}`);
+      write(stdout, theme.dim(`[debug] ${message}`));
     },
 
     log(message: string) {

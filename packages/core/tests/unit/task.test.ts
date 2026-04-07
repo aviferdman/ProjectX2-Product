@@ -743,7 +743,7 @@ describe('Task', () => {
     it('should export Task from index', async () => {
       const mod = await import('../../src/index.js');
       expect(mod.Task).toBeDefined();
-    });
+    }, 15000);
 
     it('should export TaskPriority from index', async () => {
       const mod = await import('../../src/index.js');

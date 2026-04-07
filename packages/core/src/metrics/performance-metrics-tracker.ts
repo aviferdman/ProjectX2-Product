@@ -179,7 +179,7 @@ const ONE_MINUTE_MS = 60_000;
 let _nextApiCallId = 0;
 
 /** @internal Reset the ID counter (for tests). */
-export function _resetApiCallIdCounter(): void {
+export function resetApiCallIdCounter(): void {
   _nextApiCallId = 0;
 }
 

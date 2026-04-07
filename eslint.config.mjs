@@ -16,6 +16,7 @@ export default tseslint.config(
       '**/*.mts',
       'vitest.workspace.ts',
       '**/vitest.config.ts',
+      '**/vitest.bench.config.ts',
       'examples/**',
       'docs/**',
       'community/**',
@@ -91,6 +92,7 @@ export default tseslint.config(
         {
           selector: 'function',
           format: ['camelCase', 'PascalCase'],
+          leadingUnderscore: 'allow',
         },
         {
           selector: 'typeLike',

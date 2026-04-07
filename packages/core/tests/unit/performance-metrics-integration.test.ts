@@ -20,7 +20,7 @@ import {
   ApiCallCategory,
   MetricsCollector,
 } from '../../src/metrics/index.js';
-import { _resetApiCallIdCounter } from '../../src/metrics/performance-metrics-tracker.js';
+import { resetApiCallIdCounter } from '../../src/metrics/performance-metrics-tracker.js';
 import type { LLMProvider, LLMMessage, LLMResponse, TaskResult } from '../../src/types/index.js';
 import type {
   PerformanceMetricsReport,
@@ -151,7 +151,7 @@ function exportUnifiedReport(report: UnifiedMetricsReport): string {
   return JSON.stringify(serializable, null, 2);
 }
 
-function renderBar(value: number, maxValue: number, width: number = 30): string {
+function renderBar(value: number, maxValue: number, width = 30): string {
   const filled = maxValue > 0 ? Math.round((value / maxValue) * width) : 0;
   return '█'.repeat(filled) + '░'.repeat(width - filled);
 }
@@ -216,7 +216,7 @@ describe('TASK-123: Performance Metrics Integration — Example File', () => {
 
 describe('TASK-123: Attach PerformanceMetricsTracker to Agent', () => {
   beforeEach(() => {
-    _resetApiCallIdCounter();
+    resetApiCallIdCounter();
   });
 
   it('should record an LLM API call when agent executes successfully', async () => {
@@ -471,7 +471,7 @@ describe('TASK-123: Attach MetricsCollector to Crew', () => {
 
 describe('TASK-123: Export Metrics to JSON', () => {
   beforeEach(() => {
-    _resetApiCallIdCounter();
+    resetApiCallIdCounter();
   });
 
   it('should export PerformanceMetricsReport as valid JSON', async () => {
@@ -601,7 +601,7 @@ describe('TASK-123: Visualization Helpers', () => {
 
 describe('TASK-123: End-to-end Agent + Crew Metrics', () => {
   beforeEach(() => {
-    _resetApiCallIdCounter();
+    resetApiCallIdCounter();
   });
 
   it('should track both agent-level and crew-level metrics in a single workflow', async () => {

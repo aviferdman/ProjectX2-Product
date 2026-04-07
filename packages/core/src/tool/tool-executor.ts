@@ -193,7 +193,6 @@ export class ToolExecutor {
 
   /** @internal Create a ToolContext for a composable tool at the given depth. */
   private _createContext(currentDepth: number): ToolContext {
-    const executor = this;
     const maxDepth = this._maxCompositionDepth;
     const nextDepth = currentDepth + 1;
 
@@ -201,7 +200,7 @@ export class ToolExecutor {
       depth: currentDepth,
       maxDepth,
 
-      async callTool(toolName: string, input: unknown): Promise<ToolResult> {
+      callTool: async (toolName: string, input: unknown): Promise<ToolResult> => {
         if (nextDepth > maxDepth) {
           throw new ToolCompositionError(
             toolName,
@@ -211,7 +210,7 @@ export class ToolExecutor {
           );
         }
 
-        if (!executor._registry) {
+        if (!this._registry) {
           throw new ToolCompositionError(
             toolName,
             'Tool composition requires a ToolRegistry. Pass { registry } to the ToolExecutor constructor.',
@@ -220,16 +219,16 @@ export class ToolExecutor {
           );
         }
 
-        const tool = executor._registry.get(toolName);
-        return executor._executeAtDepth(tool, input, nextDepth);
+        const tool = this._registry.get(toolName);
+        return this._executeAtDepth(tool, input, nextDepth);
       },
 
-      hasTool(toolName: string): boolean {
-        return executor._registry?.has(toolName) ?? false;
+      hasTool: (toolName: string): boolean => {
+        return this._registry?.has(toolName) ?? false;
       },
 
-      getToolNames(): readonly string[] {
-        return executor._registry?.getNames() ?? [];
+      getToolNames: (): readonly string[] => {
+        return this._registry?.getNames() ?? [];
       },
     };
   }

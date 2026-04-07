@@ -463,6 +463,7 @@ describe('collectTools edge cases', () => {
   });
 
   it('handles class with no methods at all', () => {
+    // eslint-disable-next-line @typescript-eslint/no-extraneous-class
     class Empty {}
     expect(collectTools(new Empty())).toEqual([]);
   });

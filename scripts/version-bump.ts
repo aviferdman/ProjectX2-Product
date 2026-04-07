@@ -16,7 +16,7 @@
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
-import { isValidSemver, bumpVersion, compareSemver, parseSemver, formatSemver } from './semver.js';
+import { isValidSemver, bumpVersion, compareSemver } from './semver.js';
 import type { BumpType } from './semver.js';
 
 export interface VersionBumpOptions {

@@ -178,7 +178,7 @@ export async function createGitHubRelease(
     },
     body: JSON.stringify({
       tag_name: tag,
-      name: `${tag}`,
+      name: tag,
       body,
       draft,
       prerelease: preRelease,
@@ -324,5 +324,5 @@ async function main(): Promise<void> {
 
 const isDirectExecution = process.argv[1]?.endsWith('github-release.ts') ?? false;
 if (isDirectExecution) {
-  main();
+  void main();
 }

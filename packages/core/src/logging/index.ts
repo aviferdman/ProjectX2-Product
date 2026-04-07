@@ -43,7 +43,7 @@ export {
   MetricType,
   PerformanceTimer,
   PerformanceTracker,
-  _resetMetricIdCounter,
+  resetMetricIdCounter,
 } from './performance-tracker.js';
 
 export type {

@@ -180,11 +180,13 @@ describe('Dependency Integration (TASK-006)', () => {
       const emitter = new EventEmitter<{ test: () => Promise<void> }>();
       const results: string[] = [];
 
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       emitter.on('test', async (): Promise<void> => {
         await new Promise((resolve) => setTimeout(resolve, 10));
         results.push('first');
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       emitter.on('test', async (): Promise<void> => {
         await new Promise((resolve) => setTimeout(resolve, 5));
         results.push('second');

@@ -13,7 +13,7 @@ import {
   computeApiCallSummary,
   DEFAULT_MAX_RECORDS,
   PerformanceMetricsTracker,
-  _resetApiCallIdCounter,
+  resetApiCallIdCounter,
 } from '../../../src/metrics/index.js';
 
 import type {
@@ -159,7 +159,7 @@ describe('computeApiCallSummary', () => {
 describe('PerformanceMetricsTracker', () => {
   beforeEach(() => {
     clock = 1000;
-    _resetApiCallIdCounter();
+    resetApiCallIdCounter();
   });
 
   describe('construction', () => {

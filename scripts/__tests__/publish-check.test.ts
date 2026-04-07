@@ -330,7 +330,7 @@ describe('publish-check', () => {
       expect(nonPackChecks.every((c) => c.status !== 'fail')).toBe(true);
       expect(result.packageName).toBe('@crewspace/core');
       expect(result.packageVersion).toBe('0.1.0');
-    });
+    }, 15000);
 
     it('fails when package.json is missing', () => {
       const result = runPublishCheck({

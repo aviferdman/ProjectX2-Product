@@ -12,7 +12,7 @@ import {
   MetricType,
   PerformanceTimer,
   PerformanceTracker,
-  _resetMetricIdCounter,
+  resetMetricIdCounter,
 } from '../../../src/logging/index.js';
 
 import type {
@@ -70,7 +70,7 @@ describe('PerformanceTracker', () => {
 
   beforeEach(() => {
     clock = 1000;
-    _resetMetricIdCounter();
+    resetMetricIdCounter();
     tracker = new PerformanceTracker({ now: fakeClock });
   });
 
@@ -454,7 +454,7 @@ describe('PerformanceTracker', () => {
   describe('maxMetrics eviction', () => {
     it('evicts oldest metrics when limit is exceeded', () => {
       const small = new PerformanceTracker({ maxMetrics: 3, now: fakeClock });
-      _resetMetricIdCounter();
+      resetMetricIdCounter();
 
       small.record(makeMetricInput({ durationMs: 10 })); // id perf-1
       small.record(makeMetricInput({ durationMs: 20 })); // id perf-2
@@ -509,7 +509,7 @@ describe('PerformanceTimer', () => {
 
   beforeEach(() => {
     clock = 1000;
-    _resetMetricIdCounter();
+    resetMetricIdCounter();
     tracker = new PerformanceTracker({ now: fakeClock });
   });
 
@@ -639,7 +639,7 @@ describe('PerformanceTracker integration', () => {
 
   beforeEach(() => {
     clock = 0;
-    _resetMetricIdCounter();
+    resetMetricIdCounter();
     tracker = new PerformanceTracker({ now: fakeClock });
   });
 
@@ -783,7 +783,7 @@ describe('PerformanceTracker integration', () => {
 
   it('works with default Date.now clock', () => {
     const realTracker = new PerformanceTracker();
-    _resetMetricIdCounter();
+    resetMetricIdCounter();
     const timer = realTracker.startTimer({ type: MetricType.TOOL_CALL });
     const metric = timer.stop();
     // Just verify it works — exact times depend on system clock

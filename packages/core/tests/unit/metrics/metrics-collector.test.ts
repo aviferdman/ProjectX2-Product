@@ -12,7 +12,7 @@ import {
   MetricsCollector,
   DEFAULT_MAX_EXECUTION_TIME_MEASUREMENTS,
   computeExecutionTimeSummary,
-  _resetTokenRecordIdCounter,
+  resetTokenRecordIdCounter,
 } from '../../../src/metrics/index.js';
 
 import type {
@@ -153,7 +153,7 @@ describe('MetricsCollector', () => {
 
   beforeEach(() => {
     clockValue = 1000;
-    _resetTokenRecordIdCounter();
+    resetTokenRecordIdCounter();
     collector = new MetricsCollector({ now: fakeClock });
   });
 

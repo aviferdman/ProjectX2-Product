@@ -206,7 +206,7 @@ export const DEFAULT_MAX_METRICS = 10_000;
 let _nextMetricId = 0;
 
 /** @internal */
-export function _resetMetricIdCounter(): void {
+export function resetMetricIdCounter(): void {
   _nextMetricId = 0;
 }
 

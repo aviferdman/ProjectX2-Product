@@ -124,7 +124,7 @@ async function runWithWatch(
   });
 
   // Keep the process alive until SIGINT/SIGTERM
-  const cleanup = () => {
+  const cleanup = (): void => {
     watcher.close();
     process.exit(process.exitCode ?? 0);
   };
@@ -133,5 +133,6 @@ async function runWithWatch(
   process.on('SIGTERM', cleanup);
 
   // Return a promise that never resolves (keep watching)
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   return new Promise(() => {});
 }

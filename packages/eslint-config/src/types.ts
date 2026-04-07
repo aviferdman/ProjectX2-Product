@@ -23,5 +23,7 @@ export interface CrewspaceConfigOptions {
   readonly testFiles?: string[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export type FlatConfig = ReturnType<typeof tseslint.config>[number];
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export type FlatConfigArray = ReturnType<typeof tseslint.config>;

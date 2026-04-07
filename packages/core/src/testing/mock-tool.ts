@@ -42,7 +42,7 @@ export interface MockToolOptions {
    * Dynamic handler called on each `execute` invocation.
    * When set, overrides `result` and `error`.
    */
-  readonly handler?: (input: unknown) => unknown | Promise<unknown>;
+  readonly handler?: (input: unknown) => Promise<unknown>;
 }
 
 // ---------------------------------------------------------------------------
@@ -129,7 +129,7 @@ export function createTrackingMockTool(
   return createMockTool({
     ...options,
     name,
-    handler: (input) => {
+    handler: async (input) => {
       tracker.push({ tool: name, input });
       return options.result ?? `${name} result`;
     },

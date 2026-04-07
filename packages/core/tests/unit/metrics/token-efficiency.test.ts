@@ -11,7 +11,7 @@ import {
   computeTokenEfficiencyReport,
   DEFAULT_MAX_TOKEN_RECORDS,
   TokenEfficiencyTracker,
-  _resetTokenRecordIdCounter,
+  resetTokenRecordIdCounter,
 } from '../../../src/metrics/index.js';
 
 import type {
@@ -202,7 +202,7 @@ describe('TokenEfficiencyTracker', () => {
   let tracker: TokenEfficiencyTracker;
 
   beforeEach(() => {
-    _resetTokenRecordIdCounter();
+    resetTokenRecordIdCounter();
     tracker = new TokenEfficiencyTracker({ now: () => 1000 });
   });
 

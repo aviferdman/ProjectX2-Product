@@ -14,7 +14,7 @@
  *   npx tsx scripts/release.ts --version 0.1.0 --skip-push
  */
 
-import { readFileSync, existsSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { execSync } from 'node:child_process';
 import { validatePublish } from './prepare-publish.js';
