@@ -47,6 +47,12 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Comparisons',
+        items: [
+          { text: 'Framework Comparison', link: '/guide/comparison' },
+        ],
+      },
+      {
         text: 'Performance',
         items: [
           { text: 'Benchmarks', link: '/guide/benchmarks' },

@@ -91,6 +91,7 @@ describe('VitePress docs content', () => {
     { file: 'tools.md', expectedContent: 'Tool System' },
     { file: 'llm-providers.md', expectedContent: 'LLM Providers' },
     { file: 'benchmarks.md', expectedContent: 'Benchmarks' },
+    { file: 'comparison.md', expectedContent: 'Framework Comparison' },
   ];
 
   guidePages.forEach(({ file, expectedContent }) => {
