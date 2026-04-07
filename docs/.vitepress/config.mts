@@ -61,6 +61,7 @@ export default defineConfig({
       {
         text: 'Performance',
         items: [
+          { text: 'Performance Metrics', link: '/guide/performance-metrics' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
         ],
       },

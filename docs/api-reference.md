@@ -99,6 +99,11 @@ Complete reference for every public class, interface, enum, and function in the 
   - [LLM Errors](#llm-errors)
   - [Tool Errors](#tool-errors)
   - [Memory Errors](#memory-errors)
+- [Performance Metrics](#performance-metrics)
+  - [PerformanceMetricsTracker](#performancemetricstracker)
+  - [ApiCallTimer](#apicalltimer)
+  - [ApiCallCategory (enum)](#apicallcategory)
+  - [computeApiCallSummary](#computeapicallsummary)
 - [Utility Functions](#utility-functions)
   - [Task Utilities](#task-utilities)
   - [LLM Utilities](#llm-utilities)
@@ -1599,6 +1604,224 @@ All error classes extend the built-in `Error` class with descriptive `name` and 
 | `MemoryConfigError` | Invalid memory configuration |
 | `MemoryOperationError` | Memory operation failed |
 | `MemoryQueryError` | Memory query failed |
+
+---
+
+## Performance Metrics
+
+### PerformanceMetricsTracker
+
+Unified performance metrics tracker that combines duration, token usage, and API call tracking into a single cohesive interface. Attach it to agents, engines, or crews to capture performance data during workflow execution.
+
+> **Guide:** See the [Performance Metrics guide](./guide/performance-metrics.md) for integration patterns and usage examples.
+
+```typescript
+import { PerformanceMetricsTracker, ApiCallCategory } from '@crewspace/core';
+
+const tracker = new PerformanceMetricsTracker({ maxRecords: 10_000 });
+```
+
+#### Constructor
+
+```typescript
+new PerformanceMetricsTracker(config?: PerformanceMetricsTrackerConfig)
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `config` | [`PerformanceMetricsTrackerConfig`](#performancemetricstrackerconfig) | Optional configuration |
+
+#### PerformanceMetricsTrackerConfig
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `maxRecords` | `number` | `10_000` | Maximum records retained. Oldest are evicted first. |
+| `now` | `() => number` | `Date.now` | Clock function for timestamps. Override for testing. |
+
+#### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `recordCount` | `number` | Total number of recorded calls (getter) |
+
+#### Methods
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `recordApiCall` | `(input: ApiCallInput): ApiCallRecord` | Record a completed API call |
+| `startTimer` | `(category, endpoint, metadata?): ApiCallTimer` | Start a timer for an API call |
+| `timeApiCall` | `<T>(category, endpoint, fn): Promise<T>` | Time an async operation and record it |
+| `getRecords` | `(): readonly ApiCallRecord[]` | Get all recorded API call records |
+| `getRecordsByCategory` | `(category: ApiCallCategory): readonly ApiCallRecord[]` | Filter records by category |
+| `getRecordsByEndpoint` | `(endpoint: string): readonly ApiCallRecord[]` | Filter records by endpoint |
+| `getRecordsSince` | `(sinceTimestamp: number): readonly ApiCallRecord[]` | Filter records within a time window |
+| `getSummary` | `(): ApiCallSummary` | Compute summary statistics across all calls |
+| `getCategorySummary` | `(category: ApiCallCategory): ApiCallSummary` | Compute summary for a specific category |
+| `getEndpointSummary` | `(endpoint: string): ApiCallSummary` | Compute summary for a specific endpoint |
+| `getCallRate` | `(windowMs?: number): CallRate` | Compute the call rate within a time window (default: 60s) |
+| `getReport` | `(): PerformanceMetricsReport` | Generate a full performance report with breakdowns |
+| `reset` | `(): void` | Clear all recorded metrics |
+
+#### ApiCallInput
+
+Input for recording an API call. The tracker fills in `id` and `timestamp`.
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `category` | `ApiCallCategory` | ✅ | Category of the call |
+| `endpoint` | `string` | ✅ | Endpoint or operation name |
+| `durationMs` | `number` | ✅ | Duration of the call in milliseconds |
+| `tokenUsage` | `OperationTokenUsage` | ❌ | Token usage (prompt/completion/total) |
+| `success` | `boolean` | ❌ | Whether the call succeeded (default: `true`) |
+| `errorMessage` | `string` | ❌ | Error message if the call failed |
+| `statusCode` | `number` | ❌ | HTTP status code |
+| `metadata` | `Record<string, unknown>` | ❌ | Arbitrary metadata |
+
+#### OperationTokenUsage
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `promptTokens` | `number` | Number of prompt tokens |
+| `completionTokens` | `number` | Number of completion tokens |
+| `totalTokens` | `number` | Total tokens (prompt + completion) |
+
+#### ApiCallRecord
+
+A recorded API call with all associated metrics. Returned by `recordApiCall()` and `startTimer().stop()`.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `string` | Auto-generated unique identifier |
+| `category` | `ApiCallCategory` | Category of the call |
+| `endpoint` | `string` | Endpoint or operation name |
+| `durationMs` | `number` | Duration in milliseconds |
+| `tokenUsage` | `OperationTokenUsage \| undefined` | Token usage, if applicable |
+| `success` | `boolean` | Whether the call succeeded |
+| `errorMessage` | `string \| undefined` | Error message if failed |
+| `statusCode` | `number \| undefined` | HTTP status code |
+| `timestamp` | `number` | Timestamp when recorded |
+| `metadata` | `Record<string, unknown> \| undefined` | Custom metadata |
+
+#### ApiCallSummary
+
+Summary statistics returned by `getSummary()`, `getCategorySummary()`, and `getEndpointSummary()`.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `totalCalls` | `number` | Total number of calls |
+| `successCount` | `number` | Successful calls |
+| `failureCount` | `number` | Failed calls |
+| `successRate` | `number` | Success rate (0–1) |
+| `totalDurationMs` | `number` | Total duration across all calls |
+| `avgDurationMs` | `number` | Average duration per call |
+| `minDurationMs` | `number` | Minimum duration |
+| `maxDurationMs` | `number` | Maximum duration |
+| `p50DurationMs` | `number` | Median (50th percentile) duration |
+| `p95DurationMs` | `number` | 95th percentile duration |
+| `p99DurationMs` | `number` | 99th percentile duration |
+| `totalPromptTokens` | `number` | Total prompt tokens |
+| `totalCompletionTokens` | `number` | Total completion tokens |
+| `totalTokens` | `number` | Total tokens |
+| `avgTokensPerCall` | `number` | Average tokens per call |
+| `tokensPerSecond` | `number` | Token throughput (tokens/second) |
+
+#### PerformanceMetricsReport
+
+Full report returned by `getReport()`.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `totals` | `ApiCallSummary` | Aggregate summary across all calls |
+| `byCategory` | `ReadonlyMap<ApiCallCategory, ApiCallSummary>` | Breakdown by category |
+| `byEndpoint` | `ReadonlyMap<string, EndpointBreakdown>` | Breakdown by endpoint |
+| `overallRate` | `CallRate` | Call rate over the tracker's lifetime |
+| `recentRate` | `CallRate` | Call rate over the last 60 seconds |
+| `startTime` | `number \| undefined` | Earliest call timestamp |
+| `endTime` | `number \| undefined` | Latest call timestamp |
+| `generatedAt` | `string` | ISO timestamp of report generation |
+
+#### CallRate
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `windowMs` | `number` | Time window in milliseconds |
+| `callCount` | `number` | Number of calls in the window |
+| `callsPerSecond` | `number` | Calls per second |
+| `callsPerMinute` | `number` | Calls per minute |
+
+#### EndpointBreakdown
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `endpoint` | `string` | Endpoint name |
+| `category` | `ApiCallCategory` | Category of calls to this endpoint |
+| `summary` | `ApiCallSummary` | Summary statistics for this endpoint |
+
+### ApiCallTimer
+
+A running timer for an API call. Created via `PerformanceMetricsTracker.startTimer()`.
+
+```typescript
+const timer = tracker.startTimer(ApiCallCategory.LLM, 'gpt-4o', { model: 'gpt-4o' });
+// ... perform the API call ...
+const record = timer.stop({ success: true, tokenUsage: { promptTokens: 100, completionTokens: 50, totalTokens: 150 } });
+```
+
+#### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `stopped` | `boolean` | Whether the timer has been stopped (getter) |
+| `startTime` | `number` | The start timestamp (getter) |
+
+#### Methods
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `stop` | `(extra?: ApiCallTimerStopInput): ApiCallRecord` | Stop the timer and record the call |
+
+**Throws:** `Error` if the timer has already been stopped.
+
+#### ApiCallTimerStopInput
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `tokenUsage` | `OperationTokenUsage` | ❌ | Token usage for the call |
+| `success` | `boolean` | ❌ | Whether the call succeeded (default: `true`) |
+| `errorMessage` | `string` | ❌ | Error message if failed |
+| `statusCode` | `number` | ❌ | HTTP status code |
+| `metadata` | `Record<string, unknown>` | ❌ | Additional metadata |
+
+### ApiCallCategory
+
+Enum classifying the type of API call being tracked.
+
+```typescript
+import { ApiCallCategory } from '@crewspace/core';
+```
+
+| Member | Value | Description |
+|--------|-------|-------------|
+| `LLM` | `'llm'` | LLM text-generation or chat-completion call |
+| `TOOL` | `'tool'` | Tool invocation (e.g., web search, file read) |
+| `HTTP` | `'http'` | External HTTP API call |
+| `CUSTOM` | `'custom'` | Custom or uncategorized call |
+
+### computeApiCallSummary
+
+Compute an `ApiCallSummary` from an array of `ApiCallRecord` objects. Used internally by the tracker, but also exported for custom aggregation.
+
+```typescript
+import { computeApiCallSummary } from '@crewspace/core';
+
+const summary = computeApiCallSummary(records);
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `records` | `readonly ApiCallRecord[]` | Array of API call records to summarize |
+
+**Returns:** `ApiCallSummary`
 
 ---
 
