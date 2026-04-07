@@ -19,6 +19,7 @@
 import * as fs from 'node:fs';
 
 import { resolveWorkflowFile } from './runner.js';
+import type { ColorTheme } from '../ui/index.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -380,27 +381,33 @@ export function validateWorkflowFile(options: ValidatorOptions): ValidationResul
 
 /**
  * Formats a validation result into human-readable output.
+ * Accepts an optional color theme for colored output.
  */
-export function formatValidationResult(result: ValidationResult): string {
+export function formatValidationResult(result: ValidationResult, theme?: ColorTheme): string {
   const lines: string[] = [];
+  const s = theme?.success ?? ((t: string) => t);
+  const e = theme?.error ?? ((t: string) => t);
+  const w = theme?.warning ?? ((t: string) => t);
+  const i = theme?.info ?? ((t: string) => t);
+  const d = theme?.dim ?? ((t: string) => t);
 
   if (result.diagnostics.length === 0) {
-    lines.push(`✓ ${result.file}`);
+    lines.push(`${s('✓')} ${result.file}`);
     lines.push('  No issues found.');
     return lines.join('\n') + '\n';
   }
 
-  lines.push(`${result.valid ? '✓' : '✗'} ${result.file}`);
+  lines.push(`${result.valid ? s('✓') : e('✗')} ${result.file}`);
   lines.push('');
 
   for (const diag of result.diagnostics) {
     const prefix =
       diag.level === 'error'
-        ? '  ✗ error'
+        ? `  ${e('✗ error')}`
         : diag.level === 'warning'
-          ? '  ⚠ warning'
-          : '  ℹ info';
-    const location = diag.line !== undefined ? ` (line ${String(diag.line)})` : '';
+          ? `  ${w('⚠ warning')}`
+          : `  ${i('ℹ info')}`;
+    const location = diag.line !== undefined ? ` ${d(`(line ${String(diag.line)})`)}` : '';
     lines.push(`${prefix}${location}: ${diag.message}`);
   }
 
@@ -408,10 +415,10 @@ export function formatValidationResult(result: ValidationResult): string {
 
   const parts: string[] = [];
   if (result.errorCount > 0) {
-    parts.push(`${String(result.errorCount)} error${result.errorCount === 1 ? '' : 's'}`);
+    parts.push(e(`${String(result.errorCount)} error${result.errorCount === 1 ? '' : 's'}`));
   }
   if (result.warningCount > 0) {
-    parts.push(`${String(result.warningCount)} warning${result.warningCount === 1 ? '' : 's'}`);
+    parts.push(w(`${String(result.warningCount)} warning${result.warningCount === 1 ? '' : 's'}`));
   }
   lines.push(`  ${parts.join(', ')}`);
 
