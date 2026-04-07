@@ -292,90 +292,97 @@ function visualizeUnifiedReport(report: UnifiedMetricsReport): void {
 // Main: run the example
 // ---------------------------------------------------------------------------
 
-console.log('=== Crewspace Performance Metrics Integration Example ===\n');
+async function main(): Promise<void> {
+  console.log('=== Crewspace Performance Metrics Integration Example ===\n');
 
-// Create trackers
-const agentTracker = new PerformanceMetricsTracker();
-const crewCollector = new MetricsCollector();
+  // Create trackers
+  const agentTracker = new PerformanceMetricsTracker();
+  const crewCollector = new MetricsCollector();
 
-// Create agents
-const researcher = new Agent({
-  id: 'researcher',
-  role: 'Research Analyst',
-  goal: 'Find key insights on AI trends',
-  llmProvider: createMetricsMockProvider('researcher-llm', 50),
+  // Create agents
+  const researcher = new Agent({
+    id: 'researcher',
+    role: 'Research Analyst',
+    goal: 'Find key insights on AI trends',
+    llmProvider: createMetricsMockProvider('researcher-llm', 50),
+  });
+
+  const writer = new Agent({
+    id: 'writer',
+    role: 'Content Writer',
+    goal: 'Write clear and concise technical summaries',
+    llmProvider: createMetricsMockProvider('writer-llm', 80),
+  });
+
+  const reviewer = new Agent({
+    id: 'reviewer',
+    role: 'Quality Reviewer',
+    goal: 'Review content for accuracy and completeness',
+    llmProvider: createMetricsMockProvider('reviewer-llm', 30),
+  });
+
+  // Attach performance metrics trackers to agents
+  attachMetricsToAgent(researcher, agentTracker);
+  attachMetricsToAgent(writer, agentTracker);
+  attachMetricsToAgent(reviewer, agentTracker);
+
+  // Build a crew with task dependencies
+  const crew = new Crew({
+    id: 'metrics-demo-crew',
+    name: 'Metrics Demo Crew',
+    agents: [researcher, writer, reviewer],
+    tasks: [
+      {
+        id: 'research',
+        description: 'Research the latest trends in AI observability and monitoring',
+        agentId: 'researcher',
+      },
+      {
+        id: 'write-report',
+        description: 'Write a technical summary of the research findings',
+        agentId: 'writer',
+        dependencies: ['research'],
+      },
+      {
+        id: 'review',
+        description: 'Review the report for accuracy and completeness',
+        agentId: 'reviewer',
+        dependencies: ['write-report'],
+      },
+    ],
+  });
+
+  // Attach metrics collector to crew
+  attachMetricsToCrew(crew, crewCollector);
+
+  // Run the workflow
+  console.log('Running crew workflow...\n');
+  const result = await crew.run();
+
+  console.log(`Crew finished: ${String(result.success)} (${String(result.duration)}ms)`);
+  console.log(`Tasks completed: ${String(result.taskResults.size)}`);
+
+  // Generate and visualize the agent-level performance report
+  const perfReport = agentTracker.getReport();
+  visualizePerformanceReport(perfReport);
+
+  // Generate and visualize the crew-level unified report
+  const unifiedReport = crewCollector.getReport();
+  visualizeUnifiedReport(unifiedReport);
+
+  // Export to JSON
+  console.log('\n=== Exported JSON (Agent Performance) ===');
+  const perfJson = exportPerformanceReport(perfReport);
+  console.log(perfJson.slice(0, 500) + '\n... (truncated)');
+
+  console.log('\n=== Exported JSON (Crew Unified Metrics) ===');
+  const unifiedJson = exportUnifiedReport(unifiedReport);
+  console.log(unifiedJson.slice(0, 500) + '\n... (truncated)');
+
+  console.log('\n✅ Performance metrics integration example complete.');
+}
+
+main().catch((error) => {
+  console.error('Error running example:', error);
+  process.exit(1);
 });
-
-const writer = new Agent({
-  id: 'writer',
-  role: 'Content Writer',
-  goal: 'Write clear and concise technical summaries',
-  llmProvider: createMetricsMockProvider('writer-llm', 80),
-});
-
-const reviewer = new Agent({
-  id: 'reviewer',
-  role: 'Quality Reviewer',
-  goal: 'Review content for accuracy and completeness',
-  llmProvider: createMetricsMockProvider('reviewer-llm', 30),
-});
-
-// Attach performance metrics trackers to agents
-attachMetricsToAgent(researcher, agentTracker);
-attachMetricsToAgent(writer, agentTracker);
-attachMetricsToAgent(reviewer, agentTracker);
-
-// Build a crew with task dependencies
-const crew = new Crew({
-  id: 'metrics-demo-crew',
-  name: 'Metrics Demo Crew',
-  agents: [researcher, writer, reviewer],
-  tasks: [
-    {
-      id: 'research',
-      description: 'Research the latest trends in AI observability and monitoring',
-      agentId: 'researcher',
-    },
-    {
-      id: 'write-report',
-      description: 'Write a technical summary of the research findings',
-      agentId: 'writer',
-      dependencies: ['research'],
-    },
-    {
-      id: 'review',
-      description: 'Review the report for accuracy and completeness',
-      agentId: 'reviewer',
-      dependencies: ['write-report'],
-    },
-  ],
-});
-
-// Attach metrics collector to crew
-attachMetricsToCrew(crew, crewCollector);
-
-// Run the workflow
-console.log('Running crew workflow...\n');
-const result = await crew.run();
-
-console.log(`Crew finished: ${String(result.success)} (${String(result.duration)}ms)`);
-console.log(`Tasks completed: ${String(result.taskResults.size)}`);
-
-// Generate and visualize the agent-level performance report
-const perfReport = agentTracker.getReport();
-visualizePerformanceReport(perfReport);
-
-// Generate and visualize the crew-level unified report
-const unifiedReport = crewCollector.getReport();
-visualizeUnifiedReport(unifiedReport);
-
-// Export to JSON
-console.log('\n=== Exported JSON (Agent Performance) ===');
-const perfJson = exportPerformanceReport(perfReport);
-console.log(perfJson.slice(0, 500) + '\n... (truncated)');
-
-console.log('\n=== Exported JSON (Crew Unified Metrics) ===');
-const unifiedJson = exportUnifiedReport(unifiedReport);
-console.log(unifiedJson.slice(0, 500) + '\n... (truncated)');
-
-console.log('\n✅ Performance metrics integration example complete.');
