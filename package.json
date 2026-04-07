@@ -26,6 +26,8 @@
     "publish:prepare": "tsx scripts/prepare-publish.ts",
     "release": "tsx scripts/release.ts",
     "release:dry-run": "tsx scripts/release.ts --dry-run",
+    "release:github": "tsx scripts/github-release.ts",
+    "release:github:dry-run": "tsx scripts/github-release.ts --dry-run",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",

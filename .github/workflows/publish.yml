@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 concurrency:
@@ -127,3 +127,23 @@ jobs:
           echo "Published @crewspace/core@${PACKAGE_VERSION}"
           sleep 10
           npm view @crewspace/core@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
+
+  github-release:
+    name: Create GitHub Release
+    needs: [publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Create GitHub release with release notes
+        run: npx tsx scripts/github-release.ts --tag ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
