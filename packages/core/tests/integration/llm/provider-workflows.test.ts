@@ -817,6 +817,6 @@ describe('Error propagation through composition layers', () => {
       .generateText(SIMPLE_USER_MESSAGE)
       .catch((e: unknown) => e as LLMProviderError);
     expect(error).toBeInstanceOf(LLMProviderError);
-    expect(error.message).toContain('Network error');
+    expect((error as LLMProviderError).message).toContain('Network error');
   });
 });

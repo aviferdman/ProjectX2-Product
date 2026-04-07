@@ -764,7 +764,7 @@ describe('TASK-048: SqliteMemory — Long-Term Memory with SQLite Persistence', 
 
     it('should handle entries without metadata', async () => {
       const entry = makeEntry();
-      delete (entry as Record<string, unknown>)['metadata'];
+      delete (entry as unknown as Record<string, unknown>)['metadata'];
 
       await memory.add(entry);
       const retrieved = await memory.get(entry.id);

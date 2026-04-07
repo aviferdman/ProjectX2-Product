@@ -10,29 +10,13 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import {
-  DEFAULT_WELCOME_CONFIG,
-  WELCOME_VARIABLES,
-  MAX_CONTENT_LENGTH,
-  MAX_EMBED_DESCRIPTION_LENGTH,
-  MAX_EMBED_FIELDS,
-  renderTemplate,
-  renderEmbed,
-  renderWelcomeMessage,
-  extractVariables,
-  extractMessageVariables,
-  validateWelcomeConfig,
-  formatWelcomeConfig,
-  buildWelcomeContext,
-} from '../../../../community/discord/welcome-messages.js';
+// @ts-ignore TS6059 - file is outside package rootDir (community package)
+import { DEFAULT_WELCOME_CONFIG, WELCOME_VARIABLES, MAX_CONTENT_LENGTH, MAX_EMBED_DESCRIPTION_LENGTH, MAX_EMBED_FIELDS, renderTemplate, renderEmbed, renderWelcomeMessage, extractVariables, extractMessageVariables, validateWelcomeConfig, formatWelcomeConfig, buildWelcomeContext } from '../../../../community/discord/welcome-messages.js';
 
-import type {
-  WelcomeConfig,
-  WelcomeContext,
-  WelcomeEmbed,
-  WelcomeMessageConfig,
-} from '../../../../community/discord/welcome-messages.js';
+// @ts-ignore TS6059 - file is outside package rootDir (community package)
+import type { WelcomeConfig, WelcomeContext, WelcomeEmbed, WelcomeMessageConfig } from '../../../../community/discord/welcome-messages.js';
 
+// @ts-ignore TS6059 - file is outside package rootDir (community package)
 import { SERVER_CONFIG } from '../../../../community/discord/server-config.js';
 
 const __filename = fileURLToPath(import.meta.url);

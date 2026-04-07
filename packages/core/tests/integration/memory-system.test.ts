@@ -411,7 +411,7 @@ describe('TASK-053: Memory System Integration Tests', () => {
     it('evicts oldest entries when maxEntries exceeded', async () => {
       const memory = new ShortTermMemory({ retention: { maxEntries: 3 } });
       const evicted: MemoryEntry[][] = [];
-      memory.on('memory:evict', (entries) => evicted.push(entries));
+      memory.on('memory:evict', (entries) => evicted.push([...entries]));
 
       for (let i = 0; i < 5; i++) {
         await memory.add(makeEntry({

@@ -86,7 +86,7 @@ describe('DefaultFailureClassifier', () => {
     });
 
     it('should classify memory query errors as non-critical', () => {
-      expect(classifier.classify(new MemoryQueryError('query failed'))).toBe(
+      expect(classifier.classify(new MemoryQueryError('test', 'query failed'))).toBe(
         FailureSeverity.NON_CRITICAL,
       );
     });

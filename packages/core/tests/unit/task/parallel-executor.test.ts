@@ -542,8 +542,7 @@ describe('ParallelExecutor', () => {
 
     it('should include error in result before throwing', async () => {
       const executor = new ParallelExecutor({ errorPolicy: 'fail-fast' });
-      // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-      const completionResult = vi.fn<[ParallelExecutionResult], void>();
+      const completionResult = vi.fn<(result: ParallelExecutionResult) => void>();
       executor.on('run:complete', completionResult);
 
       const runner: TaskRunner = async (task) => {
@@ -752,8 +751,7 @@ describe('ParallelExecutor', () => {
     });
 
     it('should emit run:complete event', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-      const completeFn = vi.fn<[ParallelExecutionResult], void>();
+      const completeFn = vi.fn<(result: ParallelExecutionResult) => void>();
       executor.on('run:complete', completeFn);
 
       await executor.execute([makeTask('a')], immediateRunner());

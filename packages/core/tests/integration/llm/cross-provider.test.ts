@@ -638,7 +638,7 @@ describe('Cross-provider: provider-specific features', () => {
       .generateText(SIMPLE_USER_MESSAGE)
       .catch((e: unknown) => e as LLMProviderError);
     expect(err).toBeInstanceOf(LLMProviderError);
-    expect(err.statusCode).toBe(529);
+    expect((err as LLMProviderError).statusCode).toBe(529);
   });
 
   it('should set Anthropic default max_tokens to 4096', async () => {

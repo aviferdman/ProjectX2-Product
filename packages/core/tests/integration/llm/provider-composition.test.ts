@@ -35,7 +35,7 @@ function createMockProvider(options?: {
     name: options?.name ?? 'mock',
     modelId: options?.modelId ?? 'mock-model',
     generateText: vi.fn(),
-  };
+  } as unknown as LLMProvider & { modelId: string; generateText: ReturnType<typeof vi.fn> };
 }
 
 function createMockStreamingProvider(options?: {
@@ -51,6 +51,10 @@ function createMockStreamingProvider(options?: {
     modelId: options?.modelId ?? 'mock-model',
     generateText: vi.fn(),
     generateStream: vi.fn(),
+  } as unknown as StreamingLLMProvider & {
+    modelId: string;
+    generateText: ReturnType<typeof vi.fn>;
+    generateStream: ReturnType<typeof vi.fn>;
   };
 }
 

@@ -10,26 +10,11 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import {
-  SERVER_CONFIG,
-  ROLES,
-  CATEGORIES,
-  getAllChannels,
-  getChannelNames,
-  getRoleNames,
-  validateNoDuplicateChannels,
-  validateNoDuplicateRoles,
-  validateRequiredChannels,
-  validateServerConfig,
-} from '../../../../community/discord/server-config.js';
+// @ts-ignore TS6059 - file is outside package rootDir (community package)
+import { SERVER_CONFIG, ROLES, CATEGORIES, getAllChannels, getChannelNames, getRoleNames, validateNoDuplicateChannels, validateNoDuplicateRoles, validateRequiredChannels, validateServerConfig } from '../../../../community/discord/server-config.js';
 
-import {
-  generateSetupPlan,
-  formatSetupPlan,
-  formatRoleSummary,
-  formatChannelSummary,
-  parseArgs,
-} from '../../../../community/discord/setup-discord.js';
+// @ts-ignore TS6059 - file is outside package rootDir (community package)
+import { generateSetupPlan, formatSetupPlan, formatRoleSummary, formatChannelSummary, parseArgs } from '../../../../community/discord/setup-discord.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

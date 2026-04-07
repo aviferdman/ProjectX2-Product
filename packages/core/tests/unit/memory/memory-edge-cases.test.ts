@@ -340,7 +340,7 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('evicts multiple expired entries at once', async () => {
       const memory = new ShortTermMemory({ retention: { maxAge: 50 } });
       const evicted: MemoryEntry[][] = [];
-      memory.on('memory:evict', (entries) => evicted.push(entries));
+      memory.on('memory:evict', (entries) => evicted.push([...entries]));
 
       const old = Date.now() - 200;
       await memory.add(makeEntry({ id: 'old1', createdAt: new Date(old).toISOString() }));
@@ -357,7 +357,7 @@ describe('TASK-053: Memory Edge Cases & Branch Coverage', () => {
     it('handles maxEntries eviction', async () => {
       const memory = new ShortTermMemory({ retention: { maxEntries: 2 } });
       const evicted: MemoryEntry[][] = [];
-      memory.on('memory:evict', (entries) => evicted.push(entries));
+      memory.on('memory:evict', (entries) => evicted.push([...entries]));
 
       await memory.add(makeEntry({ id: 'e1' }));
       await memory.add(makeEntry({ id: 'e2' }));

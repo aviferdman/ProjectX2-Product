@@ -243,7 +243,7 @@ describe('ExecutionEngine — DeadLetterQueue integration', () => {
         deadLetterQueue: true,
       });
 
-      const listener = vi.fn<Parameters<EngineEventMap['engine:task:dead-lettered']>>();
+      const listener = vi.fn<EngineEventMap['engine:task:dead-lettered']>();
       engine.on('engine:task:dead-lettered', listener);
 
       const failAgent = createFailingAgent('agent1', 'event test fail');

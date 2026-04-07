@@ -36,6 +36,10 @@ function createMockProvider(opts: { name: string; modelId: string }): StreamingL
     modelId: opts.modelId,
     generateText: vi.fn(),
     generateStream: vi.fn(),
+  } as unknown as StreamingLLMProvider & {
+    modelId: string;
+    generateText: ReturnType<typeof vi.fn>;
+    generateStream: ReturnType<typeof vi.fn>;
   };
 }
 
