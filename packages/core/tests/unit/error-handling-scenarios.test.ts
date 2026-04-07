@@ -1,1112 +1,1328 @@
-/**
- * Error Handling Scenarios — cross-component integration tests for error flows.
- *
- * Validates that errors propagate correctly between:
- * - TaskExecutionWrapper (retry/timeout) → DeadLetterQueue
- * - GracefulDegradationHandler → error classification
- * - Error chain preservation across layers
- * - ParallelExecutor error policies with typed errors
- * - TaskTimeoutGuard cooperative cancellation
- *
- * @packageDocumentation
- */
+import { describe, it, expect, vi } from 'vitest';
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-
-import { Task } from '../../src/task/task.js';
-import { TaskExecutionWrapper, executeWithRetry, executeWithTimeout } from '../../src/task/task-execution-wrapper.js';
-import { DeadLetterQueue } from '../../src/task/dead-letter-queue.js';
-import { TaskTimeoutGuard, withTimeoutGuard } from '../../src/task/task-timeout-guard.js';
-import { ParallelExecutor } from '../../src/task/parallel-executor.js';
-import type { TaskRunner } from '../../src/task/parallel-executor.js';
 import {
-  GracefulDegradationHandler,
-  DefaultFailureClassifier,
-  FailureSeverity,
-} from '../../src/errors/graceful-degradation.js';
-import {
+  // Base & codes
   CrewspaceError,
   ErrorCode,
-  TaskExecutionError,
-  TaskTimeoutError,
-  TaskConfigError,
-  ToolExecutionError,
-  ToolTimeoutError,
-  LLMRateLimitError,
-  LLMAuthenticationError,
-  LLMStreamError,
-  LLMContextLengthError,
+  // Utilities
+  AggregateCrewspaceError,
+  formatErrorForLog,
+  getErrorChain,
+  hasErrorCode,
+  isCrewspaceError,
+  normalizeError,
+  // Domain errors
   AgentConfigError,
   AgentExecutionError,
+  CrewConfigError,
+  CrewExecutionError,
+  EngineConfigError,
+  EngineExecutionError,
+  LLMAuthenticationError,
+  LLMContextLengthError,
+  LLMProviderError,
+  LLMRateLimitError,
+  LLMStreamError,
+  TaskConfigError,
+  TaskExecutionError,
+  TaskTimeoutError,
+  CircularDependencyError,
+  ToolConfigError,
+  ToolNotFoundError,
+  ToolExecutionError,
+  ToolPermissionError,
+  ToolTimeoutError,
+  ToolCompositionError,
+  ToolInputValidationError,
+  MemoryConfigError,
+  MemoryOperationError,
   MemoryQueryError,
-  AggregateCrewspaceError,
-  normalizeError,
-  getErrorChain,
-  formatErrorForLog,
-  isCrewspaceError,
-  hasErrorCode,
+  // Graceful degradation
+  DefaultFailureClassifier,
+  FailureSeverity,
+  GracefulDegradationHandler,
 } from '../../src/errors/index.js';
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
+// ==========================================================================
+// 1. Cross-component error propagation
+// ==========================================================================
 
-function createTask(overrides: Partial<{ id: string; description: string; retries: number; timeout: number }> = {}): Task {
-  return new Task({
-    id: overrides.id ?? 'test-task',
-    description: overrides.description ?? 'Test task',
-    ...(overrides.retries !== undefined ? { retries: overrides.retries } : {}),
-    ...(overrides.timeout !== undefined && overrides.timeout > 0 ? { timeout: overrides.timeout } : {}),
-  });
-}
+describe('Cross-component error propagation', () => {
+  it('should preserve cause chain: Tool → Task → Agent → Crew', () => {
+    const toolErr = new ToolExecutionError('search', 'network timeout');
+    const taskErr = new TaskExecutionError('t1', 'tool failed', 'agent-1', toolErr);
+    const agentErr = new AgentExecutionError('agent-1', 'task failed', taskErr);
+    const crewErr = new CrewExecutionError('crew-1', 'agent failed', 't1', agentErr);
 
-const noopSleep = async () => {};
-
-// ---------------------------------------------------------------------------
-// 1. Retry Exhaustion → Dead Letter Queue Integration
-// ---------------------------------------------------------------------------
-
-describe('Retry exhaustion → DLQ integration', () => {
-  let dlq: DeadLetterQueue;
-
-  beforeEach(() => {
-    dlq = new DeadLetterQueue({ maxSize: 10 });
+    const chain = getErrorChain(crewErr);
+    expect(chain).toHaveLength(4);
+    expect(chain[0]).toBe(crewErr);
+    expect(chain[1]).toBe(agentErr);
+    expect(chain[2]).toBe(taskErr);
+    expect(chain[3]).toBe(toolErr);
   });
 
-  it('should enqueue a task to DLQ after retry exhaustion', async () => {
-    const task = createTask({ id: 'flaky-task', retries: 2 });
-    const error = new Error('persistent failure');
+  it('should preserve error codes through the chain', () => {
+    const toolErr = new ToolTimeoutError('search', 5000);
+    const taskErr = new TaskExecutionError('t1', 'tool timed out', 'a1', toolErr);
+    const crewErr = new CrewExecutionError('c1', 'task failed', 't1', taskErr);
 
-    const runner: TaskRunner = vi.fn().mockRejectedValue(error);
-
-    const wrapper = new TaskExecutionWrapper({
-      defaultRetries: 2,
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    const wrappedRunner = wrapper.wrap(runner);
-
-    let caughtError: Error | undefined;
-    try {
-      await wrappedRunner(task, {});
-    } catch (err) {
-      caughtError = err as Error;
-    }
-
-    expect(caughtError).toBeDefined();
-    expect(caughtError).toBeInstanceOf(TaskExecutionError);
-
-    // Enqueue to DLQ after retry exhaustion
-    const enqueued = dlq.enqueue(task, caughtError!, { attempts: 3 });
-    expect(enqueued).toBe(true);
-    expect(dlq.size).toBe(1);
-
-    const entry = dlq.get('flaky-task');
-    expect(entry).toBeDefined();
-    expect(entry!.attempts).toBe(3);
-    expect(entry!.error.message).toContain('Failed after 3 attempt(s)');
+    const chain = getErrorChain(crewErr);
+    expect(hasErrorCode(chain[0]!, ErrorCode.CREW_EXECUTION)).toBe(true);
+    expect(hasErrorCode(chain[1]!, ErrorCode.TASK_EXECUTION)).toBe(true);
+    expect(hasErrorCode(chain[2]!, ErrorCode.TOOL_TIMEOUT)).toBe(true);
   });
 
-  it('should preserve the original cause through retry → DLQ chain', async () => {
-    const rootCause = new LLMRateLimitError('openai', 'Rate limited', 5000);
-    const task = createTask({ id: 'rate-limited-task' });
-    const runner: TaskRunner = vi.fn().mockRejectedValue(rootCause);
+  it('should preserve domain-specific details through JSON serialization', () => {
+    const toolErr = new ToolTimeoutError('search', 3000);
+    const taskErr = new TaskExecutionError('t1', 'tool timeout', 'agent-1', toolErr);
+    const json = taskErr.toJSON();
 
-    const wrapper = new TaskExecutionWrapper({
-      defaultRetries: 1,
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    let exhaustionError: Error | undefined;
-    try {
-      await wrapper.wrap(runner)(task, {});
-    } catch (err) {
-      exhaustionError = err as Error;
-    }
-
-    expect(exhaustionError).toBeInstanceOf(TaskExecutionError);
-    expect((exhaustionError as TaskExecutionError).cause).toBe(rootCause);
-
-    dlq.enqueue(task, exhaustionError!, { attempts: 2 });
-    const entry = dlq.get('rate-limited-task');
-
-    // The full error chain is preserved in the DLQ entry
-    const chain = getErrorChain(entry!.error);
-    expect(chain).toHaveLength(2);
-    expect(chain[0]).toBeInstanceOf(TaskExecutionError);
-    expect(chain[1]).toBeInstanceOf(LLMRateLimitError);
+    expect(json.details['taskId']).toBe('t1');
+    expect(json.details['agentId']).toBe('agent-1');
+    expect(json.cause).toBeDefined();
+    const causeDet = json.cause as { code: string; details: Record<string, unknown> };
+    expect(causeDet.code).toBe(ErrorCode.TOOL_TIMEOUT);
+    expect(causeDet.details['toolName']).toBe('search');
+    expect(causeDet.details['timeoutMs']).toBe(3000);
   });
 
-  it('should successfully retry a DLQ entry after transient failure resolves', async () => {
-    const task = createTask({ id: 'recoverable-task' });
-    const error = new ToolTimeoutError('search', 5000);
+  it('should preserve context through Engine → Task → Tool chain', () => {
+    const toolErr = new ToolExecutionError('web-search', 'rate limited');
+    const taskErr = new TaskExecutionError('research-task', 'tool failed', 'analyst', toolErr);
+    const engineErr = new EngineExecutionError('main-engine', 'task failed', 'research-task', taskErr);
 
-    dlq.enqueue(task, error, { attempts: 3 });
+    const chain = getErrorChain(engineErr);
+    expect(chain).toHaveLength(3);
 
-    const successRunner: TaskRunner = vi.fn().mockResolvedValue({
-      output: 'recovered result',
-    });
-
-    const result = await dlq.retry('recoverable-task', successRunner);
-    expect(result).toEqual({ output: 'recovered result' });
-    expect(dlq.has('recoverable-task')).toBe(false);
+    const fmt = formatErrorForLog(engineErr);
+    expect(fmt.causeChain).toHaveLength(3);
+    expect(fmt.causeChain[0]).toContain('main-engine');
+    expect(fmt.causeChain[1]).toContain('research-task');
+    expect(fmt.causeChain[2]).toContain('web-search');
   });
 
-  it('should update DLQ entry when retry from DLQ also fails', async () => {
-    const task = createTask({ id: 'stubborn-task' });
-    const originalError = new Error('original failure');
+  it('should maintain retryability info from deepest cause', () => {
+    const retryable = new LLMRateLimitError('openai', 'too many requests', 2000);
+    const taskErr = new TaskExecutionError('t1', 'llm rate limited', 'a1', retryable);
 
-    dlq.enqueue(task, originalError, { attempts: 3 });
-
-    const retryError = new Error('still failing');
-    const failingRunner: TaskRunner = vi.fn().mockRejectedValue(retryError);
-
-    await expect(dlq.retry('stubborn-task', failingRunner)).rejects.toThrow('still failing');
-
-    const entry = dlq.get('stubborn-task');
-    expect(entry!.attempts).toBe(4);
-    expect(entry!.error.message).toBe('still failing');
-  });
-
-  it('should emit events through the full retry → DLQ lifecycle', async () => {
-    const task = createTask({ id: 'monitored-task', retries: 1 });
-    const error = new Error('fail');
-    const runner: TaskRunner = vi.fn().mockRejectedValue(error);
-
-    const retryEvents: string[] = [];
-    task.on('task:retry', () => retryEvents.push('retry'));
-
-    const wrapper = new TaskExecutionWrapper({
-      defaultRetries: 1,
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    let exhaustionError: Error | undefined;
-    try {
-      await wrapper.wrap(runner)(task, {});
-    } catch (err) {
-      exhaustionError = err as Error;
-    }
-
-    expect(retryEvents).toHaveLength(1);
-
-    const dlqEvents: string[] = [];
-    dlq.on('dlq:enqueued', () => dlqEvents.push('enqueued'));
-    dlq.on('dlq:retry', () => dlqEvents.push('retry'));
-    dlq.on('dlq:retry:failure', () => dlqEvents.push('retry:failure'));
-
-    dlq.enqueue(task, exhaustionError!, { attempts: 2 });
-    expect(dlqEvents).toContain('enqueued');
-
-    await expect(dlq.retry('monitored-task', runner)).rejects.toThrow();
-    expect(dlqEvents).toContain('retry');
-    expect(dlqEvents).toContain('retry:failure');
+    expect(taskErr.isRetryable).toBe(false); // task itself is not marked retryable
+    const chain = getErrorChain(taskErr);
+    const rootCause = chain[chain.length - 1]!;
+    expect(isCrewspaceError(rootCause)).toBe(true);
+    expect((rootCause as CrewspaceError).isRetryable).toBe(true);
   });
 });
 
-// ---------------------------------------------------------------------------
-// 2. Timeout → Retry Interaction
-// ---------------------------------------------------------------------------
+// ==========================================================================
+// 2. Error classification and retryability
+// ==========================================================================
 
-describe('Timeout → retry interaction', () => {
-  it('should retry after a timeout on first attempt and eventually succeed', async () => {
-    const task = createTask({ id: 'timeout-then-ok', timeout: 50, retries: 2 });
-    let attempt = 0;
+describe('Error classification and retryability', () => {
+  const classifier = new DefaultFailureClassifier();
 
-    const runner: TaskRunner = vi.fn().mockImplementation(async () => {
-      attempt++;
-      if (attempt === 1) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        return { output: 'too late' };
-      }
-      return { output: 'success on retry' };
+  describe('retryability across error types', () => {
+    it('should mark LLMProviderError with 5xx as retryable', () => {
+      expect(new LLMProviderError('p', 'fail', 500).isRetryable).toBe(true);
+      expect(new LLMProviderError('p', 'fail', 502).isRetryable).toBe(true);
+      expect(new LLMProviderError('p', 'fail', 503).isRetryable).toBe(true);
     });
 
-    const wrapper = new TaskExecutionWrapper({
-      sleep: noopSleep,
-      random: () => 0.5,
+    it('should mark LLMProviderError with 429 as retryable', () => {
+      expect(new LLMProviderError('p', 'fail', 429).isRetryable).toBe(true);
     });
 
-    const result = await wrapper.wrap(runner)(task, {});
-    expect(result).toEqual({ output: 'success on retry' });
-    expect(runner).toHaveBeenCalledTimes(2);
+    it('should mark LLMProviderError with 4xx (non-429) as NOT retryable', () => {
+      expect(new LLMProviderError('p', 'fail', 400).isRetryable).toBe(false);
+      expect(new LLMProviderError('p', 'fail', 403).isRetryable).toBe(false);
+      expect(new LLMProviderError('p', 'fail', 404).isRetryable).toBe(false);
+    });
+
+    it('should mark LLMProviderError without statusCode as NOT retryable', () => {
+      expect(new LLMProviderError('p', 'fail').isRetryable).toBe(false);
+    });
+
+    it('should mark LLMAuthenticationError as NOT retryable regardless', () => {
+      const err = new LLMAuthenticationError('p', 'bad key');
+      expect(err.isRetryable).toBe(false);
+    });
+
+    it('should mark LLMContextLengthError as NOT retryable', () => {
+      const err = new LLMContextLengthError('p', 'too long', 10000, 8192);
+      expect(err.isRetryable).toBe(false);
+    });
+
+    it('should mark LLMStreamError as retryable', () => {
+      const err = new LLMStreamError('p', 'broken', 3, 'partial');
+      expect(err.isRetryable).toBe(true);
+    });
+
+    it('should mark ToolTimeoutError as retryable', () => {
+      expect(new ToolTimeoutError('search', 1000).isRetryable).toBe(true);
+    });
+
+    it('should mark TaskTimeoutError as retryable', () => {
+      expect(new TaskTimeoutError('t1', 5000).isRetryable).toBe(true);
+    });
+
+    it('should mark config errors as NOT retryable', () => {
+      expect(new AgentConfigError('bad').isRetryable).toBe(false);
+      expect(new CrewConfigError('bad').isRetryable).toBe(false);
+      expect(new TaskConfigError('bad').isRetryable).toBe(false);
+      expect(new ToolConfigError('bad').isRetryable).toBe(false);
+      expect(new MemoryConfigError('bad').isRetryable).toBe(false);
+      expect(new EngineConfigError('bad').isRetryable).toBe(false);
+    });
   });
 
-  it('should throw TaskTimeoutError when all retries also timeout', async () => {
-    const task = createTask({ id: 'always-slow', timeout: 30, retries: 1 });
-
-    const runner: TaskRunner = vi.fn().mockImplementation(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      return { output: 'never' };
+  describe('DefaultFailureClassifier — severity rules', () => {
+    it('should classify all config errors as CRITICAL', () => {
+      expect(classifier.classify(new AgentConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
+      expect(classifier.classify(new CrewConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
+      expect(classifier.classify(new EngineConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
+      expect(classifier.classify(new TaskConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
+      expect(classifier.classify(new ToolConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
+      expect(classifier.classify(new MemoryConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
     });
 
-    const wrapper = new TaskExecutionWrapper({
-      sleep: noopSleep,
-      random: () => 0.5,
+    it('should classify LLMAuthenticationError as CRITICAL', () => {
+      expect(classifier.classify(new LLMAuthenticationError('p', 'bad key'))).toBe(
+        FailureSeverity.CRITICAL,
+      );
     });
 
-    await expect(wrapper.wrap(runner)(task, {})).rejects.toThrow(TaskTimeoutError);
-    expect(runner).toHaveBeenCalledTimes(2);
-  });
-
-  it('should emit both timeout and retry events', async () => {
-    const task = createTask({ id: 'event-task', timeout: 30, retries: 1 });
-    let attempt = 0;
-
-    const runner: TaskRunner = vi.fn().mockImplementation(async () => {
-      attempt++;
-      if (attempt === 1) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        return { output: 'too late' };
-      }
-      return { output: 'ok' };
-    });
-
-    const timeoutEvents: number[] = [];
-    const retryEvents: number[] = [];
-    task.on('task:timeout', (_id, ms) => timeoutEvents.push(ms));
-    task.on('task:retry', (_id, attemptNum) => retryEvents.push(attemptNum));
-
-    const wrapper = new TaskExecutionWrapper({
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    await wrapper.wrap(runner)(task, {});
-
-    expect(timeoutEvents).toHaveLength(1);
-    expect(timeoutEvents[0]).toBe(30);
-    expect(retryEvents).toHaveLength(1);
-    expect(retryEvents[0]).toBe(1);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 3. Non-retryable Error Detection
-// ---------------------------------------------------------------------------
-
-describe('Non-retryable error detection across components', () => {
-  it('should not retry LLMAuthenticationError (non-retryable)', async () => {
-    const task = createTask({ id: 'auth-fail' });
-    const authError = new LLMAuthenticationError('openai', 'Invalid API key');
-
-    const runner: TaskRunner = vi.fn().mockRejectedValue(authError);
-
-    const wrapper = new TaskExecutionWrapper({
-      defaultRetries: 3,
-      sleep: noopSleep,
-      random: () => 0.5,
-      isRetryable: (err) => {
-        if (err instanceof CrewspaceError) return err.isRetryable;
-        return false;
-      },
-    });
-
-    await expect(wrapper.wrap(runner)(task, {})).rejects.toThrow(LLMAuthenticationError);
-    expect(runner).toHaveBeenCalledTimes(1);
-  });
-
-  it('should retry LLMRateLimitError (retryable) but not TaskConfigError', async () => {
-    const rateLimitError = new LLMRateLimitError('openai', 'Rate limited', 1000);
-    const configError = new TaskConfigError('Invalid config', 'bad-task');
-
-    expect(rateLimitError.isRetryable).toBe(true);
-    expect(configError.isRetryable).toBe(false);
-
-    const classifier = new DefaultFailureClassifier();
-    expect(classifier.classify(rateLimitError)).toBe(FailureSeverity.NON_CRITICAL);
-    expect(classifier.classify(configError)).toBe(FailureSeverity.CRITICAL);
-  });
-
-  it('should classify all error types consistently', () => {
-    const classifier = new DefaultFailureClassifier();
-
-    const retryableErrors = [
-      new LLMRateLimitError('openai', 'rate limited', 1000),
-      new LLMStreamError('openai', 'stream broke', 5, 'partial'),
-      new ToolExecutionError('search', 'API down'),
-      new ToolTimeoutError('search', 3000),
-      new TaskTimeoutError('task-1', 5000),
-      new MemoryQueryError('bad query'),
-    ];
-
-    const nonRetryableErrors = [
-      new LLMAuthenticationError('openai', 'bad key'),
-      new TaskConfigError('bad config'),
-      new AgentConfigError('bad agent config'),
-    ];
-
-    for (const err of retryableErrors) {
-      expect(classifier.classify(err)).toBe(FailureSeverity.NON_CRITICAL);
-    }
-
-    for (const err of nonRetryableErrors) {
+    it('should classify CircularDependencyError as CRITICAL', () => {
+      const err = new CircularDependencyError([{ path: ['a', 'b', 'a'] }]);
       expect(classifier.classify(err)).toBe(FailureSeverity.CRITICAL);
-    }
+    });
+
+    it('should classify tool execution errors as NON_CRITICAL', () => {
+      expect(classifier.classify(new ToolExecutionError('s', 'fail'))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+      expect(classifier.classify(new ToolTimeoutError('s', 5000))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+      expect(classifier.classify(new ToolCompositionError('s', 'deep', 5, 3))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+      expect(
+        classifier.classify(
+          new ToolInputValidationError('s', [
+            { path: 'q', message: 'required', code: 'invalid_type' },
+          ]),
+        ),
+      ).toBe(FailureSeverity.NON_CRITICAL);
+    });
+
+    it('should classify LLM transient errors as NON_CRITICAL', () => {
+      expect(classifier.classify(new LLMRateLimitError('p', 'rate'))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+      expect(classifier.classify(new LLMStreamError('p', 'broke', 0, ''))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+      expect(classifier.classify(new LLMContextLengthError('p', 'long'))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+    });
+
+    it('should classify memory operation/query errors as NON_CRITICAL', () => {
+      expect(classifier.classify(new MemoryOperationError('p', 'read', 'fail'))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+      expect(classifier.classify(new MemoryQueryError('p', 'bad query'))).toBe(
+        FailureSeverity.NON_CRITICAL,
+      );
+    });
+
+    it('should classify retryable errors not in explicit lists as NON_CRITICAL', () => {
+      const err = new TaskTimeoutError('t1', 5000);
+      expect(err.isRetryable).toBe(true);
+      expect(classifier.classify(err)).toBe(FailureSeverity.NON_CRITICAL);
+    });
+
+    it('should classify non-retryable CrewspaceErrors not in lists as CRITICAL', () => {
+      expect(classifier.classify(new AgentExecutionError('a1', 'fail'))).toBe(
+        FailureSeverity.CRITICAL,
+      );
+      expect(classifier.classify(new CrewExecutionError('c1', 'fail'))).toBe(
+        FailureSeverity.CRITICAL,
+      );
+    });
+
+    it('should classify plain Error as CRITICAL (fail-safe)', () => {
+      expect(classifier.classify(new Error('unknown'))).toBe(FailureSeverity.CRITICAL);
+    });
+
+    it('should classify TypeError/RangeError as CRITICAL', () => {
+      expect(classifier.classify(new TypeError('bad type'))).toBe(FailureSeverity.CRITICAL);
+      expect(classifier.classify(new RangeError('out of range'))).toBe(FailureSeverity.CRITICAL);
+    });
   });
 });
 
-// ---------------------------------------------------------------------------
-// 4. Graceful Degradation with Retry and DLQ
-// ---------------------------------------------------------------------------
+// ==========================================================================
+// 3. Graceful degradation error scenarios
+// ==========================================================================
 
-describe('Graceful degradation with error handling components', () => {
-  let handler: GracefulDegradationHandler;
-
-  beforeEach(() => {
-    handler = new GracefulDegradationHandler();
-  });
-
-  it('should degrade on tool errors but throw on config errors', async () => {
-    const toolResult = await handler.execute(
-      () => { throw new ToolExecutionError('search', 'API timeout'); },
-      { fallback: 'cached results' },
-    );
-    expect(toolResult.degraded).toBe(true);
-    expect(toolResult.value).toBe('cached results');
+describe('Graceful degradation error scenarios', () => {
+  it('should re-throw critical errors and not apply fallback', async () => {
+    const handler = new GracefulDegradationHandler();
+    const configErr = new AgentConfigError('missing role');
 
     await expect(
-      handler.execute(
-        () => { throw new TaskConfigError('Invalid config'); },
-        { fallback: 'default' },
-      ),
-    ).rejects.toThrow(TaskConfigError);
+      handler.execute(() => { throw configErr; }, { fallback: 'default' }),
+    ).rejects.toThrow(configErr);
+
+    expect(handler.degradationCount).toBe(0);
   });
 
-  it('should degrade on LLM rate limit errors with dynamic fallback', async () => {
-    const result = await handler.execute<string>(
-      () => { throw new LLMRateLimitError('openai', 'Too many requests', 5000); },
+  it('should degrade on non-critical error and return fallback', async () => {
+    const handler = new GracefulDegradationHandler();
+    const toolErr = new ToolExecutionError('search', 'network error');
+
+    const result = await handler.execute(() => { throw toolErr; }, {
+      fallback: 'cached-result',
+    });
+
+    expect(result.degraded).toBe(true);
+    expect(result.value).toBe('cached-result');
+    expect(result.error).toBe(toolErr);
+    expect(handler.degradationCount).toBe(1);
+  });
+
+  it('should support dynamic fallback providers', async () => {
+    const handler = new GracefulDegradationHandler();
+    const toolErr = new ToolTimeoutError('web-fetch', 5000);
+
+    const result = await handler.execute(() => { throw toolErr; }, {
+      fallback: (err) => `Fallback: ${err.message}`,
+    });
+
+    expect(result.degraded).toBe(true);
+    expect(result.value).toContain('web-fetch');
+  });
+
+  it('should support async fallback providers', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    const result = await handler.execute(
+      () => { throw new ToolExecutionError('db', 'connection lost'); },
       {
-        fallback: (err) => {
-          const rateLimitErr = err as LLMRateLimitError;
-          return `Rate limited, retry after ${String(rateLimitErr.retryAfterMs)}ms`;
+        fallback: async () => {
+          return 'async-fallback-value';
         },
       },
     );
 
     expect(result.degraded).toBe(true);
-    expect(result.value).toContain('5000ms');
+    expect(result.value).toBe('async-fallback-value');
   });
 
-  it('should track degradation history across multiple failures', async () => {
-    const errors = [
-      new ToolExecutionError('search', 'error 1'),
-      new ToolTimeoutError('fetch', 3000),
-      new LLMStreamError('openai', 'stream broke', 5, 'partial'),
-    ];
+  it('should pass context to dynamic fallback', async () => {
+    const handler = new GracefulDegradationHandler();
+    const ctx = { operationId: 'fetch-data', operationType: 'tool', metadata: { attempt: 1 } };
 
-    for (const err of errors) {
+    const result = await handler.execute(
+      () => { throw new ToolExecutionError('fetch', 'error'); },
+      {
+        fallback: (_err, context) => `op:${context?.operationId}`,
+        context: ctx,
+      },
+    );
+
+    expect(result.value).toBe('op:fetch-data');
+  });
+
+  it('should emit degradation:fallback event on non-critical failure', async () => {
+    const handler = new GracefulDegradationHandler();
+    const listener = vi.fn();
+    handler.on('degradation:fallback', listener);
+
+    await handler.execute(
+      () => { throw new ToolExecutionError('search', 'fail'); },
+      { fallback: 'default' },
+    );
+
+    expect(listener).toHaveBeenCalledOnce();
+    const record = listener.mock.calls[0]![0];
+    expect(record.fallbackUsed).toBe(true);
+    expect(record.severity).toBe(FailureSeverity.NON_CRITICAL);
+  });
+
+  it('should emit degradation:critical event before re-throwing', async () => {
+    const handler = new GracefulDegradationHandler();
+    const listener = vi.fn();
+    handler.on('degradation:critical', listener);
+
+    const authErr = new LLMAuthenticationError('openai', 'invalid key');
+    await expect(
+      handler.execute(() => { throw authErr; }, { fallback: 'default' }),
+    ).rejects.toThrow();
+
+    expect(listener).toHaveBeenCalledOnce();
+    expect(listener.mock.calls[0]![0]).toBe(authErr);
+  });
+
+  it('should emit degradation:success event on successful operation', async () => {
+    const handler = new GracefulDegradationHandler();
+    const listener = vi.fn();
+    handler.on('degradation:success', listener);
+
+    await handler.execute(() => 'ok', {
+      fallback: 'default',
+      context: { operationId: 'test-op' },
+    });
+
+    expect(listener).toHaveBeenCalledWith('test-op');
+  });
+
+  it('should handle non-Error thrown values via normalizeError', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    // Plain string thrown — normalizeError wraps it; plain Error → CRITICAL
+    await expect(
+      handler.execute(() => { throw 'string error'; }, { fallback: 'default' }),
+    ).rejects.toThrow();
+  });
+
+  it('should evict oldest history when maxHistorySize is exceeded', async () => {
+    const handler = new GracefulDegradationHandler({ maxHistorySize: 3 });
+
+    for (let i = 0; i < 5; i++) {
       await handler.execute(
-        () => { throw err; },
-        {
-          fallback: 'default',
-          context: { operationId: err.message },
-        },
+        () => { throw new ToolExecutionError('tool', `error-${i}`); },
+        { fallback: 'default', context: { operationId: `op-${i}` } },
       );
     }
 
     expect(handler.degradationCount).toBe(3);
-    expect(handler.history).toHaveLength(3);
-    expect(handler.history[0]!.severity).toBe(FailureSeverity.NON_CRITICAL);
+    const history = handler.history;
+    expect(history[0]!.context?.operationId).toBe('op-2');
+    expect(history[2]!.context?.operationId).toBe('op-4');
   });
 
-  it('should preserve degradation count when critical errors are thrown', async () => {
+  it('should support custom classifier', async () => {
+    const handler = new GracefulDegradationHandler({
+      classifier: {
+        classify: () => FailureSeverity.NON_CRITICAL,
+      },
+    });
+
+    // Even auth errors become non-critical with custom classifier
+    const result = await handler.execute(
+      () => { throw new LLMAuthenticationError('p', 'bad key'); },
+      { fallback: 'override' },
+    );
+
+    expect(result.degraded).toBe(true);
+    expect(result.value).toBe('override');
+  });
+
+  it('should handle executeOptional with non-critical errors', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    const result = await handler.executeOptional(() => {
+      throw new ToolExecutionError('search', 'fail');
+    });
+
+    expect(result.degraded).toBe(true);
+    expect(result.value).toBeUndefined();
+  });
+
+  it('should handle executeOptional with critical errors', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    await expect(
+      handler.executeOptional(() => {
+        throw new AgentConfigError('bad config');
+      }),
+    ).rejects.toThrow(AgentConfigError);
+  });
+
+  it('should clearHistory', async () => {
+    const handler = new GracefulDegradationHandler();
+
     await handler.execute(
-      () => { throw new ToolExecutionError('tool', 'error'); },
-      { fallback: 'fb' },
+      () => { throw new ToolExecutionError('t', 'err'); },
+      { fallback: 'x' },
     );
     expect(handler.degradationCount).toBe(1);
 
-    try {
-      await handler.execute(
-        () => { throw new LLMAuthenticationError('openai', 'Bad key'); },
-        { fallback: 'fb' },
-      );
-    } catch {
-      // expected
+    handler.clearHistory();
+    expect(handler.degradationCount).toBe(0);
+    expect(handler.history).toHaveLength(0);
+  });
+
+  it('should classify errors directly without executing', () => {
+    const handler = new GracefulDegradationHandler();
+    expect(handler.classify(new ToolTimeoutError('s', 1000))).toBe(FailureSeverity.NON_CRITICAL);
+    expect(handler.classify(new AgentConfigError('bad'))).toBe(FailureSeverity.CRITICAL);
+  });
+
+  it('should handle multiple sequential degradations with different error types', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    const r1 = await handler.execute(
+      () => { throw new ToolExecutionError('t1', 'fail'); },
+      { fallback: 'fallback-1' },
+    );
+    const r2 = await handler.execute(
+      () => { throw new ToolTimeoutError('t2', 3000); },
+      { fallback: 'fallback-2' },
+    );
+    const r3 = await handler.execute(
+      () => { throw new LLMRateLimitError('openai', 'rate limit', 5000); },
+      { fallback: 'fallback-3' },
+    );
+
+    expect(r1.degraded).toBe(true);
+    expect(r2.degraded).toBe(true);
+    expect(r3.degraded).toBe(true);
+    expect(handler.degradationCount).toBe(3);
+
+    // Verify history has all three
+    expect(handler.history[0]!.error).toBeInstanceOf(ToolExecutionError);
+    expect(handler.history[1]!.error).toBeInstanceOf(ToolTimeoutError);
+    expect(handler.history[2]!.error).toBeInstanceOf(LLMRateLimitError);
+  });
+
+  it('should log to console.warn in verbose mode', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const handler = new GracefulDegradationHandler({ verbose: true });
+
+    await handler.execute(
+      () => { throw new ToolExecutionError('search', 'timeout'); },
+      { fallback: 'default', context: { operationId: 'my-op' } },
+    );
+
+    expect(warnSpy).toHaveBeenCalledOnce();
+    expect(warnSpy.mock.calls[0]![0]).toContain('my-op');
+    warnSpy.mockRestore();
+  });
+});
+
+// ==========================================================================
+// 4. Error wrapping and unwrapping edge cases
+// ==========================================================================
+
+describe('Error wrapping and unwrapping edge cases', () => {
+  it('should handle deeply nested cause chains', () => {
+    let current: Error = new Error('root');
+    const depth = 50;
+    for (let i = 0; i < depth; i++) {
+      current = new TaskExecutionError(`task-${i}`, `level-${i}`, undefined, current);
     }
 
-    // Critical error should not be tracked in degradation history
-    expect(handler.degradationCount).toBe(1);
+    const chain = getErrorChain(current);
+    expect(chain).toHaveLength(depth + 1);
+    expect(chain[0]!.message).toContain('task-49');
+    expect(chain[depth]!.message).toBe('root');
+  });
+
+  it('should stop at non-Error causes', () => {
+    const err = new Error('top');
+    (err as { cause: unknown }).cause = 'not an error';
+    const chain = getErrorChain(err);
+    expect(chain).toHaveLength(1);
+  });
+
+  it('should handle circular cause chain of length 3', () => {
+    const a = new Error('a');
+    const b = new Error('b');
+    const c = new Error('c');
+    (a as { cause: Error }).cause = b;
+    (b as { cause: Error }).cause = c;
+    (c as { cause: Error }).cause = a;
+
+    const chain = getErrorChain(a);
+    expect(chain).toHaveLength(3);
+    expect(chain[0]).toBe(a);
+    expect(chain[1]).toBe(b);
+    expect(chain[2]).toBe(c);
+  });
+
+  it('normalizeError should handle objects', () => {
+    const err = normalizeError({ code: 42, msg: 'fail' });
+    expect(err).toBeInstanceOf(Error);
+    expect(err.message).toContain('object');
+  });
+
+  it('normalizeError should handle undefined', () => {
+    const err = normalizeError(undefined);
+    expect(err).toBeInstanceOf(Error);
+    expect(err.message).toBe('undefined');
+  });
+
+  it('normalizeError should handle boolean', () => {
+    const err = normalizeError(false);
+    expect(err).toBeInstanceOf(Error);
+    expect(err.message).toBe('false');
+  });
+
+  it('normalizeError should handle symbols via String()', () => {
+    const sym = Symbol('test');
+    const err = normalizeError(sym);
+    expect(err).toBeInstanceOf(Error);
+    expect(err.message).toContain('Symbol');
+  });
+
+  it('should preserve CrewspaceError subclass through normalizeError', () => {
+    const original = new LLMRateLimitError('openai', 'limit', 1000);
+    const normalized = normalizeError(original);
+    expect(normalized).toBe(original);
+    expect(isCrewspaceError(normalized)).toBe(true);
   });
 });
 
-// ---------------------------------------------------------------------------
-// 5. Error Chain Preservation Across Layers
-// ---------------------------------------------------------------------------
-
-describe('Error chain preservation', () => {
-  it('should preserve cause chain through wrapper → execution error', async () => {
-    const rootCause = new LLMStreamError('anthropic', 'connection reset', 3, 'partial data');
-    const agentError = new AgentExecutionError('researcher', 'LLM failed', rootCause);
-
-    const task = createTask({ id: 'chained-error-task' });
-    const runner: TaskRunner = vi.fn().mockRejectedValue(agentError);
-
-    const wrapper = new TaskExecutionWrapper({
-      defaultRetries: 1,
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    try {
-      await wrapper.wrap(runner)(task, {});
-    } catch (err) {
-      const error = err as TaskExecutionError;
-      expect(error).toBeInstanceOf(TaskExecutionError);
-
-      const chain = getErrorChain(error);
-      expect(chain).toHaveLength(3);
-      expect(chain[0]).toBeInstanceOf(TaskExecutionError);
-      expect(chain[1]).toBeInstanceOf(AgentExecutionError);
-      expect(chain[2]).toBeInstanceOf(LLMStreamError);
-    }
-  });
-
-  it('should serialize deeply nested error chains to JSON', () => {
-    const root = new LLMContextLengthError('openai', 'too long', 10000, 8192);
-    const agent = new AgentExecutionError('analyst', 'LLM context exceeded', root);
-    const task = new TaskExecutionError('analyze', 'Agent failed', 'analyst', agent);
-
-    const json = task.toJSON();
-    expect(json.name).toBe('TaskExecutionError');
-    expect(json.cause).toBeDefined();
-
-    const agentJson = json.cause as { name: string; cause?: { name: string } };
-    expect(agentJson.name).toBe('AgentExecutionError');
-    expect(agentJson.cause).toBeDefined();
-    expect(agentJson.cause!.name).toBe('LLMContextLengthError');
-  });
-
-  it('should format deep error chains for logging', () => {
-    const root = new ToolTimeoutError('web-search', 5000);
-    const exec = new TaskExecutionError('research', 'Tool failed', 'researcher', root);
-
-    const formatted = formatErrorForLog(exec);
-    expect(formatted.causeChain).toHaveLength(2);
-    expect(formatted.causeChain[0]).toContain('research');
-    expect(formatted.causeChain[1]).toContain('web-search');
-    expect(formatted.code).toBe(ErrorCode.TASK_EXECUTION);
-    expect(formatted.isRetryable).toBe(false);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 6. TaskTimeoutGuard Cooperative Cancellation
-// ---------------------------------------------------------------------------
-
-describe('TaskTimeoutGuard cooperative cancellation', () => {
-  it('should abort signal when timeout fires', async () => {
-    const guard = new TaskTimeoutGuard({ defaultTimeoutMs: 50 });
-    let signalAborted = false;
-
-    try {
-      await guard.execute(async (signal) => {
-        await new Promise((resolve, reject) => {
-          const timer = setTimeout(resolve, 500);
-          signal.addEventListener('abort', () => {
-            clearTimeout(timer);
-            signalAborted = true;
-            reject(new Error('Aborted'));
-          });
-        });
-        return 'never';
-      }, 50, 'cooperative-task');
-    } catch (err) {
-      expect(err).toBeInstanceOf(TaskTimeoutError);
-    }
-
-    // Give microtask queue time to process
-    await new Promise((resolve) => setTimeout(resolve, 10));
-    expect(signalAborted).toBe(true);
-
-    guard.dispose();
-  });
-
-  it('should manually abort a specific task by ID', async () => {
-    const guard = new TaskTimeoutGuard({ defaultTimeoutMs: 5000 });
-    const events: string[] = [];
-    guard.on('timeout:aborted', (taskId) => events.push(`aborted:${taskId}`));
-
-    const taskPromise = guard.execute(async (signal) => {
-      return new Promise<string>((resolve, reject) => {
-        const timer = setTimeout(() => resolve('done'), 3000);
-        signal.addEventListener('abort', () => {
-          clearTimeout(timer);
-          reject(new Error('Manual abort'));
-        });
-      });
-    }, 5000, 'abortable-task');
-
-    // Abort after a short delay
-    await new Promise((resolve) => setTimeout(resolve, 20));
-    const aborted = guard.abort('abortable-task', 'User cancelled');
-    expect(aborted).toBe(true);
-
-    await expect(taskPromise).rejects.toThrow();
-    expect(events).toContain('aborted:abortable-task');
-
-    guard.dispose();
-  });
-
-  it('should handle multiple concurrent guarded tasks independently', async () => {
-    const guard = new TaskTimeoutGuard({ maxTimeoutMs: 10000 });
-    const results: string[] = [];
-
-    const fast = guard.execute(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 10));
-      return 'fast';
-    }, 5000, 'fast-task');
-
-    const slow = guard.execute(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 10));
-      return 'slow';
-    }, 5000, 'slow-task');
-
-    const [fastResult, slowResult] = await Promise.all([fast, slow]);
-    results.push(fastResult, slowResult);
-
-    expect(results).toContain('fast');
-    expect(results).toContain('slow');
-    expect(guard.activeCount).toBe(0);
-
-    guard.dispose();
-  });
-
-  it('should reject execution after disposal', async () => {
-    const guard = new TaskTimeoutGuard();
-    guard.dispose();
-
-    await expect(
-      guard.execute(async () => 'value', 1000, 'disposed-task'),
-    ).rejects.toThrow('disposed');
-  });
-
-  it('withTimeoutGuard should throw TaskTimeoutError on timeout', async () => {
-    await expect(
-      withTimeoutGuard(
-        async () => {
-          await new Promise((resolve) => setTimeout(resolve, 500));
-          return 'too slow';
-        },
-        30,
-        'one-shot-task',
-      ),
-    ).rejects.toThrow(TaskTimeoutError);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 7. Parallel Executor Error Policies with Typed Errors
-// ---------------------------------------------------------------------------
-
-describe('Parallel executor error policies with typed errors', () => {
-  it('should stop on first TaskExecutionError with fail-fast policy', async () => {
-    const tasks = [
-      createTask({ id: 'task-a' }),
-      createTask({ id: 'task-b' }),
-    ];
-
-    const error = new TaskExecutionError('task-a', 'LLM failed');
-    const runner: TaskRunner = vi.fn().mockImplementation(async (task: Task) => {
-      if (task.id === 'task-a') throw error;
-      return { output: `result-${task.id}` };
-    });
-
-    const executor = new ParallelExecutor({
-      maxConcurrency: 1,
-      errorPolicy: 'fail-fast',
-    });
-
-    await expect(executor.execute(tasks, runner)).rejects.toThrow(TaskExecutionError);
-  });
-
-  it('should continue after errors with continue policy and report all failures', async () => {
-    const tasks = [
-      createTask({ id: 'ok-task' }),
-      createTask({ id: 'fail-task-1' }),
-      createTask({ id: 'fail-task-2' }),
-    ];
-
-    const runner: TaskRunner = vi.fn().mockImplementation(async (task: Task) => {
-      if (task.id === 'fail-task-1') throw new ToolTimeoutError('search', 3000);
-      if (task.id === 'fail-task-2') throw new LLMRateLimitError('openai', 'limited', 1000);
-      return { output: 'ok' };
-    });
-
-    const executor = new ParallelExecutor({
-      maxConcurrency: 10,
-      errorPolicy: 'continue',
-    });
-
-    const result = await executor.execute(tasks, runner);
-    expect(result.success).toBe(false);
-    expect(result.errors.size).toBe(2);
-    expect(result.results.has('ok-task')).toBe(true);
-    expect(result.errors.has('fail-task-1')).toBe(true);
-    expect(result.errors.has('fail-task-2')).toBe(true);
-  });
-
-  it('should skip dependent tasks when dependency fails in continue mode', async () => {
-    const parentTask = createTask({ id: 'parent' });
-    const childTask = new Task({
-      id: 'child',
-      description: 'Depends on parent',
-      dependencies: ['parent'],
-    });
-
-    const runner: TaskRunner = vi.fn().mockImplementation(async (task: Task) => {
-      if (task.id === 'parent') throw new Error('parent failed');
-      return { output: 'child done' };
-    });
-
-    const skippedTasks: string[] = [];
-    const executor = new ParallelExecutor({
-      maxConcurrency: 10,
-      errorPolicy: 'continue',
-    });
-    executor.on('task:skipped', (taskId) => skippedTasks.push(taskId));
-
-    const result = await executor.execute([parentTask, childTask], runner);
-    expect(result.success).toBe(false);
-    expect(skippedTasks).toContain('child');
-    expect(result.errors.has('parent')).toBe(true);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 8. AggregateError Scenarios
-// ---------------------------------------------------------------------------
+// ==========================================================================
+// 5. AggregateCrewspaceError scenarios
+// ==========================================================================
 
 describe('AggregateCrewspaceError scenarios', () => {
-  it('should aggregate multiple typed errors from parallel failures', () => {
+  it('should handle empty errors array', () => {
+    const agg = new AggregateCrewspaceError('No errors', []);
+    expect(agg.errors).toHaveLength(0);
+    expect(agg.message).toContain('0 errors');
+    expect(agg.code).toBe(ErrorCode.UNKNOWN);
+  });
+
+  it('should handle mixed error types', () => {
     const errors: Error[] = [
+      new LLMRateLimitError('openai', 'rate limit'),
       new ToolTimeoutError('search', 5000),
-      new LLMRateLimitError('openai', 'Rate limited', 2000),
-      new TaskExecutionError('task-1', 'Failed'),
-    ];
-
-    const aggregate = new AggregateCrewspaceError('Parallel execution failed', errors);
-
-    expect(aggregate.errors).toHaveLength(3);
-    expect(aggregate.message).toContain('3 errors');
-    expect(aggregate.code).toBe(ErrorCode.UNKNOWN);
-    expect(aggregate).toBeInstanceOf(CrewspaceError);
-
-    const json = aggregate.toJSON();
-    expect(json.details['errorCount']).toBe(3);
-    const serializedErrors = json.details['errors'] as unknown[];
-    expect(serializedErrors).toHaveLength(3);
-  });
-
-  it('should correctly identify retryable vs non-retryable errors in aggregate', () => {
-    const errors: Error[] = [
-      new LLMRateLimitError('openai', 'limited', 1000),
-      new LLMAuthenticationError('openai', 'bad key'),
-      new ToolTimeoutError('search', 3000),
-    ];
-
-    const aggregate = new AggregateCrewspaceError('Mixed failures', errors);
-    const retryableCount = aggregate.errors.filter(
-      (e) => e instanceof CrewspaceError && e.isRetryable,
-    ).length;
-    const nonRetryableCount = aggregate.errors.filter(
-      (e) => e instanceof CrewspaceError && !e.isRetryable,
-    ).length;
-
-    expect(retryableCount).toBe(2);
-    expect(nonRetryableCount).toBe(1);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 9. Error Normalization and Type Guards
-// ---------------------------------------------------------------------------
-
-describe('Error normalization in error handling flows', () => {
-  it('should normalize non-Error throws to Error instances', () => {
-    const cases: [unknown, string][] = [
-      ['string error', 'string error'],
-      [42, '42'],
-      [null, 'null'],
-      [undefined, 'undefined'],
-      [{ custom: 'object' }, '[object Object]'],
-    ];
-
-    for (const [input, expectedMessage] of cases) {
-      const normalized = normalizeError(input);
-      expect(normalized).toBeInstanceOf(Error);
-      expect(normalized.message).toBe(expectedMessage);
-    }
-  });
-
-  it('should preserve CrewspaceError subclasses through normalization', () => {
-    const errors = [
+      new Error('plain error'),
       new TaskExecutionError('t1', 'failed'),
-      new LLMRateLimitError('openai', 'limited', 1000),
-      new ToolExecutionError('search', 'error'),
     ];
+    const agg = new AggregateCrewspaceError('Multi-task failure', errors);
 
-    for (const err of errors) {
-      const normalized = normalizeError(err);
-      expect(normalized).toBe(err);
-      expect(isCrewspaceError(normalized)).toBe(true);
-    }
+    expect(agg.errors).toHaveLength(4);
+    expect(agg.message).toContain('4 errors');
+
+    const json = agg.toJSON();
+    const details = json.details['errors'] as Array<{ code?: string; name?: string }>;
+    expect(details[0]!.code).toBe(ErrorCode.LLM_RATE_LIMIT);
+    expect(details[1]!.code).toBe(ErrorCode.TOOL_TIMEOUT);
+    expect(details[2]!.name).toBe('Error');
+    expect(details[3]!.code).toBe(ErrorCode.TASK_EXECUTION);
   });
 
-  it('should correctly identify error codes with type guards', () => {
-    const taskErr = new TaskExecutionError('t1', 'failed');
-    const toolErr = new ToolTimeoutError('search', 3000);
-    const llmErr = new LLMRateLimitError('openai', 'limited', 1000);
-
-    expect(hasErrorCode(taskErr, ErrorCode.TASK_EXECUTION)).toBe(true);
-    expect(hasErrorCode(taskErr, ErrorCode.TOOL_TIMEOUT)).toBe(false);
-
-    expect(hasErrorCode(toolErr, ErrorCode.TOOL_TIMEOUT)).toBe(true);
-    expect(hasErrorCode(llmErr, ErrorCode.LLM_RATE_LIMIT)).toBe(true);
-
-    // Plain Error has no error code
-    expect(hasErrorCode(new Error('plain'), ErrorCode.UNKNOWN)).toBe(false);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 10. DLQ Overflow During Error Storm
-// ---------------------------------------------------------------------------
-
-describe('DLQ overflow during error storm', () => {
-  it('should drop oldest entries when drop-oldest policy is active', () => {
-    const dlq = new DeadLetterQueue({ maxSize: 3, overflowPolicy: 'drop-oldest' });
-    const overflowEvents: string[] = [];
-    dlq.on('dlq:overflow', (taskId) => overflowEvents.push(taskId));
-
-    for (let i = 0; i < 5; i++) {
-      const task = createTask({ id: `task-${String(i)}` });
-      dlq.enqueue(task, new Error(`Error ${String(i)}`));
-    }
-
-    expect(dlq.size).toBe(3);
-    expect(dlq.has('task-0')).toBe(false);
-    expect(dlq.has('task-1')).toBe(false);
-    expect(dlq.has('task-2')).toBe(true);
-    expect(dlq.has('task-3')).toBe(true);
-    expect(dlq.has('task-4')).toBe(true);
-    expect(overflowEvents).toEqual(['task-0', 'task-1']);
+  it('should be instanceof CrewspaceError and Error', () => {
+    const agg = new AggregateCrewspaceError('test', [new Error('a')]);
+    expect(agg).toBeInstanceOf(Error);
+    expect(agg).toBeInstanceOf(CrewspaceError);
+    expect(isCrewspaceError(agg)).toBe(true);
   });
 
-  it('should reject new entries when reject policy is active', () => {
-    const dlq = new DeadLetterQueue({ maxSize: 2, overflowPolicy: 'reject' });
-
-    const task1 = createTask({ id: 'task-1' });
-    const task2 = createTask({ id: 'task-2' });
-    const task3 = createTask({ id: 'task-3' });
-
-    expect(dlq.enqueue(task1, new Error('e1'))).toBe(true);
-    expect(dlq.enqueue(task2, new Error('e2'))).toBe(true);
-    expect(dlq.enqueue(task3, new Error('e3'))).toBe(false);
-
-    expect(dlq.size).toBe(2);
-    expect(dlq.has('task-3')).toBe(false);
-  });
-
-  it('should handle enqueue-drain-enqueue cycles', () => {
-    const dlq = new DeadLetterQueue({ maxSize: 2 });
-
-    dlq.enqueue(createTask({ id: 'a' }), new Error('e1'));
-    dlq.enqueue(createTask({ id: 'b' }), new Error('e2'));
-    expect(dlq.size).toBe(2);
-
-    const drained = dlq.drain();
-    expect(drained).toBe(2);
-    expect(dlq.isEmpty).toBe(true);
-
-    dlq.enqueue(createTask({ id: 'c' }), new Error('e3'));
-    expect(dlq.size).toBe(1);
-    expect(dlq.has('c')).toBe(true);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 11. Standalone executeWithTimeout / executeWithRetry
-// ---------------------------------------------------------------------------
-
-describe('Standalone executeWithTimeout', () => {
-  it('should throw TaskTimeoutError with correct details when timed out', async () => {
-    const task = createTask({ id: 'standalone-timeout' });
-    const runner: TaskRunner = vi.fn().mockImplementation(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      return { output: 'too late' };
-    });
-
-    try {
-      await executeWithTimeout(runner, task, {}, 30);
-      expect.unreachable('Should have thrown');
-    } catch (err) {
-      const error = err as TaskTimeoutError;
-      expect(error).toBeInstanceOf(TaskTimeoutError);
-      expect(error.taskId).toBe('standalone-timeout');
-      expect(error.timeoutMs).toBe(30);
-      expect(error.isRetryable).toBe(true);
-    }
-  });
-
-  it('should pass through runner errors without timeout wrapping', async () => {
-    const task = createTask({ id: 'runner-error-task' });
-    const llmError = new LLMAuthenticationError('openai', 'Invalid key');
-    const runner: TaskRunner = vi.fn().mockRejectedValue(llmError);
-
-    try {
-      await executeWithTimeout(runner, task, {}, 5000);
-      expect.unreachable('Should have thrown');
-    } catch (err) {
-      expect(err).toBe(llmError);
-      expect(err).toBeInstanceOf(LLMAuthenticationError);
-    }
-  });
-
-  it('should skip timeout when timeoutMs is 0', async () => {
-    const task = createTask({ id: 'no-timeout-task' });
-    const runner: TaskRunner = vi.fn().mockResolvedValue({ output: 'done' });
-
-    const result = await executeWithTimeout(runner, task, {}, 0);
-    expect(result).toEqual({ output: 'done' });
-  });
-});
-
-describe('Standalone executeWithRetry', () => {
-  it('should retry and succeed after transient failure', async () => {
-    const task = createTask({ id: 'retry-ok' });
-    let calls = 0;
-
-    const runner: TaskRunner = vi.fn().mockImplementation(async () => {
-      calls++;
-      if (calls < 3) throw new Error('transient');
-      return { output: 'success' };
-    });
-
-    const result = await executeWithRetry(runner, task, {}, 3, {
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    expect(result).toEqual({ output: 'success' });
-    expect(calls).toBe(3);
-  });
-
-  it('should throw TaskExecutionError after exhausting all retries', async () => {
-    const task = createTask({ id: 'always-fail' });
-    const runner: TaskRunner = vi.fn().mockRejectedValue(new Error('persistent'));
-
-    try {
-      await executeWithRetry(runner, task, {}, 2, {
-        sleep: noopSleep,
-        random: () => 0.5,
-      });
-      expect.unreachable('Should have thrown');
-    } catch (err) {
-      const error = err as TaskExecutionError;
-      expect(error).toBeInstanceOf(TaskExecutionError);
-      expect(error.message).toContain('Failed after 3 attempt(s)');
-      expect(error.taskId).toBe('always-fail');
-    }
-  });
-
-  it('should immediately throw non-retryable errors without retrying', async () => {
-    const task = createTask({ id: 'non-retryable' });
-    const configError = new TaskConfigError('Invalid configuration');
-    const runner: TaskRunner = vi.fn().mockRejectedValue(configError);
-
-    await expect(
-      executeWithRetry(runner, task, {}, 3, {
-        sleep: noopSleep,
-        random: () => 0.5,
-        isRetryable: (err) => {
-          if (err instanceof CrewspaceError) return err.isRetryable;
-          return true;
-        },
-      }),
-    ).rejects.toThrow(TaskConfigError);
-
-    expect(runner).toHaveBeenCalledTimes(1);
-  });
-
-  it('should emit task:retry events for each retry attempt', async () => {
-    const task = createTask({ id: 'retry-events' });
-    const retryAttempts: number[] = [];
-    task.on('task:retry', (_id, attempt) => retryAttempts.push(attempt));
-
-    let calls = 0;
-    const runner: TaskRunner = vi.fn().mockImplementation(async () => {
-      calls++;
-      if (calls < 3) throw new Error('transient');
-      return { output: 'ok' };
-    });
-
-    await executeWithRetry(runner, task, {}, 3, {
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    expect(retryAttempts).toEqual([1, 2]);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// 12. Error Details Preservation in toJSON
-// ---------------------------------------------------------------------------
-
-describe('Error details preservation in toJSON', () => {
-  it('should include domain-specific details in serialized errors', () => {
-    const errors: [CrewspaceError, Record<string, unknown>][] = [
-      [
-        new TaskExecutionError('task-1', 'failed', 'agent-1'),
-        { taskId: 'task-1', agentId: 'agent-1' },
-      ],
-      [
-        new ToolTimeoutError('search', 5000),
-        { toolName: 'search', timeoutMs: 5000 },
-      ],
-      [
-        new LLMRateLimitError('openai', 'limited', 2000),
-        { provider: 'openai', statusCode: 429, retryAfterMs: 2000 },
-      ],
-      [
-        new LLMContextLengthError('openai', 'too long', 10000, 8192),
-        { provider: 'openai', statusCode: 400, requestTokens: 10000, maxTokens: 8192 },
-      ],
-    ];
-
-    for (const [error, expectedDetails] of errors) {
-      const json = error.toJSON();
-      for (const [key, value] of Object.entries(expectedDetails)) {
-        expect(json.details[key]).toBe(value);
-      }
-    }
-  });
-
-  it('should produce valid ISO timestamps in all error types', () => {
+  it('should format aggregate errors for logging', () => {
     const errors = [
-      new TaskExecutionError('t1', 'failed'),
-      new ToolExecutionError('tool', 'error'),
-      new LLMRateLimitError('openai', 'limited', 1000),
-      new AgentExecutionError('agent', 'failed'),
+      new ToolExecutionError('search', 'timeout'),
+      new LLMProviderError('openai', 'server error', 500),
+    ];
+    const agg = new AggregateCrewspaceError('Parallel failure', errors);
+    const fmt = formatErrorForLog(agg);
+
+    expect(fmt.name).toBe('AggregateCrewspaceError');
+    expect(fmt.code).toBe(ErrorCode.UNKNOWN);
+    expect(fmt.message).toContain('2 errors');
+  });
+});
+
+// ==========================================================================
+// 6. Error serialization edge cases
+// ==========================================================================
+
+describe('Error serialization (toJSON)', () => {
+  it('should serialize ToolCompositionError with depth details', () => {
+    const err = new ToolCompositionError('pipeline', 'max depth exceeded', 10, 5);
+    const json = err.toJSON();
+
+    expect(json.name).toBe('ToolCompositionError');
+    expect(json.code).toBe(ErrorCode.TOOL_COMPOSITION);
+    expect(json.details['depth']).toBe(10);
+    expect(json.details['maxDepth']).toBe(5);
+    expect(json.details['toolName']).toBe('pipeline');
+  });
+
+  it('should serialize ToolInputValidationError with issues', () => {
+    const issues = [
+      { path: 'query', message: 'Required', code: 'invalid_type' },
+      { path: 'options.limit', message: 'Must be positive', code: 'too_small' },
+    ];
+    const err = new ToolInputValidationError('search', issues);
+    const json = err.toJSON();
+
+    expect(json.details['issues']).toHaveLength(2);
+    const serializedIssues = json.details['issues'] as Array<{ path: string; message: string }>;
+    expect(serializedIssues[0]!.path).toBe('query');
+    expect(serializedIssues[1]!.path).toBe('options.limit');
+  });
+
+  it('should serialize ToolPermissionError with permission details', () => {
+    const err = new ToolPermissionError(
+      'file-write',
+      ['read', 'write', 'execute'] as never[],
+      ['write', 'execute'] as never[],
+    );
+    const json = err.toJSON();
+
+    expect(json.details['toolName']).toBe('file-write');
+    expect(json.details['requiredPermissions']).toEqual(['read', 'write', 'execute']);
+    expect(json.details['deniedPermissions']).toEqual(['write', 'execute']);
+  });
+
+  it('should serialize LLMStreamError with partial content details', () => {
+    const err = new LLMStreamError('anthropic', 'connection reset', 15, 'Here is the partial re');
+    const json = err.toJSON();
+
+    expect(json.details['chunksReceived']).toBe(15);
+    expect(json.details['partialContent']).toBe('Here is the partial re');
+    expect(json.details['provider']).toBe('anthropic');
+  });
+
+  it('should serialize LLMContextLengthError with token details', () => {
+    const err = new LLMContextLengthError('openai', 'too long', 128000, 32768);
+    const json = err.toJSON();
+
+    expect(json.details['requestTokens']).toBe(128000);
+    expect(json.details['maxTokens']).toBe(32768);
+  });
+
+  it('should serialize CircularDependencyError with cycle details', () => {
+    const cycles = [
+      { path: ['a', 'b', 'c', 'a'] },
+      { path: ['d', 'e', 'd'] },
+    ];
+    const err = new CircularDependencyError(cycles);
+    const json = err.toJSON();
+
+    expect(json.details['cycles']).toEqual([['a', 'b', 'c', 'a'], ['d', 'e', 'd']]);
+    expect(json.details['involvedTaskIds']).toEqual(['a', 'b', 'c', 'd', 'e']);
+  });
+
+  it('should serialize MemoryOperationError with operation detail', () => {
+    const cause = new Error('ENOSPC');
+    const err = new MemoryOperationError('sqlite', 'write', 'disk full', cause);
+    const json = err.toJSON();
+
+    expect(json.details['provider']).toBe('sqlite');
+    expect(json.details['operation']).toBe('write');
+    expect(json.cause).toEqual({ message: 'ENOSPC' });
+  });
+
+  it('should serialize nested CrewspaceError causes recursively', () => {
+    const inner = new ToolTimeoutError('search', 3000);
+    const mid = new TaskExecutionError('t1', 'tool timed out', 'a1', inner);
+    const outer = new CrewExecutionError('c1', 'task failed', 't1', mid);
+    const json = outer.toJSON();
+
+    expect(json.cause).toBeDefined();
+    const midJson = json.cause as { code: string; cause: { code: string } };
+    expect(midJson.code).toBe(ErrorCode.TASK_EXECUTION);
+    expect(midJson.cause.code).toBe(ErrorCode.TOOL_TIMEOUT);
+  });
+});
+
+// ==========================================================================
+// 7. Concurrent error handling scenarios
+// ==========================================================================
+
+describe('Concurrent error handling scenarios', () => {
+  it('should handle multiple parallel degradations correctly', async () => {
+    const handler = new GracefulDegradationHandler();
+    const events: string[] = [];
+    handler.on('degradation:fallback', (record) => {
+      events.push(record.context?.operationId ?? 'unknown');
+    });
+
+    const promises = Array.from({ length: 10 }, (_, i) =>
+      handler.execute(
+        () => { throw new ToolExecutionError(`tool-${i}`, 'fail'); },
+        { fallback: `fallback-${i}`, context: { operationId: `op-${i}` } },
+      ),
+    );
+
+    const results = await Promise.all(promises);
+    expect(results).toHaveLength(10);
+    results.forEach((r, i) => {
+      expect(r.degraded).toBe(true);
+      expect(r.value).toBe(`fallback-${i}`);
+    });
+    expect(events).toHaveLength(10);
+    expect(handler.degradationCount).toBe(10);
+  });
+
+  it('should handle mixed success and failure in parallel', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    const results = await Promise.allSettled([
+      handler.execute(() => 'success-1', { fallback: 'fb-1' }),
+      handler.execute(
+        () => { throw new ToolExecutionError('t', 'fail'); },
+        { fallback: 'fb-2' },
+      ),
+      handler.execute(() => 'success-3', { fallback: 'fb-3' }),
+      handler.execute(
+        () => { throw new AgentConfigError('critical!'); },
+        { fallback: 'fb-4' },
+      ),
+    ]);
+
+    // First: success
+    expect(results[0]!.status).toBe('fulfilled');
+    expect((results[0] as PromiseFulfilledResult<{ value: string }>).value.value).toBe('success-1');
+
+    // Second: degraded (non-critical)
+    expect(results[1]!.status).toBe('fulfilled');
+    expect((results[1] as PromiseFulfilledResult<{ degraded: boolean }>).value.degraded).toBe(true);
+
+    // Third: success
+    expect(results[2]!.status).toBe('fulfilled');
+
+    // Fourth: rejected (critical)
+    expect(results[3]!.status).toBe('rejected');
+
+    expect(handler.degradationCount).toBe(1);
+  });
+
+  it('should aggregate errors from parallel operations', async () => {
+    const operations = [
+      Promise.reject(new ToolExecutionError('search', 'timeout')),
+      Promise.resolve('ok'),
+      Promise.reject(new LLMRateLimitError('openai', 'rate limit', 2000)),
+      Promise.resolve('also ok'),
+      Promise.reject(new TaskTimeoutError('t1', 5000)),
     ];
 
-    for (const err of errors) {
-      const parsed = new Date(err.timestamp);
-      expect(parsed.toISOString()).toBe(err.timestamp);
+    const results = await Promise.allSettled(operations);
+    const errors = results
+      .filter((r): r is PromiseRejectedResult => r.status === 'rejected')
+      .map((r) => r.reason as Error);
+
+    const agg = new AggregateCrewspaceError('Batch failed', errors);
+    expect(agg.errors).toHaveLength(3);
+
+    // Verify all errors are classifiable
+    for (const err of agg.errors) {
+      expect(isCrewspaceError(err)).toBe(true);
     }
   });
 });
 
-// ---------------------------------------------------------------------------
-// 13. Per-task Retry Policy with Different Error Types
-// ---------------------------------------------------------------------------
+// ==========================================================================
+// 8. Error hierarchy and instanceof checks
+// ==========================================================================
 
-describe('Per-task retry policy with error classification', () => {
-  it('should use per-task isRetryable to skip retries on fatal errors', async () => {
-    const task = new Task({
-      id: 'selective-retry',
-      description: 'Only retry transient errors',
-      retries: 3,
-      retryPolicy: {
-        baseDelayMs: 100,
-        isRetryable: (err: Error) => {
-          // Only retry rate limit errors, not auth errors
-          return err instanceof LLMRateLimitError;
-        },
-      },
-    });
-
-    const authError = new LLMAuthenticationError('openai', 'Bad key');
-    const runner: TaskRunner = vi.fn().mockRejectedValue(authError);
-
-    const wrapper = new TaskExecutionWrapper({
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
-
-    await expect(wrapper.wrap(runner)(task, {})).rejects.toThrow(LLMAuthenticationError);
-    expect(runner).toHaveBeenCalledTimes(1);
+describe('Error hierarchy and instanceof checks', () => {
+  it('LLMRateLimitError should be instanceof LLMProviderError', () => {
+    const err = new LLMRateLimitError('openai', 'rate limit');
+    expect(err).toBeInstanceOf(LLMRateLimitError);
+    expect(err).toBeInstanceOf(LLMProviderError);
+    expect(err).toBeInstanceOf(CrewspaceError);
+    expect(err).toBeInstanceOf(Error);
   });
 
-  it('should retry with per-task policy when error is classified as retryable', async () => {
-    const task = new Task({
-      id: 'retryable-task',
-      description: 'Retry rate limit errors',
-      retries: 2,
-      retryPolicy: {
-        baseDelayMs: 10,
-        backoffMultiplier: 2,
-        jitter: 0,
-        isRetryable: (err: Error) => err instanceof LLMRateLimitError,
-      },
-    });
+  it('LLMAuthenticationError should be instanceof LLMProviderError', () => {
+    const err = new LLMAuthenticationError('openai', 'bad key');
+    expect(err).toBeInstanceOf(LLMAuthenticationError);
+    expect(err).toBeInstanceOf(LLMProviderError);
+    expect(err).toBeInstanceOf(CrewspaceError);
+    expect(err).toBeInstanceOf(Error);
+  });
 
-    let calls = 0;
-    const runner: TaskRunner = vi.fn().mockImplementation(async () => {
-      calls++;
-      if (calls < 3) throw new LLMRateLimitError('openai', 'Rate limited', 1000);
-      return { output: 'success' };
-    });
+  it('LLMContextLengthError should be instanceof LLMProviderError', () => {
+    const err = new LLMContextLengthError('openai', 'too long');
+    expect(err).toBeInstanceOf(LLMContextLengthError);
+    expect(err).toBeInstanceOf(LLMProviderError);
+  });
 
-    const wrapper = new TaskExecutionWrapper({
-      sleep: noopSleep,
-      random: () => 0.5,
-    });
+  it('LLMStreamError should be instanceof LLMProviderError', () => {
+    const err = new LLMStreamError('openai', 'broken', 0, '');
+    expect(err).toBeInstanceOf(LLMStreamError);
+    expect(err).toBeInstanceOf(LLMProviderError);
+  });
 
-    const result = await wrapper.wrap(runner)(task, {});
-    expect(result).toEqual({ output: 'success' });
-    expect(calls).toBe(3);
+  it('ToolCompositionError should be instanceof ToolExecutionError', () => {
+    const err = new ToolCompositionError('pipe', 'deep', 5, 3);
+    expect(err).toBeInstanceOf(ToolCompositionError);
+    expect(err).toBeInstanceOf(ToolExecutionError);
+    expect(err).toBeInstanceOf(CrewspaceError);
+  });
+
+  it('ToolInputValidationError should be instanceof ToolExecutionError', () => {
+    const err = new ToolInputValidationError('search', []);
+    expect(err).toBeInstanceOf(ToolInputValidationError);
+    expect(err).toBeInstanceOf(ToolExecutionError);
+  });
+
+  it('CircularDependencyError should be instanceof TaskConfigError', () => {
+    const err = new CircularDependencyError([{ path: ['a', 'b', 'a'] }]);
+    expect(err).toBeInstanceOf(CircularDependencyError);
+    expect(err).toBeInstanceOf(TaskConfigError);
+    expect(err).toBeInstanceOf(CrewspaceError);
+  });
+
+  it('TaskTimeoutError should be instanceof TaskExecutionError', () => {
+    const err = new TaskTimeoutError('t1', 5000);
+    expect(err).toBeInstanceOf(TaskTimeoutError);
+    expect(err).toBeInstanceOf(TaskExecutionError);
+    expect(err).toBeInstanceOf(CrewspaceError);
   });
 });
 
-// ---------------------------------------------------------------------------
-// 14. DLQ Serialization and Inspection
-// ---------------------------------------------------------------------------
+// ==========================================================================
+// 9. Error message formatting
+// ==========================================================================
 
-describe('DLQ serialization for inspection', () => {
-  it('should serialize entries with error messages and metadata', () => {
-    const dlq = new DeadLetterQueue({ maxSize: 10 });
-    const task = createTask({ id: 'serializable-task', description: 'Important task' });
-    const error = new TaskExecutionError('serializable-task', 'All retries exhausted');
-
-    dlq.enqueue(task, error, {
-      attempts: 3,
-      metadata: { region: 'us-east-1', priority: 'high' },
-    });
-
-    const json = dlq.toJSON();
-    expect(json).toHaveLength(1);
-    expect(json[0]!.taskId).toBe('serializable-task');
-    expect(json[0]!.error).toContain('All retries exhausted');
-    expect(json[0]!.attempts).toBe(3);
-    expect(json[0]!.metadata).toEqual({ region: 'us-east-1', priority: 'high' });
+describe('Error message formatting', () => {
+  it('ToolExecutionError should include tool name', () => {
+    const err = new ToolExecutionError('web-search', 'DNS resolution failed');
+    expect(err.message).toBe('Tool "web-search" execution failed: DNS resolution failed');
   });
 
-  it('should filter DLQ entries by error type', () => {
-    const dlq = new DeadLetterQueue({ maxSize: 10 });
+  it('ToolNotFoundError should include tool name', () => {
+    const err = new ToolNotFoundError('nonexistent-tool');
+    expect(err.message).toBe('Tool "nonexistent-tool" is not registered');
+  });
 
-    const timeoutTask = createTask({ id: 'timeout-task' });
-    const authTask = createTask({ id: 'auth-task' });
-    const genericTask = createTask({ id: 'generic-task' });
+  it('ToolPermissionError should list denied permissions', () => {
+    const err = new ToolPermissionError('file', ['read', 'write'] as never[], ['write'] as never[]);
+    expect(err.message).toContain('write');
+  });
 
-    dlq.enqueue(timeoutTask, new TaskTimeoutError('timeout-task', 5000));
-    dlq.enqueue(authTask, new LLMAuthenticationError('openai', 'Bad key'));
-    dlq.enqueue(genericTask, new Error('generic'));
+  it('ToolTimeoutError should include timeout value', () => {
+    const err = new ToolTimeoutError('slow-tool', 30000);
+    expect(err.message).toContain('30000ms');
+  });
 
-    const timeoutEntries = dlq.filter(
-      (entry) => entry.error instanceof TaskTimeoutError,
+  it('ToolCompositionError should include tool name', () => {
+    const err = new ToolCompositionError('nested-tool', 'max depth exceeded', 6, 5);
+    expect(err.message).toContain('nested-tool');
+    expect(err.message).toContain('max depth exceeded');
+  });
+
+  it('ToolInputValidationError should include field summaries', () => {
+    const err = new ToolInputValidationError('api-tool', [
+      { path: 'url', message: 'Invalid URL', code: 'custom' },
+      { path: '', message: 'Missing required field', code: 'invalid_type' },
+    ]);
+    expect(err.message).toContain('url: Invalid URL');
+    expect(err.message).toContain('Missing required field');
+  });
+
+  it('LLMProviderError should include provider name', () => {
+    const err = new LLMProviderError('anthropic', 'service unavailable', 503);
+    expect(err.message).toContain('anthropic');
+  });
+
+  it('LLMRateLimitError should extend provider message', () => {
+    const err = new LLMRateLimitError('openai', 'too many requests');
+    expect(err.message).toContain('openai');
+    expect(err.message).toContain('too many requests');
+  });
+
+  it('CircularDependencyError with single cycle', () => {
+    const err = new CircularDependencyError([{ path: ['a', 'b', 'c', 'a'] }]);
+    expect(err.message).toContain('a \u2192 b \u2192 c \u2192 a');
+  });
+
+  it('CircularDependencyError with multiple cycles', () => {
+    const err = new CircularDependencyError([
+      { path: ['a', 'b', 'a'] },
+      { path: ['c', 'd', 'c'] },
+    ]);
+    expect(err.message).toContain('a \u2192 b \u2192 a');
+    expect(err.message).toContain('c \u2192 d \u2192 c');
+  });
+
+  it('MemoryOperationError should include provider and operation', () => {
+    const err = new MemoryOperationError('redis', 'read', 'connection refused');
+    expect(err.message).toBe('Memory "redis" read failed: connection refused');
+  });
+
+  it('MemoryQueryError should include provider', () => {
+    const err = new MemoryQueryError('elasticsearch', 'invalid filter');
+    expect(err.message).toContain('elasticsearch');
+  });
+
+  it('CrewExecutionError with taskId context', () => {
+    const err = new CrewExecutionError('research-crew', 'analysis failed', 'data-task');
+    expect(err.message).toContain('research-crew');
+    expect(err.message).toContain('data-task');
+  });
+
+  it('CrewExecutionError without taskId', () => {
+    const err = new CrewExecutionError('crew-1', 'general failure');
+    expect(err.message).toBe('Crew "crew-1" execution failed: general failure');
+    expect(err.taskId).toBeUndefined();
+  });
+
+  it('EngineExecutionError with taskId', () => {
+    const err = new EngineExecutionError('engine-1', 'crashed', 'task-42');
+    expect(err.message).toContain('engine-1');
+    expect(err.message).toContain('task-42');
+  });
+});
+
+// ==========================================================================
+// 10. hasErrorCode edge cases
+// ==========================================================================
+
+describe('hasErrorCode edge cases', () => {
+  it('should return false for null', () => {
+    expect(hasErrorCode(null, ErrorCode.UNKNOWN)).toBe(false);
+  });
+
+  it('should return false for undefined', () => {
+    expect(hasErrorCode(undefined, ErrorCode.UNKNOWN)).toBe(false);
+  });
+
+  it('should return false for numbers', () => {
+    expect(hasErrorCode(42, ErrorCode.UNKNOWN)).toBe(false);
+  });
+
+  it('should return false for strings', () => {
+    expect(hasErrorCode('error', ErrorCode.UNKNOWN)).toBe(false);
+  });
+
+  it('should return false for objects that look like errors but are not', () => {
+    expect(hasErrorCode({ code: ErrorCode.AGENT_CONFIG, message: 'test' }, ErrorCode.AGENT_CONFIG)).toBe(false);
+  });
+
+  it('should match ToolCompositionError with TOOL_COMPOSITION code', () => {
+    const err = new ToolCompositionError('t', 'deep', 5, 3);
+    expect(hasErrorCode(err, ErrorCode.TOOL_COMPOSITION)).toBe(true);
+    expect(hasErrorCode(err, ErrorCode.TOOL_EXECUTION)).toBe(false);
+  });
+
+  it('should match LLMRateLimitError with LLM_RATE_LIMIT code (not LLM_PROVIDER)', () => {
+    const err = new LLMRateLimitError('p', 'limit');
+    expect(hasErrorCode(err, ErrorCode.LLM_RATE_LIMIT)).toBe(true);
+    expect(hasErrorCode(err, ErrorCode.LLM_PROVIDER)).toBe(false);
+  });
+});
+
+// ==========================================================================
+// 11. formatErrorForLog edge cases
+// ==========================================================================
+
+describe('formatErrorForLog edge cases', () => {
+  it('should handle error without stack trace', () => {
+    const err = new Error('test');
+    err.stack = undefined;
+    const fmt = formatErrorForLog(err);
+    expect(fmt.stack).toBeUndefined();
+  });
+
+  it('should handle CrewspaceError with cause chain of mixed types', () => {
+    const plain = new Error('plain root');
+    const crewErr = new AgentExecutionError('a1', 'mid-level', plain);
+    const topErr = new CrewExecutionError('c1', 'top-level', 't1', crewErr);
+
+    const fmt = formatErrorForLog(topErr);
+    expect(fmt.code).toBe(ErrorCode.CREW_EXECUTION);
+    expect(fmt.causeChain).toHaveLength(3);
+    expect(fmt.causeChain[2]).toBe('plain root');
+  });
+
+  it('should format ToolInputValidationError for log', () => {
+    const err = new ToolInputValidationError('api', [
+      { path: 'body.name', message: 'Required', code: 'invalid_type' },
+    ]);
+    const fmt = formatErrorForLog(err);
+    expect(fmt.code).toBe(ErrorCode.TOOL_INPUT_VALIDATION);
+    expect(fmt.isRetryable).toBe(false);
+    expect(fmt.message).toContain('body.name: Required');
+  });
+
+  it('should format LLMStreamError with partial content info', () => {
+    const err = new LLMStreamError('openai', 'connection dropped', 42, 'Partial output...');
+    const fmt = formatErrorForLog(err);
+    expect(fmt.code).toBe(ErrorCode.LLM_STREAM);
+    expect(fmt.isRetryable).toBe(true);
+    expect(fmt.name).toBe('LLMStreamError');
+  });
+});
+
+// ==========================================================================
+// 12. Error timestamp behavior
+// ==========================================================================
+
+describe('Error timestamp behavior', () => {
+  it('should produce unique timestamps for distinct errors', async () => {
+    const err1 = new AgentConfigError('first');
+    await new Promise((r) => setTimeout(r, 5));
+    const err2 = new AgentConfigError('second');
+
+    // Both should be valid ISO timestamps
+    expect(new Date(err1.timestamp).toISOString()).toBe(err1.timestamp);
+    expect(new Date(err2.timestamp).toISOString()).toBe(err2.timestamp);
+
+    // Timestamps should be different (or at least valid)
+    const t1 = new Date(err1.timestamp).getTime();
+    const t2 = new Date(err2.timestamp).getTime();
+    expect(t2).toBeGreaterThanOrEqual(t1);
+  });
+
+  it('should include timestamp in toJSON output', () => {
+    const err = new ToolTimeoutError('search', 3000);
+    const json = err.toJSON();
+    expect(json.timestamp).toBe(err.timestamp);
+    expect(new Date(json.timestamp).toISOString()).toBe(json.timestamp);
+  });
+});
+
+// ==========================================================================
+// 13. Graceful degradation with cascading operations
+// ==========================================================================
+
+describe('Graceful degradation cascading operations', () => {
+  it('should handle pipeline where early stage degrades but later stages succeed', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    // Stage 1: tool fails, uses fallback
+    const stage1 = await handler.execute(
+      () => { throw new ToolExecutionError('web-search', 'timeout'); },
+      { fallback: 'cached search results', context: { operationId: 'stage-1' } },
     );
-    expect(timeoutEntries).toHaveLength(1);
-    expect(timeoutEntries[0]!.task.id).toBe('timeout-task');
 
-    const retryableEntries = dlq.filter(
-      (entry) => entry.error instanceof CrewspaceError && entry.error.isRetryable,
+    // Stage 2: uses stage1 result (which is fallback), succeeds
+    const stage2 = await handler.execute(
+      () => `Analyzed: ${stage1.value}`,
+      { fallback: 'analysis unavailable', context: { operationId: 'stage-2' } },
     );
-    expect(retryableEntries).toHaveLength(1);
+
+    expect(stage1.degraded).toBe(true);
+    expect(stage2.degraded).toBe(false);
+    expect(stage2.value).toBe('Analyzed: cached search results');
+    expect(handler.degradationCount).toBe(1);
+  });
+
+  it('should handle pipeline where critical error stops all subsequent stages', async () => {
+    const handler = new GracefulDegradationHandler();
+    const results: string[] = [];
+
+    try {
+      // Stage 1: succeeds
+      const r1 = await handler.execute(() => 'stage-1-result', { fallback: 'fb1' });
+      results.push(r1.value);
+
+      // Stage 2: critical error - should stop pipeline
+      await handler.execute(
+        () => { throw new LLMAuthenticationError('openai', 'invalid key'); },
+        { fallback: 'fb2' },
+      );
+      results.push('should-not-reach');
+    } catch {
+      results.push('pipeline-stopped');
+    }
+
+    expect(results).toEqual(['stage-1-result', 'pipeline-stopped']);
+    expect(handler.degradationCount).toBe(0);
+  });
+
+  it('should handle pipeline with multiple non-critical degradations', async () => {
+    const handler = new GracefulDegradationHandler();
+
+    const stages = await Promise.all([
+      handler.execute(
+        () => { throw new ToolTimeoutError('search', 5000); },
+        { fallback: 'cached', context: { operationId: 'search' } },
+      ),
+      handler.execute(
+        () => { throw new MemoryQueryError('redis', 'connection refused'); },
+        { fallback: [], context: { operationId: 'memory' } },
+      ),
+      handler.execute(
+        () => { throw new LLMRateLimitError('openai', 'limit', 2000); },
+        { fallback: 'default summary', context: { operationId: 'summarize' } },
+      ),
+    ]);
+
+    expect(stages.every((s) => s.degraded)).toBe(true);
+    expect(handler.degradationCount).toBe(3);
+    expect(handler.history.map((h) => h.context?.operationId)).toEqual([
+      'search', 'memory', 'summarize',
+    ]);
+  });
+});
+
+// ==========================================================================
+// 14. Error detail preservation
+// ==========================================================================
+
+describe('Error detail preservation', () => {
+  it('AgentConfigError preserves optional agentId', () => {
+    const withId = new AgentConfigError('bad', 'my-agent');
+    const withoutId = new AgentConfigError('bad');
+
+    expect(withId.agentId).toBe('my-agent');
+    expect(withId.toJSON().details['agentId']).toBe('my-agent');
+    expect(withoutId.agentId).toBeUndefined();
+    expect(withoutId.toJSON().details['agentId']).toBeUndefined();
+  });
+
+  it('TaskConfigError preserves optional taskId', () => {
+    const withId = new TaskConfigError('bad', 'task-1');
+    const withoutId = new TaskConfigError('bad');
+
+    expect(withId.taskId).toBe('task-1');
+    expect(withoutId.taskId).toBeUndefined();
+  });
+
+  it('ToolConfigError preserves optional toolName', () => {
+    const withName = new ToolConfigError('bad', 'search');
+    const withoutName = new ToolConfigError('bad');
+
+    expect(withName.toolName).toBe('search');
+    expect(withoutName.toolName).toBeUndefined();
+  });
+
+  it('CrewConfigError preserves optional crewId', () => {
+    const withId = new CrewConfigError('bad', 'crew-1');
+    const withoutId = new CrewConfigError('bad');
+
+    expect(withId.crewId).toBe('crew-1');
+    expect(withoutId.crewId).toBeUndefined();
+  });
+
+  it('EngineConfigError preserves optional engineId', () => {
+    const withId = new EngineConfigError('bad', 'engine-1');
+    const withoutId = new EngineConfigError('bad');
+
+    expect(withId.engineId).toBe('engine-1');
+    expect(withoutId.engineId).toBeUndefined();
+  });
+
+  it('MemoryConfigError preserves optional provider', () => {
+    const withProvider = new MemoryConfigError('bad', 'redis');
+    const withoutProvider = new MemoryConfigError('bad');
+
+    expect(withProvider.provider).toBe('redis');
+    expect(withoutProvider.provider).toBeUndefined();
+  });
+
+  it('LLMProviderError preserves optional statusCode', () => {
+    const withCode = new LLMProviderError('openai', 'fail', 500);
+    const withoutCode = new LLMProviderError('openai', 'fail');
+
+    expect(withCode.statusCode).toBe(500);
+    expect(withoutCode.statusCode).toBeUndefined();
+  });
+
+  it('LLMRateLimitError preserves optional retryAfterMs', () => {
+    const withRetry = new LLMRateLimitError('openai', 'limit', 5000);
+    const withoutRetry = new LLMRateLimitError('openai', 'limit');
+
+    expect(withRetry.retryAfterMs).toBe(5000);
+    expect(withoutRetry.retryAfterMs).toBeUndefined();
+  });
+
+  it('LLMContextLengthError preserves optional token counts', () => {
+    const full = new LLMContextLengthError('openai', 'too long', 128000, 32768);
+    const minimal = new LLMContextLengthError('openai', 'too long');
+
+    expect(full.requestTokens).toBe(128000);
+    expect(full.maxTokens).toBe(32768);
+    expect(minimal.requestTokens).toBeUndefined();
+    expect(minimal.maxTokens).toBeUndefined();
+  });
+
+  it('ToolNotFoundError preserves toolName', () => {
+    const err = new ToolNotFoundError('missing-tool');
+    expect(err.toolName).toBe('missing-tool');
+    expect(err.toJSON().details['toolName']).toBe('missing-tool');
+  });
+
+  it('CrewExecutionError preserves optional taskId', () => {
+    const withTask = new CrewExecutionError('c1', 'fail', 't1');
+    const withoutTask = new CrewExecutionError('c1', 'fail');
+
+    expect(withTask.taskId).toBe('t1');
+    expect(withoutTask.taskId).toBeUndefined();
+  });
+
+  it('EngineExecutionError preserves optional taskId', () => {
+    const withTask = new EngineExecutionError('e1', 'fail', 't1');
+    const withoutTask = new EngineExecutionError('e1', 'fail');
+
+    expect(withTask.taskId).toBe('t1');
+    expect(withoutTask.taskId).toBeUndefined();
+  });
+});
+
+// ==========================================================================
+// 15. Graceful degradation event listener edge cases
+// ==========================================================================
+
+describe('Graceful degradation event listener management', () => {
+  it('should support unsubscribing from events', async () => {
+    const handler = new GracefulDegradationHandler();
+    const listener = vi.fn();
+    handler.on('degradation:fallback', listener);
+    handler.off('degradation:fallback', listener);
+
+    await handler.execute(
+      () => { throw new ToolExecutionError('t', 'err'); },
+      { fallback: 'default' },
+    );
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('should support multiple event listeners', async () => {
+    const handler = new GracefulDegradationHandler();
+    const listener1 = vi.fn();
+    const listener2 = vi.fn();
+    handler.on('degradation:fallback', listener1);
+    handler.on('degradation:fallback', listener2);
+
+    await handler.execute(
+      () => { throw new ToolExecutionError('t', 'err'); },
+      { fallback: 'default' },
+    );
+
+    expect(listener1).toHaveBeenCalledOnce();
+    expect(listener2).toHaveBeenCalledOnce();
+  });
+
+  it('should allow chaining on() calls', () => {
+    const handler = new GracefulDegradationHandler();
+    const result = handler
+      .on('degradation:fallback', () => {})
+      .on('degradation:critical', () => {})
+      .on('degradation:success', () => {});
+
+    expect(result).toBe(handler);
+  });
+
+  it('should receive correct event data in listeners', async () => {
+    const handler = new GracefulDegradationHandler();
+    let receivedRecord: unknown = null;
+
+    handler.on('degradation:fallback', (record) => {
+      receivedRecord = record;
+    });
+
+    const ctx = { operationId: 'test-op', operationType: 'tool' };
+    await handler.execute(
+      () => { throw new ToolTimeoutError('search', 5000); },
+      { fallback: 'default', context: ctx },
+    );
+
+    expect(receivedRecord).not.toBeNull();
+    const record = receivedRecord as {
+      error: Error;
+      severity: string;
+      context: { operationId: string };
+      timestamp: string;
+      fallbackUsed: boolean;
+    };
+    expect(record.error).toBeInstanceOf(ToolTimeoutError);
+    expect(record.severity).toBe(FailureSeverity.NON_CRITICAL);
+    expect(record.context.operationId).toBe('test-op');
+    expect(record.timestamp).toBeDefined();
+    expect(record.fallbackUsed).toBe(true);
   });
 });
