@@ -40,3 +40,9 @@ export {
   formatTaskPlanTree,
 } from './task-plan-formatter.js';
 export type { FormatTaskPlanOptions } from './task-plan-formatter.js';
+export { TaskTimeoutGuard, withTimeoutGuard } from './task-timeout-guard.js';
+export type {
+  ActiveGuardInfo,
+  TaskTimeoutGuardConfig,
+  TaskTimeoutGuardEventMap,
+} from './task-timeout-guard.js';
