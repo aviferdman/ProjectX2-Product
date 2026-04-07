@@ -26,7 +26,7 @@ export type {
 } from './llm.js';
 
 export { TaskPriority, TaskStatus } from './task.js';
-export type { TaskConfig, TaskEventMap, TaskInput, TaskResult } from './task.js';
+export type { RetryPolicy, TaskConfig, TaskEventMap, TaskInput, TaskResult } from './task.js';
 
 export { ToolCategory, ToolPermission } from './tool.js';
 export type {

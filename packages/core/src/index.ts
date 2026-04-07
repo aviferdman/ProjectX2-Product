@@ -150,6 +150,7 @@ export type {
   LLMResponse,
   LLMStreamChunk,
   LLMStreamResponse,
+  RetryPolicy,
   StreamingLLMProvider,
   TaskConfig,
   TaskEventMap,

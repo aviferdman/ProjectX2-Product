@@ -194,13 +194,27 @@ export class TaskExecutionWrapper {
       const timeoutMs = task.timeout || this.defaultTimeoutMs;
       const maxRetries = task.retries || this.defaultRetries;
 
+      // Resolve per-task retry policy with fallback to wrapper defaults
+      const policy = task.retryPolicy;
+      const baseDelayMs = policy?.baseDelayMs ?? this.retryBaseDelayMs;
+      const maxDelayMs = policy?.maxDelayMs ?? this.retryMaxDelayMs;
+      const backoffMultiplier = policy?.backoffMultiplier ?? this.retryBackoffMultiplier;
+      const jitter = policy?.jitter ?? this.retryJitter;
+      const isRetryable = policy?.isRetryable ?? this._isRetryable;
+
       let lastError: Error | undefined;
       const _startTime = Date.now();
 
       for (let attempt = 0; attempt <= maxRetries; attempt++) {
         // Wait before retry (not on first attempt)
         if (attempt > 0) {
-          const delayMs = this._calculateDelay(attempt - 1);
+          const delayMs = this._calculateDelayWith(
+            attempt - 1,
+            baseDelayMs,
+            maxDelayMs,
+            backoffMultiplier,
+            jitter,
+          );
           task.emit('task:retry', task.id, attempt, maxRetries);
           await this._sleep(delayMs);
         }
@@ -217,7 +231,7 @@ export class TaskExecutionWrapper {
           }
 
           // Non-retryable errors are thrown immediately
-          if (!this._isRetryable(lastError)) {
+          if (!isRetryable(lastError)) {
             throw lastError;
           }
 
@@ -254,11 +268,27 @@ export class TaskExecutionWrapper {
   // -------------------------------------------------------------------------
 
   private _calculateDelay(attempt: number): number {
-    const exponentialDelay = this.retryBaseDelayMs * Math.pow(this.retryBackoffMultiplier, attempt);
-    const cappedDelay = Math.min(exponentialDelay, this.retryMaxDelayMs);
+    return this._calculateDelayWith(
+      attempt,
+      this.retryBaseDelayMs,
+      this.retryMaxDelayMs,
+      this.retryBackoffMultiplier,
+      this.retryJitter,
+    );
+  }
 
-    const deterministicPart = cappedDelay * (1 - this.retryJitter);
-    const randomPart = cappedDelay * this.retryJitter * this._random();
+  private _calculateDelayWith(
+    attempt: number,
+    baseDelayMs: number,
+    maxDelayMs: number,
+    backoffMultiplier: number,
+    jitter: number,
+  ): number {
+    const exponentialDelay = baseDelayMs * Math.pow(backoffMultiplier, attempt);
+    const cappedDelay = Math.min(exponentialDelay, maxDelayMs);
+
+    const deterministicPart = cappedDelay * (1 - jitter);
+    const randomPart = cappedDelay * jitter * this._random();
     return Math.round(deterministicPart + randomPart);
   }
 

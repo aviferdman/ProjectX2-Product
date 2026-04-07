@@ -13,7 +13,7 @@ import { z, ZodError } from 'zod';
 
 import { TaskConfigError } from '../errors/index.js';
 import type { CrewTask } from '../types/crew.js';
-import type { TaskConfig, TaskEventMap, TaskInput, TaskResult } from '../types/task.js';
+import type { RetryPolicy, TaskConfig, TaskEventMap, TaskInput, TaskResult } from '../types/task.js';
 import { TaskPriority, TaskStatus } from '../types/task.js';
 
 // ---------------------------------------------------------------------------
@@ -23,6 +23,17 @@ import { TaskPriority, TaskStatus } from '../types/task.js';
 const TASK_ID_PATTERN = /^[a-zA-Z0-9_-]+$/;
 const MAX_RETRIES_UPPER_BOUND = 10;
 const MAX_TIMEOUT_MS = 600_000; // 10 minutes
+
+const RetryPolicySchema = z.object({
+  baseDelayMs: z.number().int().positive('baseDelayMs must be positive').optional(),
+  maxDelayMs: z.number().int().positive('maxDelayMs must be positive').optional(),
+  backoffMultiplier: z.number().positive('backoffMultiplier must be positive').optional(),
+  jitter: z.number().min(0, 'jitter must be ≥ 0').max(1, 'jitter must be ≤ 1').optional(),
+  isRetryable: z.custom<(error: Error) => boolean>(
+    (val) => val === undefined || typeof val === 'function',
+    'isRetryable must be a function',
+  ).optional(),
+}).strict().optional();
 
 const TaskConfigSchema = z.object({
   id: z
@@ -50,6 +61,7 @@ const TaskConfigSchema = z.object({
     .min(0, 'Task retries must be non-negative')
     .max(MAX_RETRIES_UPPER_BOUND, `Task retries must be ≤ ${String(MAX_RETRIES_UPPER_BOUND)}`)
     .optional(),
+  retryPolicy: RetryPolicySchema,
   priority: z.nativeEnum(TaskPriority).optional(),
   metadata: z.record(z.unknown()).optional(),
 });
@@ -93,6 +105,9 @@ export class Task {
   /** Maximum retry attempts on failure. */
   public readonly retries: number;
 
+  /** Per-task retry policy overrides, or `undefined` if using wrapper defaults. */
+  public readonly retryPolicy: Readonly<RetryPolicy> | undefined;
+
   /** Scheduling priority. */
   public readonly priority: TaskPriority;
 
@@ -114,6 +129,9 @@ export class Task {
       this.expectedOutput = parsed.expectedOutput ?? '';
       this.timeout = parsed.timeout ?? 0;
       this.retries = parsed.retries ?? 0;
+      this.retryPolicy = parsed.retryPolicy
+        ? ({ ...parsed.retryPolicy } as Readonly<RetryPolicy>)
+        : undefined;
       this.priority = parsed.priority ?? TaskPriority.MEDIUM;
 
       this._agentId = parsed.agentId;

@@ -32,6 +32,48 @@ export enum TaskStatus {
 }
 
 // ---------------------------------------------------------------------------
+// Retry policy
+// ---------------------------------------------------------------------------
+
+/**
+ * Per-task retry policy configuration.
+ *
+ * When attached to a {@link TaskConfig}, these values override the wrapper-level
+ * defaults from {@link import('../task/task-execution-wrapper.js').TaskExecutionWrapperConfig}
+ * for that specific task. Any field left `undefined` falls back to the wrapper default.
+ *
+ * @example
+ * ```typescript
+ * const policy: RetryPolicy = {
+ *   baseDelayMs: 500,
+ *   maxDelayMs: 10_000,
+ *   backoffMultiplier: 3,
+ *   jitter: 0.5,
+ *   isRetryable: (err) => !(err instanceof FatalError),
+ * };
+ * ```
+ */
+export interface RetryPolicy {
+  /** Base delay (ms) before the first retry. */
+  readonly baseDelayMs?: number;
+
+  /** Maximum delay cap (ms) between retries. */
+  readonly maxDelayMs?: number;
+
+  /** Multiplier applied to delay after each attempt. */
+  readonly backoffMultiplier?: number;
+
+  /** Jitter factor between 0 and 1 (0 = deterministic, 1 = full jitter). */
+  readonly jitter?: number;
+
+  /**
+   * Predicate to determine whether a given error is retryable.
+   * When not provided, falls back to the wrapper-level predicate.
+   */
+  readonly isRetryable?: (error: Error) => boolean;
+}
+
+// ---------------------------------------------------------------------------
 // Configuration
 // ---------------------------------------------------------------------------
 
@@ -82,6 +124,15 @@ export interface TaskConfig {
 
   /** Number of retry attempts on failure (default: 0 — no retries). */
   readonly retries?: number;
+
+  /**
+   * Per-task retry policy overrides.
+   *
+   * When specified, these values override the wrapper-level retry defaults
+   * (backoff, jitter, delays, retryable predicate) for this specific task.
+   * Fields left `undefined` fall back to the wrapper's global config.
+   */
+  readonly retryPolicy?: RetryPolicy;
 
   /** Scheduling priority (default: {@link TaskPriority.MEDIUM}). */
   readonly priority?: TaskPriority;
