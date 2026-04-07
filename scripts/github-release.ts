@@ -15,7 +15,8 @@
  */
 
 import { readFileSync, existsSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { resolve, join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export interface GitHubReleaseOptions {
   /** Git tag (e.g., "v0.1.0") */
@@ -300,7 +301,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const ROOT = resolve(import.meta.dirname ?? '.', '..');
+  const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
   console.log(
     args.dryRun ? '\n🔍 GitHub release dry run...\n' : '\n🚀 Creating GitHub release...\n',

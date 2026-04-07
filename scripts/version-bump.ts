@@ -15,7 +15,8 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { resolve, join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { isValidSemver, bumpVersion, compareSemver } from './semver.js';
 import type { BumpType } from './semver.js';
 
@@ -334,7 +335,7 @@ function main(): void {
     process.exit(1);
   }
 
-  const ROOT = resolve(import.meta.dirname ?? '.', '..');
+  const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
   const packages: PackageBumpInfo[] = [
     {

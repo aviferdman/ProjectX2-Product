@@ -14,7 +14,8 @@
  */
 
 import { readFileSync, existsSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { resolve, join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export interface PackageInfo {
   path: string;
@@ -299,7 +300,7 @@ function main(): void {
     process.exit(1);
   }
 
-  const ROOT = resolve(import.meta.dirname ?? '.', '..');
+  const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
   const packages: PackageInfo[] = [
     {

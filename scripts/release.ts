@@ -15,7 +15,8 @@
  */
 
 import { existsSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { resolve, join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 import { validatePublish } from './prepare-publish.js';
 import type { PackageInfo } from './prepare-publish.js';
@@ -435,7 +436,7 @@ function main(): void {
     process.exit(1);
   }
 
-  const ROOT = resolve(import.meta.dirname ?? '.', '..');
+  const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
   const packages: PackageInfo[] = [
     {

@@ -14,7 +14,8 @@
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { resolve, join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 export interface PublishCheckResult {
@@ -490,7 +491,7 @@ export function parsePublishCheckArgs(argv: string[]): { rebuild: boolean } {
 
 function main(): void {
   const args = parsePublishCheckArgs(process.argv.slice(2));
-  const ROOT = resolve(import.meta.dirname ?? '.', '..');
+  const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
   const result = runPublishCheck({
     rootDir: ROOT,
