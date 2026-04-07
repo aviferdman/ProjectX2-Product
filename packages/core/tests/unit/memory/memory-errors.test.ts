@@ -24,6 +24,18 @@ describe('MemoryConfigError', () => {
   it('is an instance of Error', () => {
     expect(new MemoryConfigError('x')).toBeInstanceOf(Error);
   });
+
+  it('includes provider in toJSON details', () => {
+    const err = new MemoryConfigError('bad config', 'sqlite');
+    const json = err.toJSON();
+    expect(json.details).toEqual({ provider: 'sqlite' });
+  });
+
+  it('includes undefined provider in toJSON details when no provider', () => {
+    const err = new MemoryConfigError('bad config');
+    const json = err.toJSON();
+    expect(json.details).toEqual({ provider: undefined });
+  });
 });
 
 describe('MemoryOperationError', () => {
@@ -47,6 +59,12 @@ describe('MemoryOperationError', () => {
   it('is an instance of Error', () => {
     expect(new MemoryOperationError('p', 'op', 'm')).toBeInstanceOf(Error);
   });
+
+  it('includes provider and operation in toJSON details', () => {
+    const err = new MemoryOperationError('sqlite', 'add', 'fail');
+    const json = err.toJSON();
+    expect(json.details).toEqual({ provider: 'sqlite', operation: 'add' });
+  });
 });
 
 describe('MemoryQueryError', () => {
@@ -60,5 +78,11 @@ describe('MemoryQueryError', () => {
 
   it('is an instance of Error', () => {
     expect(new MemoryQueryError('p', 'm')).toBeInstanceOf(Error);
+  });
+
+  it('includes provider in toJSON details', () => {
+    const err = new MemoryQueryError('short-term', 'bad filter');
+    const json = err.toJSON();
+    expect(json.details).toEqual({ provider: 'short-term' });
   });
 });
