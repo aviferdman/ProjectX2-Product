@@ -1,0 +1,60 @@
+{
+  "name": "@crewspace/prettier-config",
+  "version": "0.1.0",
+  "description": "Shareable Prettier config for Crewspace projects — consistent formatting for agent orchestration codebases",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean && rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "prettier": "^3.8.1",
+    "rimraf": "^6.0.1"
+  },
+  "peerDependencies": {
+    "prettier": "^3.0.0"
+  },
+  "keywords": [
+    "crewspace",
+    "prettier",
+    "prettier-config",
+    "formatting",
+    "typescript",
+    "agent",
+    "orchestration",
+    "code-style"
+  ],
+  "homepage": "https://github.com/aviferdman/ProjectX2-Product#readme",
+  "bugs": {
+    "url": "https://github.com/aviferdman/ProjectX2-Product/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aviferdman/ProjectX2-Product.git",
+    "directory": "packages/prettier-config"
+  }
+}
