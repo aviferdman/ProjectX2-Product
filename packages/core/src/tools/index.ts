@@ -69,3 +69,21 @@ export type {
   WebTools,
   WebToolsOptions,
 } from './web/index.js';
+
+export {
+  checkDestructiveCommand,
+  createShellExecTool,
+  createShellTools,
+  DEFAULT_SHELL_TIMEOUT_MS,
+  DESTRUCTIVE_PATTERNS,
+  MAX_OUTPUT_SIZE,
+  MAX_SHELL_TIMEOUT_MS,
+  ShellExecInputSchema,
+} from './shell/index.js';
+
+export type {
+  ShellExecInput,
+  ShellExecOutput,
+  ShellTools,
+  ShellToolsOptions,
+} from './shell/index.js';

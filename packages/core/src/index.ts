@@ -278,6 +278,24 @@ export type {
   WebToolsOptions,
 } from './tools/index.js';
 
+// Built-in Tools — Shell
+export {
+  checkDestructiveCommand,
+  createShellExecTool,
+  createShellTools,
+  DEFAULT_SHELL_TIMEOUT_MS,
+  DESTRUCTIVE_PATTERNS,
+  MAX_OUTPUT_SIZE,
+  MAX_SHELL_TIMEOUT_MS,
+  ShellExecInputSchema,
+} from './tools/index.js';
+export type {
+  ShellExecInput,
+  ShellExecOutput,
+  ShellTools,
+  ShellToolsOptions,
+} from './tools/index.js';
+
 // Deprecation
 export {
   defaultDeprecationHandler,
