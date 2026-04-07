@@ -62,3 +62,21 @@ export type {
   WelcomeConfigValidation,
   WelcomeContext,
 } from './welcome-messages.js';
+
+// Bot
+export {
+  createBot,
+  handleWelcome,
+  validateBotConfig,
+  noopSender,
+} from './bot.js';
+
+export type {
+  BotMember,
+  BotGuild,
+  WelcomeResult,
+  DiscordClient,
+  MessageSender,
+  BotConfig,
+  Bot,
+} from './bot.js';
