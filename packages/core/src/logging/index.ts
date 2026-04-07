@@ -24,6 +24,24 @@ export type {
   LogTransport,
 } from './logger.js';
 
+// Log Export
+export {
+  exportLogsToFile,
+  exportLogsToStdout,
+  FileTransport,
+  formatLogEntryAsJson,
+  formatLogEntryAsText,
+  StdoutTransport,
+} from './log-export.js';
+
+export type {
+  ExportLogsToFileOptions,
+  ExportLogsToStdoutOptions,
+  FileTransportConfig,
+  LogExportFormat,
+  StdoutTransportConfig,
+} from './log-export.js';
+
 // Performance Metrics
 export {
   DEFAULT_MAX_METRICS,

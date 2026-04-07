@@ -271,17 +271,28 @@ export {
   createAgentLogger,
   createCrewLogger,
   createSilentLogger,
+  exportLogsToFile,
+  exportLogsToStdout,
+  FileTransport,
+  formatLogEntryAsJson,
+  formatLogEntryAsText,
   getLogLevelLabel,
   Logger,
   LogLevel,
   maskSensitiveData,
   parseLogLevel,
+  StdoutTransport,
 } from './logging/index.js';
 export type {
+  ExportLogsToFileOptions,
+  ExportLogsToStdoutOptions,
+  FileTransportConfig,
   LogContext,
   LogEntry,
+  LogExportFormat,
   LoggerConfig,
   LogTransport,
+  StdoutTransportConfig,
 } from './logging/index.js';
 
 // Performance Metrics

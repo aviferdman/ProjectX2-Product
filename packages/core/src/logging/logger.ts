@@ -153,6 +153,7 @@ export class BufferTransport implements LogTransport {
 
   /** Append a log entry to the in-memory buffer. */
   write(entry: LogEntry): void {
+    this._entries.push(entry);
   }
 
   /** Get all buffered entries. */
