@@ -5,9 +5,23 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    # Run benchmarks weekly on Monday at 06:00 UTC to detect gradual regressions
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      update_baseline:
+        description: 'Update the baseline after this run'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 permissions:
   contents: read
+  pull-requests: write
 
 concurrency:
   group: benchmarks-${{ github.ref }}
@@ -27,27 +41,100 @@ jobs:
 
       - run: npm ci
 
-      - name: Run performance benchmarks
-        run: npm run bench --workspace=packages/core
+      # Restore cached baseline from previous main-branch runs (used for
+      # comparison on PRs when the committed baseline hasn't changed).
+      - name: Restore cached baseline
+        uses: actions/cache@v4
+        with:
+          path: packages/core/benchmarks/baseline.json
+          key: benchmark-baseline-${{ hashFiles('packages/core/benchmarks/baseline.json') }}
+          restore-keys: |
+            benchmark-baseline-
 
       - name: Run benchmarks (JSON output for CI)
         run: npm run bench:ci --workspace=packages/core
         continue-on-error: false
 
       - name: Check for performance regressions
+        id: regression-check
         run: npm run bench:compare --workspace=packages/core
+        continue-on-error: true
 
       - name: Generate performance report
         if: always()
         run: npm run bench:report --workspace=packages/core -- --output performance-report.md
 
+      - name: Generate CI summary
+        if: always()
+        run: npm run bench:ci-summary --workspace=packages/core
+        env:
+          GITHUB_STEP_SUMMARY: ${{ github.step_summary }}
+
+      - name: Comment benchmark results on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            // Read the performance report
+            let body = '';
+            const reportPath = path.join('packages', 'core', 'performance-report.md');
+            try {
+              body = fs.readFileSync(reportPath, 'utf-8');
+            } catch {
+              body = '⚠️ Performance report could not be generated. Check the workflow logs.';
+            }
+
+            // Truncate if too long for a comment
+            const MAX_COMMENT_LENGTH = 65000;
+            if (body.length > MAX_COMMENT_LENGTH) {
+              body = body.slice(0, MAX_COMMENT_LENGTH) + '\n\n... (truncated)';
+            }
+
+            const marker = '<!-- benchmark-results -->';
+            body = `${marker}\n${body}`;
+
+            // Find existing benchmark comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100,
+            });
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
       - name: Upload benchmark results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: benchmark-results
+          name: benchmark-results-${{ github.run_id }}
           path: |
             packages/core/benchmark-results.json
             packages/core/benchmark-results-detailed.jsonl
             packages/core/performance-report.md
           retention-days: 90
+
+      # Fail the job if regressions were detected
+      - name: Fail on regressions
+        if: steps.regression-check.outcome == 'failure'
+        run: |
+          echo "::error::Performance regressions detected. See the benchmark report for details."
+          exit 1

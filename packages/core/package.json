@@ -33,6 +33,7 @@
     "bench:ci": "node --input-type=commonjs -e \"require('fs').writeFileSync('benchmark-results-detailed.jsonl','')\" && vitest run --config vitest.bench.config.ts --reporter=json --outputFile=benchmark-results.json",
     "bench:compare": "tsx scripts/compare-benchmarks.ts",
     "bench:report": "tsx scripts/generate-perf-report.ts",
+    "bench:ci-summary": "tsx scripts/format-ci-summary.ts",
     "bench:update-baseline": "tsx scripts/update-baseline.ts",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit -p tsconfig.test.json"
