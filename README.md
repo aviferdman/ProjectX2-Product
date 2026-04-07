@@ -308,6 +308,7 @@ crewspace/
 Join the Crewspace community to get help, share your projects, and connect with other developers:
 
 - **[Discord](https://discord.gg/crewspace)** — Chat, ask questions, and showcase your agents
+- **[Twitter/X](https://x.com/crewspace_dev)** — Release announcements, tips, and community highlights
 - **[GitHub Issues](https://github.com/aviferdman/ProjectX2-Product/issues)** — Bug reports and feature requests
 - **[GitHub Discussions](https://github.com/aviferdman/ProjectX2-Product/discussions)** — General Q&A and ideas
 
