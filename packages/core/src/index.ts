@@ -339,6 +339,17 @@ export type {
 } from './version/index.js';
 
 // Errors
+export { CrewspaceError, ErrorCode } from './errors/index.js';
+export type { SerializedError } from './errors/index.js';
+export {
+  AggregateCrewspaceError,
+  formatErrorForLog,
+  getErrorChain,
+  hasErrorCode,
+  isCrewspaceError,
+  normalizeError,
+} from './errors/index.js';
+export type { FormattedError } from './errors/index.js';
 export { AgentConfigError, AgentExecutionError } from './errors/index.js';
 export { CrewConfigError, CrewExecutionError } from './errors/index.js';
 export { EngineConfigError, EngineExecutionError } from './errors/index.js';

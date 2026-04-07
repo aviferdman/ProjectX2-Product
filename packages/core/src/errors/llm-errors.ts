@@ -8,6 +8,8 @@
  * @packageDocumentation
  */
 
+import { CrewspaceError, ErrorCode } from './base.js';
+
 /**
  * Base error for all LLM provider failures.
  *
@@ -22,21 +24,26 @@
  * }
  * ```
  */
-export class LLMProviderError extends Error {
+export class LLMProviderError extends CrewspaceError {
   /** Name of the provider that raised the error (e.g. "openai"). */
   public readonly provider: string;
 
   /** HTTP status code from the upstream API, if applicable. */
   public readonly statusCode: number | undefined;
 
-  public override readonly cause: Error | undefined;
-
   constructor(provider: string, message: string, statusCode?: number, cause?: Error) {
-    super(`LLM provider "${provider}": ${message}`);
+    const retryable = statusCode !== undefined && (statusCode >= 500 || statusCode === 429);
+    super(`LLM provider "${provider}": ${message}`, ErrorCode.LLM_PROVIDER, {
+      cause,
+      isRetryable: retryable,
+    });
     this.name = 'LLMProviderError';
     this.provider = provider;
     this.statusCode = statusCode;
-    this.cause = cause;
+  }
+
+  protected override getDetails(): Record<string, unknown> {
+    return { provider: this.provider, statusCode: this.statusCode };
   }
 }
 
@@ -53,6 +60,12 @@ export class LLMRateLimitError extends LLMProviderError {
     super(provider, message, 429, cause);
     this.name = 'LLMRateLimitError';
     this.retryAfterMs = retryAfterMs;
+    // Override code for more specific classification
+    (this as { code: ErrorCode }).code = ErrorCode.LLM_RATE_LIMIT;
+  }
+
+  protected override getDetails(): Record<string, unknown> {
+    return { ...super.getDetails(), retryAfterMs: this.retryAfterMs };
   }
 }
 
@@ -63,6 +76,9 @@ export class LLMAuthenticationError extends LLMProviderError {
   constructor(provider: string, message: string, cause?: Error) {
     super(provider, message, 401, cause);
     this.name = 'LLMAuthenticationError';
+    (this as { code: ErrorCode }).code = ErrorCode.LLM_AUTHENTICATION;
+    // Auth errors are never retryable
+    (this as { isRetryable: boolean }).isRetryable = false;
   }
 }
 
@@ -87,6 +103,17 @@ export class LLMContextLengthError extends LLMProviderError {
     this.name = 'LLMContextLengthError';
     this.requestTokens = requestTokens;
     this.maxTokens = maxTokens;
+    (this as { code: ErrorCode }).code = ErrorCode.LLM_CONTEXT_LENGTH;
+    // Context length errors are not retryable without modifying the request
+    (this as { isRetryable: boolean }).isRetryable = false;
+  }
+
+  protected override getDetails(): Record<string, unknown> {
+    return {
+      ...super.getDetails(),
+      requestTokens: this.requestTokens,
+      maxTokens: this.maxTokens,
+    };
   }
 }
 
@@ -111,5 +138,16 @@ export class LLMStreamError extends LLMProviderError {
     this.name = 'LLMStreamError';
     this.chunksReceived = chunksReceived;
     this.partialContent = partialContent;
+    (this as { code: ErrorCode }).code = ErrorCode.LLM_STREAM;
+    // Stream errors may be retried (transient network issues)
+    (this as { isRetryable: boolean }).isRetryable = true;
+  }
+
+  protected override getDetails(): Record<string, unknown> {
+    return {
+      ...super.getDetails(),
+      chunksReceived: this.chunksReceived,
+      partialContent: this.partialContent,
+    };
   }
 }

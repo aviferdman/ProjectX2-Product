@@ -4,6 +4,22 @@
  * @packageDocumentation
  */
 
+// Base & codes
+export { CrewspaceError, ErrorCode } from './base.js';
+export type { SerializedError } from './base.js';
+
+// Utilities
+export {
+  AggregateCrewspaceError,
+  formatErrorForLog,
+  getErrorChain,
+  hasErrorCode,
+  isCrewspaceError,
+  normalizeError,
+} from './utils.js';
+export type { FormattedError } from './utils.js';
+
+// Domain errors
 export { AgentConfigError, AgentExecutionError } from './agent-errors.js';
 export { CrewConfigError, CrewExecutionError } from './crew-errors.js';
 export { EngineConfigError, EngineExecutionError } from './engine-errors.js';

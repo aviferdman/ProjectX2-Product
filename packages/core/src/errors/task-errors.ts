@@ -4,30 +4,45 @@
  * @packageDocumentation
  */
 
+import { CrewspaceError, ErrorCode } from './base.js';
+
 /** Thrown when task configuration is invalid. */
-export class TaskConfigError extends Error {
+export class TaskConfigError extends CrewspaceError {
   public readonly taskId: string | undefined;
 
   constructor(message: string, taskId?: string) {
-    super(taskId ? `Task "${taskId}": ${message}` : message);
+    super(
+      taskId ? `Task "${taskId}": ${message}` : message,
+      ErrorCode.TASK_CONFIG,
+    );
     this.name = 'TaskConfigError';
     this.taskId = taskId;
+  }
+
+  protected override getDetails(): Record<string, unknown> {
+    return { taskId: this.taskId };
   }
 }
 
 /** Thrown when task execution fails. */
-export class TaskExecutionError extends Error {
+export class TaskExecutionError extends CrewspaceError {
   public readonly taskId: string;
   public readonly agentId: string | undefined;
-  public override readonly cause: Error | undefined;
 
   constructor(taskId: string, message: string, agentId?: string, cause?: Error) {
     const agentCtx = agentId ? ` (agent "${agentId}")` : '';
-    super(`Task "${taskId}"${agentCtx} execution failed: ${message}`);
+    super(
+      `Task "${taskId}"${agentCtx} execution failed: ${message}`,
+      ErrorCode.TASK_EXECUTION,
+      { cause },
+    );
     this.name = 'TaskExecutionError';
     this.taskId = taskId;
     this.agentId = agentId;
-    this.cause = cause;
+  }
+
+  protected override getDetails(): Record<string, unknown> {
+    return { taskId: this.taskId, agentId: this.agentId };
   }
 }
 
@@ -67,6 +82,8 @@ export class CircularDependencyError extends TaskConfigError {
     super(message);
     this.name = 'CircularDependencyError';
     this.cycles = cycles;
+    // Override code to a more specific one
+    (this as { code: ErrorCode }).code = ErrorCode.TASK_CIRCULAR_DEPENDENCY;
 
     const idSet = new Set<string>();
     for (const cycle of cycles) {
@@ -80,6 +97,14 @@ export class CircularDependencyError extends TaskConfigError {
     }
     this.involvedTaskIds = [...idSet].sort();
   }
+
+  protected override getDetails(): Record<string, unknown> {
+    return {
+      ...super.getDetails(),
+      cycles: this.cycles.map((c) => c.path),
+      involvedTaskIds: this.involvedTaskIds,
+    };
+  }
 }
 
 /** Thrown when task execution exceeds the configured timeout. */
@@ -90,5 +115,12 @@ export class TaskTimeoutError extends TaskExecutionError {
     super(taskId, `Execution timed out after ${String(timeoutMs)}ms`, agentId);
     this.name = 'TaskTimeoutError';
     this.timeoutMs = timeoutMs;
+    (this as { code: ErrorCode }).code = ErrorCode.TASK_TIMEOUT;
+    // Timeouts are generally retryable
+    (this as { isRetryable: boolean }).isRetryable = true;
+  }
+
+  protected override getDetails(): Record<string, unknown> {
+    return { ...super.getDetails(), timeoutMs: this.timeoutMs };
   }
 }
