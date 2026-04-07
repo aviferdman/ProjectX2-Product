@@ -286,7 +286,7 @@ describe('@crewspace/eslint-config', () => {
         Record<string, unknown>,
       ];
       expect(boolRule[0]).toBe('error');
-      expect(boolRule[1].allowNumber).toBe(false);
+      expect(boolRule[1]['allowNumber']).toBe(false);
     });
 
     it('accepts custom file patterns', () => {

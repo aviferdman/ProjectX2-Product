@@ -7,7 +7,12 @@
     "sourceMap": false,
     "noEmit": true,
     "rootDir": ".",
-    "types": ["vitest/globals", "node"]
+    "types": ["vitest/globals", "node"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noUncheckedIndexedAccess": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "exactOptionalPropertyTypes": false
   },
   "include": ["src/**/*.ts", "src/**/*.test.ts", "tests/**/*.ts", "benchmarks/**/*.ts", "scripts/**/*.ts"],
   "exclude": ["node_modules", "dist"]

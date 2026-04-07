@@ -243,7 +243,7 @@ describe('validateWorkflowFile', () => {
     const result = validateWorkflowFile({ file: 'nonexistent.ts', cwd: tmpDir });
     expect(result.valid).toBe(false);
     expect(result.errorCount).toBe(1);
-    expect(result.diagnostics[0].message).toContain('Workflow file not found');
+    expect(result.diagnostics[0]!.message).toContain('Workflow file not found');
   });
 
   it('should fail for unsupported extension', () => {
@@ -251,7 +251,7 @@ describe('validateWorkflowFile', () => {
     const result = validateWorkflowFile({ file: 'workflow.py', cwd: tmpDir });
     expect(result.valid).toBe(false);
     expect(result.errorCount).toBe(1);
-    expect(result.diagnostics[0].message).toContain('Unsupported file extension');
+    expect(result.diagnostics[0]!.message).toContain('Unsupported file extension');
   });
 
   it('should fail for a directory', () => {
@@ -260,7 +260,7 @@ describe('validateWorkflowFile', () => {
     const result = validateWorkflowFile({ file: 'subdir', cwd: tmpDir });
     expect(result.valid).toBe(false);
     expect(result.errorCount).toBe(1);
-    expect(result.diagnostics[0].message).toContain('Not a file');
+    expect(result.diagnostics[0]!.message).toContain('Not a file');
   });
 
   // -- Empty file -------------------------------------------------------------
@@ -270,7 +270,7 @@ describe('validateWorkflowFile', () => {
     const result = validateWorkflowFile({ file: 'empty.ts', cwd: tmpDir });
     expect(result.valid).toBe(false);
     expect(result.errorCount).toBe(1);
-    expect(result.diagnostics[0].message).toBe('File is empty');
+    expect(result.diagnostics[0]!.message).toBe('File is empty');
   });
 
   it('should fail for a whitespace-only file', () => {
@@ -278,7 +278,7 @@ describe('validateWorkflowFile', () => {
     const result = validateWorkflowFile({ file: 'whitespace.ts', cwd: tmpDir });
     expect(result.valid).toBe(false);
     expect(result.errorCount).toBe(1);
-    expect(result.diagnostics[0].message).toBe('File is empty');
+    expect(result.diagnostics[0]!.message).toBe('File is empty');
   });
 
   // -- Import checks ----------------------------------------------------------
@@ -566,7 +566,7 @@ describe('formatValidationResult', () => {
 
 describe('validate command integration', () => {
   let tmpDir: string;
-  let origExitCode: number | undefined;
+  let origExitCode: typeof process.exitCode;
 
   beforeEach(() => {
     tmpDir = makeTempDir();
