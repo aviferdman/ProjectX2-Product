@@ -270,6 +270,7 @@ See the deprecation utilities in `src/deprecation/` for safe API evolution patte
 
 ## Getting Help
 
+- **Discord:** Join us on [Discord](https://discord.gg/crewspace) — the `#help` forum and `#contributing` channel are great places to ask questions
 - **Bug reports & feature requests:** [GitHub Issues](https://github.com/aviferdman/ProjectX2-Product/issues)
 - **Questions:** Open a [question issue](https://github.com/aviferdman/ProjectX2-Product/issues/new?template=question.md)
 - **Code of Conduct:** [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)

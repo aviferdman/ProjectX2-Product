@@ -303,6 +303,14 @@ crewspace/
 - **EventEmitter3** — lightweight typed event system for lifecycle hooks
 - **Immutable by default** — readonly properties and return types throughout the API
 
+## Community
+
+Join the Crewspace community to get help, share your projects, and connect with other developers:
+
+- **[Discord](https://discord.gg/crewspace)** — Chat, ask questions, and showcase your agents
+- **[GitHub Issues](https://github.com/aviferdman/ProjectX2-Product/issues)** — Bug reports and feature requests
+- **[GitHub Discussions](https://github.com/aviferdman/ProjectX2-Product/discussions)** — General Q&A and ideas
+
 ## Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
