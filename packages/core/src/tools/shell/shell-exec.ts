@@ -153,7 +153,7 @@ export function createShellExecTool(
           },
           (error, stdout, stderr) => {
             const durationMs = Date.now() - startTime;
-            const timedOut = error !== null && 'killed' in error && error.killed;
+            const timedOut = !!(error !== null && 'killed' in error && error.killed);
 
             if (error && !timedOut && error.code === undefined && !('killed' in error)) {
               reject(
