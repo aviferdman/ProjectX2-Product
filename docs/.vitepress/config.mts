@@ -47,6 +47,12 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Performance',
+        items: [
+          { text: 'Benchmarks', link: '/guide/benchmarks' },
+        ],
+      },
+      {
         text: 'Reference',
         items: [{ text: 'API Reference', link: '/api-reference' }],
       },

@@ -90,6 +90,7 @@ describe('VitePress docs content', () => {
     { file: 'tasks-and-crews.md', expectedContent: 'Tasks' },
     { file: 'tools.md', expectedContent: 'Tool System' },
     { file: 'llm-providers.md', expectedContent: 'LLM Providers' },
+    { file: 'benchmarks.md', expectedContent: 'Benchmarks' },
   ];
 
   guidePages.forEach(({ file, expectedContent }) => {
