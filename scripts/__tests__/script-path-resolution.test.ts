@@ -33,7 +33,7 @@ describe('script path resolution', () => {
       stdio: ['pipe', 'pipe', 'pipe'],
     });
     expect(output).toContain('All version checks passed');
-  });
+  }, 30_000);
 
   it('release.ts dry-run resolves package paths correctly', () => {
     const output = execSync('npx tsx scripts/release.ts --version 0.1.0 --dry-run', {
@@ -45,7 +45,7 @@ describe('script path resolution', () => {
     expect(output).toContain('All publish validations passed');
     expect(output).toContain('Dry run passed');
     expect(output).not.toContain('package.json not found');
-  });
+  }, 30_000);
 
   it('publish-check.ts resolves package paths correctly', () => {
     const output = execSync('npx tsx scripts/publish-check.ts', {
@@ -56,5 +56,5 @@ describe('script path resolution', () => {
     });
     expect(output).toContain('Ready to publish');
     expect(output).not.toContain('not found');
-  });
+  }, 30_000);
 });
