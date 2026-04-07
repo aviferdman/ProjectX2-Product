@@ -214,7 +214,6 @@ export class TaskExecutionWrapper {
       const isRetryable = policy?.isRetryable ?? this._isRetryable;
 
       let lastError: Error | undefined;
-      const _startTime = Date.now();
 
       for (let attempt = 0; attempt <= maxRetries; attempt++) {
         // Wait before retry (not on first attempt)

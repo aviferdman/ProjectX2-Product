@@ -19,7 +19,7 @@ export interface TokenRecord {
   /** Category of operation (e.g. 'task', 'tool-call', 'llm-call'). */
   readonly operationType: string;
   /** Optional task, agent, or engine identifier. */
-  readonly operationId?: string;
+  readonly operationId?: string | undefined;
   /** Number of prompt/input tokens. */
   readonly promptTokens: number;
   /** Number of completion/output tokens. */
@@ -33,7 +33,7 @@ export interface TokenRecord {
   /** Timestamp when recorded. */
   readonly timestamp: number;
   /** Optional cost in USD. */
-  readonly costUsd?: number;
+  readonly costUsd?: number | undefined;
 }
 
 /** Input for recording a token usage entry. */

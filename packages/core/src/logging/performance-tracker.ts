@@ -66,13 +66,13 @@ export interface PerformanceMetric {
   /** Category of operation measured. */
   readonly type: MetricType;
   /** Engine that produced this metric (if applicable). */
-  readonly engineId?: string;
+  readonly engineId?: string | undefined;
   /** Task being executed (if applicable). */
-  readonly taskId?: string;
+  readonly taskId?: string | undefined;
   /** Agent performing the action (if applicable). */
-  readonly agentId?: string;
+  readonly agentId?: string | undefined;
   /** Tool being invoked (if applicable). */
-  readonly toolId?: string;
+  readonly toolId?: string | undefined;
   /** When the operation started. */
   readonly startTime: number;
   /** When the operation ended. */
@@ -80,13 +80,13 @@ export interface PerformanceMetric {
   /** Duration in milliseconds. */
   readonly durationMs: number;
   /** Token usage, if an LLM was involved. */
-  readonly tokenUsage?: MetricTokenUsage;
+  readonly tokenUsage?: MetricTokenUsage | undefined;
   /** Whether the operation succeeded. */
   readonly success: boolean;
   /** Error message if the operation failed. */
-  readonly errorMessage?: string;
+  readonly errorMessage?: string | undefined;
   /** Arbitrary metadata for custom tracking. */
-  readonly metadata?: Readonly<Record<string, unknown>>;
+  readonly metadata?: Readonly<Record<string, unknown>> | undefined;
 }
 
 /**
@@ -94,17 +94,17 @@ export interface PerformanceMetric {
  */
 export interface PerformanceMetricInput {
   readonly type: MetricType;
-  readonly engineId?: string;
-  readonly taskId?: string;
-  readonly agentId?: string;
-  readonly toolId?: string;
+  readonly engineId?: string | undefined;
+  readonly taskId?: string | undefined;
+  readonly agentId?: string | undefined;
+  readonly toolId?: string | undefined;
   readonly startTime: number;
   readonly endTime: number;
   readonly durationMs: number;
-  readonly tokenUsage?: MetricTokenUsage;
-  readonly success?: boolean;
-  readonly errorMessage?: string;
-  readonly metadata?: Readonly<Record<string, unknown>>;
+  readonly tokenUsage?: MetricTokenUsage | undefined;
+  readonly success?: boolean | undefined;
+  readonly errorMessage?: string | undefined;
+  readonly metadata?: Readonly<Record<string, unknown>> | undefined;
 }
 
 /**
@@ -219,9 +219,9 @@ function percentile(sorted: number[], p: number): number {
   const index = (p / 100) * (sorted.length - 1);
   const lower = Math.floor(index);
   const upper = Math.ceil(index);
-  if (lower === upper) return sorted[lower];
+  if (lower === upper) return sorted[lower]!;
   const weight = index - lower;
-  return sorted[lower] * (1 - weight) + sorted[upper] * weight;
+  return sorted[lower]! * (1 - weight) + sorted[upper]! * weight;
 }
 
 function computeSummary(metrics: readonly PerformanceMetric[]): PerformanceSummary {
@@ -269,8 +269,8 @@ function computeSummary(metrics: readonly PerformanceMetric[]): PerformanceSumma
     count: metrics.length,
     totalDurationMs,
     avgDurationMs: totalDurationMs / metrics.length,
-    minDurationMs: durations[0],
-    maxDurationMs: durations[durations.length - 1],
+    minDurationMs: durations[0]!,
+    maxDurationMs: durations[durations.length - 1]!,
     p50DurationMs: percentile(durations, 50),
     p95DurationMs: percentile(durations, 95),
     p99DurationMs: percentile(durations, 99),

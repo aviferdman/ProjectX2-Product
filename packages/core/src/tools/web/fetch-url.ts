@@ -124,7 +124,7 @@ export function createFetchUrlTool(options?: FetchUrlToolOptions): Tool {
 
       try {
         const response = await fetch(url, {
-          method,
+          method: method ?? 'GET',
           headers: {
             'User-Agent': userAgent,
             ...requestHeaders,

@@ -26,7 +26,7 @@ const VALID_CATEGORIES: ReadonlySet<string> = new Set<ChangeCategory>([
 /** A single changelog entry (one version). */
 export interface ChangelogEntry {
   readonly version: string;
-  readonly date?: string;
+  readonly date?: string | undefined;
   readonly changes: Partial<Record<ChangeCategory, readonly string[]>>;
 }
 
@@ -99,7 +99,7 @@ export function parseChangelog(content: string): ChangelogData {
       const item = itemMatch[1]?.trim();
       if (item) {
         const existing = currentEntry.changes[currentCategory] ?? [];
-        (currentEntry as { changes: Record<string, string[]> }).changes[currentCategory] = [
+        (currentEntry as unknown as { changes: Record<string, string[]> }).changes[currentCategory] = [
           ...existing,
           item,
         ];

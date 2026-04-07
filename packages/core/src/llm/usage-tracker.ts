@@ -34,7 +34,7 @@ export interface UsageRecord {
   /** When the request completed. */
   readonly timestamp: Date;
   /** Request duration in milliseconds, if measured. */
-  readonly durationMs?: number;
+  readonly durationMs?: number | undefined;
   /** Whether the request used streaming. */
   readonly streaming: boolean;
 }

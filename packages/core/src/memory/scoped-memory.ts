@@ -258,7 +258,7 @@ export class ScopedMemory implements MemoryProvider {
   /** Check if an entry belongs to this owner. */
   private _isOwned(entry: MemoryEntry): boolean {
     return entry.namespace === this._namespace &&
-      entry.metadata?.ownerId === this._ownerId;
+      entry.metadata?.['ownerId'] === this._ownerId;
   }
 
   /** Filter a query result to only include visible entries. */

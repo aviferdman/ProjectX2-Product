@@ -196,7 +196,8 @@ export class FallbackLLMProvider implements StreamingLLMProvider {
 
   /** The primary (first) provider. */
   get primaryProvider(): LLMProvider {
-    return this._providers[0];
+    // Constructor guarantees at least one provider
+    return this._providers[0]!;
   }
 
   /** Read-only snapshot of fallback statistics. */
@@ -268,7 +269,7 @@ export class FallbackLLMProvider implements StreamingLLMProvider {
     let lastError: Error | undefined;
 
     for (let i = 0; i < this._providers.length; i++) {
-      const provider = this._providers[i];
+      const provider = this._providers[i]!;
 
       try {
         const result = await operation(provider);
@@ -290,8 +291,8 @@ export class FallbackLLMProvider implements StreamingLLMProvider {
         }
 
         // If there's a next provider, invoke the fallback callback
-        if (i < this._providers.length - 1) {
-          const nextProvider = this._providers[i + 1];
+        const nextProvider = this._providers[i + 1];
+        if (nextProvider !== undefined) {
           this._onFallback?.({
             from: provider.name,
             to: nextProvider.name,

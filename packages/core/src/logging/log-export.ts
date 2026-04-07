@@ -58,7 +58,7 @@ export function formatLogEntryAsJson(entry: LogEntry): string {
   };
 
   if (entry.error) {
-    obj.error = {
+    obj['error'] = {
       message: entry.error.message,
       stack: entry.error.stack,
     };

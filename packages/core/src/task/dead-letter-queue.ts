@@ -68,10 +68,10 @@ export interface DeadLetterEntry {
   readonly attempts: number;
 
   /** Optional original context that was available during execution. */
-  readonly context?: Readonly<Record<string, TaskResult>>;
+  readonly context?: Readonly<Record<string, TaskResult>> | undefined;
 
   /** Arbitrary metadata attached by the caller. */
-  readonly metadata?: Readonly<Record<string, unknown>>;
+  readonly metadata?: Readonly<Record<string, unknown>> | undefined;
 }
 
 /** Options for enqueuing a task into the DLQ. */

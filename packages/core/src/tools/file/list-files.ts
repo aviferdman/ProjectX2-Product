@@ -229,7 +229,7 @@ export function createListFilesTool(basePath: string): Tool {
         resolvedPath,
         resolvedBase,
         pattern,
-        recursive,
+        recursive ?? false,
         effectiveMax + 1,
       );
 

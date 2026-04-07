@@ -76,7 +76,7 @@ export interface ToolDecoratorOptions {
 interface StoredToolMeta extends ToolDecoratorOptions {
   readonly resolvedName: string;
   readonly methodName: string;
-  readonly zodSchema?: ZodType;
+  readonly zodSchema?: ZodType | undefined;
 }
 
 // ---------------------------------------------------------------------------

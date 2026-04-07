@@ -31,7 +31,7 @@ export interface CompatCheck {
   /** Whether the API is available in the current runtime. */
   readonly available: boolean;
   /** If unavailable, a hint on how to polyfill or upgrade. */
-  readonly hint?: string;
+  readonly hint?: string | undefined;
 }
 
 /** Full compatibility report for the current runtime. */

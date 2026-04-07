@@ -141,11 +141,12 @@ export interface MockLLMResponseSystemConfig {
 
 function getLastUserContent(messages: readonly LLMMessage[]): string {
   for (let i = messages.length - 1; i >= 0; i--) {
-    if (messages[i].role === 'user' || messages[i].role === ('user' as string)) {
-      return messages[i].content;
+    const msg = messages[i]!;
+    if (msg.role === 'user' || msg.role === ('user' as string)) {
+      return msg.content;
     }
   }
-  return messages.length > 0 ? messages[messages.length - 1].content : '';
+  return messages.length > 0 ? messages[messages.length - 1]!.content : '';
 }
 
 function matchesRule(

@@ -74,7 +74,7 @@ export interface CheckpointData {
   readonly status: CheckpointStatus;
 
   /** Optional user-defined metadata. */
-  readonly metadata?: Readonly<Record<string, unknown>>;
+  readonly metadata?: Readonly<Record<string, unknown>> | undefined;
 }
 
 // ---------------------------------------------------------------------------

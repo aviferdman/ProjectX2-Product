@@ -67,9 +67,9 @@ export const GLOBAL_OWNER_ID = '__global__';
  */
 export class NamespacedMemoryManager {
   private readonly _provider: MemoryProvider;
-  private readonly _readableNamespaces?: Partial<
+  private readonly _readableNamespaces: Partial<
     Record<MemoryNamespace, readonly MemoryNamespace[]>
-  >;
+  > | undefined;
   private readonly _agentScopes: Map<string, ScopedMemory> = new Map();
   private readonly _crewScopes: Map<string, ScopedMemory> = new Map();
   private _globalScope: ScopedMemory | undefined;

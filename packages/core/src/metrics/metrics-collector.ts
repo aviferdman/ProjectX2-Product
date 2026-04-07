@@ -8,9 +8,9 @@
  * @packageDocumentation
  */
 
-import { MemoryTracker, computeMemorySummary } from './memory-metrics.js';
+import { MemoryTracker } from './memory-metrics.js';
 import type { MemoryMeasurement, MemorySummary, MemoryTrackerConfig } from './memory-metrics.js';
-import { TokenEfficiencyTracker, computeTokenEfficiencyReport } from './token-efficiency.js';
+import { TokenEfficiencyTracker } from './token-efficiency.js';
 import type { TokenRecord, TokenRecordInput, TokenEfficiencyReport, TokenEfficiencyTrackerConfig } from './token-efficiency.js';
 import { analyzeComplexity } from './complexity-analyzer.js';
 import type { WorkflowDescriptor, ComplexityReport } from './complexity-analyzer.js';

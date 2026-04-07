@@ -257,8 +257,8 @@ export class MemoryTracker {
   }
 
   private _tryGC(): void {
-    if (this._forceGC && typeof globalThis !== 'undefined' && typeof (globalThis as Record<string, unknown>).gc === 'function') {
-      (globalThis as Record<string, unknown> & { gc: () => void }).gc();
+    if (this._forceGC && typeof globalThis !== 'undefined' && typeof (globalThis as Record<string, unknown>)['gc'] === 'function') {
+      ((globalThis as Record<string, unknown>)['gc'] as () => void)();
     }
   }
 }

@@ -39,8 +39,8 @@ import { MemoryNamespace, MemoryRole } from '../types/memory.js';
 export class MemorySearchBuilder {
   private readonly _provider: MemoryProvider;
   private _namespace?: MemoryNamespace;
-  private _role?: MemoryRole;
-  private _roles?: readonly MemoryRole[];
+  private _role: MemoryRole | undefined;
+  private _roles: readonly MemoryRole[] | undefined;
   private _after?: string;
   private _before?: string;
   private _metadata?: Readonly<Record<string, string | number | boolean>>;
@@ -118,15 +118,15 @@ export class MemorySearchBuilder {
   build(): MemoryQueryOptions {
     const options: Record<string, unknown> = {};
 
-    if (this._namespace !== undefined) options.namespace = this._namespace;
-    if (this._roles !== undefined) options.roles = this._roles;
-    else if (this._role !== undefined) options.role = this._role;
-    if (this._after !== undefined) options.after = this._after;
-    if (this._before !== undefined) options.before = this._before;
-    if (this._metadata !== undefined) options.metadata = this._metadata;
-    if (this._limit !== undefined) options.limit = this._limit;
-    if (this._offset !== undefined) options.offset = this._offset;
-    if (this._sortOrder !== undefined) options.sortOrder = this._sortOrder;
+    if (this._namespace !== undefined) options['namespace'] = this._namespace;
+    if (this._roles !== undefined) options['roles'] = this._roles;
+    else if (this._role !== undefined) options['role'] = this._role;
+    if (this._after !== undefined) options['after'] = this._after;
+    if (this._before !== undefined) options['before'] = this._before;
+    if (this._metadata !== undefined) options['metadata'] = this._metadata;
+    if (this._limit !== undefined) options['limit'] = this._limit;
+    if (this._offset !== undefined) options['offset'] = this._offset;
+    if (this._sortOrder !== undefined) options['sortOrder'] = this._sortOrder;
 
     return options as MemoryQueryOptions;
   }

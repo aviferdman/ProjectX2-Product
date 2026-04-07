@@ -31,7 +31,7 @@ import type {
   MemoryQueryResult,
   MemoryRetentionPolicy,
 } from '../types/memory.js';
-import { MemoryNamespace, MemoryRole } from '../types/memory.js';
+import { MemoryNamespace } from '../types/memory.js';
 
 // ---------------------------------------------------------------------------
 // Types for better-sqlite3 (avoids hard dependency on @types/better-sqlite3)

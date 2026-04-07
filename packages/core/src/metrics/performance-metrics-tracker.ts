@@ -48,17 +48,17 @@ export interface ApiCallRecord {
   /** Duration of the call in milliseconds. */
   readonly durationMs: number;
   /** Token usage, if applicable (e.g., LLM calls). */
-  readonly tokenUsage?: OperationTokenUsage;
+  readonly tokenUsage?: OperationTokenUsage | undefined;
   /** Whether the call succeeded. */
   readonly success: boolean;
   /** Error message if the call failed. */
-  readonly errorMessage?: string;
+  readonly errorMessage?: string | undefined;
   /** HTTP status code, if applicable. */
-  readonly statusCode?: number;
+  readonly statusCode?: number | undefined;
   /** Timestamp when the call was recorded. */
   readonly timestamp: number;
   /** Arbitrary metadata for custom tracking. */
-  readonly metadata?: Readonly<Record<string, unknown>>;
+  readonly metadata?: Readonly<Record<string, unknown>> | undefined;
 }
 
 /** Input for recording an API call. The tracker fills in `id` and `timestamp`. */
@@ -66,11 +66,11 @@ export interface ApiCallInput {
   readonly category: ApiCallCategory;
   readonly endpoint: string;
   readonly durationMs: number;
-  readonly tokenUsage?: OperationTokenUsage;
-  readonly success?: boolean;
-  readonly errorMessage?: string;
-  readonly statusCode?: number;
-  readonly metadata?: Readonly<Record<string, unknown>>;
+  readonly tokenUsage?: OperationTokenUsage | undefined;
+  readonly success?: boolean | undefined;
+  readonly errorMessage?: string | undefined;
+  readonly statusCode?: number | undefined;
+  readonly metadata?: Readonly<Record<string, unknown>> | undefined;
 }
 
 /** Summary statistics for a group of API calls. */

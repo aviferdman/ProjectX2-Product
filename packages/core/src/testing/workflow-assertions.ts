@@ -107,10 +107,10 @@ export function expectEventOrder(collected: readonly string[], expected: readonl
   let searchFrom = 0;
   for (const event of expected) {
     const idx = collected.indexOf(event, searchFrom);
-    expect(idx).toBeGreaterThanOrEqual(
-      searchFrom,
+    expect(
+      idx,
       `Expected event "${event}" after index ${String(searchFrom)} in [${collected.join(', ')}]`,
-    );
+    ).toBeGreaterThanOrEqual(searchFrom);
     searchFrom = idx + 1;
   }
 }

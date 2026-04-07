@@ -66,7 +66,7 @@ export interface MemoryQueryOptions {
   /** Filter to a specific namespace. */
   readonly namespace?: MemoryNamespace;
   /** Maximum number of entries to return. */
-  readonly limit?: number;
+  readonly limit?: number | undefined;
   /** Return entries created after this ISO-8601 timestamp. */
   readonly after?: string;
   /** Return entries created before this ISO-8601 timestamp. */
@@ -78,7 +78,7 @@ export interface MemoryQueryOptions {
   /** Filter to any of the specified roles. Takes precedence over `role` if both are set. */
   readonly roles?: readonly MemoryRole[];
   /** Number of entries to skip (for pagination). */
-  readonly offset?: number;
+  readonly offset?: number | undefined;
   /** Sort direction by creation timestamp. Default: `'desc'` (newest first). */
   readonly sortOrder?: MemorySortOrder;
 }

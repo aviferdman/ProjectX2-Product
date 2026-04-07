@@ -107,7 +107,7 @@ export function createReadFileTool(basePath: string): Tool {
         );
       }
 
-      const content = await fsPromises.readFile(resolvedPath, { encoding });
+      const content = await fsPromises.readFile(resolvedPath, encoding ?? 'utf-8');
 
       return {
         content,
