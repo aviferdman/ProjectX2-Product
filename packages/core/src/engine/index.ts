@@ -15,3 +15,14 @@ export type {
   OnTaskErrorHook,
   TaskErrorPolicy,
 } from './types.js';
+
+// Checkpoint / Resume
+export { CheckpointStore } from './checkpoint-store.js';
+export { CheckpointManager } from './checkpoint-manager.js';
+export type {
+  CheckpointData,
+  CheckpointStatus,
+  CheckpointStoreConfig,
+  CheckpointTaskState,
+  ResumePlan,
+} from './checkpoint-types.js';

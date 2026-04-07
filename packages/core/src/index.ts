@@ -60,6 +60,16 @@ export type {
   TaskErrorPolicy,
 } from './engine/index.js';
 
+// Checkpoint / Resume
+export { CheckpointStore, CheckpointManager } from './engine/index.js';
+export type {
+  CheckpointData,
+  CheckpointStatus,
+  CheckpointStoreConfig,
+  CheckpointTaskState,
+  ResumePlan,
+} from './engine/index.js';
+
 // LLM Provider
 export {
   AnthropicProvider,
