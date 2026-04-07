@@ -133,7 +133,7 @@ function lineOf(content: string, offset: number): number {
  */
 function extractIds(content: string, re: RegExp): string[] {
   const matches = collectMatches(re, content);
-  return matches.map((m) => m[1]);
+  return matches.map((m) => m[1]).filter((id): id is string => id !== undefined);
 }
 
 // ---------------------------------------------------------------------------
@@ -287,7 +287,7 @@ export function validateWorkflowFile(options: ValidatorOptions): ValidationResul
   for (const match of agentMatches) {
     const region = content.slice(match.index, match.index + 500);
     const idMatch = new RegExp(ID_PROPERTY_RE.source).exec(region);
-    if (idMatch) {
+    if (idMatch?.[1]) {
       agentIds.add(idMatch[1]);
     }
   }
@@ -314,7 +314,9 @@ export function validateWorkflowFile(options: ValidatorOptions): ValidationResul
       const tasksRegion = content.slice(tasksMatch.index, tasksMatch.index + 5000);
       const taskIdMatches = collectMatches(new RegExp(ID_PROPERTY_RE.source, 'g'), tasksRegion);
       for (const m of taskIdMatches) {
-        taskIds.add(m[1]);
+        if (m[1] !== undefined) {
+          taskIds.add(m[1]);
+        }
       }
     }
   }
@@ -322,13 +324,14 @@ export function validateWorkflowFile(options: ValidatorOptions): ValidationResul
   if (taskIds.size > 0) {
     const depMatches = collectMatches(new RegExp(DEPENDENCIES_RE.source, 'g'), content);
     for (const depMatch of depMatches) {
-      const depList = depMatch[1];
+      const depList = depMatch[1] ?? '';
       const strMatches = collectMatches(new RegExp(STRING_LITERAL_RE.source, 'g'), depList);
       for (const strMatch of strMatches) {
-        if (!taskIds.has(strMatch[1])) {
+        const depId = strMatch[1];
+        if (depId !== undefined && !taskIds.has(depId)) {
           diagnostics.push({
             level: 'error',
-            message: `Task dependency "${strMatch[1]}" does not match any defined task id.`,
+            message: `Task dependency "${depId}" does not match any defined task id.`,
           });
         }
       }
