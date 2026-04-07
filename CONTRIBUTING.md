@@ -1,6 +1,22 @@
 # Contributing to Crewspace
 
-Thank you for contributing to Crewspace! This guide covers development workflow, coding standards, and performance requirements.
+Thank you for your interest in contributing to Crewspace! Whether you're fixing a bug, proposing a feature, improving documentation, or writing tests, every contribution matters. This guide covers how to get started, our development workflow, coding standards, and performance requirements.
+
+Please note that this project is released with a [Contributor Code of Conduct](./CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Reporting Bugs](#reporting-bugs)
+- [Requesting Features](#requesting-features)
+- [Development Workflow](#development-workflow)
+- [Commit Message Format](#commit-message-format)
+- [Pull Request Process](#pull-request-process)
+- [First-Time Contributors](#first-time-contributors)
+- [Performance Budgets](#performance-budgets)
+- [Coding Standards](#coding-standards)
+- [Versioning & API Stability](#versioning--api-stability)
+- [Getting Help](#getting-help)
 
 ## Getting Started
 
@@ -20,13 +36,97 @@ npm test
 npm run lint
 ```
 
+## Reporting Bugs
+
+Found a bug? We appreciate your help in making Crewspace better.
+
+1. **Search existing issues** — Check [open issues](https://github.com/aviferdman/ProjectX2-Product/issues) to see if it's already reported.
+2. **Open a bug report** — Use the [Bug Report template](https://github.com/aviferdman/ProjectX2-Product/issues/new?template=bug_report.md) and include:
+   - A clear description of the problem
+   - Minimal code to reproduce the issue
+   - Expected vs. actual behavior
+   - Your environment (Node.js version, OS, Crewspace version)
+
+## Requesting Features
+
+Have an idea for a new feature or improvement?
+
+1. **Search existing issues** — Someone may have already suggested it.
+2. **Open a feature request** — Use the [Feature Request template](https://github.com/aviferdman/ProjectX2-Product/issues/new?template=feature_request.md) and include:
+   - The problem the feature would solve
+   - A proposed API or usage example
+   - Alternatives you've considered
+
 ## Development Workflow
 
-1. Create a feature branch from `main`
-2. Make your changes with tests
-3. Ensure all checks pass: `npm run lint && npm run typecheck && npm test`
-4. Run performance benchmarks: `npm run bench --workspace=packages/core`
-5. Submit a pull request
+1. Fork the repository and clone your fork
+2. Create a feature branch from `main`: `git checkout -b feat/my-feature`
+3. Make your changes with tests
+4. Ensure all checks pass: `npm run lint && npm run typecheck && npm test`
+5. Run performance benchmarks if you changed core logic: `npm run bench --workspace=packages/core`
+6. Commit using the [commit message format](#commit-message-format)
+7. Push to your fork and submit a pull request
+
+---
+
+## Commit Message Format
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/) to keep the history readable and enable automated changelog generation.
+
+```
+<type>(<scope>): <short summary>
+
+<optional body>
+
+<optional footer>
+```
+
+**Types:**
+
+| Type | When to use |
+|------|-------------|
+| `feat` | A new feature |
+| `fix` | A bug fix |
+| `docs` | Documentation only changes |
+| `test` | Adding or updating tests |
+| `refactor` | Code change that neither fixes a bug nor adds a feature |
+| `perf` | Performance improvement |
+| `chore` | Build process, CI, tooling changes |
+
+**Examples:**
+
+```
+feat(agent): add backstory validation on construction
+fix(memory): prevent duplicate entries with same ID
+docs(readme): add LLM provider comparison table
+test(tool): add permission boundary tests for ToolExecutor
+```
+
+## Pull Request Process
+
+1. Fill out the [PR template](.github/PULL_REQUEST_TEMPLATE.md) completely.
+2. Link any related issues using `Closes #123` in the PR description.
+3. Ensure CI passes — the pipeline runs lint, typecheck, tests, and benchmarks.
+4. Request a review. At least one maintainer approval is required to merge.
+5. Address review feedback by pushing additional commits (do not force-push during review).
+6. Once approved, a maintainer will squash-merge your PR.
+
+**PR size guidelines:**
+
+- **Small** (< 200 lines) — preferred; faster to review
+- **Medium** (200–500 lines) — acceptable for features
+- **Large** (> 500 lines) — split into smaller PRs when possible
+
+## First-Time Contributors
+
+New to Crewspace? Welcome! Here's how to find your first contribution:
+
+1. Look for issues labeled [`good first issue`](https://github.com/aviferdman/ProjectX2-Product/labels/good%20first%20issue) — these are beginner-friendly tasks.
+2. Issues labeled [`help wanted`](https://github.com/aviferdman/ProjectX2-Product/labels/help%20wanted) are open for community contributions.
+3. Documentation improvements are always welcome and don't require deep framework knowledge.
+4. Writing or improving tests is a great way to learn the codebase.
+
+If you get stuck, open a [question issue](https://github.com/aviferdman/ProjectX2-Product/issues/new?template=question.md) or comment on the issue you're working on.
 
 ---
 
@@ -167,3 +267,12 @@ Crewspace follows [Semantic Versioning](https://semver.org/):
 - **PATCH**: Bug fixes, backward-compatible
 
 See the deprecation utilities in `src/deprecation/` for safe API evolution patterns.
+
+## Getting Help
+
+- **Bug reports & feature requests:** [GitHub Issues](https://github.com/aviferdman/ProjectX2-Product/issues)
+- **Questions:** Open a [question issue](https://github.com/aviferdman/ProjectX2-Product/issues/new?template=question.md)
+- **Code of Conduct:** [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+
+Thank you for helping make Crewspace better! 🚀
+
