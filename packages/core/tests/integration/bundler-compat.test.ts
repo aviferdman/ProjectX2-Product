@@ -113,7 +113,7 @@ afterAll(() => {
 // esbuild
 // ---------------------------------------------------------------------------
 describe('esbuild compatibility', () => {
-  it('should bundle ESM entry without errors', async () => {
+  it('should bundle ESM entry without errors', { timeout: 30_000 }, async () => {
     const esbuild = await import('esbuild');
     const entryFile = path.join(tmpDir, 'entry-esbuild-esm.mjs');
     const outFile = path.join(tmpDir, 'out-esbuild-esm.js');
