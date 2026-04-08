@@ -60,6 +60,7 @@
     "best-practices",
     "flat-config"
   ],
+  "author": "Crewspace Contributors",
   "homepage": "https://github.com/aviferdman/ProjectX2-Product#readme",
   "bugs": {
     "url": "https://github.com/aviferdman/ProjectX2-Product/issues"

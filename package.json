@@ -27,6 +27,8 @@
     "semver:check": "tsx scripts/check-semver-compliance.ts",
     "semver:update": "tsx scripts/check-semver-compliance.ts --update",
     "publish:prepare": "tsx scripts/prepare-publish.ts",
+    "metadata:validate": "tsx scripts/validate-package-metadata.ts",
+    "metadata:fix": "tsx scripts/validate-package-metadata.ts --fix",
     "publish:check": "tsx scripts/publish-check.ts",
     "publish:verify-exports": "tsx scripts/verify-package-exports.ts",
     "release": "tsx scripts/release.ts",
