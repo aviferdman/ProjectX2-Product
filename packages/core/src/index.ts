@@ -601,3 +601,17 @@ export {
   REQUIRED_WEB_GLOBALS,
 } from './runtime/index.js';
 export type { CompatCheck, CompatReport, RuntimeName, RuntimeVersion } from './runtime/index.js';
+
+// Workflow Storage
+export { InMemoryWorkflowStorage } from './workflow/index.js';
+export { WorkflowNotFoundError, WorkflowValidationError } from './workflow/index.js';
+export type {
+  CreateWorkflowInput,
+  ListWorkflowsOptions,
+  ListWorkflowsResult,
+  StoredAgentDefinition,
+  StoredWorkflow,
+  UpdateWorkflowInput,
+  WorkflowStatus,
+  WorkflowStorageProvider,
+} from './workflow/index.js';
