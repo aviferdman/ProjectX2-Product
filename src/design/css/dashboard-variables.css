@@ -1,0 +1,277 @@
+/*
+ * Crewspace — Dashboard & Workflow Management UI CSS Custom Properties
+ * TASK-148: Design dashboard UI (workflow list, create, usage stats)
+ *
+ * Usage: Apply `.cs-dashboard` to the dashboard root container.
+ * Uses root-level tokens from canvas-variables.css; import that first.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Dashboard layout                                                    */
+/* ------------------------------------------------------------------ */
+.cs-dashboard {
+  --dashboard-bg: var(--cs-surface-app);
+  --dashboard-header-h: 56px;
+  --dashboard-sidebar-w: 240px;
+  --dashboard-sidebar-collapsed-w: 64px;
+  --dashboard-content-max-w: 1280px;
+  --dashboard-content-padding: 24px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dashboard header                                                    */
+/* ------------------------------------------------------------------ */
+.cs-dashboard-header {
+  --header-bg: var(--cs-surface-panel);
+  --header-border: var(--cs-border-subtle);
+  --header-h: 56px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dashboard sidebar                                                   */
+/* ------------------------------------------------------------------ */
+.cs-dashboard-sidebar {
+  --sidebar-bg: var(--cs-surface-panel);
+  --sidebar-border: var(--cs-border-subtle);
+  --sidebar-w: 240px;
+  --sidebar-collapsed-w: 64px;
+
+  /* Nav items */
+  --nav-item-h: 40px;
+  --nav-item-radius: var(--cs-radius-md);
+  --nav-item-color: var(--cs-text-secondary);
+  --nav-item-color-hover: var(--cs-text-primary);
+  --nav-item-color-active: #c4b5fd;
+  --nav-item-bg-hover: rgba(30, 41, 59, 0.5);
+  --nav-item-bg-active: rgba(139, 92, 246, 0.12);
+  --nav-item-border-active: #7c3aed;
+}
+
+/* ------------------------------------------------------------------ */
+/* Search & filter toolbar                                             */
+/* ------------------------------------------------------------------ */
+.cs-dashboard-toolbar {
+  --toolbar-h: 48px;
+
+  /* Search input */
+  --search-h: 36px;
+  --search-bg: var(--cs-surface-elevated);
+  --search-border: var(--cs-border-default);
+  --search-border-focus: #8b5cf6;
+  --search-placeholder: var(--cs-text-tertiary);
+  --search-icon: var(--cs-text-tertiary);
+  --search-radius: var(--cs-radius-md);
+
+  /* Filter chips */
+  --chip-h: 28px;
+  --chip-bg: var(--cs-surface-elevated);
+  --chip-bg-active: rgba(139, 92, 246, 0.2);
+  --chip-border: var(--cs-border-default);
+  --chip-border-active: #8b5cf6;
+  --chip-text: var(--cs-text-secondary);
+  --chip-text-active: #c4b5fd;
+  --chip-radius: 9999px;
+
+  /* View toggle (grid/list) */
+  --toggle-bg: var(--cs-surface-card);
+  --toggle-bg-active: var(--cs-surface-elevated);
+  --toggle-icon: var(--cs-text-tertiary);
+  --toggle-icon-active: var(--cs-text-primary);
+  --toggle-border: var(--cs-border-default);
+  --toggle-radius: var(--cs-radius-md);
+}
+
+/* ------------------------------------------------------------------ */
+/* Workflow cards (grid view)                                           */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card {
+  --card-w: 320px;
+  --card-min-w: 280px;
+  --card-bg: var(--cs-surface-card);
+  --card-bg-hover: var(--cs-surface-elevated);
+  --card-border: var(--cs-border-default);
+  --card-border-hover: var(--cs-border-strong);
+  --card-radius: var(--cs-radius-xl);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
+  --card-gap: 16px;
+
+  /* Thumbnail */
+  --thumb-h: 160px;
+  --thumb-bg: rgba(10, 14, 26, 0.8);
+  --thumb-border: var(--cs-border-subtle);
+
+  /* Body */
+  --card-body-padding: 16px;
+  --card-title-color: var(--cs-text-primary);
+  --card-desc-color: var(--cs-text-secondary);
+  --card-meta-color: var(--cs-text-tertiary);
+
+  /* Action icons */
+  --card-action-color: var(--cs-text-tertiary);
+  --card-action-color-hover: var(--cs-text-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Workflow status badges                                               */
+/* ------------------------------------------------------------------ */
+.cs-workflow-status-draft {
+  --status-color: #94a3b8;
+  --status-bg: rgba(148, 163, 184, 0.1);
+}
+
+.cs-workflow-status-active {
+  --status-color: #10b981;
+  --status-bg: rgba(16, 185, 129, 0.1);
+}
+
+.cs-workflow-status-error {
+  --status-color: #f43f5e;
+  --status-bg: rgba(244, 63, 94, 0.1);
+}
+
+.cs-workflow-status-archived {
+  --status-color: #64748b;
+  --status-bg: rgba(100, 116, 139, 0.1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Workflow list view (table)                                           */
+/* ------------------------------------------------------------------ */
+.cs-workflow-list {
+  --list-row-h: 56px;
+  --list-row-bg: transparent;
+  --list-row-bg-hover: rgba(30, 41, 59, 0.5);
+  --list-row-bg-selected: rgba(139, 92, 246, 0.08);
+  --list-row-border: var(--cs-border-subtle);
+  --list-header-bg: var(--cs-surface-card);
+  --list-header-text: var(--cs-text-tertiary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Create workflow button                                               */
+/* ------------------------------------------------------------------ */
+.cs-create-workflow-btn {
+  --btn-h: 40px;
+  --btn-bg: #7c3aed;
+  --btn-bg-hover: #8b5cf6;
+  --btn-text: #ffffff;
+  --btn-icon: #ffffff;
+  --btn-radius: var(--cs-radius-lg);
+  --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
+}
+
+/* ------------------------------------------------------------------ */
+/* Usage statistics                                                    */
+/* ------------------------------------------------------------------ */
+.cs-stats {
+  --stat-card-bg: var(--cs-surface-card);
+  --stat-card-border: var(--cs-border-default);
+  --stat-card-radius: var(--cs-radius-xl);
+  --stat-card-min-w: 200px;
+  --stat-card-h: 100px;
+  --stat-card-padding: 16px;
+  --stat-gap: 16px;
+
+  /* Labels and values */
+  --stat-label: var(--cs-text-secondary);
+  --stat-value: var(--cs-text-primary);
+  --stat-trend-up: #34d399;
+  --stat-trend-down: #fb7185;
+
+  /* Stat icons by category */
+  --stat-icon-workflows: #a78bfa;
+  --stat-icon-runs: #38bdf8;
+  --stat-icon-agents: #34d399;
+  --stat-icon-errors: #fb7185;
+}
+
+/* ------------------------------------------------------------------ */
+/* Usage progress bar                                                  */
+/* ------------------------------------------------------------------ */
+.cs-usage-bar {
+  --bar-h: 6px;
+  --bar-radius: 9999px;
+  --bar-bg: var(--cs-surface-elevated);
+  --bar-fill: #8b5cf6;
+  --bar-fill-warning: #f59e0b;
+  --bar-fill-critical: #f43f5e;
+}
+
+/* ------------------------------------------------------------------ */
+/* Upgrade prompt banner                                               */
+/* ------------------------------------------------------------------ */
+.cs-upgrade-prompt {
+  --prompt-bg: rgba(124, 58, 237, 0.08);
+  --prompt-border: #6d28d9;
+  --prompt-radius: var(--cs-radius-xl);
+  --prompt-text: var(--cs-text-secondary);
+  --prompt-cta-bg: #7c3aed;
+  --prompt-cta-bg-hover: #8b5cf6;
+  --prompt-cta-text: #ffffff;
+}
+
+/* ------------------------------------------------------------------ */
+/* Empty state                                                         */
+/* ------------------------------------------------------------------ */
+.cs-empty-state {
+  --empty-icon-size: 64px;
+  --empty-icon-color: #475569;
+  --empty-heading-color: var(--cs-text-primary);
+  --empty-desc-color: var(--cs-text-secondary);
+  --empty-border: var(--cs-border-default);
+  --empty-border-style: dashed;
+  --empty-radius: var(--cs-radius-xl);
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-stat-count-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cs-progress-fill {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes cs-empty-state-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cs-view-switch {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

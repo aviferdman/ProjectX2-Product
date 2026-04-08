@@ -1,0 +1,138 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "crewspace": {
+    "dashboard": {
+      "color": {
+        "background": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Dashboard page background" },
+        "header-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Top header/navbar background" },
+        "header-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Header bottom border" },
+        "sidebar-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Dashboard sidebar background" },
+        "sidebar-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Sidebar right border" },
+        "content-bg": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Main content area background" }
+      },
+      "workflowCard": {
+        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Workflow card background" },
+        "bg-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color", "description": "Card hover background" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Card border" },
+        "border-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color", "description": "Card hover border" },
+        "thumbnail-bg": { "value": "rgba(10,14,26,0.8)", "type": "color", "description": "Workflow preview thumbnail area" },
+        "thumbnail-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Thumbnail bottom border" },
+        "title": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "description": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "meta": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Last edited, agent count, etc." },
+        "action-icon": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "action-icon-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "status": {
+          "draft": { "value": "{crewspace.color.primitive.slate.400}", "type": "color" },
+          "active": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },
+          "error": { "value": "{crewspace.color.primitive.rose.500}", "type": "color" },
+          "archived": { "value": "{crewspace.color.primitive.slate.500}", "type": "color" }
+        },
+        "status-bg": {
+          "draft": { "value": "rgba(148,163,184,0.1)", "type": "color" },
+          "active": { "value": "rgba(16,185,129,0.1)", "type": "color" },
+          "error": { "value": "rgba(244,63,94,0.1)", "type": "color" },
+          "archived": { "value": "rgba(100,116,139,0.1)", "type": "color" }
+        }
+      },
+      "workflowList": {
+        "row-bg": { "value": "transparent", "type": "color" },
+        "row-bg-hover": { "value": "rgba(30,41,59,0.5)", "type": "color" },
+        "row-bg-selected": { "value": "rgba(139,92,246,0.08)", "type": "color" },
+        "row-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "header-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "header-text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" }
+      },
+      "createButton": {
+        "bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
+        "bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "text": { "value": "#ffffff", "type": "color" },
+        "icon": { "value": "#ffffff", "type": "color" },
+        "shadow": { "value": "0 2px 8px rgba(124,58,237,0.35)", "type": "boxShadow" }
+      },
+      "emptyState": {
+        "icon": { "value": "{crewspace.color.primitive.slate.600}", "type": "color" },
+        "heading": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "description": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Dashed border for empty state area" }
+      },
+      "searchBar": {
+        "bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "border-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "placeholder": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "icon": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" }
+      },
+      "filterChip": {
+        "bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "bg-active": { "value": "rgba(139,92,246,0.2)", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "border-active": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "text-active": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" }
+      },
+      "viewToggle": {
+        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "bg-active": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "icon": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "icon-active": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" }
+      },
+      "stats": {
+        "card-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Usage stat card background" },
+        "card-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "label": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "value": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "trend-up": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+        "trend-down": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" },
+        "progress-bar-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "progress-bar-fill": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "progress-bar-fill-warning": { "value": "{crewspace.color.primitive.amber.500}", "type": "color", "description": "Fill color when usage > 80%" },
+        "progress-bar-fill-critical": { "value": "{crewspace.color.primitive.rose.500}", "type": "color", "description": "Fill color when usage > 95%" },
+        "icon-workflows": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
+        "icon-runs": { "value": "{crewspace.color.primitive.sky.400}", "type": "color" },
+        "icon-agents": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+        "icon-errors": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" }
+      },
+      "upgradePrompt": {
+        "bg": { "value": "rgba(124,58,237,0.08)", "type": "color" },
+        "border": { "value": "{crewspace.color.primitive.violet.700}", "type": "color" },
+        "text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "cta-bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
+        "cta-bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "cta-text": { "value": "#ffffff", "type": "color" }
+      },
+      "sizing": {
+        "header-height": { "value": "56px", "type": "sizing" },
+        "sidebar-width": { "value": "240px", "type": "sizing" },
+        "sidebar-collapsed-width": { "value": "64px", "type": "sizing" },
+        "content-max-width": { "value": "1280px", "type": "sizing" },
+        "content-padding": { "value": "24px", "type": "sizing" },
+        "toolbar-height": { "value": "48px", "type": "sizing", "description": "Search/filter/view-toggle toolbar" },
+        "card-width": { "value": "320px", "type": "sizing", "description": "Grid card width" },
+        "card-min-width": { "value": "280px", "type": "sizing" },
+        "card-thumbnail-height": { "value": "160px", "type": "sizing" },
+        "card-body-padding": { "value": "16px", "type": "sizing" },
+        "card-gap": { "value": "16px", "type": "sizing" },
+        "list-row-height": { "value": "56px", "type": "sizing" },
+        "stat-card-min-width": { "value": "200px", "type": "sizing" },
+        "stat-card-height": { "value": "100px", "type": "sizing" },
+        "stats-gap": { "value": "16px", "type": "sizing" },
+        "progress-bar-height": { "value": "6px", "type": "sizing" },
+        "search-height": { "value": "36px", "type": "sizing" },
+        "filter-chip-height": { "value": "28px", "type": "sizing" },
+        "empty-state-icon-size": { "value": "64px", "type": "sizing" },
+        "create-button-height": { "value": "40px", "type": "sizing" },
+        "upgrade-prompt-height": { "value": "auto", "type": "sizing" }
+      },
+      "animation": {
+        "card-enter": { "value": "250ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Card scale-in when appearing" },
+        "card-hover": { "value": "150ms ease-out", "type": "transition", "description": "Card hover elevation transition" },
+        "stat-count": { "value": "600ms cubic-bezier(0.16,1,0.3,1)", "type": "transition", "description": "Stat number count-up animation" },
+        "progress-fill": { "value": "400ms ease-out", "type": "transition", "description": "Progress bar fill animation" },
+        "view-switch": { "value": "200ms ease-out", "type": "transition", "description": "Grid/list view transition" },
+        "empty-state-in": { "value": "300ms ease-out", "type": "transition", "description": "Empty state fade in" }
+      }
+    }
+  }
+}
