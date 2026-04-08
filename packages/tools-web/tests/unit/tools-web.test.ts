@@ -114,7 +114,7 @@ describe('@crewspace/tools-web', () => {
 
     it('should allow requests within the limit', () => {
       const limiter = new toolsWeb.RateLimiter({ maxRequests: 5, windowMs: 60_000 });
-      expect(() => limiter.consume()).not.toThrow();
+      expect(() => limiter.consume('test-tool')).not.toThrow();
     });
   });
 

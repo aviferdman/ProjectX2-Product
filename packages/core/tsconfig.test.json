@@ -6,7 +6,7 @@
     "declarationMap": false,
     "sourceMap": false,
     "noEmit": true,
-    "rootDir": ".",
+    "rootDir": "../..",
     "types": ["vitest/globals", "node"],
     "noUnusedLocals": false,
     "noUnusedParameters": false,

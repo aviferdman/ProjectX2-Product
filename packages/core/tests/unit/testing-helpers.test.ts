@@ -292,7 +292,7 @@ describe('createMockTool', () => {
 
   it('should use dynamic handler when provided', async () => {
     const tool = createMockTool({
-      handler: (input) => `Got: ${JSON.stringify(input)}`,
+      handler: async (input) => `Got: ${JSON.stringify(input)}`,
     });
     const result = await tool.execute({ query: 'test' });
     expect(result).toBe('Got: {"query":"test"}');
