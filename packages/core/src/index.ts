@@ -615,3 +615,31 @@ export type {
   WorkflowStatus,
   WorkflowStorageProvider,
 } from './workflow/index.js';
+
+// Usage Tracking
+export {
+  InMemoryUsageStorage,
+  InMemoryAccountPlanStorage,
+  UsageTracker,
+  DEFAULT_PLAN_LIMITS,
+  UsageLimitExceededError,
+  UsageRunNotFoundError,
+  UsageAccountNotFoundError,
+  UsageInvalidTransitionError,
+} from './usage/index.js';
+export type {
+  AccountPlan,
+  AccountPlanProvider,
+  CompleteRunInput,
+  LimitCheckResult,
+  ListRunsOptions,
+  ListRunsResult as UsageListRunsResult,
+  PlanLimits,
+  PlanTier,
+  RecordRunInput,
+  RunStatus,
+  UsageRunRecord,
+  UsageStorageProvider,
+  UsageSummary as AccountUsageSummary,
+  UsageTrackerConfig,
+} from './usage/index.js';
