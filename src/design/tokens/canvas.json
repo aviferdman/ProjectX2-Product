@@ -1,0 +1,60 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "crewspace": {
+    "canvas": {
+      "viewport": {
+        "background": { "value": "#0a0e1a", "type": "color" },
+        "grid-size":  { "value": "20", "type": "number", "description": "Pixel distance between grid dots" },
+        "grid-dot-radius": { "value": "1", "type": "number" },
+        "min-zoom":   { "value": "0.1", "type": "number" },
+        "max-zoom":   { "value": "2.0", "type": "number" },
+        "default-zoom": { "value": "1.0", "type": "number" },
+        "zoom-step":  { "value": "0.1", "type": "number" },
+        "snap-grid":  { "value": "10", "type": "number", "description": "Snap-to-grid increment in pixels" }
+      },
+      "node": {
+        "border-width":       { "value": "1.5px", "type": "borderWidth" },
+        "border-width-hover": { "value": "2px",   "type": "borderWidth" },
+        "header-padding":     { "value": "10px 12px", "type": "spacing" },
+        "body-padding":       { "value": "8px 12px",  "type": "spacing" },
+        "gap":                { "value": "6px", "type": "spacing", "description": "Vertical gap between header/body/footer sections" }
+      },
+      "edge": {
+        "width":        { "value": "2", "type": "number" },
+        "width-hover":  { "value": "3", "type": "number" },
+        "type":         { "value": "smoothstep", "type": "string", "description": "React Flow edge type (smoothstep | bezier | straight)" },
+        "animated":     { "value": "true", "type": "boolean", "description": "Animated dashes for active data flow" },
+        "dash-array":   { "value": "5 5", "type": "string" },
+        "arrow-size":   { "value": "12", "type": "number" },
+        "label-bg":     { "value": "rgba(15,23,42,0.9)", "type": "color" },
+        "label-padding":{ "value": "2px 6px", "type": "spacing" }
+      },
+      "handle": {
+        "size":           { "value": "10px", "type": "sizing" },
+        "border-width":   { "value": "2px", "type": "borderWidth" },
+        "bg":             { "value": "#1e293b", "type": "color" },
+        "border-color":   { "value": "#64748b", "type": "color" },
+        "hover-bg":       { "value": "#7c3aed", "type": "color" },
+        "hover-border":   { "value": "#a78bfa", "type": "color" },
+        "connected-bg":   { "value": "#8b5cf6", "type": "color" }
+      },
+      "selection": {
+        "marquee-bg":     { "value": "rgba(139,92,246,0.08)", "type": "color" },
+        "marquee-border": { "value": "rgba(139,92,246,0.5)", "type": "color" },
+        "marquee-dash":   { "value": "4 4", "type": "string" }
+      },
+      "minimap": {
+        "position":   { "value": "bottom-right", "type": "string" },
+        "margin":     { "value": "16px", "type": "spacing" },
+        "border-radius": { "value": "8px", "type": "borderRadius" },
+        "opacity":    { "value": "0.85", "type": "number" }
+      },
+      "animation": {
+        "node-enter":   { "value": "200ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Scale-in bounce when a node is added" },
+        "edge-draw":    { "value": "300ms ease-out", "type": "transition", "description": "Edge path animation on connect" },
+        "running-pulse":{ "value": "1.5s ease-in-out infinite", "type": "transition", "description": "Glow pulse when node is executing" },
+        "data-flow":    { "value": "1s linear infinite", "type": "transition", "description": "Animated dash on active edge" }
+      }
+    }
+  }
+}

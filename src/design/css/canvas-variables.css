@@ -1,0 +1,211 @@
+/*
+ * Crewspace — Visual Canvas CSS Custom Properties
+ * TASK-132: Design visual canvas UI
+ *
+ * Usage: Apply the `.cs-canvas` class to the canvas root container.
+ * Dark-mode-first; light mode overrides are provided but the product
+ * ships dark-by-default to match developer-tool conventions.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Root-level design system tokens                                     */
+/* ------------------------------------------------------------------ */
+:root {
+  /* Brand */
+  --cs-brand-primary: #7c3aed;
+  --cs-brand-secondary: #a78bfa;
+  --cs-brand-subtle: #ede9fe;
+
+  /* Surfaces */
+  --cs-surface-app: #020617;
+  --cs-surface-canvas: #0a0e1a;
+  --cs-surface-panel: #0f172a;
+  --cs-surface-card: #1e293b;
+  --cs-surface-elevated: #334155;
+  --cs-surface-overlay: rgba(0, 0, 0, 0.6);
+
+  /* Borders */
+  --cs-border-default: #334155;
+  --cs-border-subtle: #1e293b;
+  --cs-border-strong: #64748b;
+  --cs-border-focus: #8b5cf6;
+
+  /* Text */
+  --cs-text-primary: #f8fafc;
+  --cs-text-secondary: #94a3b8;
+  --cs-text-tertiary: #64748b;
+  --cs-text-inverse: #0f172a;
+
+  /* Status */
+  --cs-status-success: #10b981;
+  --cs-status-warning: #f59e0b;
+  --cs-status-error: #f43f5e;
+  --cs-status-info: #0ea5e9;
+
+  /* Typography */
+  --cs-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --cs-font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  /* Radius */
+  --cs-radius-sm: 4px;
+  --cs-radius-md: 6px;
+  --cs-radius-lg: 8px;
+  --cs-radius-xl: 12px;
+  --cs-radius-node: 10px;
+
+  /* Shadows */
+  --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(148, 163, 184, 0.1);
+  --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(148, 163, 184, 0.15);
+  --cs-shadow-node-selected: 0 0 0 2px #8b5cf6,
+    0 4px 20px rgba(139, 92, 246, 0.25);
+  --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --cs-shadow-dropdown: 0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(148, 163, 184, 0.1);
+
+  /* Transitions */
+  --cs-transition-fast: 100ms ease-out;
+  --cs-transition-normal: 200ms ease-out;
+  --cs-transition-slow: 300ms ease-out;
+  --cs-transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Canvas-specific tokens                                              */
+/* ------------------------------------------------------------------ */
+.cs-canvas {
+  /* Viewport */
+  --canvas-bg: var(--cs-surface-canvas);
+  --canvas-grid-dot: rgba(148, 163, 184, 0.12);
+  --canvas-grid-line: rgba(148, 163, 184, 0.06);
+  --canvas-grid-size: 20px;
+
+  /* Node — Agent */
+  --node-agent-bg: rgba(124, 58, 237, 0.12);
+  --node-agent-border: #7c3aed;
+  --node-agent-icon: #a78bfa;
+
+  /* Node — Task */
+  --node-task-bg: rgba(14, 165, 233, 0.12);
+  --node-task-border: #0284c7;
+  --node-task-icon: #38bdf8;
+
+  /* Node — Tool */
+  --node-tool-bg: rgba(16, 185, 129, 0.12);
+  --node-tool-border: #059669;
+  --node-tool-icon: #34d399;
+
+  /* Node — LLM Provider */
+  --node-llm-bg: rgba(245, 158, 11, 0.12);
+  --node-llm-border: #d97706;
+  --node-llm-icon: #fbbf24;
+
+  /* Node selection */
+  --node-selected-ring: #8b5cf6;
+  --node-selected-glow: rgba(139, 92, 246, 0.25);
+
+  /* Node states */
+  --node-running-pulse: #34d399;
+  --node-error-pulse: #fb7185;
+  --node-disabled-opacity: 0.4;
+
+  /* Edges */
+  --edge-default: #64748b;
+  --edge-active: #a78bfa;
+  --edge-data-flow: #38bdf8;
+  --edge-error: #fb7185;
+  --edge-width: 2px;
+  --edge-width-hover: 3px;
+
+  /* Connection handles */
+  --handle-size: 10px;
+  --handle-bg: #1e293b;
+  --handle-border: #64748b;
+  --handle-hover-bg: #7c3aed;
+  --handle-hover-border: #a78bfa;
+  --handle-connected-bg: #8b5cf6;
+
+  /* Selection marquee */
+  --selection-bg: rgba(139, 92, 246, 0.08);
+  --selection-border: rgba(139, 92, 246, 0.5);
+
+  /* Minimap */
+  --minimap-bg: rgba(15, 23, 42, 0.9);
+  --minimap-viewport: rgba(139, 92, 246, 0.3);
+}
+
+/* ------------------------------------------------------------------ */
+/* Toolbar tokens                                                      */
+/* ------------------------------------------------------------------ */
+.cs-toolbar {
+  --toolbar-height: 48px;
+  --toolbar-bg: var(--cs-surface-panel);
+  --toolbar-border: var(--cs-border-subtle);
+  --toolbar-btn-size: 36px;
+  --toolbar-icon-size: 18px;
+  --toolbar-gap: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar tokens                                                      */
+/* ------------------------------------------------------------------ */
+.cs-sidebar {
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 48px;
+  --sidebar-bg: var(--cs-surface-panel);
+  --sidebar-border: var(--cs-border-subtle);
+  --sidebar-section-gap: 16px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Properties panel tokens                                             */
+/* ------------------------------------------------------------------ */
+.cs-properties {
+  --properties-width: 320px;
+  --properties-bg: var(--cs-surface-panel);
+  --properties-border: var(--cs-border-subtle);
+  --properties-label-width: 100px;
+  --properties-input-height: 32px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-node-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cs-running-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--node-running-pulse);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px var(--node-running-pulse);
+  }
+}
+
+@keyframes cs-error-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--node-error-pulse);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px var(--node-error-pulse);
+  }
+}
+
+@keyframes cs-edge-flow {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
