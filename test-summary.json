@@ -1,0 +1,382 @@
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-init-test-XSm6zW\cli-test
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-init-test-XSm6zW\cli-test
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-init-test-8bbuzb\cli-minimal
+
+  Template: minimal
+  Files created:
+    + package.json
+    + tsconfig.json
+    + src/index.ts
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-init-test-8bbuzb\cli-minimal
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-init-test-nUfPpk\cli-force
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-init-test-nUfPpk\cli-force
+    npm install
+    npm start
+hello world
+- Validating workflowΓÇª
+Γ£ö Validation passed
+Γ£ô C:\Users\aferdman\AppData\Local\Temp\crewspace-validate-test-GRACw4\valid.ts
+  No issues found.
+- Validating workflowΓÇª
+Γ£û Validation failed
+Γ£ù nonexistent.ts
+
+  Γ£ù error: Workflow file not found: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\nonexistent.ts
+
+  1 error
+- Validating workflowΓÇª
+Γ£û Validation failed
+Γ£ù C:\Users\aferdman\AppData\Local\Temp\crewspace-validate-test-al7M1n\empty.ts
+
+  Γ£ù error: File is empty
+
+  1 error
+- Validating workflowΓÇª
+Γ£û Validation failed
+- Validating workflowΓÇª
+Γ£ù C:\Users\aferdman\AppData\Local\Temp\crewspace-validate-test-yo9yc8\bad.ts
+
+  Γ£ù error (line 4): Agent is missing required "id" property
+
+  1 error
+Γ£ô C:\Users\aferdman\AppData\Local\Temp\crewspace-validate-test-b4xXnB\strict.ts
+
+  ΓÜá warning (line 4): Agent does not have a "backstory" property (recommended in strict mode)
+  ΓÜá warning (line 4): Agent does not have an "llmProvider" set (recommended in strict mode)
+
+  2 warnings
+Γ£ö Validation passed
+- Validating workflowΓÇª
+Γ£ö Validation passed
+Γ£ô C:\Users\aferdman\AppData\Local\Temp\crewspace-validate-test-euKGkk\warn.ts
+
+  ΓÜá warning: No @crewspace/core import detected. Workflow files typically import from @crewspace/core.
+  ΓÜá warning: No Agent or Crew instantiation found. Expected at least one new Agent() or new Crew().
+
+  2 warnings
+- Running workflowΓÇª
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-xplat-gP7Y4x\cli-project
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-xplat-gP7Y4x\cli-project
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-xplat-hDWDWV\my cool project
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-xplat-hDWDWV\my cool project
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-xplat-HGBmrz\sub
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-xplat-HGBmrz\sub
+    npm install
+    npm start
+Γ£ö Workflow completed in 453ms
+Γ£û Workflow file not found: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\missing-file.ts
+Γ£û Unsupported file extension ".py". Supported: .ts, .mts, .js, .mjs
+- Running workflowΓÇª
+Γ£û Workflow failed with exit code 3
+[debug] Target directory: C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-88f9wu
+[debug] Template: default
+[debug] Force overwrite: false
+[debug] Working directory: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product
+- Scaffolding projectΓÇª
+[debug] Project scaffolded in 24ms
+[debug] Files created: 5
+[debug] Files skipped: 0
+[debug]   Created: package.json
+[debug]   Created: tsconfig.json
+[debug]   Created: crewspace.config.ts
+[debug]   Created: src/index.ts
+[debug]   Created: .gitignore
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-88f9wu
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-88f9wu
+    npm install
+    npm start
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-6az4Ql
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-6az4Ql
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-J55aG4
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-J55aG4
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-N07h5n
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-N07h5n
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-Vzhc7g
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-Vzhc7g
+    npm install
+    npm start
+error: unknown option '--does-not-exist'
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-FFQbuP\my-project
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-FFQbuP\my-project
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-DaWxzN
+
+  Template: minimal
+  Files created:
+    + package.json
+    + tsconfig.json
+    + src/index.ts
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-DaWxzN
+    npm install
+    npm start
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-jQAkCL
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-cli-test-jQAkCL
+    npm install
+    npm start
+Γ£û Workflow file not found: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\workflow.ts
+Γ£û Workflow file not found: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\workflow.ts
+Γ£û Workflow file not found: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\workflow.ts
+- Validating workflowΓÇª
+Γ£û Validation failed
+- Validating workflowΓÇª
+Γ£û Validation failed
+Γ£ù workflow.ts
+
+  Γ£ù error: Workflow file not found: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\workflow.ts
+
+  1 error
+Γ£ù workflow.ts
+
+  Γ£ù error: Workflow file not found: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product\workflow.ts
+
+  1 error
+- Scaffolding projectΓÇª
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-lAHMMY\normal-project
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-lAHMMY\normal-project
+    npm install
+    npm start
+[debug] Validating file: C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-jKUm6j\valid.ts
+[debug] Working directory: C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-jKUm6j
+[debug] Strict mode: false
+- Validating workflowΓÇª
+[debug] Validation completed in 20ms
+[debug] Resolved file: C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-jKUm6j\valid.ts
+[debug] Errors: 0, Warnings: 0
+Γ£ö Validation passed
+Γ£ô C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-jKUm6j\valid.ts
+  No issues found.
+[debug] Validating file: C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-3m9U84\invalid.ts
+[debug] Working directory: C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-3m9U84
+[debug] Strict mode: false
+- Validating workflowΓÇª
+[debug] Validation completed in 23ms
+[debug] Resolved file: C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-3m9U84\invalid.ts
+[debug] Errors: 1, Warnings: 0
+[debug]   [error] (line 4): Agent is missing required "id" property
+Γ£û Validation failed
+Γ£ù C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-3m9U84\invalid.ts
+
+  Γ£ù error (line 4): Agent is missing required "id" property
+
+  1 error
+- Scaffolding projectΓÇª
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-wQ5xw4
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-wQ5xw4
+    npm install
+    npm start
+[debug] Target directory: C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-IX3vm8
+[debug] Template: default
+[debug] Force overwrite: false
+[debug] Working directory: C:\Users\aferdman\OneDrive - Microsoft\Desktop\Meirson\ProjectX2-Product
+- Scaffolding projectΓÇª
+[debug] Project scaffolded in 13ms
+[debug] Files created: 5
+[debug] Files skipped: 0
+[debug]   Created: package.json
+[debug]   Created: tsconfig.json
+[debug]   Created: crewspace.config.ts
+[debug]   Created: src/index.ts
+[debug]   Created: .gitignore
+
+Γ£ô Crewspace project created in C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-IX3vm8
+
+  Template: default
+  Files created:
+    + package.json
+    + tsconfig.json
+    + crewspace.config.ts
+    + src/index.ts
+    + .gitignore
+
+  Next steps:
+    cd C:\Users\aferdman\AppData\Local\Temp\crewspace-verbose-test-IX3vm8
+    npm install
+    npm start
