@@ -1,5 +1,9 @@
 # @crewspace/cli
 
+[![npm version](https://img.shields.io/npm/v/@crewspace/cli.svg)](https://www.npmjs.com/package/@crewspace/cli)
+[![npm downloads](https://img.shields.io/npm/dm/@crewspace/cli.svg)](https://www.npmjs.com/package/@crewspace/cli)
+[![license](https://img.shields.io/npm/l/@crewspace/cli.svg)](https://github.com/aviferdman/ProjectX2-Product/blob/main/LICENSE)
+
 Command-line interface for [Crewspace](https://github.com/aviferdman/ProjectX2-Product) — scaffold, run, and validate multi-agent workflows in TypeScript.
 
 ## Installation

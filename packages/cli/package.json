@@ -35,7 +35,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src/",
-    "typecheck": "tsc --noEmit -p tsconfig.test.json"
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "prepublishOnly": "npm run build && npm run typecheck"
   },
   "dependencies": {
     "chalk": "^5.6.2",
