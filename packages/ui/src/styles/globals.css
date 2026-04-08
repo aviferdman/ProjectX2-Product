@@ -1,0 +1,87 @@
+/*
+ * Crewspace global styles
+ *
+ * Import this stylesheet in your app entry point:
+ *   import '@crewspace/ui/styles';
+ *
+ * It layers Tailwind utilities on top of the Crewspace design-system
+ * CSS custom properties defined in src/design/css/canvas-variables.css.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/* Base reset on dark-mode-first surfaces                              */
+/* ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    /* Brand */
+    --cs-brand-primary: #7c3aed;
+    --cs-brand-secondary: #a78bfa;
+    --cs-brand-subtle: #ede9fe;
+
+    /* Surfaces */
+    --cs-surface-app: #020617;
+    --cs-surface-canvas: #0a0e1a;
+    --cs-surface-panel: #0f172a;
+    --cs-surface-card: #1e293b;
+    --cs-surface-elevated: #334155;
+    --cs-surface-overlay: rgba(0, 0, 0, 0.6);
+
+    /* Borders */
+    --cs-border-default: #334155;
+    --cs-border-subtle: #1e293b;
+    --cs-border-strong: #64748b;
+    --cs-border-focus: #8b5cf6;
+
+    /* Text */
+    --cs-text-primary: #f8fafc;
+    --cs-text-secondary: #94a3b8;
+    --cs-text-tertiary: #64748b;
+    --cs-text-inverse: #0f172a;
+
+    /* Status */
+    --cs-status-success: #10b981;
+    --cs-status-warning: #f59e0b;
+    --cs-status-error: #f43f5e;
+    --cs-status-info: #0ea5e9;
+
+    /* Typography */
+    --cs-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system,
+      sans-serif;
+    --cs-font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+    /* Radius */
+    --cs-radius-sm: 4px;
+    --cs-radius-md: 6px;
+    --cs-radius-lg: 8px;
+    --cs-radius-xl: 12px;
+    --cs-radius-node: 10px;
+
+    /* Shadows */
+    --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(148, 163, 184, 0.1);
+    --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(148, 163, 184, 0.15);
+    --cs-shadow-node-selected: 0 0 0 2px #8b5cf6,
+      0 4px 20px rgba(139, 92, 246, 0.25);
+    --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.35);
+
+    /* Transitions */
+    --cs-transition-fast: 100ms ease-out;
+    --cs-transition-normal: 200ms ease-out;
+    --cs-transition-slow: 300ms ease-out;
+    --cs-transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  body {
+    font-family: var(--cs-font-sans);
+    background-color: var(--cs-surface-app);
+    color: var(--cs-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

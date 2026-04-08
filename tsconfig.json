@@ -1,4 +1,4 @@
 {
   "files": [],
-  "references": [{ "path": "packages/core" }, { "path": "packages/prettier-config" }]
+  "references": [{ "path": "packages/core" }, { "path": "packages/prettier-config" }, { "path": "packages/ui" }]
 }
