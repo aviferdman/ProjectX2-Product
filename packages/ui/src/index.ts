@@ -30,6 +30,25 @@ export {
   type TooltipProps,
   Spinner,
   type SpinnerProps,
+  // Canvas (TASK-135)
+  WorkflowCanvas,
+  type WorkflowCanvasProps,
+  WorkflowNode,
+  WorkflowEdge,
+  CanvasBackground,
+  type CanvasBackgroundProps,
+  CanvasControls,
+  type CanvasControlsProps,
+  CanvasMinimap,
+  type CanvasMinimapProps,
+  type CanvasNodeType,
+  type NodeStatus,
+  type WorkflowNodeData,
+  type EdgeVariant,
+  type WorkflowEdgeData,
+  type BaseNodeProps,
+  Z_INDEX,
+  CANVAS_CONFIG,
 } from './components/index.js';
 
 // Theme
