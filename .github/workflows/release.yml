@@ -1,0 +1,171 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 0.1.0)'
+        required: true
+        type: string
+      dry-run:
+        description: 'Dry run (validate without creating release)'
+        required: false
+        default: false
+        type: boolean
+      draft:
+        description: 'Create as draft release'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.vars.outputs.tag }}
+      version: ${{ steps.vars.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Set release variables
+        id: vars
+        run: |
+          echo "tag=v${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate publish readiness
+        run: npx tsx scripts/prepare-publish.ts --tag v${{ inputs.version }}
+
+      - name: Validate release
+        run: npx tsx scripts/release.ts --version ${{ inputs.version }} --dry-run
+
+      - name: Generate release notes (preview)
+        run: npx tsx scripts/generate-release-notes.ts --version ${{ inputs.version }}
+
+  test:
+    name: Test Suite
+    needs: [validate]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+
+  build:
+    name: Build
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Verify dist output
+        run: |
+          test -d packages/core/dist || (echo "ERROR: packages/core/dist not found" && exit 1)
+          test -d packages/cli/dist || (echo "ERROR: packages/cli/dist not found" && exit 1)
+          test -d packages/tools-file/dist || (echo "ERROR: packages/tools-file/dist not found" && exit 1)
+          test -d packages/tools-web/dist || (echo "ERROR: packages/tools-web/dist not found" && exit 1)
+          test -d packages/tools-shell/dist || (echo "ERROR: packages/tools-shell/dist not found" && exit 1)
+
+  tag-and-release:
+    name: Tag & Create Release
+    needs: [validate, build]
+    if: ${{ !inputs.dry-run }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create git tag
+        run: |
+          git tag -a "v${{ inputs.version }}" -m "Release ${{ inputs.version }}"
+          git push origin "v${{ inputs.version }}"
+
+      - name: Generate release notes
+        run: npx tsx scripts/generate-release-notes.ts --version ${{ inputs.version }} --output release-notes.md
+
+      - name: Create GitHub release
+        run: |
+          npx tsx scripts/github-release.ts \
+            --tag "v${{ inputs.version }}" \
+            ${{ inputs.draft && '--draft' || '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+  dry-run-summary:
+    name: Dry Run Summary
+    needs: [validate, build]
+    if: ${{ inputs.dry-run }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generate release notes preview
+        run: |
+          echo "============================================"
+          echo "  DRY RUN — Release v${{ inputs.version }}"
+          echo "============================================"
+          echo ""
+          npx tsx scripts/generate-release-notes.ts --version ${{ inputs.version }}
+          echo ""
+          echo "============================================"
+          echo "  All checks passed. Ready to release."
+          echo "  Re-run without dry-run to create release."
+          echo "============================================"
