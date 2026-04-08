@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Semantic versioning configuration and CHANGELOG management
 - Version validation utilities for monorepo consistency
+- Standalone tool packages for modular installation:
+  - `@crewspace/tools-file` — File tools (read, write, list) with sandbox safety
+  - `@crewspace/tools-web` — Web tools (fetch, parse HTML, search) with rate limiting
+  - `@crewspace/tools-shell` — Shell tools (exec) with timeout and destructive command detection
+- Publish readiness checks and CI verification for all tools packages
 
 ## [0.1.0] - 2026-04-06
 

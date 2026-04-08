@@ -236,6 +236,20 @@ describe('tools-* publish readiness', () => {
       expect(content).toContain('@crewspace/tools-shell');
     });
 
+    it('ci.yml workflow verifies dist output for tools packages', () => {
+      const content = readFileSync(resolve(ROOT, '.github', 'workflows', 'ci.yml'), 'utf-8');
+      expect(content).toContain('packages/tools-file/dist');
+      expect(content).toContain('packages/tools-web/dist');
+      expect(content).toContain('packages/tools-shell/dist');
+    });
+
+    it('CHANGELOG.md mentions tools packages', () => {
+      const content = readFileSync(resolve(ROOT, 'CHANGELOG.md'), 'utf-8');
+      expect(content).toContain('@crewspace/tools-file');
+      expect(content).toContain('@crewspace/tools-web');
+      expect(content).toContain('@crewspace/tools-shell');
+    });
+
     it('all tools packages have the same version as core', () => {
       const coreVersion = (JSON.parse(
         readFileSync(resolve(ROOT, 'packages', 'core', 'package.json'), 'utf-8'),

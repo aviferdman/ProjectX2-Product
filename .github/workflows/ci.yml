@@ -110,4 +110,7 @@ jobs:
         run: |
           test -d packages/core/dist || (echo "ERROR: packages/core/dist not found" && exit 1)
           test -d packages/cli/dist || (echo "ERROR: packages/cli/dist not found" && exit 1)
+          test -d packages/tools-file/dist || (echo "ERROR: packages/tools-file/dist not found" && exit 1)
+          test -d packages/tools-web/dist || (echo "ERROR: packages/tools-web/dist not found" && exit 1)
+          test -d packages/tools-shell/dist || (echo "ERROR: packages/tools-shell/dist not found" && exit 1)
           echo "Build output verified successfully"
