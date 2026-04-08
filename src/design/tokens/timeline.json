@@ -1,0 +1,127 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "crewspace": {
+    "timeline": {
+      "color": {
+        "background": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Timeline panel background" },
+        "header-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Timeline header/toolbar background" },
+        "lane-bg": { "value": "rgba(15,23,42,0.6)", "type": "color", "description": "Agent lane background" },
+        "lane-bg-alt": { "value": "rgba(15,23,42,0.8)", "type": "color", "description": "Alternating agent lane background" },
+        "lane-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Horizontal lane divider" },
+        "lane-label-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Sticky lane label background" },
+        "axis-line": { "value": "{crewspace.color.primitive.slate.700}", "type": "color", "description": "Time axis line" },
+        "axis-tick": { "value": "{crewspace.color.primitive.slate.600}", "type": "color", "description": "Time axis tick marks" },
+        "axis-label": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Time axis labels" },
+        "grid-line": { "value": "rgba(148,163,184,0.06)", "type": "color", "description": "Vertical grid lines" },
+        "playhead": { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Current time playhead line" },
+        "playhead-glow": { "value": "rgba(139,92,246,0.3)", "type": "color", "description": "Playhead glow effect" },
+        "selection-range": { "value": "rgba(139,92,246,0.1)", "type": "color", "description": "Time range selection highlight" },
+        "selection-border": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" }
+      },
+      "event": {
+        "llm-call": {
+          "bg": { "value": "rgba(245,158,11,0.2)", "type": "color", "description": "LLM call event block" },
+          "border": { "value": "{crewspace.color.primitive.amber.500}", "type": "color" },
+          "icon": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" }
+        },
+        "tool-use": {
+          "bg": { "value": "rgba(16,185,129,0.2)", "type": "color", "description": "Tool invocation event block" },
+          "border": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },
+          "icon": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" }
+        },
+        "task-start": {
+          "bg": { "value": "rgba(14,165,233,0.2)", "type": "color", "description": "Task start marker" },
+          "border": { "value": "{crewspace.color.primitive.sky.500}", "type": "color" },
+          "icon": { "value": "{crewspace.color.primitive.sky.400}", "type": "color" }
+        },
+        "task-complete": {
+          "bg": { "value": "rgba(16,185,129,0.15)", "type": "color", "description": "Task completion marker" },
+          "border": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },
+          "icon": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" }
+        },
+        "error": {
+          "bg": { "value": "rgba(244,63,94,0.2)", "type": "color", "description": "Error event block" },
+          "border": { "value": "{crewspace.color.primitive.rose.500}", "type": "color" },
+          "icon": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" }
+        },
+        "message": {
+          "bg": { "value": "rgba(139,92,246,0.15)", "type": "color", "description": "Agent message / delegation" },
+          "border": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+          "icon": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" }
+        },
+        "selected": {
+          "ring": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+          "glow": { "value": "rgba(139,92,246,0.25)", "type": "color" }
+        },
+        "hover-opacity": { "value": "0.85", "type": "number" }
+      },
+      "logViewer": {
+        "background": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color" },
+        "header-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "row-bg": { "value": "transparent", "type": "color" },
+        "row-bg-alt": { "value": "rgba(30,41,59,0.3)", "type": "color" },
+        "row-bg-hover": { "value": "rgba(30,41,59,0.6)", "type": "color" },
+        "row-bg-selected": { "value": "rgba(139,92,246,0.1)", "type": "color" },
+        "row-border": { "value": "rgba(51,65,85,0.3)", "type": "color" },
+        "timestamp": { "value": "{crewspace.color.primitive.slate.500}", "type": "color" },
+        "level": {
+          "debug": { "value": "{crewspace.color.primitive.slate.400}", "type": "color" },
+          "info": { "value": "{crewspace.color.primitive.sky.400}", "type": "color" },
+          "warn": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" },
+          "error": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" }
+        },
+        "level-bg": {
+          "debug": { "value": "rgba(148,163,184,0.1)", "type": "color" },
+          "info": { "value": "rgba(14,165,233,0.1)", "type": "color" },
+          "warn": { "value": "rgba(245,158,11,0.1)", "type": "color" },
+          "error": { "value": "rgba(244,63,94,0.1)", "type": "color" }
+        },
+        "search-highlight": { "value": "rgba(251,191,36,0.3)", "type": "color", "description": "Text search match highlight" },
+        "search-highlight-active": { "value": "rgba(251,191,36,0.6)", "type": "color", "description": "Active search match" }
+      },
+      "filter": {
+        "bar-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "chip-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "chip-bg-active": { "value": "rgba(139,92,246,0.2)", "type": "color" },
+        "chip-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "chip-border-active": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "chip-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "chip-text-active": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "dropdown-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "dropdown-item-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "search-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "search-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "search-border-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" }
+      },
+      "sizing": {
+        "panel-min-height": { "value": "200px", "type": "sizing" },
+        "panel-default-height": { "value": "320px", "type": "sizing" },
+        "panel-max-height": { "value": "600px", "type": "sizing" },
+        "header-height": { "value": "44px", "type": "sizing" },
+        "lane-height": { "value": "48px", "type": "sizing" },
+        "lane-label-width": { "value": "160px", "type": "sizing" },
+        "event-min-width": { "value": "8px", "type": "sizing" },
+        "event-height": { "value": "28px", "type": "sizing" },
+        "event-marker-size": { "value": "12px", "type": "sizing" },
+        "playhead-width": { "value": "2px", "type": "sizing" },
+        "playhead-handle": { "value": "12px", "type": "sizing" },
+        "axis-height": { "value": "32px", "type": "sizing" },
+        "tick-height": { "value": "8px", "type": "sizing" },
+        "filter-bar-height": { "value": "40px", "type": "sizing" },
+        "filter-chip-height": { "value": "28px", "type": "sizing" },
+        "log-row-height": { "value": "32px", "type": "sizing" },
+        "log-timestamp-width": { "value": "100px", "type": "sizing" },
+        "log-level-width": { "value": "56px", "type": "sizing" },
+        "log-agent-width": { "value": "120px", "type": "sizing" },
+        "resizer-handle": { "value": "6px", "type": "sizing", "description": "Drag handle for resizing timeline/log split" }
+      },
+      "animation": {
+        "playhead-pulse": { "value": "2s ease-in-out infinite", "type": "transition", "description": "Gentle pulse on active playhead" },
+        "event-enter": { "value": "150ms ease-out", "type": "transition", "description": "Event block fade-in" },
+        "lane-expand": { "value": "200ms ease-out", "type": "transition", "description": "Lane expand/collapse" },
+        "filter-toggle": { "value": "150ms ease-out", "type": "transition", "description": "Filter chip toggle" },
+        "log-scroll": { "value": "100ms ease-out", "type": "transition", "description": "Smooth log auto-scroll" }
+      }
+    }
+  }
+}

@@ -1,0 +1,238 @@
+/*
+ * Crewspace — Debugging Timeline UI CSS Custom Properties
+ * TASK-140: Design debugging timeline UI (timeline chart, log viewer, filters)
+ *
+ * Usage: Apply `.cs-timeline` to the timeline root container.
+ * Uses root-level tokens from canvas-variables.css; import that first.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Timeline root container                                             */
+/* ------------------------------------------------------------------ */
+.cs-timeline {
+  /* Layout */
+  --timeline-panel-min-h: 200px;
+  --timeline-panel-default-h: 320px;
+  --timeline-panel-max-h: 600px;
+  --timeline-header-h: 44px;
+  --timeline-resizer-handle: 6px;
+
+  /* Background */
+  --timeline-bg: var(--cs-surface-app);
+  --timeline-header-bg: var(--cs-surface-panel);
+}
+
+/* ------------------------------------------------------------------ */
+/* Time axis                                                           */
+/* ------------------------------------------------------------------ */
+.cs-timeline-axis {
+  --axis-h: 32px;
+  --axis-line: #334155;
+  --axis-tick: #475569;
+  --axis-label: var(--cs-text-tertiary);
+  --axis-tick-h: 8px;
+  --axis-grid: rgba(148, 163, 184, 0.06);
+}
+
+/* ------------------------------------------------------------------ */
+/* Agent lanes                                                         */
+/* ------------------------------------------------------------------ */
+.cs-timeline-lanes {
+  --lane-h: 48px;
+  --lane-label-w: 160px;
+  --lane-bg: rgba(15, 23, 42, 0.6);
+  --lane-bg-alt: rgba(15, 23, 42, 0.8);
+  --lane-border: var(--cs-border-subtle);
+  --lane-label-bg: var(--cs-surface-panel);
+}
+
+/* ------------------------------------------------------------------ */
+/* Playhead                                                            */
+/* ------------------------------------------------------------------ */
+.cs-timeline-playhead {
+  --playhead-color: #8b5cf6;
+  --playhead-glow: rgba(139, 92, 246, 0.3);
+  --playhead-w: 2px;
+  --playhead-handle: 12px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Time range selection                                                */
+/* ------------------------------------------------------------------ */
+.cs-timeline-selection {
+  --selection-bg: rgba(139, 92, 246, 0.1);
+  --selection-border: #a78bfa;
+}
+
+/* ------------------------------------------------------------------ */
+/* Event blocks — by type                                              */
+/* ------------------------------------------------------------------ */
+.cs-event-llm {
+  --event-bg: rgba(245, 158, 11, 0.2);
+  --event-border: #f59e0b;
+  --event-icon: #fbbf24;
+}
+
+.cs-event-tool {
+  --event-bg: rgba(16, 185, 129, 0.2);
+  --event-border: #10b981;
+  --event-icon: #34d399;
+}
+
+.cs-event-task-start {
+  --event-bg: rgba(14, 165, 233, 0.2);
+  --event-border: #0ea5e9;
+  --event-icon: #38bdf8;
+}
+
+.cs-event-task-complete {
+  --event-bg: rgba(16, 185, 129, 0.15);
+  --event-border: #10b981;
+  --event-icon: #34d399;
+}
+
+.cs-event-error {
+  --event-bg: rgba(244, 63, 94, 0.2);
+  --event-border: #f43f5e;
+  --event-icon: #fb7185;
+}
+
+.cs-event-message {
+  --event-bg: rgba(139, 92, 246, 0.15);
+  --event-border: #8b5cf6;
+  --event-icon: #a78bfa;
+}
+
+/* Shared event sizing */
+.cs-timeline [class*='cs-event-'] {
+  --event-min-w: 8px;
+  --event-h: 28px;
+  --event-marker-size: 12px;
+  --event-radius: 4px;
+}
+
+/* Event states */
+.cs-event-selected {
+  --event-ring: #8b5cf6;
+  --event-glow: rgba(139, 92, 246, 0.25);
+}
+
+/* ------------------------------------------------------------------ */
+/* Log viewer                                                          */
+/* ------------------------------------------------------------------ */
+.cs-log-viewer {
+  --log-bg: var(--cs-surface-panel);
+  --log-header-bg: var(--cs-surface-card);
+  --log-row-h: 32px;
+  --log-row-bg: transparent;
+  --log-row-bg-alt: rgba(30, 41, 59, 0.3);
+  --log-row-bg-hover: rgba(30, 41, 59, 0.6);
+  --log-row-bg-selected: rgba(139, 92, 246, 0.1);
+  --log-row-border: rgba(51, 65, 85, 0.3);
+
+  /* Column widths */
+  --log-ts-w: 100px;
+  --log-level-w: 56px;
+  --log-agent-w: 120px;
+
+  /* Timestamp color */
+  --log-ts-color: #64748b;
+
+  /* Search highlights */
+  --log-search-hl: rgba(251, 191, 36, 0.3);
+  --log-search-hl-active: rgba(251, 191, 36, 0.6);
+}
+
+/* Log level colors */
+.cs-log-level-debug {
+  --log-level-color: #94a3b8;
+  --log-level-bg: rgba(148, 163, 184, 0.1);
+}
+
+.cs-log-level-info {
+  --log-level-color: #38bdf8;
+  --log-level-bg: rgba(14, 165, 233, 0.1);
+}
+
+.cs-log-level-warn {
+  --log-level-color: #fbbf24;
+  --log-level-bg: rgba(245, 158, 11, 0.1);
+}
+
+.cs-log-level-error {
+  --log-level-color: #fb7185;
+  --log-level-bg: rgba(244, 63, 94, 0.1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Filter bar                                                          */
+/* ------------------------------------------------------------------ */
+.cs-timeline-filters {
+  --filter-bar-bg: var(--cs-surface-card);
+  --filter-bar-h: 40px;
+
+  /* Filter chips */
+  --chip-h: 28px;
+  --chip-bg: var(--cs-surface-elevated);
+  --chip-bg-active: rgba(139, 92, 246, 0.2);
+  --chip-border: var(--cs-border-default);
+  --chip-border-active: #8b5cf6;
+  --chip-text: var(--cs-text-secondary);
+  --chip-text-active: #c4b5fd;
+  --chip-radius: 9999px;
+
+  /* Search input */
+  --filter-search-bg: var(--cs-surface-elevated);
+  --filter-search-border: var(--cs-border-default);
+  --filter-search-border-focus: #8b5cf6;
+
+  /* Dropdown */
+  --filter-dropdown-bg: var(--cs-surface-card);
+  --filter-dropdown-hover: var(--cs-surface-elevated);
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-playhead-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 4px 0 var(--playhead-glow);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px var(--playhead-glow);
+  }
+}
+
+@keyframes cs-event-enter {
+  from {
+    opacity: 0;
+    transform: scaleX(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes cs-lane-expand {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: var(--lane-h);
+    opacity: 1;
+  }
+}
+
+@keyframes cs-filter-chip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
