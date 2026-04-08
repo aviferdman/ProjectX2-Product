@@ -449,6 +449,21 @@ function main(): void {
       name: '@crewspace/cli',
       versionExport: 'src/index.ts',
     },
+    {
+      path: 'packages/tools-file',
+      name: '@crewspace/tools-file',
+      versionExport: 'src/index.ts',
+    },
+    {
+      path: 'packages/tools-web',
+      name: '@crewspace/tools-web',
+      versionExport: 'src/index.ts',
+    },
+    {
+      path: 'packages/tools-shell',
+      name: '@crewspace/tools-shell',
+      versionExport: 'src/index.ts',
+    },
   ];
 
   console.log(

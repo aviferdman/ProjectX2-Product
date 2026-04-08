@@ -452,6 +452,11 @@ describe('publish workflow file', () => {
 
     // Publishes with public access
     expect(content).toContain('--access public');
+
+    // Publishes all tool packages
+    expect(content).toContain('workspace=packages/tools-file');
+    expect(content).toContain('workspace=packages/tools-web');
+    expect(content).toContain('workspace=packages/tools-shell');
   });
 
   it('validates tag before publishing', () => {

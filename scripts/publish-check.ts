@@ -485,23 +485,53 @@ export function formatPublishCheckOutput(result: PublishCheckResult): string {
 
 // --- CLI entry point ---
 
-export function parsePublishCheckArgs(argv: string[]): { rebuild: boolean } {
-  return { rebuild: argv.includes('--rebuild') };
+export function parsePublishCheckArgs(argv: string[]): { rebuild: boolean; packages: string[] } {
+  const packages: string[] = [];
+  let rebuild = false;
+
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--rebuild') {
+      rebuild = true;
+    } else if (argv[i] === '--package' && argv[i + 1]) {
+      packages.push(argv[i + 1]!);
+      i++;
+    }
+  }
+
+  return { rebuild, packages };
 }
 
 function main(): void {
   const args = parsePublishCheckArgs(process.argv.slice(2));
   const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-  const result = runPublishCheck({
-    rootDir: ROOT,
-    packagePath: 'packages/core',
-    rebuild: args.rebuild,
-  });
+  const allPackages = [
+    'packages/core',
+    'packages/cli',
+    'packages/tools-file',
+    'packages/tools-web',
+    'packages/tools-shell',
+  ];
 
-  console.log(formatPublishCheckOutput(result));
+  const packagePaths = args.packages.length > 0 ? args.packages : allPackages;
+  let allPassed = true;
 
-  if (!result.passed) {
+  for (const packagePath of packagePaths) {
+    const result = runPublishCheck({
+      rootDir: ROOT,
+      packagePath,
+      rebuild: args.rebuild,
+    });
+
+    console.log(formatPublishCheckOutput(result));
+    console.log('');
+
+    if (!result.passed) {
+      allPassed = false;
+    }
+  }
+
+  if (!allPassed) {
     process.exit(1);
   }
 }

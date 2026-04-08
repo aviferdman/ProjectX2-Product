@@ -84,6 +84,9 @@ jobs:
         run: |
           test -d packages/core/dist || (echo "ERROR: packages/core/dist not found" && exit 1)
           test -d packages/cli/dist || (echo "ERROR: packages/cli/dist not found" && exit 1)
+          test -d packages/tools-file/dist || (echo "ERROR: packages/tools-file/dist not found" && exit 1)
+          test -d packages/tools-web/dist || (echo "ERROR: packages/tools-web/dist not found" && exit 1)
+          test -d packages/tools-shell/dist || (echo "ERROR: packages/tools-shell/dist not found" && exit 1)
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -92,6 +95,9 @@ jobs:
           path: |
             packages/core/dist/
             packages/cli/dist/
+            packages/tools-file/dist/
+            packages/tools-web/dist/
+            packages/tools-shell/dist/
           retention-days: 1
 
   publish:
@@ -120,6 +126,9 @@ jobs:
         run: |
           npm pack --dry-run --workspace=packages/core
           npm pack --dry-run --workspace=packages/cli
+          npm pack --dry-run --workspace=packages/tools-file
+          npm pack --dry-run --workspace=packages/tools-web
+          npm pack --dry-run --workspace=packages/tools-shell
 
       - name: Publish @crewspace/core
         run: npm publish --workspace=packages/core --provenance --access public
@@ -131,6 +140,21 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Publish @crewspace/tools-file
+        run: npm publish --workspace=packages/tools-file --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @crewspace/tools-web
+        run: npm publish --workspace=packages/tools-web --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @crewspace/tools-shell
+        run: npm publish --workspace=packages/tools-shell --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Verify published packages
         run: |
           PACKAGE_VERSION=$(node -p "require('./packages/core/package.json').version")
@@ -138,6 +162,9 @@ jobs:
           sleep 10
           npm view @crewspace/core@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
           npm view @crewspace/cli@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
+          npm view @crewspace/tools-file@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
+          npm view @crewspace/tools-web@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
+          npm view @crewspace/tools-shell@${PACKAGE_VERSION} version || echo "WARN: Package may take a moment to appear on registry"
 
   github-release:
     name: Create GitHub Release

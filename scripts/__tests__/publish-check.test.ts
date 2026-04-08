@@ -399,11 +399,26 @@ describe('publish-check', () => {
 
   describe('parsePublishCheckArgs', () => {
     it('parses --rebuild flag', () => {
-      expect(parsePublishCheckArgs(['--rebuild'])).toEqual({ rebuild: true });
+      expect(parsePublishCheckArgs(['--rebuild'])).toEqual({ rebuild: true, packages: [] });
     });
 
-    it('defaults to no rebuild', () => {
-      expect(parsePublishCheckArgs([])).toEqual({ rebuild: false });
+    it('defaults to no rebuild and no packages', () => {
+      expect(parsePublishCheckArgs([])).toEqual({ rebuild: false, packages: [] });
+    });
+
+    it('parses --package flag', () => {
+      const result = parsePublishCheckArgs(['--package', 'packages/tools-file']);
+      expect(result.packages).toEqual(['packages/tools-file']);
+    });
+
+    it('parses multiple --package flags', () => {
+      const result = parsePublishCheckArgs([
+        '--package', 'packages/tools-file',
+        '--package', 'packages/tools-web',
+        '--rebuild',
+      ]);
+      expect(result.rebuild).toBe(true);
+      expect(result.packages).toEqual(['packages/tools-file', 'packages/tools-web']);
     });
   });
 });

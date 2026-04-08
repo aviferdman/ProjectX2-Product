@@ -30,6 +30,9 @@ function main(): void {
   const packages = [
     { path: 'packages/core', versionExportFile: 'src/index.ts', versionExportName: 'VERSION' },
     { path: 'packages/cli', versionExportFile: 'src/index.ts', versionExportName: 'CLI_VERSION' },
+    { path: 'packages/tools-file', versionExportFile: 'src/index.ts', versionExportName: null },
+    { path: 'packages/tools-web', versionExportFile: 'src/index.ts', versionExportName: null },
+    { path: 'packages/tools-shell', versionExportFile: 'src/index.ts', versionExportName: null },
   ];
 
   for (const pkg of packages) {
@@ -51,7 +54,9 @@ function main(): void {
     }
 
     const versionFile = join(ROOT, pkg.path, pkg.versionExportFile);
-    if (existsSync(versionFile)) {
+    if (pkg.versionExportName === null) {
+      console.log('  OK: No VERSION export expected (re-export package)');
+    } else if (existsSync(versionFile)) {
       const content = readFileSync(versionFile, 'utf-8');
       const exportName = pkg.versionExportName ?? 'VERSION';
       const match = new RegExp(`export const ${exportName} = '([^']+)'`).exec(content);
