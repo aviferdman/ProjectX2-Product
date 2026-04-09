@@ -187,6 +187,14 @@ export {
   type BreakpointState,
 } from './hooks/index.js';
 
+// Hooks — Canvas State (TASK-138)
+export {
+  useCanvasState,
+  type UseCanvasStateOptions,
+  type UseCanvasStateResult,
+  type CanvasStateManager,
+} from './hooks/index.js';
+
 // Design tokens (programmatic)
 export {
   colors,
