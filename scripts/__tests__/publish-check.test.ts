@@ -95,6 +95,7 @@ describe('publish-check', () => {
           keywords: ['agent'],
           exports: { '.': { import: './dist/index.js' } },
           engines: { node: '>=18.0.0' },
+          publishConfig: { access: 'public' },
         }),
       );
 

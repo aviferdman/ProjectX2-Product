@@ -89,5 +89,9 @@
     "type": "git",
     "url": "https://github.com/aviferdman/ProjectX2-Product.git",
     "directory": "packages/ui"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

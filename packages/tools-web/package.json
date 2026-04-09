@@ -64,5 +64,9 @@
     "type": "git",
     "url": "https://github.com/aviferdman/ProjectX2-Product.git",
     "directory": "packages/tools-web"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

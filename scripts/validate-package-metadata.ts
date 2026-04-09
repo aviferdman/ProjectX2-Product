@@ -52,6 +52,7 @@ export interface PackageJson {
   bugs?: { url: string } | string;
   repository?: { type: string; url: string; directory?: string } | string;
   author?: string | { name: string; url?: string };
+  publishConfig?: { access?: string; registry?: string };
   private?: boolean;
   [key: string]: unknown;
 }
@@ -431,6 +432,63 @@ export function validateTypeField(pkg: PackageJson): ValidationCheck[] {
   ];
 }
 
+export function validatePublishConfig(pkg: PackageJson): ValidationCheck[] {
+  const checks: ValidationCheck[] = [];
+
+  if (!pkg.publishConfig) {
+    checks.push({
+      name: 'publish-config-present',
+      status: 'fail',
+      message: 'publishConfig is missing — scoped packages default to restricted access',
+      fixable: true,
+    });
+    return checks;
+  }
+
+  checks.push({
+    name: 'publish-config-present',
+    status: 'pass',
+    message: 'publishConfig is present',
+  });
+
+  if (pkg.publishConfig.access === 'public') {
+    checks.push({
+      name: 'publish-config-access',
+      status: 'pass',
+      message: 'publishConfig.access is "public"',
+    });
+  } else {
+    checks.push({
+      name: 'publish-config-access',
+      status: 'fail',
+      message: `publishConfig.access is "${pkg.publishConfig.access ?? 'unset'}", expected "public"`,
+      fixable: true,
+    });
+  }
+
+  const expectedRegistry = 'https://registry.npmjs.org/';
+  if (pkg.publishConfig.registry) {
+    if (
+      pkg.publishConfig.registry === expectedRegistry ||
+      pkg.publishConfig.registry === expectedRegistry.replace(/\/$/, '')
+    ) {
+      checks.push({
+        name: 'publish-config-registry',
+        status: 'pass',
+        message: 'publishConfig.registry points to npmjs.org',
+      });
+    } else {
+      checks.push({
+        name: 'publish-config-registry',
+        status: 'warn',
+        message: `publishConfig.registry is "${pkg.publishConfig.registry}", expected "${expectedRegistry}"`,
+      });
+    }
+  }
+
+  return checks;
+}
+
 // --- Main Validation ---
 
 export function validatePackage(pkgDir: string): ValidationResult {
@@ -458,6 +516,7 @@ export function validatePackage(pkgDir: string): ValidationResult {
   checks.push(...validateAuthor(pkg));
   checks.push(...validateEngines(pkg));
   checks.push(...validateTypeField(pkg));
+  checks.push(...validatePublishConfig(pkg));
 
   const passed = checks.every((c) => c.status !== 'fail');
 
@@ -502,6 +561,14 @@ export function applyFixes(pkgDir: string): { fixed: string[]; pkg: PackageJson 
   if (!pkg.engines) {
     pkg.engines = { node: EXPECTED_NODE_ENGINE };
     fixed.push('Added engines field');
+  }
+
+  if (!pkg.publishConfig) {
+    pkg.publishConfig = { access: 'public', registry: 'https://registry.npmjs.org/' };
+    fixed.push('Added publishConfig with access: "public"');
+  } else if (pkg.publishConfig.access !== 'public') {
+    pkg.publishConfig.access = 'public';
+    fixed.push('Set publishConfig.access to "public"');
   }
 
   if (fixed.length > 0) {

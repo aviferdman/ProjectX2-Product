@@ -13,6 +13,7 @@ import {
   validateAuthor,
   validateEngines,
   validateTypeField,
+  validatePublishConfig,
   validatePackage,
   validateCrossPackageConsistency,
   applyFixes,
@@ -41,6 +42,7 @@ function makePackageJson(overrides: Partial<PackageJson> = {}): PackageJson {
     },
     author: 'Crewspace Contributors',
     engines: { node: '>=18.0.0' },
+    publishConfig: { access: 'public', registry: 'https://registry.npmjs.org/' },
     ...overrides,
   };
 }
@@ -260,6 +262,42 @@ describe('validate-package-metadata', () => {
     });
   });
 
+  describe('validatePublishConfig', () => {
+    it('passes with correct publishConfig', () => {
+      const checks = validatePublishConfig(
+        makePackageJson({ publishConfig: { access: 'public', registry: 'https://registry.npmjs.org/' } }),
+      );
+      expect(checks.every((c) => c.status === 'pass')).toBe(true);
+    });
+
+    it('fails when publishConfig is missing', () => {
+      const checks = validatePublishConfig(makePackageJson({ publishConfig: undefined }));
+      expect(checks.some((c) => c.status === 'fail' && c.name === 'publish-config-present')).toBe(true);
+    });
+
+    it('fails when access is not public', () => {
+      const checks = validatePublishConfig(
+        makePackageJson({ publishConfig: { access: 'restricted' } }),
+      );
+      expect(checks.some((c) => c.status === 'fail' && c.name === 'publish-config-access')).toBe(true);
+    });
+
+    it('warns when registry is non-standard', () => {
+      const checks = validatePublishConfig(
+        makePackageJson({ publishConfig: { access: 'public', registry: 'https://custom.registry.com/' } }),
+      );
+      expect(checks.some((c) => c.status === 'warn' && c.name === 'publish-config-registry')).toBe(true);
+    });
+
+    it('passes when registry matches without trailing slash', () => {
+      const checks = validatePublishConfig(
+        makePackageJson({ publishConfig: { access: 'public', registry: 'https://registry.npmjs.org' } }),
+      );
+      const registryCheck = checks.find((c) => c.name === 'publish-config-registry');
+      expect(registryCheck?.status).toBe('pass');
+    });
+  });
+
   describe('validatePackage', () => {
     it('passes for a fully valid package', () => {
       const pkgDir = join(tempDir, 'test-pkg');
@@ -391,6 +429,33 @@ describe('validate-package-metadata', () => {
       expect(fixed.some((f) => f.includes('baseline keywords'))).toBe(true);
       expect(pkg.keywords).toContain('crewspace');
       expect(pkg.keywords).toContain('typescript');
+    });
+
+    it('adds missing publishConfig', () => {
+      const pkgDir = join(tempDir, 'fixme');
+      mkdirSync(pkgDir, { recursive: true });
+      writeFileSync(
+        join(pkgDir, 'package.json'),
+        JSON.stringify(makePackageJson({ publishConfig: undefined })),
+      );
+
+      const { fixed, pkg } = applyFixes(pkgDir);
+      expect(fixed.some((f) => f.includes('publishConfig'))).toBe(true);
+      expect(pkg.publishConfig?.access).toBe('public');
+      expect(pkg.publishConfig?.registry).toBe('https://registry.npmjs.org/');
+    });
+
+    it('fixes publishConfig access when not public', () => {
+      const pkgDir = join(tempDir, 'fixme');
+      mkdirSync(pkgDir, { recursive: true });
+      writeFileSync(
+        join(pkgDir, 'package.json'),
+        JSON.stringify(makePackageJson({ publishConfig: { access: 'restricted' } })),
+      );
+
+      const { fixed, pkg } = applyFixes(pkgDir);
+      expect(fixed.some((f) => f.includes('publishConfig.access'))).toBe(true);
+      expect(pkg.publishConfig?.access).toBe('public');
     });
 
     it('does nothing when everything is present', () => {

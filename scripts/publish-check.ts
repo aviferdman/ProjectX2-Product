@@ -203,6 +203,29 @@ export function checkPackageMetadata(pkgDir: string): CheckItem[] {
     });
   }
 
+  const publishConfig = pkgJson['publishConfig'] as
+    | { access?: string; registry?: string }
+    | undefined;
+  if (publishConfig?.access === 'public') {
+    checks.push({
+      name: 'publish-config',
+      status: 'pass',
+      message: 'publishConfig.access is "public"',
+    });
+  } else if (publishConfig) {
+    checks.push({
+      name: 'publish-config',
+      status: 'warn',
+      message: `publishConfig.access is "${publishConfig.access ?? 'unset'}", expected "public" for scoped packages`,
+    });
+  } else {
+    checks.push({
+      name: 'publish-config',
+      status: 'warn',
+      message: 'No publishConfig — scoped packages default to restricted access',
+    });
+  }
+
   return checks;
 }
 
@@ -511,6 +534,9 @@ function main(): void {
     'packages/tools-file',
     'packages/tools-web',
     'packages/tools-shell',
+    'packages/eslint-config',
+    'packages/prettier-config',
+    'packages/ui',
   ];
 
   const packagePaths = args.packages.length > 0 ? args.packages : allPackages;
