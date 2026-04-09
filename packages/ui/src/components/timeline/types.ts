@@ -168,6 +168,10 @@ export interface LogEntry {
   data?: Record<string, unknown>;
   /** Optional associated event ID (links to timeline). */
   eventId?: string;
+  /** Optional task identifier for filtering by task. */
+  taskId?: string;
+  /** Optional task display name. */
+  taskName?: string;
 }
 
 /** Props for the LogViewer component. */
@@ -200,4 +204,42 @@ export interface LogRowProps {
   onClick?: (entryId: string) => void;
   /** Search query for highlighting. */
   searchQuery?: string;
+}
+
+/* ------------------------------------------------------------------ */
+/* Log Filters types (TASK-145)                                        */
+/* ------------------------------------------------------------------ */
+
+/** Structured filters for the log viewer. */
+export interface LogFilters {
+  /** Free-text search across message and agent name. */
+  searchQuery: string;
+  /** Agent IDs to include. Empty array means "all agents". */
+  agentIds: string[];
+  /** Task IDs to include. Empty array means "all tasks". */
+  taskIds: string[];
+  /** Log levels to include. Empty array means "all levels". */
+  levels: LogLevel[];
+}
+
+/** Option for a filter dropdown / chip list. */
+export interface FilterOption {
+  /** Unique identifier for the option. */
+  id: string;
+  /** Display label. */
+  label: string;
+}
+
+/** Props for the LogFilterBar component. */
+export interface LogFilterBarProps {
+  /** Current filter state. */
+  filters: LogFilters;
+  /** Callback when filters change. */
+  onFiltersChange: (filters: LogFilters) => void;
+  /** Available agents for the agent filter dropdown. */
+  agents: FilterOption[];
+  /** Available tasks for the task filter dropdown. */
+  tasks: FilterOption[];
+  /** Optional className for the root element. */
+  className?: string;
 }

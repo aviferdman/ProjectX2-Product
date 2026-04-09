@@ -110,6 +110,13 @@ export {
   LOG_LEVEL_STYLES,
   LOG_COLORS,
   SYNTAX_COLORS,
+  // Log Filters (TASK-145)
+  LogFilterBar,
+  type LogFilterBarProps,
+  type LogFilters,
+  type LogFilterOption,
+  filterLogEntries,
+  DEFAULT_LOG_FILTERS,
   // Template Browser (TASK-159)
   TemplateCategoryBadge,
   type TemplateCategoryBadgeProps,
@@ -193,6 +200,13 @@ export {
   type UseCanvasStateOptions,
   type UseCanvasStateResult,
   type CanvasStateManager,
+} from './hooks/index.js';
+
+// Hooks — Log Filters (TASK-145)
+export {
+  useLogFilters,
+  type UseLogFiltersOptions,
+  type UseLogFiltersResult,
 } from './hooks/index.js';
 
 // Design tokens (programmatic)

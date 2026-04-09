@@ -7,3 +7,9 @@ export {
   type UseCanvasStateResult,
   type CanvasStateManager,
 } from './useCanvasState.js';
+// TASK-145: Log filter management hook
+export {
+  useLogFilters,
+  type UseLogFiltersOptions,
+  type UseLogFiltersResult,
+} from './useLogFilters.js';

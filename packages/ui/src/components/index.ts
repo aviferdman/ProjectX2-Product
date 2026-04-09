@@ -92,6 +92,13 @@ export {
   LOG_LEVEL_STYLES,
   LOG_COLORS,
   SYNTAX_COLORS,
+  // Log Filters (TASK-145)
+  LogFilterBar,
+  type LogFilterBarProps,
+  type LogFilters,
+  type FilterOption as LogFilterOption,
+  filterLogEntries,
+  DEFAULT_LOG_FILTERS,
 } from './timeline/index.js';
 
 // Template Browser (TASK-159)

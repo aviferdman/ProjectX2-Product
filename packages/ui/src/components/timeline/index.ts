@@ -2,6 +2,7 @@
  * Timeline barrel export.
  * TASK-143: Implement timeline chart (time axis, agent lanes, event blocks)
  * TASK-144: Implement log viewer (display, format, syntax highlighting)
+ * TASK-145: Implement filters and search (agent, task, log level)
  */
 export { TimelineChart } from './TimelineChart.js';
 export { TimeAxis } from './TimeAxis.js';
@@ -12,6 +13,8 @@ export { Playhead } from './Playhead.js';
 export { LogViewer } from './LogViewer.js';
 export { LogRow, formatTimestamp, tokenizeJson, highlightSearch } from './LogRow.js';
 export type { SyntaxToken, HighlightSegment } from './LogRow.js';
+export { LogFilterBar } from './LogFilterBar.js';
+export { filterLogEntries, DEFAULT_LOG_FILTERS } from './filterLogEntries.js';
 export {
   TIMELINE_SIZING,
   EVENT_STYLES,
@@ -41,4 +44,7 @@ export type {
   LogEntry,
   LogViewerProps,
   LogRowProps,
+  LogFilters,
+  FilterOption,
+  LogFilterBarProps,
 } from './types.js';
