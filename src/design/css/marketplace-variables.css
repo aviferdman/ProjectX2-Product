@@ -1,0 +1,447 @@
+/*
+ * Crewspace — Marketplace CSS Custom Properties
+ * TASK-163: Design marketplace UI (integration browser, install flow)
+ *
+ * Component-level tokens for the marketplace page: integration browser,
+ * category sidebar, search/filter controls, install flow, and progress.
+ * Builds on root tokens from canvas-variables.css.
+ * Apply `.cs-marketplace` to the page root element.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Page layout                                                         */
+/* ------------------------------------------------------------------ */
+.cs-marketplace {
+  --mp-bg: var(--cs-surface-app);
+  --mp-header-h: 56px;
+  --mp-sidebar-w: 240px;
+  --mp-sidebar-collapsed-w: 0px;
+  --mp-content-max-w: 1440px;
+  --mp-content-padding: 24px;
+  --mp-toolbar-h: 52px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header                                                              */
+/* ------------------------------------------------------------------ */
+.cs-marketplace-header {
+  --header-bg: var(--cs-surface-panel);
+  --header-border: var(--cs-border-default);
+  --header-h: 56px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Category sidebar                                                    */
+/* ------------------------------------------------------------------ */
+.cs-marketplace-sidebar {
+  --sidebar-bg: var(--cs-surface-panel);
+  --sidebar-border: var(--cs-border-subtle);
+  --sidebar-w: 240px;
+
+  /* Section labels */
+  --section-gap: 16px;
+  --section-label-color: var(--cs-text-tertiary);
+
+  /* Category items */
+  --cat-item-h: 36px;
+  --cat-item-gap: 4px;
+  --cat-item-radius: var(--cs-radius-md, 6px);
+  --cat-item-color: var(--cs-text-secondary);
+  --cat-item-color-hover: var(--cs-text-primary);
+  --cat-item-color-active: #c4b5fd;
+  --cat-item-bg-hover: rgba(148, 163, 184, 0.08);
+  --cat-item-bg-active: rgba(139, 92, 246, 0.1);
+  --cat-item-icon-size: 18px;
+
+  /* Category colors */
+  --cat-ai-ml: #a78bfa;
+  --cat-ai-ml-bg: rgba(167, 139, 250, 0.15);
+  --cat-communication: #38bdf8;
+  --cat-communication-bg: rgba(56, 189, 248, 0.15);
+  --cat-data: #34d399;
+  --cat-data-bg: rgba(52, 211, 153, 0.15);
+  --cat-devtools: #fbbf24;
+  --cat-devtools-bg: rgba(251, 191, 36, 0.15);
+  --cat-productivity: #fb7185;
+  --cat-productivity-bg: rgba(251, 113, 133, 0.15);
+  --cat-storage: #cbd5e1;
+  --cat-storage-bg: rgba(203, 213, 225, 0.15);
+}
+
+.cs-marketplace-sidebar [data-active] {
+  --cat-item-color: var(--cat-item-color-active);
+  --cat-item-bg: var(--cat-item-bg-active);
+}
+
+/* ------------------------------------------------------------------ */
+/* Toolbar (search + filters + sort)                                   */
+/* ------------------------------------------------------------------ */
+.cs-marketplace-toolbar {
+  --toolbar-h: 52px;
+
+  /* Search input */
+  --search-h: 40px;
+  --search-bg: rgba(30, 41, 59, 0.5);
+  --search-border: var(--cs-border-default);
+  --search-border-focus: #8b5cf6;
+  --search-placeholder: var(--cs-text-tertiary);
+  --search-text: var(--cs-text-primary);
+  --search-icon: var(--cs-text-tertiary);
+  --search-radius: var(--cs-radius-lg, 8px);
+
+  /* Filter chips */
+  --chip-h: 30px;
+  --chip-gap: 8px;
+  --chip-bg: rgba(30, 41, 59, 0.4);
+  --chip-bg-active: rgba(139, 92, 246, 0.15);
+  --chip-border: var(--cs-border-subtle);
+  --chip-border-active: rgba(139, 92, 246, 0.4);
+  --chip-text: var(--cs-text-secondary);
+  --chip-text-active: #c4b5fd;
+  --chip-radius: 9999px;
+  --chip-count-bg: rgba(148, 163, 184, 0.12);
+  --chip-count-text: var(--cs-text-tertiary);
+
+  /* Sort dropdown */
+  --sort-bg: rgba(30, 41, 59, 0.6);
+  --sort-bg-hover: rgba(30, 41, 59, 0.8);
+  --sort-border: var(--cs-border-default);
+  --sort-text: var(--cs-text-secondary);
+  --sort-text-active: var(--cs-text-primary);
+  --sort-menu-bg: var(--cs-surface-elevated);
+  --sort-menu-border: var(--cs-border-default);
+  --sort-item-bg-hover: rgba(139, 92, 246, 0.08);
+  --sort-radius: var(--cs-radius-lg, 8px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Integration card grid                                               */
+/* ------------------------------------------------------------------ */
+.cs-marketplace-grid {
+  --grid-card-w: 300px;
+  --grid-card-min-w: 260px;
+  --grid-card-max-w: 360px;
+  --grid-card-gap: 20px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Featured banner                                                     */
+/* ------------------------------------------------------------------ */
+.cs-marketplace-featured {
+  --featured-bg: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(56, 189, 248, 0.08) 100%);
+  --featured-border: rgba(139, 92, 246, 0.25);
+  --featured-radius: var(--cs-radius-xl, 12px);
+  --featured-h: 200px;
+  --featured-title-color: var(--cs-text-primary);
+  --featured-desc-color: var(--cs-text-secondary);
+
+  /* Featured badge */
+  --featured-badge-h: 22px;
+  --featured-badge-bg: rgba(251, 191, 36, 0.15);
+  --featured-badge-text: #fcd34d;
+  --featured-badge-border: rgba(251, 191, 36, 0.3);
+  --featured-badge-radius: var(--cs-radius-sm, 4px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Install button states                                               */
+/* ------------------------------------------------------------------ */
+.cs-mp-install-btn {
+  --btn-h: 36px;
+  --btn-radius: var(--cs-radius-lg, 8px);
+  --btn-icon-size: 16px;
+  --btn-font-size: 0.8125rem;
+  --btn-font-weight: 600;
+}
+
+/* Default state: Install */
+.cs-mp-install-btn--default {
+  --btn-bg: #7c3aed;
+  --btn-bg-hover: #8b5cf6;
+  --btn-bg-active: #6d28d9;
+  --btn-text: #ffffff;
+  --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
+}
+
+/* Installing state: spinner + progress */
+.cs-mp-install-btn--installing {
+  --btn-bg: rgba(139, 92, 246, 0.15);
+  --btn-text: #c4b5fd;
+  --btn-border: rgba(139, 92, 246, 0.3);
+}
+
+/* Installed state: checkmark */
+.cs-mp-install-btn--installed {
+  --btn-bg: rgba(52, 211, 153, 0.12);
+  --btn-text: #34d399;
+  --btn-border: rgba(52, 211, 153, 0.3);
+  --btn-icon-color: #34d399;
+}
+
+/* Uninstall state (hover on installed) */
+.cs-mp-install-btn--uninstall {
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(251, 113, 133, 0.1);
+  --btn-text: var(--cs-text-secondary);
+  --btn-text-hover: #fb7185;
+  --btn-border: var(--cs-border-default);
+  --btn-border-hover: rgba(251, 113, 133, 0.3);
+}
+
+/* ------------------------------------------------------------------ */
+/* Progress bar                                                        */
+/* ------------------------------------------------------------------ */
+.cs-mp-progress-bar {
+  --progress-h: 4px;
+  --progress-radius: 2px;
+  --progress-track-bg: rgba(30, 41, 59, 0.5);
+  --progress-fill-bg: #8b5cf6;
+  --progress-fill-bg-complete: #10b981;
+  --progress-fill-bg-error: #f43f5e;
+  --progress-shimmer: rgba(255, 255, 255, 0.15);
+  --progress-transition: 400ms ease-out;
+}
+
+/* ------------------------------------------------------------------ */
+/* Install confirmation modal                                          */
+/* ------------------------------------------------------------------ */
+.cs-mp-install-modal-overlay {
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+}
+
+.cs-mp-install-modal {
+  --modal-w: 520px;
+  --modal-max-h: 80vh;
+  --modal-bg: var(--cs-surface-elevated);
+  --modal-border: var(--cs-border-default);
+  --modal-radius: var(--cs-radius-xl, 12px);
+  --modal-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(148, 163, 184, 0.06);
+
+  /* Header */
+  --modal-header-bg: var(--cs-surface-panel);
+  --modal-header-border: var(--cs-border-subtle);
+  --modal-header-h: 56px;
+  --modal-title-color: var(--cs-text-primary);
+  --modal-subtitle-color: var(--cs-text-secondary);
+
+  /* Close button */
+  --modal-close-color: var(--cs-text-tertiary);
+  --modal-close-color-hover: var(--cs-text-primary);
+  --modal-close-size: 32px;
+
+  /* Body */
+  --modal-body-padding: 24px;
+
+  /* Integration icon */
+  --modal-icon-size: 48px;
+  --modal-icon-radius: var(--cs-radius-lg, 8px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Permission list (inside install modal)                              */
+/* ------------------------------------------------------------------ */
+.cs-mp-permission-list {
+  --perm-item-h: 40px;
+  --perm-item-gap: 8px;
+  --perm-icon-size: 20px;
+  --perm-icon-granted: #34d399;
+  --perm-icon-required: #fbbf24;
+  --perm-icon-optional: var(--cs-text-tertiary);
+  --perm-text-color: var(--cs-text-primary);
+  --perm-desc-color: var(--cs-text-secondary);
+  --perm-divider: var(--cs-border-subtle);
+}
+
+/* ------------------------------------------------------------------ */
+/* Install status steps (inside modal)                                 */
+/* ------------------------------------------------------------------ */
+.cs-mp-install-status {
+  --status-pending-color: var(--cs-text-tertiary);
+  --status-pending-icon: #64748b;
+  --status-running-color: #c4b5fd;
+  --status-running-icon: #a78bfa;
+  --status-success-color: #34d399;
+  --status-success-icon: #34d399;
+  --status-error-color: #fb7185;
+  --status-error-icon: #fb7185;
+  --status-connector: var(--cs-border-subtle);
+  --status-connector-done: #10b981;
+  --status-step-transition: 200ms ease-out;
+}
+
+/* ------------------------------------------------------------------ */
+/* Pagination                                                          */
+/* ------------------------------------------------------------------ */
+.cs-marketplace-pagination {
+  --page-btn-size: 32px;
+  --page-btn-bg: transparent;
+  --page-btn-bg-hover: rgba(148, 163, 184, 0.08);
+  --page-btn-bg-active: rgba(139, 92, 246, 0.15);
+  --page-btn-text: var(--cs-text-secondary);
+  --page-btn-text-active: #c4b5fd;
+  --page-btn-border: var(--cs-border-subtle);
+  --page-btn-radius: var(--cs-radius-md, 6px);
+  --page-gap: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Empty state                                                         */
+/* ------------------------------------------------------------------ */
+.cs-marketplace-empty {
+  --empty-icon-size: 72px;
+  --empty-icon-color: #475569;
+  --empty-heading-color: var(--cs-text-primary);
+  --empty-desc-color: var(--cs-text-secondary);
+  --empty-border: var(--cs-border-subtle);
+  --empty-border-style: dashed;
+  --empty-radius: var(--cs-radius-xl, 12px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+
+/* Card grid entry */
+@keyframes cs-mp-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Install modal entrance */
+@keyframes cs-mp-modal-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal overlay fade-in */
+@keyframes cs-mp-overlay-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Progress bar shimmer */
+@keyframes cs-mp-progress-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+/* Install spinner rotation */
+@keyframes cs-mp-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Success pulse after install */
+@keyframes cs-mp-success-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+}
+
+/* Grid reflow when filtering */
+@keyframes cs-mp-grid-reflow {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Empty state fade-in */
+@keyframes cs-mp-empty-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Install status step enter */
+@keyframes cs-mp-status-step-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive: stacked layout on small screens                         */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .cs-marketplace {
+    --mp-sidebar-w: 0px;
+    --mp-content-padding: 16px;
+  }
+
+  .cs-marketplace-grid {
+    --grid-card-min-w: 100%;
+    --grid-card-max-w: 100%;
+    --grid-card-gap: 16px;
+  }
+
+  .cs-mp-install-modal {
+    --modal-w: 100%;
+    --modal-max-h: 100vh;
+    --modal-radius: 0;
+  }
+
+  .cs-marketplace-featured {
+    --featured-h: auto;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-marketplace,
+  .cs-marketplace *,
+  .cs-mp-install-modal,
+  .cs-mp-install-modal * {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+
+  .cs-mp-progress-bar {
+    --progress-shimmer: transparent;
+  }
+}

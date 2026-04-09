@@ -30,4 +30,12 @@ export default defineWorkspace([
       environment: 'node',
     },
   },
+  {
+    test: {
+      name: 'design',
+      root: './src/design',
+      include: ['__tests__/**/*.test.ts'],
+      environment: 'node',
+    },
+  },
 ]);

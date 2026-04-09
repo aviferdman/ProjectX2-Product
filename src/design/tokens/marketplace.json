@@ -1,0 +1,318 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "crewspace": {
+    "marketplace": {
+      "_description": "TASK-163: Design marketplace UI (integration browser, install flow). Design tokens for the marketplace page layout, integration browsing, search/filter controls, and install flow.",
+
+      "layout": {
+        "bg": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Page background" },
+        "header-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Header bar background" },
+        "header-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Header bottom border" },
+        "sidebar-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Category sidebar background" },
+        "sidebar-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Sidebar right border" },
+        "content-bg": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Main content area background" }
+      },
+
+      "sizing": {
+        "header-height": { "value": "56px", "type": "sizing", "description": "Top header bar height" },
+        "sidebar-width": { "value": "240px", "type": "sizing", "description": "Category sidebar width" },
+        "sidebar-collapsed-width": { "value": "0px", "type": "sizing", "description": "Collapsed sidebar on mobile" },
+        "content-max-width": { "value": "1440px", "type": "sizing", "description": "Maximum content width" },
+        "content-padding": { "value": "24px", "type": "sizing", "description": "Main content area padding" },
+        "toolbar-height": { "value": "52px", "type": "sizing", "description": "Search/filter toolbar height" },
+        "card-width": { "value": "300px", "type": "sizing", "description": "Integration card default width" },
+        "card-min-width": { "value": "260px", "type": "sizing", "description": "Minimum card width for responsive grid" },
+        "card-max-width": { "value": "360px", "type": "sizing", "description": "Maximum card width" },
+        "card-gap": { "value": "20px", "type": "sizing", "description": "Gap between integration cards" },
+        "featured-height": { "value": "200px", "type": "sizing", "description": "Featured banner card height" },
+        "featured-max-width": { "value": "100%", "type": "sizing", "description": "Featured banner spans full width" },
+        "install-modal-width": { "value": "520px", "type": "sizing", "description": "Install confirmation modal width" },
+        "install-modal-max-height": { "value": "80vh", "type": "sizing", "description": "Maximum modal height" },
+        "progress-bar-height": { "value": "4px", "type": "sizing", "description": "Install progress bar track height" },
+        "progress-bar-radius": { "value": "2px", "type": "sizing", "description": "Progress bar corner rounding" }
+      },
+
+      "grid": {
+        "columns-sm": { "value": "1", "type": "number", "description": "Single column on small screens" },
+        "columns-md": { "value": "2", "type": "number", "description": "Two columns on medium screens" },
+        "columns-lg": { "value": "3", "type": "number", "description": "Three columns on large screens" },
+        "columns-xl": { "value": "4", "type": "number", "description": "Four columns on extra-large screens" }
+      },
+
+      "searchBar": {
+        "height": { "value": "40px", "type": "sizing" },
+        "bg": { "value": "rgba(30,41,59,0.5)", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "border-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "placeholder": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "text": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "icon": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" }
+      },
+
+      "filterChip": {
+        "height": { "value": "30px", "type": "sizing" },
+        "gap": { "value": "8px", "type": "sizing" },
+        "bg": { "value": "rgba(30,41,59,0.4)", "type": "color" },
+        "bg-active": { "value": "rgba(139,92,246,0.15)", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "border-active": { "value": "rgba(139,92,246,0.4)", "type": "color" },
+        "text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "text-active": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "radius": { "value": "{crewspace.radius.full}", "type": "borderRadius" },
+        "count-bg": { "value": "rgba(148,163,184,0.12)", "type": "color", "description": "Count badge inside chip" },
+        "count-text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" }
+      },
+
+      "sortDropdown": {
+        "bg": { "value": "rgba(30,41,59,0.6)", "type": "color" },
+        "bg-hover": { "value": "rgba(30,41,59,0.8)", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "text-active": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "menu-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "menu-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "item-bg-hover": { "value": "rgba(139,92,246,0.08)", "type": "color" },
+        "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" }
+      },
+
+      "categorySidebar": {
+        "item-height": { "value": "36px", "type": "sizing" },
+        "item-radius": { "value": "{crewspace.radius.md}", "type": "borderRadius" },
+        "item-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "item-color-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "item-color-active": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "item-bg-hover": { "value": "rgba(148,163,184,0.08)", "type": "color" },
+        "item-bg-active": { "value": "rgba(139,92,246,0.1)", "type": "color" },
+        "item-icon-size": { "value": "18px", "type": "sizing" },
+        "item-gap": { "value": "4px", "type": "sizing" },
+        "section-gap": { "value": "16px", "type": "sizing" },
+        "section-label-color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" }
+      },
+
+      "categoryColor": {
+        "ai-ml": { "value": "{crewspace.color.primitive.violet.400}", "type": "color", "description": "AI & Machine Learning" },
+        "ai-ml-bg": { "value": "rgba(167,139,250,0.15)", "type": "color" },
+        "communication": { "value": "{crewspace.color.primitive.sky.400}", "type": "color", "description": "Communication & Chat" },
+        "communication-bg": { "value": "rgba(56,189,248,0.15)", "type": "color" },
+        "data": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color", "description": "Data & Analytics" },
+        "data-bg": { "value": "rgba(52,211,153,0.15)", "type": "color" },
+        "devtools": { "value": "{crewspace.color.primitive.amber.400}", "type": "color", "description": "Developer Tools" },
+        "devtools-bg": { "value": "rgba(251,191,36,0.15)", "type": "color" },
+        "productivity": { "value": "{crewspace.color.primitive.rose.400}", "type": "color", "description": "Productivity & Workflow" },
+        "productivity-bg": { "value": "rgba(251,113,133,0.15)", "type": "color" },
+        "storage": { "value": "{crewspace.color.primitive.slate.300}", "type": "color", "description": "Storage & Files" },
+        "storage-bg": { "value": "rgba(203,213,225,0.15)", "type": "color" }
+      },
+
+      "featured": {
+        "bg": { "value": "linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(56,189,248,0.08) 100%)", "type": "gradient", "description": "Featured banner gradient" },
+        "border": { "value": "rgba(139,92,246,0.25)", "type": "color" },
+        "badge-bg": { "value": "rgba(251,191,36,0.15)", "type": "color" },
+        "badge-text": { "value": "#fcd34d", "type": "color" },
+        "badge-border": { "value": "rgba(251,191,36,0.3)", "type": "color" },
+        "badge-height": { "value": "22px", "type": "sizing" },
+        "title-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "desc-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius" }
+      },
+
+      "installButton": {
+        "height": { "value": "36px", "type": "sizing" },
+        "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
+        "icon-size": { "value": "16px", "type": "sizing" },
+        "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+        "font-weight": { "value": "600", "type": "fontWeight" },
+        "default-bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
+        "default-bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "default-bg-active": { "value": "{crewspace.color.primitive.violet.700}", "type": "color" },
+        "default-text": { "value": "#ffffff", "type": "color" },
+        "default-shadow": { "value": "0 2px 8px rgba(124,58,237,0.35)", "type": "boxShadow" },
+        "default-shadow-hover": { "value": "0 4px 12px rgba(124,58,237,0.45)", "type": "boxShadow" },
+        "installing-bg": { "value": "rgba(139,92,246,0.15)", "type": "color" },
+        "installing-text": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "installing-border": { "value": "rgba(139,92,246,0.3)", "type": "color" },
+        "installed-bg": { "value": "rgba(52,211,153,0.12)", "type": "color" },
+        "installed-text": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+        "installed-border": { "value": "rgba(52,211,153,0.3)", "type": "color" },
+        "installed-icon": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color", "description": "Checkmark icon" },
+        "uninstall-bg": { "value": "transparent", "type": "color" },
+        "uninstall-bg-hover": { "value": "rgba(251,113,133,0.1)", "type": "color" },
+        "uninstall-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "uninstall-text-hover": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" },
+        "uninstall-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "uninstall-border-hover": { "value": "rgba(251,113,133,0.3)", "type": "color" }
+      },
+
+      "progressBar": {
+        "track-bg": { "value": "rgba(30,41,59,0.5)", "type": "color" },
+        "fill-bg": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "fill-bg-complete": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },
+        "fill-bg-error": { "value": "{crewspace.color.primitive.rose.500}", "type": "color" },
+        "shimmer": { "value": "rgba(255,255,255,0.15)", "type": "color", "description": "Animated shimmer highlight on active bar" }
+      },
+
+      "installModal": {
+        "overlay": { "value": "rgba(0,0,0,0.6)", "type": "color" },
+        "bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius" },
+        "shadow": { "value": "0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.06)", "type": "boxShadow" },
+        "header-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color" },
+        "header-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "header-height": { "value": "56px", "type": "sizing" },
+        "title-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "subtitle-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "body-padding": { "value": "24px", "type": "sizing" },
+        "close-color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "close-color-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "close-size": { "value": "32px", "type": "sizing" },
+        "icon-container-size": { "value": "48px", "type": "sizing", "description": "Integration logo container in modal header" },
+        "icon-container-radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" }
+      },
+
+      "permissionList": {
+        "item-height": { "value": "40px", "type": "sizing" },
+        "item-gap": { "value": "8px", "type": "sizing" },
+        "icon-size": { "value": "20px", "type": "sizing" },
+        "icon-color-granted": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+        "icon-color-required": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" },
+        "icon-color-optional": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "text-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "desc-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "divider-color": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" }
+      },
+
+      "installStatus": {
+        "pending-color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "pending-icon": { "value": "{crewspace.color.primitive.slate.500}", "type": "color" },
+        "running-color": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "running-icon": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
+        "success-color": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+        "success-icon": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+        "error-color": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" },
+        "error-icon": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" },
+        "step-connector-color": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "step-connector-color-done": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" }
+      },
+
+      "emptyState": {
+        "icon-size": { "value": "72px", "type": "sizing" },
+        "icon-color": { "value": "{crewspace.color.primitive.slate.600}", "type": "color" },
+        "heading-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "desc-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius" }
+      },
+
+      "pagination": {
+        "btn-size": { "value": "32px", "type": "sizing" },
+        "btn-bg": { "value": "transparent", "type": "color" },
+        "btn-bg-hover": { "value": "rgba(148,163,184,0.08)", "type": "color" },
+        "btn-bg-active": { "value": "rgba(139,92,246,0.15)", "type": "color" },
+        "btn-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "btn-text-active": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "btn-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "btn-radius": { "value": "{crewspace.radius.md}", "type": "borderRadius" },
+        "gap": { "value": "4px", "type": "sizing" }
+      },
+
+      "typography": {
+        "page-title": {
+          "font-size": { "value": "1.5rem", "type": "fontSize", "description": "24px" },
+          "font-weight": { "value": "700", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" }
+        },
+        "page-subtitle": {
+          "font-size": { "value": "0.875rem", "type": "fontSize", "description": "14px" },
+          "font-weight": { "value": "400", "type": "fontWeight" },
+          "line-height": { "value": "1.5", "type": "lineHeight" }
+        },
+        "section-title": {
+          "font-size": { "value": "1.125rem", "type": "fontSize", "description": "18px" },
+          "font-weight": { "value": "600", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" }
+        },
+        "sidebar-label": {
+          "font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
+          "font-weight": { "value": "600", "type": "fontWeight" },
+          "line-height": { "value": "1", "type": "lineHeight" },
+          "letter-spacing": { "value": "0.05em", "type": "letterSpacing" }
+        },
+        "sidebar-item": {
+          "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "font-weight": { "value": "500", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" }
+        },
+        "chip-label": {
+          "font-size": { "value": "0.75rem", "type": "fontSize", "description": "12px" },
+          "font-weight": { "value": "500", "type": "fontWeight" },
+          "line-height": { "value": "1", "type": "lineHeight" }
+        },
+        "install-btn": {
+          "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "font-weight": { "value": "600", "type": "fontWeight" },
+          "line-height": { "value": "1", "type": "lineHeight" }
+        },
+        "modal-title": {
+          "font-size": { "value": "1.125rem", "type": "fontSize", "description": "18px" },
+          "font-weight": { "value": "600", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" }
+        },
+        "modal-subtitle": {
+          "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "font-weight": { "value": "400", "type": "fontWeight" },
+          "line-height": { "value": "1.5", "type": "lineHeight" }
+        },
+        "permission-label": {
+          "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "font-weight": { "value": "500", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" }
+        },
+        "permission-desc": {
+          "font-size": { "value": "0.75rem", "type": "fontSize", "description": "12px" },
+          "font-weight": { "value": "400", "type": "fontWeight" },
+          "line-height": { "value": "1.5", "type": "lineHeight" }
+        },
+        "status-label": {
+          "font-size": { "value": "0.75rem", "type": "fontSize", "description": "12px" },
+          "font-weight": { "value": "500", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" }
+        },
+        "empty-heading": {
+          "font-size": { "value": "1rem", "type": "fontSize", "description": "16px" },
+          "font-weight": { "value": "600", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" }
+        },
+        "empty-desc": {
+          "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "font-weight": { "value": "400", "type": "fontWeight" },
+          "line-height": { "value": "1.5", "type": "lineHeight" }
+        }
+      },
+
+      "animation": {
+        "card-enter-duration": { "value": "250ms", "type": "duration" },
+        "card-enter-easing": { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier" },
+        "stagger-delay": { "value": "40ms", "type": "duration", "description": "Delay between consecutive card animations" },
+        "max-stagger": { "value": "500ms", "type": "duration", "description": "Maximum total stagger" },
+        "modal-enter-duration": { "value": "300ms", "type": "duration" },
+        "modal-enter-easing": { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier" },
+        "modal-overlay-duration": { "value": "200ms", "type": "duration" },
+        "progress-duration": { "value": "400ms", "type": "duration" },
+        "progress-easing": { "value": "ease-out", "type": "cubicBezier" },
+        "filter-toggle-duration": { "value": "150ms", "type": "duration" },
+        "filter-toggle-easing": { "value": "ease-out", "type": "cubicBezier" },
+        "hover-duration": { "value": "150ms", "type": "duration" },
+        "hover-easing": { "value": "ease-out", "type": "cubicBezier" },
+        "spinner-duration": { "value": "800ms", "type": "duration", "description": "Install spinner rotation speed" },
+        "status-step-duration": { "value": "200ms", "type": "duration", "description": "Install step transition" },
+        "grid-reflow-duration": { "value": "200ms", "type": "duration" },
+        "grid-reflow-easing": { "value": "ease-out", "type": "cubicBezier" },
+        "empty-state-duration": { "value": "300ms", "type": "duration" },
+        "empty-state-easing": { "value": "ease-out", "type": "cubicBezier" },
+        "success-pulse-duration": { "value": "600ms", "type": "duration", "description": "Green pulse on successful install" }
+      }
+    }
+  }
+}
