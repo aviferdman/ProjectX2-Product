@@ -35,7 +35,7 @@ export {
   ResponsiveLayout,
   type ResponsiveLayoutProps,
   type SidebarMode,
-  // Canvas (TASK-135, TASK-136)
+  // Canvas (TASK-135, TASK-136, TASK-137)
   WorkflowCanvas,
   type WorkflowCanvasProps,
   WorkflowNode,
@@ -53,6 +53,13 @@ export {
   TaskNode,
   ToolNode,
   LLMNode,
+  // TASK-137: Toolbar & Properties Panel
+  CanvasToolbar,
+  type CanvasToolbarProps,
+  type ToolbarNodeEntry,
+  DEFAULT_NODE_ENTRIES,
+  PropertiesPanel,
+  type PropertiesPanelProps,
   type CanvasNodeType,
   type NodeStatus,
   type WorkflowNodeData,

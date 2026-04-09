@@ -13,7 +13,7 @@ export {
   type SidebarMode,
 } from './layout/index.js';
 
-// Canvas (TASK-135, TASK-136)
+// Canvas (TASK-135, TASK-136, TASK-137)
 export {
   WorkflowCanvas,
   type WorkflowCanvasProps,
@@ -32,6 +32,13 @@ export {
   TaskNode,
   ToolNode,
   LLMNode,
+  // TASK-137: Toolbar & Properties Panel
+  CanvasToolbar,
+  type CanvasToolbarProps,
+  type ToolbarNodeEntry,
+  DEFAULT_NODE_ENTRIES,
+  PropertiesPanel,
+  type PropertiesPanelProps,
   type CanvasNodeType,
   type NodeStatus,
   type WorkflowNodeData,
