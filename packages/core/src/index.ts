@@ -663,6 +663,33 @@ export type {
   UsageTrackerConfig,
 } from './usage/index.js';
 
+// Canvas State
+export { InMemoryCanvasStateStorage } from './canvas/index.js';
+export { CanvasStateService } from './canvas/index.js';
+export {
+  CanvasNotFoundError,
+  CanvasValidationError,
+  CanvasHistoryEmptyError,
+} from './canvas/index.js';
+export type {
+  CanvasEdge,
+  CanvasEdgeVariant,
+  CanvasHistoryEntry,
+  CanvasNode,
+  CanvasNodeKind,
+  CanvasNodeStatus,
+  CanvasPosition,
+  CanvasSnapshot,
+  CanvasStateServiceConfig,
+  CanvasStateStorageProvider,
+  CanvasViewport,
+  CreateCanvasStateInput,
+  ListCanvasStatesOptions,
+  ListCanvasStatesResult,
+  StoredCanvasState,
+  UpdateCanvasStateInput,
+} from './canvas/index.js';
+
 // Template Storage
 export { InMemoryTemplateStorage } from './template/index.js';
 export { TemplateNotFoundError, TemplateValidationError } from './template/index.js';
