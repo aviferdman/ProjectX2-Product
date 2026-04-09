@@ -147,6 +147,66 @@ export interface PlayheadProps {
 }
 
 /* ------------------------------------------------------------------ */
+/* Playback types (TASK-146)                                           */
+/* ------------------------------------------------------------------ */
+
+/** Supported playback speed multipliers. */
+export type PlaybackSpeed = 0.25 | 0.5 | 1 | 2 | 4;
+
+/** Playback state machine states. */
+export type PlaybackStatus = 'idle' | 'playing' | 'paused';
+
+/** Describes the full playback state. */
+export interface PlaybackState {
+  /** Current status. */
+  status: PlaybackStatus;
+  /** Current playhead position in ms. */
+  currentMs: number;
+  /** Playback speed multiplier. */
+  speed: PlaybackSpeed;
+  /** Timeline start in ms. */
+  startMs: number;
+  /** Timeline end in ms. */
+  endMs: number;
+  /** Index of the currently focused event (-1 = none). */
+  currentEventIndex: number;
+}
+
+/** Props for the PlaybackControls component. */
+export interface PlaybackControlsProps {
+  /** Current playback status. */
+  status: PlaybackStatus;
+  /** Current playhead position in ms. */
+  currentMs: number;
+  /** Current playback speed. */
+  speed: PlaybackSpeed;
+  /** Timeline duration start in ms. */
+  startMs: number;
+  /** Timeline duration end in ms. */
+  endMs: number;
+  /** Called when play is requested. */
+  onPlay: () => void;
+  /** Called when pause is requested. */
+  onPause: () => void;
+  /** Called to step to the next event. */
+  onStepForward: () => void;
+  /** Called to step to the previous event. */
+  onStepBackward: () => void;
+  /** Called to jump to the start. */
+  onJumpToStart: () => void;
+  /** Called to jump to the end. */
+  onJumpToEnd: () => void;
+  /** Called when playback speed changes. */
+  onSpeedChange: (speed: PlaybackSpeed) => void;
+  /** Called when the user scrubs the playhead. */
+  onSeek: (ms: number) => void;
+  /** Whether controls are disabled. */
+  disabled?: boolean;
+  /** Optional className for the root element. */
+  className?: string;
+}
+
+/* ------------------------------------------------------------------ */
 /* Log Viewer types (TASK-144)                                         */
 /* ------------------------------------------------------------------ */
 

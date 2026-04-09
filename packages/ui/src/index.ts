@@ -86,6 +86,13 @@ export {
   type EventMarkerProps,
   Playhead,
   type PlayheadProps,
+  // Playback (TASK-146)
+  PlaybackControls,
+  type PlaybackControlsProps,
+  formatPlaybackTime,
+  type PlaybackSpeed,
+  type PlaybackStatus,
+  type PlaybackState,
   TIMELINE_SIZING,
   EVENT_STYLES,
   isPointEvent,
@@ -207,6 +214,14 @@ export {
   useLogFilters,
   type UseLogFiltersOptions,
   type UseLogFiltersResult,
+} from './hooks/index.js';
+
+// Hooks — Timeline Playback (TASK-146)
+export {
+  useTimelinePlayback,
+  PLAYBACK_SPEEDS,
+  type UseTimelinePlaybackOptions,
+  type UseTimelinePlaybackResult,
 } from './hooks/index.js';
 
 // Design tokens (programmatic)

@@ -54,7 +54,7 @@ export {
   CANVAS_CONFIG,
 } from './canvas/index.js';
 
-// Timeline (TASK-143, TASK-144)
+// Timeline (TASK-143, TASK-144, TASK-146)
 export {
   TimelineChart,
   type TimelineChartProps,
@@ -68,6 +68,13 @@ export {
   type EventMarkerProps,
   Playhead,
   type PlayheadProps,
+  // Playback (TASK-146)
+  PlaybackControls,
+  type PlaybackControlsProps,
+  formatPlaybackTime,
+  type PlaybackSpeed,
+  type PlaybackStatus,
+  type PlaybackState,
   TIMELINE_SIZING,
   EVENT_STYLES,
   isPointEvent,

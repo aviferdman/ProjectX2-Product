@@ -3,6 +3,7 @@
  * TASK-143: Implement timeline chart (time axis, agent lanes, event blocks)
  * TASK-144: Implement log viewer (display, format, syntax highlighting)
  * TASK-145: Implement filters and search (agent, task, log level)
+ * TASK-146: Implement timeline playback and step-through
  */
 export { TimelineChart } from './TimelineChart.js';
 export { TimeAxis } from './TimeAxis.js';
@@ -10,6 +11,7 @@ export { AgentLane } from './AgentLane.js';
 export { EventBlock } from './EventBlock.js';
 export { EventMarker } from './EventMarker.js';
 export { Playhead } from './Playhead.js';
+export { PlaybackControls, formatPlaybackTime } from './PlaybackControls.js';
 export { LogViewer } from './LogViewer.js';
 export { LogRow, formatTimestamp, tokenizeJson, highlightSearch } from './LogRow.js';
 export type { SyntaxToken, HighlightSegment } from './LogRow.js';
@@ -41,6 +43,10 @@ export type {
   EventBlockProps,
   EventMarkerProps,
   PlayheadProps,
+  PlaybackSpeed,
+  PlaybackStatus,
+  PlaybackState,
+  PlaybackControlsProps,
   LogEntry,
   LogViewerProps,
   LogRowProps,

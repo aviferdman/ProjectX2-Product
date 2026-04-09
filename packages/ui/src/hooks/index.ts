@@ -13,3 +13,10 @@ export {
   type UseLogFiltersOptions,
   type UseLogFiltersResult,
 } from './useLogFilters.js';
+// TASK-146: Timeline playback hook
+export {
+  useTimelinePlayback,
+  PLAYBACK_SPEEDS,
+  type UseTimelinePlaybackOptions,
+  type UseTimelinePlaybackResult,
+} from './useTimelinePlayback.js';
