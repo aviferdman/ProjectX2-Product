@@ -40,7 +40,9 @@ export class UsageLimitExceededError extends CrewspaceError {
         ? 'monthly run'
         : limitType === 'maxConcurrentRuns'
           ? 'concurrent run'
-          : 'workflow';
+          : limitType === 'maxAgents'
+            ? 'agent'
+            : 'workflow';
 
     super(
       `Account "${accountId}" has exceeded the ${limitLabel} limit (${String(currentValue)}/${String(limitValue)}) on the "${planTier}" plan`,

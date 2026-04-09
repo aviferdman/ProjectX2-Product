@@ -283,6 +283,7 @@ export class UsageTracker {
     return {
       maxRunsPerMonth: customLimits.maxRunsPerMonth ?? defaults.maxRunsPerMonth,
       maxConcurrentRuns: customLimits.maxConcurrentRuns ?? defaults.maxConcurrentRuns,
+      maxAgents: customLimits.maxAgents ?? defaults.maxAgents,
       maxWorkflows: customLimits.maxWorkflows ?? defaults.maxWorkflows,
     };
   }

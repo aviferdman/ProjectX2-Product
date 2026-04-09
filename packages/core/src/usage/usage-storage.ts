@@ -213,7 +213,7 @@ export class InMemoryUsageStorage implements UsageStorageProvider {
  *
  * await plans.setAccountPlan({
  *   accountId: 'acct-1',
- *   planTier: 'starter',
+ *   planTier: 'pro',
  *   billingPeriodStart: '2026-04-01T00:00:00.000Z',
  * });
  * ```

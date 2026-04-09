@@ -380,11 +380,12 @@ describe('UsageTracker', () => {
     });
 
     it('throws UsageLimitExceededError when concurrent limit reached', async () => {
-      // Free plan allows 1 concurrent run
+      // Free plan allows 2 concurrent runs
       await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-1' });
+      await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-2' });
 
       await expect(
-        tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-2' }),
+        tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-3' }),
       ).rejects.toThrow(UsageLimitExceededError);
     });
 
@@ -494,7 +495,7 @@ describe('UsageTracker', () => {
       expect(summary.activeRuns).toBe(0);
       expect(summary.planTier).toBe('free');
       expect(summary.limits).toEqual(DEFAULT_PLAN_LIMITS.free);
-      expect(summary.remainingRuns).toBe(50);
+      expect(summary.remainingRuns).toBe(500);
       expect(summary.usagePercent).toBe(0);
     });
 
@@ -509,8 +510,8 @@ describe('UsageTracker', () => {
 
       expect(summary.runsThisPeriod).toBe(1);
       expect(summary.activeRuns).toBe(0);
-      expect(summary.remainingRuns).toBe(49);
-      expect(summary.usagePercent).toBe(2);
+      expect(summary.remainingRuns).toBe(499);
+      expect(summary.usagePercent).toBe(0);
     });
 
     it('counts active runs correctly', async () => {
@@ -551,8 +552,8 @@ describe('UsageTracker', () => {
       const summary = await tracker.getUsageSummary('acct-1');
       expect(summary.limits.maxRunsPerMonth).toBe(100);
       // concurrent and workflow limits should use free defaults
-      expect(summary.limits.maxConcurrentRuns).toBe(1);
-      expect(summary.limits.maxWorkflows).toBe(3);
+      expect(summary.limits.maxConcurrentRuns).toBe(2);
+      expect(summary.limits.maxWorkflows).toBe(10);
     });
   });
 
@@ -582,7 +583,7 @@ describe('UsageTracker', () => {
 
 describe('Usage errors', () => {
   it('UsageLimitExceededError has structured details', () => {
-    const err = new UsageLimitExceededError('acct-1', 'maxRunsPerMonth', 50, 50, 'free');
+    const err = new UsageLimitExceededError('acct-1', 'maxRunsPerMonth', 500, 500, 'free');
     expect(err.name).toBe('UsageLimitExceededError');
     expect(err.message).toContain('acct-1');
     expect(err.message).toContain('monthly run');
@@ -591,8 +592,8 @@ describe('Usage errors', () => {
     expect(json.details).toEqual({
       accountId: 'acct-1',
       limitType: 'maxRunsPerMonth',
-      currentValue: 50,
-      limitValue: 50,
+      currentValue: 500,
+      limitValue: 500,
       planTier: 'free',
     });
   });
@@ -620,12 +621,12 @@ describe('Usage errors', () => {
   });
 
   it('UsageLimitExceededError for concurrent limit', () => {
-    const err = new UsageLimitExceededError('acct-1', 'maxConcurrentRuns', 3, 3, 'starter');
+    const err = new UsageLimitExceededError('acct-1', 'maxConcurrentRuns', 3, 3, 'pro');
     expect(err.message).toContain('concurrent run');
   });
 
   it('UsageLimitExceededError for workflow limit', () => {
-    const err = new UsageLimitExceededError('acct-1', 'maxWorkflows', 3, 3, 'free');
+    const err = new UsageLimitExceededError('acct-1', 'maxWorkflows', 10, 10, 'free');
     expect(err.message).toContain('workflow');
   });
 });
@@ -637,28 +638,38 @@ describe('Usage errors', () => {
 describe('DEFAULT_PLAN_LIMITS', () => {
   it('defines limits for all tiers', () => {
     expect(DEFAULT_PLAN_LIMITS.free).toBeDefined();
-    expect(DEFAULT_PLAN_LIMITS.starter).toBeDefined();
     expect(DEFAULT_PLAN_LIMITS.pro).toBeDefined();
+    expect(DEFAULT_PLAN_LIMITS.team).toBeDefined();
     expect(DEFAULT_PLAN_LIMITS.enterprise).toBeDefined();
   });
 
-  it('free tier has reasonable defaults', () => {
+  it('free tier has correct defaults matching spec', () => {
     const free = DEFAULT_PLAN_LIMITS.free;
-    expect(free.maxRunsPerMonth).toBe(50);
-    expect(free.maxConcurrentRuns).toBe(1);
-    expect(free.maxWorkflows).toBe(3);
+    expect(free.maxRunsPerMonth).toBe(500);
+    expect(free.maxConcurrentRuns).toBe(2);
+    expect(free.maxAgents).toBe(5);
+    expect(free.maxWorkflows).toBe(10);
   });
 
   it('enterprise tier has unlimited (-1) values', () => {
     const enterprise = DEFAULT_PLAN_LIMITS.enterprise;
     expect(enterprise.maxRunsPerMonth).toBe(-1);
     expect(enterprise.maxConcurrentRuns).toBe(-1);
+    expect(enterprise.maxAgents).toBe(-1);
     expect(enterprise.maxWorkflows).toBe(-1);
   });
 
   it('tiers are ordered by increasing limits', () => {
-    const { free, starter, pro } = DEFAULT_PLAN_LIMITS;
-    expect(free.maxRunsPerMonth).toBeLessThan(starter.maxRunsPerMonth);
-    expect(starter.maxRunsPerMonth).toBeLessThan(pro.maxRunsPerMonth);
+    const { free, pro } = DEFAULT_PLAN_LIMITS;
+    expect(free.maxAgents).toBeLessThan(pro.maxAgents);
+    expect(free.maxWorkflows).toBeLessThan(pro.maxWorkflows);
+    expect(free.maxConcurrentRuns).toBeLessThan(pro.maxConcurrentRuns);
+  });
+
+  it('pro tier matches spec (unlimited runs, 20 agents, 100 workflows)', () => {
+    const pro = DEFAULT_PLAN_LIMITS.pro;
+    expect(pro.maxRunsPerMonth).toBe(-1);
+    expect(pro.maxAgents).toBe(20);
+    expect(pro.maxWorkflows).toBe(100);
   });
 });

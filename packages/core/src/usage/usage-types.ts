@@ -12,7 +12,7 @@
 // ---------------------------------------------------------------------------
 
 /** Available plan tiers with associated usage limits. */
-export type PlanTier = 'free' | 'starter' | 'pro' | 'enterprise';
+export type PlanTier = 'free' | 'pro' | 'team' | 'enterprise';
 
 /** Limits associated with a plan tier. */
 export interface PlanLimits {
@@ -22,16 +22,19 @@ export interface PlanLimits {
   /** Maximum concurrent workflow runs. -1 means unlimited. */
   readonly maxConcurrentRuns: number;
 
+  /** Maximum number of agents per workflow. -1 means unlimited. */
+  readonly maxAgents: number;
+
   /** Maximum number of stored workflows. -1 means unlimited. */
   readonly maxWorkflows: number;
 }
 
 /** Default limits for each plan tier. */
 export const DEFAULT_PLAN_LIMITS: Readonly<Record<PlanTier, PlanLimits>> = {
-  free: { maxRunsPerMonth: 50, maxConcurrentRuns: 1, maxWorkflows: 3 },
-  starter: { maxRunsPerMonth: 500, maxConcurrentRuns: 3, maxWorkflows: 20 },
-  pro: { maxRunsPerMonth: 5000, maxConcurrentRuns: 10, maxWorkflows: -1 },
-  enterprise: { maxRunsPerMonth: -1, maxConcurrentRuns: -1, maxWorkflows: -1 },
+  free: { maxRunsPerMonth: 500, maxConcurrentRuns: 2, maxAgents: 5, maxWorkflows: 10 },
+  pro: { maxRunsPerMonth: -1, maxConcurrentRuns: 10, maxAgents: 20, maxWorkflows: 100 },
+  team: { maxRunsPerMonth: -1, maxConcurrentRuns: 25, maxAgents: 50, maxWorkflows: -1 },
+  enterprise: { maxRunsPerMonth: -1, maxConcurrentRuns: -1, maxAgents: -1, maxWorkflows: -1 },
 };
 
 // ---------------------------------------------------------------------------
