@@ -1,0 +1,270 @@
+/*
+ * Crewspace — Action/Event Card CSS Custom Properties
+ * TASK-141: Design action/event cards (LLM calls, tool use, task completion)
+ *
+ * Usage: Apply `.cs-action-card` to the card root element.
+ * Requires root-level tokens from canvas-variables.css.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Card layout                                                         */
+/* ------------------------------------------------------------------ */
+.cs-action-card {
+  --card-w: 380px;
+  --card-min-w: 320px;
+  --card-max-w: 480px;
+  --card-radius: 10px;
+  --card-padding: 16px;
+  --card-gap: 12px;
+  --card-header-h: 44px;
+  --card-section-gap: 8px;
+
+  /* Colors */
+  --card-bg: var(--cs-surface-card);
+  --card-bg-hover: var(--cs-surface-elevated);
+  --card-border: var(--cs-border-default);
+  --card-divider: rgba(51, 65, 85, 0.4);
+  --card-header-text: var(--cs-text-primary);
+  --card-label-text: var(--cs-text-tertiary);
+  --card-value-text: var(--cs-text-secondary);
+  --card-close-icon: #64748b;
+  --card-close-icon-hover: #cbd5e1;
+
+  /* Code blocks */
+  --card-code-bg: rgba(15, 23, 42, 0.6);
+  --card-code-border: rgba(51, 65, 85, 0.5);
+  --card-code-radius: 6px;
+  --card-code-padding: 12px;
+  --card-code-max-h: 200px;
+
+  /* Metrics */
+  --card-metrics-bg: rgba(15, 23, 42, 0.4);
+  --card-metrics-radius: 8px;
+  --card-metrics-padding: 12px;
+  --card-metrics-gap: 16px;
+  --card-metrics-divider: rgba(51, 65, 85, 0.5);
+
+  /* Badge */
+  --card-badge-bg: rgba(30, 41, 59, 0.6);
+
+  /* Shadows */
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(148, 163, 184, 0.08);
+  --card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(148, 163, 184, 0.12);
+
+  /* Selection */
+  --card-selected-ring: #8b5cf6;
+  --card-selected-glow: rgba(139, 92, 246, 0.2);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card type accents — LLM Call (amber)                                */
+/* ------------------------------------------------------------------ */
+.cs-action-card--llm {
+  --card-accent: #f59e0b;
+  --card-accent-subtle: rgba(245, 158, 11, 0.1);
+  --card-icon-bg: rgba(245, 158, 11, 0.15);
+  --card-icon-color: #fbbf24;
+  --card-badge-text: #fbbf24;
+  --card-badge-type-bg: rgba(245, 158, 11, 0.12);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card type accents — Tool Use (emerald)                              */
+/* ------------------------------------------------------------------ */
+.cs-action-card--tool {
+  --card-accent: #10b981;
+  --card-accent-subtle: rgba(16, 185, 129, 0.1);
+  --card-icon-bg: rgba(16, 185, 129, 0.15);
+  --card-icon-color: #34d399;
+  --card-badge-text: #34d399;
+  --card-badge-type-bg: rgba(16, 185, 129, 0.12);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card type accents — Task Start (sky)                                */
+/* ------------------------------------------------------------------ */
+.cs-action-card--task-start {
+  --card-accent: #0ea5e9;
+  --card-accent-subtle: rgba(14, 165, 233, 0.1);
+  --card-icon-bg: rgba(14, 165, 233, 0.15);
+  --card-icon-color: #38bdf8;
+  --card-badge-text: #38bdf8;
+  --card-badge-type-bg: rgba(14, 165, 233, 0.12);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card type accents — Task Complete (emerald, lighter)                 */
+/* ------------------------------------------------------------------ */
+.cs-action-card--task-complete {
+  --card-accent: #10b981;
+  --card-accent-subtle: rgba(16, 185, 129, 0.08);
+  --card-icon-bg: rgba(16, 185, 129, 0.15);
+  --card-icon-color: #34d399;
+  --card-badge-text: #34d399;
+  --card-badge-type-bg: rgba(16, 185, 129, 0.12);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card type accents — Error (rose)                                    */
+/* ------------------------------------------------------------------ */
+.cs-action-card--error {
+  --card-accent: #f43f5e;
+  --card-accent-subtle: rgba(244, 63, 94, 0.1);
+  --card-icon-bg: rgba(244, 63, 94, 0.15);
+  --card-icon-color: #fb7185;
+  --card-badge-text: #fb7185;
+  --card-badge-type-bg: rgba(244, 63, 94, 0.12);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card type accents — Message (violet)                                */
+/* ------------------------------------------------------------------ */
+.cs-action-card--message {
+  --card-accent: #8b5cf6;
+  --card-accent-subtle: rgba(139, 92, 246, 0.1);
+  --card-icon-bg: rgba(139, 92, 246, 0.15);
+  --card-icon-color: #a78bfa;
+  --card-badge-text: #a78bfa;
+  --card-badge-type-bg: rgba(139, 92, 246, 0.12);
+}
+
+/* ------------------------------------------------------------------ */
+/* Status dots                                                         */
+/* ------------------------------------------------------------------ */
+.cs-action-card__status--running {
+  --status-dot: #34d399;
+  --status-dot-glow: rgba(52, 211, 153, 0.4);
+}
+
+.cs-action-card__status--completed {
+  --status-dot: #10b981;
+}
+
+.cs-action-card__status--error {
+  --status-dot: #f43f5e;
+}
+
+.cs-action-card__status--pending {
+  --status-dot: #64748b;
+}
+
+/* ------------------------------------------------------------------ */
+/* Syntax highlighting (code blocks inside cards)                      */
+/* ------------------------------------------------------------------ */
+.cs-action-card__code .token-string {
+  color: #34d399;
+}
+.cs-action-card__code .token-number {
+  color: #fbbf24;
+}
+.cs-action-card__code .token-boolean,
+.cs-action-card__code .token-null {
+  color: #a78bfa;
+}
+.cs-action-card__code .token-key {
+  color: #38bdf8;
+}
+.cs-action-card__code .token-error {
+  color: #fb7185;
+}
+.cs-action-card__code .token-comment {
+  color: #64748b;
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-card-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+}
+
+@keyframes cs-section-expand {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+@keyframes cs-metric-count {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cs-success-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+@keyframes cs-error-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15%,
+  45%,
+  75% {
+    transform: translateX(-3px);
+  }
+  30%,
+  60% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes cs-status-dot-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--status-dot-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 4px var(--status-dot-glow);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-action-card,
+  .cs-action-card * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
