@@ -61,6 +61,28 @@ export {
   type NodeStyleOverrides,
   Z_INDEX,
   CANVAS_CONFIG,
+  // Timeline (TASK-143)
+  TimelineChart,
+  type TimelineChartProps,
+  TimeAxis,
+  type TimeAxisProps,
+  AgentLane,
+  type AgentLaneProps,
+  EventBlock,
+  type EventBlockProps,
+  EventMarker,
+  type EventMarkerProps,
+  Playhead,
+  type PlayheadProps,
+  TIMELINE_SIZING,
+  EVENT_STYLES,
+  isPointEvent,
+  type TimelineEventType,
+  type LogLevel,
+  type TimelineEvent,
+  type TimelineAgent,
+  type TimelineViewport,
+  type TickScale,
 } from './components/index.js';
 
 // Theme
