@@ -616,6 +616,25 @@ export type {
   WorkflowStorageProvider,
 } from './workflow/index.js';
 
+// Workflow Execution
+export { WorkflowExecutor } from './workflow/index.js';
+export {
+  WorkflowExecutionFailedError,
+  WorkflowNotActiveError,
+  WorkflowExecutionCancelledError,
+  WorkflowExecutionTimeoutError,
+  WorkflowNoAgentsError,
+} from './workflow/index.js';
+export type {
+  AgentResolver,
+  WorkflowExecutorConfig,
+  WorkflowExecutionEventMap,
+  WorkflowExecutionOptions,
+  WorkflowExecutionResult,
+  WorkflowExecutionStatus,
+  WorkflowTaskResult,
+} from './workflow/index.js';
+
 // Usage Tracking
 export {
   InMemoryUsageStorage,
