@@ -40,7 +40,7 @@ export {
   CANVAS_CONFIG,
 } from './canvas/index.js';
 
-// Timeline (TASK-143)
+// Timeline (TASK-143, TASK-144)
 export {
   TimelineChart,
   type TimelineChartProps,
@@ -63,4 +63,19 @@ export {
   type TimelineAgent,
   type TimelineViewport,
   type TickScale,
+  // Log Viewer (TASK-144)
+  LogViewer,
+  type LogViewerProps,
+  LogRow,
+  type LogRowProps,
+  type LogEntry,
+  formatTimestamp,
+  tokenizeJson,
+  highlightSearch,
+  type SyntaxToken,
+  type HighlightSegment,
+  LOG_SIZING,
+  LOG_LEVEL_STYLES,
+  LOG_COLORS,
+  SYNTAX_COLORS,
 } from './timeline/index.js';

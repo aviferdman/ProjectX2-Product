@@ -110,3 +110,62 @@ export const LANE = {
   bgAlt: 'rgba(15,23,42,0.8)',
   borderColor: 'var(--cs-border-subtle, rgba(51,65,85,0.5))',
 } as const;
+
+/* ------------------------------------------------------------------ */
+/* Log Viewer constants (TASK-144)                                     */
+/* ------------------------------------------------------------------ */
+
+export const LOG_SIZING = {
+  rowHeight: 32,
+  timestampWidth: 100,
+  levelWidth: 56,
+  agentWidth: 120,
+  headerHeight: 40,
+} as const;
+
+export const LOG_LEVEL_STYLES = {
+  debug: {
+    color: '#94a3b8',
+    bg: 'rgba(148,163,184,0.1)',
+    label: 'DEBUG',
+  },
+  info: {
+    color: '#38bdf8',
+    bg: 'rgba(14,165,233,0.1)',
+    label: 'INFO',
+  },
+  warn: {
+    color: '#fbbf24',
+    bg: 'rgba(245,158,11,0.1)',
+    label: 'WARN',
+  },
+  error: {
+    color: '#fb7185',
+    bg: 'rgba(244,63,94,0.1)',
+    label: 'ERROR',
+  },
+} as const;
+
+export const LOG_COLORS = {
+  background: 'var(--cs-surface-panel, #0f172a)',
+  headerBg: 'var(--cs-surface-card, #1e293b)',
+  rowBg: 'transparent',
+  rowBgAlt: 'rgba(30,41,59,0.3)',
+  rowBgHover: 'rgba(30,41,59,0.6)',
+  rowBgSelected: 'rgba(139,92,246,0.1)',
+  rowBorder: 'rgba(51,65,85,0.3)',
+  timestamp: '#64748b',
+  searchHighlight: 'rgba(251,191,36,0.3)',
+  searchHighlightActive: 'rgba(251,191,36,0.6)',
+} as const;
+
+/** Syntax highlighting token colors for JSON/code in log messages. */
+export const SYNTAX_COLORS = {
+  string: '#a5d6ff',
+  number: '#79c0ff',
+  boolean: '#ff7b72',
+  null: '#8b949e',
+  key: '#d2a8ff',
+  punctuation: '#8b949e',
+  default: 'var(--cs-text-secondary, #cbd5e1)',
+} as const;

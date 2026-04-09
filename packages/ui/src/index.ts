@@ -83,6 +83,21 @@ export {
   type TimelineAgent,
   type TimelineViewport,
   type TickScale,
+  // Log Viewer (TASK-144)
+  LogViewer,
+  type LogViewerProps,
+  LogRow,
+  type LogRowProps,
+  type LogEntry,
+  formatTimestamp,
+  tokenizeJson,
+  highlightSearch,
+  type SyntaxToken,
+  type HighlightSegment,
+  LOG_SIZING,
+  LOG_LEVEL_STYLES,
+  LOG_COLORS,
+  SYNTAX_COLORS,
 } from './components/index.js';
 
 // Theme

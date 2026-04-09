@@ -145,3 +145,59 @@ export interface PlayheadProps {
   /** Whether playback is active (enables pulse animation). */
   isPlaying?: boolean;
 }
+
+/* ------------------------------------------------------------------ */
+/* Log Viewer types (TASK-144)                                         */
+/* ------------------------------------------------------------------ */
+
+/** A single log entry displayed in the log viewer. */
+export interface LogEntry {
+  /** Unique identifier. */
+  id: string;
+  /** Timestamp in milliseconds relative to workflow start. */
+  timestampMs: number;
+  /** Log severity level. */
+  level: LogLevel;
+  /** Agent that produced this log. */
+  agentId: string;
+  /** Agent display name. */
+  agentName?: string;
+  /** The log message content. */
+  message: string;
+  /** Optional structured data (JSON) attached to the entry. */
+  data?: Record<string, unknown>;
+  /** Optional associated event ID (links to timeline). */
+  eventId?: string;
+}
+
+/** Props for the LogViewer component. */
+export interface LogViewerProps {
+  /** Log entries to display. */
+  entries: LogEntry[];
+  /** Currently selected log entry ID. */
+  selectedEntryId?: string | null;
+  /** Callback when a log entry is clicked. */
+  onEntrySelect?: (entryId: string | null) => void;
+  /** Search query string for highlighting matches in messages. */
+  searchQuery?: string;
+  /** Whether to auto-scroll to the latest entry. */
+  autoScroll?: boolean;
+  /** Optional className for the root element. */
+  className?: string;
+  /** Maximum height of the log viewer panel. */
+  maxHeight?: number | string;
+}
+
+/** Props for the LogRow sub-component. */
+export interface LogRowProps {
+  /** The log entry to render. */
+  entry: LogEntry;
+  /** Row index for alternating backgrounds. */
+  index: number;
+  /** Whether this row is selected. */
+  isSelected?: boolean;
+  /** Click handler. */
+  onClick?: (entryId: string) => void;
+  /** Search query for highlighting. */
+  searchQuery?: string;
+}
