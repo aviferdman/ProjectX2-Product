@@ -1,0 +1,169 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "crewspace": {
+    "integrationCard": {
+      "_description": "TASK-164: Design integration cards (logo, description, OAuth status). Design tokens for the integration card component used in the marketplace and settings pages.",
+
+      "card": {
+        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Default card background" },
+        "bg-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color", "description": "Hover state background" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Default card border" },
+        "border-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color", "description": "Hover state border" },
+        "border-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Keyboard focus ring color" },
+        "shadow": { "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.06)", "type": "boxShadow", "description": "Resting card shadow" },
+        "shadow-hover": { "value": "0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.1)", "type": "boxShadow", "description": "Hover elevation shadow" },
+        "shadow-focus": { "value": "0 0 0 3px rgba(139,92,246,0.25)", "type": "boxShadow", "description": "Focus ring glow" },
+        "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius", "description": "12px corner radius" }
+      },
+
+      "sizing": {
+        "width": { "value": "320px", "type": "sizing", "description": "Default card width" },
+        "min-width": { "value": "280px", "type": "sizing", "description": "Minimum card width for responsive grid" },
+        "max-width": { "value": "380px", "type": "sizing", "description": "Maximum card width" },
+        "gap": { "value": "20px", "type": "sizing", "description": "Gap between cards in grid" },
+        "padding": { "value": "20px", "type": "sizing", "description": "Inner padding" },
+        "header-gap": { "value": "14px", "type": "sizing", "description": "Gap between logo and text in header row" }
+      },
+
+      "logo": {
+        "container-size": { "value": "48px", "type": "sizing", "description": "Logo container width and height" },
+        "container-size-sm": { "value": "40px", "type": "sizing", "description": "Compact variant logo size" },
+        "icon-size": { "value": "28px", "type": "sizing", "description": "Icon size within container" },
+        "icon-size-sm": { "value": "22px", "type": "sizing", "description": "Compact variant icon size" },
+        "container-radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius", "description": "8px rounded container" },
+        "container-bg": { "value": "rgba(30,41,59,0.5)", "type": "color", "description": "Fallback background when no logo image" },
+        "container-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Subtle container border" },
+        "placeholder-color": { "value": "{crewspace.color.primitive.slate.500}", "type": "color", "description": "Placeholder icon color when logo missing" },
+        "shadow": { "value": "0 1px 2px rgba(0,0,0,0.2)", "type": "boxShadow", "description": "Subtle logo shadow" }
+      },
+
+      "title": {
+        "color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color", "description": "Integration name text color" },
+        "font-size": { "value": "0.9375rem", "type": "fontSize", "description": "15px" },
+        "font-weight": { "value": "600", "type": "fontWeight" },
+        "line-height": { "value": "1.25", "type": "lineHeight" },
+        "max-lines": { "value": "1", "type": "number", "description": "Truncate to single line" }
+      },
+
+      "provider": {
+        "color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Provider label color (e.g. 'by GitHub')" },
+        "font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
+        "font-weight": { "value": "400", "type": "fontWeight" },
+        "line-height": { "value": "1.25", "type": "lineHeight" }
+      },
+
+      "description": {
+        "color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color", "description": "Description text color" },
+        "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+        "font-weight": { "value": "400", "type": "fontWeight" },
+        "line-height": { "value": "1.5", "type": "lineHeight" },
+        "max-lines": { "value": "2", "type": "number", "description": "Clamp to 2 lines" },
+        "min-height": { "value": "40px", "type": "sizing", "description": "Reserve 2-line space to prevent layout shift" },
+        "margin-top": { "value": "12px", "type": "sizing", "description": "Gap above description" }
+      },
+
+      "oauthStatus": {
+        "height": { "value": "28px", "type": "sizing", "description": "Status badge height" },
+        "radius": { "value": "9999px", "type": "borderRadius", "description": "Pill shape" },
+        "icon-size": { "value": "14px", "type": "sizing", "description": "Status icon size" },
+        "font-size": { "value": "0.75rem", "type": "fontSize", "description": "12px label" },
+        "font-weight": { "value": "500", "type": "fontWeight" },
+        "gap": { "value": "6px", "type": "sizing", "description": "Gap between status icon and label" },
+        "padding-x": { "value": "10px", "type": "sizing", "description": "Horizontal padding" },
+        "margin-top": { "value": "14px", "type": "sizing", "description": "Gap above status row" },
+
+        "connected-bg": { "value": "rgba(52,211,153,0.12)", "type": "color", "description": "Connected state background" },
+        "connected-text": { "value": "#34d399", "type": "color", "description": "Connected state text" },
+        "connected-icon": { "value": "#34d399", "type": "color", "description": "Connected status dot/checkmark" },
+        "connected-border": { "value": "rgba(52,211,153,0.25)", "type": "color", "description": "Connected state border" },
+
+        "disconnected-bg": { "value": "rgba(148,163,184,0.08)", "type": "color", "description": "Disconnected state background" },
+        "disconnected-text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Disconnected state text" },
+        "disconnected-icon": { "value": "{crewspace.color.primitive.slate.500}", "type": "color", "description": "Disconnected icon color" },
+        "disconnected-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Disconnected state border" },
+
+        "pending-bg": { "value": "rgba(251,191,36,0.12)", "type": "color", "description": "Pending/authorizing state background" },
+        "pending-text": { "value": "#fbbf24", "type": "color", "description": "Pending state text" },
+        "pending-icon": { "value": "#fbbf24", "type": "color", "description": "Pending spinner/dot color" },
+        "pending-border": { "value": "rgba(251,191,36,0.25)", "type": "color", "description": "Pending state border" },
+
+        "error-bg": { "value": "rgba(251,113,133,0.1)", "type": "color", "description": "Error/revoked state background" },
+        "error-text": { "value": "#fb7185", "type": "color", "description": "Error state text" },
+        "error-icon": { "value": "#fb7185", "type": "color", "description": "Error icon color" },
+        "error-border": { "value": "rgba(251,113,133,0.25)", "type": "color", "description": "Error state border" }
+      },
+
+      "connectButton": {
+        "height": { "value": "32px", "type": "sizing", "description": "Connect/reconnect button height" },
+        "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius", "description": "8px" },
+        "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+        "font-weight": { "value": "600", "type": "fontWeight" },
+        "icon-size": { "value": "14px", "type": "sizing" },
+
+        "default-bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color", "description": "Primary connect CTA" },
+        "default-bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "default-bg-active": { "value": "{crewspace.color.primitive.violet.700}", "type": "color" },
+        "default-text": { "value": "#ffffff", "type": "color" },
+        "default-shadow": { "value": "0 2px 8px rgba(124,58,237,0.35)", "type": "boxShadow" },
+        "default-shadow-hover": { "value": "0 4px 12px rgba(124,58,237,0.45)", "type": "boxShadow" },
+
+        "disconnect-bg": { "value": "transparent", "type": "color", "description": "Disconnect/revoke action" },
+        "disconnect-bg-hover": { "value": "rgba(251,113,133,0.1)", "type": "color" },
+        "disconnect-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "disconnect-text-hover": { "value": "#fb7185", "type": "color" },
+        "disconnect-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
+        "disconnect-border-hover": { "value": "rgba(251,113,133,0.3)", "type": "color" },
+
+        "reconnect-bg": { "value": "rgba(251,191,36,0.12)", "type": "color", "description": "Reconnect CTA after error" },
+        "reconnect-bg-hover": { "value": "rgba(251,191,36,0.2)", "type": "color" },
+        "reconnect-text": { "value": "#fbbf24", "type": "color" },
+        "reconnect-border": { "value": "rgba(251,191,36,0.3)", "type": "color" }
+      },
+
+      "divider": {
+        "color": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Horizontal divider between sections" },
+        "margin-y": { "value": "14px", "type": "sizing", "description": "Vertical margin around divider" }
+      },
+
+      "footer": {
+        "padding-top": { "value": "14px", "type": "sizing", "description": "Footer section top padding" },
+        "meta-color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Footer meta text color" },
+        "meta-font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
+        "meta-font-weight": { "value": "400", "type": "fontWeight" },
+        "meta-line-height": { "value": "1.25", "type": "lineHeight" },
+        "meta-icon-size": { "value": "12px", "type": "sizing", "description": "Footer meta icons (scopes count, last sync)" },
+        "meta-gap": { "value": "12px", "type": "sizing", "description": "Gap between footer meta items" },
+        "meta-separator": { "value": "{crewspace.color.primitive.slate.600}", "type": "color", "description": "Dot separator between meta items" }
+      },
+
+      "scopesBadge": {
+        "height": { "value": "20px", "type": "sizing" },
+        "radius": { "value": "{crewspace.radius.sm}", "type": "borderRadius" },
+        "bg": { "value": "rgba(139,92,246,0.1)", "type": "color", "description": "Scopes count badge background" },
+        "text": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "border": { "value": "rgba(139,92,246,0.2)", "type": "color" },
+        "font-size": { "value": "0.625rem", "type": "fontSize", "description": "10px" },
+        "font-weight": { "value": "500", "type": "fontWeight" }
+      },
+
+      "skeleton": {
+        "bg": { "value": "rgba(30,41,59,0.3)", "type": "color", "description": "Shimmer base" },
+        "bg-highlight": { "value": "rgba(30,41,59,0.5)", "type": "color", "description": "Shimmer highlight" },
+        "bg-static": { "value": "rgba(30,41,59,0.4)", "type": "color", "description": "Reduced-motion fallback" },
+        "animation-duration": { "value": "1.5s", "type": "duration" }
+      },
+
+      "animation": {
+        "card-enter-duration": { "value": "250ms", "type": "duration", "description": "Card entrance animation duration" },
+        "card-enter-easing": { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier", "description": "Spring easing for entrance" },
+        "stagger-delay": { "value": "50ms", "type": "duration", "description": "Delay between consecutive card animations" },
+        "max-stagger": { "value": "600ms", "type": "duration", "description": "Maximum total stagger time" },
+        "hover-duration": { "value": "150ms", "type": "duration" },
+        "hover-easing": { "value": "ease-out", "type": "cubicBezier" },
+        "status-transition-duration": { "value": "200ms", "type": "duration", "description": "OAuth status change transition" },
+        "pulse-duration": { "value": "600ms", "type": "duration", "description": "Connected success pulse" },
+        "spinner-duration": { "value": "800ms", "type": "duration", "description": "Pending state spinner" }
+      }
+    }
+  }
+}

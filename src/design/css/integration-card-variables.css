@@ -1,0 +1,320 @@
+/*
+ * Crewspace — Integration Card CSS Custom Properties
+ * TASK-164: Design integration cards (logo, description, OAuth status)
+ *
+ * Component-level tokens for the integration card: logo container, provider
+ * info, description, OAuth status badge, connect/disconnect actions, and
+ * footer metadata. Builds on root tokens from canvas-variables.css.
+ * Apply `.cs-integration-card` to each card root element.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Card container                                                      */
+/* ------------------------------------------------------------------ */
+.cs-integration-card {
+  --ic-bg: var(--cs-surface-card);
+  --ic-bg-hover: var(--cs-surface-elevated);
+  --ic-border: var(--cs-border-default);
+  --ic-border-hover: var(--cs-border-strong);
+  --ic-border-focus: #8b5cf6;
+  --ic-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --ic-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
+  --ic-shadow-focus: 0 0 0 3px rgba(139, 92, 246, 0.25);
+  --ic-radius: var(--cs-radius-xl, 12px);
+  --ic-padding: 20px;
+  --ic-header-gap: 14px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Logo                                                                */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-logo {
+  --logo-size: 48px;
+  --logo-size-sm: 40px;
+  --logo-icon-size: 28px;
+  --logo-icon-size-sm: 22px;
+  --logo-radius: var(--cs-radius-lg, 8px);
+  --logo-bg: rgba(30, 41, 59, 0.5);
+  --logo-border: var(--cs-border-subtle);
+  --logo-placeholder-color: #64748b;
+  --logo-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ------------------------------------------------------------------ */
+/* Title & provider                                                    */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-title {
+  --title-color: var(--cs-text-primary);
+  --title-font-size: 0.9375rem;
+  --title-font-weight: 600;
+  --title-line-height: 1.25;
+}
+
+.cs-integration-card-provider {
+  --provider-color: var(--cs-text-tertiary);
+  --provider-font-size: 0.6875rem;
+  --provider-font-weight: 400;
+  --provider-line-height: 1.25;
+}
+
+/* ------------------------------------------------------------------ */
+/* Description                                                         */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-description {
+  --desc-color: var(--cs-text-secondary);
+  --desc-font-size: 0.8125rem;
+  --desc-font-weight: 400;
+  --desc-line-height: 1.5;
+  --desc-min-height: 40px;
+  --desc-margin-top: 12px;
+}
+
+/* ------------------------------------------------------------------ */
+/* OAuth status badge                                                  */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-oauth {
+  --oauth-h: 28px;
+  --oauth-radius: 9999px;
+  --oauth-icon-size: 14px;
+  --oauth-font-size: 0.75rem;
+  --oauth-font-weight: 500;
+  --oauth-gap: 6px;
+  --oauth-px: 10px;
+  --oauth-margin-top: 14px;
+}
+
+/* Connected */
+.cs-integration-card-oauth--connected {
+  --oauth-bg: rgba(52, 211, 153, 0.12);
+  --oauth-text: #34d399;
+  --oauth-icon: #34d399;
+  --oauth-border: rgba(52, 211, 153, 0.25);
+}
+
+/* Disconnected */
+.cs-integration-card-oauth--disconnected {
+  --oauth-bg: rgba(148, 163, 184, 0.08);
+  --oauth-text: var(--cs-text-tertiary);
+  --oauth-icon: #64748b;
+  --oauth-border: var(--cs-border-subtle);
+}
+
+/* Pending / authorizing */
+.cs-integration-card-oauth--pending {
+  --oauth-bg: rgba(251, 191, 36, 0.12);
+  --oauth-text: #fbbf24;
+  --oauth-icon: #fbbf24;
+  --oauth-border: rgba(251, 191, 36, 0.25);
+}
+
+/* Error / revoked */
+.cs-integration-card-oauth--error {
+  --oauth-bg: rgba(251, 113, 133, 0.1);
+  --oauth-text: #fb7185;
+  --oauth-icon: #fb7185;
+  --oauth-border: rgba(251, 113, 133, 0.25);
+}
+
+/* ------------------------------------------------------------------ */
+/* Connect / disconnect button                                         */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-btn {
+  --btn-h: 32px;
+  --btn-radius: var(--cs-radius-lg, 8px);
+  --btn-font-size: 0.8125rem;
+  --btn-font-weight: 600;
+  --btn-icon-size: 14px;
+}
+
+/* Connect (primary CTA) */
+.cs-integration-card-btn--connect {
+  --btn-bg: #7c3aed;
+  --btn-bg-hover: #8b5cf6;
+  --btn-bg-active: #6d28d9;
+  --btn-text: #ffffff;
+  --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
+}
+
+/* Disconnect */
+.cs-integration-card-btn--disconnect {
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(251, 113, 133, 0.1);
+  --btn-text: var(--cs-text-secondary);
+  --btn-text-hover: #fb7185;
+  --btn-border: var(--cs-border-default);
+  --btn-border-hover: rgba(251, 113, 133, 0.3);
+}
+
+/* Reconnect */
+.cs-integration-card-btn--reconnect {
+  --btn-bg: rgba(251, 191, 36, 0.12);
+  --btn-bg-hover: rgba(251, 191, 36, 0.2);
+  --btn-text: #fbbf24;
+  --btn-border: rgba(251, 191, 36, 0.3);
+}
+
+/* ------------------------------------------------------------------ */
+/* Divider                                                             */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-divider {
+  --divider-color: var(--cs-border-subtle);
+  --divider-my: 14px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer (scopes, last synced, meta)                                  */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-footer {
+  --footer-pt: 14px;
+  --footer-meta-color: var(--cs-text-tertiary);
+  --footer-meta-font-size: 0.6875rem;
+  --footer-meta-font-weight: 400;
+  --footer-meta-line-height: 1.25;
+  --footer-meta-icon-size: 12px;
+  --footer-meta-gap: 12px;
+  --footer-meta-separator: #475569;
+}
+
+/* ------------------------------------------------------------------ */
+/* Scopes badge                                                        */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-scopes {
+  --scopes-h: 20px;
+  --scopes-radius: var(--cs-radius-sm, 4px);
+  --scopes-bg: rgba(139, 92, 246, 0.1);
+  --scopes-text: #c4b5fd;
+  --scopes-border: rgba(139, 92, 246, 0.2);
+  --scopes-font-size: 0.625rem;
+  --scopes-font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ */
+/* Skeleton / loading state                                            */
+/* ------------------------------------------------------------------ */
+.cs-integration-card-skeleton {
+  --skel-bg: rgba(30, 41, 59, 0.3);
+  --skel-bg-highlight: rgba(30, 41, 59, 0.5);
+  --skel-bg-static: rgba(30, 41, 59, 0.4);
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+
+/* Card entrance */
+@keyframes cs-ic-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* OAuth status change */
+@keyframes cs-ic-status-change {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Connected success pulse */
+@keyframes cs-ic-connected-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+}
+
+/* Pending spinner */
+@keyframes cs-ic-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Skeleton shimmer */
+@keyframes cs-ic-skeleton-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+/* Error shake */
+@keyframes cs-ic-error-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-3px);
+  }
+  40%, 80% {
+    transform: translateX(3px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive: compact layout on small screens                         */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .cs-integration-card {
+    --ic-padding: 16px;
+    --ic-header-gap: 10px;
+  }
+
+  .cs-integration-card-logo {
+    --logo-size: 40px;
+    --logo-icon-size: 22px;
+  }
+
+  .cs-integration-card-title {
+    --title-font-size: 0.875rem;
+  }
+
+  .cs-integration-card-description {
+    --desc-font-size: 0.75rem;
+    --desc-margin-top: 10px;
+  }
+
+  .cs-integration-card-oauth {
+    --oauth-h: 24px;
+    --oauth-font-size: 0.6875rem;
+    --oauth-margin-top: 10px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-integration-card,
+  .cs-integration-card *,
+  .cs-integration-card-oauth,
+  .cs-integration-card-btn {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+
+  .cs-integration-card-skeleton {
+    --skel-bg-highlight: var(--skel-bg-static);
+  }
+}
