@@ -1,0 +1,309 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "crewspace": {
+    "templatePreviewModal": {
+      "_description": "TASK-158: Design template preview modal (workflow diagram, details, use button). Comprehensive design tokens for the Template Preview Modal component.",
+
+      "overlay": {
+        "bg": { "value": "rgba(0,0,0,0.7)", "type": "color", "description": "Modal backdrop overlay" },
+        "bg-blur": { "value": "8px", "type": "dimension", "description": "Backdrop blur radius for frosted glass effect" }
+      },
+
+      "container": {
+        "bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Modal background" },
+        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Modal outer border" },
+        "border-width": { "value": "1px", "type": "borderWidth" },
+        "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius", "description": "12px corner radius" },
+        "shadow": { "value": "0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.08)", "type": "boxShadow" },
+        "width": { "value": "900px", "type": "sizing", "description": "Fixed modal width" },
+        "max-width": { "value": "calc(100vw - 48px)", "type": "sizing", "description": "Responsive max width with margin" },
+        "max-height": { "value": "85vh", "type": "sizing" },
+        "min-height": { "value": "520px", "type": "sizing", "description": "Minimum height to prevent collapsed layout" }
+      },
+
+      "header": {
+        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Bottom border below header" },
+        "height": { "value": "64px", "type": "sizing" },
+        "padding-x": { "value": "24px", "type": "spacing" },
+        "padding-y": { "value": "16px", "type": "spacing" },
+        "gap": { "value": "12px", "type": "spacing", "description": "Gap between header elements" },
+        "radius": { "value": "12px 12px 0 0", "type": "borderRadius", "description": "Top corners match container" },
+        "title": {
+          "color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+          "font-size": { "value": "1.25rem", "type": "fontSize", "description": "20px" },
+          "font-weight": { "value": "700", "type": "fontWeight" },
+          "line-height": { "value": "1.25", "type": "lineHeight" },
+          "max-width": { "value": "480px", "type": "sizing", "description": "Truncate long titles" }
+        },
+        "category-badge": {
+          "height": { "value": "24px", "type": "sizing" },
+          "radius": { "value": "{crewspace.radius.sm}", "type": "borderRadius" },
+          "font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
+          "font-weight": { "value": "600", "type": "fontWeight" },
+          "letter-spacing": { "value": "0.03em", "type": "letterSpacing" },
+          "padding-x": { "value": "8px", "type": "spacing" },
+          "icon-size": { "value": "12px", "type": "sizing" },
+          "gap": { "value": "4px", "type": "spacing" }
+        },
+        "rating": {
+          "color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+          "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "font-weight": { "value": "500", "type": "fontWeight" },
+          "star-filled": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" },
+          "star-empty": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "star-size": { "value": "14px", "type": "sizing" },
+          "gap": { "value": "4px", "type": "spacing" }
+        },
+        "close-btn": {
+          "size": { "value": "32px", "type": "sizing" },
+          "icon-size": { "value": "16px", "type": "sizing" },
+          "color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "color-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+          "bg": { "value": "transparent", "type": "color" },
+          "bg-hover": { "value": "rgba(30,41,59,0.5)", "type": "color" },
+          "radius": { "value": "{crewspace.radius.md}", "type": "borderRadius" }
+        }
+      },
+
+      "body": {
+        "display": { "value": "flex", "type": "string", "description": "Horizontal split: diagram + sidebar" },
+        "overflow": { "value": "hidden auto", "type": "string", "description": "Vertical scroll when needed" }
+      },
+
+      "diagram": {
+        "bg": { "value": "rgba(10,14,26,0.9)", "type": "color", "description": "Dark background matching canvas" },
+        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Right border separating from sidebar" },
+        "height": { "value": "400px", "type": "sizing", "description": "Fixed diagram area height" },
+        "min-height": { "value": "300px", "type": "sizing", "description": "Responsive minimum" },
+        "padding": { "value": "24px", "type": "spacing" },
+        "flex": { "value": "1", "type": "string", "description": "Takes remaining width after sidebar" },
+
+        "grid": {
+          "dot-color": { "value": "rgba(148,163,184,0.08)", "type": "color", "description": "Subtle background grid" },
+          "dot-size": { "value": "1px", "type": "sizing" },
+          "dot-spacing": { "value": "20px", "type": "sizing" }
+        },
+
+        "node": {
+          "agent-bg": { "value": "rgba(124,58,237,0.15)", "type": "color" },
+          "agent-border": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+          "agent-icon": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
+          "task-bg": { "value": "rgba(14,165,233,0.15)", "type": "color" },
+          "task-border": { "value": "{crewspace.color.primitive.sky.500}", "type": "color" },
+          "task-icon": { "value": "{crewspace.color.primitive.sky.400}", "type": "color" },
+          "tool-bg": { "value": "rgba(16,185,129,0.15)", "type": "color" },
+          "tool-border": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },
+          "tool-icon": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+          "llm-bg": { "value": "rgba(245,158,11,0.15)", "type": "color" },
+          "llm-border": { "value": "{crewspace.color.primitive.amber.500}", "type": "color" },
+          "llm-icon": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" },
+          "width": { "value": "140px", "type": "sizing", "description": "Preview node card width" },
+          "height": { "value": "48px", "type": "sizing", "description": "Compact preview node height" },
+          "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
+          "border-width": { "value": "1.5px", "type": "borderWidth" },
+          "icon-size": { "value": "16px", "type": "sizing" },
+          "label-font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
+          "label-font-weight": { "value": "500", "type": "fontWeight" },
+          "label-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+          "shadow": { "value": "0 1px 4px rgba(0,0,0,0.3)", "type": "boxShadow" }
+        },
+
+        "edge": {
+          "color": { "value": "rgba(148,163,184,0.25)", "type": "color" },
+          "color-active": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
+          "width": { "value": "1.5px", "type": "borderWidth" },
+          "dash-array": { "value": "4 4", "type": "string", "description": "Dashed line for data flow" },
+          "arrow-size": { "value": "8px", "type": "sizing" }
+        },
+
+        "controls": {
+          "bg": { "value": "rgba(15,23,42,0.8)", "type": "color", "description": "Zoom controls background" },
+          "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+          "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
+          "btn-size": { "value": "28px", "type": "sizing" },
+          "btn-icon-size": { "value": "14px", "type": "sizing" },
+          "btn-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+          "btn-color-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+          "btn-bg-hover": { "value": "rgba(30,41,59,0.6)", "type": "color" },
+          "position": { "value": "bottom-left", "type": "string" },
+          "inset": { "value": "16px", "type": "spacing" },
+          "gap": { "value": "2px", "type": "spacing" }
+        },
+
+        "empty": {
+          "icon-size": { "value": "56px", "type": "sizing" },
+          "icon-color": { "value": "{crewspace.color.primitive.slate.600}", "type": "color" },
+          "text-color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "text-font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" }
+        }
+      },
+
+      "sidebar": {
+        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Left border" },
+        "width": { "value": "300px", "type": "sizing" },
+        "min-width": { "value": "260px", "type": "sizing" },
+        "padding": { "value": "20px", "type": "spacing" },
+        "gap": { "value": "20px", "type": "spacing", "description": "Gap between sidebar sections" },
+        "overflow": { "value": "hidden auto", "type": "string", "description": "Scroll when content overflows" },
+
+        "section-divider": {
+          "color": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+          "width": { "value": "1px", "type": "borderWidth" },
+          "margin-y": { "value": "0px", "type": "spacing", "description": "Divider spacing handled by section gap" }
+        },
+
+        "section-label": {
+          "color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
+          "font-weight": { "value": "600", "type": "fontWeight" },
+          "letter-spacing": { "value": "0.05em", "type": "letterSpacing" },
+          "text-transform": { "value": "uppercase", "type": "string" },
+          "margin-bottom": { "value": "8px", "type": "spacing" }
+        }
+      },
+
+      "sidebarMeta": {
+        "author": {
+          "avatar-size": { "value": "28px", "type": "sizing" },
+          "avatar-radius": { "value": "{crewspace.radius.full}", "type": "borderRadius" },
+          "avatar-bg": { "value": "rgba(139,92,246,0.15)", "type": "color", "description": "Fallback avatar bg" },
+          "avatar-text": { "value": "{crewspace.color.primitive.violet.300}", "type": "color", "description": "Initials color" },
+          "name-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+          "name-font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "name-font-weight": { "value": "500", "type": "fontWeight" },
+          "gap": { "value": "8px", "type": "spacing" }
+        },
+        "stat": {
+          "icon-size": { "value": "14px", "type": "sizing" },
+          "icon-color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "label-color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "label-font-size": { "value": "0.75rem", "type": "fontSize", "description": "12px" },
+          "value-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+          "value-font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+          "value-font-weight": { "value": "500", "type": "fontWeight" },
+          "row-gap": { "value": "10px", "type": "spacing" },
+          "inline-gap": { "value": "8px", "type": "spacing" }
+        },
+        "date": {
+          "color": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "font-size": { "value": "0.75rem", "type": "fontSize", "description": "12px" }
+        }
+      },
+
+      "sidebarDescription": {
+        "color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "font-size": { "value": "0.875rem", "type": "fontSize", "description": "14px" },
+        "font-weight": { "value": "400", "type": "fontWeight" },
+        "line-height": { "value": "1.625", "type": "lineHeight" },
+        "max-height": { "value": "160px", "type": "sizing", "description": "Scrollable if longer" },
+        "overflow": { "value": "hidden auto", "type": "string" }
+      },
+
+      "sidebarComposition": {
+        "item-height": { "value": "32px", "type": "sizing" },
+        "item-gap": { "value": "8px", "type": "spacing" },
+        "item-radius": { "value": "{crewspace.radius.md}", "type": "borderRadius" },
+        "item-bg": { "value": "rgba(30,41,59,0.3)", "type": "color" },
+        "item-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "icon-size": { "value": "16px", "type": "sizing" },
+        "label-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
+        "label-font-size": { "value": "0.75rem", "type": "fontSize", "description": "12px" },
+        "count-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+        "count-font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
+        "count-font-weight": { "value": "600", "type": "fontWeight" },
+        "agent-color": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
+        "task-color": { "value": "{crewspace.color.primitive.sky.400}", "type": "color" },
+        "tool-color": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
+        "llm-color": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" }
+      },
+
+      "sidebarTags": {
+        "tag-height": { "value": "24px", "type": "sizing" },
+        "tag-radius": { "value": "{crewspace.radius.sm}", "type": "borderRadius" },
+        "tag-padding-x": { "value": "8px", "type": "spacing" },
+        "tag-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "tag-bg-hover": { "value": "rgba(139,92,246,0.12)", "type": "color" },
+        "tag-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "tag-text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+        "tag-text-hover": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+        "tag-font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
+        "tag-font-weight": { "value": "500", "type": "fontWeight" },
+        "gap": { "value": "6px", "type": "spacing" },
+        "wrap": { "value": "wrap", "type": "string", "description": "Tags wrap to multiple rows in sidebar (not truncated)" }
+      },
+
+      "footer": {
+        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
+        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Top border above footer" },
+        "height": { "value": "64px", "type": "sizing" },
+        "padding-x": { "value": "24px", "type": "spacing" },
+        "padding-y": { "value": "12px", "type": "spacing" },
+        "gap": { "value": "12px", "type": "spacing" },
+        "radius": { "value": "0 0 12px 12px", "type": "borderRadius", "description": "Bottom corners match container" },
+
+        "useButton": {
+          "height": { "value": "40px", "type": "sizing" },
+          "min-width": { "value": "160px", "type": "sizing" },
+          "bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
+          "bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+          "bg-active": { "value": "{crewspace.color.primitive.violet.700}", "type": "color" },
+          "bg-disabled": { "value": "rgba(124,58,237,0.3)", "type": "color" },
+          "text": { "value": "#ffffff", "type": "color" },
+          "text-disabled": { "value": "rgba(255,255,255,0.5)", "type": "color" },
+          "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
+          "shadow": { "value": "0 2px 8px rgba(124,58,237,0.35)", "type": "boxShadow" },
+          "shadow-hover": { "value": "0 4px 12px rgba(124,58,237,0.45)", "type": "boxShadow" },
+          "icon-size": { "value": "16px", "type": "sizing" },
+          "icon-gap": { "value": "8px", "type": "spacing" },
+          "font-size": { "value": "0.875rem", "type": "fontSize", "description": "14px" },
+          "font-weight": { "value": "600", "type": "fontWeight" }
+        },
+
+        "openCanvasButton": {
+          "height": { "value": "40px", "type": "sizing" },
+          "bg": { "value": "transparent", "type": "color" },
+          "bg-hover": { "value": "rgba(139,92,246,0.12)", "type": "color" },
+          "text": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
+          "text-hover": { "value": "{crewspace.color.primitive.violet.200}", "type": "color" },
+          "border": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
+          "border-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+          "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
+          "icon-size": { "value": "16px", "type": "sizing" },
+          "font-size": { "value": "0.875rem", "type": "fontSize", "description": "14px" },
+          "font-weight": { "value": "500", "type": "fontWeight" }
+        }
+      },
+
+      "animation": {
+        "overlay-enter": { "value": "200ms ease-out", "type": "transition", "description": "Backdrop fade in" },
+        "overlay-exit": { "value": "150ms ease-in", "type": "transition", "description": "Backdrop fade out" },
+        "modal-enter": { "value": "300ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Modal scale-in with spring" },
+        "modal-exit": { "value": "200ms ease-in", "type": "transition", "description": "Modal scale-out" },
+        "diagram-nodes-enter": { "value": "250ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Staggered node appearance in diagram" },
+        "diagram-edges-draw": { "value": "400ms ease-out", "type": "transition", "description": "Edge path animation after nodes settle" },
+        "diagram-node-stagger": { "value": "60ms", "type": "duration", "description": "Delay between node appearances" },
+        "sidebar-content-enter": { "value": "200ms ease-out", "type": "transition", "description": "Sidebar content fade in" },
+        "sidebar-content-delay": { "value": "150ms", "type": "duration", "description": "Delay after modal enter before sidebar fades in" },
+        "button-transition": { "value": "150ms ease-out", "type": "transition", "description": "Button hover/active transitions" },
+        "close-btn-transition": { "value": "100ms ease-out", "type": "transition" }
+      },
+
+      "responsive": {
+        "breakpoint-collapse": { "value": "768px", "type": "dimension", "description": "Below this, sidebar stacks below diagram" },
+        "collapsed-sidebar-position": { "value": "below", "type": "string", "description": "Sidebar moves below diagram on narrow screens" },
+        "collapsed-diagram-height": { "value": "280px", "type": "sizing", "description": "Shorter diagram on narrow screens" },
+        "collapsed-width": { "value": "calc(100vw - 32px)", "type": "sizing", "description": "Nearly full-width on mobile" },
+        "collapsed-max-height": { "value": "90vh", "type": "sizing" }
+      },
+
+      "keyboard": {
+        "focus-ring-color": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "focus-ring-width": { "value": "2px", "type": "borderWidth" },
+        "focus-ring-offset": { "value": "2px", "type": "spacing" },
+        "focus-ring-shadow": { "value": "0 0 0 3px rgba(139,92,246,0.25)", "type": "boxShadow" }
+      }
+    }
+  }
+}

@@ -1,0 +1,377 @@
+/*
+ * Crewspace — Template Preview Modal CSS Custom Properties
+ * TASK-158: Design template preview modal (workflow diagram, details, use button)
+ *
+ * Usage: Apply `.cs-preview-modal` to the modal root.
+ * Requires root-level tokens from canvas-variables.css and template-library-variables.css.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Overlay                                                             */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-overlay {
+  --overlay-bg: rgba(0, 0, 0, 0.7);
+  --overlay-blur: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Modal container                                                     */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal {
+  --modal-bg: var(--cs-surface-panel);
+  --modal-border: var(--cs-border-default);
+  --modal-border-width: 1px;
+  --modal-radius: var(--cs-radius-xl);
+  --modal-shadow: 0 24px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(148, 163, 184, 0.08);
+  --modal-w: 900px;
+  --modal-max-w: calc(100vw - 48px);
+  --modal-max-h: 85vh;
+  --modal-min-h: 520px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header                                                              */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-header {
+  --header-bg: var(--cs-surface-card);
+  --header-border: var(--cs-border-subtle);
+  --header-h: 64px;
+  --header-px: 24px;
+  --header-py: 16px;
+  --header-gap: 12px;
+  --header-radius: var(--cs-radius-xl) var(--cs-radius-xl) 0 0;
+
+  /* Title */
+  --title-color: var(--cs-text-primary);
+  --title-max-w: 480px;
+
+  /* Category badge */
+  --badge-h: 24px;
+  --badge-radius: var(--cs-radius-sm);
+  --badge-px: 8px;
+  --badge-gap: 4px;
+
+  /* Rating */
+  --rating-color: var(--cs-text-secondary);
+  --star-filled: #fbbf24;
+  --star-empty: var(--cs-text-tertiary);
+  --star-size: 14px;
+
+  /* Close button */
+  --close-size: 32px;
+  --close-icon-size: 16px;
+  --close-color: var(--cs-text-tertiary);
+  --close-color-hover: var(--cs-text-primary);
+  --close-bg: transparent;
+  --close-bg-hover: rgba(30, 41, 59, 0.5);
+  --close-radius: var(--cs-radius-md);
+}
+
+/* ------------------------------------------------------------------ */
+/* Workflow diagram area                                                */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-diagram {
+  --diagram-bg: rgba(10, 14, 26, 0.9);
+  --diagram-border: var(--cs-border-subtle);
+  --diagram-h: 400px;
+  --diagram-min-h: 300px;
+  --diagram-padding: 24px;
+
+  /* Background grid */
+  --grid-dot-color: rgba(148, 163, 184, 0.08);
+  --grid-dot-size: 1px;
+  --grid-dot-spacing: 20px;
+
+  /* Preview nodes */
+  --node-w: 140px;
+  --node-h: 48px;
+  --node-radius: var(--cs-radius-lg);
+  --node-border-w: 1.5px;
+  --node-icon-size: 16px;
+  --node-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+  /* Node type colors */
+  --node-agent-bg: rgba(124, 58, 237, 0.15);
+  --node-agent-border: #8b5cf6;
+  --node-agent-icon: #a78bfa;
+  --node-task-bg: rgba(14, 165, 233, 0.15);
+  --node-task-border: #0ea5e9;
+  --node-task-icon: #38bdf8;
+  --node-tool-bg: rgba(16, 185, 129, 0.15);
+  --node-tool-border: #10b981;
+  --node-tool-icon: #34d399;
+  --node-llm-bg: rgba(245, 158, 11, 0.15);
+  --node-llm-border: #f59e0b;
+  --node-llm-icon: #fbbf24;
+
+  /* Edges */
+  --edge-color: rgba(148, 163, 184, 0.25);
+  --edge-color-active: #a78bfa;
+  --edge-width: 1.5px;
+  --edge-dash: 4 4;
+  --edge-arrow-size: 8px;
+
+  /* Zoom controls */
+  --ctrl-bg: rgba(15, 23, 42, 0.8);
+  --ctrl-border: var(--cs-border-subtle);
+  --ctrl-radius: var(--cs-radius-lg);
+  --ctrl-btn-size: 28px;
+  --ctrl-btn-icon-size: 14px;
+  --ctrl-btn-color: var(--cs-text-secondary);
+  --ctrl-btn-color-hover: var(--cs-text-primary);
+  --ctrl-btn-bg-hover: rgba(30, 41, 59, 0.6);
+  --ctrl-inset: 16px;
+  --ctrl-gap: 2px;
+
+  /* Empty state */
+  --empty-icon-size: 56px;
+  --empty-icon-color: #475569;
+  --empty-text-color: var(--cs-text-tertiary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Detail sidebar                                                      */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-sidebar {
+  --sidebar-bg: var(--cs-surface-card);
+  --sidebar-border: var(--cs-border-subtle);
+  --sidebar-w: 300px;
+  --sidebar-min-w: 260px;
+  --sidebar-padding: 20px;
+  --sidebar-gap: 20px;
+
+  /* Section dividers */
+  --divider-color: var(--cs-border-subtle);
+  --divider-w: 1px;
+
+  /* Section labels (AUTHOR, DESCRIPTION, etc.) */
+  --label-color: var(--cs-text-tertiary);
+  --label-transform: uppercase;
+  --label-spacing: 0.05em;
+  --label-mb: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar — Author meta                                               */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-author {
+  --avatar-size: 28px;
+  --avatar-radius: 9999px;
+  --avatar-bg: rgba(139, 92, 246, 0.15);
+  --avatar-text: #c4b5fd;
+  --name-color: var(--cs-text-primary);
+  --author-gap: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar — Stats (uses, rating, created)                             */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-stats {
+  --stat-icon-size: 14px;
+  --stat-icon-color: var(--cs-text-tertiary);
+  --stat-label-color: var(--cs-text-tertiary);
+  --stat-value-color: var(--cs-text-secondary);
+  --stat-row-gap: 10px;
+  --stat-inline-gap: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar — Composition (agent/task/tool/llm counts)                  */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-composition {
+  --item-h: 32px;
+  --item-gap: 8px;
+  --item-radius: var(--cs-radius-md);
+  --item-bg: rgba(30, 41, 59, 0.3);
+  --item-border: var(--cs-border-subtle);
+  --item-icon-size: 16px;
+  --item-label-color: var(--cs-text-secondary);
+  --item-count-color: var(--cs-text-primary);
+
+  /* Type colors */
+  --comp-agent: #a78bfa;
+  --comp-task: #38bdf8;
+  --comp-tool: #34d399;
+  --comp-llm: #fbbf24;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar — Tags (full, wrapping)                                     */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-tags {
+  --tag-h: 24px;
+  --tag-radius: var(--cs-radius-sm);
+  --tag-px: 8px;
+  --tag-bg: var(--cs-surface-elevated);
+  --tag-bg-hover: rgba(139, 92, 246, 0.12);
+  --tag-border: var(--cs-border-subtle);
+  --tag-text: var(--cs-text-tertiary);
+  --tag-text-hover: #c4b5fd;
+  --tag-gap: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer                                                              */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-footer {
+  --footer-bg: var(--cs-surface-card);
+  --footer-border: var(--cs-border-subtle);
+  --footer-h: 64px;
+  --footer-px: 24px;
+  --footer-py: 12px;
+  --footer-gap: 12px;
+  --footer-radius: 0 0 var(--cs-radius-xl) var(--cs-radius-xl);
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer — "Use Template" primary button                              */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-use-btn {
+  --btn-h: 40px;
+  --btn-min-w: 160px;
+  --btn-bg: #7c3aed;
+  --btn-bg-hover: #8b5cf6;
+  --btn-bg-active: #6d28d9;
+  --btn-bg-disabled: rgba(124, 58, 237, 0.3);
+  --btn-text: #ffffff;
+  --btn-text-disabled: rgba(255, 255, 255, 0.5);
+  --btn-radius: var(--cs-radius-lg);
+  --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
+  --btn-icon-size: 16px;
+  --btn-icon-gap: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer — "Open in Canvas" secondary button                          */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal-canvas-btn {
+  --btn-h: 40px;
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(139, 92, 246, 0.12);
+  --btn-text: #c4b5fd;
+  --btn-text-hover: #ddd6fe;
+  --btn-border: #7c3aed;
+  --btn-border-hover: #8b5cf6;
+  --btn-radius: var(--cs-radius-lg);
+  --btn-icon-size: 16px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Focus ring (keyboard navigation)                                    */
+/* ------------------------------------------------------------------ */
+.cs-preview-modal :focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-preview-overlay-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cs-preview-overlay-exit {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes cs-preview-modal-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-preview-modal-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+}
+
+@keyframes cs-preview-node-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cs-preview-edge-draw {
+  from {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes cs-preview-sidebar-enter {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive: stacked layout below 768px                              */
+/* ------------------------------------------------------------------ */
+@media (max-width: 767px) {
+  .cs-preview-modal {
+    --modal-w: calc(100vw - 32px);
+    --modal-max-h: 90vh;
+  }
+
+  .cs-preview-modal-diagram {
+    --diagram-h: 280px;
+    --diagram-min-h: 200px;
+  }
+
+  .cs-preview-modal-sidebar {
+    --sidebar-w: 100%;
+    --sidebar-min-w: 100%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-preview-modal-overlay,
+  .cs-preview-modal,
+  .cs-preview-modal-diagram,
+  .cs-preview-modal-sidebar {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}
