@@ -4,6 +4,7 @@
  * This package provides the Crewspace visual design system:
  * - Tailwind theme preset & CSS custom properties
  * - Base UI components (Button, Input, Card, Badge, Modal, Tooltip, Spinner)
+ * - Responsive layout system (ResponsiveLayout, hooks)
  * - Design token constants for programmatic access
  */
 
@@ -30,6 +31,10 @@ export {
   type TooltipProps,
   Spinner,
   type SpinnerProps,
+  // Layout (TASK-172)
+  ResponsiveLayout,
+  type ResponsiveLayoutProps,
+  type SidebarMode,
   // Canvas (TASK-135, TASK-136)
   WorkflowCanvas,
   type WorkflowCanvasProps,
@@ -164,7 +169,16 @@ export {
 } from './components/index.js';
 
 // Theme
-export { crewspaceTailwindPreset, crewspaceTheme } from './theme/index.js';
+export { crewspaceTailwindPreset, crewspaceTheme, responsiveTheme, mergedTheme } from './theme/index.js';
+
+// Hooks (TASK-172)
+export {
+  useMediaQuery,
+  useBreakpoint,
+  BREAKPOINTS,
+  type Breakpoint,
+  type BreakpointState,
+} from './hooks/index.js';
 
 // Design tokens (programmatic)
 export {
@@ -173,4 +187,6 @@ export {
   radius,
   typography,
   transitions,
+  breakpoints,
+  responsive,
 } from './theme/tokens.js';

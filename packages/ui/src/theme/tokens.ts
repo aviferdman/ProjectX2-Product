@@ -112,3 +112,40 @@ export const transitions = {
   slow: '300ms ease-out',
   spring: '300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
 } as const;
+
+/* ------------------------------------------------------------------ */
+/* Responsive breakpoints (TASK-172)                                   */
+/* ------------------------------------------------------------------ */
+export const breakpoints = {
+  xs: 375,
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  '2xl': 1536,
+} as const;
+
+export const responsive = {
+  container: {
+    padding: { xs: 12, sm: 16, md: 20, lg: 24, xl: 24, '2xl': 32 },
+    maxWidth: { xs: '100%', sm: '100%', md: '100%', lg: '100%', xl: 1280, '2xl': 1440 },
+  },
+  sidebar: {
+    collapsed: 64,
+    expanded: 240,
+    overlay: 280,
+  },
+  header: {
+    mobile: 48,
+    desktop: 56,
+  },
+  grid: {
+    columns: { xs: 1, sm: 1, md: 2, lg: 3, xl: 3, '2xl': 4 },
+    gap: { mobile: 12, tablet: 16, desktop: 20 },
+  },
+  touch: {
+    minTargetSize: 44,
+    comfortableTargetSize: 48,
+    targetSpacing: 8,
+  },
+} as const;

@@ -16,8 +16,8 @@ export const WorkflowGrid = forwardRef<HTMLDivElement, WorkflowGridProps>(
       <div
         ref={ref}
         className={clsx(
-          'grid gap-4',
-          'grid-cols-[repeat(auto-fill,minmax(280px,1fr))]',
+          'grid gap-grid-gap-mobile md:gap-grid-gap-tablet lg:gap-grid-gap-desktop',
+          'grid-cols-1 sm:grid-cols-cards-2 lg:grid-cols-cards-3 2xl:grid-cols-cards-4',
           className,
         )}
         {...rest}

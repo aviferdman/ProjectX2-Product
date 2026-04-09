@@ -52,7 +52,7 @@ export const WorkflowCard = forwardRef<HTMLDivElement, WorkflowCardProps>(
         {...rest}
       >
         {/* Thumbnail area */}
-        <div className="h-40 bg-[rgba(10,14,26,0.8)] border-b border-slate-800 flex items-center justify-center">
+        <div className="h-28 sm:h-40 bg-[rgba(10,14,26,0.8)] border-b border-slate-800 flex items-center justify-center">
           <svg
             className="w-12 h-12 text-slate-600"
             fill="none"

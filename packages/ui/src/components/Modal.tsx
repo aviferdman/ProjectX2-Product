@@ -87,8 +87,12 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           aria-modal="true"
           aria-label={title}
           className={clsx(
-            'w-full rounded-xl border border-slate-700 bg-surface-panel shadow-xl',
+            'w-full bg-surface-panel shadow-xl',
             'animate-in zoom-in-95 duration-200',
+            // Mobile: full-screen, no border-radius
+            'h-full rounded-none border-0',
+            // md+: centered dialog with border-radius and border
+            'md:h-auto md:max-h-modal-desktop md:rounded-xl md:border md:border-slate-700',
             sizeStyles[size],
             className,
           )}
@@ -96,11 +100,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         >
           {title && (
             <div className="flex items-center justify-between border-b border-slate-700 px-5 py-3">
-              <h2 className="text-lg font-semibold text-slate-100">{title}</h2>
+              <h2 className="text-section-title-mobile md:text-section-title-desktop font-semibold text-slate-100">
+                {title}
+              </h2>
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-md p-1 text-slate-400 hover:bg-surface-elevated hover:text-white transition-colors"
+                className="rounded-md p-1 text-slate-400 hover:bg-surface-elevated hover:text-white transition-colors min-w-touch-min min-h-touch-min md:min-w-0 md:min-h-0 flex items-center justify-center"
                 aria-label="Close"
               >
                 <svg
@@ -117,7 +123,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
               </button>
             </div>
           )}
-          <div className="p-5">{children}</div>
+          <div className="p-5 overflow-y-auto">{children}</div>
         </div>
       </Overlay>
     );

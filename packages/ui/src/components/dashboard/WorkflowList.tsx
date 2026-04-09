@@ -24,9 +24,9 @@ interface ColumnDef {
 const columns: ColumnDef[] = [
   { key: 'name', label: 'Name', sortable: true },
   { key: 'status', label: 'Status', sortable: true, width: 'w-28' },
-  { key: 'actions', label: 'Agents', sortable: false, width: 'w-24' },
-  { key: 'actions', label: 'Tasks', sortable: false, width: 'w-24' },
-  { key: 'updatedAt', label: 'Last Updated', sortable: true, width: 'w-32' },
+  { key: 'actions', label: 'Agents', sortable: false, width: 'w-24 hidden md:table-cell' },
+  { key: 'actions', label: 'Tasks', sortable: false, width: 'w-24 hidden md:table-cell' },
+  { key: 'updatedAt', label: 'Last Updated', sortable: true, width: 'w-32 hidden sm:table-cell' },
   { key: 'actions', label: '', sortable: false, width: 'w-20' },
 ];
 

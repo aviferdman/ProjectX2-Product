@@ -12,6 +12,7 @@ import { WorkflowGrid } from './WorkflowGrid.js';
 import { WorkflowList } from './WorkflowList.js';
 import { EmptyState } from './EmptyState.js';
 import type { FilterOption } from './FilterChips.js';
+import { useBreakpoint } from '../../hooks/useBreakpoint.js';
 
 export interface DashboardPageProps extends HTMLAttributes<HTMLDivElement> {
   workflows: WorkflowSummary[];
@@ -74,6 +75,7 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
     },
     ref,
   ) => {
+    const { isMobile } = useBreakpoint();
     const [viewMode, setViewMode] = useState<ViewMode>(defaultViewMode);
     const [filters, setFilters] = useState<DashboardFilters>({
       search: '',
@@ -107,11 +109,17 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
 
     const hasWorkflows = workflows.length > 0;
     const hasResults = filtered.length > 0;
+    // Force grid view on mobile for better UX
+    const effectiveViewMode = isMobile ? 'grid' : viewMode;
 
     return (
       <div
         ref={ref}
-        className={clsx('cs-dashboard flex flex-col gap-6', className)}
+        className={clsx(
+          'cs-dashboard flex flex-col',
+          'gap-4 md:gap-6',
+          className,
+        )}
         {...rest}
       >
         {/* Toolbar */}
@@ -152,7 +160,7 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
               setFilters({ search: '', status: 'all', sort: filters.sort })
             }
           />
-        ) : viewMode === 'grid' ? (
+        ) : effectiveViewMode === 'grid' ? (
           <WorkflowGrid
             workflows={filtered}
             onOpen={onOpen}

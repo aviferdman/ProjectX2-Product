@@ -6,6 +6,13 @@ export { Modal, type ModalProps } from './Modal.js';
 export { Tooltip, type TooltipProps } from './Tooltip.js';
 export { Spinner, type SpinnerProps } from './Spinner.js';
 
+// Layout (TASK-172)
+export {
+  ResponsiveLayout,
+  type ResponsiveLayoutProps,
+  type SidebarMode,
+} from './layout/index.js';
+
 // Canvas (TASK-135, TASK-136)
 export {
   WorkflowCanvas,
