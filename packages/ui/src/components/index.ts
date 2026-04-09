@@ -144,6 +144,30 @@ export {
   ITEMS_PER_PAGE,
 } from './templates/index.js';
 
+// Usage Stats (TASK-152)
+export {
+  PlanBadge,
+  type PlanBadgeProps,
+  UsageProgressBar,
+  type UsageProgressBarProps,
+  UsageStatCard,
+  type UsageStatCardProps,
+  UsageLimitAlert,
+  type UsageLimitAlertProps,
+  UpgradePrompt,
+  type UpgradePromptProps,
+  UsageStatsPanel,
+  type UsageStatsPanelProps,
+  type PlanTier,
+  type PlanLimits,
+  type UsageStats,
+  type UsageAlertSeverity,
+  isUnlimited,
+  PLAN_DISPLAY_NAMES,
+  USAGE_THRESHOLDS,
+  getAlertSeverity,
+} from './usage/index.js';
+
 // Dashboard (TASK-151)
 export {
   WorkflowStatusBadge,
