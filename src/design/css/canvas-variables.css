@@ -1,6 +1,7 @@
 /*
  * Crewspace — Visual Canvas CSS Custom Properties
  * TASK-132: Design visual canvas UI
+ * TASK-139: Design QA — canvas implementation vs specs
  *
  * Usage: Apply the `.cs-canvas` class to the canvas root container.
  * Dark-mode-first; light mode overrides are provided but the product
@@ -81,6 +82,15 @@
   --canvas-grid-dot: rgba(148, 163, 184, 0.12);
   --canvas-grid-line: rgba(148, 163, 184, 0.06);
   --canvas-grid-size: 20px;
+  --canvas-grid-dot-radius: 1px;
+  --canvas-min-zoom: 0.1;
+  --canvas-max-zoom: 2.0;
+  --canvas-default-zoom: 1.0;
+  --canvas-zoom-step: 0.1;
+  --canvas-snap-grid: 10px;
+
+  /* Node — common */
+  --node-gap: 6px;
 
   /* Node — Agent */
   --node-agent-bg: rgba(124, 58, 237, 0.12);
@@ -118,9 +128,16 @@
   --edge-error: #fb7185;
   --edge-width: 2px;
   --edge-width-hover: 3px;
+  --edge-type: smoothstep;
+  --edge-animated: true;
+  --edge-dash-array: 5 5;
+  --edge-arrow-size: 12px;
+  --edge-label-bg: rgba(15, 23, 42, 0.9);
+  --edge-label-padding: 2px 6px;
 
   /* Connection handles */
   --handle-size: 10px;
+  --handle-border-width: 2px;
   --handle-bg: #1e293b;
   --handle-border: #64748b;
   --handle-hover-bg: #7c3aed;
@@ -130,10 +147,14 @@
   /* Selection marquee */
   --selection-bg: rgba(139, 92, 246, 0.08);
   --selection-border: rgba(139, 92, 246, 0.5);
+  --selection-dash: 4 4;
 
   /* Minimap */
   --minimap-bg: rgba(15, 23, 42, 0.9);
   --minimap-viewport: rgba(139, 92, 246, 0.3);
+  --minimap-margin: 16px;
+  --minimap-border-radius: 8px;
+  --minimap-opacity: 0.85;
 }
 
 /* ------------------------------------------------------------------ */
@@ -174,12 +195,15 @@
 /* Animations                                                          */
 /* ------------------------------------------------------------------ */
 @keyframes cs-node-enter {
-  from {
+  0% {
     opacity: 0;
     transform: scale(0.85);
   }
-  to {
+  60% {
     opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
     transform: scale(1);
   }
 }
@@ -190,7 +214,7 @@
     box-shadow: 0 0 0 0 var(--node-running-pulse);
   }
   50% {
-    box-shadow: 0 0 12px 4px var(--node-running-pulse);
+    box-shadow: 0 0 8px 2px var(--node-running-pulse);
   }
 }
 
@@ -200,12 +224,21 @@
     box-shadow: 0 0 0 0 var(--node-error-pulse);
   }
   50% {
-    box-shadow: 0 0 12px 4px var(--node-error-pulse);
+    box-shadow: 0 0 6px 2px var(--node-error-pulse);
   }
 }
 
 @keyframes cs-edge-flow {
   to {
     stroke-dashoffset: -10;
+  }
+}
+
+@keyframes cs-edge-draw {
+  from {
+    stroke-dasharray: 0 100%;
+  }
+  to {
+    stroke-dasharray: 100% 0;
   }
 }

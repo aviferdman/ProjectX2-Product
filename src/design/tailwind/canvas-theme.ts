@@ -1,6 +1,7 @@
 /**
  * Crewspace — Tailwind CSS theme extensions for the Visual Canvas UI
  * TASK-132: Design visual canvas UI
+ * TASK-139: Design QA — canvas implementation vs specs
  *
  * Merge into your tailwind.config.ts:
  *   import { crewspaceTheme } from './src/design/tailwind/canvas-theme';
@@ -28,6 +29,7 @@ export const crewspaceTheme = {
       'selection-border': 'rgba(139,92,246,0.5)',
       'minimap-bg': 'rgba(15,23,42,0.9)',
       'minimap-viewport': 'rgba(139,92,246,0.3)',
+      'edge-label-bg': 'rgba(15,23,42,0.9)',
     },
     node: {
       agent: {
@@ -88,16 +90,23 @@ export const crewspaceTheme = {
     'node-w': '220px',
     'node-min-w': '180px',
     'node-max-w': '280px',
+    'node-gap': '6px',
     'toolbar-h': '48px',
     'sidebar-w': '280px',
     'sidebar-collapsed-w': '48px',
     'properties-w': '320px',
     'minimap-w': '200px',
     'minimap-h': '140px',
+    'minimap-margin': '16px',
+    'canvas-grid-size': '20px',
+    'canvas-snap-grid': '10px',
+    'edge-arrow-size': '12px',
+    'handle-border-width': '2px',
   },
 
   borderRadius: {
     node: '10px',
+    minimap: '8px',
   },
 
   boxShadow: {
@@ -106,6 +115,11 @@ export const crewspaceTheme = {
     'node-selected': '0 0 0 2px #8b5cf6, 0 4px 20px rgba(139,92,246,0.25)',
     panel: '0 1px 3px rgba(0,0,0,0.3)',
     toolbar: '0 2px 12px rgba(0,0,0,0.35)',
+    dropdown: '0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.1)',
+  },
+
+  opacity: {
+    minimap: '0.85',
   },
 
   transitionTimingFunction: {
@@ -117,23 +131,29 @@ export const crewspaceTheme = {
     'running-pulse': 'running-pulse 1.5s ease-in-out infinite',
     'error-pulse': 'error-pulse 1.5s ease-in-out infinite',
     'edge-flow': 'edge-flow 1s linear infinite',
+    'edge-draw': 'edge-draw 300ms ease-out',
   },
 
   keyframes: {
     'node-enter': {
-      from: { opacity: '0', transform: 'scale(0.85)' },
-      to: { opacity: '1', transform: 'scale(1)' },
+      '0%': { opacity: '0', transform: 'scale(0.85)' },
+      '60%': { opacity: '1', transform: 'scale(1.03)' },
+      '100%': { transform: 'scale(1)' },
     },
     'running-pulse': {
-      '0%, 100%': { boxShadow: '0 0 0 0 rgba(52,211,153,0)' },
-      '50%': { boxShadow: '0 0 12px 4px rgba(52,211,153,0.4)' },
+      '0%, 100%': { boxShadow: '0 0 0 0 rgba(52,211,153,0.35)' },
+      '50%': { boxShadow: '0 0 8px 2px rgba(52,211,153,0.35)' },
     },
     'error-pulse': {
-      '0%, 100%': { boxShadow: '0 0 0 0 rgba(251,113,133,0)' },
-      '50%': { boxShadow: '0 0 12px 4px rgba(251,113,133,0.4)' },
+      '0%, 100%': { boxShadow: '0 0 0 0 rgba(244,63,94,0.3)' },
+      '50%': { boxShadow: '0 0 6px 2px rgba(244,63,94,0.3)' },
     },
     'edge-flow': {
       to: { strokeDashoffset: '-10' },
+    },
+    'edge-draw': {
+      from: { strokeDasharray: '0 100%' },
+      to: { strokeDasharray: '100% 0' },
     },
   },
 } as const;
