@@ -23,6 +23,12 @@
       "import": "./dist/theme/tailwind-config.js",
       "require": "./dist/cjs/theme/tailwind-config.js",
       "default": "./dist/theme/tailwind-config.js"
+    },
+    "./performance": {
+      "types": "./dist/performance/index.d.ts",
+      "import": "./dist/performance/index.js",
+      "require": "./dist/cjs/performance/index.js",
+      "default": "./dist/performance/index.js"
     }
   },
   "files": [

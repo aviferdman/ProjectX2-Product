@@ -14,6 +14,36 @@
       "require": "./dist/cjs/index.js",
       "default": "./dist/index.js"
     },
+    "./cache": {
+      "types": "./dist/cache/index.d.ts",
+      "import": "./dist/cache/index.js",
+      "require": "./dist/cjs/cache/index.js",
+      "default": "./dist/cache/index.js"
+    },
+    "./agent": {
+      "types": "./dist/agent/index.d.ts",
+      "import": "./dist/agent/index.js",
+      "require": "./dist/cjs/agent/index.js",
+      "default": "./dist/agent/index.js"
+    },
+    "./llm": {
+      "types": "./dist/llm/index.d.ts",
+      "import": "./dist/llm/index.js",
+      "require": "./dist/cjs/llm/index.js",
+      "default": "./dist/llm/index.js"
+    },
+    "./memory": {
+      "types": "./dist/memory/index.d.ts",
+      "import": "./dist/memory/index.js",
+      "require": "./dist/cjs/memory/index.js",
+      "default": "./dist/memory/index.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js",
+      "require": "./dist/cjs/tools/index.js",
+      "default": "./dist/tools/index.js"
+    },
     "./testing": {
       "types": "./dist/testing/index.d.ts",
       "import": "./dist/testing/index.js",

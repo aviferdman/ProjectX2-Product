@@ -716,3 +716,22 @@ export type {
   TemplatePopularityStats,
   TemplateWithStats,
 } from './template/index.js';
+
+// Cache & Performance (TASK-180)
+export {
+  LRUCache,
+  memoize,
+  memoizeAsync,
+  DEFAULT_MEMOIZE_MAX_SIZE,
+  LazyModule,
+  LazyModuleRegistry,
+} from './cache/index.js';
+export type {
+  LRUCacheConfig,
+  CacheStats,
+  MemoizeConfig,
+  MemoizedFunction,
+  MemoizedAsyncFunction,
+  LazyModuleConfig,
+  LazyModuleStatus,
+} from './cache/index.js';

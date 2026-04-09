@@ -190,3 +190,14 @@ export {
   breakpoints,
   responsive,
 } from './theme/tokens.js';
+
+// Performance (TASK-180)
+export {
+  createLazyComponent,
+  LoadingFallback,
+} from './performance/index.js';
+export type {
+  LazyComponentOptions,
+  LazyComponentResult,
+  LoadingFallbackProps,
+} from './performance/index.js';
