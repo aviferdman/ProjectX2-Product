@@ -1,0 +1,482 @@
+/*
+ * Crewspace — Landing Page CSS Custom Properties
+ * TASK-183: Create marketing assets (landing page design, screenshots, demo video)
+ *
+ * Component-level tokens for the marketing landing page: hero section,
+ * feature cards, code demo, screenshot gallery, video embed, social proof,
+ * stats bar, footer CTA, and site footer.
+ * Apply `.cs-landing` to the page root element.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Page layout                                                         */
+/* ------------------------------------------------------------------ */
+.cs-landing {
+  --lp-bg: #020617;
+  --lp-content-max-w: 1280px;
+  --lp-content-padding: 24px;
+  --lp-section-gap: 96px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Navigation                                                          */
+/* ------------------------------------------------------------------ */
+.cs-landing-nav {
+  --nav-bg: rgba(2, 6, 23, 0.8);
+  --nav-bg-blur: 16px;
+  --nav-border: rgba(148, 163, 184, 0.08);
+  --nav-h: 64px;
+  --nav-link-color: #94a3b8;
+  --nav-link-color-hover: #f8fafc;
+  --nav-link-color-active: #c4b5fd;
+  --nav-logo-h: 32px;
+  --nav-mobile-bg: rgba(2, 6, 23, 0.95);
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero section                                                        */
+/* ------------------------------------------------------------------ */
+.cs-landing-hero {
+  --hero-bg: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  --hero-grid-color: rgba(148, 163, 184, 0.04);
+  --hero-grid-size: 32px;
+  --hero-min-h: 640px;
+  --hero-pt: 120px;
+  --hero-pb: 80px;
+
+  /* Version badge */
+  --badge-bg: rgba(139, 92, 246, 0.12);
+  --badge-border: rgba(139, 92, 246, 0.25);
+  --badge-text: #c4b5fd;
+  --badge-h: 28px;
+  --badge-radius: 9999px;
+
+  /* Headline */
+  --headline-color: #f8fafc;
+  --headline-gradient: linear-gradient(135deg, #f8fafc 0%, #c4b5fd 50%, #8b5cf6 100%);
+  --headline-max-w: 800px;
+
+  /* Subheadline */
+  --subheadline-color: #94a3b8;
+  --subheadline-max-w: 640px;
+}
+
+/* ------------------------------------------------------------------ */
+/* CTA buttons                                                         */
+/* ------------------------------------------------------------------ */
+.cs-landing-cta-primary {
+  --cta-bg: #7c3aed;
+  --cta-bg-hover: #8b5cf6;
+  --cta-bg-active: #6d28d9;
+  --cta-text: #ffffff;
+  --cta-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+  --cta-shadow-hover: 0 8px 24px rgba(124, 58, 237, 0.5);
+  --cta-glow: 0 0 40px rgba(139, 92, 246, 0.25);
+  --cta-h: 48px;
+  --cta-radius: 12px;
+  --cta-icon-size: 18px;
+}
+
+.cs-landing-cta-secondary {
+  --cta-bg: transparent;
+  --cta-bg-hover: rgba(148, 163, 184, 0.08);
+  --cta-border: rgba(148, 163, 184, 0.2);
+  --cta-border-hover: rgba(148, 163, 184, 0.35);
+  --cta-text: #e2e8f0;
+  --cta-h: 48px;
+  --cta-radius: 12px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Feature section heading                                             */
+/* ------------------------------------------------------------------ */
+.cs-landing-features {
+  --section-heading-color: #f8fafc;
+  --section-subtext-color: #94a3b8;
+  --section-heading-max-w: 640px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Feature cards                                                       */
+/* ------------------------------------------------------------------ */
+.cs-landing-feature-card {
+  --card-bg: rgba(15, 23, 42, 0.6);
+  --card-bg-hover: rgba(15, 23, 42, 0.8);
+  --card-border: rgba(148, 163, 184, 0.08);
+  --card-border-hover: rgba(139, 92, 246, 0.2);
+  --card-radius: 16px;
+  --card-padding: 32px;
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  /* Icon */
+  --card-icon-size: 48px;
+  --card-icon-bg: rgba(139, 92, 246, 0.1);
+  --card-icon-color: #a78bfa;
+  --card-icon-radius: 12px;
+
+  /* Text */
+  --card-title-color: #f8fafc;
+  --card-desc-color: #94a3b8;
+}
+
+.cs-landing-feature-grid {
+  --grid-gap: 24px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Code demo                                                           */
+/* ------------------------------------------------------------------ */
+.cs-landing-code {
+  --code-bg: rgba(15, 23, 42, 0.8);
+  --code-border: rgba(148, 163, 184, 0.1);
+  --code-radius: 16px;
+  --code-padding: 24px;
+  --code-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --code-max-w: 720px;
+
+  /* Chrome header */
+  --header-bg: rgba(15, 23, 42, 0.6);
+  --header-h: 44px;
+  --header-border: rgba(148, 163, 184, 0.08);
+  --dot-red: #f43f5e;
+  --dot-yellow: #fbbf24;
+  --dot-green: #34d399;
+  --dot-size: 12px;
+  --filename-color: #64748b;
+
+  /* Syntax colors */
+  --line-number-color: #334155;
+  --text-color: #e2e8f0;
+  --keyword-color: #c4b5fd;
+  --string-color: #34d399;
+  --comment-color: #475569;
+  --function-color: #38bdf8;
+  --type-color: #fbbf24;
+
+  /* Active line */
+  --highlight-bg: rgba(139, 92, 246, 0.08);
+  --highlight-border: rgba(139, 92, 246, 0.3);
+
+  /* Tabs */
+  --tab-bg: rgba(30, 41, 59, 0.5);
+  --tab-bg-active: rgba(139, 92, 246, 0.12);
+  --tab-text: #64748b;
+  --tab-text-active: #c4b5fd;
+  --tab-border-active: #8b5cf6;
+  --tab-h: 36px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Screenshot gallery                                                  */
+/* ------------------------------------------------------------------ */
+.cs-landing-screenshot {
+  --shot-bg: rgba(15, 23, 42, 0.5);
+  --shot-border: rgba(148, 163, 184, 0.08);
+  --shot-radius: 16px;
+  --shot-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --shot-padding: 4px;
+
+  /* Browser chrome */
+  --chrome-bg: #0f172a;
+  --chrome-h: 40px;
+  --chrome-border: rgba(148, 163, 184, 0.1);
+  --chrome-dot-size: 10px;
+  --url-bg: rgba(30, 41, 59, 0.6);
+  --url-text: #64748b;
+  --url-radius: 6px;
+  --url-h: 28px;
+
+  /* Image area */
+  --image-radius: 0 0 12px 12px;
+  --caption-color: #64748b;
+
+  /* Thumbnail gallery */
+  --gallery-gap: 24px;
+  --thumb-size: 80px;
+  --thumb-radius: 8px;
+  --thumb-border: rgba(148, 163, 184, 0.1);
+  --thumb-border-active: #8b5cf6;
+  --thumb-opacity: 0.5;
+  --thumb-opacity-active: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Video embed                                                         */
+/* ------------------------------------------------------------------ */
+.cs-landing-video {
+  --video-bg: #0f172a;
+  --video-border: rgba(148, 163, 184, 0.08);
+  --video-radius: 16px;
+  --video-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+
+  /* Play button */
+  --play-size: 72px;
+  --play-bg: rgba(124, 58, 237, 0.9);
+  --play-bg-hover: rgba(139, 92, 246, 0.95);
+  --play-shadow: 0 8px 32px rgba(124, 58, 237, 0.5);
+  --play-icon-color: #ffffff;
+  --play-icon-size: 28px;
+  --play-radius: 9999px;
+
+  /* Overlay */
+  --overlay-bg: rgba(0, 0, 0, 0.4);
+
+  /* Duration badge */
+  --duration-bg: rgba(0, 0, 0, 0.7);
+  --duration-text: #e2e8f0;
+  --duration-radius: 6px;
+
+  /* Progress */
+  --progress-track: rgba(255, 255, 255, 0.2);
+  --progress-fill: #8b5cf6;
+  --progress-h: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Social proof / testimonials                                         */
+/* ------------------------------------------------------------------ */
+.cs-landing-testimonial {
+  --testimonial-bg: rgba(15, 23, 42, 0.4);
+  --testimonial-border: rgba(148, 163, 184, 0.06);
+  --testimonial-radius: 16px;
+  --testimonial-padding: 32px;
+
+  /* Quote */
+  --quote-color: #e2e8f0;
+  --quote-mark-color: rgba(139, 92, 246, 0.3);
+
+  /* Author */
+  --author-name-color: #f8fafc;
+  --author-role-color: #64748b;
+  --avatar-size: 48px;
+  --avatar-radius: 9999px;
+  --avatar-border: rgba(139, 92, 246, 0.2);
+}
+
+.cs-landing-logo-bar {
+  --logo-h: 28px;
+  --logo-opacity: 0.4;
+  --logo-opacity-hover: 0.7;
+  --logo-gap: 48px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Stats bar                                                           */
+/* ------------------------------------------------------------------ */
+.cs-landing-stats {
+  --stats-bg: rgba(139, 92, 246, 0.06);
+  --stats-border: rgba(139, 92, 246, 0.12);
+  --stats-radius: 16px;
+  --stats-padding: 32px;
+  --stats-value-color: #f8fafc;
+  --stats-label-color: #94a3b8;
+  --stats-divider: rgba(148, 163, 184, 0.1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer CTA                                                          */
+/* ------------------------------------------------------------------ */
+.cs-landing-footer-cta {
+  --fcta-bg: radial-gradient(ellipse 80% 50% at 50% 120%, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+  --fcta-heading-color: #f8fafc;
+  --fcta-subtext-color: #94a3b8;
+  --fcta-padding-y: 96px;
+  --fcta-divider: rgba(148, 163, 184, 0.08);
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer                                                              */
+/* ------------------------------------------------------------------ */
+.cs-landing-footer {
+  --footer-bg: #020617;
+  --footer-border: rgba(148, 163, 184, 0.08);
+  --footer-text: #64748b;
+  --footer-link: #94a3b8;
+  --footer-link-hover: #f8fafc;
+  --footer-heading: #e2e8f0;
+  --footer-py: 64px;
+  --footer-gap: 32px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+
+/* Hero content fade-in and slide-up */
+@keyframes cs-lp-hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Feature card scroll reveal */
+@keyframes cs-lp-feature-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Generic scroll reveal for sections */
+@keyframes cs-lp-scroll-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Code typing cursor blink */
+@keyframes cs-lp-cursor-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Screenshot crossfade transition */
+@keyframes cs-lp-screenshot-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slow gradient shift for hero background */
+@keyframes cs-lp-gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Floating decorative element */
+@keyframes cs-lp-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* CTA ambient pulse glow */
+@keyframes cs-lp-cta-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(139, 92, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+  }
+}
+
+/* Stat counter number roll-up */
+@keyframes cs-lp-count-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Video play button pulse */
+@keyframes cs-lp-play-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(124, 58, 237, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0);
+  }
+}
+
+/* Logo bar slide */
+@keyframes cs-lp-logo-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive: mobile adjustments                                      */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .cs-landing {
+    --lp-content-padding: 16px;
+    --lp-section-gap: 64px;
+  }
+
+  .cs-landing-hero {
+    --hero-pt: 80px;
+    --hero-pb: 48px;
+    --hero-min-h: auto;
+  }
+
+  .cs-landing-cta-primary,
+  .cs-landing-cta-secondary {
+    --cta-h: 40px;
+  }
+
+  .cs-landing-feature-card {
+    --card-padding: 24px;
+  }
+
+  .cs-landing-testimonial {
+    --testimonial-padding: 24px;
+  }
+
+  .cs-landing-stats {
+    --stats-padding: 24px;
+  }
+
+  .cs-landing-footer-cta {
+    --fcta-padding-y: 64px;
+  }
+
+  .cs-landing-footer {
+    --footer-py: 48px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-landing,
+  .cs-landing *,
+  .cs-landing-hero,
+  .cs-landing-hero * {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}
