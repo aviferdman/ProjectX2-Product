@@ -80,6 +80,42 @@ export {
   SYNTAX_COLORS,
 } from './timeline/index.js';
 
+// Template Browser (TASK-159)
+export {
+  TemplateCategoryBadge,
+  type TemplateCategoryBadgeProps,
+  TemplateTag,
+  type TemplateTagProps,
+  FeaturedBadge,
+  type FeaturedBadgeProps,
+  TemplateCard,
+  type TemplateCardProps,
+  TemplateSearchBar,
+  type TemplateSearchBarProps,
+  TemplateCategoryFilter,
+  type TemplateCategoryFilterProps,
+  TemplateSortDropdown,
+  type TemplateSortDropdownProps,
+  TemplateToolbar,
+  type TemplateToolbarProps,
+  TemplateGrid,
+  type TemplateGridProps,
+  TemplateEmptyState,
+  type TemplateEmptyStateProps,
+  TemplatePagination,
+  type TemplatePaginationProps,
+  TemplateBrowserPage,
+  type TemplateBrowserPageProps,
+  type TemplateCategory,
+  type TemplateSortField,
+  type TemplateSortDirection,
+  type TemplateSummary,
+  type TemplateFilters,
+  TEMPLATE_CATEGORIES,
+  SORT_OPTIONS,
+  ITEMS_PER_PAGE,
+} from './templates/index.js';
+
 // Dashboard (TASK-151)
 export {
   WorkflowStatusBadge,
