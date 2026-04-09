@@ -1,0 +1,372 @@
+/*
+ * Crewspace — Workflow Card & List View CSS Custom Properties
+ * TASK-149: Design workflow card/list views (thumbnails, metadata, actions)
+ *
+ * Usage: Apply `.cs-workflow-card` or `.cs-workflow-list` to the respective containers.
+ * Depends on root-level tokens from canvas-variables.css (import that first).
+ */
+
+/* ------------------------------------------------------------------ */
+/* Workflow Card — Grid View                                           */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card {
+  --card-w: 320px;
+  --card-min-w: 280px;
+  --card-max-w: 360px;
+  --card-bg: var(--cs-surface-card);
+  --card-bg-hover: var(--cs-surface-elevated);
+  --card-bg-selected: rgba(139, 92, 246, 0.06);
+  --card-border: var(--cs-border-default);
+  --card-border-hover: var(--cs-border-strong);
+  --card-border-selected: #8b5cf6;
+  --card-radius: var(--cs-radius-xl);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
+  --card-shadow-selected: 0 0 0 2px rgba(139, 92, 246, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --card-gap: 16px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Card Thumbnail                                                      */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__thumbnail {
+  --thumb-h: 160px;
+  --thumb-h-compact: 120px;
+  --thumb-bg: rgba(10, 14, 26, 0.8);
+  --thumb-border-bottom: var(--cs-border-subtle);
+  --thumb-radius-top: 12px 12px 0 0;
+  --thumb-overlay-gradient: linear-gradient(180deg, transparent 60%, rgba(10, 14, 26, 0.6) 100%);
+
+  /* Miniature node dots */
+  --thumb-node-agent: #a78bfa;
+  --thumb-node-task: #38bdf8;
+  --thumb-node-tool: #34d399;
+  --thumb-node-llm: #fbbf24;
+  --thumb-node-size: 8px;
+  --thumb-edge-color: rgba(148, 163, 184, 0.25);
+  --thumb-edge-width: 1px;
+
+  /* Empty thumbnail placeholder */
+  --thumb-placeholder-icon-size: 32px;
+  --thumb-placeholder-icon-color: #475569;
+
+  /* Running pulse overlay */
+  --thumb-running-pulse: #34d399;
+}
+
+/* ------------------------------------------------------------------ */
+/* Card Body                                                           */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__body {
+  --body-padding: 16px;
+  --body-gap: 8px;
+
+  /* Title */
+  --title-color: var(--cs-text-primary);
+  --title-font-size: 0.875rem;
+  --title-font-weight: 600;
+  --title-line-height: 1.25;
+
+  /* Description */
+  --desc-color: var(--cs-text-secondary);
+  --desc-font-size: 0.75rem;
+  --desc-font-weight: 400;
+  --desc-line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------ */
+/* Card Metadata Row                                                   */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__meta {
+  --meta-color: var(--cs-text-tertiary);
+  --meta-font-size: 0.6875rem;
+  --meta-font-weight: 400;
+  --meta-line-height: 1.25;
+  --meta-icon-size: 12px;
+  --meta-icon-gap: 4px;
+  --meta-separator-color: #475569;
+  --meta-gap: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Agent Avatar Stack                                                  */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__avatars {
+  --avatar-size: 20px;
+  --avatar-overlap: -4px;
+  --avatar-border: var(--cs-surface-card);
+  --avatar-border-width: 2px;
+  --avatar-overflow-bg: var(--cs-surface-elevated);
+  --avatar-overflow-text: var(--cs-text-tertiary);
+  --avatar-overflow-font-size: 0.5625rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Status Badge                                                        */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__status {
+  --badge-h: 20px;
+  --badge-px: 8px;
+  --badge-radius: 9999px;
+  --badge-font-size: 0.625rem;
+  --badge-font-weight: 600;
+  --badge-letter-spacing: 0.05em;
+  --badge-dot-size: 6px;
+  --badge-dot-gap: 4px;
+}
+
+.cs-workflow-card__status--draft {
+  --badge-text: #94a3b8;
+  --badge-bg: rgba(148, 163, 184, 0.1);
+  --badge-dot: #94a3b8;
+}
+
+.cs-workflow-card__status--active {
+  --badge-text: #10b981;
+  --badge-bg: rgba(16, 185, 129, 0.1);
+  --badge-dot: #10b981;
+}
+
+.cs-workflow-card__status--running {
+  --badge-text: #34d399;
+  --badge-bg: rgba(52, 211, 153, 0.1);
+  --badge-dot: #34d399;
+}
+
+.cs-workflow-card__status--error {
+  --badge-text: #f43f5e;
+  --badge-bg: rgba(244, 63, 94, 0.1);
+  --badge-dot: #f43f5e;
+}
+
+.cs-workflow-card__status--paused {
+  --badge-text: #fbbf24;
+  --badge-bg: rgba(251, 191, 36, 0.1);
+  --badge-dot: #fbbf24;
+}
+
+.cs-workflow-card__status--archived {
+  --badge-text: #64748b;
+  --badge-bg: rgba(100, 116, 139, 0.1);
+  --badge-dot: #64748b;
+}
+
+/* ------------------------------------------------------------------ */
+/* Card Actions (⋯ menu)                                               */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__actions {
+  --action-trigger-size: 28px;
+  --action-trigger-icon-size: 16px;
+  --action-trigger-color: var(--cs-text-tertiary);
+  --action-trigger-color-hover: var(--cs-text-primary);
+  --action-trigger-bg-hover: rgba(148, 163, 184, 0.1);
+  --action-trigger-radius: var(--cs-radius-md);
+}
+
+.cs-workflow-card__action-menu {
+  --menu-bg: var(--cs-surface-elevated);
+  --menu-border: var(--cs-border-default);
+  --menu-radius: var(--cs-radius-lg);
+  --menu-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(148, 163, 184, 0.1);
+  --menu-w: 200px;
+  --menu-p: 4px;
+
+  /* Menu items */
+  --item-h: 32px;
+  --item-px: 12px;
+  --item-font-size: 0.8125rem;
+  --item-color: var(--cs-text-secondary);
+  --item-color-hover: var(--cs-text-primary);
+  --item-bg-hover: rgba(148, 163, 184, 0.08);
+  --item-icon-size: 14px;
+  --item-icon-color: var(--cs-text-tertiary);
+  --item-radius: var(--cs-radius-sm);
+
+  /* Divider */
+  --divider-color: var(--cs-border-subtle);
+
+  /* Destructive items (delete) */
+  --destructive-color: #fb7185;
+  --destructive-color-hover: #fda4af;
+  --destructive-bg-hover: rgba(244, 63, 94, 0.08);
+}
+
+/* ------------------------------------------------------------------ */
+/* Quick Action Buttons (hover overlay on thumbnail)                   */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__quick-actions {
+  --qa-bg: rgba(15, 23, 42, 0.8);
+  --qa-bg-hover: rgba(15, 23, 42, 0.95);
+  --qa-border: var(--cs-border-default);
+  --qa-radius: var(--cs-radius-md);
+  --qa-icon-size: 14px;
+  --qa-icon-color: var(--cs-text-secondary);
+  --qa-icon-color-hover: var(--cs-text-primary);
+  --qa-btn-size: 28px;
+  --qa-gap: 4px;
+  --qa-container-p: 4px;
+  --qa-container-radius: var(--cs-radius-lg);
+}
+
+/* ------------------------------------------------------------------ */
+/* Card Footer                                                         */
+/* ------------------------------------------------------------------ */
+.cs-workflow-card__footer {
+  --footer-padding: 12px 16px;
+  --footer-border-top: var(--cs-border-subtle);
+  --footer-gap: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Workflow List — Table View                                           */
+/* ------------------------------------------------------------------ */
+.cs-workflow-list {
+  --list-row-h: 56px;
+  --list-row-px: 16px;
+  --list-row-bg: transparent;
+  --list-row-bg-hover: rgba(30, 41, 59, 0.5);
+  --list-row-bg-selected: rgba(139, 92, 246, 0.08);
+  --list-row-border: var(--cs-border-subtle);
+  --list-row-transition: 150ms ease-out;
+}
+
+/* List header */
+.cs-workflow-list__header {
+  --header-h: 40px;
+  --header-bg: var(--cs-surface-card);
+  --header-border: var(--cs-border-default);
+  --header-text: var(--cs-text-tertiary);
+  --header-font-size: 0.6875rem;
+  --header-font-weight: 600;
+  --header-letter-spacing: 0.05em;
+  --header-sort-icon: var(--cs-text-tertiary);
+  --header-sort-icon-active: #a78bfa;
+  --header-sort-icon-size: 12px;
+}
+
+/* Column widths */
+.cs-workflow-list__columns {
+  --col-checkbox: 40px;
+  --col-icon: 40px;
+  --col-name-min: 200px;
+  --col-status: 100px;
+  --col-agents: 120px;
+  --col-last-run: 120px;
+  --col-created: 120px;
+  --col-actions: 48px;
+}
+
+/* List checkbox */
+.cs-workflow-list__checkbox {
+  --checkbox-size: 16px;
+  --checkbox-border: var(--cs-border-default);
+  --checkbox-border-checked: #8b5cf6;
+  --checkbox-bg-checked: #7c3aed;
+  --checkbox-check-color: #ffffff;
+  --checkbox-radius: var(--cs-radius-sm);
+}
+
+/* Row workflow icon */
+.cs-workflow-list__icon {
+  --wf-icon-size: 32px;
+  --wf-icon-radius: var(--cs-radius-md);
+  --wf-icon-bg: rgba(139, 92, 246, 0.1);
+  --wf-icon-color: #a78bfa;
+  --wf-icon-inner: 16px;
+}
+
+/* Row name cell */
+.cs-workflow-list__name {
+  --name-title-color: var(--cs-text-primary);
+  --name-title-font-size: 0.8125rem;
+  --name-title-font-weight: 500;
+  --name-subtitle-color: var(--cs-text-tertiary);
+  --name-subtitle-font-size: 0.6875rem;
+  --name-gap: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Bulk Actions Bar (floating toolbar for multi-select)                */
+/* ------------------------------------------------------------------ */
+.cs-workflow-list__bulk-actions {
+  --bulk-bg: var(--cs-surface-elevated);
+  --bulk-border: var(--cs-border-default);
+  --bulk-radius: var(--cs-radius-lg);
+  --bulk-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --bulk-h: 44px;
+  --bulk-px: 16px;
+  --bulk-btn-h: 28px;
+  --bulk-btn-bg: rgba(148, 163, 184, 0.08);
+  --bulk-btn-bg-hover: rgba(148, 163, 184, 0.15);
+  --bulk-btn-text: var(--cs-text-secondary);
+  --bulk-btn-text-hover: var(--cs-text-primary);
+  --bulk-count-text: var(--cs-text-primary);
+  --bulk-count-font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-quick-actions-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cs-action-menu-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-status-dot-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes cs-row-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cs-bulk-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
