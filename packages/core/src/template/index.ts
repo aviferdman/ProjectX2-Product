@@ -1,5 +1,5 @@
 /**
- * Template storage exports.
+ * Template storage and library service exports.
  *
  * @packageDocumentation
  */
@@ -18,3 +18,17 @@ export type {
   TemplateStorageProvider,
   UpdateTemplateInput,
 } from './template-storage-types.js';
+
+// Template Library Service
+export { TemplateLibraryService } from './template-service.js';
+
+export type {
+  BrowseTemplatesOptions,
+  BrowseTemplatesResult,
+  FeaturedTemplate,
+  InstantiateTemplateOptions,
+  TemplateInstantiationResult,
+  TemplateLibraryServiceConfig,
+  TemplatePopularityStats,
+  TemplateWithStats,
+} from './template-service-types.js';

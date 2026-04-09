@@ -703,3 +703,16 @@ export type {
   TemplateStorageProvider,
   UpdateTemplateInput,
 } from './template/index.js';
+
+// Template Library Service
+export { TemplateLibraryService } from './template/index.js';
+export type {
+  BrowseTemplatesOptions,
+  BrowseTemplatesResult,
+  FeaturedTemplate,
+  InstantiateTemplateOptions,
+  TemplateInstantiationResult,
+  TemplateLibraryServiceConfig,
+  TemplatePopularityStats,
+  TemplateWithStats,
+} from './template/index.js';
