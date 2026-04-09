@@ -643,3 +643,17 @@ export type {
   UsageSummary as AccountUsageSummary,
   UsageTrackerConfig,
 } from './usage/index.js';
+
+// Template Storage
+export { InMemoryTemplateStorage } from './template/index.js';
+export { TemplateNotFoundError, TemplateValidationError } from './template/index.js';
+export type {
+  CreateTemplateInput,
+  ListTemplatesOptions,
+  ListTemplatesResult,
+  StoredTemplate,
+  TemplateCategory,
+  TemplateStatus,
+  TemplateStorageProvider,
+  UpdateTemplateInput,
+} from './template/index.js';
