@@ -1,0 +1,288 @@
+/*
+ * Crewspace — Template Card CSS Custom Properties
+ * TASK-157: Design template cards (thumbnail, title, description, tags)
+ *
+ * Detailed component-level tokens for the template card.
+ * Builds on template-library-variables.css and root tokens.
+ * Apply `.cs-tpl-card` to each template card root element.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Card container                                                      */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card {
+  --card-w: 300px;
+  --card-min-w: 260px;
+  --card-max-w: 360px;
+  --card-bg: var(--cs-surface-card);
+  --card-bg-hover: var(--cs-surface-elevated);
+  --card-border: var(--cs-border-default);
+  --card-border-hover: var(--cs-border-strong);
+  --card-border-focus: #8b5cf6;
+  --card-radius: var(--cs-radius-xl, 12px);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
+  --card-shadow-focus: 0 0 0 3px rgba(139, 92, 246, 0.25);
+  --card-body-padding: 16px;
+  --card-body-gap: 10px;
+  --card-gap: 20px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Thumbnail zone                                                      */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__thumb {
+  --thumb-h: 180px;
+  --thumb-h-md: 160px;
+  --thumb-h-sm: 140px;
+  --thumb-bg: rgba(10, 14, 26, 0.8);
+  --thumb-border: var(--cs-border-subtle);
+  --thumb-radius: 12px 12px 0 0;
+  --thumb-overlay-gradient: linear-gradient(180deg, transparent 30%, rgba(10, 14, 26, 0.7) 100%);
+  --thumb-overlay-transition: 200ms ease-out;
+
+  /* Mini node graph */
+  --thumb-node-agent: #a78bfa;
+  --thumb-node-task: #38bdf8;
+  --thumb-node-tool: #34d399;
+  --thumb-node-llm: #fbbf24;
+  --thumb-edge-color: rgba(148, 163, 184, 0.2);
+  --thumb-node-ring: rgba(255, 255, 255, 0.1);
+  --thumb-node-padding: 16px;
+
+  /* Empty state */
+  --thumb-empty-icon-color: #475569;
+  --thumb-empty-icon-size: 40px;
+}
+
+/* Preview overlay button (centered circle on thumbnail hover) */
+.cs-tpl-card__thumb-preview {
+  --preview-btn-size: 40px;
+  --preview-btn-bg: rgba(255, 255, 255, 0.1);
+  --preview-btn-bg-hover: rgba(255, 255, 255, 0.2);
+  --preview-btn-border: rgba(255, 255, 255, 0.2);
+  --preview-btn-icon-size: 18px;
+  --preview-btn-icon-color: rgba(255, 255, 255, 0.9);
+  --preview-btn-radius: 50%;
+}
+
+/* ------------------------------------------------------------------ */
+/* Badges (Featured / Popular / New)                                   */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__badge {
+  --badge-h: 20px;
+  --badge-radius: var(--cs-radius-sm, 4px);
+  --badge-inset: 8px;
+  --badge-backdrop: blur(8px);
+}
+
+.cs-tpl-card__badge--featured {
+  --badge-bg: rgba(251, 191, 36, 0.15);
+  --badge-text: #fcd34d;
+  --badge-border: rgba(251, 191, 36, 0.3);
+}
+
+.cs-tpl-card__badge--popular {
+  --badge-bg: rgba(52, 211, 153, 0.15);
+  --badge-text: #6ee7b7;
+  --badge-border: rgba(52, 211, 153, 0.3);
+}
+
+.cs-tpl-card__badge--new {
+  --badge-bg: rgba(56, 189, 248, 0.15);
+  --badge-text: #7dd3fc;
+  --badge-border: rgba(56, 189, 248, 0.3);
+}
+
+/* ------------------------------------------------------------------ */
+/* Category icon                                                       */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__cat-icon {
+  --cat-icon-size: 36px;
+  --cat-icon-size-sm: 28px;
+  --cat-icon-inner: 18px;
+  --cat-icon-radius: var(--cs-radius-lg, 8px);
+  --cat-icon-mr: 12px;
+}
+
+.cs-tpl-card__cat-icon--research {
+  --cat-icon-color: #38bdf8;
+  --cat-icon-bg: rgba(56, 189, 248, 0.15);
+}
+.cs-tpl-card__cat-icon--code {
+  --cat-icon-color: #a78bfa;
+  --cat-icon-bg: rgba(167, 139, 250, 0.15);
+}
+.cs-tpl-card__cat-icon--support {
+  --cat-icon-color: #34d399;
+  --cat-icon-bg: rgba(52, 211, 153, 0.15);
+}
+.cs-tpl-card__cat-icon--content {
+  --cat-icon-color: #fbbf24;
+  --cat-icon-bg: rgba(251, 191, 36, 0.15);
+}
+.cs-tpl-card__cat-icon--data {
+  --cat-icon-color: #fb7185;
+  --cat-icon-bg: rgba(251, 113, 133, 0.15);
+}
+.cs-tpl-card__cat-icon--automation {
+  --cat-icon-color: #cbd5e1;
+  --cat-icon-bg: rgba(203, 213, 225, 0.15);
+}
+
+/* ------------------------------------------------------------------ */
+/* Title                                                               */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__title {
+  --title-color: var(--cs-text-primary);
+  --title-font-size: 0.875rem;
+  --title-font-weight: 600;
+  --title-line-height: 1.25;
+  --title-mb: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Description                                                         */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__desc {
+  --desc-color: var(--cs-text-secondary);
+  --desc-font-size: 0.75rem;
+  --desc-font-weight: 400;
+  --desc-line-height: 1.5;
+  --desc-max-lines: 2;
+  --desc-min-h: 36px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tags                                                                */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__tags {
+  --tag-h: 22px;
+  --tag-gap: 6px;
+  --tag-radius: var(--cs-radius-sm, 4px);
+  --tag-bg: var(--cs-surface-elevated);
+  --tag-bg-hover: rgba(139, 92, 246, 0.12);
+  --tag-border: var(--cs-border-subtle);
+  --tag-border-hover: rgba(139, 92, 246, 0.25);
+  --tag-text: var(--cs-text-tertiary);
+  --tag-text-hover: #c4b5fd;
+  --tag-font-size: 0.625rem;
+  --tag-font-weight: 500;
+  --tag-letter-spacing: 0.02em;
+  --tag-transition: 100ms ease-out;
+
+  /* Overflow indicator (+N) */
+  --tag-overflow-bg: rgba(148, 163, 184, 0.08);
+  --tag-overflow-text: var(--cs-text-tertiary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Meta row                                                            */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__meta {
+  --meta-color: var(--cs-text-tertiary);
+  --meta-font-size: 0.6875rem;
+  --meta-font-weight: 400;
+  --meta-line-height: 1.25;
+  --meta-icon-size: 12px;
+  --meta-gap: 8px;
+  --meta-separator-color: #475569;
+  --meta-star-filled: #fbbf24;
+  --meta-star-empty: var(--cs-text-tertiary);
+  --meta-mt: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Action buttons                                                      */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card__actions {
+  --actions-gap: 8px;
+  --actions-pt: 12px;
+}
+
+/* Preview button (secondary) */
+.cs-tpl-card__btn-preview {
+  --btn-h: 36px;
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(139, 92, 246, 0.12);
+  --btn-border: #7c3aed;
+  --btn-border-hover: #8b5cf6;
+  --btn-text: #c4b5fd;
+  --btn-text-hover: #ddd6fe;
+  --btn-radius: var(--cs-radius-lg, 8px);
+  --btn-font-size: 0.8125rem;
+  --btn-font-weight: 500;
+  --btn-icon-size: 14px;
+}
+
+/* Use Template button (primary) */
+.cs-tpl-card__btn-use {
+  --btn-h: 36px;
+  --btn-bg: #7c3aed;
+  --btn-bg-hover: #8b5cf6;
+  --btn-bg-active: #6d28d9;
+  --btn-text: #ffffff;
+  --btn-radius: var(--cs-radius-lg, 8px);
+  --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
+  --btn-shadow-active: 0 1px 4px rgba(124, 58, 237, 0.25);
+  --btn-font-size: 0.8125rem;
+  --btn-font-weight: 600;
+  --btn-icon-size: 14px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Skeleton / loading state                                            */
+/* ------------------------------------------------------------------ */
+.cs-tpl-card--skeleton {
+  --skeleton-bg: rgba(30, 41, 59, 0.3);
+  --skeleton-bg-highlight: rgba(30, 41, 59, 0.5);
+  --skeleton-bg-static: rgba(30, 41, 59, 0.4);
+  --skeleton-duration: 1.5s;
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-tpl-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-tpl-card-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes cs-tpl-card-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-tpl-card,
+  .cs-tpl-card * {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+  .cs-tpl-card--skeleton {
+    --skeleton-bg: var(--skeleton-bg-static);
+  }
+}
