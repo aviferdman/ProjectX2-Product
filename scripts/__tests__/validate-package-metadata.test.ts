@@ -529,4 +529,60 @@ describe('validate-package-metadata', () => {
       expect(parseArgs([])).toEqual({ fix: false });
     });
   });
+
+  describe('integration: actual workspace packages', () => {
+    it('discovers all workspace packages', () => {
+      const rootDir = join(__dirname, '..', '..');
+      const packageDirs = discoverPackages(rootDir);
+      expect(packageDirs.length).toBeGreaterThanOrEqual(8);
+    });
+
+    it('all packages pass metadata validation', () => {
+      const rootDir = join(__dirname, '..', '..');
+      const packageDirs = discoverPackages(rootDir);
+
+      const results = packageDirs.map((dir) => validatePackage(dir));
+      const failures = results.filter((r) => !r.passed);
+
+      if (failures.length > 0) {
+        const failMessages = failures.map((f) => {
+          const failedChecks = f.checks
+            .filter((c) => c.status === 'fail')
+            .map((c) => c.message)
+            .join(', ');
+          return `${f.packageName}: ${failedChecks}`;
+        });
+        throw new Error(`Package metadata validation failed:\n${failMessages.join('\n')}`);
+      }
+
+      expect(results.every((r) => r.passed)).toBe(true);
+    });
+
+    it('all packages have consistent versions', () => {
+      const rootDir = join(__dirname, '..', '..');
+      const packageDirs = discoverPackages(rootDir);
+      const results = packageDirs.map((dir) => validatePackage(dir));
+      const crossChecks = validateCrossPackageConsistency(results);
+      const versionCheck = crossChecks.find((c) => c.name === 'version-consistency');
+      expect(versionCheck?.status).not.toBe('fail');
+    });
+
+    it('each package has name, version, license, and keywords', () => {
+      const rootDir = join(__dirname, '..', '..');
+      const packageDirs = discoverPackages(rootDir);
+
+      for (const dir of packageDirs) {
+        const result = validatePackage(dir);
+        const nameCheck = result.checks.find((c) => c.name === 'required-name');
+        const versionCheck = result.checks.find((c) => c.name === 'required-version');
+        const licenseCheck = result.checks.find((c) => c.name === 'required-license');
+        const keywordsCheck = result.checks.find((c) => c.name === 'required-keywords');
+
+        expect(nameCheck?.status, `${result.packageName}: name`).toBe('pass');
+        expect(versionCheck?.status, `${result.packageName}: version`).toBe('pass');
+        expect(licenseCheck?.status, `${result.packageName}: license`).toBe('pass');
+        expect(keywordsCheck?.status, `${result.packageName}: keywords`).toBe('pass');
+      }
+    });
+  });
 });
