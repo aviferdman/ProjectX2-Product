@@ -1,0 +1,318 @@
+/*
+ * Crewspace — Template Library UI CSS Custom Properties
+ * TASK-156: Design template library UI (grid, cards, preview, filters)
+ *
+ * Usage: Apply `.cs-template-library` to the template library root container.
+ * Uses root-level tokens from canvas-variables.css; import that first.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Template library layout                                             */
+/* ------------------------------------------------------------------ */
+.cs-template-library {
+  --tpl-bg: var(--cs-surface-app);
+  --tpl-header-h: 56px;
+  --tpl-sidebar-w: 220px;
+  --tpl-content-max-w: 1440px;
+  --tpl-content-padding: 24px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Template library header                                             */
+/* ------------------------------------------------------------------ */
+.cs-template-header {
+  --header-bg: var(--cs-surface-panel);
+  --header-border: var(--cs-border-subtle);
+  --header-h: 56px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Category sidebar                                                    */
+/* ------------------------------------------------------------------ */
+.cs-template-sidebar {
+  --sidebar-bg: var(--cs-surface-panel);
+  --sidebar-border: var(--cs-border-subtle);
+  --sidebar-w: 220px;
+
+  /* Category items */
+  --cat-item-h: 40px;
+  --cat-item-radius: var(--cs-radius-md);
+  --cat-item-color: var(--cs-text-secondary);
+  --cat-item-color-hover: var(--cs-text-primary);
+  --cat-item-bg-hover: rgba(30, 41, 59, 0.5);
+  --cat-item-icon-size: 32px;
+
+  /* Category colors */
+  --cat-research: #38bdf8;
+  --cat-research-bg: rgba(56, 189, 248, 0.1);
+  --cat-code: #a78bfa;
+  --cat-code-bg: rgba(167, 139, 250, 0.1);
+  --cat-support: #34d399;
+  --cat-support-bg: rgba(52, 211, 153, 0.1);
+  --cat-content: #fbbf24;
+  --cat-content-bg: rgba(251, 191, 36, 0.1);
+  --cat-data: #fb7185;
+  --cat-data-bg: rgba(251, 113, 133, 0.1);
+  --cat-automation: #cbd5e1;
+  --cat-automation-bg: rgba(203, 213, 225, 0.1);
+}
+
+/* Active category state (applied alongside category-specific class) */
+.cs-template-sidebar [data-active] {
+  --cat-item-color: var(--cs-text-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Search & filter toolbar                                             */
+/* ------------------------------------------------------------------ */
+.cs-template-toolbar {
+  --toolbar-h: 52px;
+
+  /* Search input */
+  --search-h: 40px;
+  --search-bg: var(--cs-surface-elevated);
+  --search-border: var(--cs-border-default);
+  --search-border-focus: #8b5cf6;
+  --search-placeholder: var(--cs-text-tertiary);
+  --search-icon: var(--cs-text-tertiary);
+  --search-radius: var(--cs-radius-lg);
+
+  /* Filter chips */
+  --chip-h: 30px;
+  --chip-bg: var(--cs-surface-elevated);
+  --chip-bg-active: rgba(139, 92, 246, 0.2);
+  --chip-border: var(--cs-border-default);
+  --chip-border-active: #8b5cf6;
+  --chip-text: var(--cs-text-secondary);
+  --chip-text-active: #c4b5fd;
+  --chip-radius: 9999px;
+
+  /* Sort dropdown */
+  --sort-bg: var(--cs-surface-elevated);
+  --sort-bg-hover: var(--cs-surface-card);
+  --sort-border: var(--cs-border-default);
+  --sort-text: var(--cs-text-secondary);
+  --sort-text-active: var(--cs-text-primary);
+  --sort-menu-bg: var(--cs-surface-overlay);
+  --sort-menu-border: var(--cs-border-default);
+  --sort-item-bg-hover: rgba(30, 41, 59, 0.5);
+  --sort-radius: var(--cs-radius-md);
+}
+
+/* ------------------------------------------------------------------ */
+/* Template cards (grid view)                                          */
+/* ------------------------------------------------------------------ */
+.cs-template-card {
+  --card-w: 300px;
+  --card-min-w: 260px;
+  --card-max-w: 360px;
+  --card-bg: var(--cs-surface-card);
+  --card-bg-hover: var(--cs-surface-elevated);
+  --card-border: var(--cs-border-default);
+  --card-border-hover: var(--cs-border-strong);
+  --card-radius: var(--cs-radius-xl);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
+  --card-gap: 20px;
+
+  /* Thumbnail */
+  --thumb-h: 180px;
+  --thumb-bg: rgba(10, 14, 26, 0.8);
+  --thumb-border: var(--cs-border-subtle);
+  --thumb-overlay: rgba(10, 14, 26, 0.6);
+  --thumb-radius: var(--cs-radius-xl) var(--cs-radius-xl) 0 0;
+
+  /* Body */
+  --card-body-padding: 16px;
+  --card-title-color: var(--cs-text-primary);
+  --card-desc-color: var(--cs-text-secondary);
+  --card-meta-color: var(--cs-text-tertiary);
+
+  /* Action icons */
+  --card-action-color: var(--cs-text-tertiary);
+  --card-action-color-hover: var(--cs-text-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Template tags                                                       */
+/* ------------------------------------------------------------------ */
+.cs-template-tag {
+  --tag-h: 22px;
+  --tag-bg: var(--cs-surface-elevated);
+  --tag-bg-hover: rgba(139, 92, 246, 0.12);
+  --tag-text: var(--cs-text-tertiary);
+  --tag-text-hover: #c4b5fd;
+  --tag-border: var(--cs-border-subtle);
+  --tag-radius: var(--cs-radius-sm);
+  --tag-gap: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Featured & popular badges                                           */
+/* ------------------------------------------------------------------ */
+.cs-template-badge-featured {
+  --badge-h: 20px;
+  --badge-bg: rgba(251, 191, 36, 0.15);
+  --badge-text: #fcd34d;
+  --badge-border: rgba(251, 191, 36, 0.3);
+  --badge-radius: var(--cs-radius-sm);
+}
+
+.cs-template-badge-popular {
+  --badge-h: 20px;
+  --badge-bg: rgba(52, 211, 153, 0.15);
+  --badge-text: #6ee7b7;
+  --badge-border: rgba(52, 211, 153, 0.3);
+  --badge-radius: var(--cs-radius-sm);
+}
+
+/* ------------------------------------------------------------------ */
+/* "Use Template" primary action                                       */
+/* ------------------------------------------------------------------ */
+.cs-use-template-btn {
+  --btn-h: 36px;
+  --btn-bg: #7c3aed;
+  --btn-bg-hover: #8b5cf6;
+  --btn-text: #ffffff;
+  --btn-icon: #ffffff;
+  --btn-radius: var(--cs-radius-lg);
+  --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
+}
+
+/* ------------------------------------------------------------------ */
+/* "Preview" secondary action                                          */
+/* ------------------------------------------------------------------ */
+.cs-preview-template-btn {
+  --btn-h: 36px;
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(139, 92, 246, 0.12);
+  --btn-text: #c4b5fd;
+  --btn-text-hover: #ddd6fe;
+  --btn-border: #7c3aed;
+  --btn-border-hover: #8b5cf6;
+  --btn-radius: var(--cs-radius-lg);
+}
+
+/* ------------------------------------------------------------------ */
+/* Preview modal                                                       */
+/* ------------------------------------------------------------------ */
+.cs-template-preview-modal {
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --modal-bg: var(--cs-surface-panel);
+  --modal-border: var(--cs-border-default);
+  --modal-radius: var(--cs-radius-xl);
+  --modal-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(148, 163, 184, 0.08);
+  --modal-w: 900px;
+  --modal-max-h: 85vh;
+
+  /* Header */
+  --modal-header-bg: var(--cs-surface-card);
+  --modal-header-border: var(--cs-border-subtle);
+  --modal-header-h: 64px;
+
+  /* Diagram area */
+  --diagram-bg: rgba(10, 14, 26, 0.9);
+  --diagram-border: var(--cs-border-subtle);
+  --diagram-h: 400px;
+  --diagram-radius: var(--cs-radius-lg);
+
+  /* Sidebar details */
+  --modal-sidebar-w: 300px;
+  --modal-sidebar-bg: var(--cs-surface-card);
+  --modal-sidebar-border: var(--cs-border-subtle);
+
+  /* Close */
+  --close-color: var(--cs-text-tertiary);
+  --close-color-hover: var(--cs-text-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Pagination                                                          */
+/* ------------------------------------------------------------------ */
+.cs-template-pagination {
+  --page-btn-size: 32px;
+  --page-btn-bg: transparent;
+  --page-btn-bg-hover: rgba(30, 41, 59, 0.5);
+  --page-btn-bg-active: rgba(139, 92, 246, 0.2);
+  --page-btn-text: var(--cs-text-secondary);
+  --page-btn-text-active: #c4b5fd;
+  --page-btn-border: var(--cs-border-default);
+  --page-btn-radius: var(--cs-radius-md);
+}
+
+/* ------------------------------------------------------------------ */
+/* Empty state (no search results)                                     */
+/* ------------------------------------------------------------------ */
+.cs-template-empty {
+  --empty-icon-size: 72px;
+  --empty-icon-color: #475569;
+  --empty-heading-color: var(--cs-text-primary);
+  --empty-desc-color: var(--cs-text-secondary);
+  --empty-border: var(--cs-border-default);
+  --empty-border-style: dashed;
+  --empty-radius: var(--cs-radius-xl);
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-tpl-card-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-tpl-modal-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cs-tpl-overlay-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cs-tpl-grid-reflow {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cs-tpl-empty-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cs-tpl-filter-toggle {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}

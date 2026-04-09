@@ -1,0 +1,217 @@
+/**
+ * Crewspace — Tailwind CSS theme extensions for the Template Library UI
+ * TASK-156: Design template library UI (grid, cards, preview, filters)
+ *
+ * Merge into your tailwind.config.ts alongside other themes:
+ *   import { templateLibraryTheme } from './src/design/tailwind/template-library-theme';
+ *   export default { theme: { extend: { ...canvasTheme, ...dashboardTheme, ...templateLibraryTheme } } };
+ */
+
+export const templateLibraryTheme = {
+  colors: {
+    'tpl-library': {
+      bg: 'var(--cs-surface-app)',
+      'header-bg': 'var(--cs-surface-panel)',
+      'header-border': 'var(--cs-border-subtle)',
+      'sidebar-bg': 'var(--cs-surface-panel)',
+      'sidebar-border': 'var(--cs-border-subtle)',
+    },
+    'tpl-card': {
+      bg: 'var(--cs-surface-card)',
+      'bg-hover': 'var(--cs-surface-elevated)',
+      border: 'var(--cs-border-default)',
+      'border-hover': 'var(--cs-border-strong)',
+      'thumb-bg': 'rgba(10,14,26,0.8)',
+      'thumb-overlay': 'rgba(10,14,26,0.6)',
+      title: 'var(--cs-text-primary)',
+      desc: 'var(--cs-text-secondary)',
+      meta: 'var(--cs-text-tertiary)',
+    },
+    'tpl-category': {
+      research: '#38bdf8',
+      'research-bg': 'rgba(56,189,248,0.1)',
+      'research-icon-bg': 'rgba(56,189,248,0.15)',
+      code: '#a78bfa',
+      'code-bg': 'rgba(167,139,250,0.1)',
+      'code-icon-bg': 'rgba(167,139,250,0.15)',
+      support: '#34d399',
+      'support-bg': 'rgba(52,211,153,0.1)',
+      'support-icon-bg': 'rgba(52,211,153,0.15)',
+      content: '#fbbf24',
+      'content-bg': 'rgba(251,191,36,0.1)',
+      'content-icon-bg': 'rgba(251,191,36,0.15)',
+      data: '#fb7185',
+      'data-bg': 'rgba(251,113,133,0.1)',
+      'data-icon-bg': 'rgba(251,113,133,0.15)',
+      automation: '#cbd5e1',
+      'automation-bg': 'rgba(203,213,225,0.1)',
+      'automation-icon-bg': 'rgba(203,213,225,0.15)',
+    },
+    'tpl-tag': {
+      bg: 'var(--cs-surface-elevated)',
+      'bg-hover': 'rgba(139,92,246,0.12)',
+      text: 'var(--cs-text-tertiary)',
+      'text-hover': '#c4b5fd',
+    },
+    'tpl-badge': {
+      'featured-bg': 'rgba(251,191,36,0.15)',
+      'featured-text': '#fcd34d',
+      'featured-border': 'rgba(251,191,36,0.3)',
+      'popular-bg': 'rgba(52,211,153,0.15)',
+      'popular-text': '#6ee7b7',
+      'popular-border': 'rgba(52,211,153,0.3)',
+    },
+    'tpl-use-btn': {
+      bg: '#7c3aed',
+      'bg-hover': '#8b5cf6',
+      text: '#ffffff',
+    },
+    'tpl-preview-btn': {
+      bg: 'transparent',
+      'bg-hover': 'rgba(139,92,246,0.12)',
+      text: '#c4b5fd',
+      'text-hover': '#ddd6fe',
+      border: '#7c3aed',
+      'border-hover': '#8b5cf6',
+    },
+    'tpl-modal': {
+      overlay: 'rgba(0,0,0,0.7)',
+      bg: 'var(--cs-surface-panel)',
+      border: 'var(--cs-border-default)',
+      'header-bg': 'var(--cs-surface-card)',
+      'header-border': 'var(--cs-border-subtle)',
+      'diagram-bg': 'rgba(10,14,26,0.9)',
+      'diagram-border': 'var(--cs-border-subtle)',
+      'sidebar-bg': 'var(--cs-surface-card)',
+      'sidebar-border': 'var(--cs-border-subtle)',
+    },
+    'tpl-filter': {
+      'chip-bg': 'var(--cs-surface-elevated)',
+      'chip-bg-active': 'rgba(139,92,246,0.2)',
+      'chip-border': 'var(--cs-border-default)',
+      'chip-border-active': '#8b5cf6',
+      'chip-text': 'var(--cs-text-secondary)',
+      'chip-text-active': '#c4b5fd',
+    },
+    'tpl-sort': {
+      bg: 'var(--cs-surface-elevated)',
+      'bg-hover': 'var(--cs-surface-card)',
+      border: 'var(--cs-border-default)',
+      text: 'var(--cs-text-secondary)',
+      'text-active': 'var(--cs-text-primary)',
+      'menu-bg': 'var(--cs-surface-overlay)',
+    },
+    'tpl-search': {
+      bg: 'var(--cs-surface-elevated)',
+      border: 'var(--cs-border-default)',
+      'border-focus': '#8b5cf6',
+      placeholder: 'var(--cs-text-tertiary)',
+      icon: 'var(--cs-text-tertiary)',
+    },
+    'tpl-pagination': {
+      bg: 'transparent',
+      'bg-hover': 'rgba(30,41,59,0.5)',
+      'bg-active': 'rgba(139,92,246,0.2)',
+      text: 'var(--cs-text-secondary)',
+      'text-active': '#c4b5fd',
+    },
+  },
+
+  spacing: {
+    'tpl-header-h': '56px',
+    'tpl-sidebar-w': '220px',
+    'tpl-content-max-w': '1440px',
+    'tpl-content-p': '24px',
+    'tpl-toolbar-h': '52px',
+    'tpl-card-w': '300px',
+    'tpl-card-min-w': '260px',
+    'tpl-card-max-w': '360px',
+    'tpl-card-thumb-h': '180px',
+    'tpl-card-body-p': '16px',
+    'tpl-card-gap': '20px',
+    'tpl-tag-h': '22px',
+    'tpl-tag-gap': '6px',
+    'tpl-cat-icon-size': '32px',
+    'tpl-search-h': '40px',
+    'tpl-chip-h': '30px',
+    'tpl-use-btn-h': '36px',
+    'tpl-preview-btn-h': '36px',
+    'tpl-modal-w': '900px',
+    'tpl-modal-sidebar-w': '300px',
+    'tpl-modal-diagram-h': '400px',
+    'tpl-badge-h': '20px',
+    'tpl-empty-icon-size': '72px',
+    'tpl-page-btn-size': '32px',
+  },
+
+  fontSize: {
+    'tpl-page-title': ['1.5rem', { lineHeight: '1.25', fontWeight: '700' }],
+    'tpl-page-subtitle': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
+    'tpl-section-title': ['1.125rem', { lineHeight: '1.25', fontWeight: '600' }],
+    'tpl-card-title': ['0.875rem', { lineHeight: '1.25', fontWeight: '600' }],
+    'tpl-card-desc': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
+    'tpl-card-meta': ['0.6875rem', { lineHeight: '1.25', fontWeight: '400' }],
+    'tpl-tag': ['0.625rem', { lineHeight: '1', fontWeight: '500', letterSpacing: '0.02em' }],
+    'tpl-badge': ['0.5625rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
+    'tpl-category-label': ['0.8125rem', { lineHeight: '1.25', fontWeight: '500' }],
+    'tpl-category-count': ['0.6875rem', { lineHeight: '1', fontWeight: '400' }],
+    'tpl-search-input': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
+    'tpl-filter-chip': ['0.75rem', { lineHeight: '1', fontWeight: '500' }],
+    'tpl-sort-label': ['0.75rem', { lineHeight: '1', fontWeight: '500' }],
+    'tpl-modal-title': ['1.25rem', { lineHeight: '1.25', fontWeight: '700' }],
+    'tpl-modal-desc': ['0.875rem', { lineHeight: '1.625', fontWeight: '400' }],
+    'tpl-modal-detail-label': ['0.6875rem', { lineHeight: '1.25', fontWeight: '600', letterSpacing: '0.05em' }],
+    'tpl-modal-detail-value': ['0.8125rem', { lineHeight: '1.5', fontWeight: '400' }],
+    'tpl-empty-heading': ['1.125rem', { lineHeight: '1.25', fontWeight: '600' }],
+    'tpl-empty-desc': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
+  },
+
+  maxHeight: {
+    'tpl-modal': '85vh',
+  },
+
+  boxShadow: {
+    'tpl-card': '0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.06)',
+    'tpl-card-hover': '0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.1)',
+    'tpl-use-btn': '0 2px 8px rgba(124,58,237,0.35)',
+    'tpl-use-btn-hover': '0 4px 12px rgba(124,58,237,0.45)',
+    'tpl-modal': '0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.08)',
+    'tpl-sort-menu': '0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.06)',
+  },
+
+  animation: {
+    'tpl-card-enter': 'tpl-card-enter 250ms cubic-bezier(0.34,1.56,0.64,1)',
+    'tpl-modal-enter': 'tpl-modal-enter 300ms cubic-bezier(0.34,1.56,0.64,1)',
+    'tpl-overlay-fade': 'tpl-overlay-fade 200ms ease-out',
+    'tpl-grid-reflow': 'tpl-grid-reflow 200ms ease-out',
+    'tpl-filter-toggle': 'tpl-filter-toggle 150ms ease-out',
+    'tpl-empty-in': 'tpl-empty-in 300ms ease-out',
+  },
+
+  keyframes: {
+    'tpl-card-enter': {
+      from: { opacity: '0', transform: 'scale(0.92) translateY(8px)' },
+      to: { opacity: '1', transform: 'scale(1) translateY(0)' },
+    },
+    'tpl-modal-enter': {
+      from: { opacity: '0', transform: 'scale(0.95) translateY(12px)' },
+      to: { opacity: '1', transform: 'scale(1) translateY(0)' },
+    },
+    'tpl-overlay-fade': {
+      from: { opacity: '0' },
+      to: { opacity: '1' },
+    },
+    'tpl-grid-reflow': {
+      from: { opacity: '0.6' },
+      to: { opacity: '1' },
+    },
+    'tpl-filter-toggle': {
+      from: { transform: 'scale(0.95)' },
+      to: { transform: 'scale(1)' },
+    },
+    'tpl-empty-in': {
+      from: { opacity: '0', transform: 'translateY(12px)' },
+      to: { opacity: '1', transform: 'translateY(0)' },
+    },
+  },
+} as const;
