@@ -1,0 +1,179 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "crewspace": {
+    "responsive": {
+      "breakpoint": {
+        "xs": {
+          "value": "375px",
+          "type": "dimension",
+          "description": "Small phones (iPhone SE, Galaxy S). Min supported width."
+        },
+        "sm": {
+          "value": "640px",
+          "type": "dimension",
+          "description": "Large phones / small tablets in portrait. Single-column layout threshold."
+        },
+        "md": {
+          "value": "768px",
+          "type": "dimension",
+          "description": "Tablets in portrait (iPad Mini). Sidebar becomes collapsible overlay."
+        },
+        "lg": {
+          "value": "1024px",
+          "type": "dimension",
+          "description": "Tablets in landscape / small laptops. Persistent sidebar appears."
+        },
+        "xl": {
+          "value": "1280px",
+          "type": "dimension",
+          "description": "Standard desktops. Full layout with sidebar + properties panel."
+        },
+        "2xl": {
+          "value": "1536px",
+          "type": "dimension",
+          "description": "Large desktops / ultrawide. Max content width applies."
+        }
+      },
+      "container": {
+        "max-width": {
+          "xs": { "value": "100%", "type": "dimension" },
+          "sm": { "value": "100%", "type": "dimension" },
+          "md": { "value": "100%", "type": "dimension" },
+          "lg": { "value": "100%", "type": "dimension" },
+          "xl": { "value": "1280px", "type": "dimension" },
+          "2xl": { "value": "1440px", "type": "dimension" }
+        },
+        "padding": {
+          "xs": { "value": "12px", "type": "spacing", "description": "Tightest padding on small phones" },
+          "sm": { "value": "16px", "type": "spacing" },
+          "md": { "value": "20px", "type": "spacing" },
+          "lg": { "value": "24px", "type": "spacing" },
+          "xl": { "value": "24px", "type": "spacing" },
+          "2xl": { "value": "32px", "type": "spacing" }
+        }
+      },
+      "layout": {
+        "sidebar": {
+          "behavior": {
+            "xs": { "value": "hidden", "type": "string", "description": "No sidebar; hamburger menu opens full-screen overlay" },
+            "sm": { "value": "hidden", "type": "string", "description": "No sidebar; hamburger menu opens full-screen overlay" },
+            "md": { "value": "overlay", "type": "string", "description": "Sidebar opens as slide-over overlay, collapses on close" },
+            "lg": { "value": "collapsible", "type": "string", "description": "Persistent sidebar, collapsed (icons only) by default" },
+            "xl": { "value": "expanded", "type": "string", "description": "Persistent sidebar, expanded with labels" },
+            "2xl": { "value": "expanded", "type": "string", "description": "Persistent sidebar, expanded with labels" }
+          },
+          "width": {
+            "collapsed": { "value": "64px", "type": "sizing" },
+            "expanded": { "value": "240px", "type": "sizing" },
+            "overlay": { "value": "280px", "type": "sizing" }
+          }
+        },
+        "header": {
+          "height": {
+            "mobile": { "value": "48px", "type": "sizing", "description": "Compact header for mobile" },
+            "desktop": { "value": "56px", "type": "sizing", "description": "Standard header height" }
+          }
+        },
+        "properties-panel": {
+          "behavior": {
+            "xs": { "value": "bottom-sheet", "type": "string", "description": "Slides up from bottom as a sheet" },
+            "sm": { "value": "bottom-sheet", "type": "string", "description": "Slides up from bottom as a sheet" },
+            "md": { "value": "overlay", "type": "string", "description": "Slide-in panel from right edge" },
+            "lg": { "value": "overlay", "type": "string", "description": "Slide-in panel from right edge" },
+            "xl": { "value": "docked", "type": "string", "description": "Persistent right panel, can be toggled" },
+            "2xl": { "value": "docked", "type": "string", "description": "Persistent right panel, always visible" }
+          },
+          "width": {
+            "overlay": { "value": "320px", "type": "sizing" },
+            "docked": { "value": "320px", "type": "sizing" },
+            "bottom-sheet-max-h": { "value": "60vh", "type": "sizing" }
+          }
+        },
+        "canvas": {
+          "toolbar-position": {
+            "mobile": { "value": "bottom", "type": "string", "description": "Floating toolbar at bottom for thumb access" },
+            "desktop": { "value": "top", "type": "string", "description": "Standard top toolbar" }
+          },
+          "minimap-visible": {
+            "xs": { "value": "false", "type": "boolean", "description": "Hidden on phones — too small to be useful" },
+            "sm": { "value": "false", "type": "boolean" },
+            "md": { "value": "true", "type": "boolean" },
+            "lg": { "value": "true", "type": "boolean" },
+            "xl": { "value": "true", "type": "boolean" },
+            "2xl": { "value": "true", "type": "boolean" }
+          },
+          "default-zoom": {
+            "mobile": { "value": "0.6", "type": "number", "description": "Lower default zoom to show more canvas on small screens" },
+            "tablet": { "value": "0.8", "type": "number" },
+            "desktop": { "value": "1.0", "type": "number" }
+          }
+        }
+      },
+      "grid": {
+        "columns": {
+          "xs": { "value": "1", "type": "number", "description": "Single column card grid on phones" },
+          "sm": { "value": "1", "type": "number", "description": "Single column, cards stretch full width" },
+          "md": { "value": "2", "type": "number", "description": "Two columns for tablet portrait" },
+          "lg": { "value": "3", "type": "number", "description": "Three columns for small desktops" },
+          "xl": { "value": "3", "type": "number", "description": "Three columns for standard desktops" },
+          "2xl": { "value": "4", "type": "number", "description": "Four columns for large screens" }
+        },
+        "gap": {
+          "mobile": { "value": "12px", "type": "spacing" },
+          "tablet": { "value": "16px", "type": "spacing" },
+          "desktop": { "value": "20px", "type": "spacing" }
+        }
+      },
+      "typography": {
+        "scale": {
+          "page-title": {
+            "mobile": { "value": "1.25rem", "type": "fontSize", "description": "20px on mobile" },
+            "desktop": { "value": "1.5rem", "type": "fontSize", "description": "24px on desktop" }
+          },
+          "section-title": {
+            "mobile": { "value": "0.875rem", "type": "fontSize", "description": "14px on mobile" },
+            "desktop": { "value": "1rem", "type": "fontSize", "description": "16px on desktop" }
+          },
+          "body": {
+            "mobile": { "value": "0.8125rem", "type": "fontSize", "description": "13px on mobile" },
+            "desktop": { "value": "0.875rem", "type": "fontSize", "description": "14px on desktop" }
+          }
+        }
+      },
+      "touch": {
+        "min-target-size": { "value": "44px", "type": "sizing", "description": "WCAG 2.5.5 minimum touch target size" },
+        "comfortable-target-size": { "value": "48px", "type": "sizing", "description": "Recommended touch target for primary actions" },
+        "target-spacing": { "value": "8px", "type": "spacing", "description": "Minimum gap between touch targets" }
+      },
+      "modal": {
+        "width": {
+          "xs": { "value": "100vw", "type": "sizing", "description": "Full-screen modal on phones" },
+          "sm": { "value": "100vw", "type": "sizing", "description": "Full-screen modal on large phones" },
+          "md": { "value": "640px", "type": "sizing", "description": "Centered modal on tablets" },
+          "lg": { "value": "800px", "type": "sizing" },
+          "xl": { "value": "900px", "type": "sizing" }
+        },
+        "height": {
+          "mobile": { "value": "100vh", "type": "sizing", "description": "Full height on mobile" },
+          "desktop": { "value": "85vh", "type": "sizing", "description": "Max 85% viewport height on desktop" }
+        },
+        "border-radius": {
+          "mobile": { "value": "0px", "type": "borderRadius", "description": "No radius on full-screen mobile modals" },
+          "desktop": { "value": "12px", "type": "borderRadius" }
+        }
+      },
+      "stat-cards": {
+        "columns": {
+          "xs": { "value": "2", "type": "number", "description": "2 stat cards per row on mobile" },
+          "sm": { "value": "2", "type": "number" },
+          "md": { "value": "4", "type": "number", "description": "All 4 stat cards in one row on tablet+" },
+          "lg": { "value": "4", "type": "number" }
+        },
+        "min-width": {
+          "mobile": { "value": "140px", "type": "sizing", "description": "Smaller stat cards on mobile" },
+          "desktop": { "value": "200px", "type": "sizing" }
+        }
+      }
+    }
+  }
+}

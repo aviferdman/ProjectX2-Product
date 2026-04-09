@@ -1,0 +1,141 @@
+/**
+ * Crewspace — CSS Custom Properties for Responsive Design
+ * TASK-169: Design responsive breakpoints (mobile, tablet, desktop)
+ *
+ * Usage: Import in your global stylesheet or app entry.
+ * These variables adapt layout dimensions per breakpoint.
+ *
+ * Breakpoints (mobile-first):
+ *   xs: 375px   — small phones
+ *   sm: 640px   — large phones
+ *   md: 768px   — tablets portrait
+ *   lg: 1024px  — tablets landscape / small laptops
+ *   xl: 1280px  — standard desktops
+ *   2xl: 1536px — large desktops
+ */
+
+:root {
+  /* ── Breakpoint values (for reference in JS / media queries) ── */
+  --cs-bp-xs: 375px;
+  --cs-bp-sm: 640px;
+  --cs-bp-md: 768px;
+  --cs-bp-lg: 1024px;
+  --cs-bp-xl: 1280px;
+  --cs-bp-2xl: 1536px;
+
+  /* ── Container ── */
+  --cs-container-max-w: 100%;
+  --cs-container-padding: 12px;
+
+  /* ── Header ── */
+  --cs-header-h: 48px;
+
+  /* ── Sidebar ── */
+  --cs-sidebar-w: 0px;
+  --cs-sidebar-visible: 0;
+  --cs-sidebar-mode: hidden;
+
+  /* ── Properties Panel ── */
+  --cs-properties-w: 0px;
+  --cs-properties-mode: bottom-sheet;
+  --cs-properties-sheet-max-h: 60vh;
+
+  /* ── Canvas ── */
+  --cs-canvas-toolbar-pos: bottom;
+  --cs-canvas-minimap-visible: 0;
+  --cs-canvas-default-zoom: 0.6;
+
+  /* ── Card Grid ── */
+  --cs-grid-columns: 1;
+  --cs-grid-gap: 12px;
+
+  /* ── Stat Cards ── */
+  --cs-stat-columns: 2;
+  --cs-stat-min-w: 140px;
+
+  /* ── Typography Scale ── */
+  --cs-page-title-size: 1.25rem;
+  --cs-section-title-size: 0.875rem;
+  --cs-body-size: 0.8125rem;
+
+  /* ── Touch Targets ── */
+  --cs-touch-min: 44px;
+  --cs-touch-comfortable: 48px;
+  --cs-touch-spacing: 8px;
+
+  /* ── Modal ── */
+  --cs-modal-w: 100vw;
+  --cs-modal-h: 100vh;
+  --cs-modal-radius: 0px;
+}
+
+/* ── sm: 640px — Large phones ── */
+@media (min-width: 640px) {
+  :root {
+    --cs-container-padding: 16px;
+    --cs-grid-gap: 16px;
+  }
+}
+
+/* ── md: 768px — Tablets portrait ── */
+@media (min-width: 768px) {
+  :root {
+    --cs-container-padding: 20px;
+    --cs-header-h: 56px;
+    --cs-sidebar-mode: overlay;
+    --cs-sidebar-w: 280px;
+    --cs-properties-mode: overlay;
+    --cs-properties-w: 320px;
+    --cs-canvas-toolbar-pos: top;
+    --cs-canvas-minimap-visible: 1;
+    --cs-canvas-default-zoom: 0.8;
+    --cs-grid-columns: 2;
+    --cs-grid-gap: 16px;
+    --cs-stat-columns: 4;
+    --cs-stat-min-w: 160px;
+    --cs-page-title-size: 1.375rem;
+    --cs-section-title-size: 1rem;
+    --cs-body-size: 0.875rem;
+    --cs-modal-w: 640px;
+    --cs-modal-h: 85vh;
+    --cs-modal-radius: 12px;
+  }
+}
+
+/* ── lg: 1024px — Tablets landscape / small laptops ── */
+@media (min-width: 1024px) {
+  :root {
+    --cs-container-padding: 24px;
+    --cs-sidebar-mode: collapsible;
+    --cs-sidebar-visible: 1;
+    --cs-sidebar-w: 64px;
+    --cs-canvas-default-zoom: 1.0;
+    --cs-grid-columns: 3;
+    --cs-grid-gap: 20px;
+    --cs-stat-min-w: 180px;
+    --cs-modal-w: 800px;
+  }
+}
+
+/* ── xl: 1280px — Standard desktops ── */
+@media (min-width: 1280px) {
+  :root {
+    --cs-container-max-w: 1280px;
+    --cs-sidebar-mode: expanded;
+    --cs-sidebar-w: 240px;
+    --cs-properties-mode: docked;
+    --cs-properties-w: 320px;
+    --cs-page-title-size: 1.5rem;
+    --cs-stat-min-w: 200px;
+    --cs-modal-w: 900px;
+  }
+}
+
+/* ── 2xl: 1536px — Large desktops ── */
+@media (min-width: 1536px) {
+  :root {
+    --cs-container-max-w: 1440px;
+    --cs-container-padding: 32px;
+    --cs-grid-columns: 4;
+  }
+}
