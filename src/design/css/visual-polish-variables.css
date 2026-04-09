@@ -1,0 +1,481 @@
+/*
+ * Crewspace — Visual Polish CSS Custom Properties
+ * TASK-177: Visual polish pass (spacing, alignment, colors, consistency)
+ *
+ * This file establishes a unified polish layer across all Crewspace components.
+ * It defines shared patterns for spacing rhythm, card surfaces, focus rings,
+ * dividers, overlays, badges, buttons, inputs, typography, animations, and
+ * scrollbars so every component renders with consistent visual quality.
+ *
+ * Import after canvas-variables.css which defines root-level :root tokens.
+ * Usage: These tokens are available globally and via scoped component classes.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Semantic spacing aliases                                            */
+/* ------------------------------------------------------------------ */
+:root {
+  /* Component gaps — horizontal/grid spacing */
+  --cs-gap-xs: 4px;
+  --cs-gap-sm: 8px;
+  --cs-gap-md: 12px;
+  --cs-gap-lg: 16px;
+  --cs-gap-xl: 24px;
+  --cs-gap-2xl: 32px;
+
+  /* Inset padding — internal content padding */
+  --cs-inset-xs: 4px;
+  --cs-inset-sm: 8px;
+  --cs-inset-md: 12px;
+  --cs-inset-lg: 16px;
+  --cs-inset-xl: 24px;
+  --cs-inset-2xl: 32px;
+
+  /* Stack spacing — vertical rhythm between stacked elements */
+  --cs-stack-xs: 2px;
+  --cs-stack-sm: 4px;
+  --cs-stack-md: 8px;
+  --cs-stack-lg: 16px;
+  --cs-stack-xl: 24px;
+
+  /* Icon sizes */
+  --cs-icon-xs: 12px;
+  --cs-icon-sm: 16px;
+  --cs-icon-md: 20px;
+  --cs-icon-lg: 24px;
+  --cs-icon-xl: 32px;
+  --cs-icon-2xl: 48px;
+
+  /* Focus ring */
+  --cs-focus-ring-color: #8b5cf6;
+  --cs-focus-ring-width: 2px;
+  --cs-focus-ring-offset: 2px;
+  --cs-focus-ring-offset-color: #020617;
+  --cs-focus-ring-shadow: 0 0 0 2px #020617, 0 0 0 4px #8b5cf6;
+
+  /* Dividers */
+  --cs-divider-color: var(--cs-border-subtle, #1e293b);
+  --cs-divider-color-strong: var(--cs-border-default, #334155);
+  --cs-divider-width: 1px;
+  --cs-divider-spacing: 16px;
+  --cs-divider-spacing-compact: 8px;
+
+  /* Overlays */
+  --cs-overlay-bg: rgba(0, 0, 0, 0.6);
+  --cs-overlay-bg-light: rgba(0, 0, 0, 0.4);
+  --cs-overlay-bg-heavy: rgba(0, 0, 0, 0.75);
+  --cs-overlay-blur: 8px;
+  --cs-overlay-blur-sm: 4px;
+
+  /* State opacities */
+  --cs-opacity-hover: 0.08;
+  --cs-opacity-active: 0.12;
+  --cs-opacity-selected: 0.15;
+  --cs-opacity-disabled: 0.4;
+  --cs-opacity-placeholder: 0.5;
+
+  /* Animation durations */
+  --cs-duration-instant: 50ms;
+  --cs-duration-fast: 100ms;
+  --cs-duration-normal: 150ms;
+  --cs-duration-moderate: 200ms;
+  --cs-duration-slow: 300ms;
+  --cs-duration-enter: 250ms;
+
+  /* Animation easings */
+  --cs-easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --cs-easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --cs-easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --cs-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Stagger */
+  --cs-stagger-delay: 40ms;
+  --cs-stagger-max: 500ms;
+
+  /* Scrollbar */
+  --cs-scrollbar-w: 6px;
+  --cs-scrollbar-track: transparent;
+  --cs-scrollbar-thumb: rgba(148, 163, 184, 0.2);
+  --cs-scrollbar-thumb-hover: rgba(148, 163, 184, 0.35);
+  --cs-scrollbar-radius: 9999px;
+
+  /* Z-index scale */
+  --cs-z-base: 0;
+  --cs-z-dropdown: 100;
+  --cs-z-sticky: 200;
+  --cs-z-overlay: 300;
+  --cs-z-modal: 400;
+  --cs-z-popover: 500;
+  --cs-z-tooltip: 600;
+  --cs-z-toast: 700;
+}
+
+/* ------------------------------------------------------------------ */
+/* Unified card surface                                                */
+/* ------------------------------------------------------------------ */
+.cs-card-polished {
+  --card-p: var(--cs-inset-lg);
+  --card-p-compact: var(--cs-inset-md);
+  --card-gap: var(--cs-gap-lg);
+  --card-gap-compact: var(--cs-gap-md);
+  --card-radius: 12px;
+  --card-border-w: 1px;
+  --card-bg: var(--cs-surface-card, #1e293b);
+  --card-bg-hover: var(--cs-surface-elevated, #334155);
+  --card-border-color: var(--cs-border-default, #334155);
+  --card-border-color-hover: var(--cs-border-strong, #64748b);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(148, 163, 184, 0.1);
+  --card-shadow-active: 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(148, 163, 184, 0.08);
+  --card-transition: var(--cs-duration-normal) ease-out;
+}
+
+/* ------------------------------------------------------------------ */
+/* Unified button patterns                                             */
+/* ------------------------------------------------------------------ */
+.cs-btn-polished {
+  --btn-h-sm: 28px;
+  --btn-h-md: 36px;
+  --btn-h-lg: 40px;
+  --btn-px-sm: 8px;
+  --btn-px-md: 12px;
+  --btn-px-lg: 16px;
+  --btn-radius: 8px;
+  --btn-radius-pill: 9999px;
+  --btn-font-size: 0.8125rem;
+  --btn-font-weight: 500;
+
+  /* Primary */
+  --btn-primary-bg: #7c3aed;
+  --btn-primary-bg-hover: #8b5cf6;
+  --btn-primary-text: #ffffff;
+  --btn-primary-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+  --btn-primary-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
+
+  /* Ghost */
+  --btn-ghost-bg: transparent;
+  --btn-ghost-bg-hover: rgba(148, 163, 184, 0.08);
+  --btn-ghost-text: var(--cs-text-secondary, #94a3b8);
+  --btn-ghost-text-hover: var(--cs-text-primary, #f8fafc);
+
+  /* Danger */
+  --btn-danger-bg: #e11d48;
+  --btn-danger-bg-hover: #f43f5e;
+  --btn-danger-text: #ffffff;
+}
+
+/* ------------------------------------------------------------------ */
+/* Unified input patterns                                              */
+/* ------------------------------------------------------------------ */
+.cs-input-polished {
+  --input-h: 36px;
+  --input-h-sm: 28px;
+  --input-px: 12px;
+  --input-radius: 6px;
+  --input-bg: var(--cs-surface-elevated, #334155);
+  --input-border: var(--cs-border-default, #334155);
+  --input-border-hover: var(--cs-border-strong, #64748b);
+  --input-border-focus: #8b5cf6;
+  --input-placeholder: var(--cs-text-tertiary, #64748b);
+  --input-text: var(--cs-text-primary, #f8fafc);
+  --input-font-size: 0.8125rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Unified badge patterns                                              */
+/* ------------------------------------------------------------------ */
+.cs-badge-polished {
+  --badge-h: 22px;
+  --badge-h-sm: 18px;
+  --badge-px: 8px;
+  --badge-radius: 9999px;
+  --badge-font-size: 0.6875rem;
+  --badge-font-weight: 600;
+  --badge-letter-spacing: 0.025em;
+  --badge-dot-size: 6px;
+  --badge-dot-gap: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Polished typography presets                                          */
+/* ------------------------------------------------------------------ */
+.cs-type-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--cs-text-primary, #f8fafc);
+}
+
+.cs-type-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--cs-text-primary, #f8fafc);
+}
+
+.cs-type-card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--cs-text-primary, #f8fafc);
+}
+
+.cs-type-card-body {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--cs-text-secondary, #94a3b8);
+}
+
+.cs-type-card-meta {
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--cs-text-tertiary, #64748b);
+}
+
+.cs-type-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--cs-text-secondary, #94a3b8);
+}
+
+.cs-type-caption {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.025em;
+  color: var(--cs-text-tertiary, #64748b);
+}
+
+.cs-type-overline {
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cs-text-tertiary, #64748b);
+}
+
+/* ------------------------------------------------------------------ */
+/* Focus ring utility                                                  */
+/* ------------------------------------------------------------------ */
+.cs-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--cs-focus-ring-shadow);
+}
+
+/* ------------------------------------------------------------------ */
+/* Divider utilities                                                   */
+/* ------------------------------------------------------------------ */
+.cs-divider {
+  border: 0;
+  border-top: var(--cs-divider-width) solid var(--cs-divider-color);
+  margin: var(--cs-divider-spacing) 0;
+}
+
+.cs-divider--compact {
+  margin: var(--cs-divider-spacing-compact) 0;
+}
+
+.cs-divider--strong {
+  border-top-color: var(--cs-divider-color-strong);
+}
+
+.cs-divider--vertical {
+  border-top: 0;
+  border-left: var(--cs-divider-width) solid var(--cs-divider-color);
+  margin: 0 var(--cs-divider-spacing);
+  align-self: stretch;
+}
+
+/* ------------------------------------------------------------------ */
+/* Scrollbar styling                                                   */
+/* ------------------------------------------------------------------ */
+.cs-scrollbar::-webkit-scrollbar {
+  width: var(--cs-scrollbar-w);
+  height: var(--cs-scrollbar-w);
+}
+
+.cs-scrollbar::-webkit-scrollbar-track {
+  background: var(--cs-scrollbar-track);
+}
+
+.cs-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--cs-scrollbar-thumb);
+  border-radius: var(--cs-scrollbar-radius);
+}
+
+.cs-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--cs-scrollbar-thumb-hover);
+}
+
+/* Firefox scrollbar */
+.cs-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--cs-scrollbar-thumb) var(--cs-scrollbar-track);
+}
+
+/* ------------------------------------------------------------------ */
+/* Polished overlay                                                    */
+/* ------------------------------------------------------------------ */
+.cs-overlay {
+  background: var(--cs-overlay-bg);
+  backdrop-filter: blur(var(--cs-overlay-blur));
+  -webkit-backdrop-filter: blur(var(--cs-overlay-blur));
+}
+
+.cs-overlay--light {
+  background: var(--cs-overlay-bg-light);
+  backdrop-filter: blur(var(--cs-overlay-blur-sm));
+  -webkit-backdrop-filter: blur(var(--cs-overlay-blur-sm));
+}
+
+.cs-overlay--heavy {
+  background: var(--cs-overlay-bg-heavy);
+  backdrop-filter: blur(var(--cs-overlay-blur));
+  -webkit-backdrop-filter: blur(var(--cs-overlay-blur));
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-polish-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cs-polish-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cs-polish-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cs-polish-spring-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cs-polish-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes cs-polish-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cs-polish-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Disabled state utility                                              */
+/* ------------------------------------------------------------------ */
+.cs-disabled {
+  opacity: var(--cs-opacity-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cs-duration-instant: 0ms;
+    --cs-duration-fast: 0ms;
+    --cs-duration-normal: 0ms;
+    --cs-duration-moderate: 0ms;
+    --cs-duration-slow: 0ms;
+    --cs-duration-enter: 0ms;
+    --cs-stagger-delay: 0ms;
+    --cs-stagger-max: 0ms;
+  }
+
+  .cs-card-polished {
+    --card-transition: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive adjustments                                              */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  :root {
+    --cs-gap-lg: 12px;
+    --cs-gap-xl: 16px;
+    --cs-gap-2xl: 24px;
+    --cs-inset-lg: 12px;
+    --cs-inset-xl: 16px;
+    --cs-inset-2xl: 24px;
+  }
+
+  .cs-card-polished {
+    --card-p: var(--cs-inset-md);
+    --card-gap: var(--cs-gap-md);
+  }
+
+  .cs-type-page-title {
+    font-size: 1.25rem;
+  }
+
+  .cs-type-section-title {
+    font-size: 0.9375rem;
+  }
+}
