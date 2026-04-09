@@ -1,7 +1,8 @@
 # Crewspace Web App — Usability Testing Plan
 
 > **TASK-178** · P1 · UX/UI · Phase 2 (Epic 23: Polish, Performance & Launch Prep)  
-> Final usability testing: 5–10 users, onboarding validation, end-to-end flow verification, and heuristic evaluation across all major screens.
+> Final usability testing: 10–12 users, onboarding validation, end-to-end flow verification, and heuristic evaluation across all major screens.  
+> **Addendum (C189):** Added founder/startup CEO segment; expanded accessibility sample from 2 to 4 dedicated participants.
 
 ---
 
@@ -50,27 +51,32 @@
 
 ## 2. Participant Recruitment
 
-### 2.1 Target Participants: 8 Users
+### 2.1 Target Participants: 10 Users
 
 | Segment | Count | Profile | Archetype |
 |---------|-------|---------|-----------|
 | **AI/ML engineers** | 3 | Build or use LLM-based applications; familiar with agent patterns | Builder |
+| **Founders / startup CEOs** | 2 | Technical or semi-technical founders evaluating tools for their engineering team; budget decision-makers | Evaluator → Operator |
 | **Full-stack developers** | 2 | Build web apps; new to multi-agent orchestration | Explorer → Builder |
 | **Technical PMs / DevOps** | 2 | Manage developer workflows; evaluate tools for teams | Operator |
 | **Non-technical power user** | 1 | Comfortable with no-code tools; no AI/agent background | Explorer |
+
+> **Addendum note:** Founders added per PM review (C189). Founders are critical for validating the product's value proposition, onboarding clarity, and pricing perception since they are the primary purchase decision-makers for the target market (small-to-medium engineering teams). At least 1 founder should have AI/agent experience, 1 should be new to agents.
 
 ### 2.2 Screening Criteria
 
 **Include:**
 - Active developers or technical professionals
 - At least some experience with workflow/automation tools (Zapier, n8n, Airflow, etc.)
-- Mix of AI-experienced (4) and AI-new (4)
+- Mix of AI-experienced (5) and AI-new (5)
 - Comfortable thinking aloud during tasks
+- For founder segment: currently managing or building a product with ≥2 engineers; has evaluated/purchased developer tools in past 12 months
 
 **Exclude:**
 - Crewspace team members or close collaborators
 - Users who have seen the Crewspace web UI before
 - People unfamiliar with basic web application usage
+- Founders with no technical background (cannot evaluate developer tooling)
 
 ### 2.3 Recruitment Channels
 
@@ -80,10 +86,13 @@
 | Crewspace CLI users | Email existing CLI users who opted into feedback |
 | Twitter/X | Reach out to AI-tooling enthusiasts |
 | User testing platforms | UserTesting.com or Maze for quick recruitment |
+| Founder communities | Indie Hackers, YC alumni Slack, startup-focused Discord servers |
+| LinkedIn outreach | Target CTOs/technical founders at seed/Series A startups (2–20 engineers) |
 
 ### 2.4 Compensation
 
 - $50 gift card (Amazon or GitHub Sponsors equivalent) per participant
+- $75 gift card for founder segment (higher time value, harder to recruit)
 - Session duration: 45–60 minutes
 
 ---
@@ -469,7 +478,9 @@ Rate each heuristic per screen: ✅ Pass | ⚠️ Minor issue | ❌ Fail
 |-----------|-----------|
 | **High** | ≥ 50% of participants encountered it |
 | **Medium** | 25–49% of participants |
-| **Low** | < 25% of participants (1–2 users) |
+| **Low** | < 25% of participants (1–3 users) |
+
+> **Note:** For accessibility-specific issues, frequency is measured against the 4 a11y participants only. An issue found by ≥2 of 4 a11y participants is classified as "High (a11y)."
 
 ---
 
@@ -477,7 +488,26 @@ Rate each heuristic per screen: ✅ Pass | ⚠️ Minor issue | ❌ Fail
 
 Aligned with TASK-171 accessibility requirements (WCAG 2.1 AA).
 
-### 9.1 Keyboard-Only Test (1 participant)
+> **Addendum (C189):** Accessibility sample increased from 2 to 4 dedicated participants per PM review. This provides statistically meaningful coverage: 2 keyboard-only users and 2 assistive technology users, ensuring issues are reproducible and not participant-specific artifacts.
+
+### 9.0 Dedicated Accessibility Participants: 4 Users
+
+In addition to the 10 core usability participants, recruit 4 dedicated accessibility testers. These participants run the full S1–S5 scenarios using their assistive technology of choice, plus the accessibility-specific checks below.
+
+| # | Assistive Technology | Platform | Recruitment |
+|---|---------------------|----------|-------------|
+| A1 | Keyboard-only (no mouse) | Windows + Chrome | Any developer comfortable with keyboard-first workflow |
+| A2 | Keyboard-only (no mouse) | macOS + Safari | Any developer comfortable with keyboard-first workflow |
+| A3 | NVDA screen reader | Windows + Chrome/Firefox | Recruit via accessibility communities (a11y Slack, NFB tech division, AbilityNet) |
+| A4 | VoiceOver screen reader | macOS + Safari | Recruit via accessibility communities (AppleVis, MacVisionaries mailing list) |
+
+**Screening for A3/A4:**
+- Regular screen reader users (daily or weekly use)
+- Comfortable with web applications
+- Experience with developer tools preferred but not required
+- Compensated at $75 per session (60–75 min for a11y sessions)
+
+### 9.1 Keyboard-Only Test (2 participants: A1, A2)
 
 Run one full session (S1–S5) using keyboard only (no mouse). Observe:
 
@@ -491,9 +521,9 @@ Run one full session (S1–S5) using keyboard only (no mouse). Observe:
 | Canvas keyboard nav | Canvas editor | Can add nodes, navigate between them, open properties |
 | Shortcuts work | Canvas | Ctrl+Z, Ctrl+N, Cmd+K all functional |
 
-### 9.2 Screen Reader Test (1 participant or evaluator simulation)
+### 9.2 Screen Reader Test (2 participants: A3, A4)
 
-Run key scenarios with NVDA (Windows) or VoiceOver (macOS):
+Run key scenarios with NVDA (A3) and VoiceOver (A4):
 
 | Check | Pass criteria |
 |-------|---------------|
@@ -654,12 +684,13 @@ After testing, produce a report with:
 # Crewspace Usability Test Report — [Date]
 
 ## Executive Summary
-- Participants tested: X
+- Participants tested: X (core: X, accessibility: X)
 - Sessions completed: X  
 - Overall SUS score: XX/100
 - Critical issues found: X
 - Onboarding completion rate: XX%
 - Median onboarding time: Xm XXs
+- Accessibility issues found: X (keyboard: X, screen reader: X)
 
 ## Key Findings (Top 5)
 1. [Finding with severity and frequency]
