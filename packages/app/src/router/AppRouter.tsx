@@ -1,0 +1,70 @@
+/**
+ * AppRouter — top-level route tree for the Crewspace SPA.
+ * TASK-131: Declarative routing with auth guards.
+ */
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ROUTES } from './routes.js';
+import { ProtectedRoute } from './ProtectedRoute.js';
+import { LoginPage } from '../pages/LoginPage.js';
+import { DashboardPage } from '../pages/DashboardPage.js';
+import { CanvasPage } from '../pages/CanvasPage.js';
+import { TemplatesPage } from '../pages/TemplatesPage.js';
+import { MarketplacePage } from '../pages/MarketplacePage.js';
+import { SettingsPage } from '../pages/SettingsPage.js';
+import { NotFoundPage } from '../pages/NotFoundPage.js';
+
+export interface AppRouterProps {
+  children?: React.ReactNode;
+}
+
+function ProtectedChildren({ children }: { children: React.ReactNode }): React.JSX.Element {
+  return React.createElement(ProtectedRoute, null, children);
+}
+
+export function AppRouter({ children }: AppRouterProps): React.JSX.Element {
+  return React.createElement(
+    BrowserRouter,
+    null,
+    children,
+    React.createElement(
+      Routes,
+      null,
+      /* Public routes */
+      React.createElement(Route, {
+        path: ROUTES.HOME,
+        element: React.createElement(Navigate, { to: ROUTES.DASHBOARD, replace: true }),
+      }),
+      React.createElement(Route, {
+        path: ROUTES.LOGIN,
+        element: React.createElement(LoginPage),
+      }),
+      /* Protected routes */
+      React.createElement(Route, {
+        path: ROUTES.DASHBOARD,
+        element: React.createElement(ProtectedChildren, null, React.createElement(DashboardPage)),
+      }),
+      React.createElement(Route, {
+        path: ROUTES.CANVAS,
+        element: React.createElement(ProtectedChildren, null, React.createElement(CanvasPage)),
+      }),
+      React.createElement(Route, {
+        path: ROUTES.TEMPLATES,
+        element: React.createElement(ProtectedChildren, null, React.createElement(TemplatesPage)),
+      }),
+      React.createElement(Route, {
+        path: ROUTES.MARKETPLACE,
+        element: React.createElement(ProtectedChildren, null, React.createElement(MarketplacePage)),
+      }),
+      React.createElement(Route, {
+        path: ROUTES.SETTINGS,
+        element: React.createElement(ProtectedChildren, null, React.createElement(SettingsPage)),
+      }),
+      /* Catch-all */
+      React.createElement(Route, {
+        path: '*',
+        element: React.createElement(NotFoundPage),
+      }),
+    ),
+  );
+}
