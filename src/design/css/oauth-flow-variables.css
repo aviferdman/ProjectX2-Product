@@ -1,0 +1,393 @@
+/* ============================================================
+   OAuth Connection Flow – CSS Custom Properties
+   Task: TASK-165
+   Screens: provider selection, consent, callback, success, error
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Screen / Modal Container
+   ---------------------------------------------------------- */
+.cs-oauth-flow {
+  --oflow-bg: var(--cs-surface-app);
+  --oflow-overlay: rgba(0, 0, 0, 0.6);
+  --oflow-max-w: 480px;
+  --oflow-min-h: 400px;
+  --oflow-padding: 32px;
+  --oflow-radius: 12px;
+  --oflow-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* ----------------------------------------------------------
+   Header
+   ---------------------------------------------------------- */
+.cs-oauth-flow-header {
+  --header-gap: 16px;
+}
+
+.cs-oauth-flow-title {
+  --title-font-size: 1.25rem;
+  --title-font-weight: 600;
+  --title-line-height: 1.5;
+  --title-color: var(--cs-text-primary);
+}
+
+.cs-oauth-flow-subtitle {
+  --subtitle-font-size: 0.875rem;
+  --subtitle-font-weight: 400;
+  --subtitle-line-height: 1.5;
+  --subtitle-color: var(--cs-text-secondary);
+}
+
+/* ----------------------------------------------------------
+   Provider Card (selection screen)
+   ---------------------------------------------------------- */
+.cs-oauth-flow-provider {
+  --provider-bg: var(--cs-surface-card);
+  --provider-bg-hover: var(--cs-surface-elevated);
+  --provider-border: var(--cs-border-default);
+  --provider-border-hover: var(--cs-border-strong);
+  --provider-border-selected: var(--cs-brand-primary);
+  --provider-radius: 8px;
+  --provider-padding: 16px;
+  --provider-gap: 12px;
+  --provider-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --provider-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.cs-oauth-flow-provider:hover {
+  --provider-bg: var(--provider-bg-hover);
+  --provider-border: var(--provider-border-hover);
+  --provider-shadow: var(--provider-shadow-hover);
+}
+
+.cs-oauth-flow-provider--selected {
+  --provider-border: var(--provider-border-selected);
+}
+
+.cs-oauth-flow-provider-icon {
+  --provider-icon-size: 40px;
+  --provider-icon-radius: 6px;
+}
+
+.cs-oauth-flow-provider-name {
+  --provider-name-font-size: 0.9375rem;
+  --provider-name-font-weight: 500;
+  --provider-name-line-height: 1.35;
+  --provider-name-color: var(--cs-text-primary);
+}
+
+.cs-oauth-flow-provider-desc {
+  --provider-desc-font-size: 0.8125rem;
+  --provider-desc-font-weight: 400;
+  --provider-desc-line-height: 1.4;
+  --provider-desc-color: var(--cs-text-secondary);
+}
+
+/* ----------------------------------------------------------
+   Consent / Scopes
+   ---------------------------------------------------------- */
+.cs-oauth-flow-consent {
+  --consent-bg: var(--cs-surface-panel);
+  --consent-border: var(--cs-border-subtle);
+  --consent-radius: 8px;
+  --consent-padding: 20px;
+  --consent-gap: 16px;
+}
+
+.cs-oauth-flow-scope-item {
+  --scope-padding: 12px;
+  --scope-gap: 10px;
+  --scope-icon-size: 20px;
+  --scope-icon-color: var(--cs-brand-primary);
+  --scope-text-color: var(--cs-text-primary);
+  --scope-desc-color: var(--cs-text-tertiary);
+  --scope-font-size: 0.8125rem;
+  --scope-font-weight: 400;
+  --scope-line-height: 1.4;
+}
+
+.cs-oauth-flow-consent-warning {
+  --warning-bg: rgba(245, 158, 11, 0.1);
+  --warning-border: var(--cs-status-warning);
+  --warning-text: var(--cs-status-warning);
+  --warning-icon: var(--cs-status-warning);
+  --warning-font-size: 0.75rem;
+  --warning-font-weight: 500;
+  --warning-line-height: 1.5;
+  --warning-padding: 12px;
+  --warning-radius: 6px;
+}
+
+/* ----------------------------------------------------------
+   Callback / Loading
+   ---------------------------------------------------------- */
+.cs-oauth-flow-callback {
+  --callback-gap: 20px;
+}
+
+.cs-oauth-flow-spinner {
+  --spinner-size: 48px;
+  --spinner-track: var(--cs-border-subtle);
+  --spinner-arc: var(--cs-brand-primary);
+  --spinner-width: 3px;
+}
+
+.cs-oauth-flow-callback-message {
+  --callback-msg-color: var(--cs-text-secondary);
+  --callback-msg-font-size: 0.875rem;
+  --callback-msg-font-weight: 400;
+  --callback-msg-line-height: 1.5;
+}
+
+.cs-oauth-flow-progress {
+  --progress-height: 4px;
+  --progress-bg: var(--cs-border-subtle);
+  --progress-fill: var(--cs-brand-primary);
+  --progress-radius: 9999px;
+}
+
+/* ----------------------------------------------------------
+   Status – Success
+   ---------------------------------------------------------- */
+.cs-oauth-flow-status--success {
+  --status-icon-color: var(--cs-status-success);
+  --status-icon-bg: rgba(16, 185, 129, 0.15);
+  --status-icon-size: 56px;
+  --status-checkmark-size: 28px;
+  --status-title-color: var(--cs-text-primary);
+  --status-message-color: var(--cs-text-secondary);
+}
+
+/* ----------------------------------------------------------
+   Status – Error
+   ---------------------------------------------------------- */
+.cs-oauth-flow-status--error {
+  --status-icon-color: var(--cs-status-error);
+  --status-icon-bg: rgba(244, 63, 94, 0.15);
+  --status-icon-size: 56px;
+  --status-title-color: var(--cs-text-primary);
+  --status-message-color: var(--cs-text-secondary);
+  --status-retry-color: var(--cs-brand-primary);
+  --status-error-code-color: var(--cs-text-tertiary);
+  --status-error-code-font-size: 0.75rem;
+  --status-error-code-font-weight: 400;
+  --status-error-code-line-height: 1.5;
+}
+
+/* ----------------------------------------------------------
+   Buttons
+   ---------------------------------------------------------- */
+.cs-oauth-flow-btn {
+  --btn-height: 40px;
+  --btn-px: 20px;
+  --btn-radius: 8px;
+  --btn-font-size: 0.875rem;
+  --btn-font-weight: 500;
+  --btn-line-height: 1.25;
+  --btn-gap: 8px;
+}
+
+.cs-oauth-flow-btn--primary {
+  --btn-bg: var(--cs-brand-primary);
+  --btn-bg-hover: #7c3aed;
+  --btn-bg-active: #6d28d9;
+  --btn-text: #ffffff;
+  --btn-shadow: 0 1px 3px rgba(124, 58, 237, 0.3);
+}
+
+.cs-oauth-flow-btn--secondary {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--cs-surface-elevated);
+  --btn-text: var(--cs-text-secondary);
+  --btn-border: var(--cs-border-default);
+}
+
+.cs-oauth-flow-btn--danger {
+  --btn-bg: var(--cs-status-error);
+  --btn-bg-hover: #e11d48;
+  --btn-text: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   Account Link
+   ---------------------------------------------------------- */
+.cs-oauth-flow-account {
+  --account-gap: 12px;
+  --account-padding: 16px;
+  --account-bg: var(--cs-surface-card);
+  --account-border: var(--cs-border-subtle);
+  --account-radius: 8px;
+}
+
+.cs-oauth-flow-account-avatar {
+  --avatar-size: 36px;
+  --avatar-radius: 9999px;
+  --avatar-border: var(--cs-border-default);
+}
+
+.cs-oauth-flow-account-name {
+  --account-name-font-size: 0.875rem;
+  --account-name-font-weight: 500;
+  --account-name-line-height: 1.35;
+  --account-name-color: var(--cs-text-primary);
+}
+
+.cs-oauth-flow-account-email {
+  --account-email-font-size: 0.75rem;
+  --account-email-font-weight: 400;
+  --account-email-line-height: 1.5;
+  --account-email-color: var(--cs-text-tertiary);
+}
+
+/* ----------------------------------------------------------
+   Step Indicator
+   ---------------------------------------------------------- */
+.cs-oauth-flow-steps {
+  --step-size: 28px;
+  --step-gap: 8px;
+  --step-line-width: 2px;
+}
+
+.cs-oauth-flow-step--active {
+  --step-color: var(--cs-brand-primary);
+  --step-text: #ffffff;
+}
+
+.cs-oauth-flow-step--completed {
+  --step-color: var(--cs-status-success);
+  --step-text: #ffffff;
+}
+
+.cs-oauth-flow-step--inactive {
+  --step-color: var(--cs-border-subtle);
+  --step-text: var(--cs-text-tertiary);
+}
+
+.cs-oauth-flow-step-label {
+  --step-label-font-size: 0.6875rem;
+  --step-label-font-weight: 500;
+  --step-label-line-height: 1.25;
+  --step-label-color: var(--cs-text-secondary);
+}
+
+/* ----------------------------------------------------------
+   Keyframe Animations
+   ---------------------------------------------------------- */
+@keyframes oauth-screen-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes oauth-screen-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+  }
+}
+
+@keyframes oauth-step-transition {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes oauth-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes oauth-success-bounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes oauth-error-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-6px);
+  }
+  40%, 80% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes oauth-progress-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes oauth-provider-stagger {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   Responsive
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .cs-oauth-flow {
+    --oflow-max-w: 100%;
+    --oflow-padding: 20px;
+    --oflow-radius: 0;
+    --oflow-min-h: 100vh;
+  }
+
+  .cs-oauth-flow-provider-icon {
+    --provider-icon-size: 32px;
+  }
+
+  .cs-oauth-flow-spinner {
+    --spinner-size: 40px;
+  }
+}
+
+/* ----------------------------------------------------------
+   Reduced Motion
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cs-oauth-flow,
+  .cs-oauth-flow * {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}
