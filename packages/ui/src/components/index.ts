@@ -211,6 +211,27 @@ export {
   MARKETPLACE_ITEMS_PER_PAGE,
 } from './marketplace/index.js';
 
+// OAuth Flows (TASK-167)
+export {
+  OAuthStatusBadge,
+  type OAuthStatusBadgeProps,
+  OAuthProviderCard,
+  type OAuthProviderCardProps,
+  OAuthProviderList,
+  type OAuthProviderListProps,
+  OAuthConnectDialog,
+  type OAuthConnectDialogProps,
+  OAuthSettingsPanel,
+  type OAuthSettingsPanelProps,
+  type OAuthProvider,
+  type OAuthConnectionStatus,
+  type OAuthConnection,
+  type OAuthFlowStatus,
+  type OAuthProviderMeta,
+  OAUTH_PROVIDERS,
+  STATUS_LABELS,
+} from './oauth/index.js';
+
 // Dashboard (TASK-151)
 export {
   WorkflowStatusBadge,

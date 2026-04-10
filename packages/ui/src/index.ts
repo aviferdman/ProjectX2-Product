@@ -251,6 +251,24 @@ export {
   INTEGRATION_CATEGORIES,
   MARKETPLACE_SORT_OPTIONS,
   MARKETPLACE_ITEMS_PER_PAGE,
+  // OAuth Flows (TASK-167)
+  OAuthStatusBadge,
+  type OAuthStatusBadgeProps,
+  OAuthProviderCard,
+  type OAuthProviderCardProps,
+  OAuthProviderList,
+  type OAuthProviderListProps,
+  OAuthConnectDialog,
+  type OAuthConnectDialogProps,
+  OAuthSettingsPanel,
+  type OAuthSettingsPanelProps,
+  type OAuthProvider,
+  type OAuthConnectionStatus,
+  type OAuthConnection,
+  type OAuthFlowStatus,
+  type OAuthProviderMeta,
+  OAUTH_PROVIDERS,
+  STATUS_LABELS,
 } from './components/index.js';
 
 // Theme
@@ -297,6 +315,13 @@ export {
   type InstantiateFormValues,
   type InstantiationResult,
   type InstantiationTemplate,
+} from './hooks/index.js';
+
+// Hooks — OAuth Flow (TASK-167)
+export {
+  useOAuthFlow,
+  type UseOAuthFlowOptions,
+  type UseOAuthFlowResult,
 } from './hooks/index.js';
 
 // Design tokens (programmatic)

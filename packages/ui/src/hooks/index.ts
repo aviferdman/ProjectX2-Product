@@ -30,3 +30,9 @@ export {
   type InstantiationResult,
   type InstantiationTemplate,
 } from './useTemplateInstantiation.js';
+// TASK-167: OAuth flow management hook
+export {
+  useOAuthFlow,
+  type UseOAuthFlowOptions,
+  type UseOAuthFlowResult,
+} from './useOAuthFlow.js';
