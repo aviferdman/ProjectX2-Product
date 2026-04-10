@@ -269,6 +269,34 @@ export {
   type OAuthProviderMeta,
   OAUTH_PROVIDERS,
   STATUS_LABELS,
+  // Animations (TASK-173)
+  FadeIn,
+  type FadeInProps,
+  SlideIn,
+  type SlideInProps,
+  type SlideDirection,
+  ScaleIn,
+  type ScaleInProps,
+  PageTransition,
+  type PageTransitionProps,
+  AnimatePresence,
+  type AnimatePresenceProps,
+  Skeleton,
+  type SkeletonProps,
+  type SkeletonVariant,
+  Shimmer,
+  type ShimmerProps,
+  PulseLoader,
+  type PulseLoaderProps,
+  StaggerList,
+  type StaggerListProps,
+  DURATION,
+  EASING,
+  STAGGER,
+  type AnimationVariant,
+  type AnimationPhase,
+  type PageTransitionVariant,
+  type LoadingVariant,
 } from './components/index.js';
 
 // Theme
@@ -322,6 +350,13 @@ export {
   useOAuthFlow,
   type UseOAuthFlowOptions,
   type UseOAuthFlowResult,
+} from './hooks/index.js';
+
+// Hooks — Animation (TASK-173)
+export {
+  useAnimation,
+  type UseAnimationOptions,
+  type UseAnimationResult,
 } from './hooks/index.js';
 
 // Design tokens (programmatic)

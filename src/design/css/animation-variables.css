@@ -1,0 +1,323 @@
+/*
+ * Crewspace — Animation CSS Custom Properties & Keyframes
+ * TASK-173: Page transitions, state changes, and loading animations
+ *
+ * Builds on top of the visual-polish animation tokens defined in
+ * visual-polish-variables.css. This file adds concrete animation presets
+ * and keyframe definitions for page transitions, state changes, and
+ * loading states.
+ *
+ * Import after visual-polish-variables.css.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Animation custom properties                                         */
+/* ------------------------------------------------------------------ */
+:root {
+  /* Page transitions */
+  --cs-page-fade-duration: 300ms;
+  --cs-page-fade-easing: var(--cs-easing-default);
+  --cs-page-slide-duration: 350ms;
+  --cs-page-slide-easing: var(--cs-easing-out);
+  --cs-page-slide-distance: 16px;
+
+  /* State changes */
+  --cs-state-hover-duration: 150ms;
+  --cs-state-hover-easing: var(--cs-easing-default);
+  --cs-state-toggle-duration: 200ms;
+  --cs-state-toggle-easing: var(--cs-easing-default);
+  --cs-state-collapse-duration: 250ms;
+  --cs-state-collapse-easing: var(--cs-easing-default);
+
+  /* Loading */
+  --cs-loading-skeleton-duration: 1.5s;
+  --cs-loading-shimmer-duration: 2s;
+  --cs-loading-pulse-duration: 1.5s;
+  --cs-loading-spin-duration: 750ms;
+
+  /* Skeleton colors */
+  --cs-skeleton-base: rgba(148, 163, 184, 0.08);
+  --cs-skeleton-highlight: rgba(148, 163, 184, 0.16);
+}
+
+/* ------------------------------------------------------------------ */
+/* Page transition keyframes                                           */
+/* ------------------------------------------------------------------ */
+@keyframes cs-page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cs-page-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes cs-page-slide-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--cs-page-slide-distance));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cs-page-slide-up-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--cs-page-slide-distance) * -1));
+  }
+}
+
+@keyframes cs-page-slide-left-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cs-page-slide-left-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+}
+
+@keyframes cs-page-slide-right-in {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* State transition keyframes                                          */
+/* ------------------------------------------------------------------ */
+@keyframes cs-state-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cs-state-scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes cs-state-spring-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cs-state-collapse-open {
+  from {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  to {
+    opacity: 1;
+    max-height: var(--cs-collapse-height, 500px);
+    overflow: hidden;
+  }
+}
+
+@keyframes cs-state-collapse-close {
+  from {
+    opacity: 1;
+    max-height: var(--cs-collapse-height, 500px);
+    overflow: hidden;
+  }
+  to {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Loading keyframes                                                   */
+/* ------------------------------------------------------------------ */
+@keyframes cs-loading-skeleton {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes cs-loading-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes cs-loading-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes cs-loading-dots {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Animation utility classes                                           */
+/* ------------------------------------------------------------------ */
+
+/* Page transitions */
+.cs-anim-page-fade-in {
+  animation: cs-page-fade-in var(--cs-page-fade-duration) var(--cs-page-fade-easing) both;
+}
+
+.cs-anim-page-fade-out {
+  animation: cs-page-fade-out var(--cs-page-fade-duration) var(--cs-page-fade-easing) both;
+}
+
+.cs-anim-page-slide-up {
+  animation: cs-page-slide-up-in var(--cs-page-slide-duration) var(--cs-page-slide-easing) both;
+}
+
+.cs-anim-page-slide-left {
+  animation: cs-page-slide-left-in var(--cs-page-slide-duration) var(--cs-page-slide-easing) both;
+}
+
+.cs-anim-page-slide-right {
+  animation: cs-page-slide-right-in var(--cs-page-slide-duration) var(--cs-page-slide-easing) both;
+}
+
+/* State change */
+.cs-anim-scale-in {
+  animation: cs-state-scale-in var(--cs-duration-enter) var(--cs-easing-out) both;
+}
+
+.cs-anim-spring-in {
+  animation: cs-state-spring-in var(--cs-duration-enter) var(--cs-easing-spring) both;
+}
+
+/* Loading */
+.cs-anim-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--cs-skeleton-base) 25%,
+    var(--cs-skeleton-highlight) 50%,
+    var(--cs-skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: cs-loading-skeleton var(--cs-loading-skeleton-duration) ease-in-out infinite;
+}
+
+.cs-anim-pulse {
+  animation: cs-loading-pulse var(--cs-loading-pulse-duration) ease-in-out infinite;
+}
+
+.cs-anim-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.cs-anim-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--cs-skeleton-highlight) 50%,
+    transparent 100%
+  );
+  animation: cs-loading-shimmer var(--cs-loading-shimmer-duration) linear infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* Stagger animation support                                           */
+/* ------------------------------------------------------------------ */
+.cs-stagger-child {
+  animation: cs-page-slide-up-in var(--cs-duration-enter) var(--cs-easing-out) both;
+  animation-delay: calc(var(--cs-stagger-index, 0) * var(--cs-stagger-delay));
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-anim-page-fade-in,
+  .cs-anim-page-fade-out,
+  .cs-anim-page-slide-up,
+  .cs-anim-page-slide-left,
+  .cs-anim-page-slide-right,
+  .cs-anim-scale-in,
+  .cs-anim-spring-in,
+  .cs-stagger-child {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .cs-anim-skeleton,
+  .cs-anim-pulse {
+    animation: none !important;
+  }
+
+  .cs-anim-shimmer::after {
+    animation: none !important;
+  }
+}

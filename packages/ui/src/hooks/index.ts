@@ -36,3 +36,9 @@ export {
   type UseOAuthFlowOptions,
   type UseOAuthFlowResult,
 } from './useOAuthFlow.js';
+// TASK-173: Animation hook
+export {
+  useAnimation,
+  type UseAnimationOptions,
+  type UseAnimationResult,
+} from './useAnimation.js';
