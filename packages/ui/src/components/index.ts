@@ -168,6 +168,11 @@ export {
   TEMPLATE_CATEGORIES,
   SORT_OPTIONS,
   ITEMS_PER_PAGE,
+  // Template Instantiation (TASK-161)
+  UseTemplateDialog,
+  type UseTemplateDialogProps,
+  TemplateBrowserWithInstantiation,
+  type TemplateBrowserWithInstantiationProps,
 } from './templates/index.js';
 
 // Usage Stats (TASK-152)

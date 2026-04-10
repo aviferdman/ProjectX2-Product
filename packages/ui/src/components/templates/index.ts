@@ -53,6 +53,10 @@ export {
   UseTemplateDialog,
   type UseTemplateDialogProps,
 } from './UseTemplateDialog.js';
+export {
+  TemplateBrowserWithInstantiation,
+  type TemplateBrowserWithInstantiationProps,
+} from './TemplateBrowserWithInstantiation.js';
 
 export type {
   TemplateCategory,

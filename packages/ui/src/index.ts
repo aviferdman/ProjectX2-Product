@@ -181,6 +181,8 @@ export {
   // Template Instantiation (TASK-161)
   UseTemplateDialog,
   type UseTemplateDialogProps,
+  TemplateBrowserWithInstantiation,
+  type TemplateBrowserWithInstantiationProps,
   type TemplateCategory,
   type TemplateSortField,
   type TemplateSortDirection,
