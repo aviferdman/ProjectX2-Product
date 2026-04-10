@@ -236,3 +236,46 @@
     transform: scale(1);
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Syntax highlighting (§4.5)                                          */
+/* ------------------------------------------------------------------ */
+.cs-log-viewer {
+  --syntax-string: #34d399;          /* emerald-400 */
+  --syntax-number: #fbbf24;          /* amber-400 */
+  --syntax-boolean: #a78bfa;         /* violet-400 */
+  --syntax-null: #a78bfa;            /* violet-400 */
+  --syntax-key: #38bdf8;             /* sky-400 */
+  --syntax-error: #fb7185;           /* rose-400 */
+  --syntax-punctuation: #94a3b8;     /* slate-400 */
+}
+
+/* ------------------------------------------------------------------ */
+/* Focus-visible ring (§8)                                             */
+/* ------------------------------------------------------------------ */
+.cs-timeline [tabindex]:focus-visible,
+.cs-timeline button:focus-visible,
+.cs-log-viewer [tabindex]:focus-visible,
+.cs-log-viewer button:focus-visible,
+.cs-timeline-filters button:focus-visible,
+.cs-timeline-filters input:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion (§8)                                                 */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cs-timeline-playhead,
+  .cs-timeline [class*='cs-event-'],
+  .cs-timeline-lanes,
+  .cs-timeline-filters {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .cs-timeline .animate-pulse {
+    animation: none !important;
+  }
+}

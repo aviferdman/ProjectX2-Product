@@ -98,6 +98,15 @@ export const timelineTheme = {
       'search-border': 'var(--cs-border-default)',
       'search-border-focus': '#8b5cf6',
     },
+    syntax: {
+      string: '#34d399',
+      number: '#fbbf24',
+      boolean: '#a78bfa',
+      null: '#a78bfa',
+      key: '#38bdf8',
+      error: '#fb7185',
+      punctuation: '#94a3b8',
+    },
   },
 
   spacing: {

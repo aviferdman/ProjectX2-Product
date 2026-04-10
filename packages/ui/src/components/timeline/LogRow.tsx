@@ -36,7 +36,7 @@ function isJsonLike(str: string): boolean {
 /** Tokenize a JSON string for syntax highlighting. */
 export interface SyntaxToken {
   text: string;
-  type: 'string' | 'number' | 'boolean' | 'null' | 'key' | 'punctuation' | 'default';
+  type: 'string' | 'number' | 'boolean' | 'null' | 'key' | 'error' | 'punctuation' | 'default';
 }
 
 export function tokenizeJson(input: string): SyntaxToken[] {
@@ -194,7 +194,7 @@ export const LogRow: React.FC<LogRowProps> = ({
 
       {/* Level badge */}
       <span
-        className="flex-shrink-0 flex items-center justify-center rounded px-1.5"
+        className="flex-shrink-0 flex items-center justify-center rounded-full"
         data-testid={`log-level-${entry.id}`}
         style={{
           width: LOG_SIZING.levelWidth,
@@ -202,6 +202,7 @@ export const LogRow: React.FC<LogRowProps> = ({
           fontSize: 10,
           fontWeight: 600,
           letterSpacing: '0.05em',
+          padding: '2px 6px',
           color: levelStyle.color,
           background: levelStyle.bg,
         }}

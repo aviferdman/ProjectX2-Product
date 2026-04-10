@@ -35,7 +35,7 @@ const FilterChip: React.FC<{
     data-testid={testId}
     onClick={onClick}
     className={clsx(
-      'h-6 rounded-full border px-2 text-[10px] font-semibold uppercase tracking-wide transition-colors',
+      'h-7 rounded-full border px-3 text-[11px] font-medium transition-colors',
       'select-none cursor-pointer',
     )}
     style={{

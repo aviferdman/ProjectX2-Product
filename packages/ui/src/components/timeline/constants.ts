@@ -159,13 +159,15 @@ export const LOG_COLORS = {
   searchHighlightActive: 'rgba(251,191,36,0.6)',
 } as const;
 
-/** Syntax highlighting token colors for JSON/code in log messages. */
+/** Syntax highlighting token colors for JSON/code in log messages.
+ * Aligned with TASK-140 spec §4.5 (emerald/amber/violet/sky/rose palette). */
 export const SYNTAX_COLORS = {
-  string: '#a5d6ff',
-  number: '#79c0ff',
-  boolean: '#ff7b72',
-  null: '#8b949e',
-  key: '#d2a8ff',
-  punctuation: '#8b949e',
+  string: '#34d399',      // emerald-400
+  number: '#fbbf24',      // amber-400
+  boolean: '#a78bfa',     // violet-400
+  null: '#a78bfa',        // violet-400
+  key: '#38bdf8',         // sky-400
+  error: '#fb7185',       // rose-400
+  punctuation: '#94a3b8', // slate-400
   default: 'var(--cs-text-secondary, #cbd5e1)',
 } as const;

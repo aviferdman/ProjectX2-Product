@@ -121,6 +121,15 @@
         "lane-expand": { "value": "200ms ease-out", "type": "transition", "description": "Lane expand/collapse" },
         "filter-toggle": { "value": "150ms ease-out", "type": "transition", "description": "Filter chip toggle" },
         "log-scroll": { "value": "100ms ease-out", "type": "transition", "description": "Smooth log auto-scroll" }
+      },
+      "syntax": {
+        "string": { "value": "#34d399", "type": "color", "description": "JSON string value — emerald-400" },
+        "number": { "value": "#fbbf24", "type": "color", "description": "JSON number value — amber-400" },
+        "boolean": { "value": "#a78bfa", "type": "color", "description": "JSON boolean/null — violet-400" },
+        "null": { "value": "#a78bfa", "type": "color", "description": "JSON null value — violet-400" },
+        "key": { "value": "#38bdf8", "type": "color", "description": "JSON key — sky-400" },
+        "error": { "value": "#fb7185", "type": "color", "description": "Error/stack trace text — rose-400" },
+        "punctuation": { "value": "#94a3b8", "type": "color", "description": "Brackets, commas — slate-400" }
       }
     }
   }
