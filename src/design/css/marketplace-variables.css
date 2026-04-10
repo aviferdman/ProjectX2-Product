@@ -122,6 +122,12 @@
   --grid-card-min-w: 260px;
   --grid-card-max-w: 360px;
   --grid-card-gap: 20px;
+
+  /* Responsive column counts */
+  --grid-columns-sm: 1;
+  --grid-columns-md: 2;
+  --grid-columns-lg: 3;
+  --grid-columns-xl: 4;
 }
 
 /* ------------------------------------------------------------------ */

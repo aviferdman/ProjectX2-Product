@@ -101,7 +101,7 @@ describe('marketplace.json — design tokens', () => {
       const validTypes = [
         'color', 'sizing', 'number', 'borderRadius', 'boxShadow',
         'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing',
-        'duration', 'cubicBezier', 'gradient',
+        'duration', 'cubicBezier', 'gradient', 'string',
       ];
       for (const leaf of leaves) {
         expect(validTypes, `${leaf.path} has type "${leaf.type}"`).toContain(leaf.type);

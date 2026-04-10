@@ -202,6 +202,7 @@
         "heading-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
         "desc-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
         "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "border-style": { "value": "dashed", "type": "string", "description": "Dashed border to distinguish empty state" },
         "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius" }
       },
 

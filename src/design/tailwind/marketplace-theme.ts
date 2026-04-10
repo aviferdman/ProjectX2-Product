@@ -229,6 +229,12 @@ export const marketplaceTheme = {
 
     // Empty state
     'mp-empty-icon-size': '72px',
+
+    // Additional sizing
+    'mp-sidebar-collapsed-w': '0px',
+    'mp-featured-max-w': '100%',
+    'mp-progress-radius': '2px',
+    'mp-modal-icon-radius': '8px',
   },
 
   fontSize: {
@@ -270,6 +276,21 @@ export const marketplaceTheme = {
 
     // Pagination
     'mp-page-btn': ['0.75rem', { lineHeight: '1', fontWeight: '500' }],
+  },
+
+  borderRadius: {
+    'mp-search': '8px',
+    'mp-chip': '9999px',
+    'mp-sort': '8px',
+    'mp-featured': '12px',
+    'mp-featured-badge': '4px',
+    'mp-install-btn': '8px',
+    'mp-progress': '2px',
+    'mp-modal': '12px',
+    'mp-modal-icon': '8px',
+    'mp-cat-item': '6px',
+    'mp-pagination': '6px',
+    'mp-empty': '12px',
   },
 
   maxHeight: {
