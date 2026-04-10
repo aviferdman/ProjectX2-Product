@@ -2,6 +2,7 @@
  * Dev entry point — renders the App with a stub auth adapter
  * so the UI can be run locally via `npm run dev`.
  */
+import '@crewspace/ui/styles';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '../App.js';

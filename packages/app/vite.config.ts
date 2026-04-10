@@ -16,6 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@crewspace/app': resolve(__dirname, 'src/index.ts'),
+      '@crewspace/ui': resolve(__dirname, '../ui/src/index.ts'),
     },
   },
 });

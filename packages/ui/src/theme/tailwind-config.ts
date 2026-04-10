@@ -12,9 +12,9 @@
  *   export default { presets: [crewspaceTailwindPreset] };
  */
 
-import { designSystemTheme } from '../../src/design/tailwind/design-system-theme.js';
-import { crewspaceTheme } from '../../src/design/tailwind/canvas-theme.js';
-import { responsiveTheme } from '../../src/design/tailwind/responsive-theme.js';
+import { designSystemTheme } from '../../../../src/design/tailwind/design-system-theme.js';
+import { crewspaceTheme } from '../../../../src/design/tailwind/canvas-theme.js';
+import { responsiveTheme } from '../../../../src/design/tailwind/responsive-theme.js';
 
 /** Deep-merge two plain objects (second wins on conflicts) */
 function deepMerge<T extends Record<string, unknown>>(a: T, b: Record<string, unknown>): T {
