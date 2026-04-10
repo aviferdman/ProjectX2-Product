@@ -141,7 +141,10 @@ export type {
 // Types
 export {
   AgentStatus,
+  ConvergenceStrategy,
   CrewStatus,
+  DiscussionMessageType,
+  DiscussionStatus,
   LLMRole,
   TaskPriority,
   TaskStatus,
@@ -155,6 +158,11 @@ export type {
   CrewEventMap,
   CrewRunResult,
   CrewTask,
+  DiscussionConfig,
+  DiscussionEventMap,
+  DiscussionMessage,
+  DiscussionResult,
+  DiscussionRound,
   LLMMessage,
   LLMModelInfo,
   LLMProvider,
@@ -167,6 +175,7 @@ export type {
   RetryPolicy,
   StreamingLLMProvider,
   TaskConfig,
+  TaskDiscussionConfig,
   TaskEventMap,
   TaskInput,
   TaskResult,
@@ -177,6 +186,9 @@ export type {
   ToolPermissionPolicy,
   ToolResult,
 } from './types/index.js';
+
+// Discussion
+export { DiscussionManager } from './discussion/index.js';
 
 // Tool System
 export {

@@ -14,14 +14,17 @@ import {
   OllamaProvider,
 } from '@crewspace/core/llm';
 import { LLMRole } from '@crewspace/core/types';
+import { ConvergenceStrategy } from '@crewspace/core/types';
 import type {
   LLMProvider,
   LLMProviderConfig,
   CrewRunResult,
   TaskResult,
   LLMResponse,
+  DiscussionMessage,
+  DiscussionResult,
 } from '@crewspace/core/types';
-import type { AgentNode, TaskNode, WorkflowState } from '../types/workflow.js';
+import type { AgentNode, TaskNode, WorkflowState, DiscussionEdge } from '../types/workflow.js';
 
 // ---------------------------------------------------------------------------
 // LLM provider configuration
@@ -102,20 +105,23 @@ export function saveLLMConfig(config: LLMConfig): void {
 // Prompt → Workflow plan (LLM-driven)
 // ---------------------------------------------------------------------------
 
-const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner. The user will describe a goal. You must output a JSON workflow plan with agents and tasks.
+const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner. The user will describe a goal. You must output a JSON workflow plan with agents, tasks, and optional collaborative discussions between agents.
 
 Rules:
 - Each agent has: id (alphanumeric with dashes), role (short title), goal, backstory, tools (array of tool names from: web-search, web-scraper, document-reader, data-processor, chart-generator, document-writer, code-executor, api-caller)
 - Each task has: id (alphanumeric), description, agentId (must reference an agent id), dependencies (array of task ids that must complete first), expectedOutput
+- Tasks that benefit from collaboration may include a "discussion" object with: participantIds (array of 2+ agent ids who should discuss), maxRounds (1-10), convergenceStrategy ("unanimous", "majority", or "stable-output"), and an optional topic
+- When agents have complementary expertise (e.g., researcher + analyst, writer + editor), add a discussion so they iterate and refine together before the task executes
+- Discussions happen BEFORE the task runs — the discussion result feeds into the task as context
 - Tasks should form a logical DAG — earlier tasks feed later ones
-- Keep it practical: 2-6 agents, 3-8 tasks
+- Keep it practical: 2-6 agents, 3-8 tasks, 0-4 discussions
 - Agent IDs must start with "agent-", task IDs must start with "task-"
 
 Respond ONLY with valid JSON matching this schema:
 {
   "name": "string — short workflow name",
   "agents": [{ "id": "string", "role": "string", "goal": "string", "backstory": "string", "tools": ["string"] }],
-  "tasks": [{ "id": "string", "description": "string", "agentId": "string", "dependencies": ["string"], "expectedOutput": "string" }]
+  "tasks": [{ "id": "string", "description": "string", "agentId": "string", "dependencies": ["string"], "expectedOutput": "string", "discussion": { "participantIds": ["string"], "maxRounds": number, "convergenceStrategy": "string", "topic": "string" } | null }]
 }`;
 
 interface WorkflowPlan {
@@ -133,10 +139,16 @@ interface WorkflowPlan {
     agentId: string;
     dependencies: string[];
     expectedOutput: string;
+    discussion?: {
+      participantIds: string[];
+      maxRounds: number;
+      convergenceStrategy: string;
+      topic?: string;
+    } | null;
   }>;
 }
 
-/** Ask the LLM to decompose a user prompt into agents + tasks. */
+/** Ask the LLM to decompose a user prompt into agents + tasks with optional discussions. */
 export async function generateWorkflowPlan(
   prompt: string,
   provider: LLMProvider,
@@ -163,10 +175,23 @@ export async function generateWorkflowPlan(
     id: t.id,
     description: t.description,
     agentId: t.agentId,
-    dependencies: t.dependencies,
+    dependencies: t.dependencies ?? [],
     expectedOutput: t.expectedOutput,
     status: 'pending' as const,
+    ...(t.discussion
+      ? {
+          discussion: {
+            participantIds: t.discussion.participantIds,
+            maxRounds: t.discussion.maxRounds,
+            convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<TaskNode['discussion']>['convergenceStrategy'],
+            ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
+          },
+        }
+      : {}),
   }));
+
+  // Build discussion edges from task discussion configs
+  const discussionEdges = buildDiscussionEdges(tasks);
 
   return {
     id: `wf-${Date.now()}`,
@@ -174,19 +199,45 @@ export async function generateWorkflowPlan(
     description: prompt,
     agents,
     tasks,
+    discussionEdges,
     status: 'draft',
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
 }
 
+/** Build DiscussionEdge entries from tasks that have discussion configs. */
+function buildDiscussionEdges(tasks: TaskNode[]): DiscussionEdge[] {
+  const edges: DiscussionEdge[] = [];
+  for (const task of tasks) {
+    if (!task.discussion) continue;
+    const participants = task.discussion.participantIds;
+    // Create a bidirectional edge for each pair of participants
+    for (let i = 0; i < participants.length; i++) {
+      for (let j = i + 1; j < participants.length; j++) {
+        edges.push({
+          id: `edge-${task.id}-${participants[i]}-${participants[j]}`,
+          fromAgentId: participants[i]!,
+          toAgentId: participants[j]!,
+          taskId: task.id,
+          status: 'idle',
+          messages: [],
+        });
+      }
+    }
+  }
+  return edges;
+}
+
 // ---------------------------------------------------------------------------
 // Chat follow-up (LLM-driven)
 // ---------------------------------------------------------------------------
 
-const CHAT_SYSTEM_PROMPT = `You are an AI assistant helping the user refine their agent workflow. The user may ask to modify agents, tasks, or run the workflow.
+const CHAT_SYSTEM_PROMPT = `You are an AI assistant helping the user refine their agent workflow. The user may ask to modify agents, tasks, discussions, or run the workflow.
 
-If the user wants to modify the workflow, respond with JSON wrapped in <json>...</json> tags with the full updated workflow plan (same schema as before).
+Tasks may include a "discussion" object where agents collaborate before execution. When modifying, you can add/remove/update discussions.
+
+If the user wants to modify the workflow, respond with JSON wrapped in <json>...</json> tags with the full updated workflow plan (same schema: agents, tasks with optional discussion fields).
 If the user is asking a question or chatting, respond normally in markdown.
 
 Current workflow:
@@ -212,6 +263,7 @@ export async function chatWithWorkflow(
             description: t.description,
             agentId: t.agentId,
             dependencies: t.dependencies,
+            ...(t.discussion ? { discussion: t.discussion } : {}),
           })),
         },
         null,
@@ -248,12 +300,24 @@ export async function chatWithWorkflow(
         dependencies: t.dependencies ?? [],
         expectedOutput: t.expectedOutput ?? '',
         status: 'pending' as const,
+        ...(t.discussion
+          ? {
+              discussion: {
+                participantIds: t.discussion.participantIds,
+                maxRounds: t.discussion.maxRounds,
+                convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<TaskNode['discussion']>['convergenceStrategy'],
+                ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
+              },
+            }
+          : {}),
       }));
+      const discussionEdges = buildDiscussionEdges(tasks);
       const updatedWorkflow: WorkflowState = {
         ...workflow,
         name: plan.name ?? workflow.name,
         agents,
         tasks,
+        discussionEdges,
         updatedAt: Date.now(),
       };
       // Strip the JSON block from the visible text
@@ -280,9 +344,23 @@ export interface ExecutionCallbacks {
   onTaskError: (taskId: string, error: Error) => void;
   onCrewComplete: (result: CrewRunResult) => void;
   onCrewError: (error: Error) => void;
+  onDiscussionStart?: (discussionId: string, participantIds: readonly string[]) => void;
+  onDiscussionMessage?: (discussionId: string, message: DiscussionMessage) => void;
+  onDiscussionComplete?: (discussionId: string, result: DiscussionResult) => void;
 }
 
-/** Execute a workflow using the real Crew engine. */
+/** Map UI convergence strategy string to core enum. */
+function mapConvergenceStrategy(strategy: string): ConvergenceStrategy {
+  switch (strategy) {
+    case 'unanimous': return ConvergenceStrategy.UNANIMOUS;
+    case 'majority': return ConvergenceStrategy.MAJORITY;
+    case 'llm-judge': return ConvergenceStrategy.LLM_JUDGE;
+    case 'stable-output': return ConvergenceStrategy.STABLE_OUTPUT;
+    default: return ConvergenceStrategy.UNANIMOUS;
+  }
+}
+
+/** Execute a workflow using the real Crew engine, with discussion support. */
 export async function executeWorkflow(
   workflow: WorkflowState,
   provider: LLMProvider,
@@ -301,7 +379,7 @@ export async function executeWorkflow(
       }),
   );
 
-  // 2. Build CrewTask array
+  // 2. Build CrewTask array, including discussion configs
   const crewTasks = workflow.tasks.map((t) => {
     const task: {
       id: string;
@@ -309,6 +387,12 @@ export async function executeWorkflow(
       agentId: string;
       expectedOutput?: string;
       dependencies?: string[];
+      discussion?: {
+        participantIds: string[];
+        maxRounds: number;
+        convergenceStrategy: ConvergenceStrategy;
+        topic?: string;
+      };
     } = {
       id: t.id,
       description: t.description,
@@ -319,6 +403,14 @@ export async function executeWorkflow(
     }
     if (t.dependencies.length > 0) {
       task.dependencies = t.dependencies;
+    }
+    if (t.discussion) {
+      task.discussion = {
+        participantIds: t.discussion.participantIds,
+        maxRounds: t.discussion.maxRounds,
+        convergenceStrategy: mapConvergenceStrategy(t.discussion.convergenceStrategy),
+        ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
+      };
     }
     return task;
   });
@@ -343,6 +435,19 @@ export async function executeWorkflow(
 
   crew.on('crew:task:error', (_crewId: string, taskId: string, error: Error) => {
     callbacks.onTaskError(taskId, error);
+  });
+
+  // 5. Wire discussion events
+  crew.on('crew:discussion:start', (_crewId: string, discussionId: string, participantIds: readonly string[]) => {
+    callbacks.onDiscussionStart?.(discussionId, participantIds);
+  });
+
+  crew.on('crew:discussion:message', (_crewId: string, discussionId: string, message: DiscussionMessage) => {
+    callbacks.onDiscussionMessage?.(discussionId, message);
+  });
+
+  crew.on('crew:discussion:complete', (_crewId: string, discussionId: string, result: DiscussionResult) => {
+    callbacks.onDiscussionComplete?.(discussionId, result);
   });
 
   // 5. Run!

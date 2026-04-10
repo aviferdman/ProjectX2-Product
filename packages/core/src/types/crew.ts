@@ -5,6 +5,7 @@
  */
 
 import type { TaskResult } from './task.js';
+import type { DiscussionMessage, DiscussionResult, TaskDiscussionConfig } from './discussion.js';
 
 /** Lifecycle status of a crew. */
 export enum CrewStatus {
@@ -48,6 +49,9 @@ export interface CrewTask {
 
   /** IDs of tasks whose results should be injected as context. */
   readonly dependencies?: readonly string[];
+
+  /** Optional discussion configuration for collaborative agent discussion before execution. */
+  readonly discussion?: TaskDiscussionConfig;
 }
 
 /**
@@ -106,4 +110,7 @@ export interface CrewEventMap {
   'crew:task:complete': (crewId: string, taskId: string, result: TaskResult) => void;
   'crew:task:error': (crewId: string, taskId: string, error: Error) => void;
   'crew:status-changed': (crewId: string, status: CrewStatus) => void;
+  'crew:discussion:start': (crewId: string, discussionId: string, participantIds: readonly string[]) => void;
+  'crew:discussion:message': (crewId: string, discussionId: string, message: DiscussionMessage) => void;
+  'crew:discussion:complete': (crewId: string, discussionId: string, result: DiscussionResult) => void;
 }

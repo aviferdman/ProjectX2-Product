@@ -3,7 +3,7 @@
  * Shows agents as nodes with task connections in a graph, list, or timeline view.
  */
 import React, { useMemo } from 'react';
-import type { WorkflowState, AgentNode, TaskNode } from '../../types/workflow.js';
+import type { WorkflowState, AgentNode, TaskNode, DiscussionEdge, DiscussionMessageUI } from '../../types/workflow.js';
 
 interface WorkflowPreviewProps {
   workflow: WorkflowState | null;
@@ -56,8 +56,49 @@ export function WorkflowPreview({
 }
 
 /* ------------------------------------------------------------------ */
-/* Graph View — Visual node graph                                      */
+/* Graph View — Canvas-style node graph with agent connections         */
 /* ------------------------------------------------------------------ */
+
+/** Compute agent node positions in a force-directed-style layout. */
+function useAgentPositions(agents: AgentNode[]) {
+  return useMemo(() => {
+    const positions = new Map<string, { x: number; y: number }>();
+    const count = agents.length;
+    if (count === 0) return positions;
+
+    // Arrange agents in a circle for balanced layout
+    const centerX = 450;
+    const centerY = 300;
+    const radius = Math.max(180, count * 55);
+
+    for (let i = 0; i < count; i++) {
+      const angle = (2 * Math.PI * i) / count - Math.PI / 2;
+      positions.set(agents[i]!.id, {
+        x: centerX + radius * Math.cos(angle),
+        y: centerY + radius * Math.sin(angle),
+      });
+    }
+    return positions;
+  }, [agents]);
+}
+
+/** Compute which agents are connected by task dependencies. */
+function useTaskDependencyEdges(workflow: WorkflowState) {
+  return useMemo(() => {
+    const edges: Array<{ from: string; to: string; taskId: string }> = [];
+    for (const task of workflow.tasks) {
+      if (task.dependencies.length === 0) continue;
+      for (const depId of task.dependencies) {
+        const depTask = workflow.tasks.find((t) => t.id === depId);
+        if (depTask && depTask.agentId !== task.agentId) {
+          edges.push({ from: depTask.agentId, to: task.agentId, taskId: task.id });
+        }
+      }
+    }
+    return edges;
+  }, [workflow.tasks]);
+}
+
 function GraphView({
   workflow,
   selectedNodeId,
@@ -67,26 +108,10 @@ function GraphView({
   selectedNodeId: string | null;
   onSelectNode: (id: string | null) => void;
 }): React.JSX.Element {
-  // Calculate task positions based on dependency layers
-  const taskLayers = useMemo(() => {
-    const layers: TaskNode[][] = [];
-    const placed = new Set<string>();
-    const tasks = workflow.tasks;
-
-    while (placed.size < tasks.length) {
-      const layer: TaskNode[] = [];
-      for (const task of tasks) {
-        if (placed.has(task.id)) continue;
-        if (task.dependencies.every((d) => placed.has(d))) {
-          layer.push(task);
-        }
-      }
-      if (layer.length === 0) break; // Avoid infinite loop
-      for (const t of layer) placed.add(t.id);
-      layers.push(layer);
-    }
-    return layers;
-  }, [workflow.tasks]);
+  const agentPositions = useAgentPositions(workflow.agents);
+  const depEdges = useTaskDependencyEdges(workflow);
+  const discussionEdges = workflow.discussionEdges ?? [];
+  const NODE_RADIUS = 54;
 
   return (
     <div className="h-full relative overflow-auto bg-[var(--cs-surface-app)]" onClick={() => onSelectNode(null)}>
@@ -99,86 +124,261 @@ function GraphView({
         }}
       />
 
-      {/* Agents Row */}
-      <div className="relative px-8 pt-8 pb-4">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-5 h-5 rounded bg-violet-500/20 flex items-center justify-center">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgb(167 139 250)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </div>
-          <h3 className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider">Agent Team</h3>
-          <span className="text-xs text-[var(--cs-text-tertiary)]">({workflow.agents.length})</span>
-        </div>
+      {/* SVG layer for edges/arrows */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ minWidth: 900, minHeight: 600 }}>
+        <defs>
+          {/* Arrow marker for dependency edges */}
+          <marker id="arrow-dep" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 3.5 L 0 7 z" fill="rgba(139,92,246,0.5)" />
+          </marker>
+          {/* Arrow marker for discussion edges */}
+          <marker id="arrow-disc" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 3.5 L 0 7 z" fill="rgba(34,211,238,0.6)" />
+          </marker>
+          <marker id="arrow-disc-active" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 3.5 L 0 7 z" fill="rgba(34,211,238,1)" />
+          </marker>
+        </defs>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {workflow.agents.map((agent) => (
-            <AgentCard
-              key={agent.id}
-              agent={agent}
-              isSelected={selectedNodeId === agent.id}
-              tasksCount={workflow.tasks.filter((t) => t.agentId === agent.id).length}
-              onClick={(e: React.MouseEvent) => {
-                e.stopPropagation();
-                onSelectNode(agent.id);
-              }}
-            />
-          ))}
-        </div>
-      </div>
+        {/* Dependency edges (dashed violet lines) */}
+        {depEdges.map((edge, i) => {
+          const from = agentPositions.get(edge.from);
+          const to = agentPositions.get(edge.to);
+          if (!from || !to) return null;
+          const { x1, y1, x2, y2 } = clipLineToCircle(from.x, from.y, to.x, to.y, NODE_RADIUS);
+          return (
+            <g key={`dep-${i}`}>
+              <line
+                x1={x1} y1={y1} x2={x2} y2={y2}
+                stroke="rgba(139,92,246,0.25)"
+                strokeWidth="1.5"
+                strokeDasharray="6 4"
+                markerEnd="url(#arrow-dep)"
+              />
+            </g>
+          );
+        })}
 
-      {/* Tasks Flow */}
-      <div className="relative px-8 pt-4 pb-8">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-5 h-5 rounded bg-cyan-500/20 flex items-center justify-center">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgb(34 211 238)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 11 12 14 22 4" />
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-            </svg>
-          </div>
-          <h3 className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider">Task Pipeline</h3>
-          <span className="text-xs text-[var(--cs-text-tertiary)]">({workflow.tasks.length} tasks)</span>
-        </div>
+        {/* Discussion edges (solid cyan lines with animation) */}
+        {discussionEdges.map((edge) => {
+          const from = agentPositions.get(edge.fromAgentId);
+          const to = agentPositions.get(edge.toAgentId);
+          if (!from || !to) return null;
+          const isActive = edge.status === 'active';
+          const isConverged = edge.status === 'converged';
+          const { x1, y1, x2, y2 } = clipLineToCircle(from.x, from.y, to.x, to.y, NODE_RADIUS);
+          // Offset slightly from dependency lines
+          const midX = (x1 + x2) / 2;
+          const midY = (y1 + y2) / 2;
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const len = Math.sqrt(dx * dx + dy * dy) || 1;
+          const offsetX = (-dy / len) * 12;
+          const offsetY = (dx / len) * 12;
 
-        <div className="space-y-4">
-          {taskLayers.map((layer, layerIdx) => (
-            <div key={layerIdx} className="flex flex-col gap-3">
-              {/* Layer connector */}
-              {layerIdx > 0 && (
-                <div className="flex justify-center py-1">
-                  <div className="flex items-center gap-2">
-                    <div className="w-px h-6 bg-gradient-to-b from-violet-500/30 to-violet-500/10" />
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgb(139 92 246)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-40">
-                      <line x1="12" y1="5" x2="12" y2="19" />
-                      <polyline points="19 12 12 19 5 12" />
-                    </svg>
-                    <div className="w-px h-6 bg-gradient-to-b from-violet-500/30 to-violet-500/10" />
-                  </div>
-                </div>
+          return (
+            <g key={edge.id}>
+              {/* Discussion connection line (curved) */}
+              <path
+                d={`M ${x1} ${y1} Q ${midX + offsetX} ${midY + offsetY} ${x2} ${y2}`}
+                fill="none"
+                stroke={isConverged ? 'rgba(16,185,129,0.6)' : isActive ? 'rgba(34,211,238,0.8)' : 'rgba(34,211,238,0.2)'}
+                strokeWidth={isActive ? 2.5 : 1.5}
+                markerEnd={isActive ? 'url(#arrow-disc-active)' : 'url(#arrow-disc)'}
+              />
+
+              {/* Animated message dot flowing along edge when active */}
+              {isActive && (
+                <circle r="4" fill="#22d3ee" opacity="0.9">
+                  <animateMotion
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                    path={`M ${x1} ${y1} Q ${midX + offsetX} ${midY + offsetY} ${x2} ${y2}`}
+                  />
+                </circle>
               )}
 
-              <div className="flex flex-wrap gap-3">
-                {layer.map((task) => {
-                  const agent = workflow.agents.find((a) => a.id === task.agentId);
-                  return (
-                    <TaskCard
-                      key={task.id}
-                      task={task}
-                      agent={agent}
-                      isSelected={selectedNodeId === task.id}
-                      onClick={(e: React.MouseEvent) => {
-                        e.stopPropagation();
-                        onSelectNode(task.id);
-                      }}
-                    />
-                  );
-                })}
-              </div>
+              {/* Discussion badge at midpoint */}
+              {(edge.messages.length > 0 || isActive) && (
+                <g transform={`translate(${midX + offsetX}, ${midY + offsetY})`}>
+                  <rect x="-14" y="-10" width="28" height="20" rx="10"
+                    fill={isConverged ? 'rgba(16,185,129,0.2)' : isActive ? 'rgba(34,211,238,0.15)' : 'rgba(34,211,238,0.1)'}
+                    stroke={isConverged ? 'rgba(16,185,129,0.4)' : isActive ? 'rgba(34,211,238,0.4)' : 'rgba(34,211,238,0.2)'}
+                    strokeWidth="1"
+                  />
+                  <text textAnchor="middle" dy="4" fontSize="9" fontWeight="600"
+                    fill={isConverged ? '#10b981' : '#22d3ee'}
+                  >
+                    {isConverged ? '✓' : `${edge.messages.length}`}
+                  </text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Agent nodes */}
+      <div className="relative" style={{ minWidth: 900, minHeight: 600 }}>
+        {workflow.agents.map((agent) => {
+          const pos = agentPositions.get(agent.id);
+          if (!pos) return null;
+          const agentTasks = workflow.tasks.filter((t) => t.agentId === agent.id);
+          const hasActiveDiscussion = discussionEdges.some(
+            (e) => (e.fromAgentId === agent.id || e.toAgentId === agent.id) && e.status === 'active',
+          );
+
+          return (
+            <div
+              key={agent.id}
+              className="absolute"
+              style={{ left: pos.x - NODE_RADIUS, top: pos.y - NODE_RADIUS }}
+            >
+              <button
+                onClick={(e) => { e.stopPropagation(); onSelectNode(agent.id); }}
+                className={`relative w-[108px] h-[108px] rounded-full border-2 transition-all duration-300 flex flex-col items-center justify-center focus-ring ${
+                  selectedNodeId === agent.id
+                    ? 'border-violet-500 bg-violet-500/15 shadow-lg shadow-violet-500/20 scale-110'
+                    : hasActiveDiscussion
+                      ? 'border-cyan-400/60 bg-cyan-500/10 shadow-md shadow-cyan-500/10'
+                      : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/80 hover:border-[var(--cs-border-default)] hover:bg-[var(--cs-surface-card)] hover:scale-105'
+                }`}
+                style={{
+                  borderColor: selectedNodeId === agent.id ? undefined : hasActiveDiscussion ? undefined : `${agent.color}40`,
+                  background: selectedNodeId === agent.id ? undefined : `radial-gradient(circle at 30% 30%, ${agent.color}15, ${agent.color}05)`,
+                }}
+              >
+                {/* Agent initial badge */}
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold mb-1"
+                  style={{ backgroundColor: `${agent.color}40`, border: `2px solid ${agent.color}60` }}
+                >
+                  {agent.role.split(' ').map((w) => w[0]).join('').slice(0, 2)}
+                </div>
+                <span className="text-[10px] font-semibold text-[var(--cs-text-primary)] text-center leading-tight px-2 truncate max-w-[96px]">
+                  {agent.role}
+                </span>
+                <span className="text-[8px] text-[var(--cs-text-tertiary)] mt-0.5">
+                  {agentTasks.length} tasks
+                </span>
+
+                {/* Status indicator ring */}
+                {agent.status === 'working' && (
+                  <div className="absolute inset-0 rounded-full border-2 border-amber-400/50 animate-ping" style={{ animationDuration: '2s' }} />
+                )}
+                {hasActiveDiscussion && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-cyan-400 flex items-center justify-center animate-pulse">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                  </div>
+                )}
+                {agent.status === 'completed' && (
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500/90 flex items-center justify-center">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                )}
+              </button>
             </div>
-          ))}
+          );
+        })}
+
+        {/* Task badges along the agent nodes */}
+        {workflow.agents.map((agent) => {
+          const pos = agentPositions.get(agent.id);
+          if (!pos) return null;
+          const agentTasks = workflow.tasks.filter((t) => t.agentId === agent.id);
+          return agentTasks.map((task, tidx) => {
+            const taskAngle = (tidx - (agentTasks.length - 1) / 2) * 0.4;
+            const tx = pos.x + (NODE_RADIUS + 24) * Math.cos(taskAngle - Math.PI / 4);
+            const ty = pos.y + (NODE_RADIUS + 24) * Math.sin(taskAngle - Math.PI / 4);
+            return (
+              <button
+                key={task.id}
+                onClick={(e) => { e.stopPropagation(); onSelectNode(task.id); }}
+                className={`absolute px-2 py-1 rounded-lg border text-[9px] max-w-[130px] truncate transition-all hover:scale-105 focus-ring ${
+                  selectedNodeId === task.id
+                    ? 'border-violet-500/50 bg-violet-500/15 text-violet-300'
+                    : task.status === 'completed'
+                      ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+                      : task.status === 'running'
+                        ? 'border-amber-500/30 bg-amber-500/10 text-amber-300 animate-pulse'
+                        : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/60 text-[var(--cs-text-secondary)]'
+                }`}
+                style={{ left: tx - 50, top: ty - 8 }}
+                title={task.description}
+              >
+                {task.discussion && <span className="mr-1">💬</span>}
+                {task.description.slice(0, 20)}{task.description.length > 20 ? '…' : ''}
+              </button>
+            );
+          });
+        })}
+      </div>
+
+      {/* Live discussion messages overlay */}
+      {discussionEdges.some((e) => e.status === 'active' && e.messages.length > 0) && (
+        <div className="absolute bottom-4 right-4 w-72 max-h-60 overflow-y-auto rounded-xl border border-cyan-500/20 bg-[var(--cs-surface-panel)]/95 backdrop-blur-sm shadow-xl scrollbar-thin">
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-cyan-500/10">
+            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-xs font-semibold text-cyan-300">Live Discussion</span>
+          </div>
+          <div className="p-2 space-y-1.5">
+            {discussionEdges
+              .filter((e) => e.status === 'active')
+              .flatMap((e) => e.messages)
+              .slice(-8)
+              .map((msg) => {
+                const agent = workflow.agents.find((a) => a.id === msg.fromAgentId);
+                return (
+                  <div key={msg.id} className="flex items-start gap-2 animate-fadeInUp">
+                    <div
+                      className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[8px] font-bold text-white mt-0.5"
+                      style={{ backgroundColor: agent?.color ?? '#6366f1' }}
+                    >
+                      {agent?.role.charAt(0) ?? '?'}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-semibold" style={{ color: agent?.color ?? '#a78bfa' }}>
+                          {agent?.role ?? msg.fromAgentId}
+                        </span>
+                        <span className={`text-[8px] px-1 py-0.5 rounded font-medium ${
+                          msg.type === 'agreement' ? 'bg-emerald-500/20 text-emerald-400'
+                            : msg.type === 'disagreement' ? 'bg-rose-500/20 text-rose-400'
+                            : msg.type === 'revision' ? 'bg-amber-500/20 text-amber-400'
+                            : msg.type === 'question' ? 'bg-blue-500/20 text-blue-400'
+                            : 'bg-slate-500/20 text-slate-400'
+                        }`}>
+                          {msg.type}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-[var(--cs-text-secondary)] leading-relaxed line-clamp-2 mt-0.5">
+                        {msg.content.replace(/^\[(?:AGREE|DISAGREE|REVISE|QUESTION|PROPOSAL)\]\s*/i, '').slice(0, 120)}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      )}
+
+      {/* Legend */}
+      <div className="absolute top-4 right-4 flex items-center gap-4 px-3 py-2 rounded-lg bg-[var(--cs-surface-panel)]/80 backdrop-blur-sm border border-[var(--cs-border-subtle)]">
+        <div className="flex items-center gap-1.5">
+          <div className="w-6 h-px border-t-2 border-dashed border-violet-500/40" />
+          <span className="text-[9px] text-[var(--cs-text-tertiary)]">Dependency</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-6 h-px border-t-2 border-cyan-400/60" />
+          <span className="text-[9px] text-[var(--cs-text-tertiary)]">Discussion</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="text-[9px] text-[var(--cs-text-tertiary)]">Active</span>
         </div>
       </div>
 
@@ -192,6 +392,23 @@ function GraphView({
       )}
     </div>
   );
+}
+
+/** Clip a line from two circle centers so it starts/ends at circle edges. */
+function clipLineToCircle(
+  cx1: number, cy1: number, cx2: number, cy2: number, radius: number,
+): { x1: number; y1: number; x2: number; y2: number } {
+  const dx = cx2 - cx1;
+  const dy = cy2 - cy1;
+  const len = Math.sqrt(dx * dx + dy * dy) || 1;
+  const nx = dx / len;
+  const ny = dy / len;
+  return {
+    x1: cx1 + nx * radius,
+    y1: cy1 + ny * radius,
+    x2: cx2 - nx * radius,
+    y2: cy2 - ny * radius,
+  };
 }
 
 /* ------------------------------------------------------------------ */

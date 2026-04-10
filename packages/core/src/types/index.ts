@@ -49,3 +49,13 @@ export type {
   MemoryRetentionPolicy,
   MemorySortOrder,
 } from './memory.js';
+
+export { ConvergenceStrategy, DiscussionMessageType, DiscussionStatus } from './discussion.js';
+export type {
+  DiscussionConfig,
+  DiscussionEventMap,
+  DiscussionMessage,
+  DiscussionResult,
+  DiscussionRound,
+  TaskDiscussionConfig,
+} from './discussion.js';

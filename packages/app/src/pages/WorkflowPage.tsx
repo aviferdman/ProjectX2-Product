@@ -79,9 +79,11 @@ export function WorkflowPage(): React.JSX.Element {
 
         setWorkflow(generated);
         setIsGenerating(false);
+        const discussionCount = generated.tasks.filter((t) => t.discussion).length;
+        const discussionNote = discussionCount > 0 ? `\n\n**Discussions:** ${discussionCount} collaborative task(s) where agents will discuss and iterate until convergence.` : '';
         pushMessage(
           'assistant',
-          `I've assembled a team of **${generated.agents.length} agents** with **${generated.tasks.length} tasks** to execute your initiative.\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
+          `I've assembled a team of **${generated.agents.length} agents** with **${generated.tasks.length} tasks** to execute your initiative.${discussionNote}\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}${t.discussion ? ' 💬' : ''}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
         );
       } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
@@ -201,6 +203,94 @@ export function WorkflowPage(): React.JSX.Element {
         onCrewError(error) {
           setWorkflow((prev) => (prev ? { ...prev, status: 'failed' } : null));
           pushMessage('assistant', `Workflow failed: ${error.message}`);
+        },
+
+        // Discussion callbacks
+        onDiscussionStart(discussionId, participantIds) {
+          // Find which task this discussion belongs to (id format: crewId-disc-taskId)
+          const taskId = discussionId.split('-disc-')[1];
+          const participantNames = participantIds
+            .map((pid) => workflow.agents.find((a) => a.id === pid)?.role ?? pid)
+            .join(' & ');
+          pushMessage('system', `💬 Discussion started for task **${taskId}**: ${participantNames} are collaborating…`);
+
+          // Update discussion edge statuses to active
+          setWorkflow((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              discussionEdges: (prev.discussionEdges ?? []).map((edge) =>
+                edge.taskId === taskId ? { ...edge, status: 'active' as const } : edge,
+              ),
+              agents: prev.agents.map((a) =>
+                (participantIds as readonly string[]).includes(a.id) ? { ...a, status: 'working' as const } : a,
+              ),
+            };
+          });
+        },
+
+        onDiscussionMessage(discussionId, message) {
+          const taskId = discussionId.split('-disc-')[1];
+          const fromAgent = workflow.agents.find((a) => a.id === message.fromAgentId);
+
+          // Add message to the relevant discussion edges
+          setWorkflow((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              discussionEdges: (prev.discussionEdges ?? []).map((edge) => {
+                if (edge.taskId !== taskId) return edge;
+                if (
+                  edge.fromAgentId === message.fromAgentId ||
+                  edge.toAgentId === message.fromAgentId
+                ) {
+                  return {
+                    ...edge,
+                    messages: [
+                      ...edge.messages,
+                      {
+                        id: message.id,
+                        fromAgentId: message.fromAgentId,
+                        toAgentId: message.toAgentId,
+                        content: message.content,
+                        round: message.round,
+                        type: message.type as 'proposal' | 'feedback' | 'revision' | 'agreement' | 'disagreement' | 'question' | 'answer',
+                        timestamp: message.timestamp,
+                      },
+                    ],
+                  };
+                }
+                return edge;
+              }),
+            };
+          });
+
+          // Show abbreviated message in chat
+          const typeEmoji = message.type === 'agreement' ? '✅' : message.type === 'disagreement' ? '❌' : message.type === 'revision' ? '📝' : message.type === 'question' ? '❓' : '💬';
+          const shortContent = message.content.replace(/^\[(?:AGREE|DISAGREE|REVISE|QUESTION|PROPOSAL)\]\s*/i, '').slice(0, 100);
+          pushMessage('system', `${typeEmoji} **${fromAgent?.role ?? message.fromAgentId}** (R${message.round}): ${shortContent}${message.content.length > 100 ? '…' : ''}`);
+        },
+
+        onDiscussionComplete(discussionId, result) {
+          const taskId = discussionId.split('-disc-')[1];
+          const statusLabel = result.status === 'converged'
+            ? `converged at round ${result.convergenceRound}`
+            : `completed after ${result.rounds.length} rounds (${result.status})`;
+
+          pushMessage('system', `💬 Discussion for **${taskId}** ${statusLabel} with ${result.totalMessages} messages.`);
+
+          // Update edge status
+          setWorkflow((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              discussionEdges: (prev.discussionEdges ?? []).map((edge) =>
+                edge.taskId === taskId
+                  ? { ...edge, status: (result.status === 'converged' ? 'converged' : 'max-rounds') as 'converged' | 'max-rounds' }
+                  : edge,
+              ),
+            };
+          });
         },
       });
     } catch (error) {

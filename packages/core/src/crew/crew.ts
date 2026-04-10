@@ -12,9 +12,12 @@ import { EventEmitter } from 'eventemitter3';
 import { z, ZodError } from 'zod';
 
 import type { Agent } from '../agent/agent.js';
+import { DiscussionManager } from '../discussion/discussion-manager.js';
 import { CrewConfigError, CrewExecutionError } from '../errors/crew-errors.js';
 import type { CrewConfig, CrewEventMap, CrewRunResult, CrewTask } from '../types/crew.js';
 import { CrewStatus } from '../types/crew.js';
+import { ConvergenceStrategy } from '../types/discussion.js';
+import type { DiscussionResult } from '../types/discussion.js';
 import type { TaskResult } from '../types/task.js';
 
 // ---------------------------------------------------------------------------
@@ -33,6 +36,15 @@ const CrewTaskSchema = z.object({
   agentId: z.string().min(1, 'Task agentId must not be empty'),
   context: z.record(z.unknown()).optional(),
   dependencies: z.array(z.string()).optional(),
+  discussion: z
+    .object({
+      participantIds: z.array(z.string()).min(2, 'Discussion requires at least 2 participants'),
+      maxRounds: z.number().int().positive().max(20),
+      convergenceStrategy: z.nativeEnum(ConvergenceStrategy),
+      topic: z.string().optional(),
+      stabilityThreshold: z.number().int().positive().optional(),
+    })
+    .optional(),
 });
 
 const CrewConfigSchema = z.object({
@@ -149,6 +161,7 @@ export class Crew {
           ...(t.expectedOutput !== undefined ? { expectedOutput: t.expectedOutput } : {}),
           ...(t.context !== undefined ? { context: t.context } : {}),
           ...(t.dependencies !== undefined ? { dependencies: t.dependencies } : {}),
+          ...(t.discussion !== undefined ? { discussion: t.discussion } : {}),
         };
         return task;
       });
@@ -260,10 +273,16 @@ export class Crew {
           throw new CrewExecutionError(this.id, `Agent "${task.agentId}" not found`, task.id);
         }
 
+        // Run pre-task discussion if configured
+        let discussionResult: DiscussionResult | undefined;
+        if (task.discussion) {
+          discussionResult = await this._runTaskDiscussion(task, taskResults);
+        }
+
         this._emit('crew:task:start', this.id, task.id, task.agentId);
 
         try {
-          const taskInput = this._buildTaskInput(task, taskResults);
+          const taskInput = this._buildTaskInput(task, taskResults, discussionResult);
           const result = await agent.execute(taskInput);
           taskResults.set(task.id, result);
           this._emit('crew:task:complete', this.id, task.id, result);
@@ -321,6 +340,7 @@ export class Crew {
   private _buildTaskInput(
     task: CrewTask,
     completedResults: ReadonlyMap<string, TaskResult>,
+    discussionResult?: DiscussionResult,
   ): { description: string; expectedOutput?: string; context?: Record<string, unknown> } {
     const context: Record<string, unknown> = { ...task.context };
 
@@ -335,6 +355,25 @@ export class Crew {
       if (Object.keys(dependencyOutputs).length > 0) {
         context['dependencyResults'] = dependencyOutputs;
       }
+    }
+
+    // Inject discussion result if a pre-task discussion was held
+    if (discussionResult) {
+      context['discussionResult'] = {
+        status: discussionResult.status,
+        finalOutput: discussionResult.finalOutput,
+        totalMessages: discussionResult.totalMessages,
+        convergenceRound: discussionResult.convergenceRound,
+        rounds: discussionResult.rounds.map((r) => ({
+          roundNumber: r.roundNumber,
+          messages: r.messages.map((m) => ({
+            from: m.fromAgentId,
+            to: m.toAgentId,
+            type: m.type,
+            content: m.content,
+          })),
+        })),
+      };
     }
 
     const input: {
@@ -354,6 +393,55 @@ export class Crew {
     }
 
     return input;
+  }
+
+  /**
+   * Run a collaborative discussion between agents before executing a task.
+   */
+  private async _runTaskDiscussion(
+    task: CrewTask,
+    completedResults: ReadonlyMap<string, TaskResult>,
+  ): Promise<DiscussionResult> {
+    const disc = task.discussion!;
+    const discussionId = `${this.id}-disc-${task.id}`;
+
+    // Build initial context from dependency results
+    let initialContext = '';
+    if (task.dependencies) {
+      const depOutputs: string[] = [];
+      for (const depId of task.dependencies) {
+        const depResult = completedResults.get(depId);
+        if (depResult) {
+          depOutputs.push(`[${depId}]: ${depResult.output}`);
+        }
+      }
+      if (depOutputs.length > 0) {
+        initialContext = `Previous task results:\n${depOutputs.join('\n\n')}`;
+      }
+    }
+
+    const manager = new DiscussionManager(this._agents);
+
+    // Forward discussion events as crew events
+    manager.on('discussion:start', (dId, participantIds) => {
+      this._emit('crew:discussion:start', this.id, dId, participantIds);
+    });
+    manager.on('discussion:message', (dId, message) => {
+      this._emit('crew:discussion:message', this.id, dId, message);
+    });
+    manager.on('discussion:complete', (dId, result) => {
+      this._emit('crew:discussion:complete', this.id, dId, result);
+    });
+
+    return manager.runDiscussion({
+      id: discussionId,
+      participantIds: disc.participantIds,
+      topic: disc.topic ?? task.description,
+      initialContext: initialContext || undefined,
+      maxRounds: disc.maxRounds,
+      convergenceStrategy: disc.convergenceStrategy,
+      stabilityThreshold: disc.stabilityThreshold,
+    });
   }
 
   /**
