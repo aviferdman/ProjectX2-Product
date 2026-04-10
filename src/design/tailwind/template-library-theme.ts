@@ -60,6 +60,9 @@ export const templateLibraryTheme = {
       'popular-bg': 'rgba(52,211,153,0.15)',
       'popular-text': '#6ee7b7',
       'popular-border': 'rgba(52,211,153,0.3)',
+      'new-bg': 'rgba(56,189,248,0.15)',
+      'new-text': '#7dd3fc',
+      'new-border': 'rgba(56,189,248,0.3)',
     },
     'tpl-use-btn': {
       bg: '#7c3aed',
@@ -133,6 +136,8 @@ export const templateLibraryTheme = {
     'tpl-tag-gap': '6px',
     'tpl-cat-icon-size': '32px',
     'tpl-search-h': '40px',
+    'tpl-search-w': '320px',
+    'tpl-search-max-w': '400px',
     'tpl-chip-h': '30px',
     'tpl-use-btn-h': '36px',
     'tpl-preview-btn-h': '36px',

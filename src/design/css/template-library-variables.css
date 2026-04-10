@@ -70,6 +70,8 @@
 
   /* Search input */
   --search-h: 40px;
+  --search-w: 320px;
+  --search-max-w: 400px;
   --search-bg: var(--cs-surface-elevated);
   --search-border: var(--cs-border-default);
   --search-border-focus: #8b5cf6;
@@ -95,6 +97,7 @@
   --sort-text-active: var(--cs-text-primary);
   --sort-menu-bg: var(--cs-surface-overlay);
   --sort-menu-border: var(--cs-border-default);
+  --sort-menu-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.06);
   --sort-item-bg-hover: rgba(30, 41, 59, 0.5);
   --sort-radius: var(--cs-radius-md);
 }
@@ -163,6 +166,14 @@
   --badge-bg: rgba(52, 211, 153, 0.15);
   --badge-text: #6ee7b7;
   --badge-border: rgba(52, 211, 153, 0.3);
+  --badge-radius: var(--cs-radius-sm);
+}
+
+.cs-template-badge-new {
+  --badge-h: 20px;
+  --badge-bg: rgba(56, 189, 248, 0.15);
+  --badge-text: #7dd3fc;
+  --badge-border: rgba(56, 189, 248, 0.3);
   --badge-radius: var(--cs-radius-sm);
 }
 

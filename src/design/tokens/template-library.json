@@ -114,7 +114,8 @@
         "text-active": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
         "menu-bg": { "value": "{crewspace.color.semantic.surface.overlay}", "type": "color" },
         "menu-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "item-bg-hover": { "value": "rgba(30,41,59,0.5)", "type": "color" }
+        "item-bg-hover": { "value": "rgba(30,41,59,0.5)", "type": "color" },
+        "menu-shadow": { "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.06)", "type": "boxShadow", "description": "Sort dropdown menu shadow" }
       },
       "featured": {
         "badge-bg": { "value": "rgba(251,191,36,0.15)", "type": "color", "description": "Featured/staff-pick badge" },
@@ -122,7 +123,10 @@
         "badge-border": { "value": "rgba(251,191,36,0.3)", "type": "color" },
         "popular-badge-bg": { "value": "rgba(52,211,153,0.15)", "type": "color", "description": "Popular badge" },
         "popular-badge-text": { "value": "{crewspace.color.primitive.emerald.300}", "type": "color" },
-        "popular-badge-border": { "value": "rgba(52,211,153,0.3)", "type": "color" }
+        "popular-badge-border": { "value": "rgba(52,211,153,0.3)", "type": "color" },
+        "new-badge-bg": { "value": "rgba(56,189,248,0.15)", "type": "color", "description": "New badge" },
+        "new-badge-text": { "value": "{crewspace.color.primitive.sky.300}", "type": "color" },
+        "new-badge-border": { "value": "rgba(56,189,248,0.3)", "type": "color" }
       },
       "emptyState": {
         "icon": { "value": "{crewspace.color.primitive.slate.600}", "type": "color" },
@@ -155,6 +159,8 @@
         "tag-gap": { "value": "6px", "type": "sizing" },
         "category-icon-size": { "value": "32px", "type": "sizing" },
         "search-height": { "value": "40px", "type": "sizing" },
+        "search-width": { "value": "320px", "type": "sizing", "description": "Search bar default width" },
+        "search-max-width": { "value": "400px", "type": "sizing", "description": "Search bar maximum width" },
         "filter-chip-height": { "value": "30px", "type": "sizing" },
         "use-button-height": { "value": "36px", "type": "sizing" },
         "preview-button-height": { "value": "36px", "type": "sizing" },
