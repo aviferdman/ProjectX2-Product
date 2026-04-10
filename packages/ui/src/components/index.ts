@@ -88,6 +88,8 @@ export {
   // Playback (TASK-146)
   PlaybackControls,
   type PlaybackControlsProps,
+  TimelinePlayer,
+  type TimelinePlayerProps,
   formatPlaybackTime,
   type PlaybackSpeed,
   type PlaybackStatus,

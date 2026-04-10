@@ -12,6 +12,8 @@ export { EventBlock } from './EventBlock.js';
 export { EventMarker } from './EventMarker.js';
 export { Playhead } from './Playhead.js';
 export { PlaybackControls, formatPlaybackTime } from './PlaybackControls.js';
+export { TimelinePlayer } from './TimelinePlayer.js';
+export type { TimelinePlayerProps } from './TimelinePlayer.js';
 export { LogViewer } from './LogViewer.js';
 export { LogRow, formatTimestamp, tokenizeJson, highlightSearch } from './LogRow.js';
 export type { SyntaxToken, HighlightSegment } from './LogRow.js';
