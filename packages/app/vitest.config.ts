@@ -7,11 +7,5 @@ export default defineProject({
     include: ['tests/**/*.test.{ts,tsx}'],
     setupFiles: ['./tests/setup.ts'],
     globals: true,
-    pool: 'forks',
-    poolOptions: {
-      forks: {
-        singleFork: true,
-      },
-    },
   },
 });
