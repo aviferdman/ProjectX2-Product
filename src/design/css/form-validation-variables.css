@@ -1,0 +1,35 @@
+/* TASK-187: CSS custom properties for form field validation */
+:root {
+  /* Valid state */
+  --cs-form-valid-border: rgba(5, 150, 105, 0.6);
+  --cs-form-valid-text: #34d399;
+  --cs-form-valid-icon: #34d399;
+  --cs-form-valid-bg: rgba(16, 185, 129, 0.06);
+
+  /* Invalid state */
+  --cs-form-invalid-border: rgba(225, 29, 72, 0.6);
+  --cs-form-invalid-text: #fb7185;
+  --cs-form-invalid-icon: #fb7185;
+  --cs-form-invalid-bg: rgba(244, 63, 94, 0.06);
+
+  /* Warning state */
+  --cs-form-warning-border: rgba(217, 119, 6, 0.6);
+  --cs-form-warning-text: #fbbf24;
+  --cs-form-warning-icon: #fbbf24;
+  --cs-form-warning-bg: rgba(245, 158, 11, 0.06);
+
+  /* Label */
+  --cs-form-label-color: #cbd5e1;
+  --cs-form-label-required: #fb7185;
+
+  /* Helper */
+  --cs-form-helper-color: #64748b;
+
+  /* Transition */
+  --cs-form-transition-duration: 150ms;
+
+  /* Message */
+  --cs-form-message-font-size: 0.75rem;
+  --cs-form-message-line-height: 1rem;
+  --cs-form-message-gap: 0.25rem;
+}

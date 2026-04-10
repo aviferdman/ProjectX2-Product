@@ -77,3 +77,13 @@ export {
   type UseToastOptions,
   type UseToastResult,
 } from './useToast.js';
+// TASK-187: Form validation hook
+export {
+  useFormValidation,
+  type UseFormValidationOptions,
+  type UseFormValidationResult,
+  type FieldValidationResult,
+  type FieldValidator,
+  type FieldConfig,
+  type FieldState,
+} from './useFormValidation.js';

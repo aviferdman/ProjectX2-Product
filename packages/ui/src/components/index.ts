@@ -1,5 +1,18 @@
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button.js';
 export { Input, type InputProps } from './Input.js';
+
+// Form Field Validation (TASK-187)
+export { FormField, type FormFieldProps, type ValidationState } from './FormField.js';
+export { Textarea, type TextareaProps } from './Textarea.js';
+export {
+  required,
+  minLength,
+  maxLength,
+  maxLengthWarning,
+  pattern,
+  email,
+  showValid,
+} from './validators.js';
 export { Card, CardHeader, CardBody, type CardProps, type CardHeaderProps, type CardBodyProps } from './Card.js';
 export { Badge, type BadgeProps, type BadgeVariant } from './Badge.js';
 export { Modal, type ModalProps } from './Modal.js';

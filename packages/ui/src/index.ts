@@ -16,6 +16,19 @@ export {
   type ButtonSize,
   Input,
   type InputProps,
+  // Form Validation (TASK-187)
+  FormField,
+  type FormFieldProps,
+  type ValidationState,
+  Textarea,
+  type TextareaProps,
+  required,
+  minLength,
+  maxLength,
+  maxLengthWarning,
+  pattern,
+  email,
+  showValid,
   Card,
   CardHeader,
   CardBody,
@@ -432,6 +445,17 @@ export {
   useToast,
   type UseToastOptions,
   type UseToastResult,
+} from './hooks/index.js';
+
+// Hooks — Form Validation (TASK-187)
+export {
+  useFormValidation,
+  type UseFormValidationOptions,
+  type UseFormValidationResult,
+  type FieldValidationResult,
+  type FieldValidator,
+  type FieldConfig,
+  type FieldState,
 } from './hooks/index.js';
 
 // Design tokens (programmatic)
