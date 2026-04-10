@@ -8,7 +8,7 @@
  * CSS custom properties defined in src/design/css/canvas-variables.css.
  */
 
-@import '../../src/design/css/responsive-variables.css';
+@import '../../../../src/design/css/responsive-variables.css';
 
 @tailwind base;
 @tailwind components;
