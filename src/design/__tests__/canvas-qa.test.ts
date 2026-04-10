@@ -44,11 +44,6 @@ function collectTokenLeaves(
   return results;
 }
 
-// Normalize CSS value for comparison (strip spaces around commas / inside rgba)
-function normalizeCSSValue(v: string): string {
-  return String(v).replace(/\s+/g, ' ').replace(/\s*,\s*/g, ',').trim();
-}
-
 // ── Canvas Token JSON ─────────────────────────────────────────────
 
 describe('canvas.json — design tokens', () => {
@@ -67,7 +62,10 @@ describe('canvas.json — design tokens', () => {
   const canvas = (tokens as { crewspace: { canvas: Record<string, unknown> } }).crewspace.canvas;
 
   it('contains required top-level sections', () => {
-    const requiredSections = ['viewport', 'node', 'edge', 'handle', 'selection', 'minimap', 'animation'];
+    const requiredSections = [
+      'viewport', 'node', 'edge', 'handle', 'selection',
+      'minimap', 'toolbar', 'sidebar', 'properties', 'animation',
+    ];
     for (const section of requiredSections) {
       expect(canvas, `missing section: ${section}`).toHaveProperty(section);
     }
@@ -76,8 +74,8 @@ describe('canvas.json — design tokens', () => {
   describe('token leaf values', () => {
     const leaves = collectTokenLeaves(canvas);
 
-    it('has at least 30 token leaves', () => {
-      expect(leaves.length).toBeGreaterThanOrEqual(30);
+    it('has at least 60 token leaves', () => {
+      expect(leaves.length).toBeGreaterThanOrEqual(60);
     });
 
     it('every leaf has a non-empty value', () => {
@@ -112,6 +110,11 @@ describe('canvas.json — design tokens', () => {
       expect(viewport).toHaveProperty('snap-grid');
     });
 
+    it('has grid color tokens', () => {
+      expect(viewport).toHaveProperty('grid-dot-color');
+      expect(viewport).toHaveProperty('grid-line-color');
+    });
+
     it('has zoom range tokens', () => {
       expect(viewport).toHaveProperty('min-zoom');
       expect(viewport).toHaveProperty('max-zoom');
@@ -123,6 +126,47 @@ describe('canvas.json — design tokens', () => {
       const defaultZoom = Number((viewport['default-zoom'] as { value: string }).value);
       expect(minZoom).toBeLessThan(defaultZoom);
       expect(defaultZoom).toBeLessThanOrEqual(maxZoom);
+    });
+  });
+
+  describe('node section', () => {
+    const node = canvas.node as Record<string, Record<string, unknown>>;
+
+    it('has dimension tokens', () => {
+      expect(node).toHaveProperty('width');
+      expect(node).toHaveProperty('min-width');
+      expect(node).toHaveProperty('max-width');
+      expect(node).toHaveProperty('header-height');
+      expect(node).toHaveProperty('border-radius');
+    });
+
+    it('has correct dimension values from spec', () => {
+      expect((node.width as { value: string }).value).toBe('220px');
+      expect((node['min-width'] as { value: string }).value).toBe('180px');
+      expect((node['max-width'] as { value: string }).value).toBe('280px');
+      expect((node['header-height'] as { value: string }).value).toBe('40px');
+      expect((node['border-radius'] as { value: string }).value).toBe('10px');
+    });
+
+    it('has node type color tokens', () => {
+      const types = ['agent', 'task', 'tool', 'llm'] as const;
+      for (const t of types) {
+        expect(node, `missing ${t}-bg`).toHaveProperty(`${t}-bg`);
+        expect(node, `missing ${t}-border`).toHaveProperty(`${t}-border`);
+        expect(node, `missing ${t}-icon`).toHaveProperty(`${t}-icon`);
+      }
+    });
+
+    it('has node state tokens', () => {
+      expect(node).toHaveProperty('selected-ring');
+      expect(node).toHaveProperty('selected-glow');
+      expect(node).toHaveProperty('running-pulse');
+      expect(node).toHaveProperty('error-pulse');
+      expect(node).toHaveProperty('disabled-opacity');
+    });
+
+    it('disabled-opacity matches spec (0.4)', () => {
+      expect((node['disabled-opacity'] as { value: string }).value).toBe('0.4');
     });
   });
 
@@ -144,9 +188,29 @@ describe('canvas.json — design tokens', () => {
       expect(edge).toHaveProperty('arrow-size');
     });
 
+    it('has edge color tokens', () => {
+      expect(edge).toHaveProperty('color-default');
+      expect(edge).toHaveProperty('color-active');
+      expect(edge).toHaveProperty('color-data-flow');
+      expect(edge).toHaveProperty('color-error');
+      expect((edge['color-default'] as { value: string }).value).toBe('#64748b');
+      expect((edge['color-active'] as { value: string }).value).toBe('#a78bfa');
+      expect((edge['color-data-flow'] as { value: string }).value).toBe('#38bdf8');
+      expect((edge['color-error'] as { value: string }).value).toBe('#fb7185');
+    });
+
     it('has label tokens', () => {
       expect(edge).toHaveProperty('label-bg');
       expect(edge).toHaveProperty('label-padding');
+      expect(edge).toHaveProperty('label-radius');
+      expect(edge).toHaveProperty('label-font-size');
+      expect(edge).toHaveProperty('label-max-width');
+    });
+
+    it('has correct label detail values from spec', () => {
+      expect((edge['label-radius'] as { value: string }).value).toBe('4px');
+      expect((edge['label-font-size'] as { value: string }).value).toBe('12px');
+      expect((edge['label-max-width'] as { value: string }).value).toBe('120px');
     });
   });
 
@@ -156,6 +220,7 @@ describe('canvas.json — design tokens', () => {
     it('has size and border tokens', () => {
       expect(handle).toHaveProperty('size');
       expect(handle).toHaveProperty('border-width');
+      expect(handle).toHaveProperty('hit-area');
     });
 
     it('has color state tokens', () => {
@@ -164,6 +229,10 @@ describe('canvas.json — design tokens', () => {
       expect(handle).toHaveProperty('hover-bg');
       expect(handle).toHaveProperty('hover-border');
       expect(handle).toHaveProperty('connected-bg');
+    });
+
+    it('hit-area is 20px per spec', () => {
+      expect((handle['hit-area'] as { value: string }).value).toBe('20px');
     });
   });
 
@@ -185,6 +254,74 @@ describe('canvas.json — design tokens', () => {
       expect(minimap).toHaveProperty('margin');
       expect(minimap).toHaveProperty('border-radius');
       expect(minimap).toHaveProperty('opacity');
+    });
+
+    it('has dimension tokens', () => {
+      expect(minimap).toHaveProperty('width');
+      expect(minimap).toHaveProperty('height');
+      expect((minimap.width as { value: string }).value).toBe('200px');
+      expect((minimap.height as { value: string }).value).toBe('140px');
+    });
+
+    it('has color tokens', () => {
+      expect(minimap).toHaveProperty('bg');
+      expect(minimap).toHaveProperty('viewport-color');
+    });
+  });
+
+  describe('toolbar section', () => {
+    const toolbar = canvas.toolbar as Record<string, Record<string, unknown>>;
+
+    it('has all toolbar tokens', () => {
+      expect(toolbar).toHaveProperty('height');
+      expect(toolbar).toHaveProperty('btn-size');
+      expect(toolbar).toHaveProperty('icon-size');
+      expect(toolbar).toHaveProperty('gap');
+      expect(toolbar).toHaveProperty('padding');
+      expect(toolbar).toHaveProperty('divider-gap');
+    });
+
+    it('has correct values from spec', () => {
+      expect((toolbar.height as { value: string }).value).toBe('48px');
+      expect((toolbar['btn-size'] as { value: string }).value).toBe('36px');
+      expect((toolbar['icon-size'] as { value: string }).value).toBe('18px');
+      expect((toolbar.gap as { value: string }).value).toBe('4px');
+      expect((toolbar['divider-gap'] as { value: string }).value).toBe('8px');
+    });
+  });
+
+  describe('sidebar section', () => {
+    const sidebar = canvas.sidebar as Record<string, Record<string, unknown>>;
+
+    it('has all sidebar tokens', () => {
+      expect(sidebar).toHaveProperty('width');
+      expect(sidebar).toHaveProperty('collapsed-width');
+      expect(sidebar).toHaveProperty('padding');
+      expect(sidebar).toHaveProperty('section-gap');
+    });
+
+    it('has correct values from spec', () => {
+      expect((sidebar.width as { value: string }).value).toBe('280px');
+      expect((sidebar['collapsed-width'] as { value: string }).value).toBe('48px');
+      expect((sidebar.padding as { value: string }).value).toBe('12px');
+    });
+  });
+
+  describe('properties section', () => {
+    const properties = canvas.properties as Record<string, Record<string, unknown>>;
+
+    it('has all properties panel tokens', () => {
+      expect(properties).toHaveProperty('width');
+      expect(properties).toHaveProperty('padding');
+      expect(properties).toHaveProperty('label-width');
+      expect(properties).toHaveProperty('input-height');
+      expect(properties).toHaveProperty('header-height');
+    });
+
+    it('has correct values from spec', () => {
+      expect((properties.width as { value: string }).value).toBe('320px');
+      expect((properties.padding as { value: string }).value).toBe('16px');
+      expect((properties['header-height'] as { value: string }).value).toBe('48px');
     });
   });
 
@@ -233,7 +370,41 @@ describe('canvas-variables.css — consistency with tokens', () => {
     });
   });
 
-  describe('node tokens reflected in CSS', () => {
+  describe('node dimension tokens reflected in CSS', () => {
+    it('has --node-width matching spec (220px)', () => {
+      expect(css).toContain('--node-width: 220px');
+    });
+
+    it('has --node-min-width matching spec (180px)', () => {
+      expect(css).toContain('--node-min-width: 180px');
+    });
+
+    it('has --node-max-width matching spec (280px)', () => {
+      expect(css).toContain('--node-max-width: 280px');
+    });
+
+    it('has --node-header-height matching spec (40px)', () => {
+      expect(css).toContain('--node-header-height: 40px');
+    });
+
+    it('has --node-border-width matching spec (1.5px)', () => {
+      expect(css).toContain('--node-border-width: 1.5px');
+    });
+
+    it('has --node-border-width-hover matching spec (2px)', () => {
+      expect(css).toContain('--node-border-width-hover: 2px');
+    });
+
+    it('has --node-header-padding', () => {
+      expect(css).toContain('--node-header-padding: 10px 12px');
+    });
+
+    it('has --node-body-padding', () => {
+      expect(css).toContain('--node-body-padding: 8px 12px');
+    });
+  });
+
+  describe('node color tokens reflected in CSS', () => {
     const nodeTypes = ['agent', 'task', 'tool', 'llm'] as const;
 
     for (const nodeType of nodeTypes) {
@@ -279,6 +450,12 @@ describe('canvas-variables.css — consistency with tokens', () => {
       expect(css).toContain('--edge-label-bg');
       expect(css).toContain('--edge-label-padding');
     });
+
+    it('has edge label detail tokens from spec', () => {
+      expect(css).toContain('--edge-label-radius: 4px');
+      expect(css).toContain('--edge-label-font-size: 12px');
+      expect(css).toContain('--edge-label-max-width: 120px');
+    });
   });
 
   describe('handle tokens reflected in CSS', () => {
@@ -288,6 +465,10 @@ describe('canvas-variables.css — consistency with tokens', () => {
 
     it('has handle border-width', () => {
       expect(css).toContain('--handle-border-width: 2px');
+    });
+
+    it('has handle hit-area from spec', () => {
+      expect(css).toContain('--handle-hit-area: 20px');
     });
 
     it('has handle color values matching tokens', () => {
@@ -315,6 +496,32 @@ describe('canvas-variables.css — consistency with tokens', () => {
       expect(css).toContain('--minimap-margin: 16px');
       expect(css).toContain('--minimap-border-radius: 8px');
       expect(css).toContain('--minimap-opacity: 0.85');
+    });
+  });
+
+  describe('toolbar tokens reflected in CSS', () => {
+    it('has toolbar padding from spec', () => {
+      expect(css).toContain('--toolbar-padding: 0 12px');
+    });
+
+    it('has toolbar divider-gap from spec', () => {
+      expect(css).toContain('--toolbar-divider-gap: 8px');
+    });
+  });
+
+  describe('sidebar tokens reflected in CSS', () => {
+    it('has sidebar padding from spec', () => {
+      expect(css).toContain('--sidebar-padding: 12px');
+    });
+  });
+
+  describe('properties panel tokens reflected in CSS', () => {
+    it('has properties padding from spec', () => {
+      expect(css).toContain('--properties-padding: 16px');
+    });
+
+    it('has properties header-height from spec', () => {
+      expect(css).toContain('--properties-header-height: 48px');
     });
   });
 
@@ -366,6 +573,19 @@ describe('canvas-theme.ts — consistency with tokens', () => {
       });
     }
 
+    it('has node state colors', () => {
+      expect(twSource).toContain("running: '#34d399'");
+      expect(twSource).toContain("error: '#fb7185'");
+    });
+
+    it('has handle colors', () => {
+      expect(twSource).toContain("bg: '#1e293b'");
+      expect(twSource).toContain("border: '#64748b'");
+      expect(twSource).toContain("'hover-bg': '#7c3aed'");
+      expect(twSource).toContain("'hover-border': '#a78bfa'");
+      expect(twSource).toContain("'connected-bg': '#8b5cf6'");
+    });
+
     it('has edge colors', () => {
       expect(twSource).toContain("DEFAULT: '#64748b'");
       expect(twSource).toContain("active: '#a78bfa'");
@@ -384,12 +604,43 @@ describe('canvas-theme.ts — consistency with tokens', () => {
     it('has edge-label-bg color', () => {
       expect(twSource).toContain("'edge-label-bg'");
     });
+
+    it('has border semantic colors', () => {
+      expect(twSource).toContain("subtle: '#1e293b'");
+      expect(twSource).toContain("strong: '#64748b'");
+      expect(twSource).toContain("focus: '#8b5cf6'");
+    });
+
+    it('has text semantic colors', () => {
+      expect(twSource).toContain("primary: '#f8fafc'");
+      expect(twSource).toContain("secondary: '#94a3b8'");
+      expect(twSource).toContain("tertiary: '#64748b'");
+      expect(twSource).toContain("inverse: '#0f172a'");
+    });
   });
 
   describe('spacing tokens in Tailwind', () => {
     it('has node spacing', () => {
       expect(twSource).toContain("'node-w'");
       expect(twSource).toContain("'node-gap': '6px'");
+    });
+
+    it('has node header height', () => {
+      expect(twSource).toContain("'node-header-h': '40px'");
+    });
+
+    it('has toolbar spacing from spec', () => {
+      expect(twSource).toContain("'toolbar-padding': '0 12px'");
+      expect(twSource).toContain("'toolbar-divider-gap': '8px'");
+    });
+
+    it('has sidebar spacing from spec', () => {
+      expect(twSource).toContain("'sidebar-padding': '12px'");
+    });
+
+    it('has properties spacing from spec', () => {
+      expect(twSource).toContain("'properties-padding': '16px'");
+      expect(twSource).toContain("'properties-header-h': '48px'");
     });
 
     it('has minimap margin', () => {
@@ -405,7 +656,9 @@ describe('canvas-theme.ts — consistency with tokens', () => {
       expect(twSource).toContain("'edge-arrow-size': '12px'");
     });
 
-    it('has handle border-width', () => {
+    it('has handle sizing', () => {
+      expect(twSource).toContain("'handle-size': '10px'");
+      expect(twSource).toContain("'handle-hit-area': '20px'");
       expect(twSource).toContain("'handle-border-width': '2px'");
     });
   });
@@ -418,6 +671,10 @@ describe('canvas-theme.ts — consistency with tokens', () => {
     it('has minimap radius matching token', () => {
       const minimapRadius = ((canvas.minimap as Record<string, any>)['border-radius'] as { value: string }).value;
       expect(twSource).toContain(`minimap: '${minimapRadius}'`);
+    });
+
+    it('has edge-label radius from spec', () => {
+      expect(twSource).toContain("'edge-label': '4px'");
     });
   });
 
@@ -459,6 +716,10 @@ describe('canvas-theme.ts — consistency with tokens', () => {
       const minimapOpacity = ((canvas.minimap as Record<string, any>).opacity as { value: string }).value;
       expect(twSource).toContain(`minimap: '${minimapOpacity}'`);
     });
+
+    it('has node disabled opacity from spec', () => {
+      expect(twSource).toContain("'node-disabled': '0.4'");
+    });
   });
 });
 
@@ -480,7 +741,22 @@ describe('canvas CSS ↔ Tailwind cross-file consistency', () => {
 
   it('both files have matching handle bg color', () => {
     expect(css).toContain('--handle-bg: #1e293b');
-    // Tailwind has handle colors inside canvas or handle keys
+    expect(twSource).toContain("bg: '#1e293b'");
+  });
+
+  it('both files have matching handle hover-bg color', () => {
+    expect(css).toContain('--handle-hover-bg: #7c3aed');
+    expect(twSource).toContain("'hover-bg': '#7c3aed'");
+  });
+
+  it('both files have matching edge default color', () => {
+    expect(css).toContain('--edge-default: #64748b');
+    expect(twSource).toContain("DEFAULT: '#64748b'");
+  });
+
+  it('both files have matching node disabled opacity', () => {
+    expect(css).toContain('--node-disabled-opacity: 0.4');
+    expect(twSource).toContain("'node-disabled': '0.4'");
   });
 
   it('node-enter animation exists in both CSS and Tailwind', () => {
@@ -496,5 +772,49 @@ describe('canvas CSS ↔ Tailwind cross-file consistency', () => {
   it('edge-flow animation exists in both CSS and Tailwind', () => {
     expect(css).toContain('@keyframes cs-edge-flow');
     expect(twSource).toContain("'edge-flow'");
+  });
+});
+
+// ── Token ↔ Spec Value Verification ─────────────────────────────
+
+describe('canvas tokens match design spec values', () => {
+  const tokens = loadTokens('canvas.json');
+  const canvas = (tokens as { crewspace: { canvas: Record<string, unknown> } }).crewspace.canvas;
+
+  it('agent border color matches spec (violet-600: #7c3aed)', () => {
+    expect(((canvas.node as any)['agent-border'] as { value: string }).value).toBe('#7c3aed');
+  });
+
+  it('task border color matches spec (sky-600: #0284c7)', () => {
+    expect(((canvas.node as any)['task-border'] as { value: string }).value).toBe('#0284c7');
+  });
+
+  it('tool border color matches spec (emerald-600: #059669)', () => {
+    expect(((canvas.node as any)['tool-border'] as { value: string }).value).toBe('#059669');
+  });
+
+  it('llm border color matches spec (amber-600: #d97706)', () => {
+    expect(((canvas.node as any)['llm-border'] as { value: string }).value).toBe('#d97706');
+  });
+
+  it('running-pulse color matches spec (emerald: #34d399)', () => {
+    expect(((canvas.node as any)['running-pulse'] as { value: string }).value).toBe('#34d399');
+  });
+
+  it('error-pulse color matches spec (rose: #fb7185)', () => {
+    expect(((canvas.node as any)['error-pulse'] as { value: string }).value).toBe('#fb7185');
+  });
+
+  it('handle connected-bg matches spec (#8b5cf6)', () => {
+    expect(((canvas.handle as any)['connected-bg'] as { value: string }).value).toBe('#8b5cf6');
+  });
+
+  it('edge smoothstep type matches spec', () => {
+    expect(((canvas.edge as any).type as { value: string }).value).toBe('smoothstep');
+  });
+
+  it('minimap dimensions match spec (200×140px)', () => {
+    expect(((canvas.minimap as any).width as { value: string }).value).toBe('200px');
+    expect(((canvas.minimap as any).height as { value: string }).value).toBe('140px');
   });
 });

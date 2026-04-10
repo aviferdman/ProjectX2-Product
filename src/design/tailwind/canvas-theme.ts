@@ -56,12 +56,33 @@ export const crewspaceTheme = {
         ring: '#8b5cf6',
         glow: 'rgba(139,92,246,0.25)',
       },
+      running: '#34d399',
+      error: '#fb7185',
+    },
+    handle: {
+      bg: '#1e293b',
+      border: '#64748b',
+      'hover-bg': '#7c3aed',
+      'hover-border': '#a78bfa',
+      'connected-bg': '#8b5cf6',
     },
     edge: {
       DEFAULT: '#64748b',
       active: '#a78bfa',
       'data-flow': '#38bdf8',
       error: '#fb7185',
+    },
+    border: {
+      DEFAULT: '#334155',
+      subtle: '#1e293b',
+      strong: '#64748b',
+      focus: '#8b5cf6',
+    },
+    text: {
+      primary: '#f8fafc',
+      secondary: '#94a3b8',
+      tertiary: '#64748b',
+      inverse: '#0f172a',
     },
     status: {
       success: '#10b981',
@@ -91,22 +112,31 @@ export const crewspaceTheme = {
     'node-min-w': '180px',
     'node-max-w': '280px',
     'node-gap': '6px',
+    'node-header-h': '40px',
     'toolbar-h': '48px',
+    'toolbar-padding': '0 12px',
+    'toolbar-divider-gap': '8px',
     'sidebar-w': '280px',
     'sidebar-collapsed-w': '48px',
+    'sidebar-padding': '12px',
     'properties-w': '320px',
+    'properties-padding': '16px',
+    'properties-header-h': '48px',
     'minimap-w': '200px',
     'minimap-h': '140px',
     'minimap-margin': '16px',
     'canvas-grid-size': '20px',
     'canvas-snap-grid': '10px',
     'edge-arrow-size': '12px',
+    'handle-size': '10px',
+    'handle-hit-area': '20px',
     'handle-border-width': '2px',
   },
 
   borderRadius: {
     node: '10px',
     minimap: '8px',
+    'edge-label': '4px',
   },
 
   boxShadow: {
@@ -120,6 +150,7 @@ export const crewspaceTheme = {
 
   opacity: {
     minimap: '0.85',
+    'node-disabled': '0.4',
   },
 
   transitionTimingFunction: {
