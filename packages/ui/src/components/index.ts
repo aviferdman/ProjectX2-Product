@@ -6,6 +6,10 @@ export { Modal, type ModalProps } from './Modal.js';
 export { Tooltip, type TooltipProps } from './Tooltip.js';
 export { Spinner, type SpinnerProps } from './Spinner.js';
 
+// Error Handling (TASK-181)
+export { ErrorBoundary, type ErrorBoundaryProps, type ErrorBoundaryState } from './ErrorBoundary.js';
+export { ErrorFallback, type ErrorFallbackProps, type ErrorSeverity } from './ErrorFallback.js';
+
 // Layout (TASK-172)
 export {
   ResponsiveLayout,

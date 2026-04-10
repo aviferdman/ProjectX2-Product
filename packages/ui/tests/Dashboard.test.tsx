@@ -403,4 +403,28 @@ describe('DashboardPage', () => {
     render(<DashboardPage workflows={mockWorkflows} defaultViewMode="list" />);
     expect(screen.getByText('Name')).toBeInTheDocument();
   });
+
+  it('shows error state when error prop is provided', () => {
+    render(<DashboardPage workflows={[]} error="Failed to fetch workflows" />);
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText('Failed to load workflows')).toBeInTheDocument();
+    expect(screen.getByText('Failed to fetch workflows')).toBeInTheDocument();
+  });
+
+  it('calls onRetry when retry button is clicked in error state', () => {
+    const onRetry = vi.fn();
+    render(
+      <DashboardPage workflows={[]} error="Server error" onRetry={onRetry} />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
+    expect(onRetry).toHaveBeenCalledOnce();
+  });
+
+  it('error state takes priority over loading state', () => {
+    render(
+      <DashboardPage workflows={[]} loading error="Connection failed" />,
+    );
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.queryByText('Loading workflows…')).not.toBeInTheDocument();
+  });
 });

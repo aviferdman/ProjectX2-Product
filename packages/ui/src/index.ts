@@ -31,6 +31,13 @@ export {
   type TooltipProps,
   Spinner,
   type SpinnerProps,
+  // Error Handling (TASK-181)
+  ErrorBoundary,
+  type ErrorBoundaryProps,
+  type ErrorBoundaryState,
+  ErrorFallback,
+  type ErrorFallbackProps,
+  type ErrorSeverity,
   // Layout (TASK-172)
   ResponsiveLayout,
   type ResponsiveLayoutProps,
@@ -319,6 +326,14 @@ export {
   BREAKPOINTS,
   type Breakpoint,
   type BreakpointState,
+} from './hooks/index.js';
+
+// Hooks — Async Error (TASK-181)
+export {
+  useAsyncError,
+  type UseAsyncErrorOptions,
+  type UseAsyncErrorResult,
+  type AsyncStatus,
 } from './hooks/index.js';
 
 // Hooks — Canvas State (TASK-138)

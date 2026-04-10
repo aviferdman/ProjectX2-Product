@@ -11,12 +11,17 @@ import { DashboardToolbar } from './DashboardToolbar.js';
 import { WorkflowGrid } from './WorkflowGrid.js';
 import { WorkflowList } from './WorkflowList.js';
 import { EmptyState } from './EmptyState.js';
+import { ErrorFallback } from '../ErrorFallback.js';
 import type { FilterOption } from './FilterChips.js';
 import { useBreakpoint } from '../../hooks/useBreakpoint.js';
 
 export interface DashboardPageProps extends HTMLAttributes<HTMLDivElement> {
   workflows: WorkflowSummary[];
   loading?: boolean | undefined;
+  /** Error message to display. When set, an error state is shown instead of workflows. */
+  error?: string | undefined;
+  /** Callback when user clicks retry on the error state */
+  onRetry?: (() => void) | undefined;
   onOpen?: ((id: string) => void) | undefined;
   onCreate?: (() => void) | undefined;
   onDuplicate?: ((id: string) => void) | undefined;
@@ -65,6 +70,8 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
     {
       workflows,
       loading = false,
+      error,
+      onRetry,
       onOpen,
       onCreate,
       onDuplicate,
@@ -134,7 +141,15 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
         />
 
         {/* Content */}
-        {loading ? (
+        {error ? (
+          <ErrorFallback
+            heading="Failed to load workflows"
+            message={error}
+            onRetry={onRetry}
+            secondaryLabel={onCreate ? 'Create New' : undefined}
+            onSecondary={onCreate}
+          />
+        ) : loading ? (
           <div className="flex items-center justify-center py-24">
             <div className="flex flex-col items-center gap-3">
               <svg

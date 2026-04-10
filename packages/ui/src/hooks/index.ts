@@ -1,5 +1,12 @@
 export { useMediaQuery } from './useMediaQuery.js';
 export { useBreakpoint, BREAKPOINTS, type Breakpoint, type BreakpointState } from './useBreakpoint.js';
+// TASK-181: Async error handling hook
+export {
+  useAsyncError,
+  type UseAsyncErrorOptions,
+  type UseAsyncErrorResult,
+  type AsyncStatus,
+} from './useAsyncError.js';
 // TASK-138: Canvas state management hook
 export {
   useCanvasState,
