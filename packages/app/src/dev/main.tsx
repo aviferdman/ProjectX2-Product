@@ -1,6 +1,7 @@
 /**
  * Dev entry point — renders the App with a stub auth adapter
  * so the UI can be run locally via `npm run dev`.
+ * Auto-logins with stub credentials for seamless dev experience.
  */
 import '@crewspace/ui/styles';
 import React from 'react';

@@ -1,10 +1,11 @@
 /**
  * Pages — re-export all page components.
- * TASK-131
  */
+export { HomePage } from './HomePage.js';
 export { LoginPage } from './LoginPage.js';
 export { DashboardPage } from './DashboardPage.js';
 export { CanvasPage } from './CanvasPage.js';
+export { WorkflowPage } from './WorkflowPage.js';
 export { TemplatesPage } from './TemplatesPage.js';
 export { MarketplacePage } from './MarketplacePage.js';
 export { SettingsPage } from './SettingsPage.js';
