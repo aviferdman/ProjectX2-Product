@@ -48,6 +48,12 @@ export {
   type WorkflowDiagramEdge,
 } from './WorkflowDiagram.js';
 
+// Template Instantiation — TASK-161
+export {
+  UseTemplateDialog,
+  type UseTemplateDialogProps,
+} from './UseTemplateDialog.js';
+
 export type {
   TemplateCategory,
   TemplateSortField,

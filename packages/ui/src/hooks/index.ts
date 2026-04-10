@@ -20,3 +20,13 @@ export {
   type UseTimelinePlaybackOptions,
   type UseTimelinePlaybackResult,
 } from './useTimelinePlayback.js';
+// TASK-161: Template instantiation hook
+export {
+  useTemplateInstantiation,
+  type UseTemplateInstantiationOptions,
+  type UseTemplateInstantiationResult,
+  type InstantiationStatus,
+  type InstantiateFormValues,
+  type InstantiationResult,
+  type InstantiationTemplate,
+} from './useTemplateInstantiation.js';

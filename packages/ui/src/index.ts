@@ -156,6 +156,9 @@ export {
   type WorkflowDiagramProps,
   type WorkflowDiagramNode,
   type WorkflowDiagramEdge,
+  // Template Instantiation (TASK-161)
+  UseTemplateDialog,
+  type UseTemplateDialogProps,
   type TemplateCategory,
   type TemplateSortField,
   type TemplateSortDirection,
@@ -250,6 +253,17 @@ export {
   PLAYBACK_SPEEDS,
   type UseTimelinePlaybackOptions,
   type UseTimelinePlaybackResult,
+} from './hooks/index.js';
+
+// Hooks — Template Instantiation (TASK-161)
+export {
+  useTemplateInstantiation,
+  type UseTemplateInstantiationOptions,
+  type UseTemplateInstantiationResult,
+  type InstantiationStatus,
+  type InstantiateFormValues,
+  type InstantiationResult,
+  type InstantiationTemplate,
 } from './hooks/index.js';
 
 // Design tokens (programmatic)
