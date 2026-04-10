@@ -46,7 +46,7 @@ describe('AppContext', () => {
     const { getContext } = renderWithStore();
 
     expect(getContext().sidebarMode).toBe('expanded');
-    expect(getContext().theme).toBe('system');
+    expect(getContext().theme).toBe('light');
     expect(getContext().notifications).toEqual([]);
     expect(getContext().activeWorkflowId).toBeNull();
   });

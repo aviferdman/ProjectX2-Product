@@ -89,7 +89,7 @@ function GraphView({
   }, [workflow.tasks]);
 
   return (
-    <div className="h-full relative overflow-auto bg-[#020617]" onClick={() => onSelectNode(null)}>
+    <div className="h-full relative overflow-auto bg-[var(--cs-surface-app)]" onClick={() => onSelectNode(null)}>
       {/* Dot grid background */}
       <div
         className="absolute inset-0"
@@ -110,8 +110,8 @@ function GraphView({
               <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
           </div>
-          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Agent Team</h3>
-          <span className="text-xs text-slate-600">({workflow.agents.length})</span>
+          <h3 className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider">Agent Team</h3>
+          <span className="text-xs text-[var(--cs-text-tertiary)]">({workflow.agents.length})</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -139,8 +139,8 @@ function GraphView({
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
             </svg>
           </div>
-          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Task Pipeline</h3>
-          <span className="text-xs text-slate-600">({workflow.tasks.length} tasks)</span>
+          <h3 className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider">Task Pipeline</h3>
+          <span className="text-xs text-[var(--cs-text-tertiary)]">({workflow.tasks.length} tasks)</span>
         </div>
 
         <div className="space-y-4">
@@ -207,20 +207,20 @@ function ListView({
   onSelectNode: (id: string | null) => void;
 }): React.JSX.Element {
   return (
-    <div className="h-full overflow-auto bg-[#020617] p-6">
+    <div className="h-full overflow-auto bg-[var(--cs-surface-app)] p-6 scrollbar-thin">
       <div className="max-w-3xl mx-auto space-y-6">
         {/* Agents Section */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Agents</h3>
-          <div className="space-y-2">
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-3">Agents</h3>
+          <div className="space-y-2 stagger-children">
             {workflow.agents.map((agent) => (
               <button
                 key={agent.id}
                 onClick={() => onSelectNode(agent.id)}
-                className={`w-full text-left px-4 py-3 rounded-xl border transition-all ${
+                className={`w-full text-left px-4 py-3 rounded-xl border transition-all card-hover focus-ring ${
                   selectedNodeId === agent.id
                     ? 'border-violet-500/40 bg-violet-500/10'
-                    : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10'
+                    : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/10 hover:bg-[var(--cs-surface-card)]/30 hover:border-[var(--cs-border-default)]'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -231,8 +231,8 @@ function ListView({
                     {agent.role.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{agent.role}</p>
-                    <p className="text-xs text-slate-500 truncate">{agent.goal}</p>
+                    <p className="text-sm font-medium text-[var(--cs-text-primary)] truncate">{agent.role}</p>
+                    <p className="text-xs text-[var(--cs-text-tertiary)] truncate">{agent.goal}</p>
                   </div>
                   <StatusPill status={agent.status} />
                 </div>
@@ -243,26 +243,26 @@ function ListView({
 
         {/* Tasks Section */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Tasks</h3>
-          <div className="space-y-2">
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-3">Tasks</h3>
+          <div className="space-y-2 stagger-children">
             {workflow.tasks.map((task, idx) => {
               const agent = workflow.agents.find((a) => a.id === task.agentId);
               return (
                 <button
                   key={task.id}
                   onClick={() => onSelectNode(task.id)}
-                  className={`w-full text-left px-4 py-3 rounded-xl border transition-all ${
+                  className={`w-full text-left px-4 py-3 rounded-xl border transition-all card-hover focus-ring ${
                     selectedNodeId === task.id
                       ? 'border-violet-500/40 bg-violet-500/10'
-                      : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10'
+                      : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/10 hover:bg-[var(--cs-surface-card)]/30 hover:border-[var(--cs-border-default)]'
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-md bg-white/5 flex items-center justify-center text-xs font-mono text-slate-500 flex-shrink-0 mt-0.5">
+                    <span className="w-6 h-6 rounded-md bg-[var(--cs-surface-card)]/20 flex items-center justify-center text-xs font-mono text-[var(--cs-text-tertiary)] flex-shrink-0 mt-0.5">
                       {idx + 1}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-white">{task.description}</p>
+                      <p className="text-sm text-[var(--cs-text-primary)]">{task.description}</p>
                       <div className="flex items-center gap-2 mt-1.5">
                         {agent && (
                           <span
@@ -273,11 +273,23 @@ function ListView({
                           </span>
                         )}
                         {task.dependencies.length > 0 && (
-                          <span className="text-[10px] text-slate-600">
+                          <span className="text-[10px] text-[var(--cs-text-tertiary)]">
                             depends on: {task.dependencies.join(', ')}
                           </span>
                         )}
                       </div>
+                      {/* Show task output in list view */}
+                      {task.output && (
+                        <div className="mt-2 px-2.5 py-2 rounded-lg bg-emerald-500/5 border border-emerald-500/10 animate-fadeIn">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">Result</span>
+                          </div>
+                          <p className="text-[11px] text-[var(--cs-text-secondary)] leading-relaxed line-clamp-3">{task.output}</p>
+                        </div>
+                      )}
                     </div>
                     <TaskStatusPill status={task.status} />
                   </div>
@@ -304,7 +316,7 @@ function TimelineView({
   onSelectNode: (id: string | null) => void;
 }): React.JSX.Element {
   return (
-    <div className="h-full overflow-auto bg-[#020617] p-6">
+    <div className="h-full overflow-auto bg-[var(--cs-surface-app)] p-6">
       <div className="max-w-4xl mx-auto">
         {/* Agent lanes */}
         <div className="space-y-1">
@@ -315,8 +327,8 @@ function TimelineView({
                 {/* Agent label */}
                 <div className="w-40 flex-shrink-0 flex items-center px-3 py-2 rounded-l-lg border-r-2" style={{ borderColor: agent.color }}>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-white truncate">{agent.role}</p>
-                    <p className="text-[10px] text-slate-500">{agentTasks.length} tasks</p>
+                    <p className="text-xs font-semibold text-[var(--cs-text-primary)] truncate">{agent.role}</p>
+                    <p className="text-[10px] text-[var(--cs-text-tertiary)]">{agentTasks.length} tasks</p>
                   </div>
                 </div>
                 {/* Task blocks */}
@@ -328,7 +340,7 @@ function TimelineView({
                       className={`flex-shrink-0 px-3 py-2 rounded-lg border text-xs transition-all ${
                         selectedNodeId === task.id
                           ? 'border-violet-500/40 bg-violet-500/10 text-white'
-                          : 'border-white/5 bg-white/[0.03] text-slate-400 hover:bg-white/[0.06] hover:text-white'
+                          : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/20 text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface-card)]/30 hover:text-[var(--cs-text-primary)]'
                       }`}
                       style={{
                         minWidth: '120px',
@@ -345,7 +357,7 @@ function TimelineView({
                     </button>
                   ))}
                   {agentTasks.length === 0 && (
-                    <span className="text-xs text-slate-600 italic">No tasks assigned</span>
+                    <span className="text-xs text-[var(--cs-text-tertiary)] italic">No tasks assigned</span>
                   )}
                 </div>
               </div>
@@ -377,7 +389,7 @@ function AgentCard({
       className={`w-full text-left rounded-xl p-4 border transition-all duration-200 ${
         isSelected
           ? 'border-violet-500/50 bg-violet-500/10 shadow-lg shadow-violet-500/10'
-          : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10'
+          : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/10 hover:bg-[var(--cs-surface-card)]/30 hover:border-[var(--cs-border-default)]'
       }`}
     >
       <div className="flex items-start gap-3">
@@ -388,12 +400,12 @@ function AgentCard({
           {agent.role.split(' ').map((w) => w[0]).join('').slice(0, 2)}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-white truncate">{agent.role}</p>
-          <p className="text-xs text-slate-400 mt-0.5 line-clamp-2">{agent.goal}</p>
+          <p className="text-sm font-semibold text-[var(--cs-text-primary)] truncate">{agent.role}</p>
+          <p className="text-xs text-[var(--cs-text-secondary)] mt-0.5 line-clamp-2">{agent.goal}</p>
           <div className="flex items-center gap-2 mt-2">
-            <span className="text-[10px] text-slate-500">{tasksCount} tasks</span>
-            <span className="text-[10px] text-slate-600">·</span>
-            <span className="text-[10px] text-slate-500">{agent.tools.length} tools</span>
+            <span className="text-[10px] text-[var(--cs-text-tertiary)]">{tasksCount} tasks</span>
+            <span className="text-[10px] text-[var(--cs-text-tertiary)]">·</span>
+            <span className="text-[10px] text-[var(--cs-text-tertiary)]">{agent.tools.length} tools</span>
             <div className="flex-1" />
             <StatusPill status={agent.status} />
           </div>
@@ -420,18 +432,18 @@ function TaskCard({
   return (
     <button
       onClick={onClick}
-      className={`flex-1 min-w-[260px] max-w-md text-left rounded-xl p-4 border transition-all duration-200 ${
+      className={`flex-1 min-w-[260px] max-w-md text-left rounded-xl p-4 border transition-all duration-200 card-hover focus-ring ${
         isSelected
           ? 'border-violet-500/50 bg-violet-500/10 shadow-lg shadow-violet-500/10'
-          : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10'
+          : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/10 hover:bg-[var(--cs-surface-card)]/30 hover:border-[var(--cs-border-default)]'
       }`}
     >
       <div className="flex items-start gap-3">
-        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
+        <div className="w-8 h-8 rounded-lg bg-[var(--cs-surface-card)]/20 flex items-center justify-center flex-shrink-0">
           <TaskStatusIcon status={task.status} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-white line-clamp-2">{task.description}</p>
+          <p className="text-sm text-[var(--cs-text-primary)] line-clamp-2">{task.description}</p>
           <div className="flex items-center gap-2 mt-2">
             {agent && (
               <span
@@ -443,6 +455,12 @@ function TaskCard({
             )}
             <TaskStatusPill status={task.status} />
           </div>
+          {/* Show output preview when task is completed */}
+          {task.output && (
+            <div className="mt-2 px-2 py-1.5 rounded-md bg-emerald-500/5 border border-emerald-500/10 animate-fadeIn">
+              <p className="text-[10px] text-emerald-400/80 line-clamp-2 leading-relaxed">{task.output}</p>
+            </div>
+          )}
         </div>
       </div>
     </button>
@@ -465,12 +483,12 @@ function DetailsPanel({
   const task = workflow.tasks.find((t) => t.id === nodeId);
 
   return (
-    <div className="fixed right-0 top-[49px] bottom-0 w-80 bg-[#0f172a] border-l border-white/5 shadow-2xl z-20 overflow-y-auto animate-slideInRight">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
-        <h3 className="text-sm font-semibold text-white">Details</h3>
+    <div className="fixed right-0 top-[49px] bottom-0 w-80 bg-[var(--cs-surface-panel)] border-l border-[var(--cs-border-subtle)] shadow-2xl z-20 overflow-y-auto animate-slideInRight scrollbar-thin">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+        <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">Details</h3>
         <button
           onClick={onClose}
-          className="p-1 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+          className="p-1 rounded-lg hover:bg-[var(--cs-surface-card)]/20 text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
@@ -483,36 +501,36 @@ function DetailsPanel({
         {agent && (
           <>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Role</label>
-              <p className="text-sm text-white mt-1">{agent.role}</p>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Role</label>
+              <p className="text-sm text-[var(--cs-text-primary)] mt-1">{agent.role}</p>
             </div>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Goal</label>
-              <p className="text-sm text-slate-300 mt-1">{agent.goal}</p>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Goal</label>
+              <p className="text-sm text-[var(--cs-text-secondary)] mt-1">{agent.goal}</p>
             </div>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Backstory</label>
-              <p className="text-xs text-slate-400 mt-1 leading-relaxed">{agent.backstory}</p>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Backstory</label>
+              <p className="text-xs text-[var(--cs-text-secondary)] mt-1 leading-relaxed">{agent.backstory}</p>
             </div>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Tools</label>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Tools</label>
               <div className="flex flex-wrap gap-1 mt-1.5">
                 {agent.tools.map((tool) => (
-                  <span key={tool} className="px-2 py-0.5 rounded-md bg-white/5 text-[10px] text-slate-400 border border-white/5">
+                  <span key={tool} className="px-2 py-0.5 rounded-md bg-[var(--cs-surface-card)]/20 text-[10px] text-[var(--cs-text-secondary)] border border-[var(--cs-border-subtle)]">
                     {tool}
                   </span>
                 ))}
               </div>
             </div>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Assigned Tasks</label>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Assigned Tasks</label>
               <div className="space-y-1 mt-1.5">
                 {workflow.tasks
                   .filter((t) => t.agentId === agent.id)
                   .map((t) => (
-                    <div key={t.id} className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/5">
+                    <div key={t.id} className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-[var(--cs-surface-card)]/10 border border-[var(--cs-border-subtle)]">
                       <TaskStatusIcon status={t.status} />
-                      <span className="text-xs text-slate-300 truncate">{t.description}</span>
+                      <span className="text-xs text-[var(--cs-text-secondary)] truncate">{t.description}</span>
                     </div>
                   ))}
               </div>
@@ -523,11 +541,11 @@ function DetailsPanel({
         {task && (
           <>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Description</label>
-              <p className="text-sm text-white mt-1">{task.description}</p>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Description</label>
+              <p className="text-sm text-[var(--cs-text-primary)] mt-1">{task.description}</p>
             </div>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Assigned Agent</label>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Assigned Agent</label>
               {(() => {
                 const a = workflow.agents.find((ag) => ag.id === task.agentId);
                 return a ? (
@@ -538,25 +556,25 @@ function DetailsPanel({
                     >
                       {a.role.charAt(0)}
                     </div>
-                    <span className="text-sm text-slate-300">{a.role}</span>
+                    <span className="text-sm text-[var(--cs-text-secondary)]">{a.role}</span>
                   </div>
                 ) : null;
               })()}
             </div>
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Expected Output</label>
-              <p className="text-xs text-slate-400 mt-1">{task.expectedOutput}</p>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Expected Output</label>
+              <p className="text-xs text-[var(--cs-text-secondary)] mt-1">{task.expectedOutput}</p>
             </div>
             {task.dependencies.length > 0 && (
               <div>
-                <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Dependencies</label>
+                <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Dependencies</label>
                 <div className="space-y-1 mt-1.5">
                   {task.dependencies.map((depId) => {
                     const dep = workflow.tasks.find((t) => t.id === depId);
                     return dep ? (
-                      <div key={depId} className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/[0.02] border border-white/5">
+                      <div key={depId} className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-[var(--cs-surface-card)]/10 border border-[var(--cs-border-subtle)]">
                         <TaskStatusIcon status={dep.status} />
-                        <span className="text-xs text-slate-300 truncate">{dep.description}</span>
+                        <span className="text-xs text-[var(--cs-text-secondary)] truncate">{dep.description}</span>
                       </div>
                     ) : null;
                   })}
@@ -564,11 +582,39 @@ function DetailsPanel({
               </div>
             )}
             <div>
-              <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Status</label>
+              <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Status</label>
               <div className="mt-1.5">
                 <TaskStatusPill status={task.status} />
               </div>
             </div>
+            {/* Task Output / Result */}
+            {task.output && (
+              <div className="animate-fadeInUp">
+                <label className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  Result
+                </label>
+                <div className="mt-1.5 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/15">
+                  <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">{task.output}</p>
+                </div>
+              </div>
+            )}
+            {task.status === 'running' && !task.output && (
+              <div className="animate-fadeIn">
+                <label className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <svg className="animate-spin h-2.5 w-2.5" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  In Progress
+                </label>
+                <div className="mt-1.5 p-3 rounded-lg bg-amber-500/5 border border-amber-500/15">
+                  <p className="text-xs text-[var(--cs-text-secondary)] animate-pulse">Agent is working on this task...</p>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>
@@ -581,22 +627,22 @@ function DetailsPanel({
 /* ------------------------------------------------------------------ */
 function GeneratingState(): React.JSX.Element {
   return (
-    <div className="h-full flex items-center justify-center bg-[#020617]">
+    <div className="h-full flex items-center justify-center bg-[var(--cs-surface-app)]">
       <div className="text-center">
         <div className="relative w-16 h-16 mx-auto mb-6">
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 animate-pulse" />
-          <div className="absolute inset-1 rounded-xl bg-[#020617] flex items-center justify-center">
+          <div className="absolute inset-1 rounded-xl bg-[var(--cs-surface-app)] flex items-center justify-center">
             <svg className="animate-spin h-6 w-6 text-violet-400" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
           </div>
         </div>
-        <h3 className="text-lg font-semibold text-white mb-2">Assembling your agent team...</h3>
-        <p className="text-sm text-slate-400">Analyzing your requirements and creating the optimal workflow</p>
+        <h3 className="text-lg font-semibold text-[var(--cs-text-primary)] mb-2">Assembling your agent team...</h3>
+        <p className="text-sm text-[var(--cs-text-secondary)]">Analyzing your requirements and creating the optimal workflow</p>
         <div className="mt-6 flex items-center justify-center gap-1">
           {['Identifying roles', 'Mapping tasks', 'Setting dependencies'].map((step, i) => (
-            <span key={step} className="px-2.5 py-1 rounded-full bg-white/5 text-[10px] text-slate-500 animate-pulse" style={{ animationDelay: `${i * 200}ms` }}>
+            <span key={step} className="px-2.5 py-1 rounded-full bg-[var(--cs-surface-card)]/20 text-[10px] text-[var(--cs-text-tertiary)] animate-pulse" style={{ animationDelay: `${i * 200}ms` }}>
               {step}
             </span>
           ))}
@@ -608,17 +654,17 @@ function GeneratingState(): React.JSX.Element {
 
 function EmptyState(): React.JSX.Element {
   return (
-    <div className="h-full flex items-center justify-center bg-[#020617]">
+    <div className="h-full flex items-center justify-center bg-[var(--cs-surface-app)]">
       <div className="text-center max-w-sm px-4">
-        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-500">
+        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-[var(--cs-surface-card)]/20 border border-[var(--cs-border-default)] flex items-center justify-center">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--cs-text-tertiary)]">
             <path d="M12 2L2 7l10 5 10-5-10-5z" />
             <path d="M2 17l10 5 10-5" />
             <path d="M2 12l10 5 10-5" />
           </svg>
         </div>
-        <h3 className="text-sm font-medium text-slate-300 mb-1">No workflow yet</h3>
-        <p className="text-xs text-slate-500">Describe your initiative in the chat to generate a workflow</p>
+        <h3 className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">No workflow yet</h3>
+        <p className="text-xs text-[var(--cs-text-tertiary)]">Describe your initiative in the chat to generate a workflow</p>
       </div>
     </div>
   );
@@ -629,7 +675,7 @@ function EmptyState(): React.JSX.Element {
 /* ------------------------------------------------------------------ */
 function StatusPill({ status }: { status: AgentNode['status'] }): React.JSX.Element {
   const styles: Record<AgentNode['status'], string> = {
-    idle: 'bg-slate-500/20 text-slate-400',
+    idle: 'bg-slate-500/20 text-[var(--cs-text-secondary)]',
     working: 'bg-amber-500/20 text-amber-400 animate-pulse',
     error: 'bg-rose-500/20 text-rose-400',
     completed: 'bg-emerald-500/20 text-emerald-400',
@@ -643,7 +689,7 @@ function StatusPill({ status }: { status: AgentNode['status'] }): React.JSX.Elem
 
 function TaskStatusPill({ status }: { status: TaskNode['status'] }): React.JSX.Element {
   const styles: Record<TaskNode['status'], string> = {
-    pending: 'bg-slate-500/20 text-slate-400',
+    pending: 'bg-slate-500/20 text-[var(--cs-text-secondary)]',
     running: 'bg-amber-500/20 text-amber-400 animate-pulse',
     completed: 'bg-emerald-500/20 text-emerald-400',
     failed: 'bg-rose-500/20 text-rose-400',

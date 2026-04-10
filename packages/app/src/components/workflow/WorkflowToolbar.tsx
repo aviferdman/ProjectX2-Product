@@ -25,11 +25,11 @@ export function WorkflowToolbar({
   isGenerating,
 }: WorkflowToolbarProps): React.JSX.Element {
   return (
-    <header className="flex items-center gap-3 px-4 py-2.5 bg-[#0b1120] border-b border-white/5 flex-shrink-0 z-10">
+    <header className="flex items-center gap-3 px-4 py-2.5 glass border-b border-[var(--cs-border-subtle)] flex-shrink-0 z-10">
       {/* Back */}
       <button
         onClick={onBack}
-        className="p-1.5 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+        className="p-1.5 rounded-lg hover:bg-[var(--cs-surface-card)] text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors"
         title="Back to home"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -47,16 +47,16 @@ export function WorkflowToolbar({
             <path d="M2 12l10 5 10-5" />
           </svg>
         </div>
-        <span className="text-sm font-semibold text-white hidden sm:inline">CrewSpace</span>
+        <span className="text-sm font-semibold text-[var(--cs-text-primary)] hidden sm:inline">CrewSpace</span>
       </div>
 
-      <div className="w-px h-5 bg-white/10 hidden sm:block" />
+      <div className="w-px h-5 bg-[var(--cs-border-default)] hidden sm:block" />
 
       {/* Workflow Name */}
       <div className="flex-1 min-w-0">
         {workflow ? (
           <div className="flex items-center gap-2">
-            <span className="text-sm text-slate-300 truncate max-w-[300px]">
+            <span className="text-sm text-[var(--cs-text-secondary)] truncate max-w-[300px]">
               {workflow.description.length > 60
                 ? workflow.description.slice(0, 60) + '...'
                 : workflow.description}
@@ -64,14 +64,14 @@ export function WorkflowToolbar({
             <WorkflowStatusBadge status={workflow.status} />
           </div>
         ) : isGenerating ? (
-          <span className="text-sm text-slate-500 animate-pulse">Generating workflow...</span>
+          <span className="text-sm text-[var(--cs-text-tertiary)] animate-pulse">Generating workflow...</span>
         ) : (
-          <span className="text-sm text-slate-500">New workflow</span>
+          <span className="text-sm text-[var(--cs-text-tertiary)]">New workflow</span>
         )}
       </div>
 
       {/* View Mode Toggle */}
-      <div className="hidden md:flex items-center bg-white/5 rounded-lg p-0.5 border border-white/5">
+      <div className="hidden md:flex items-center bg-[var(--cs-surface-card)] rounded-lg p-0.5 border border-[var(--cs-border-subtle)]">
         <ViewModeButton
           active={viewMode === 'graph'}
           onClick={() => onViewModeChange('graph')}
@@ -116,15 +116,16 @@ export function WorkflowToolbar({
         />
       </div>
 
-      <div className="w-px h-5 bg-white/10" />
+      <div className="w-px h-5 bg-[var(--cs-border-default)]" />
 
       {/* Actions */}
       <div className="flex items-center gap-2">
         {/* Settings */}
         <button
           onClick={onSettings}
-          className="p-2 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+          className="p-2 rounded-lg hover:bg-[var(--cs-surface-card)] text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
           title="LLM Settings"
+          aria-label="LLM Settings"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="3" />
@@ -134,7 +135,7 @@ export function WorkflowToolbar({
 
         {/* Share */}
         <button
-          className="p-2 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+          className="p-2 rounded-lg hover:bg-[var(--cs-surface-card)] text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors"
           title="Share workflow"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -148,7 +149,7 @@ export function WorkflowToolbar({
 
         {/* Save */}
         <button
-          className="p-2 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+          className="p-2 rounded-lg hover:bg-[var(--cs-surface-card)] text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors"
           title="Save workflow"
           disabled={!workflow}
         >
@@ -163,7 +164,7 @@ export function WorkflowToolbar({
         <button
           onClick={onRun}
           disabled={!workflow || workflow.status === 'running' || isGenerating}
-          className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-600/30 disabled:cursor-not-allowed text-white text-sm font-medium transition-all shadow-lg shadow-emerald-500/20"
+          className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-600/30 disabled:cursor-not-allowed text-white text-sm font-medium transition-all shadow-lg shadow-emerald-500/20 focus-ring"
         >
           {workflow?.status === 'running' ? (
             <>
@@ -203,8 +204,8 @@ function ViewModeButton({
       onClick={onClick}
       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
         active
-          ? 'bg-white/10 text-white shadow-sm'
-          : 'text-slate-500 hover:text-slate-300'
+          ? 'bg-violet-500/15 text-violet-700 shadow-sm'
+          : 'text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-primary)]'
       }`}
       title={label}
     >
@@ -216,7 +217,7 @@ function ViewModeButton({
 
 function WorkflowStatusBadge({ status }: { status: WorkflowState['status'] }): React.JSX.Element {
   const styles: Record<WorkflowState['status'], string> = {
-    draft: 'bg-slate-500/20 text-slate-400 border-slate-500/20',
+    draft: 'bg-slate-500/20 text-[var(--cs-text-secondary)] border-slate-500/20',
     running: 'bg-amber-500/20 text-amber-400 border-amber-500/20 animate-pulse',
     completed: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/20',
     failed: 'bg-rose-500/20 text-rose-400 border-rose-500/20',

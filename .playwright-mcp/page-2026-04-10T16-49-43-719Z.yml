@@ -1,0 +1,52 @@
+- generic [ref=e131]:
+  - banner [ref=e132]:
+    - button "Back to home" [ref=e133] [cursor=pointer]:
+      - img [ref=e134]
+    - generic [ref=e136]:
+      - img [ref=e138]
+      - generic [ref=e142]: CrewSpace
+    - generic [ref=e144]: New workflow
+    - generic [ref=e145]:
+      - button "Graph" [ref=e146] [cursor=pointer]:
+        - img [ref=e147]
+        - generic [ref=e153]: Graph
+      - button "List" [ref=e154] [cursor=pointer]:
+        - img [ref=e155]
+        - generic [ref=e156]: List
+      - button "Timeline" [ref=e157] [cursor=pointer]:
+        - img [ref=e158]
+        - generic [ref=e160]: Timeline
+    - generic [ref=e162]:
+      - button "LLM Settings" [ref=e163] [cursor=pointer]:
+        - img [ref=e164]
+      - button "Share workflow" [ref=e167] [cursor=pointer]:
+        - img [ref=e168]
+      - button "Save workflow" [disabled] [ref=e174]:
+        - img [ref=e175]
+      - button "Run" [disabled] [ref=e179]:
+        - img [ref=e180]
+        - text: Run
+  - generic [ref=e182]:
+    - generic [ref=e184]:
+      - generic [ref=e185]:
+        - img [ref=e187]
+        - generic [ref=e189]:
+          - heading "Workflow Assistant" [level=3] [ref=e190]
+          - paragraph [ref=e191]: Ready to help
+      - generic [ref=e193]:
+        - img [ref=e195]
+        - paragraph [ref=e199]: Describe your initiative
+        - paragraph [ref=e200]: Tell me what you want to accomplish and I'll assemble the right team of AI agents.
+      - generic [ref=e202]:
+        - textbox "Ask anything about the workflow..." [ref=e203]
+        - generic [ref=e204]:
+          - button "Attach" [ref=e206] [cursor=pointer]:
+            - img [ref=e207]
+          - button [disabled] [ref=e209]:
+            - img [ref=e210]
+    - button "Collapse chat sidebar" [ref=e213] [cursor=pointer]:
+      - img [ref=e214]
+    - generic [ref=e218]:
+      - img [ref=e220]
+      - heading "No workflow yet" [level=3] [ref=e224]
+      - paragraph [ref=e225]: Describe your initiative in the chat to generate a workflow

@@ -1,0 +1,97 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - img [ref=e8]
+        - generic [ref=e12]: CrewSpace
+      - navigation [ref=e13]:
+        - button "Projects" [ref=e14] [cursor=pointer]
+        - button "Templates" [ref=e15] [cursor=pointer]
+        - button "Marketplace" [ref=e16] [cursor=pointer]
+      - generic [ref=e17]:
+        - button "Get Started" [ref=e18] [cursor=pointer]
+        - generic [ref=e19]: D
+  - generic [ref=e21]:
+    - heading "Build something extraordinary with AI agents" [level=1] [ref=e22]:
+      - text: Build something extraordinary
+      - text: with AI agents
+    - paragraph [ref=e23]: Describe what you need and CrewSpace will assemble the perfect team of AI agents to get it done.
+  - generic [ref=e24]:
+    - generic [ref=e25]:
+      - textbox "Describe your initiative" [ref=e26]:
+        - /placeholder: Conduct market research in the mobile gaming industry — identify user needs and MVP strategy
+        - text: Research mobile gaming market trends
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - button "Attach file" [ref=e29] [cursor=pointer]:
+            - img [ref=e30]
+          - button "Use template" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+          - generic [ref=e38]: Enter to build
+        - button "Generating..." [disabled] [ref=e131]:
+          - img [ref=e132]
+          - text: Generating...
+    - generic [ref=e42]:
+      - button "Conduct market research in the mobile gaming industry — identify user needs and MVP strategy" [ref=e43] [cursor=pointer]
+      - button "Create a content marketing campaign for a SaaS product launch" [ref=e44] [cursor=pointer]
+      - button "Analyze competitor pricing strategies in the e-commerce space" [ref=e45] [cursor=pointer]
+      - button "Build a customer onboarding workflow with automated follow-ups" [ref=e46] [cursor=pointer]
+  - generic [ref=e47]:
+    - heading "How it works" [level=2] [ref=e48]
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - img [ref=e52]
+        - generic [ref=e56]: "1"
+        - heading "Start with an idea" [level=3] [ref=e57]
+        - paragraph [ref=e58]: Describe your initiative in plain language — no setup, no config, just your vision.
+      - generic [ref=e59]:
+        - img [ref=e61]
+        - generic [ref=e64]: "2"
+        - heading "Watch it come to life" [level=3] [ref=e65]
+        - paragraph [ref=e66]: CrewSpace assembles specialized AI agents, wires them together, and builds your workflow in seconds.
+      - generic [ref=e67]:
+        - img [ref=e69]
+        - generic [ref=e71]: "3"
+        - heading "Refine and ship" [level=3] [ref=e72]
+        - paragraph [ref=e73]: Iterate on the result, tweak agent roles and hand-offs, then run your workflow at scale.
+  - generic [ref=e75]:
+    - generic [ref=e76]:
+      - generic [ref=e77]: 50+
+      - generic [ref=e78]: Agents Available
+    - generic [ref=e79]:
+      - generic [ref=e80]: 10K+
+      - generic [ref=e81]: Workflows Built
+    - generic [ref=e82]:
+      - generic [ref=e83]: 5M+
+      - generic [ref=e84]: Tasks Completed
+  - generic [ref=e85]:
+    - generic [ref=e86]:
+      - heading "Recent projects" [level=2] [ref=e87]
+      - button "View all →" [ref=e88] [cursor=pointer]
+    - generic [ref=e89]:
+      - button "Mobile Game MVP Research 4 agents · 2 hours ago completed" [ref=e90] [cursor=pointer]:
+        - img [ref=e92]
+        - generic [ref=e96]:
+          - paragraph [ref=e97]: Mobile Game MVP Research
+          - paragraph [ref=e98]: 4 agents · 2 hours ago
+        - generic [ref=e99]:
+          - generic "completed" [ref=e100]
+          - img [ref=e101]
+      - button "SaaS Launch Campaign 6 agents · 1 day ago running" [ref=e103] [cursor=pointer]:
+        - img [ref=e105]
+        - generic [ref=e109]:
+          - paragraph [ref=e110]: SaaS Launch Campaign
+          - paragraph [ref=e111]: 6 agents · 1 day ago
+        - generic [ref=e112]:
+          - generic "running" [ref=e113]
+          - img [ref=e114]
+      - button "Competitor Analysis Pipeline 3 agents · 3 days ago draft" [ref=e116] [cursor=pointer]:
+        - img [ref=e118]
+        - generic [ref=e122]:
+          - paragraph [ref=e123]: Competitor Analysis Pipeline
+          - paragraph [ref=e124]: 3 agents · 3 days ago
+        - generic [ref=e125]:
+          - generic "draft" [ref=e126]
+          - img [ref=e127]
+  - contentinfo [ref=e129]:
+    - paragraph [ref=e130]: © 2026 CrewSpace — AI Agent Orchestration Platform

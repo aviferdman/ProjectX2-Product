@@ -1,0 +1,61 @@
+- generic [ref=e135]:
+  - banner [ref=e136]:
+    - button "Back to home" [ref=e137] [cursor=pointer]:
+      - img [ref=e138]
+    - generic [ref=e140]:
+      - img [ref=e142]
+      - generic [ref=e146]: CrewSpace
+    - generic [ref=e148]: New workflow
+    - generic [ref=e149]:
+      - button "Graph" [ref=e150] [cursor=pointer]:
+        - img [ref=e151]
+        - generic [ref=e157]: Graph
+      - button "List" [ref=e158] [cursor=pointer]:
+        - img [ref=e159]
+        - generic [ref=e160]: List
+      - button "Timeline" [ref=e161] [cursor=pointer]:
+        - img [ref=e162]
+        - generic [ref=e164]: Timeline
+    - generic [ref=e166]:
+      - button "LLM Settings" [ref=e167] [cursor=pointer]:
+        - img [ref=e168]
+      - button "Share workflow" [ref=e171] [cursor=pointer]:
+        - img [ref=e172]
+      - button "Save workflow" [disabled] [ref=e178]:
+        - img [ref=e179]
+      - button "Run" [disabled] [ref=e183]:
+        - img [ref=e184]
+        - text: Run
+  - generic [ref=e186]:
+    - generic [ref=e188]:
+      - generic [ref=e189]:
+        - img [ref=e191]
+        - generic [ref=e193]:
+          - heading "Workflow Assistant" [level=3] [ref=e194]
+          - paragraph [ref=e195]: Ready to help
+      - generic [ref=e196]:
+        - generic [ref=e199]: "Analyzing your request: \"Research the mobile gaming market\""
+        - generic [ref=e201]:
+          - img [ref=e203]
+          - generic [ref=e207]:
+            - paragraph [ref=e208]: "Failed to generate workflow: LLM provider \"openai\": API key is required. Provide it via config.apiKey or the OPENAI_API_KEY environment variable."
+            - paragraph [ref=e210]: Please check your API key in Settings (gear icon) and try again.
+        - generic [ref=e213]: "Analyzing your request: \"Research the mobile gaming market\""
+        - generic [ref=e215]:
+          - img [ref=e217]
+          - generic [ref=e221]:
+            - paragraph [ref=e222]: "Failed to generate workflow: LLM provider \"openai\": API key is required. Provide it via config.apiKey or the OPENAI_API_KEY environment variable."
+            - paragraph [ref=e224]: Please check your API key in Settings (gear icon) and try again.
+      - generic [ref=e226]:
+        - textbox "Ask anything about the workflow..." [ref=e227]
+        - generic [ref=e228]:
+          - button "Attach" [ref=e230] [cursor=pointer]:
+            - img [ref=e231]
+          - button [disabled] [ref=e233]:
+            - img [ref=e234]
+    - button [ref=e237] [cursor=pointer]:
+      - img [ref=e238]
+    - generic [ref=e242]:
+      - img [ref=e244]
+      - heading "No workflow yet" [level=3] [ref=e248]
+      - paragraph [ref=e249]: Describe your initiative in the chat to generate a workflow

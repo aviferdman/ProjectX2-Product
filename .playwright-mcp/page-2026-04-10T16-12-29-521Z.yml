@@ -1,0 +1,82 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - link "CrewSpace" [ref=e6] [cursor=pointer]:
+      - /url: /
+      - img [ref=e8]
+      - generic [ref=e12]: CrewSpace
+    - navigation [ref=e13]:
+      - generic [ref=e14]: Projects
+      - button "Templates" [ref=e15] [cursor=pointer]
+      - button "Marketplace" [ref=e16] [cursor=pointer]
+    - generic [ref=e17]: D
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - heading "Projects" [level=1] [ref=e20]
+      - button "New Project" [ref=e21] [cursor=pointer]:
+        - img [ref=e22]
+        - text: New Project
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - img [ref=e25]
+        - textbox "Search projects..." [ref=e28]
+      - generic [ref=e29]:
+        - button "all" [ref=e30] [cursor=pointer]
+        - button "draft" [ref=e31] [cursor=pointer]
+        - button "running" [ref=e32] [cursor=pointer]
+        - button "completed" [ref=e33] [cursor=pointer]
+    - generic [ref=e34]:
+      - button "completed Mobile Game MVP Research Market research in the mobile gaming industry 4 agents · 5 tasks 2 hours ago" [ref=e35] [cursor=pointer]:
+        - generic [ref=e36]:
+          - img [ref=e38]
+          - generic [ref=e42]: completed
+        - heading "Mobile Game MVP Research" [level=3] [ref=e43]
+        - paragraph [ref=e44]: Market research in the mobile gaming industry
+        - generic [ref=e45]:
+          - generic [ref=e46]: 4 agents
+          - generic [ref=e47]: ·
+          - generic [ref=e48]: 5 tasks
+          - generic [ref=e49]: 2 hours ago
+      - button "running SaaS Launch Campaign Content marketing campaign for a SaaS product 6 agents · 8 tasks 1 day ago" [ref=e50] [cursor=pointer]:
+        - generic [ref=e51]:
+          - img [ref=e53]
+          - generic [ref=e57]: running
+        - heading "SaaS Launch Campaign" [level=3] [ref=e58]
+        - paragraph [ref=e59]: Content marketing campaign for a SaaS product
+        - generic [ref=e60]:
+          - generic [ref=e61]: 6 agents
+          - generic [ref=e62]: ·
+          - generic [ref=e63]: 8 tasks
+          - generic [ref=e64]: 1 day ago
+      - button "draft Competitor Analysis Pricing strategy analysis in e-commerce 3 agents · 4 tasks 3 days ago" [ref=e65] [cursor=pointer]:
+        - generic [ref=e66]:
+          - img [ref=e68]
+          - generic [ref=e72]: draft
+        - heading "Competitor Analysis" [level=3] [ref=e73]
+        - paragraph [ref=e74]: Pricing strategy analysis in e-commerce
+        - generic [ref=e75]:
+          - generic [ref=e76]: 3 agents
+          - generic [ref=e77]: ·
+          - generic [ref=e78]: 4 tasks
+          - generic [ref=e79]: 3 days ago
+      - button "completed Customer Onboarding Flow Automated onboarding workflow with follow-ups 5 agents · 7 tasks 1 week ago" [ref=e80] [cursor=pointer]:
+        - generic [ref=e81]:
+          - img [ref=e83]
+          - generic [ref=e87]: completed
+        - heading "Customer Onboarding Flow" [level=3] [ref=e88]
+        - paragraph [ref=e89]: Automated onboarding workflow with follow-ups
+        - generic [ref=e90]:
+          - generic [ref=e91]: 5 agents
+          - generic [ref=e92]: ·
+          - generic [ref=e93]: 7 tasks
+          - generic [ref=e94]: 1 week ago
+      - button "draft AI Trends Summary Board presentation on AI trends 2 agents · 3 tasks 2 weeks ago" [ref=e95] [cursor=pointer]:
+        - generic [ref=e96]:
+          - img [ref=e98]
+          - generic [ref=e102]: draft
+        - heading "AI Trends Summary" [level=3] [ref=e103]
+        - paragraph [ref=e104]: Board presentation on AI trends
+        - generic [ref=e105]:
+          - generic [ref=e106]: 2 agents
+          - generic [ref=e107]: ·
+          - generic [ref=e108]: 3 tasks
+          - generic [ref=e109]: 2 weeks ago

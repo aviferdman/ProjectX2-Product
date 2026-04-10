@@ -2,7 +2,7 @@
  * AppContext — React context for global application state.
  * TASK-131: Centralized state management via useReducer.
  */
-import React, { createContext, useContext, useReducer, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useCallback, useMemo, useEffect } from 'react';
 import type {
   AppState,
   AppContextValue,
@@ -42,7 +42,7 @@ type AppAction =
 
 const initialState: AppState = {
   sidebarMode: 'expanded',
-  theme: 'system',
+  theme: 'light',
   notifications: [],
   activeWorkflowId: null,
 };
@@ -106,6 +106,23 @@ export interface AppProviderProps {
 export function AppProvider({ initialState: overrides, children }: AppProviderProps): React.JSX.Element {
   const merged: AppState = { ...initialState, ...overrides };
   const [state, dispatch] = useReducer(appReducer, merged);
+
+  /* Apply data-theme attribute to <html> for CSS variable switching */
+  useEffect(() => {
+    const html = document.documentElement;
+    if (state.theme === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      const mql = window.matchMedia('(prefers-color-scheme: dark)');
+      const handler = (e: MediaQueryListEvent) => {
+        html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      };
+      mql.addEventListener('change', handler);
+      return () => mql.removeEventListener('change', handler);
+    } else {
+      html.setAttribute('data-theme', state.theme);
+    }
+  }, [state.theme]);
 
   const setSidebarMode = useCallback((mode: SidebarMode) => {
     dispatch({ type: 'SET_SIDEBAR_MODE', mode });

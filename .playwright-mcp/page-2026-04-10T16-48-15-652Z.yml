@@ -1,0 +1,146 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "CrewSpace" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img [ref=e9]
+        - generic [ref=e13]: CrewSpace
+      - navigation [ref=e14]:
+        - generic [ref=e15]: Projects
+        - button "Templates" [ref=e16] [cursor=pointer]
+        - button "Marketplace" [ref=e17] [cursor=pointer]
+      - generic [ref=e18]:
+        - button "Settings" [ref=e19] [cursor=pointer]:
+          - img [ref=e20]
+        - generic [ref=e23]: D
+  - main [ref=e24]:
+    - generic [ref=e25]:
+      - generic [ref=e26]:
+        - heading "Projects" [level=1] [ref=e27]
+        - paragraph [ref=e28]: Manage and monitor your AI agent workflows
+      - button "New Project" [ref=e29] [cursor=pointer]:
+        - img [ref=e30]
+        - text: New Project
+    - generic [ref=e31]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - generic [ref=e34]: 📁
+          - generic [ref=e35]: Total Projects
+        - paragraph [ref=e36]: "6"
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - generic [ref=e39]: 🔄
+          - generic [ref=e40]: Running
+        - paragraph [ref=e41]: "1"
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]: ✅
+          - generic [ref=e45]: Completed
+        - paragraph [ref=e46]: "2"
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]: 🤖
+          - generic [ref=e50]: Total Agents
+        - paragraph [ref=e51]: "24"
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - img [ref=e54]
+        - textbox "Search projects" [ref=e57]:
+          - /placeholder: Search projects...
+      - generic [ref=e58]:
+        - button "all" [ref=e59] [cursor=pointer]
+        - button "draft" [ref=e60] [cursor=pointer]
+        - button "running" [ref=e61] [cursor=pointer]
+        - button "completed" [ref=e62] [cursor=pointer]
+        - button "failed" [ref=e63] [cursor=pointer]
+    - generic [ref=e64]:
+      - button "completed Mobile Game MVP Research Market research in the mobile gaming industry 4 agents 5 tasks 2 hours ago" [ref=e65] [cursor=pointer]:
+        - generic [ref=e66]:
+          - img [ref=e68]
+          - generic [ref=e72]: completed
+        - heading "Mobile Game MVP Research" [level=3] [ref=e73]
+        - paragraph [ref=e74]: Market research in the mobile gaming industry
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - img [ref=e78]
+              - text: 4 agents
+            - generic [ref=e81]:
+              - img [ref=e82]
+              - text: 5 tasks
+          - generic [ref=e85]: 2 hours ago
+      - button "running SaaS Launch Campaign Content marketing campaign for a SaaS product 6 agents 8 tasks 1 day ago" [ref=e86] [cursor=pointer]:
+        - generic [ref=e87]:
+          - img [ref=e89]
+          - generic [ref=e93]: running
+        - heading "SaaS Launch Campaign" [level=3] [ref=e95]
+        - paragraph [ref=e96]: Content marketing campaign for a SaaS product
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - img [ref=e100]
+              - text: 6 agents
+            - generic [ref=e103]:
+              - img [ref=e104]
+              - text: 8 tasks
+          - generic [ref=e107]: 1 day ago
+      - button "draft Competitor Analysis Pricing strategy analysis in e-commerce 3 agents 4 tasks 3 days ago" [ref=e108] [cursor=pointer]:
+        - generic [ref=e109]:
+          - img [ref=e111]
+          - generic [ref=e115]: draft
+        - heading "Competitor Analysis" [level=3] [ref=e116]
+        - paragraph [ref=e117]: Pricing strategy analysis in e-commerce
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - img [ref=e121]
+              - text: 3 agents
+            - generic [ref=e124]:
+              - img [ref=e125]
+              - text: 4 tasks
+          - generic [ref=e128]: 3 days ago
+      - button "completed Customer Onboarding Flow Automated onboarding workflow with follow-ups 5 agents 7 tasks 1 week ago" [ref=e129] [cursor=pointer]:
+        - generic [ref=e130]:
+          - img [ref=e132]
+          - generic [ref=e136]: completed
+        - heading "Customer Onboarding Flow" [level=3] [ref=e137]
+        - paragraph [ref=e138]: Automated onboarding workflow with follow-ups
+        - generic [ref=e139]:
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - img [ref=e142]
+              - text: 5 agents
+            - generic [ref=e145]:
+              - img [ref=e146]
+              - text: 7 tasks
+          - generic [ref=e149]: 1 week ago
+      - button "failed AI Trends Summary Board presentation on AI trends 2 agents 3 tasks 2 weeks ago" [ref=e150] [cursor=pointer]:
+        - generic [ref=e151]:
+          - img [ref=e153]
+          - generic [ref=e157]: failed
+        - heading "AI Trends Summary" [level=3] [ref=e158]
+        - paragraph [ref=e159]: Board presentation on AI trends
+        - generic [ref=e160]:
+          - generic [ref=e161]:
+            - generic [ref=e162]:
+              - img [ref=e163]
+              - text: 2 agents
+            - generic [ref=e166]:
+              - img [ref=e167]
+              - text: 3 tasks
+          - generic [ref=e170]: 2 weeks ago
+      - button "draft QA Pipeline Automated quality assurance for dev team 4 agents 6 tasks 2 weeks ago" [ref=e171] [cursor=pointer]:
+        - generic [ref=e172]:
+          - img [ref=e174]
+          - generic [ref=e178]: draft
+        - heading "QA Pipeline" [level=3] [ref=e179]
+        - paragraph [ref=e180]: Automated quality assurance for dev team
+        - generic [ref=e181]:
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - img [ref=e184]
+              - text: 4 agents
+            - generic [ref=e187]:
+              - img [ref=e188]
+              - text: 6 tasks
+          - generic [ref=e191]: 2 weeks ago

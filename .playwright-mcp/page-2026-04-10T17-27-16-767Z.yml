@@ -1,0 +1,125 @@
+- generic [ref=e135]:
+  - banner [ref=e136]:
+    - button "Back to home" [ref=e137] [cursor=pointer]:
+      - img [ref=e138]
+    - generic [ref=e140]:
+      - img [ref=e142]
+      - generic [ref=e146]: CrewSpace
+    - generic [ref=e241]:
+      - generic [ref=e242]: Say hello
+      - generic [ref=e243]: draft
+    - generic [ref=e149]:
+      - button "Graph" [ref=e150] [cursor=pointer]:
+        - img [ref=e151]
+        - generic [ref=e157]: Graph
+      - button "List" [ref=e158] [cursor=pointer]:
+        - img [ref=e159]
+        - generic [ref=e160]: List
+      - button "Timeline" [ref=e161] [cursor=pointer]:
+        - img [ref=e162]
+        - generic [ref=e164]: Timeline
+    - generic [ref=e166]:
+      - button "LLM Settings" [ref=e167] [cursor=pointer]:
+        - img [ref=e168]
+      - button "Share workflow" [ref=e171] [cursor=pointer]:
+        - img [ref=e172]
+      - button "Save workflow" [ref=e178] [cursor=pointer]:
+        - img [ref=e179]
+      - button "Run" [ref=e183] [cursor=pointer]:
+        - img [ref=e184]
+        - text: Run
+  - generic [ref=e186]:
+    - generic [ref=e188]:
+      - generic [ref=e189]:
+        - img [ref=e191]
+        - generic [ref=e193]:
+          - heading "Workflow Assistant" [level=3] [ref=e194]
+          - paragraph [ref=e195]: 2 agents · 2 tasks
+      - generic [ref=e196]:
+        - generic [ref=e199]: "Analyzing your request: \"Say hello\""
+        - generic [ref=e244]:
+          - img [ref=e246]
+          - generic [ref=e250]:
+            - paragraph [ref=e251]: I've assembled a team of 2 agents with 2 tasks to execute your initiative.
+            - paragraph [ref=e253]: "Agents:"
+            - generic [ref=e254]:
+              - generic [ref=e255]: •
+              - generic [ref=e256]: Greeting Specialist — Welcome users to the platform
+            - generic [ref=e257]:
+              - generic [ref=e258]: •
+              - generic [ref=e259]: Conversation Starter — Start meaningful conversations with users
+            - paragraph [ref=e261]: "Task pipeline:"
+            - generic [ref=e262]:
+              - generic [ref=e263]: "1."
+              - generic [ref=e264]: Read and analyze user data
+            - generic [ref=e265]:
+              - generic [ref=e266]: "2."
+              - generic [ref=e267]: Generate conversation topics
+            - paragraph [ref=e269]: You can modify agents, reorder tasks, or hit Run to execute.
+      - generic [ref=e270]:
+        - button "▶ Run workflow" [ref=e271] [cursor=pointer]
+        - button "+ Add agent" [ref=e272] [cursor=pointer]
+        - button "✎ Modify tasks" [ref=e273] [cursor=pointer]
+        - button "📊 View results" [ref=e274] [cursor=pointer]
+      - generic [ref=e212]:
+        - textbox "Ask anything about the workflow..." [ref=e213]
+        - generic [ref=e214]:
+          - button "Attach" [ref=e216] [cursor=pointer]:
+            - img [ref=e217]
+          - button [disabled] [ref=e219]:
+            - img [ref=e220]
+    - button "Collapse chat sidebar" [ref=e223] [cursor=pointer]:
+      - img [ref=e224]
+    - generic [ref=e276]:
+      - generic [ref=e278]:
+        - generic [ref=e279]:
+          - img [ref=e281]
+          - heading "Agent Team" [level=3] [ref=e286]
+          - generic [ref=e287]: (2)
+        - generic [ref=e288]:
+          - button "GS Greeting Specialist Welcome users to the platform 1 tasks · 2 tools idle" [ref=e289] [cursor=pointer]:
+            - generic [ref=e290]:
+              - generic [ref=e291]: GS
+              - generic [ref=e292]:
+                - paragraph [ref=e293]: Greeting Specialist
+                - paragraph [ref=e294]: Welcome users to the platform
+                - generic [ref=e295]:
+                  - generic [ref=e296]: 1 tasks
+                  - generic [ref=e297]: ·
+                  - generic [ref=e298]: 2 tools
+                  - generic [ref=e299]: idle
+          - button "CS Conversation Starter Start meaningful conversations with users 1 tasks · 2 tools idle" [ref=e300] [cursor=pointer]:
+            - generic [ref=e301]:
+              - generic [ref=e302]: CS
+              - generic [ref=e303]:
+                - paragraph [ref=e304]: Conversation Starter
+                - paragraph [ref=e305]: Start meaningful conversations with users
+                - generic [ref=e306]:
+                  - generic [ref=e307]: 1 tasks
+                  - generic [ref=e308]: ·
+                  - generic [ref=e309]: 2 tools
+                  - generic [ref=e310]: idle
+      - generic [ref=e311]:
+        - generic [ref=e312]:
+          - img [ref=e314]
+          - heading "Task Pipeline" [level=3] [ref=e317]
+          - generic [ref=e318]: (2 tasks)
+        - generic [ref=e319]:
+          - button "Read and analyze user data Greeting Specialist pending" [ref=e322] [cursor=pointer]:
+            - generic [ref=e323]:
+              - img [ref=e325]
+              - generic [ref=e327]:
+                - paragraph [ref=e328]: Read and analyze user data
+                - generic [ref=e329]:
+                  - generic [ref=e330]: Greeting Specialist
+                  - generic [ref=e331]: pending
+          - generic [ref=e332]:
+            - img [ref=e336]
+            - button "Generate conversation topics Conversation Starter pending" [ref=e340] [cursor=pointer]:
+              - generic [ref=e341]:
+                - img [ref=e343]
+                - generic [ref=e345]:
+                  - paragraph [ref=e346]: Generate conversation topics
+                  - generic [ref=e347]:
+                    - generic [ref=e348]: Conversation Starter
+                    - generic [ref=e349]: pending

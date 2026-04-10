@@ -14,6 +14,22 @@ export default defineConfig({
     port: 3000,
     open: false,
     strictPort: false,
+    proxy: {
+      // LLM API proxies — bypass browser CORS restrictions.
+      // The browser calls /api/openai/... → forwarded to https://api.openai.com/...
+      '/api/openai': {
+        target: 'https://api.openai.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/openai/, ''),
+        secure: true,
+      },
+      '/api/anthropic': {
+        target: 'https://api.anthropic.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/anthropic/, ''),
+        secure: true,
+      },
+    },
   },
   build: {
     outDir: 'dist-app',

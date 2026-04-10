@@ -38,11 +38,24 @@ const AGENT_COLORS = ['#8b5cf6', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#e
 
 /** Create an LLM provider from config. */
 export function createProvider(config: LLMConfig): LLMProvider {
+  // In the browser, route API calls through the Vite dev proxy to avoid CORS.
+  // /api/openai/* → https://api.openai.com/*
+  // /api/anthropic/* → https://api.anthropic.com/*
+  const isBrowser = typeof window !== 'undefined';
+  const proxyBaseUrl = (provider: string): string | undefined => {
+    if (!isBrowser) return config.baseUrl;
+    switch (provider) {
+      case 'openai': return config.baseUrl ?? '/api/openai/v1';
+      case 'anthropic': return config.baseUrl ?? '/api/anthropic';
+      default: return config.baseUrl;
+    }
+  };
+
   const base: LLMProviderConfig = {
     provider: config.provider,
     modelId: config.modelId,
     ...(config.apiKey ? { apiKey: config.apiKey } : {}),
-    ...(config.baseUrl ? { baseUrl: config.baseUrl } : {}),
+    baseUrl: proxyBaseUrl(config.provider) ?? undefined,
   };
   switch (config.provider) {
     case 'openai':
@@ -354,5 +367,17 @@ function parseJsonResponse<T>(content: string): T {
   if (cleaned.startsWith('```')) {
     cleaned = cleaned.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '');
   }
-  return JSON.parse(cleaned) as T;
+
+  // Local models (Ollama) sometimes emit preamble text before the JSON object.
+  // Try a direct parse first; if it fails, extract the first { ... } block.
+  try {
+    return JSON.parse(cleaned) as T;
+  } catch {
+    const start = cleaned.indexOf('{');
+    const end = cleaned.lastIndexOf('}');
+    if (start !== -1 && end > start) {
+      return JSON.parse(cleaned.slice(start, end + 1)) as T;
+    }
+    throw new Error(`LLM response is not valid JSON:\n${cleaned.slice(0, 300)}`);
+  }
 }

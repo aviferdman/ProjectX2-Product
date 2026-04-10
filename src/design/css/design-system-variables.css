@@ -243,6 +243,13 @@
   --cs-opacity-disabled: 0.4;
   --cs-opacity-overlay: 0.6;
   --cs-opacity-subtle: 0.1;
+
+  /* Component aliases (used by UI components) */
+  --cs-bg-surface: var(--cs-surface-app);
+  --cs-bg-card: var(--cs-surface-card);
+  --cs-bg-card-hover: var(--cs-surface-elevated);
+  --cs-bg-panel: var(--cs-surface-panel);
+  --cs-border-hover: var(--cs-surface-elevated);
 }
 
 /* ================================================================== */
@@ -281,4 +288,11 @@
     0 0 0 1px rgba(0, 0, 0, 0.05);
   --cs-shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.15),
     0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  /* Component aliases — light mode values */
+  --cs-bg-surface: var(--cs-surface-app);
+  --cs-bg-card: var(--cs-surface-card);
+  --cs-bg-card-hover: var(--cs-surface-elevated);
+  --cs-bg-panel: var(--cs-surface-panel);
+  --cs-border-hover: var(--cs-slate-300);
 }

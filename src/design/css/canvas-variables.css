@@ -260,3 +260,36 @@
     stroke-dasharray: 100% 0;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Light mode overrides                                                */
+/* ------------------------------------------------------------------ */
+[data-theme='light'] {
+  --cs-surface-canvas: #f1f5f9;
+}
+
+[data-theme='light'] .cs-canvas {
+  --canvas-bg: #f1f5f9;
+  --canvas-grid-dot: rgba(100, 116, 139, 0.18);
+  --canvas-grid-line: rgba(100, 116, 139, 0.08);
+
+  /* Node backgrounds — slightly more opaque for light */
+  --node-agent-bg: rgba(124, 58, 237, 0.08);
+  --node-task-bg: rgba(14, 165, 233, 0.08);
+  --node-tool-bg: rgba(16, 185, 129, 0.08);
+  --node-llm-bg: rgba(245, 158, 11, 0.08);
+
+  /* Edges */
+  --edge-default: #94a3b8;
+  --edge-label-bg: rgba(255, 255, 255, 0.9);
+
+  /* Connection handles */
+  --handle-bg: #ffffff;
+  --handle-border: #94a3b8;
+
+  /* Selection marquee */
+  --selection-bg: rgba(139, 92, 246, 0.06);
+
+  /* Minimap */
+  --minimap-bg: rgba(255, 255, 255, 0.9);
+}

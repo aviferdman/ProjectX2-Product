@@ -66,12 +66,16 @@ export function WorkflowPage(): React.JSX.Element {
     setIsGenerating(true);
     setLlmError(null);
 
-    let cancelled = false;
+    // NOTE: We intentionally do NOT use a `cancelled` flag here.
+    // The `hasTriggeredGeneration` ref already prevents double-execution.
+    // A cancellation guard would silently discard results when React Strict Mode
+    // unmounts the first render — the ref stays `true` across remounts so the
+    // second mount skips the effect, but the first mount's async result would be
+    // dropped, leaving the UI stuck on "Thinking..." forever.
     (async () => {
       try {
         const provider = getProvider();
         const generated = await generateWorkflowPlan(initialPrompt, provider);
-        if (cancelled) return;
 
         setWorkflow(generated);
         setIsGenerating(false);
@@ -80,7 +84,6 @@ export function WorkflowPage(): React.JSX.Element {
           `I've assembled a team of **${generated.agents.length} agents** with **${generated.tasks.length} tasks** to execute your initiative.\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
         );
       } catch (error) {
-        if (cancelled) return;
         const msg = error instanceof Error ? error.message : String(error);
         setIsGenerating(false);
         setLlmError(msg);
@@ -88,7 +91,7 @@ export function WorkflowPage(): React.JSX.Element {
       }
     })();
 
-    return () => { cancelled = true; };
+    return undefined;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // -----------------------------------------------------------------------
@@ -208,7 +211,7 @@ export function WorkflowPage(): React.JSX.Element {
   }, [workflow, getProvider, pushMessage]);
 
   return (
-    <div className="h-screen flex flex-col bg-[#020617] overflow-hidden">
+    <div className="h-screen flex flex-col bg-[var(--cs-surface-app)] overflow-hidden">
       {/* Top Toolbar */}
       <WorkflowToolbar
         workflow={workflow}
@@ -240,7 +243,7 @@ export function WorkflowPage(): React.JSX.Element {
         {/* Chat Sidebar */}
         {!isSidebarCollapsed && (
           <div
-            className="flex-shrink-0 border-r border-white/5 flex flex-col bg-[#0b1120] animate-slideInLeft"
+            className="flex-shrink-0 border-r border-[var(--cs-border-subtle)] flex flex-col bg-[var(--cs-surface-panel)] animate-slideInLeft"
             style={{ width: sidebarWidth }}
           >
             <WorkflowChat
@@ -255,7 +258,7 @@ export function WorkflowPage(): React.JSX.Element {
         {/* Sidebar Toggle */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="flex-shrink-0 w-6 flex items-center justify-center bg-[#0b1120]/50 border-r border-white/5 hover:bg-violet-500/10 transition-all group focus-ring"
+          className="flex-shrink-0 w-6 flex items-center justify-center bg-[var(--cs-surface-panel)]/50 border-r border-[var(--cs-border-subtle)] hover:bg-violet-500/10 transition-all group focus-ring"
           aria-label={isSidebarCollapsed ? 'Expand chat sidebar' : 'Collapse chat sidebar'}
           title={isSidebarCollapsed ? 'Expand chat' : 'Collapse chat'}
         >
@@ -268,7 +271,7 @@ export function WorkflowPage(): React.JSX.Element {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className={`text-slate-600 group-hover:text-violet-400 transition-all duration-200 ${isSidebarCollapsed ? '' : 'rotate-180'}`}
+            className={`text-[var(--cs-text-tertiary)] group-hover:text-violet-400 transition-all duration-200 ${isSidebarCollapsed ? '' : 'rotate-180'}`}
           >
             <polyline points="15 18 9 12 15 6" />
           </svg>
