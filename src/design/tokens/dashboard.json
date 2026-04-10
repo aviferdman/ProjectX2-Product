@@ -117,20 +117,34 @@
         "list-row-height": { "value": "56px", "type": "sizing" },
         "stat-card-min-width": { "value": "200px", "type": "sizing" },
         "stat-card-height": { "value": "100px", "type": "sizing" },
+        "stat-card-padding": { "value": "16px", "type": "sizing", "description": "Stat card inner padding" },
+        "stat-card-radius": { "value": "12px", "type": "sizing", "description": "Stat card border-radius (--cs-radius-xl)" },
         "stats-gap": { "value": "16px", "type": "sizing" },
         "progress-bar-height": { "value": "6px", "type": "sizing" },
         "search-height": { "value": "36px", "type": "sizing" },
+        "search-min-width": { "value": "200px", "type": "sizing", "description": "Search input minimum width" },
+        "search-max-width": { "value": "360px", "type": "sizing", "description": "Search input maximum width" },
         "filter-chip-height": { "value": "28px", "type": "sizing" },
         "empty-state-icon-size": { "value": "64px", "type": "sizing" },
+        "empty-state-border-width": { "value": "2px", "type": "sizing", "description": "Empty state dashed border width" },
         "create-button-height": { "value": "40px", "type": "sizing" },
         "upgrade-prompt-height": { "value": "auto", "type": "sizing" }
+      },
+      "stat-card-shadow": {
+        "value": "0 1px 3px rgba(0,0,0,0.2), 0 0 0 1px rgba(148,163,184,0.06)",
+        "type": "boxShadow",
+        "description": "Stat card drop shadow"
       },
       "animation": {
         "card-enter": { "value": "250ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Card scale-in when appearing" },
         "card-hover": { "value": "150ms ease-out", "type": "transition", "description": "Card hover elevation transition" },
+        "card-stagger-delay": { "value": "50ms", "type": "transition", "description": "Per-card stagger delay (index × value, max 500ms)" },
+        "thumb-hover": { "value": "200ms ease-out", "type": "transition", "description": "Thumbnail hover scale transition" },
+        "thumb-hover-scale": { "value": "1.02", "type": "number", "description": "Thumbnail hover scale factor" },
         "stat-count": { "value": "600ms cubic-bezier(0.16,1,0.3,1)", "type": "transition", "description": "Stat number count-up animation" },
         "progress-fill": { "value": "400ms ease-out", "type": "transition", "description": "Progress bar fill animation" },
         "view-switch": { "value": "200ms ease-out", "type": "transition", "description": "Grid/list view transition" },
+        "filter-chip-toggle": { "value": "150ms ease-out", "type": "transition", "description": "Filter chip bg/border transition" },
         "empty-state-in": { "value": "300ms ease-out", "type": "transition", "description": "Empty state fade in" }
       }
     }

@@ -55,6 +55,8 @@
 
   /* Search input */
   --search-h: 36px;
+  --search-min-w: 200px;
+  --search-max-w: 360px;
   --search-bg: var(--cs-surface-elevated);
   --search-border: var(--cs-border-default);
   --search-border-focus: #8b5cf6;
@@ -100,6 +102,8 @@
   --thumb-h: 160px;
   --thumb-bg: rgba(10, 14, 26, 0.8);
   --thumb-border: var(--cs-border-subtle);
+  --thumb-hover-scale: 1.02;
+  --thumb-hover-transition: 200ms ease-out;
 
   /* Body */
   --card-body-padding: 16px;
@@ -110,6 +114,9 @@
   /* Action icons */
   --card-action-color: var(--cs-text-tertiary);
   --card-action-color-hover: var(--cs-text-primary);
+
+  /* Card enter stagger */
+  --card-stagger-delay: 50ms;
 }
 
 /* ------------------------------------------------------------------ */
@@ -172,6 +179,7 @@
   --stat-card-min-w: 200px;
   --stat-card-h: 100px;
   --stat-card-padding: 16px;
+  --stat-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(148, 163, 184, 0.06);
   --stat-gap: 16px;
 
   /* Labels and values */
@@ -221,6 +229,7 @@
   --empty-heading-color: var(--cs-text-primary);
   --empty-desc-color: var(--cs-text-secondary);
   --empty-border: var(--cs-border-default);
+  --empty-border-width: 2px;
   --empty-border-style: dashed;
   --empty-radius: var(--cs-radius-xl);
 }

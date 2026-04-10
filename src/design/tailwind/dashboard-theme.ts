@@ -80,6 +80,7 @@ export const dashboardTheme = {
       'item-active': '#c4b5fd',
       'item-bg-hover': 'rgba(30,41,59,0.5)',
       'item-bg-active': 'rgba(139,92,246,0.12)',
+      'item-border-active': '#7c3aed',
     },
   },
 
@@ -119,6 +120,10 @@ export const dashboardTheme = {
     'nav-item': ['0.8125rem', { lineHeight: '1.25', fontWeight: '500' }],
     'nav-section': ['0.6875rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
     'search-input': ['0.8125rem', { lineHeight: '1.5', fontWeight: '400' }],
+    'filter-chip': ['0.6875rem', { lineHeight: '1', fontWeight: '500' }],
+    'list-header': ['0.6875rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
+    'create-btn-text': ['0.875rem', { lineHeight: '1', fontWeight: '600' }],
+    'upgrade-text': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
     'empty-heading': ['1.125rem', { lineHeight: '1.25', fontWeight: '600' }],
     'empty-desc': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
   },
@@ -129,6 +134,29 @@ export const dashboardTheme = {
     'create-btn': '0 2px 8px rgba(124,58,237,0.35)',
     'create-btn-hover': '0 4px 12px rgba(124,58,237,0.45)',
     'stat-card': '0 1px 3px rgba(0,0,0,0.2), 0 0 0 1px rgba(148,163,184,0.06)',
+  },
+
+  borderRadius: {
+    'workflow-card': '12px',
+    'stat-card': '12px',
+    'search-input': '6px',
+    'filter-chip': '9999px',
+    'status-badge': '9999px',
+    'usage-bar': '9999px',
+    'create-btn': '8px',
+    'upgrade-prompt': '12px',
+    'empty-state': '12px',
+  },
+
+  transitionDuration: {
+    'card-hover': '150ms',
+    'thumb-hover': '200ms',
+    'card-enter': '250ms',
+    'filter-toggle': '150ms',
+    'view-switch': '200ms',
+    'empty-in': '300ms',
+    'progress-fill': '400ms',
+    'stat-count': '600ms',
   },
 
   animation: {
