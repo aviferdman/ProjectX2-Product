@@ -1,0 +1,377 @@
+/*
+ * Crewspace — Component Library CSS Custom Properties
+ * TASK-126: Design component library (buttons, inputs, cards, modals)
+ *
+ * Provides CSS variables for the four core UI components. All values
+ * reference foundational tokens from design-system-variables.css.
+ */
+
+/* ================================================================== */
+/* Button                                                              */
+/* ================================================================== */
+.cs-btn {
+  /* Size: md (default) */
+  --btn-height: 36px;
+  --btn-px: 16px;
+  --btn-py: 8px;
+  --btn-font-size: 0.875rem;
+  --btn-icon-size: 18px;
+  --btn-gap: 8px;
+  --btn-radius: 6px;
+  --btn-border-width: 1px;
+  --btn-font-weight: 600;
+  --btn-transition: all 200ms ease-out;
+
+  /* Variant: primary (default) */
+  --btn-bg: var(--cs-interactive-default);
+  --btn-bg-hover: var(--cs-interactive-hover);
+  --btn-bg-active: var(--cs-interactive-active);
+  --btn-text: #ffffff;
+  --btn-border-color: transparent;
+  --btn-shadow: 0 1px 3px rgba(124, 58, 237, 0.3);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.4);
+
+  /* Focus ring */
+  --btn-focus-ring-width: 2px;
+  --btn-focus-ring-offset: 2px;
+  --btn-focus-ring-color: var(--cs-violet-500, #8b5cf6);
+
+  /* Disabled */
+  --btn-disabled-opacity: 0.4;
+
+  /* Loading */
+  --btn-loading-opacity: 0.7;
+}
+
+/* Button sizes */
+.cs-btn--xs {
+  --btn-height: 28px;
+  --btn-px: 8px;
+  --btn-py: 4px;
+  --btn-font-size: 0.75rem;
+  --btn-icon-size: 14px;
+  --btn-gap: 4px;
+  --btn-radius: 4px;
+}
+
+.cs-btn--sm {
+  --btn-height: 32px;
+  --btn-px: 12px;
+  --btn-py: 6px;
+  --btn-font-size: 0.8125rem;
+  --btn-icon-size: 16px;
+  --btn-gap: 6px;
+  --btn-radius: 6px;
+}
+
+.cs-btn--lg {
+  --btn-height: 44px;
+  --btn-px: 24px;
+  --btn-py: 10px;
+  --btn-font-size: 1rem;
+  --btn-icon-size: 20px;
+  --btn-gap: 8px;
+  --btn-radius: 8px;
+}
+
+.cs-btn--xl {
+  --btn-height: 52px;
+  --btn-px: 32px;
+  --btn-py: 14px;
+  --btn-font-size: 1.125rem;
+  --btn-icon-size: 22px;
+  --btn-gap: 10px;
+  --btn-radius: 8px;
+}
+
+/* Button variants */
+.cs-btn--secondary {
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(139, 92, 246, 0.1);
+  --btn-bg-active: rgba(139, 92, 246, 0.15);
+  --btn-text: var(--cs-violet-400, #a78bfa);
+  --btn-border-color: var(--cs-border-default);
+  --btn-shadow: none;
+  --btn-shadow-hover: none;
+}
+
+.cs-btn--ghost {
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(148, 163, 184, 0.1);
+  --btn-bg-active: rgba(148, 163, 184, 0.15);
+  --btn-text: var(--cs-text-secondary);
+  --btn-border-color: transparent;
+  --btn-shadow: none;
+  --btn-shadow-hover: none;
+}
+
+.cs-btn--danger {
+  --btn-bg: var(--cs-rose-600, #e11d48);
+  --btn-bg-hover: var(--cs-rose-500, #f43f5e);
+  --btn-bg-active: rgba(225, 29, 72, 0.9);
+  --btn-text: #ffffff;
+  --btn-border-color: transparent;
+  --btn-shadow: 0 1px 3px rgba(225, 29, 72, 0.3);
+  --btn-shadow-hover: 0 4px 12px rgba(225, 29, 72, 0.4);
+}
+
+.cs-btn--success {
+  --btn-bg: var(--cs-emerald-600, #059669);
+  --btn-bg-hover: var(--cs-emerald-500, #10b981);
+  --btn-bg-active: rgba(5, 150, 105, 0.9);
+  --btn-text: #ffffff;
+  --btn-border-color: transparent;
+  --btn-shadow: 0 1px 3px rgba(5, 150, 105, 0.3);
+  --btn-shadow-hover: 0 4px 12px rgba(5, 150, 105, 0.4);
+}
+
+/* ================================================================== */
+/* Input                                                               */
+/* ================================================================== */
+.cs-input {
+  /* Size: md (default) */
+  --input-height: 36px;
+  --input-px: 12px;
+  --input-py: 8px;
+  --input-font-size: 0.875rem;
+  --input-radius: 6px;
+  --input-icon-size: 18px;
+  --input-border-width: 1px;
+  --input-transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
+
+  /* Colors */
+  --input-bg: var(--cs-slate-900, #0f172a);
+  --input-bg-hover: var(--cs-slate-800, #1e293b);
+  --input-bg-disabled: var(--cs-slate-900, #0f172a);
+  --input-text: var(--cs-text-primary);
+  --input-text-disabled: var(--cs-text-disabled);
+  --input-placeholder: var(--cs-slate-500, #64748b);
+  --input-border: var(--cs-border-default);
+  --input-border-hover: var(--cs-slate-500, #64748b);
+  --input-border-focus: var(--cs-violet-500, #8b5cf6);
+  --input-border-error: var(--cs-rose-500, #f43f5e);
+  --input-border-success: var(--cs-emerald-500, #10b981);
+
+  /* Label */
+  --input-label-font-size: 0.8125rem;
+  --input-label-font-weight: 500;
+  --input-label-color: var(--cs-text-secondary);
+  --input-label-margin-bottom: 6px;
+
+  /* Helper */
+  --input-helper-font-size: 0.75rem;
+  --input-helper-color: var(--cs-text-tertiary);
+  --input-helper-margin-top: 4px;
+  --input-error-color: var(--cs-rose-400, #fb7185);
+  --input-success-color: var(--cs-emerald-400, #34d399);
+
+  /* Icons */
+  --input-icon-color: var(--cs-slate-400, #94a3b8);
+  --input-icon-focus-color: var(--cs-violet-400, #a78bfa);
+
+  /* Focus ring */
+  --input-focus-ring-width: 2px;
+  --input-focus-ring-offset: 1px;
+  --input-focus-ring-color: var(--cs-violet-500, #8b5cf6);
+
+  /* Error ring */
+  --input-error-ring-width: 2px;
+  --input-error-ring-color: var(--cs-rose-500, #f43f5e);
+
+  /* Disabled */
+  --input-disabled-opacity: 0.4;
+}
+
+/* Input sizes */
+.cs-input--sm {
+  --input-height: 32px;
+  --input-px: 10px;
+  --input-py: 6px;
+  --input-font-size: 0.8125rem;
+  --input-radius: 6px;
+  --input-icon-size: 16px;
+}
+
+.cs-input--lg {
+  --input-height: 44px;
+  --input-px: 16px;
+  --input-py: 10px;
+  --input-font-size: 1rem;
+  --input-radius: 8px;
+  --input-icon-size: 20px;
+}
+
+/* ================================================================== */
+/* Card                                                                */
+/* ================================================================== */
+.cs-card {
+  /* Size: md (default) */
+  --card-padding: 16px;
+  --card-radius: 10px;
+  --card-gap: 12px;
+  --card-border-width: 1px;
+  --card-transition: all 200ms ease-out;
+
+  /* Colors */
+  --card-bg: var(--cs-surface-card);
+  --card-bg-hover: var(--cs-surface-elevated);
+  --card-bg-selected: rgba(139, 92, 246, 0.08);
+  --card-border: var(--cs-border-default);
+  --card-border-hover: var(--cs-slate-500, #64748b);
+  --card-border-selected: var(--cs-violet-500, #8b5cf6);
+  --card-header-text: var(--cs-text-primary);
+  --card-body-text: var(--cs-text-secondary);
+  --card-meta-text: var(--cs-text-tertiary);
+  --card-divider: rgba(51, 65, 85, 0.4);
+
+  /* Shadows */
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
+  --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
+  --card-shadow-selected: 0 0 0 2px rgba(139, 92, 246, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
+
+  /* Header */
+  --card-header-height: 48px;
+  --card-header-font-size: 0.875rem;
+  --card-header-font-weight: 600;
+
+  /* Footer */
+  --card-footer-height: 44px;
+  --card-footer-font-size: 0.8125rem;
+  --card-footer-bg: rgba(15, 23, 42, 0.3);
+}
+
+/* Card sizes */
+.cs-card--sm {
+  --card-padding: 12px;
+  --card-radius: 8px;
+  --card-gap: 8px;
+}
+
+.cs-card--lg {
+  --card-padding: 24px;
+  --card-radius: 12px;
+  --card-gap: 16px;
+}
+
+/* ================================================================== */
+/* Modal                                                               */
+/* ================================================================== */
+.cs-modal-overlay {
+  --modal-overlay-bg: rgba(0, 0, 0, 0.6);
+  --modal-overlay-blur: 4px;
+  --modal-overlay-z: 300;
+  --modal-overlay-enter: 200ms ease-out;
+  --modal-overlay-exit: 150ms ease-in;
+}
+
+.cs-modal {
+  /* Size: md (default) */
+  --modal-width: 560px;
+  --modal-max-height: 85vh;
+  --modal-padding: 24px;
+  --modal-radius: 12px;
+  --modal-border-width: 1px;
+  --modal-z: 300;
+
+  /* Colors */
+  --modal-bg: var(--cs-slate-900, #0f172a);
+  --modal-border: var(--cs-border-default);
+  --modal-header-text: var(--cs-text-primary);
+  --modal-body-text: var(--cs-text-secondary);
+  --modal-divider: rgba(51, 65, 85, 0.4);
+  --modal-close-icon: var(--cs-slate-400, #94a3b8);
+  --modal-close-icon-hover: var(--cs-text-primary);
+
+  /* Shadow */
+  --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(148, 163, 184, 0.08);
+
+  /* Header */
+  --modal-header-height: 56px;
+  --modal-header-font-size: 1.125rem;
+  --modal-header-font-weight: 600;
+  --modal-header-padding-bottom: 16px;
+
+  /* Footer */
+  --modal-footer-height: 64px;
+  --modal-footer-padding-top: 16px;
+  --modal-footer-gap: 12px;
+
+  /* Body */
+  --modal-body-max-height: 60vh;
+  --modal-body-overflow-y: auto;
+
+  /* Animation */
+  --modal-enter: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --modal-exit: 150ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Modal sizes */
+.cs-modal--sm {
+  --modal-width: 400px;
+  --modal-max-height: 80vh;
+  --modal-padding: 20px;
+}
+
+.cs-modal--lg {
+  --modal-width: 720px;
+  --modal-max-height: 90vh;
+  --modal-padding: 32px;
+}
+
+.cs-modal--xl {
+  --modal-width: 960px;
+  --modal-max-height: 90vh;
+  --modal-padding: 32px;
+}
+
+.cs-modal--fullscreen {
+  --modal-width: 100vw;
+  --modal-max-height: 100vh;
+  --modal-padding: 32px;
+  --modal-radius: 0px;
+}
+
+/* ================================================================== */
+/* Light mode overrides                                                */
+/* ================================================================== */
+[data-theme='light'] .cs-btn {
+  --btn-shadow: 0 1px 3px rgba(124, 58, 237, 0.15);
+  --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+[data-theme='light'] .cs-btn--secondary {
+  --btn-bg-hover: rgba(139, 92, 246, 0.06);
+  --btn-bg-active: rgba(139, 92, 246, 0.1);
+  --btn-text: var(--cs-violet-600, #7c3aed);
+}
+
+[data-theme='light'] .cs-btn--ghost {
+  --btn-bg-hover: rgba(148, 163, 184, 0.06);
+  --btn-bg-active: rgba(148, 163, 184, 0.1);
+}
+
+[data-theme='light'] .cs-input {
+  --input-bg: #ffffff;
+  --input-bg-hover: var(--cs-slate-50, #f8fafc);
+  --input-bg-disabled: var(--cs-slate-100, #f1f5f9);
+  --input-placeholder: var(--cs-slate-400, #94a3b8);
+}
+
+[data-theme='light'] .cs-card {
+  --card-bg: #ffffff;
+  --card-bg-hover: var(--cs-slate-50, #f8fafc);
+  --card-divider: rgba(203, 213, 225, 0.5);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --card-footer-bg: var(--cs-slate-50, #f8fafc);
+}
+
+[data-theme='light'] .cs-modal-overlay {
+  --modal-overlay-bg: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='light'] .cs-modal {
+  --modal-bg: #ffffff;
+  --modal-divider: rgba(203, 213, 225, 0.5);
+  --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06);
+}

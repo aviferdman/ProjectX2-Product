@@ -12,6 +12,7 @@
 export { designSystemTheme } from './tailwind/design-system-theme.js';
 export { crewspaceTheme } from './tailwind/canvas-theme.js';
 export { responsiveTheme } from './tailwind/responsive-theme.js';
+export { componentLibraryTheme } from './tailwind/component-library-theme.js';
 
 /* ------------------------------------------------------------------ */
 /* Token constants (TypeScript)                                        */
@@ -40,6 +41,7 @@ export {
 /* ------------------------------------------------------------------ */
 export const tokenPaths = {
   designSystem: './tokens/design-system.json',
+  componentLibrary: './tokens/component-library.json',
   colors: './tokens/colors.json',
   typography: './tokens/typography.json',
   spacing: './tokens/spacing.json',
@@ -53,6 +55,7 @@ export const tokenPaths = {
 /* ------------------------------------------------------------------ */
 export const cssPaths = {
   designSystem: './css/design-system-variables.css',
+  componentLibrary: './css/component-library-variables.css',
   canvas: './css/canvas-variables.css',
   timeline: './css/timeline-variables.css',
   dashboard: './css/dashboard-variables.css',
