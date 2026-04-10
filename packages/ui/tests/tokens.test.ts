@@ -1,5 +1,21 @@
 import { describe, it, expect } from 'vitest';
-import { colors, sizing, radius, typography, transitions } from '../src/theme/tokens.js';
+import {
+  colors,
+  sizing,
+  radius,
+  typography,
+  transitions,
+  shadows,
+  fontWeight,
+  lineHeight,
+  letterSpacing,
+  zIndex,
+  spacing,
+  duration,
+  easing,
+  opacity,
+  breakpoints,
+} from '../src/theme/tokens.js';
 
 describe('Design tokens', () => {
   describe('colors', () => {
@@ -76,6 +92,94 @@ describe('Design tokens', () => {
       expect(transitions.normal).toContain('200ms');
       expect(transitions.slow).toContain('300ms');
       expect(transitions.spring).toContain('cubic-bezier');
+    });
+
+    it('has slower preset', () => {
+      expect(transitions.slower).toContain('500ms');
+    });
+  });
+
+  describe('shadows', () => {
+    it('has elevation scale', () => {
+      expect(shadows.xs).toContain('rgba');
+      expect(shadows.sm).toContain('rgba');
+      expect(shadows.md).toContain('rgba');
+      expect(shadows.lg).toContain('rgba');
+      expect(shadows.xl).toContain('rgba');
+    });
+
+    it('has none value', () => {
+      expect(shadows.none).toBe('none');
+    });
+  });
+
+  describe('fontWeight', () => {
+    it('has standard weight levels', () => {
+      expect(fontWeight.normal).toBe(400);
+      expect(fontWeight.medium).toBe(500);
+      expect(fontWeight.semibold).toBe(600);
+      expect(fontWeight.bold).toBe(700);
+    });
+  });
+
+  describe('lineHeight', () => {
+    it('has standard scale', () => {
+      expect(lineHeight.tight).toBe(1.25);
+      expect(lineHeight.normal).toBe(1.5);
+      expect(lineHeight.relaxed).toBe(1.625);
+    });
+  });
+
+  describe('letterSpacing', () => {
+    it('has standard range', () => {
+      expect(letterSpacing.tight).toBe('-0.01em');
+      expect(letterSpacing.normal).toBe('0');
+      expect(letterSpacing.wide).toBe('0.025em');
+    });
+  });
+
+  describe('zIndex', () => {
+    it('follows correct layer ordering', () => {
+      expect(zIndex.base).toBeLessThan(zIndex.node);
+      expect(zIndex.node).toBeLessThan(zIndex.toolbar);
+      expect(zIndex.dropdown).toBeLessThan(zIndex.modal);
+      expect(zIndex.modal).toBeLessThan(zIndex.tooltip);
+    });
+  });
+
+  describe('spacing', () => {
+    it('follows 4px grid', () => {
+      expect(spacing[1]).toBe(4);
+      expect(spacing[2]).toBe(8);
+      expect(spacing[4]).toBe(16);
+    });
+  });
+
+  describe('duration', () => {
+    it('values are numeric ms', () => {
+      expect(duration.fast).toBe(100);
+      expect(duration.normal).toBe(200);
+    });
+  });
+
+  describe('easing', () => {
+    it('has standard curves', () => {
+      expect(easing.default).toBe('ease-out');
+      expect(easing.spring).toContain('cubic-bezier');
+    });
+  });
+
+  describe('opacity', () => {
+    it('has semantic values', () => {
+      expect(opacity.disabled).toBe(0.4);
+      expect(opacity.overlay).toBe(0.6);
+    });
+  });
+
+  describe('breakpoints', () => {
+    it('matches responsive spec', () => {
+      expect(breakpoints.sm).toBe(640);
+      expect(breakpoints.lg).toBe(1024);
     });
   });
 });

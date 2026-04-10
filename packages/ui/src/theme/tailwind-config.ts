@@ -4,11 +4,15 @@
  * Extends Tailwind with the Crewspace design tokens (colors, typography,
  * spacing, shadows, animations) defined by the design team.
  *
+ * The merge order (base → component themes) ensures foundational tokens
+ * are always present while allowing component themes to specialize.
+ *
  * Usage in consuming apps:
  *   import { crewspaceTailwindPreset } from '@crewspace/ui/tailwind';
  *   export default { presets: [crewspaceTailwindPreset] };
  */
 
+import { designSystemTheme } from '../../src/design/tailwind/design-system-theme.js';
 import { crewspaceTheme } from '../../src/design/tailwind/canvas-theme.js';
 import { responsiveTheme } from '../../src/design/tailwind/responsive-theme.js';
 
@@ -35,7 +39,10 @@ function deepMerge<T extends Record<string, unknown>>(a: T, b: Record<string, un
 }
 
 const mergedTheme = deepMerge(
-  crewspaceTheme as unknown as Record<string, unknown>,
+  deepMerge(
+    designSystemTheme as unknown as Record<string, unknown>,
+    crewspaceTheme as unknown as Record<string, unknown>,
+  ),
   responsiveTheme as unknown as Record<string, unknown>,
 );
 
@@ -45,4 +52,4 @@ export const crewspaceTailwindPreset = {
   },
 } as const;
 
-export { crewspaceTheme, responsiveTheme, mergedTheme };
+export { designSystemTheme, crewspaceTheme, responsiveTheme, mergedTheme };

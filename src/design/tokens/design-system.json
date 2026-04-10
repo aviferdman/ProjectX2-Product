@@ -1,0 +1,268 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Crewspace Design System — Unified foundational design tokens (TASK-125). This file aggregates all primitive and semantic tokens into a single DTCG-compliant source of truth for colors, typography, spacing, sizing, radius, shadows, transitions, and z-index layers.",
+  "crewspace": {
+    "color": {
+      "$description": "Color tokens — primitives (palette) and semantics (contextual usage)",
+      "primitive": {
+        "slate": {
+          "50":  { "$value": "#f8fafc", "$type": "color" },
+          "100": { "$value": "#f1f5f9", "$type": "color" },
+          "200": { "$value": "#e2e8f0", "$type": "color" },
+          "300": { "$value": "#cbd5e1", "$type": "color" },
+          "400": { "$value": "#94a3b8", "$type": "color" },
+          "500": { "$value": "#64748b", "$type": "color" },
+          "600": { "$value": "#475569", "$type": "color" },
+          "700": { "$value": "#334155", "$type": "color" },
+          "800": { "$value": "#1e293b", "$type": "color" },
+          "900": { "$value": "#0f172a", "$type": "color" },
+          "950": { "$value": "#020617", "$type": "color" }
+        },
+        "violet": {
+          "50":  { "$value": "#f5f3ff", "$type": "color" },
+          "100": { "$value": "#ede9fe", "$type": "color" },
+          "200": { "$value": "#ddd6fe", "$type": "color" },
+          "300": { "$value": "#c4b5fd", "$type": "color" },
+          "400": { "$value": "#a78bfa", "$type": "color" },
+          "500": { "$value": "#8b5cf6", "$type": "color" },
+          "600": { "$value": "#7c3aed", "$type": "color" },
+          "700": { "$value": "#6d28d9", "$type": "color" },
+          "800": { "$value": "#5b21b6", "$type": "color" },
+          "900": { "$value": "#4c1d95", "$type": "color" }
+        },
+        "emerald": {
+          "50":  { "$value": "#ecfdf5", "$type": "color" },
+          "100": { "$value": "#d1fae5", "$type": "color" },
+          "400": { "$value": "#34d399", "$type": "color" },
+          "500": { "$value": "#10b981", "$type": "color" },
+          "600": { "$value": "#059669", "$type": "color" }
+        },
+        "amber": {
+          "50":  { "$value": "#fffbeb", "$type": "color" },
+          "100": { "$value": "#fef3c7", "$type": "color" },
+          "400": { "$value": "#fbbf24", "$type": "color" },
+          "500": { "$value": "#f59e0b", "$type": "color" },
+          "600": { "$value": "#d97706", "$type": "color" }
+        },
+        "rose": {
+          "50":  { "$value": "#fff1f2", "$type": "color" },
+          "100": { "$value": "#ffe4e6", "$type": "color" },
+          "400": { "$value": "#fb7185", "$type": "color" },
+          "500": { "$value": "#f43f5e", "$type": "color" },
+          "600": { "$value": "#e11d48", "$type": "color" }
+        },
+        "sky": {
+          "50":  { "$value": "#f0f9ff", "$type": "color" },
+          "100": { "$value": "#e0f2fe", "$type": "color" },
+          "400": { "$value": "#38bdf8", "$type": "color" },
+          "500": { "$value": "#0ea5e9", "$type": "color" },
+          "600": { "$value": "#0284c7", "$type": "color" }
+        },
+        "white":   { "$value": "#ffffff", "$type": "color" },
+        "black":   { "$value": "#000000", "$type": "color" },
+        "transparent": { "$value": "transparent", "$type": "color" }
+      },
+      "semantic": {
+        "brand": {
+          "primary":   { "$value": "{crewspace.color.primitive.violet.600}", "$type": "color", "$description": "Primary brand / accent" },
+          "secondary": { "$value": "{crewspace.color.primitive.violet.400}", "$type": "color", "$description": "Secondary brand accent" },
+          "subtle":    { "$value": "{crewspace.color.primitive.violet.100}", "$type": "color", "$description": "Subtle brand tint for backgrounds" }
+        },
+        "surface": {
+          "app":       { "$value": "{crewspace.color.primitive.slate.950}", "$type": "color", "$description": "App background (dark mode)" },
+          "canvas":    { "$value": "#0a0e1a", "$type": "color", "$description": "Canvas viewport — very dark blue-black" },
+          "panel":     { "$value": "{crewspace.color.primitive.slate.900}", "$type": "color", "$description": "Sidebar / panel background" },
+          "card":      { "$value": "{crewspace.color.primitive.slate.800}", "$type": "color", "$description": "Card / node background" },
+          "elevated":  { "$value": "{crewspace.color.primitive.slate.700}", "$type": "color", "$description": "Elevated elements (hover, modals)" },
+          "overlay":   { "$value": "rgba(0,0,0,0.6)", "$type": "color", "$description": "Scrim overlay for modals" }
+        },
+        "border": {
+          "default":  { "$value": "{crewspace.color.primitive.slate.700}", "$type": "color" },
+          "subtle":   { "$value": "{crewspace.color.primitive.slate.800}", "$type": "color" },
+          "strong":   { "$value": "{crewspace.color.primitive.slate.500}", "$type": "color" },
+          "focus":    { "$value": "{crewspace.color.primitive.violet.500}", "$type": "color" }
+        },
+        "text": {
+          "primary":   { "$value": "{crewspace.color.primitive.slate.50}", "$type": "color" },
+          "secondary": { "$value": "{crewspace.color.primitive.slate.400}", "$type": "color" },
+          "tertiary":  { "$value": "{crewspace.color.primitive.slate.500}", "$type": "color" },
+          "inverse":   { "$value": "{crewspace.color.primitive.slate.900}", "$type": "color" },
+          "disabled":  { "$value": "{crewspace.color.primitive.slate.600}", "$type": "color" },
+          "link":      { "$value": "{crewspace.color.primitive.violet.400}", "$type": "color" },
+          "link-hover":{ "$value": "{crewspace.color.primitive.violet.300}", "$type": "color" }
+        },
+        "status": {
+          "success":      { "$value": "{crewspace.color.primitive.emerald.500}", "$type": "color" },
+          "success-subtle": { "$value": "{crewspace.color.primitive.emerald.50}", "$type": "color" },
+          "warning":      { "$value": "{crewspace.color.primitive.amber.500}", "$type": "color" },
+          "warning-subtle": { "$value": "{crewspace.color.primitive.amber.50}", "$type": "color" },
+          "error":        { "$value": "{crewspace.color.primitive.rose.500}", "$type": "color" },
+          "error-subtle": { "$value": "{crewspace.color.primitive.rose.50}", "$type": "color" },
+          "info":         { "$value": "{crewspace.color.primitive.sky.500}", "$type": "color" },
+          "info-subtle":  { "$value": "{crewspace.color.primitive.sky.50}", "$type": "color" }
+        },
+        "interactive": {
+          "default":  { "$value": "{crewspace.color.primitive.violet.600}", "$type": "color", "$description": "Default interactive element color" },
+          "hover":    { "$value": "{crewspace.color.primitive.violet.500}", "$type": "color" },
+          "active":   { "$value": "{crewspace.color.primitive.violet.700}", "$type": "color" },
+          "disabled": { "$value": "{crewspace.color.primitive.slate.600}", "$type": "color" }
+        }
+      }
+    },
+    "typography": {
+      "$description": "Typography tokens — font families, sizes, weights, line heights, letter spacing, and presets",
+      "fontFamily": {
+        "sans":  { "$value": "Inter, ui-sans-serif, system-ui, -apple-system, sans-serif", "$type": "fontFamily" },
+        "mono":  { "$value": "'JetBrains Mono', 'Fira Code', ui-monospace, monospace", "$type": "fontFamily" }
+      },
+      "fontSize": {
+        "2xs":   { "$value": "0.625rem",  "$type": "dimension", "$description": "10px — micro labels, badges" },
+        "xs":    { "$value": "0.75rem",   "$type": "dimension", "$description": "12px — labels, captions" },
+        "sm":    { "$value": "0.8125rem", "$type": "dimension", "$description": "13px — node body, secondary text" },
+        "base":  { "$value": "0.875rem",  "$type": "dimension", "$description": "14px — default UI text" },
+        "md":    { "$value": "1rem",      "$type": "dimension", "$description": "16px — section titles" },
+        "lg":    { "$value": "1.125rem",  "$type": "dimension", "$description": "18px — panel headings" },
+        "xl":    { "$value": "1.25rem",   "$type": "dimension", "$description": "20px — page headings" },
+        "2xl":   { "$value": "1.5rem",    "$type": "dimension", "$description": "24px — large headings" },
+        "3xl":   { "$value": "1.875rem",  "$type": "dimension", "$description": "30px — hero / display" },
+        "4xl":   { "$value": "2.25rem",   "$type": "dimension", "$description": "36px — display" }
+      },
+      "fontWeight": {
+        "normal":   { "$value": "400", "$type": "fontWeight" },
+        "medium":   { "$value": "500", "$type": "fontWeight" },
+        "semibold": { "$value": "600", "$type": "fontWeight" },
+        "bold":     { "$value": "700", "$type": "fontWeight" }
+      },
+      "lineHeight": {
+        "none":    { "$value": "1",     "$type": "number" },
+        "tight":   { "$value": "1.25",  "$type": "number" },
+        "snug":    { "$value": "1.375", "$type": "number" },
+        "normal":  { "$value": "1.5",   "$type": "number" },
+        "relaxed": { "$value": "1.625", "$type": "number" },
+        "loose":   { "$value": "2",     "$type": "number" }
+      },
+      "letterSpacing": {
+        "tighter": { "$value": "-0.02em", "$type": "dimension" },
+        "tight":   { "$value": "-0.01em", "$type": "dimension" },
+        "normal":  { "$value": "0",       "$type": "dimension" },
+        "wide":    { "$value": "0.025em", "$type": "dimension" },
+        "wider":   { "$value": "0.05em",  "$type": "dimension" },
+        "widest":  { "$value": "0.1em",   "$type": "dimension" }
+      }
+    },
+    "spacing": {
+      "$description": "Spacing scale based on 4px grid",
+      "0":    { "$value": "0px",   "$type": "dimension" },
+      "px":   { "$value": "1px",   "$type": "dimension" },
+      "0.5":  { "$value": "2px",   "$type": "dimension" },
+      "1":    { "$value": "4px",   "$type": "dimension" },
+      "1.5":  { "$value": "6px",   "$type": "dimension" },
+      "2":    { "$value": "8px",   "$type": "dimension" },
+      "2.5":  { "$value": "10px",  "$type": "dimension" },
+      "3":    { "$value": "12px",  "$type": "dimension" },
+      "3.5":  { "$value": "14px",  "$type": "dimension" },
+      "4":    { "$value": "16px",  "$type": "dimension" },
+      "5":    { "$value": "20px",  "$type": "dimension" },
+      "6":    { "$value": "24px",  "$type": "dimension" },
+      "7":    { "$value": "28px",  "$type": "dimension" },
+      "8":    { "$value": "32px",  "$type": "dimension" },
+      "9":    { "$value": "36px",  "$type": "dimension" },
+      "10":   { "$value": "40px",  "$type": "dimension" },
+      "12":   { "$value": "48px",  "$type": "dimension" },
+      "14":   { "$value": "56px",  "$type": "dimension" },
+      "16":   { "$value": "64px",  "$type": "dimension" },
+      "20":   { "$value": "80px",  "$type": "dimension" },
+      "24":   { "$value": "96px",  "$type": "dimension" }
+    },
+    "radius": {
+      "$description": "Border radius scale",
+      "none": { "$value": "0px",    "$type": "dimension" },
+      "sm":   { "$value": "4px",    "$type": "dimension" },
+      "md":   { "$value": "6px",    "$type": "dimension" },
+      "lg":   { "$value": "8px",    "$type": "dimension" },
+      "xl":   { "$value": "12px",   "$type": "dimension" },
+      "2xl":  { "$value": "16px",   "$type": "dimension" },
+      "full": { "$value": "9999px", "$type": "dimension" },
+      "node": { "$value": "10px",   "$type": "dimension", "$description": "Canvas node corner radius" }
+    },
+    "shadow": {
+      "$description": "Box shadow tokens for elevation hierarchy",
+      "xs":             { "$value": "0 1px 2px rgba(0,0,0,0.2)", "$type": "shadow" },
+      "sm":             { "$value": "0 1px 3px rgba(0,0,0,0.3)", "$type": "shadow" },
+      "md":             { "$value": "0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.1)", "$type": "shadow" },
+      "lg":             { "$value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.15)", "$type": "shadow" },
+      "xl":             { "$value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.1)", "$type": "shadow" },
+      "node":           { "$value": "0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.1)", "$type": "shadow" },
+      "node-hover":     { "$value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.15)", "$type": "shadow" },
+      "node-selected":  { "$value": "0 0 0 2px rgba(139,92,246,1), 0 4px 20px rgba(139,92,246,0.25)", "$type": "shadow" },
+      "panel":          { "$value": "0 1px 3px rgba(0,0,0,0.3)", "$type": "shadow" },
+      "toolbar":        { "$value": "0 2px 12px rgba(0,0,0,0.35)", "$type": "shadow" },
+      "dropdown":       { "$value": "0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.1)", "$type": "shadow" },
+      "inner":          { "$value": "inset 0 2px 4px rgba(0,0,0,0.2)", "$type": "shadow" },
+      "none":           { "$value": "none", "$type": "shadow" }
+    },
+    "transition": {
+      "$description": "Transition presets for consistent motion",
+      "fast":     { "$value": "100ms ease-out", "$type": "transition" },
+      "normal":   { "$value": "200ms ease-out", "$type": "transition" },
+      "slow":     { "$value": "300ms ease-out", "$type": "transition" },
+      "slower":   { "$value": "500ms ease-out", "$type": "transition" },
+      "spring":   { "$value": "300ms cubic-bezier(0.34,1.56,0.64,1)", "$type": "transition", "$description": "Bouncy feel for micro-interactions" }
+    },
+    "duration": {
+      "$description": "Raw duration values for animation composition",
+      "instant":  { "$value": "0ms",    "$type": "duration" },
+      "fast":     { "$value": "100ms",  "$type": "duration" },
+      "normal":   { "$value": "200ms",  "$type": "duration" },
+      "slow":     { "$value": "300ms",  "$type": "duration" },
+      "slower":   { "$value": "500ms",  "$type": "duration" },
+      "slowest":  { "$value": "1000ms", "$type": "duration" }
+    },
+    "easing": {
+      "$description": "Easing curves",
+      "default":  { "$value": "ease-out",                          "$type": "cubicBezier" },
+      "in":       { "$value": "ease-in",                           "$type": "cubicBezier" },
+      "in-out":   { "$value": "ease-in-out",                       "$type": "cubicBezier" },
+      "spring":   { "$value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "$type": "cubicBezier" },
+      "linear":   { "$value": "linear",                            "$type": "cubicBezier" }
+    },
+    "zIndex": {
+      "$description": "Z-index layering system",
+      "base":     { "$value": "0",    "$type": "number" },
+      "canvas":   { "$value": "1",    "$type": "number" },
+      "node":     { "$value": "10",   "$type": "number" },
+      "edge":     { "$value": "5",    "$type": "number" },
+      "toolbar":  { "$value": "100",  "$type": "number" },
+      "sidebar":  { "$value": "100",  "$type": "number" },
+      "dropdown": { "$value": "200",  "$type": "number" },
+      "modal":    { "$value": "300",  "$type": "number" },
+      "overlay":  { "$value": "250",  "$type": "number" },
+      "toast":    { "$value": "400",  "$type": "number" },
+      "tooltip":  { "$value": "500",  "$type": "number" }
+    },
+    "breakpoint": {
+      "$description": "Responsive breakpoints (min-width)",
+      "xs":  { "$value": "375px",  "$type": "dimension" },
+      "sm":  { "$value": "640px",  "$type": "dimension" },
+      "md":  { "$value": "768px",  "$type": "dimension" },
+      "lg":  { "$value": "1024px", "$type": "dimension" },
+      "xl":  { "$value": "1280px", "$type": "dimension" },
+      "2xl": { "$value": "1536px", "$type": "dimension" }
+    },
+    "opacity": {
+      "$description": "Opacity scale",
+      "0":   { "$value": "0",    "$type": "number" },
+      "5":   { "$value": "0.05", "$type": "number" },
+      "10":  { "$value": "0.1",  "$type": "number" },
+      "20":  { "$value": "0.2",  "$type": "number" },
+      "30":  { "$value": "0.3",  "$type": "number" },
+      "40":  { "$value": "0.4",  "$type": "number" },
+      "50":  { "$value": "0.5",  "$type": "number" },
+      "60":  { "$value": "0.6",  "$type": "number" },
+      "70":  { "$value": "0.7",  "$type": "number" },
+      "80":  { "$value": "0.8",  "$type": "number" },
+      "90":  { "$value": "0.9",  "$type": "number" },
+      "100": { "$value": "1",    "$type": "number" }
+    }
+  }
+}
