@@ -35,6 +35,8 @@
     "publish:verify-exports": "tsx scripts/verify-package-exports.ts",
     "release": "tsx scripts/release.ts",
     "release:dry-run": "tsx scripts/release.ts --dry-run",
+    "release:create": "tsx scripts/create-release.ts",
+    "release:create:dry-run": "tsx scripts/create-release.ts --dry-run",
     "release:github": "tsx scripts/github-release.ts",
     "release:github:dry-run": "tsx scripts/github-release.ts --dry-run",
     "docs:dev": "vitepress dev docs",
