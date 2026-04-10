@@ -71,3 +71,9 @@ export {
   type UseAriaAnnouncerOptions,
   type UseAriaAnnouncerResult,
 } from './useAriaAnnouncer.js';
+// TASK-182: Toast notification hook
+export {
+  useToast,
+  type UseToastOptions,
+  type UseToastResult,
+} from './useToast.js';

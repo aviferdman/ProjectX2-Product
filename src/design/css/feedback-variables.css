@@ -1,0 +1,41 @@
+/* TASK-182: CSS custom properties for feedback components */
+:root {
+  /* Status colors */
+  --cs-feedback-success-bg: rgba(16, 185, 129, 0.08);
+  --cs-feedback-success-border: rgba(5, 150, 105, 0.5);
+  --cs-feedback-success-icon: #34d399;
+
+  --cs-feedback-error-bg: rgba(244, 63, 94, 0.08);
+  --cs-feedback-error-border: rgba(225, 29, 72, 0.5);
+  --cs-feedback-error-icon: #fb7185;
+
+  --cs-feedback-warning-bg: rgba(245, 158, 11, 0.08);
+  --cs-feedback-warning-border: rgba(217, 119, 6, 0.5);
+  --cs-feedback-warning-icon: #fbbf24;
+
+  --cs-feedback-info-bg: rgba(14, 165, 233, 0.08);
+  --cs-feedback-info-border: rgba(2, 132, 199, 0.5);
+  --cs-feedback-info-icon: #38bdf8;
+
+  /* Empty state */
+  --cs-feedback-empty-border: #334155;
+  --cs-feedback-empty-icon: #475569;
+
+  /* Loading */
+  --cs-feedback-loading-spinner: #a78bfa;
+  --cs-feedback-loading-track: #1e293b;
+  --cs-feedback-loading-bar: #8b5cf6;
+
+  /* Toast */
+  --cs-toast-bg: #0f172a;
+  --cs-toast-shadow: rgba(0, 0, 0, 0.4);
+  --cs-toast-max-width: 420px;
+  --cs-toast-min-width: 280px;
+  --cs-toast-z-index: 50;
+  --cs-toast-gap: 0.5rem;
+
+  /* Animation durations */
+  --cs-feedback-transition: 150ms;
+  --cs-feedback-enter-duration: 200ms;
+  --cs-feedback-exit-duration: 150ms;
+}
