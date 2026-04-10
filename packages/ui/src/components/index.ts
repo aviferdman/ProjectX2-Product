@@ -175,6 +175,42 @@ export {
   getAlertSeverity,
 } from './usage/index.js';
 
+// Marketplace Browser (TASK-166)
+export {
+  IntegrationCategoryBadge,
+  type IntegrationCategoryBadgeProps,
+  VerifiedBadge,
+  type VerifiedBadgeProps,
+  StarRating,
+  type StarRatingProps,
+  IntegrationCard,
+  type IntegrationCardProps,
+  IntegrationGrid,
+  type IntegrationGridProps,
+  MarketplaceSearchBar,
+  type MarketplaceSearchBarProps,
+  MarketplaceCategoryFilter,
+  type MarketplaceCategoryFilterProps,
+  MarketplaceSortDropdown,
+  type MarketplaceSortDropdownProps,
+  MarketplaceToolbar,
+  type MarketplaceToolbarProps,
+  MarketplaceEmptyState,
+  type MarketplaceEmptyStateProps,
+  MarketplacePagination,
+  type MarketplacePaginationProps,
+  MarketplaceBrowserPage,
+  type MarketplaceBrowserPageProps,
+  type IntegrationCategory,
+  type IntegrationSortField,
+  type MarketplaceSortDirection,
+  type IntegrationSummary,
+  type MarketplaceFilters,
+  INTEGRATION_CATEGORIES,
+  MARKETPLACE_SORT_OPTIONS,
+  MARKETPLACE_ITEMS_PER_PAGE,
+} from './marketplace/index.js';
+
 // Dashboard (TASK-151)
 export {
   WorkflowStatusBadge,
