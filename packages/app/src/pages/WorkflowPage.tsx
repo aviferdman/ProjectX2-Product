@@ -1,114 +1,23 @@
 /**
  * WorkflowPage — Main workflow editor view (Lovable-style).
  * Split layout: chat sidebar (left) + workflow visualization (right).
+ * Wired to @crewspace/core for real LLM-driven planning and execution.
  */
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { WorkflowChat } from '../components/workflow/WorkflowChat.js';
 import { WorkflowPreview } from '../components/workflow/WorkflowPreview.js';
 import { WorkflowToolbar } from '../components/workflow/WorkflowToolbar.js';
-import type { WorkflowState, AgentNode, TaskNode, ChatMessage } from '../types/workflow.js';
-
-/** Generate a realistic workflow from a prompt (mock — in production calls core engine). */
-function generateMockWorkflow(prompt: string): WorkflowState {
-  const id = `wf-${Date.now()}`;
-  const agents: AgentNode[] = [
-    {
-      id: 'agent-researcher',
-      role: 'Research Analyst',
-      goal: 'Gather comprehensive market data and trends',
-      backstory: 'Senior research analyst with 10+ years of experience in market intelligence.',
-      tools: ['web-search', 'web-scraper', 'document-reader'],
-      status: 'idle',
-      color: '#8b5cf6',
-      position: { x: 100, y: 100 },
-    },
-    {
-      id: 'agent-analyst',
-      role: 'Data Analyst',
-      goal: 'Analyze collected data and extract actionable insights',
-      backstory: 'Expert data analyst specializing in statistical analysis and pattern recognition.',
-      tools: ['data-processor', 'chart-generator'],
-      status: 'idle',
-      color: '#06b6d4',
-      position: { x: 400, y: 100 },
-    },
-    {
-      id: 'agent-strategist',
-      role: 'Strategy Consultant',
-      goal: 'Develop strategic recommendations based on analysis',
-      backstory: 'Management consultant with expertise in go-to-market strategies and product development.',
-      tools: ['document-writer', 'presentation-builder'],
-      status: 'idle',
-      color: '#f59e0b',
-      position: { x: 250, y: 300 },
-    },
-    {
-      id: 'agent-writer',
-      role: 'Report Writer',
-      goal: 'Compile findings into a comprehensive, professional report',
-      backstory: 'Technical writer specializing in business reports and executive summaries.',
-      tools: ['document-writer', 'formatter'],
-      status: 'idle',
-      color: '#10b981',
-      position: { x: 550, y: 300 },
-    },
-  ];
-
-  const tasks: TaskNode[] = [
-    {
-      id: 'task-1',
-      description: 'Research market landscape, key players, and trends',
-      agentId: 'agent-researcher',
-      dependencies: [],
-      expectedOutput: 'Comprehensive market data report with sources',
-      status: 'pending',
-    },
-    {
-      id: 'task-2',
-      description: 'Analyze user demographics, needs, and pain points',
-      agentId: 'agent-researcher',
-      dependencies: [],
-      expectedOutput: 'User needs analysis document',
-      status: 'pending',
-    },
-    {
-      id: 'task-3',
-      description: 'Process and analyze collected data for patterns and insights',
-      agentId: 'agent-analyst',
-      dependencies: ['task-1', 'task-2'],
-      expectedOutput: 'Data analysis with key findings and visualizations',
-      status: 'pending',
-    },
-    {
-      id: 'task-4',
-      description: 'Develop MVP strategy and go-to-market recommendations',
-      agentId: 'agent-strategist',
-      dependencies: ['task-3'],
-      expectedOutput: 'Strategic recommendation document with MVP roadmap',
-      status: 'pending',
-    },
-    {
-      id: 'task-5',
-      description: 'Compile all findings into a final executive report',
-      agentId: 'agent-writer',
-      dependencies: ['task-3', 'task-4'],
-      expectedOutput: 'Final comprehensive report with executive summary',
-      status: 'pending',
-    },
-  ];
-
-  return {
-    id,
-    name: 'Generated Workflow',
-    description: prompt,
-    agents,
-    tasks,
-    status: 'draft',
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  };
-}
+import type { WorkflowState, ChatMessage } from '../types/workflow.js';
+import {
+  createProvider,
+  getDefaultLLMConfig,
+  generateWorkflowPlan,
+  chatWithWorkflow,
+  executeWorkflow,
+} from '../services/orchestration.js';
+import type { LLMProvider } from '@crewspace/core/types';
+import { LLMSettings } from '../components/workflow/LLMSettings.js';
 
 export function WorkflowPage(): React.JSX.Element {
   const { workflowId } = useParams<{ workflowId: string }>();
@@ -121,113 +30,182 @@ export function WorkflowPage(): React.JSX.Element {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'graph' | 'list' | 'timeline'>('graph');
-  const [sidebarWidth, setSidebarWidth] = useState(420);
+  const [sidebarWidth] = useState(420);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [llmError, setLlmError] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
 
-  // Generate workflow on mount if we have a prompt
+  // Stable LLM provider ref — created once, survives re-renders
+  const providerRef = useRef<LLMProvider | null>(null);
+
+  const getProvider = useCallback((): LLMProvider => {
+    if (!providerRef.current) {
+      const config = getDefaultLLMConfig();
+      providerRef.current = createProvider(config);
+    }
+    return providerRef.current;
+  }, []);
+
+  // Helper to push a chat message
+  const pushMessage = useCallback((role: 'user' | 'assistant' | 'system', content: string) => {
+    const msg: ChatMessage = { id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`, role, content, timestamp: Date.now() };
+    setChatMessages((prev) => [...prev, msg]);
+  }, []);
+
+  // Track whether initial generation has been triggered
+  const hasTriggeredGeneration = useRef(false);
+
+  // -----------------------------------------------------------------------
+  // 1. Generate workflow from initial prompt via LLM
+  // -----------------------------------------------------------------------
   useEffect(() => {
-    if (initialPrompt && !workflow) {
-      const systemMsg: ChatMessage = {
-        id: 'msg-system-1',
-        role: 'system',
-        content: `Analyzing your request: "${initialPrompt}"`,
-        timestamp: Date.now(),
-      };
-      setChatMessages([systemMsg]);
+    if (!initialPrompt || workflow || hasTriggeredGeneration.current) return undefined;
+    hasTriggeredGeneration.current = true;
 
-      setIsGenerating(true);
-      const timer = setTimeout(() => {
-        const generated = generateMockWorkflow(initialPrompt);
+    pushMessage('system', `Analyzing your request: "${initialPrompt}"`);
+    setIsGenerating(true);
+    setLlmError(null);
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const provider = getProvider();
+        const generated = await generateWorkflowPlan(initialPrompt, provider);
+        if (cancelled) return;
+
         setWorkflow(generated);
         setIsGenerating(false);
-        const assistantMsg: ChatMessage = {
-          id: 'msg-assistant-1',
-          role: 'assistant',
-          content: `I've assembled a team of ${generated.agents.length} specialized agents with ${generated.tasks.length} tasks to execute your initiative.\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Workflow:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}`).join('\n')}\n\nYou can modify the agents, reorder tasks, or run the workflow. What would you like to adjust?`,
-          timestamp: Date.now() + 1,
-        };
-        setChatMessages((prev) => [...prev, assistantMsg]);
-      }, 2000);
-      return () => { clearTimeout(timer); };
-    }
-    return undefined;
+        pushMessage(
+          'assistant',
+          `I've assembled a team of **${generated.agents.length} agents** with **${generated.tasks.length} tasks** to execute your initiative.\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
+        );
+      } catch (error) {
+        if (cancelled) return;
+        const msg = error instanceof Error ? error.message : String(error);
+        setIsGenerating(false);
+        setLlmError(msg);
+        pushMessage('assistant', `Failed to generate workflow: ${msg}\n\nPlease check your API key in Settings (gear icon) and try again.`);
+      }
+    })();
+
+    return () => { cancelled = true; };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // -----------------------------------------------------------------------
+  // 2. Chat follow-ups — LLM-driven
+  // -----------------------------------------------------------------------
   const handleChatMessage = useCallback(
-    (content: string) => {
-      const userMsg: ChatMessage = {
-        id: `msg-user-${Date.now()}`,
-        role: 'user',
-        content,
-        timestamp: Date.now(),
-      };
-      setChatMessages((prev) => [...prev, userMsg]);
+    async (content: string) => {
+      pushMessage('user', content);
+      setLlmError(null);
 
-      // Simulate AI response
-      setTimeout(() => {
-        const assistantMsg: ChatMessage = {
-          id: `msg-assistant-${Date.now()}`,
-          role: 'assistant',
-          content: getAssistantResponse(content, workflow),
-          timestamp: Date.now(),
-        };
-        setChatMessages((prev) => [...prev, assistantMsg]);
-      }, 1000);
+      try {
+        const provider = getProvider();
+        const { text, updatedWorkflow } = await chatWithWorkflow(content, workflow, provider);
+
+        if (updatedWorkflow) {
+          setWorkflow(updatedWorkflow);
+        }
+        pushMessage('assistant', text);
+      } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
+        setLlmError(msg);
+        pushMessage('assistant', `Error: ${msg}`);
+      }
     },
-    [workflow],
+    [workflow, getProvider, pushMessage],
   );
 
-  const handleRunWorkflow = useCallback(() => {
+  // -----------------------------------------------------------------------
+  // 3. Run workflow — real Crew execution
+  // -----------------------------------------------------------------------
+  const handleRunWorkflow = useCallback(async () => {
     if (!workflow) return;
+
     setWorkflow((prev) => (prev ? { ...prev, status: 'running' } : null));
-    // Simulate agent execution
-    let taskIndex = 0;
-    const tasks = workflow.tasks;
-    const runNext = () => {
-      if (taskIndex >= tasks.length) {
-        setWorkflow((prev) => (prev ? { ...prev, status: 'completed' } : null));
-        const doneMsg: ChatMessage = {
-          id: `msg-done-${Date.now()}`,
-          role: 'assistant',
-          content: 'All tasks completed successfully! You can view the results in each task output.',
-          timestamp: Date.now(),
-        };
-        setChatMessages((prev) => [...prev, doneMsg]);
-        return;
-      }
-      const currentTask = tasks[taskIndex];
-      if (!currentTask) return;
-      setWorkflow((prev) => {
-        if (!prev) return null;
-        return {
-          ...prev,
-          tasks: prev.tasks.map((t) =>
-            t.id === currentTask.id ? { ...t, status: 'running' as const } : t,
-          ),
-          agents: prev.agents.map((a) =>
-            a.id === currentTask.agentId ? { ...a, status: 'working' as const } : a,
-          ),
-        };
+    pushMessage('system', 'Starting workflow execution…');
+    setLlmError(null);
+
+    try {
+      const provider = getProvider();
+
+      await executeWorkflow(workflow, provider, {
+        onTaskStart(taskId, agentId) {
+          setWorkflow((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              tasks: prev.tasks.map((t) =>
+                t.id === taskId ? { ...t, status: 'running' as const } : t,
+              ),
+              agents: prev.agents.map((a) =>
+                a.id === agentId ? { ...a, status: 'working' as const } : a,
+              ),
+            };
+          });
+          const agent = workflow.agents.find((a) => a.id === agentId);
+          pushMessage('system', `▶ **${agent?.role ?? agentId}** is working on: ${workflow.tasks.find((t) => t.id === taskId)?.description ?? taskId}`);
+        },
+
+        onTaskComplete(taskId, result) {
+          setWorkflow((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              tasks: prev.tasks.map((t) =>
+                t.id === taskId
+                  ? { ...t, status: 'completed' as const, output: result.output }
+                  : t,
+              ),
+              agents: prev.agents.map((a) => {
+                // Set agent back to idle if none of its remaining tasks are running
+                const hasRunningTasks = prev.tasks.some(
+                  (t) => t.agentId === a.id && t.id !== taskId && t.status === 'running',
+                );
+                if (a.id === result.agentId && !hasRunningTasks) {
+                  return { ...a, status: 'idle' as const };
+                }
+                return a;
+              }),
+            };
+          });
+        },
+
+        onTaskError(taskId, error) {
+          setWorkflow((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              tasks: prev.tasks.map((t) =>
+                t.id === taskId ? { ...t, status: 'failed' as const } : t,
+              ),
+            };
+          });
+          pushMessage('assistant', `Task **${taskId}** failed: ${error.message}`);
+        },
+
+        onCrewComplete(result) {
+          setWorkflow((prev) => (prev ? { ...prev, status: 'completed' } : null));
+          const outputs = Array.from(result.taskResults.entries())
+            .map(([tid, r]) => `**${tid}**: ${r.output.slice(0, 200)}${r.output.length > 200 ? '…' : ''}`)
+            .join('\n\n');
+          pushMessage(
+            'assistant',
+            `All ${result.taskResults.size} tasks completed in ${(result.duration / 1000).toFixed(1)}s.\n\n${outputs}`,
+          );
+        },
+
+        onCrewError(error) {
+          setWorkflow((prev) => (prev ? { ...prev, status: 'failed' } : null));
+          pushMessage('assistant', `Workflow failed: ${error.message}`);
+        },
       });
-      setTimeout(() => {
-        setWorkflow((prev) => {
-          if (!prev) return null;
-          return {
-            ...prev,
-            tasks: prev.tasks.map((t) =>
-              t.id === currentTask.id ? { ...t, status: 'completed' as const } : t,
-            ),
-            agents: prev.agents.map((a) =>
-              a.id === currentTask.agentId ? { ...a, status: 'idle' as const } : a,
-            ),
-          };
-        });
-        taskIndex++;
-        runNext();
-      }, 2000);
-    };
-    runNext();
-  }, [workflow]);
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
+      setLlmError(msg);
+      setWorkflow((prev) => (prev ? { ...prev, status: 'failed' } : null));
+    }
+  }, [workflow, getProvider, pushMessage]);
 
   return (
     <div className="h-screen flex flex-col bg-[#020617] overflow-hidden">
@@ -238,15 +216,31 @@ export function WorkflowPage(): React.JSX.Element {
         onViewModeChange={setViewMode}
         onRun={handleRunWorkflow}
         onBack={() => navigate('/')}
+        onSettings={() => setShowSettings(true)}
         isGenerating={isGenerating}
       />
+
+      {/* Error Banner */}
+      {llmError && (
+        <div className="flex items-center gap-3 px-4 py-2.5 bg-rose-500/10 border-b border-rose-500/20 animate-fadeInDown">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="15" y1="9" x2="9" y2="15" />
+            <line x1="9" y1="9" x2="15" y2="15" />
+          </svg>
+          <span className="text-xs text-rose-300 flex-1 truncate">{llmError}</span>
+          <button onClick={() => setLlmError(null)} className="text-xs text-rose-400 hover:text-rose-300 transition-colors focus-ring" aria-label="Dismiss error">
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {/* Main Split View */}
       <div className="flex-1 flex overflow-hidden">
         {/* Chat Sidebar */}
         {!isSidebarCollapsed && (
           <div
-            className="flex-shrink-0 border-r border-white/5 flex flex-col bg-[#0b1120]"
+            className="flex-shrink-0 border-r border-white/5 flex flex-col bg-[#0b1120] animate-slideInLeft"
             style={{ width: sidebarWidth }}
           >
             <WorkflowChat
@@ -261,7 +255,9 @@ export function WorkflowPage(): React.JSX.Element {
         {/* Sidebar Toggle */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="flex-shrink-0 w-5 flex items-center justify-center bg-[#0b1120] border-r border-white/5 hover:bg-white/5 transition-colors group"
+          className="flex-shrink-0 w-6 flex items-center justify-center bg-[#0b1120]/50 border-r border-white/5 hover:bg-violet-500/10 transition-all group focus-ring"
+          aria-label={isSidebarCollapsed ? 'Expand chat sidebar' : 'Collapse chat sidebar'}
+          title={isSidebarCollapsed ? 'Expand chat' : 'Collapse chat'}
         >
           <svg
             width="12"
@@ -272,7 +268,7 @@ export function WorkflowPage(): React.JSX.Element {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className={`text-slate-600 group-hover:text-slate-400 transition-all ${isSidebarCollapsed ? '' : 'rotate-180'}`}
+            className={`text-slate-600 group-hover:text-violet-400 transition-all duration-200 ${isSidebarCollapsed ? '' : 'rotate-180'}`}
           >
             <polyline points="15 18 9 12 15 6" />
           </svg>
@@ -289,26 +285,13 @@ export function WorkflowPage(): React.JSX.Element {
           />
         </div>
       </div>
+
+      {/* LLM Settings Modal */}
+      <LLMSettings
+        open={showSettings}
+        onClose={() => setShowSettings(false)}
+        onSaved={() => { providerRef.current = null; }}
+      />
     </div>
   );
-}
-
-/** Simple mock response generator. */
-function getAssistantResponse(input: string, workflow: WorkflowState | null): string {
-  const lower = input.toLowerCase();
-  if (lower.includes('add') && lower.includes('agent')) {
-    return 'I can add a new agent to the workflow. What role should this agent have? For example: "Add a QA Reviewer agent that validates all outputs before the final report."';
-  }
-  if (lower.includes('remove') || lower.includes('delete')) {
-    return "I can remove an agent or task. Which one would you like to remove? Click on it in the workflow view, or tell me its name.";
-  }
-  if (lower.includes('run') || lower.includes('start') || lower.includes('execute')) {
-    return workflow?.status === 'running'
-      ? 'The workflow is already running. You can monitor progress in the visualization panel.'
-      : 'Ready to run! Click the **Run Workflow** button in the toolbar, or I can start it for you.';
-  }
-  if (lower.includes('change') || lower.includes('modify') || lower.includes('edit')) {
-    return "Sure! Tell me what you'd like to change. You can modify agent roles, task descriptions, dependencies, or the overall workflow structure.";
-  }
-  return `I understand. ${workflow ? `The current workflow has ${workflow.agents.length} agents and ${workflow.tasks.length} tasks.` : 'No workflow generated yet.'} How would you like to proceed? You can:\n\n• **Add/remove agents** to change the team composition\n• **Edit tasks** to adjust the work breakdown\n• **Run the workflow** to execute all tasks\n• **Ask questions** about the strategy`;
 }
