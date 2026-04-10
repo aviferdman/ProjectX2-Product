@@ -297,6 +297,16 @@ export {
   type AnimationPhase,
   type PageTransitionVariant,
   type LoadingVariant,
+  // Accessibility (TASK-174)
+  SkipLink,
+  type SkipLinkProps,
+  LiveRegion,
+  type LiveRegionProps,
+  type LiveRegionPoliteness,
+  FocusScope,
+  type FocusScopeProps,
+  ShortcutHelpDialog,
+  type ShortcutHelpDialogProps,
 } from './components/index.js';
 
 // Theme
@@ -357,6 +367,31 @@ export {
   useAnimation,
   type UseAnimationOptions,
   type UseAnimationResult,
+} from './hooks/index.js';
+
+// Hooks — Accessibility (TASK-174)
+export {
+  useKeyboardShortcuts,
+  formatShortcut,
+  groupShortcutsByCategory,
+  type KeyboardShortcut,
+  type ModifierKey,
+  type UseKeyboardShortcutsOptions,
+  type UseKeyboardShortcutsResult,
+} from './hooks/index.js';
+
+export {
+  useFocusTrap,
+  getFocusableElements,
+  type UseFocusTrapOptions,
+  type UseFocusTrapResult,
+} from './hooks/index.js';
+
+export {
+  useAriaAnnouncer,
+  type AriaPoliteness,
+  type UseAriaAnnouncerOptions,
+  type UseAriaAnnouncerResult,
 } from './hooks/index.js';
 
 // Design tokens (programmatic)

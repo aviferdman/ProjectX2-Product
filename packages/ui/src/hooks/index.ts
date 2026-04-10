@@ -42,3 +42,25 @@ export {
   type UseAnimationOptions,
   type UseAnimationResult,
 } from './useAnimation.js';
+// TASK-174: Accessibility hooks
+export {
+  useKeyboardShortcuts,
+  formatShortcut,
+  groupShortcutsByCategory,
+  type KeyboardShortcut,
+  type ModifierKey,
+  type UseKeyboardShortcutsOptions,
+  type UseKeyboardShortcutsResult,
+} from './useKeyboardShortcuts.js';
+export {
+  useFocusTrap,
+  getFocusableElements,
+  type UseFocusTrapOptions,
+  type UseFocusTrapResult,
+} from './useFocusTrap.js';
+export {
+  useAriaAnnouncer,
+  type AriaPoliteness,
+  type UseAriaAnnouncerOptions,
+  type UseAriaAnnouncerResult,
+} from './useAriaAnnouncer.js';

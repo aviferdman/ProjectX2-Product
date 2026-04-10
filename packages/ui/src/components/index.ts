@@ -263,6 +263,19 @@ export {
   type LoadingVariant,
 } from './animation/index.js';
 
+// Accessibility (TASK-174)
+export {
+  SkipLink,
+  type SkipLinkProps,
+  LiveRegion,
+  type LiveRegionProps,
+  type LiveRegionPoliteness,
+  FocusScope,
+  type FocusScopeProps,
+  ShortcutHelpDialog,
+  type ShortcutHelpDialogProps,
+} from './accessibility/index.js';
+
 // Dashboard (TASK-151)
 export {
   WorkflowStatusBadge,
