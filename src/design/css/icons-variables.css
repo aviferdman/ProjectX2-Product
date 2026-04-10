@@ -1,0 +1,99 @@
+/*
+ * Crewspace Icon System — CSS Custom Properties
+ * TASK-127: Icon set and visual assets design tokens
+ *
+ * Defines sizing, stroke-width, and visual properties for the curated
+ * Crewspace icon system. All icon components should reference these
+ * variables via var(--cs-icon-*).
+ */
+
+/* ================================================================== */
+/* Icon sizing scale                                                   */
+/* ================================================================== */
+:root {
+  --cs-icon-size-xs: 12px;
+  --cs-icon-size-sm: 16px;
+  --cs-icon-size-md: 20px;
+  --cs-icon-size-lg: 24px;
+  --cs-icon-size-xl: 32px;
+  --cs-icon-size-2xl: 48px;
+
+  /* Stroke widths */
+  --cs-icon-stroke-thin: 1.25;
+  --cs-icon-stroke-default: 1.75;
+  --cs-icon-stroke-bold: 2.25;
+
+  /* Icon colors — semantic (inherit from design-system-variables.css) */
+  --cs-icon-color-default: var(--cs-text-secondary, #94a3b8);
+  --cs-icon-color-primary: var(--cs-text-primary, #f8fafc);
+  --cs-icon-color-muted: var(--cs-text-tertiary, #64748b);
+  --cs-icon-color-brand: var(--cs-brand-primary, #7c3aed);
+  --cs-icon-color-success: var(--cs-status-success, #10b981);
+  --cs-icon-color-warning: var(--cs-status-warning, #f59e0b);
+  --cs-icon-color-error: var(--cs-status-error, #f43f5e);
+  --cs-icon-color-info: var(--cs-status-info, #0ea5e9);
+
+  /* Node-type icon colors */
+  --cs-icon-color-agent: var(--cs-violet-400, #a78bfa);
+  --cs-icon-color-task: var(--cs-sky-400, #38bdf8);
+  --cs-icon-color-tool: var(--cs-emerald-400, #34d399);
+  --cs-icon-color-llm: var(--cs-amber-400, #fbbf24);
+
+  /* Interactive states */
+  --cs-icon-color-hover: var(--cs-text-primary, #f8fafc);
+  --cs-icon-color-disabled: var(--cs-text-disabled, #475569);
+  --cs-icon-opacity-disabled: var(--cs-opacity-disabled, 0.4);
+
+  /* Transition for icon animations */
+  --cs-icon-transition: color var(--cs-transition-fast, 100ms ease-out),
+    transform var(--cs-transition-fast, 100ms ease-out),
+    opacity var(--cs-transition-fast, 100ms ease-out);
+}
+
+/* ================================================================== */
+/* Light mode overrides                                                */
+/* ================================================================== */
+[data-theme='light'] {
+  --cs-icon-color-default: var(--cs-text-secondary, #475569);
+  --cs-icon-color-primary: var(--cs-text-primary, #0f172a);
+  --cs-icon-color-muted: var(--cs-text-tertiary, #64748b);
+  --cs-icon-color-hover: var(--cs-text-primary, #0f172a);
+  --cs-icon-color-disabled: var(--cs-text-disabled, #94a3b8);
+}
+
+/* ================================================================== */
+/* Utility classes                                                     */
+/* ================================================================== */
+.cs-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--cs-icon-color-default);
+  transition: var(--cs-icon-transition);
+}
+
+.cs-icon--xs { width: var(--cs-icon-size-xs); height: var(--cs-icon-size-xs); }
+.cs-icon--sm { width: var(--cs-icon-size-sm); height: var(--cs-icon-size-sm); }
+.cs-icon--md { width: var(--cs-icon-size-md); height: var(--cs-icon-size-md); }
+.cs-icon--lg { width: var(--cs-icon-size-lg); height: var(--cs-icon-size-lg); }
+.cs-icon--xl { width: var(--cs-icon-size-xl); height: var(--cs-icon-size-xl); }
+.cs-icon--2xl { width: var(--cs-icon-size-2xl); height: var(--cs-icon-size-2xl); }
+
+.cs-icon--brand { color: var(--cs-icon-color-brand); }
+.cs-icon--success { color: var(--cs-icon-color-success); }
+.cs-icon--warning { color: var(--cs-icon-color-warning); }
+.cs-icon--error { color: var(--cs-icon-color-error); }
+.cs-icon--info { color: var(--cs-icon-color-info); }
+.cs-icon--muted { color: var(--cs-icon-color-muted); }
+
+.cs-icon--agent { color: var(--cs-icon-color-agent); }
+.cs-icon--task { color: var(--cs-icon-color-task); }
+.cs-icon--tool { color: var(--cs-icon-color-tool); }
+.cs-icon--llm { color: var(--cs-icon-color-llm); }
+
+.cs-icon--disabled {
+  color: var(--cs-icon-color-disabled);
+  opacity: var(--cs-icon-opacity-disabled);
+  pointer-events: none;
+}

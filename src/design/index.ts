@@ -13,6 +13,30 @@ export { designSystemTheme } from './tailwind/design-system-theme.js';
 export { crewspaceTheme } from './tailwind/canvas-theme.js';
 export { responsiveTheme } from './tailwind/responsive-theme.js';
 export { componentLibraryTheme } from './tailwind/component-library-theme.js';
+export { iconsTheme } from './tailwind/icons-theme.js';
+
+/* ------------------------------------------------------------------ */
+/* Icon system (TASK-127)                                              */
+/* ------------------------------------------------------------------ */
+export {
+  iconRegistry,
+  ICON_CATEGORIES,
+  ICON_COUNT,
+  getIconData,
+  getIconsByCategory,
+  hasIcon,
+  type IconPathData,
+  type IconCategory,
+  type IconName,
+  iconSize,
+  iconStroke,
+  iconColor,
+  nodeTypeIcons,
+  type IconSize,
+  type IconStrokeWeight,
+  type IconColorToken,
+  type NodeType,
+} from './icons/index.js';
 
 /* ------------------------------------------------------------------ */
 /* Token constants (TypeScript)                                        */
@@ -48,6 +72,7 @@ export const tokenPaths = {
   canvas: './tokens/canvas.json',
   timeline: './tokens/timeline.json',
   dashboard: './tokens/dashboard.json',
+  icons: './tokens/icons.json',
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -59,4 +84,5 @@ export const cssPaths = {
   canvas: './css/canvas-variables.css',
   timeline: './css/timeline-variables.css',
   dashboard: './css/dashboard-variables.css',
+  icons: './css/icons-variables.css',
 } as const;
