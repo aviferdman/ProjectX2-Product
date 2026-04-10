@@ -149,6 +149,13 @@ export {
   type TemplatePaginationProps,
   TemplateBrowserPage,
   type TemplateBrowserPageProps,
+  // Template Preview (TASK-160)
+  TemplatePreviewModal,
+  type TemplatePreviewModalProps,
+  WorkflowDiagram,
+  type WorkflowDiagramProps,
+  type WorkflowDiagramNode,
+  type WorkflowDiagramEdge,
   type TemplateCategory,
   type TemplateSortField,
   type TemplateSortDirection,

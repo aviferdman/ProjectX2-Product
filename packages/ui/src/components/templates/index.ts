@@ -36,6 +36,18 @@ export {
   type TemplateBrowserPageProps,
 } from './TemplateBrowserPage.js';
 
+// Template Preview — TASK-160
+export {
+  TemplatePreviewModal,
+  type TemplatePreviewModalProps,
+} from './TemplatePreviewModal.js';
+export {
+  WorkflowDiagram,
+  type WorkflowDiagramProps,
+  type WorkflowDiagramNode,
+  type WorkflowDiagramEdge,
+} from './WorkflowDiagram.js';
+
 export type {
   TemplateCategory,
   TemplateSortField,
