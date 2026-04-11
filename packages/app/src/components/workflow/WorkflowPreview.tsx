@@ -4,7 +4,7 @@
  */
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import type { WorkflowState, AgentNode, TaskNode, DiscussionEdge, DiscussionMessageUI } from '../../types/workflow.js';
-import { getAgentAvatar } from '../../data/hardcoded-agents.js';
+import { AgentAvatar } from '../AgentAvatar.js';
 
 interface WorkflowPreviewProps {
   workflow: WorkflowState | null;
@@ -625,11 +625,11 @@ function GraphView({
                       {discParticipants.slice(0, 4).map((a) => (
                         <div
                           key={a.id}
-                          className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] text-white border border-[var(--cs-surface-card)]"
+                          className="w-5 h-5 rounded-full flex items-center justify-center text-white border border-[var(--cs-surface-card)]"
                           style={{ backgroundColor: a.color }}
                           title={a.role}
                         >
-                          {getAgentAvatar(a.id, a.role)}
+                          <AgentAvatar id={a.id} size={12} fallback={a.role} />
                         </div>
                       ))}
                     </div>
@@ -657,20 +657,44 @@ function GraphView({
                   onClick={(e) => { e.stopPropagation(); if (!dragging) onSelectNode(task.id); }}
                   onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); setContextMenu({ x: e.clientX, y: e.clientY, type: 'task', taskId: task.id }); }}
                 >
-                  {/* Icon / status */}
-                  <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: `${color}15`, border: `1.5px solid ${color}30` }}
-                  >
-                    {task.status === 'completed' ? (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12" /></svg>
-                    ) : task.status === 'running' ? (
-                      <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke={color} strokeWidth="4" /><path className="opacity-75" fill={color} d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+                  {/* Icon / agent avatar */}
+                  <div className="relative w-9 h-9 flex-shrink-0">
+                    {agent ? (
+                      <>
+                        <div
+                          className="w-9 h-9 rounded-lg flex items-center justify-center text-white"
+                          style={{ backgroundColor: agent.color }}
+                        >
+                          <AgentAvatar id={agent.id} size={18} fallback={agent.role} />
+                        </div>
+                        {task.status !== 'pending' && (
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[var(--cs-surface-app)] border border-[var(--cs-border-subtle)] flex items-center justify-center">
+                            {task.status === 'completed' ? (
+                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            ) : task.status === 'running' ? (
+                              <svg className="animate-spin" width="10" height="10" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="#f59e0b" strokeWidth="4" /><path className="opacity-75" fill="#f59e0b" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+                            ) : (
+                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="3" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                            )}
+                          </div>
+                        )}
+                      </>
                     ) : (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                        <line x1="9" y1="9" x2="15" y2="15" /><line x1="15" y1="9" x2="9" y2="15" />
-                      </svg>
+                      <div
+                        className="w-9 h-9 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: `${color}15`, border: `1.5px solid ${color}30` }}
+                      >
+                        {task.status === 'completed' ? (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        ) : task.status === 'running' ? (
+                          <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke={color} strokeWidth="4" /><path className="opacity-75" fill={color} d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+                        ) : (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                            <line x1="9" y1="9" x2="15" y2="15" /><line x1="15" y1="9" x2="9" y2="15" />
+                          </svg>
+                        )}
+                      </div>
                     )}
                   </div>
 
@@ -1086,8 +1110,24 @@ function TaskCard({
       }`}
     >
       <div className="flex items-start gap-3">
-        <div className="w-8 h-8 rounded-lg bg-[var(--cs-surface-card)]/20 flex items-center justify-center flex-shrink-0">
-          <TaskStatusIcon status={task.status} />
+        <div className="relative w-8 h-8 flex-shrink-0">
+          {agent ? (
+            <>
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                style={{ backgroundColor: agent.color }}
+              >
+                <AgentAvatar id={agent.id} size={18} fallback={agent.role} />
+              </div>
+              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[var(--cs-surface-app)] border border-[var(--cs-border-subtle)] flex items-center justify-center scale-[0.7] origin-bottom-right">
+                <TaskStatusIcon status={task.status} />
+              </div>
+            </>
+          ) : (
+            <div className="w-8 h-8 rounded-lg bg-[var(--cs-surface-card)]/20 flex items-center justify-center">
+              <TaskStatusIcon status={task.status} />
+            </div>
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm text-[var(--cs-text-primary)] line-clamp-2">{task.description}</p>
@@ -1327,10 +1367,10 @@ function DetailsPanel({
                   return a ? (
                     <div className="flex items-center gap-2 mt-1.5">
                       <div
-                        className="w-6 h-6 rounded-md flex items-center justify-center text-xs text-white"
+                        className="w-6 h-6 rounded-md flex items-center justify-center text-white"
                         style={{ backgroundColor: `${a.color}30` }}
                       >
-                        {getAgentAvatar(a.id, a.role)}
+                        <AgentAvatar id={a.id} size={14} fallback={a.role} />
                       </div>
                       <span className="text-sm text-[var(--cs-text-secondary)]">{a.role}</span>
                     </div>
@@ -1446,8 +1486,8 @@ function DetailsPanel({
                     <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                       {participants.map(a => (
                         <div key={a.id} className="flex items-center gap-1 px-1.5 py-1 rounded-lg bg-[var(--cs-surface-card)]/15 border border-[var(--cs-border-subtle)] group/chip">
-                          <div className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] text-white" style={{ backgroundColor: a.color }}>
-                            {getAgentAvatar(a.id, a.role)}
+                          <div className="w-4 h-4 rounded-full flex items-center justify-center text-white" style={{ backgroundColor: a.color }}>
+                            <AgentAvatar id={a.id} size={10} fallback={a.role} />
                           </div>
                           <span className="text-[10px] text-[var(--cs-text-secondary)]">{a.role}</span>
                           {canEdit && participants.length > 2 && (
@@ -1552,10 +1592,10 @@ function DetailsPanel({
                             <div key={msg.id} className="rounded-lg bg-[var(--cs-surface-card)]/10 border border-[var(--cs-border-subtle)] p-2">
                               <div className="flex items-center gap-1.5 mb-1">
                                 <div
-                                  className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] text-white flex-shrink-0"
+                                  className="w-4 h-4 rounded-full flex items-center justify-center text-white flex-shrink-0"
                                   style={{ backgroundColor: msgAgent?.color ?? '#6366f1' }}
                                 >
-                                  {msgAgent ? getAgentAvatar(msgAgent.id, msgAgent.role) : '?'}
+                                  <AgentAvatar id={msgAgent?.id ?? ''} size={10} fallback={msgAgent?.role} />
                                 </div>
                                 <span className="text-[10px] font-semibold" style={{ color: msgAgent?.color ?? '#a78bfa' }}>
                                   {msgAgent?.role ?? msg.fromAgentId}

@@ -6,7 +6,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { crewPath, ROUTES } from '../router/routes.js';
 import { useCrewStore } from '../store/index.js';
-import { getAgentAvatar } from '../data/hardcoded-agents.js';
+import { AgentAvatar } from '../components/AgentAvatar.js';
 
 /* ------------------------------------------------------------------ */
 /* Template data                                                       */
@@ -559,11 +559,11 @@ function FeaturedCard({
             {template.agents.map((agent, i) => (
               <div
                 key={i}
-                className="w-7 h-7 rounded-full border-2 border-[var(--cs-surface-app)] flex items-center justify-center text-sm text-white"
+                className="w-7 h-7 rounded-full border-2 border-[var(--cs-surface-app)] flex items-center justify-center text-white"
                 style={{ backgroundColor: agent.color }}
                 title={agent.role}
               >
-                {getAgentAvatar(agent.id, agent.role)}
+                <AgentAvatar id={agent.id} size={14} fallback={agent.role} />
               </div>
             ))}
           </div>
@@ -644,11 +644,11 @@ function TemplateCard({
             {template.agents.slice(0, 4).map((agent, i) => (
               <div
                 key={i}
-                className="w-6 h-6 rounded-full border-2 border-[var(--cs-surface-app)] flex items-center justify-center text-xs text-white"
+                className="w-6 h-6 rounded-full border-2 border-[var(--cs-surface-app)] flex items-center justify-center text-white"
                 style={{ backgroundColor: agent.color }}
                 title={agent.role}
               >
-                {getAgentAvatar(agent.id, agent.role)}
+                <AgentAvatar id={agent.id} size={12} fallback={agent.role} />
               </div>
             ))}
           </div>

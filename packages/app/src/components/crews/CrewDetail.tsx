@@ -3,8 +3,9 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCrewStore } from '../../store/index.js';
 import { ROUTES, workflowPath } from '../../router/routes.js';
 import type { WorkflowState } from '../../types/workflow.js';
-import { ALL_HARDCODED_AGENTS, BUSINESS_PRODUCT_AGENTS, RESEARCH_ANALYSIS_AGENTS, getAgentAvatar } from '../../data/hardcoded-agents.js';
+import { ALL_HARDCODED_AGENTS, BUSINESS_PRODUCT_AGENTS, RESEARCH_ANALYSIS_AGENTS } from '../../data/hardcoded-agents.js';
 import type { HardcodedAgent } from '../../data/hardcoded-agents.js';
+import { AgentAvatar } from '../AgentAvatar.js';
 
 type CategoryFilter = 'all' | 'business-product' | 'research-analysis';
 
@@ -300,9 +301,7 @@ export function CrewDetail(): React.JSX.Element {
                       }`}
                     >
                       <div className="flex items-start gap-2">
-                        <span className="text-base mt-0.5 shrink-0" role="img" aria-label={def.role}>
-                          {def.avatar}
-                        </span>
+                        <AgentAvatar id={def.id} size={18} className="shrink-0 mt-0.5 text-[var(--cs-text-secondary)]" />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="text-sm font-medium text-[var(--cs-text-primary)]">{def.role}</span>
@@ -377,10 +376,10 @@ export function CrewDetail(): React.JSX.Element {
                     </svg>
                   </button>
                   <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center text-lg mb-3"
+                    className="w-9 h-9 rounded-lg flex items-center justify-center text-white mb-3"
                     style={{ backgroundColor: agent.color }}
                   >
-                    {getAgentAvatar(agent.id, agent.role)}
+                    <AgentAvatar id={agent.id} size={20} fallback={agent.role} />
                   </div>
                   <p className="text-sm font-medium text-[var(--cs-text-primary)] truncate mb-1">{agent.role}</p>
                   {agent.tools.length > 0 && (

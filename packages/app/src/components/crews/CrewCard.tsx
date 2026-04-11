@@ -1,6 +1,6 @@
 import React from 'react';
 import type { CrewDefinition } from '../../types/crew.js';
-import { getAgentAvatar } from '../../data/hardcoded-agents.js';
+import { AgentAvatar } from '../AgentAvatar.js';
 
 export interface CrewCardProps {
   crew: CrewDefinition;
@@ -76,11 +76,11 @@ export function CrewCard({ crew, onClick, onDelete }: CrewCardProps): React.JSX.
             {visibleAgents.map((agent, i) => (
               <div
                 key={agent.id}
-                className="w-7 h-7 rounded-full border-2 border-[var(--cs-surface-card)] flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full border-2 border-[var(--cs-surface-card)] flex items-center justify-center text-white"
                 style={{ backgroundColor: agent.color, zIndex: MAX_VISIBLE_AGENTS - i }}
                 title={agent.role}
               >
-                {getAgentAvatar(agent.id, agent.role)}
+                <AgentAvatar id={agent.id} size={14} fallback={agent.role} />
               </div>
             ))}
             {extraCount > 0 && (

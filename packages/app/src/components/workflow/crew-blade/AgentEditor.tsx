@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import type { AgentNode } from '../../../types/workflow.js';
 import { ALL_HARDCODED_AGENTS, BUSINESS_PRODUCT_AGENTS, RESEARCH_ANALYSIS_AGENTS } from '../../../data/hardcoded-agents.js';
 import type { HardcodedAgent } from '../../../data/hardcoded-agents.js';
+import { AgentAvatar } from '../../AgentAvatar.js';
 
 interface AgentEditorProps {
   agent?: AgentNode;
@@ -236,9 +237,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
               }`}
             >
               <div className="flex items-start gap-2">
-                <span className="text-base mt-0.5 shrink-0" role="img" aria-label={def.role}>
-                  {def.avatar}
-                </span>
+                <AgentAvatar id={def.id} size={18} className="shrink-0 mt-0.5 text-[var(--cs-text-secondary)]" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-[var(--cs-text-primary)]">
