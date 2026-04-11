@@ -218,7 +218,7 @@ export const LogRow: React.FC<LogRowProps> = ({
           width: LOG_SIZING.agentWidth,
           fontSize: 12,
           fontWeight: 500,
-          color: 'var(--cs-text-secondary, #94a3b8)',
+          color: 'var(--cs-text-secondary, #a1a1aa)',
           lineHeight: `${LOG_SIZING.rowHeight}px`,
         }}
       >

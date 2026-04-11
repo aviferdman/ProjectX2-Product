@@ -66,11 +66,11 @@ export const MarketplaceSortDropdown = forwardRef<
         onClick={() => setOpen(!open)}
         className={clsx(
           'inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5',
-          'bg-[var(--cs-bg-surface,#020617)] border-[var(--cs-border-default,#1e293b)] text-[var(--cs-text-secondary,#94a3b8)]',
+          'bg-[var(--cs-bg-surface,#09090b)] border-[var(--cs-border-default,#18181b)] text-[var(--cs-text-secondary,#a1a1aa)]',
           'text-xs font-medium',
           'transition-colors duration-150',
-          'hover:bg-[var(--cs-bg-card,#0f172a)] hover:text-[var(--cs-text-primary,#f8fafc)]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+          'hover:bg-[var(--cs-bg-card,#111113)] hover:text-[var(--cs-text-primary,#fafafa)]',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         )}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -97,7 +97,7 @@ export const MarketplaceSortDropdown = forwardRef<
           aria-label="Sort options"
           className={clsx(
             'absolute right-0 z-50 mt-1 min-w-[180px] overflow-hidden rounded-lg border',
-            'bg-[var(--cs-bg-card,#0f172a)] border-[var(--cs-border-default,#1e293b)]',
+            'bg-[var(--cs-bg-card,#111113)] border-[var(--cs-border-default,#18181b)]',
             'shadow-lg',
           )}
         >
@@ -115,8 +115,8 @@ export const MarketplaceSortDropdown = forwardRef<
                   'text-xs',
                   'transition-colors duration-100',
                   isSelected
-                    ? 'text-violet-300'
-                    : 'text-[var(--cs-text-secondary,#94a3b8)] hover:bg-[rgba(30,41,59,0.5)]',
+                    ? 'text-indigo-300'
+                    : 'text-[var(--cs-text-secondary,#a1a1aa)] hover:bg-[rgba(30,41,59,0.5)]',
                 )}
               >
                 {option.label}

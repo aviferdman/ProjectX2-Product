@@ -15,14 +15,14 @@ interface AgentEditorProps {
 }
 
 const AGENT_COLORS = [
-  '#7c3aed',
+  '#6366f1',
   '#2563eb',
   '#059669',
   '#d97706',
   '#dc2626',
   '#ec4899',
   '#06b6d4',
-  '#8b5cf6',
+  '#6366f1',
 ];
 
 type CategoryFilter = 'all' | 'business-product' | 'research-analysis';
@@ -68,7 +68,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
         goal: def.goal,
         backstory: def.backstory,
         tools: [...def.tools],
-        color: AGENT_COLORS[colorIndex % AGENT_COLORS.length] ?? '#7c3aed',
+        color: AGENT_COLORS[colorIndex % AGENT_COLORS.length] ?? '#6366f1',
       });
     },
     [onSave, existingAgentIds],
@@ -122,7 +122,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
               {agent.tools.map((tool) => (
                 <span
                   key={tool}
-                  className="px-2.5 py-1 text-xs rounded-md bg-violet-600/20 border border-violet-500/40 text-violet-300"
+                  className="px-2.5 py-1 text-xs rounded-md bg-indigo-600/20 border border-indigo-500/40 text-indigo-300"
                 >
                   {tool}
                 </span>
@@ -212,7 +212,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
             onClick={() => setCategoryFilter(cat)}
             className={`px-2.5 py-1 text-xs rounded-md border transition-colors ${
               categoryFilter === cat
-                ? 'bg-violet-600/20 border-violet-500/40 text-violet-300'
+                ? 'bg-indigo-600/20 border-indigo-500/40 text-indigo-300'
                 : 'bg-[var(--cs-surface-app)] border-[var(--cs-border-subtle)] text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)]'
             }`}
           >
@@ -233,7 +233,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
               className={`w-full text-left p-3 rounded-lg border transition-all ${
                 alreadyAdded
                   ? 'opacity-40 cursor-not-allowed border-[var(--cs-border-subtle)] bg-[var(--cs-surface-app)]/30'
-                  : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-app)]/50 hover:bg-white/5 hover:border-violet-500/30'
+                  : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-app)]/50 hover:bg-white/5 hover:border-indigo-500/30'
               }`}
             >
               <div className="flex items-start gap-2">

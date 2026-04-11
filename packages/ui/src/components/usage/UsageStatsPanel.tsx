@@ -54,7 +54,7 @@ export const UsageStatsPanel = forwardRef<HTMLDivElement, UsageStatsPanelProps>(
         >
           <div className="flex flex-col items-center gap-3">
             <svg
-              className="animate-spin h-8 w-8 text-violet-400"
+              className="animate-spin h-8 w-8 text-indigo-400"
               viewBox="0 0 24 24"
               fill="none"
               aria-label="Loading"

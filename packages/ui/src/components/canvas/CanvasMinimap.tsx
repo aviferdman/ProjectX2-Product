@@ -8,8 +8,8 @@ import { Z_INDEX } from './types.js';
 import type { WorkflowNodeData, CanvasNodeType } from './types.js';
 
 const nodeColorMap: Record<CanvasNodeType, string> = {
-  agent: '#7c3aed',
-  task: '#0284c7',
+  agent: '#6366f1',
+  task: '#0891b2',
   tool: '#059669',
   llm: '#d97706',
 };
@@ -17,7 +17,7 @@ const nodeColorMap: Record<CanvasNodeType, string> = {
 function nodeColor(node: { data?: Record<string, unknown> }): string {
   const data = node.data as WorkflowNodeData | undefined;
   const nt = data?.nodeType ?? 'task';
-  return nodeColorMap[nt] ?? '#64748b';
+  return nodeColorMap[nt] ?? '#52525b';
 }
 
 export type CanvasMinimapProps = Omit<MiniMapProps, 'className'> & {

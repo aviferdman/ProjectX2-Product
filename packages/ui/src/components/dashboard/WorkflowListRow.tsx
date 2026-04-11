@@ -39,7 +39,7 @@ export const WorkflowListRow = forwardRef<HTMLTableRowElement, WorkflowListRowPr
         className={clsx(
           'cs-workflow-list group h-14 border-b border-slate-800 cursor-pointer',
           'transition-colors duration-100',
-          selected ? 'bg-violet-500/[0.08]' : 'hover:bg-slate-800/50',
+          selected ? 'bg-indigo-500/[0.08]' : 'hover:bg-slate-800/50',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-primary',
           className,
         )}

@@ -329,7 +329,7 @@ export function WorkflowPage(): React.JSX.Element {
   // -----------------------------------------------------------------------
   // 4. Crew Blade CRUD handlers
   // -----------------------------------------------------------------------
-  const AGENT_COLORS = ['#8b5cf6', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
+  const AGENT_COLORS = ['#6366f1', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
 
   const handleAgentAdd = useCallback((agentData: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) => {
     setWorkflow((prev) => {
@@ -428,7 +428,7 @@ export function WorkflowPage(): React.JSX.Element {
       {/* Error Banner */}
       {llmError && (
         <div className="flex items-center gap-3 px-4 py-2.5 bg-rose-500/10 border-b border-rose-500/20 animate-fadeInDown">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <line x1="15" y1="9" x2="9" y2="15" />
             <line x1="9" y1="9" x2="15" y2="15" />
@@ -460,7 +460,7 @@ export function WorkflowPage(): React.JSX.Element {
         {/* Sidebar Toggle */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="flex-shrink-0 w-6 flex items-center justify-center bg-[var(--cs-surface-panel)]/50 border-r border-[var(--cs-border-subtle)] hover:bg-violet-500/10 transition-all group focus-ring"
+          className="flex-shrink-0 w-6 flex items-center justify-center bg-[var(--cs-surface-panel)]/50 border-r border-[var(--cs-border-subtle)] hover:bg-indigo-500/10 transition-all group focus-ring"
           aria-label={isSidebarCollapsed ? 'Expand chat sidebar' : 'Collapse chat sidebar'}
           title={isSidebarCollapsed ? 'Expand chat' : 'Collapse chat'}
         >
@@ -473,7 +473,7 @@ export function WorkflowPage(): React.JSX.Element {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className={`text-[var(--cs-text-tertiary)] group-hover:text-violet-400 transition-all duration-200 ${isSidebarCollapsed ? '' : 'rotate-180'}`}
+            className={`text-[var(--cs-text-tertiary)] group-hover:text-indigo-400 transition-all duration-200 ${isSidebarCollapsed ? '' : 'rotate-180'}`}
           >
             <polyline points="15 18 9 12 15 6" />
           </svg>

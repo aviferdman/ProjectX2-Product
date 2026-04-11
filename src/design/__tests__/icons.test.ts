@@ -298,7 +298,7 @@ describe('Tailwind icons-theme', () => {
 
   it('color values reference CSS variables with fallbacks', () => {
     expect(iconsTheme.colors.icon.brand).toContain('var(--cs-icon-color-brand');
-    expect(iconsTheme.colors.icon.brand).toContain('#7c3aed');
+    expect(iconsTheme.colors.icon.brand).toContain('#6366f1');
   });
 
   it('has strokeWidth utilities', () => {

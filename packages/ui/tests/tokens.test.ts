@@ -20,27 +20,27 @@ import {
 describe('Design tokens', () => {
   describe('colors', () => {
     it('has brand primary matching design spec', () => {
-      expect(colors.brand.primary).toBe('#7c3aed');
+      expect(colors.brand.primary).toBe('#6366f1');
     });
 
     it('has all surface values', () => {
-      expect(colors.surface.app).toBe('#020617');
-      expect(colors.surface.canvas).toBe('#0a0e1a');
-      expect(colors.surface.panel).toBe('#0f172a');
-      expect(colors.surface.card).toBe('#1e293b');
-      expect(colors.surface.elevated).toBe('#334155');
+      expect(colors.surface.app).toBe('#09090b');
+      expect(colors.surface.canvas).toBe('#0c0c14');
+      expect(colors.surface.panel).toBe('#111113');
+      expect(colors.surface.card).toBe('#18181b');
+      expect(colors.surface.elevated).toBe('#27272a');
     });
 
     it('has all status colors', () => {
       expect(colors.status.success).toBe('#10b981');
       expect(colors.status.warning).toBe('#f59e0b');
-      expect(colors.status.error).toBe('#f43f5e');
-      expect(colors.status.info).toBe('#0ea5e9');
+      expect(colors.status.error).toBe('#ef4444');
+      expect(colors.status.info).toBe('#06b6d4');
     });
 
     it('has all node type colors', () => {
-      expect(colors.node.agent.border).toBe('#7c3aed');
-      expect(colors.node.task.border).toBe('#0284c7');
+      expect(colors.node.agent.border).toBe('#6366f1');
+      expect(colors.node.task.border).toBe('#0891b2');
       expect(colors.node.tool.border).toBe('#059669');
       expect(colors.node.llm.border).toBe('#d97706');
     });

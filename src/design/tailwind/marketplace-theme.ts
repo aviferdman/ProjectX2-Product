@@ -23,20 +23,20 @@ export const marketplaceTheme = {
     'mp-category': {
       text: 'var(--cs-text-secondary)',
       'text-hover': 'var(--cs-text-primary)',
-      'text-active': '#c4b5fd',
-      'bg-hover': 'rgba(148,163,184,0.08)',
-      'bg-active': 'rgba(139,92,246,0.1)',
+      'text-active': '#a5b4fc',
+      'bg-hover': 'rgba(113,113,122,0.08)',
+      'bg-active': 'rgba(99,102,241,0.1)',
       'section-label': 'var(--cs-text-tertiary)',
       // Category icon colors
-      'ai-ml': '#a78bfa',
+      'ai-ml': '#818cf8',
       'ai-ml-bg': 'rgba(167,139,250,0.15)',
-      communication: '#38bdf8',
+      communication: '#22d3ee',
       'communication-bg': 'rgba(56,189,248,0.15)',
       data: '#34d399',
       'data-bg': 'rgba(52,211,153,0.15)',
       devtools: '#fbbf24',
       'devtools-bg': 'rgba(251,191,36,0.15)',
-      productivity: '#fb7185',
+      productivity: '#f87171',
       'productivity-bg': 'rgba(251,113,133,0.15)',
       storage: '#cbd5e1',
       'storage-bg': 'rgba(203,213,225,0.15)',
@@ -46,7 +46,7 @@ export const marketplaceTheme = {
     'mp-search': {
       bg: 'rgba(30,41,59,0.5)',
       border: 'var(--cs-border-default)',
-      'border-focus': '#8b5cf6',
+      'border-focus': '#818cf8',
       placeholder: 'var(--cs-text-tertiary)',
       text: 'var(--cs-text-primary)',
       icon: 'var(--cs-text-tertiary)',
@@ -55,12 +55,12 @@ export const marketplaceTheme = {
     // Filter chips
     'mp-filter': {
       'chip-bg': 'rgba(30,41,59,0.4)',
-      'chip-bg-active': 'rgba(139,92,246,0.15)',
+      'chip-bg-active': 'rgba(99,102,241,0.15)',
       'chip-border': 'var(--cs-border-subtle)',
-      'chip-border-active': 'rgba(139,92,246,0.4)',
+      'chip-border-active': 'rgba(99,102,241,0.4)',
       'chip-text': 'var(--cs-text-secondary)',
-      'chip-text-active': '#c4b5fd',
-      'count-bg': 'rgba(148,163,184,0.12)',
+      'chip-text-active': '#a5b4fc',
+      'count-bg': 'rgba(113,113,122,0.12)',
       'count-text': 'var(--cs-text-tertiary)',
     },
 
@@ -73,12 +73,12 @@ export const marketplaceTheme = {
       'text-active': 'var(--cs-text-primary)',
       'menu-bg': 'var(--cs-surface-elevated)',
       'menu-border': 'var(--cs-border-default)',
-      'item-bg-hover': 'rgba(139,92,246,0.08)',
+      'item-bg-hover': 'rgba(99,102,241,0.08)',
     },
 
     // Featured banner
     'mp-featured': {
-      border: 'rgba(139,92,246,0.25)',
+      border: 'rgba(99,102,241,0.25)',
       'badge-bg': 'rgba(251,191,36,0.15)',
       'badge-text': '#fcd34d',
       'badge-border': 'rgba(251,191,36,0.3)',
@@ -88,14 +88,14 @@ export const marketplaceTheme = {
 
     // Install button states
     'mp-install-btn': {
-      bg: '#7c3aed',
-      'bg-hover': '#8b5cf6',
+      bg: '#6366f1',
+      'bg-hover': '#818cf8',
       'bg-active': '#6d28d9',
       text: '#ffffff',
       // Installing state
-      'installing-bg': 'rgba(139,92,246,0.15)',
-      'installing-text': '#c4b5fd',
-      'installing-border': 'rgba(139,92,246,0.3)',
+      'installing-bg': 'rgba(99,102,241,0.15)',
+      'installing-text': '#a5b4fc',
+      'installing-border': 'rgba(99,102,241,0.3)',
       // Installed state
       'installed-bg': 'rgba(52,211,153,0.12)',
       'installed-text': '#34d399',
@@ -103,7 +103,7 @@ export const marketplaceTheme = {
       'installed-icon': '#34d399',
       // Uninstall state
       'uninstall-text': 'var(--cs-text-secondary)',
-      'uninstall-text-hover': '#fb7185',
+      'uninstall-text-hover': '#f87171',
       'uninstall-bg-hover': 'rgba(251,113,133,0.1)',
       'uninstall-border': 'var(--cs-border-default)',
       'uninstall-border-hover': 'rgba(251,113,133,0.3)',
@@ -112,9 +112,9 @@ export const marketplaceTheme = {
     // Progress bar
     'mp-progress': {
       track: 'rgba(30,41,59,0.5)',
-      fill: '#8b5cf6',
+      fill: '#818cf8',
       'fill-complete': '#10b981',
-      'fill-error': '#f43f5e',
+      'fill-error': '#ef4444',
       shimmer: 'rgba(255,255,255,0.15)',
     },
 
@@ -144,13 +144,13 @@ export const marketplaceTheme = {
     // Install status steps
     'mp-status': {
       'pending-text': 'var(--cs-text-tertiary)',
-      'pending-icon': '#64748b',
-      'running-text': '#c4b5fd',
-      'running-icon': '#a78bfa',
+      'pending-icon': '#52525b',
+      'running-text': '#a5b4fc',
+      'running-icon': '#818cf8',
       'success-text': '#34d399',
       'success-icon': '#34d399',
-      'error-text': '#fb7185',
-      'error-icon': '#fb7185',
+      'error-text': '#f87171',
+      'error-icon': '#f87171',
       connector: 'var(--cs-border-subtle)',
       'connector-done': '#10b981',
     },
@@ -158,15 +158,15 @@ export const marketplaceTheme = {
     // Pagination
     'mp-pagination': {
       bg: 'transparent',
-      'bg-hover': 'rgba(148,163,184,0.08)',
-      'bg-active': 'rgba(139,92,246,0.15)',
+      'bg-hover': 'rgba(113,113,122,0.08)',
+      'bg-active': 'rgba(99,102,241,0.15)',
       text: 'var(--cs-text-secondary)',
-      'text-active': '#c4b5fd',
+      'text-active': '#a5b4fc',
     },
 
     // Empty state
     'mp-empty': {
-      icon: '#475569',
+      icon: '#3f3f46',
       heading: 'var(--cs-text-primary)',
       desc: 'var(--cs-text-secondary)',
       border: 'var(--cs-border-subtle)',
@@ -299,10 +299,10 @@ export const marketplaceTheme = {
 
   boxShadow: {
     // Install button shadows
-    'mp-install-btn': '0 2px 8px rgba(124,58,237,0.35)',
-    'mp-install-btn-hover': '0 4px 12px rgba(124,58,237,0.45)',
+    'mp-install-btn': '0 2px 8px rgba(99,102,241,0.35)',
+    'mp-install-btn-hover': '0 4px 12px rgba(99,102,241,0.45)',
     // Modal shadow
-    'mp-modal': '0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.06)',
+    'mp-modal': '0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.06)',
     // Success pulse
     'mp-success-pulse': '0 0 0 0 rgba(52,211,153,0.4)',
   },

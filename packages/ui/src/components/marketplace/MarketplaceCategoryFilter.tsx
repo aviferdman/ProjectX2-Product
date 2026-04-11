@@ -41,9 +41,9 @@ export const MarketplaceCategoryFilter = forwardRef<
               'text-xs font-medium',
               'transition-all duration-150',
               isActive
-                ? 'border-violet-500/50 bg-violet-500/10 text-violet-300'
-                : 'border-[var(--cs-border-default,#1e293b)] bg-transparent text-[var(--cs-text-secondary,#94a3b8)] hover:text-violet-300',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+                ? 'border-indigo-500/50 bg-indigo-500/10 text-indigo-300'
+                : 'border-[var(--cs-border-default,#18181b)] bg-transparent text-[var(--cs-text-secondary,#a1a1aa)] hover:text-indigo-300',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
             )}
           >
             {item.label}

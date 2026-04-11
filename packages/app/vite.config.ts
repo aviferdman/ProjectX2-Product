@@ -15,6 +15,12 @@ export default defineConfig({
     open: false,
     strictPort: false,
     proxy: {
+      // Azure Function proxy — in local dev, forward to Azure Functions Core Tools (port 7071)
+      // or directly to Azure OpenAI if AZURE_OPENAI_ENDPOINT is set.
+      '/api/chat': {
+        target: 'http://127.0.0.1:7071',
+        changeOrigin: true,
+      },
       // LLM API proxies — bypass browser CORS restrictions.
       // The browser calls /api/openai/... → forwarded to https://api.openai.com/...
       '/api/openai': {

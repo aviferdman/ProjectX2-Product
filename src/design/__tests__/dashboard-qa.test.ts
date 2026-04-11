@@ -177,7 +177,7 @@ describe('dashboard.json — design tokens', () => {
 
     it('has status background colors', () => {
       const statusBg = card['status-bg'] as Record<string, { value: string }>;
-      expect(statusBg.draft.value).toBe('rgba(148,163,184,0.1)');
+      expect(statusBg.draft.value).toBe('rgba(113,113,122,0.1)');
       expect(statusBg.active.value).toBe('rgba(16,185,129,0.1)');
       expect(statusBg.error.value).toBe('rgba(244,63,94,0.1)');
       expect(statusBg.archived.value).toBe('rgba(100,116,139,0.1)');
@@ -240,7 +240,7 @@ describe('dashboard.json — design tokens', () => {
       const shadow = (dashboard as Record<string, { value: string; type: string }>)['stat-card-shadow'];
       expect(shadow.type).toBe('boxShadow');
       expect(shadow.value).toContain('rgba(0,0,0,0.2)');
-      expect(shadow.value).toContain('rgba(148,163,184,0.06)');
+      expect(shadow.value).toContain('rgba(113,113,122,0.06)');
     });
   });
 });
@@ -277,16 +277,16 @@ describe('dashboard-variables.css — consistency with spec', () => {
   });
 
   describe('sidebar nav variables', () => {
-    it('has --nav-item-color-active: #c4b5fd', () => {
-      expect(css).toContain('--nav-item-color-active: #c4b5fd');
+    it('has --nav-item-color-active: #a5b4fc', () => {
+      expect(css).toContain('--nav-item-color-active: #a5b4fc');
     });
 
     it('has --nav-item-bg-active: rgba(139, 92, 246, 0.12)', () => {
       expect(css).toContain('--nav-item-bg-active: rgba(139, 92, 246, 0.12)');
     });
 
-    it('has --nav-item-border-active: #7c3aed', () => {
-      expect(css).toContain('--nav-item-border-active: #7c3aed');
+    it('has --nav-item-border-active: #6366f1', () => {
+      expect(css).toContain('--nav-item-border-active: #6366f1');
     });
   });
 
@@ -300,16 +300,16 @@ describe('dashboard-variables.css — consistency with spec', () => {
       expect(css).toContain('--search-max-w: 360px');
     });
 
-    it('has --search-border-focus: #8b5cf6', () => {
-      expect(css).toContain('--search-border-focus: #8b5cf6');
+    it('has --search-border-focus: #818cf8', () => {
+      expect(css).toContain('--search-border-focus: #818cf8');
     });
 
     it('has filter chip variables', () => {
       expect(css).toContain('--chip-h: 28px');
       expect(css).toContain('--chip-radius: 9999px');
       expect(css).toContain('--chip-bg-active: rgba(139, 92, 246, 0.2)');
-      expect(css).toContain('--chip-border-active: #8b5cf6');
-      expect(css).toContain('--chip-text-active: #c4b5fd');
+      expect(css).toContain('--chip-border-active: #818cf8');
+      expect(css).toContain('--chip-text-active: #a5b4fc');
     });
   });
 
@@ -355,10 +355,10 @@ describe('dashboard-variables.css — consistency with spec', () => {
 
   describe('status badge variables', () => {
     const statuses = [
-      { name: 'draft', color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)' },
+      { name: 'draft', color: '#a1a1aa', bg: 'rgba(148, 163, 184, 0.1)' },
       { name: 'active', color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)' },
-      { name: 'error', color: '#f43f5e', bg: 'rgba(244, 63, 94, 0.1)' },
-      { name: 'archived', color: '#64748b', bg: 'rgba(100, 116, 139, 0.1)' },
+      { name: 'error', color: '#ef4444', bg: 'rgba(244, 63, 94, 0.1)' },
+      { name: 'archived', color: '#52525b', bg: 'rgba(100, 116, 139, 0.1)' },
     ];
 
     for (const status of statuses) {
@@ -382,15 +382,15 @@ describe('dashboard-variables.css — consistency with spec', () => {
     });
 
     it('has stat icon color variables', () => {
-      expect(css).toContain('--stat-icon-workflows: #a78bfa');
-      expect(css).toContain('--stat-icon-runs: #38bdf8');
+      expect(css).toContain('--stat-icon-workflows: #818cf8');
+      expect(css).toContain('--stat-icon-runs: #22d3ee');
       expect(css).toContain('--stat-icon-agents: #34d399');
-      expect(css).toContain('--stat-icon-errors: #fb7185');
+      expect(css).toContain('--stat-icon-errors: #f87171');
     });
 
     it('has trend colors', () => {
       expect(css).toContain('--stat-trend-up: #34d399');
-      expect(css).toContain('--stat-trend-down: #fb7185');
+      expect(css).toContain('--stat-trend-down: #f87171');
     });
   });
 
@@ -404,16 +404,16 @@ describe('dashboard-variables.css — consistency with spec', () => {
     });
 
     it('has fill variants (normal, warning, critical)', () => {
-      expect(css).toContain('--bar-fill: #8b5cf6');
+      expect(css).toContain('--bar-fill: #818cf8');
       expect(css).toContain('--bar-fill-warning: #f59e0b');
-      expect(css).toContain('--bar-fill-critical: #f43f5e');
+      expect(css).toContain('--bar-fill-critical: #ef4444');
     });
   });
 
   describe('create workflow button variables', () => {
-    it('has --btn-bg: #7c3aed / hover: #8b5cf6', () => {
-      expect(css).toContain('--btn-bg: #7c3aed');
-      expect(css).toContain('--btn-bg-hover: #8b5cf6');
+    it('has --btn-bg: #6366f1 / hover: #818cf8', () => {
+      expect(css).toContain('--btn-bg: #6366f1');
+      expect(css).toContain('--btn-bg-hover: #818cf8');
     });
 
     it('has --btn-shadow and --btn-shadow-hover', () => {
@@ -439,8 +439,8 @@ describe('dashboard-variables.css — consistency with spec', () => {
       expect(css).toContain('--empty-icon-size: 64px');
     });
 
-    it('has --empty-icon-color: #475569', () => {
-      expect(css).toContain('--empty-icon-color: #475569');
+    it('has --empty-icon-color: #3f3f46', () => {
+      expect(css).toContain('--empty-icon-color: #3f3f46');
     });
   });
 
@@ -449,8 +449,8 @@ describe('dashboard-variables.css — consistency with spec', () => {
       expect(css).toContain('--prompt-bg: rgba(124, 58, 237, 0.08)');
     });
 
-    it('has --prompt-border: #6d28d9', () => {
-      expect(css).toContain('--prompt-border: #6d28d9');
+    it('has --prompt-border: #4f46e5', () => {
+      expect(css).toContain('--prompt-border: #4f46e5');
     });
   });
 
@@ -515,26 +515,26 @@ describe('dashboard-theme.ts — consistency with spec', () => {
     });
 
     it('has workflow status colors', () => {
-      expect(twSource).toContain("draft: '#94a3b8'");
+      expect(twSource).toContain("draft: '#a1a1aa'");
       expect(twSource).toContain("active: '#10b981'");
-      expect(twSource).toContain("error: '#f43f5e'");
-      expect(twSource).toContain("archived: '#64748b'");
+      expect(twSource).toContain("error: '#ef4444'");
+      expect(twSource).toContain("archived: '#52525b'");
     });
 
     it('has stat icon colors matching spec', () => {
-      expect(twSource).toContain("'icon-workflows': '#a78bfa'");
-      expect(twSource).toContain("'icon-runs': '#38bdf8'");
+      expect(twSource).toContain("'icon-workflows': '#818cf8'");
+      expect(twSource).toContain("'icon-runs': '#22d3ee'");
       expect(twSource).toContain("'icon-agents': '#34d399'");
-      expect(twSource).toContain("'icon-errors': '#fb7185'");
+      expect(twSource).toContain("'icon-errors': '#f87171'");
     });
 
     it('has nav item-border-active for active left accent', () => {
-      expect(twSource).toContain("'item-border-active': '#7c3aed'");
+      expect(twSource).toContain("'item-border-active': '#6366f1'");
     });
 
     it('has upgrade prompt colors', () => {
-      expect(twSource).toContain("'cta-bg': '#7c3aed'");
-      expect(twSource).toContain("'cta-bg-hover': '#8b5cf6'");
+      expect(twSource).toContain("'cta-bg': '#6366f1'");
+      expect(twSource).toContain("'cta-bg-hover': '#818cf8'");
     });
   });
 
@@ -721,14 +721,14 @@ describe('dashboard CSS ↔ Tailwind cross-file consistency', () => {
   const css = loadCSS('dashboard-variables.css');
   const twSource = loadTailwind('dashboard-theme.ts');
 
-  it('both files reference the same active nav color (#c4b5fd)', () => {
-    expect(css).toContain('#c4b5fd');
-    expect(twSource).toContain('#c4b5fd');
+  it('both files reference the same active nav color (#a5b4fc)', () => {
+    expect(css).toContain('#a5b4fc');
+    expect(twSource).toContain('#a5b4fc');
   });
 
-  it('both files reference the same create button bg (#7c3aed)', () => {
-    expect(css).toContain('--btn-bg: #7c3aed');
-    expect(twSource).toContain("bg: '#7c3aed'");
+  it('both files reference the same create button bg (#6366f1)', () => {
+    expect(css).toContain('--btn-bg: #6366f1');
+    expect(twSource).toContain("bg: '#6366f1'");
   });
 
   it('both files have matching stat trend-up color (#34d399)', () => {
@@ -736,14 +736,14 @@ describe('dashboard CSS ↔ Tailwind cross-file consistency', () => {
     expect(twSource).toContain("'trend-up': '#34d399'");
   });
 
-  it('both files have matching stat trend-down color (#fb7185)', () => {
-    expect(css).toContain('--stat-trend-down: #fb7185');
-    expect(twSource).toContain("'trend-down': '#fb7185'");
+  it('both files have matching stat trend-down color (#f87171)', () => {
+    expect(css).toContain('--stat-trend-down: #f87171');
+    expect(twSource).toContain("'trend-down': '#f87171'");
   });
 
-  it('both files have matching usage bar fill (#8b5cf6)', () => {
-    expect(css).toContain('--bar-fill: #8b5cf6');
-    expect(twSource).toContain("fill: '#8b5cf6'");
+  it('both files have matching usage bar fill (#818cf8)', () => {
+    expect(css).toContain('--bar-fill: #818cf8');
+    expect(twSource).toContain("fill: '#818cf8'");
   });
 
   it('card-enter animation exists in both CSS and Tailwind', () => {

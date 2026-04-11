@@ -71,7 +71,7 @@ export const StarRating = forwardRef<HTMLSpanElement, StarRatingProps>(
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
           </svg>
         ))}
-        <span className="ml-1 text-xs text-[var(--cs-text-secondary,#94a3b8)]">
+        <span className="ml-1 text-xs text-[var(--cs-text-secondary,#a1a1aa)]">
           {clamped.toFixed(1)}
         </span>
       </span>

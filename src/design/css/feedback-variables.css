@@ -7,7 +7,7 @@
 
   --cs-feedback-error-bg: rgba(244, 63, 94, 0.08);
   --cs-feedback-error-border: rgba(225, 29, 72, 0.5);
-  --cs-feedback-error-icon: #fb7185;
+  --cs-feedback-error-icon: #f87171;
 
   --cs-feedback-warning-bg: rgba(245, 158, 11, 0.08);
   --cs-feedback-warning-border: rgba(217, 119, 6, 0.5);
@@ -15,19 +15,19 @@
 
   --cs-feedback-info-bg: rgba(14, 165, 233, 0.08);
   --cs-feedback-info-border: rgba(2, 132, 199, 0.5);
-  --cs-feedback-info-icon: #38bdf8;
+  --cs-feedback-info-icon: #22d3ee;
 
   /* Empty state */
-  --cs-feedback-empty-border: #334155;
-  --cs-feedback-empty-icon: #475569;
+  --cs-feedback-empty-border: #27272a;
+  --cs-feedback-empty-icon: #3f3f46;
 
   /* Loading */
-  --cs-feedback-loading-spinner: #a78bfa;
-  --cs-feedback-loading-track: #1e293b;
-  --cs-feedback-loading-bar: #8b5cf6;
+  --cs-feedback-loading-spinner: #818cf8;
+  --cs-feedback-loading-track: #18181b;
+  --cs-feedback-loading-bar: #818cf8;
 
   /* Toast */
-  --cs-toast-bg: #0f172a;
+  --cs-toast-bg: #111113;
   --cs-toast-shadow: rgba(0, 0, 0, 0.4);
   --cs-toast-max-width: 420px;
   --cs-toast-min-width: 280px;

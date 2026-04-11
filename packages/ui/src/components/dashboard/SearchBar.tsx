@@ -37,7 +37,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
             'bg-surface-elevated border border-slate-700 outline-none',
             'text-slate-100 placeholder:text-slate-500',
             'transition-colors duration-150',
-            'focus:border-violet-500 focus:ring-1 focus:ring-violet-500',
+            'focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500',
           )}
           aria-label="Search workflows"
           {...rest}

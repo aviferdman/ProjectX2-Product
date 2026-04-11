@@ -48,7 +48,7 @@ const IconButton: React.FC<{
     aria-label={label}
     className={clsx(
       'inline-flex items-center justify-center rounded',
-      'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+      'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
       disabled
         ? 'opacity-40 cursor-not-allowed'
         : 'hover:bg-white/10 active:bg-white/20 cursor-pointer',
@@ -145,7 +145,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
       )}
       style={{
         padding: '8px 12px',
-        background: 'var(--cs-surface-card, #1e293b)',
+        background: 'var(--cs-surface-card, #18181b)',
         borderRadius: 8,
         border: '1px solid var(--cs-border-subtle, rgba(51,65,85,0.5))',
       }}
@@ -181,7 +181,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
         aria-label={isPlaying ? 'Pause' : 'Play'}
         className={clsx(
           'inline-flex items-center justify-center rounded-full',
-          'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+          'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
           disabled
             ? 'opacity-40 cursor-not-allowed'
             : 'hover:brightness-110 active:brightness-90 cursor-pointer',
@@ -275,7 +275,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
         style={{
           fontFamily: 'JetBrains Mono, monospace',
           fontSize: 12,
-          color: 'var(--cs-text-secondary, #94a3b8)',
+          color: 'var(--cs-text-secondary, #a1a1aa)',
           minWidth: 100,
           textAlign: 'center',
           whiteSpace: 'nowrap',
@@ -293,7 +293,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
         aria-label={`Playback speed: ${speed}x. Click to change.`}
         className={clsx(
           'inline-flex items-center justify-center rounded px-2',
-          'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+          'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
           disabled
             ? 'opacity-40 cursor-not-allowed'
             : 'hover:bg-white/10 cursor-pointer',
@@ -303,7 +303,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
           fontFamily: 'JetBrains Mono, monospace',
           fontSize: 12,
           fontWeight: 600,
-          color: speed === 1 ? 'var(--cs-text-secondary, #94a3b8)' : PLAYHEAD.color,
+          color: speed === 1 ? 'var(--cs-text-secondary, #a1a1aa)' : PLAYHEAD.color,
           border: `1px solid ${speed === 1 ? 'var(--cs-border-subtle, rgba(51,65,85,0.5))' : PLAYHEAD.color}`,
           borderRadius: 4,
         }}

@@ -52,7 +52,7 @@ export const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(
           'shadow-tpl-card transition-all duration-150',
           'hover:border-tpl-card-border-hover hover:bg-tpl-card-bg-hover hover:shadow-tpl-card-hover',
           'hover:-translate-y-0.5',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900',
           'animate-tpl-card-enter',
           className,
         )}

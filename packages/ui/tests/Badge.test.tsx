@@ -15,7 +15,7 @@ describe('Badge', () => {
 
   it('applies brand variant', () => {
     const { container } = render(<Badge variant="brand">B</Badge>);
-    expect(container.firstElementChild?.className).toContain('text-violet-300');
+    expect(container.firstElementChild?.className).toContain('text-indigo-300');
   });
 
   it('applies success variant', () => {

@@ -5,17 +5,17 @@
       "color": {
         "background": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Timeline panel background" },
         "header-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Timeline header/toolbar background" },
-        "lane-bg": { "value": "rgba(15,23,42,0.6)", "type": "color", "description": "Agent lane background" },
-        "lane-bg-alt": { "value": "rgba(15,23,42,0.8)", "type": "color", "description": "Alternating agent lane background" },
+        "lane-bg": { "value": "rgba(17,17,19,0.6)", "type": "color", "description": "Agent lane background" },
+        "lane-bg-alt": { "value": "rgba(17,17,19,0.8)", "type": "color", "description": "Alternating agent lane background" },
         "lane-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Horizontal lane divider" },
         "lane-label-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Sticky lane label background" },
         "axis-line": { "value": "{crewspace.color.primitive.slate.700}", "type": "color", "description": "Time axis line" },
         "axis-tick": { "value": "{crewspace.color.primitive.slate.600}", "type": "color", "description": "Time axis tick marks" },
         "axis-label": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Time axis labels" },
-        "grid-line": { "value": "rgba(148,163,184,0.06)", "type": "color", "description": "Vertical grid lines" },
+        "grid-line": { "value": "rgba(113,113,122,0.06)", "type": "color", "description": "Vertical grid lines" },
         "playhead": { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Current time playhead line" },
-        "playhead-glow": { "value": "rgba(139,92,246,0.3)", "type": "color", "description": "Playhead glow effect" },
-        "selection-range": { "value": "rgba(139,92,246,0.1)", "type": "color", "description": "Time range selection highlight" },
+        "playhead-glow": { "value": "rgba(99,102,241,0.3)", "type": "color", "description": "Playhead glow effect" },
+        "selection-range": { "value": "rgba(99,102,241,0.1)", "type": "color", "description": "Time range selection highlight" },
         "selection-border": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" }
       },
       "event": {
@@ -45,13 +45,13 @@
           "icon": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" }
         },
         "message": {
-          "bg": { "value": "rgba(139,92,246,0.15)", "type": "color", "description": "Agent message / delegation" },
+          "bg": { "value": "rgba(99,102,241,0.15)", "type": "color", "description": "Agent message / delegation" },
           "border": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" }
         },
         "selected": {
           "ring": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
-          "glow": { "value": "rgba(139,92,246,0.25)", "type": "color" }
+          "glow": { "value": "rgba(99,102,241,0.25)", "type": "color" }
         },
         "hover-opacity": { "value": "0.85", "type": "number" }
       },
@@ -61,8 +61,8 @@
         "row-bg": { "value": "transparent", "type": "color" },
         "row-bg-alt": { "value": "rgba(30,41,59,0.3)", "type": "color" },
         "row-bg-hover": { "value": "rgba(30,41,59,0.6)", "type": "color" },
-        "row-bg-selected": { "value": "rgba(139,92,246,0.1)", "type": "color" },
-        "row-border": { "value": "rgba(51,65,85,0.3)", "type": "color" },
+        "row-bg-selected": { "value": "rgba(99,102,241,0.1)", "type": "color" },
+        "row-border": { "value": "rgba(39,39,42,0.3)", "type": "color" },
         "timestamp": { "value": "{crewspace.color.primitive.slate.500}", "type": "color" },
         "level": {
           "debug": { "value": "{crewspace.color.primitive.slate.400}", "type": "color" },
@@ -71,7 +71,7 @@
           "error": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" }
         },
         "level-bg": {
-          "debug": { "value": "rgba(148,163,184,0.1)", "type": "color" },
+          "debug": { "value": "rgba(113,113,122,0.1)", "type": "color" },
           "info": { "value": "rgba(14,165,233,0.1)", "type": "color" },
           "warn": { "value": "rgba(245,158,11,0.1)", "type": "color" },
           "error": { "value": "rgba(244,63,94,0.1)", "type": "color" }
@@ -82,7 +82,7 @@
       "filter": {
         "bar-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
         "chip-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
-        "chip-bg-active": { "value": "rgba(139,92,246,0.2)", "type": "color" },
+        "chip-bg-active": { "value": "rgba(99,102,241,0.2)", "type": "color" },
         "chip-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
         "chip-border-active": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
         "chip-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
@@ -125,11 +125,11 @@
       "syntax": {
         "string": { "value": "#34d399", "type": "color", "description": "JSON string value — emerald-400" },
         "number": { "value": "#fbbf24", "type": "color", "description": "JSON number value — amber-400" },
-        "boolean": { "value": "#a78bfa", "type": "color", "description": "JSON boolean/null — violet-400" },
-        "null": { "value": "#a78bfa", "type": "color", "description": "JSON null value — violet-400" },
-        "key": { "value": "#38bdf8", "type": "color", "description": "JSON key — sky-400" },
-        "error": { "value": "#fb7185", "type": "color", "description": "Error/stack trace text — rose-400" },
-        "punctuation": { "value": "#94a3b8", "type": "color", "description": "Brackets, commas — slate-400" }
+        "boolean": { "value": "#818cf8", "type": "color", "description": "JSON boolean/null — violet-400" },
+        "null": { "value": "#818cf8", "type": "color", "description": "JSON null value — violet-400" },
+        "key": { "value": "#22d3ee", "type": "color", "description": "JSON key — sky-400" },
+        "error": { "value": "#f87171", "type": "color", "description": "Error/stack trace text — rose-400" },
+        "punctuation": { "value": "#a1a1aa", "type": "color", "description": "Brackets, commas — slate-400" }
       }
     }
   }

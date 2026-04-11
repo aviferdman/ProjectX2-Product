@@ -14,29 +14,34 @@
 /* ================================================================== */
 :root {
   /* Slate */
-  --cs-slate-50: #f8fafc;
+  --cs-slate-50: #fafafa;
   --cs-slate-100: #f1f5f9;
   --cs-slate-200: #e2e8f0;
   --cs-slate-300: #cbd5e1;
-  --cs-slate-400: #94a3b8;
-  --cs-slate-500: #64748b;
-  --cs-slate-600: #475569;
-  --cs-slate-700: #334155;
-  --cs-slate-800: #1e293b;
-  --cs-slate-900: #0f172a;
-  --cs-slate-950: #020617;
+  --cs-slate-400: #a1a1aa;
+  --cs-slate-500: #52525b;
+  --cs-slate-600: #3f3f46;
+  --cs-slate-700: #27272a;
+  --cs-slate-800: #18181b;
+  --cs-slate-900: #111113;
+  --cs-slate-950: #09090b;
 
-  /* Violet */
-  --cs-violet-50: #f5f3ff;
-  --cs-violet-100: #ede9fe;
-  --cs-violet-200: #ddd6fe;
-  --cs-violet-300: #c4b5fd;
-  --cs-violet-400: #a78bfa;
-  --cs-violet-500: #8b5cf6;
-  --cs-violet-600: #7c3aed;
-  --cs-violet-700: #6d28d9;
-  --cs-violet-800: #5b21b6;
-  --cs-violet-900: #4c1d95;
+  /* Indigo */
+  --cs-indigo-50: #eef2ff;
+  --cs-indigo-100: #e0e7ff;
+  --cs-indigo-200: #c7d2fe;
+  --cs-indigo-300: #a5b4fc;
+  --cs-indigo-400: #818cf8;
+  --cs-indigo-500: #6366f1;
+  --cs-indigo-600: #4f46e5;
+  --cs-indigo-700: #4338ca;
+  --cs-indigo-800: #3730a3;
+  --cs-indigo-900: #312e81;
+
+  /* Cyan (secondary accent) */
+  --cs-cyan-400: #22d3ee;
+  --cs-cyan-500: #06b6d4;
+  --cs-cyan-600: #0891b2;
 
   /* Emerald */
   --cs-emerald-50: #ecfdf5;
@@ -55,16 +60,16 @@
   /* Rose */
   --cs-rose-50: #fff1f2;
   --cs-rose-100: #ffe4e6;
-  --cs-rose-400: #fb7185;
-  --cs-rose-500: #f43f5e;
+  --cs-rose-400: #f87171;
+  --cs-rose-500: #ef4444;
   --cs-rose-600: #e11d48;
 
   /* Sky */
   --cs-sky-50: #f0f9ff;
   --cs-sky-100: #e0f2fe;
-  --cs-sky-400: #38bdf8;
-  --cs-sky-500: #0ea5e9;
-  --cs-sky-600: #0284c7;
+  --cs-sky-400: #22d3ee;
+  --cs-sky-500: #06b6d4;
+  --cs-sky-600: #0891b2;
 }
 
 /* ================================================================== */
@@ -72,13 +77,13 @@
 /* ================================================================== */
 :root {
   /* Brand */
-  --cs-brand-primary: var(--cs-violet-600);
-  --cs-brand-secondary: var(--cs-violet-400);
-  --cs-brand-subtle: var(--cs-violet-100);
+  --cs-brand-primary: var(--cs-indigo-600);
+  --cs-brand-secondary: var(--cs-indigo-400);
+  --cs-brand-subtle: var(--cs-indigo-100);
 
   /* Surfaces */
   --cs-surface-app: var(--cs-slate-950);
-  --cs-surface-canvas: #0a0e1a;
+  --cs-surface-canvas: #0c0c14;
   --cs-surface-panel: var(--cs-slate-900);
   --cs-surface-card: var(--cs-slate-800);
   --cs-surface-elevated: var(--cs-slate-700);
@@ -88,7 +93,7 @@
   --cs-border-default: var(--cs-slate-700);
   --cs-border-subtle: var(--cs-slate-800);
   --cs-border-strong: var(--cs-slate-500);
-  --cs-border-focus: var(--cs-violet-500);
+  --cs-border-focus: var(--cs-indigo-500);
 
   /* Text */
   --cs-text-primary: var(--cs-slate-50);
@@ -96,8 +101,8 @@
   --cs-text-tertiary: var(--cs-slate-500);
   --cs-text-inverse: var(--cs-slate-900);
   --cs-text-disabled: var(--cs-slate-600);
-  --cs-text-link: var(--cs-violet-400);
-  --cs-text-link-hover: var(--cs-violet-300);
+  --cs-text-link: var(--cs-indigo-400);
+  --cs-text-link-hover: var(--cs-indigo-300);
 
   /* Status */
   --cs-status-success: var(--cs-emerald-500);
@@ -110,9 +115,9 @@
   --cs-status-info-subtle: var(--cs-sky-50);
 
   /* Interactive */
-  --cs-interactive-default: var(--cs-violet-600);
-  --cs-interactive-hover: var(--cs-violet-500);
-  --cs-interactive-active: var(--cs-violet-700);
+  --cs-interactive-default: var(--cs-indigo-600);
+  --cs-interactive-hover: var(--cs-indigo-500);
+  --cs-interactive-active: var(--cs-indigo-700);
   --cs-interactive-disabled: var(--cs-slate-600);
 
   /* Typography */
@@ -256,12 +261,12 @@
 /* Light mode overrides                                                */
 /* ================================================================== */
 [data-theme='light'] {
-  --cs-brand-primary: var(--cs-violet-600);
-  --cs-brand-secondary: var(--cs-violet-500);
-  --cs-brand-subtle: var(--cs-violet-50);
+  --cs-brand-primary: var(--cs-indigo-600);
+  --cs-brand-secondary: var(--cs-indigo-500);
+  --cs-brand-subtle: var(--cs-indigo-50);
 
   --cs-surface-app: var(--cs-slate-50);
-  --cs-surface-canvas: #f8fafc;
+  --cs-surface-canvas: #fafafa;
   --cs-surface-panel: #ffffff;
   --cs-surface-card: var(--cs-slate-100);
   --cs-surface-elevated: #ffffff;
@@ -270,15 +275,15 @@
   --cs-border-default: var(--cs-slate-200);
   --cs-border-subtle: var(--cs-slate-100);
   --cs-border-strong: var(--cs-slate-400);
-  --cs-border-focus: var(--cs-violet-500);
+  --cs-border-focus: var(--cs-indigo-500);
 
   --cs-text-primary: var(--cs-slate-900);
   --cs-text-secondary: var(--cs-slate-600);
   --cs-text-tertiary: var(--cs-slate-500);
   --cs-text-inverse: var(--cs-slate-50);
   --cs-text-disabled: var(--cs-slate-400);
-  --cs-text-link: var(--cs-violet-600);
-  --cs-text-link-hover: var(--cs-violet-700);
+  --cs-text-link: var(--cs-indigo-600);
+  --cs-text-link-hover: var(--cs-indigo-700);
 
   --cs-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
   --cs-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);

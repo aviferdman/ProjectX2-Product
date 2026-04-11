@@ -4,27 +4,27 @@
     "color": {
       "primitive": {
         "slate": {
-          "50":  { "value": "#f8fafc", "type": "color" },
+          "50":  { "value": "#fafafa", "type": "color" },
           "100": { "value": "#f1f5f9", "type": "color" },
           "200": { "value": "#e2e8f0", "type": "color" },
           "300": { "value": "#cbd5e1", "type": "color" },
-          "400": { "value": "#94a3b8", "type": "color" },
-          "500": { "value": "#64748b", "type": "color" },
-          "600": { "value": "#475569", "type": "color" },
-          "700": { "value": "#334155", "type": "color" },
-          "800": { "value": "#1e293b", "type": "color" },
-          "900": { "value": "#0f172a", "type": "color" },
-          "950": { "value": "#020617", "type": "color" }
+          "400": { "value": "#a1a1aa", "type": "color" },
+          "500": { "value": "#52525b", "type": "color" },
+          "600": { "value": "#3f3f46", "type": "color" },
+          "700": { "value": "#27272a", "type": "color" },
+          "800": { "value": "#18181b", "type": "color" },
+          "900": { "value": "#111113", "type": "color" },
+          "950": { "value": "#09090b", "type": "color" }
         },
         "violet": {
           "50":  { "value": "#f5f3ff", "type": "color" },
-          "100": { "value": "#ede9fe", "type": "color" },
+          "100": { "value": "#eef2ff", "type": "color" },
           "200": { "value": "#ddd6fe", "type": "color" },
-          "300": { "value": "#c4b5fd", "type": "color" },
-          "400": { "value": "#a78bfa", "type": "color" },
-          "500": { "value": "#8b5cf6", "type": "color" },
-          "600": { "value": "#7c3aed", "type": "color" },
-          "700": { "value": "#6d28d9", "type": "color" },
+          "300": { "value": "#a5b4fc", "type": "color" },
+          "400": { "value": "#818cf8", "type": "color" },
+          "500": { "value": "#818cf8", "type": "color" },
+          "600": { "value": "#6366f1", "type": "color" },
+          "700": { "value": "#4f46e5", "type": "color" },
           "800": { "value": "#5b21b6", "type": "color" },
           "900": { "value": "#4c1d95", "type": "color" }
         },
@@ -45,16 +45,16 @@
         "rose": {
           "50":  { "value": "#fff1f2", "type": "color" },
           "100": { "value": "#ffe4e6", "type": "color" },
-          "400": { "value": "#fb7185", "type": "color" },
-          "500": { "value": "#f43f5e", "type": "color" },
+          "400": { "value": "#f87171", "type": "color" },
+          "500": { "value": "#ef4444", "type": "color" },
           "600": { "value": "#e11d48", "type": "color" }
         },
         "sky": {
           "50":  { "value": "#f0f9ff", "type": "color" },
           "100": { "value": "#e0f2fe", "type": "color" },
-          "400": { "value": "#38bdf8", "type": "color" },
-          "500": { "value": "#0ea5e9", "type": "color" },
-          "600": { "value": "#0284c7", "type": "color" }
+          "400": { "value": "#22d3ee", "type": "color" },
+          "500": { "value": "#06b6d4", "type": "color" },
+          "600": { "value": "#0891b2", "type": "color" }
         }
       },
       "semantic": {
@@ -65,7 +65,7 @@
         },
         "surface": {
           "app":       { "value": "{crewspace.color.primitive.slate.950}", "type": "color", "description": "App background (dark mode default)" },
-          "canvas":    { "value": "#0a0e1a", "type": "color", "description": "Canvas viewport background — very dark blue-black" },
+          "canvas":    { "value": "#0c0c14", "type": "color", "description": "Canvas viewport background — very dark blue-black" },
           "panel":     { "value": "{crewspace.color.primitive.slate.900}", "type": "color", "description": "Sidebar / panel background" },
           "card":      { "value": "{crewspace.color.primitive.slate.800}", "type": "color", "description": "Card / node default background" },
           "elevated":  { "value": "{crewspace.color.primitive.slate.700}", "type": "color", "description": "Elevated elements (hover, modals)" },
@@ -91,17 +91,17 @@
         }
       },
       "canvas": {
-        "background":     { "value": "#0a0e1a", "type": "color", "description": "Canvas viewport" },
-        "grid-dot":       { "value": "rgba(148,163,184,0.12)", "type": "color", "description": "Background dot grid" },
-        "grid-line":      { "value": "rgba(148,163,184,0.06)", "type": "color", "description": "Background major gridlines" },
-        "selection-box":  { "value": "rgba(139,92,246,0.15)", "type": "color", "description": "Marquee selection fill" },
+        "background":     { "value": "#0c0c14", "type": "color", "description": "Canvas viewport" },
+        "grid-dot":       { "value": "rgba(113,113,122,0.12)", "type": "color", "description": "Background dot grid" },
+        "grid-line":      { "value": "rgba(113,113,122,0.06)", "type": "color", "description": "Background major gridlines" },
+        "selection-box":  { "value": "rgba(99,102,241,0.15)", "type": "color", "description": "Marquee selection fill" },
         "selection-border": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
-        "minimap-bg":     { "value": "rgba(15,23,42,0.9)", "type": "color" },
-        "minimap-viewport": { "value": "rgba(139,92,246,0.3)", "type": "color" }
+        "minimap-bg":     { "value": "rgba(17,17,19,0.9)", "type": "color" },
+        "minimap-viewport": { "value": "rgba(99,102,241,0.3)", "type": "color" }
       },
       "node": {
         "agent": {
-          "bg":     { "value": "rgba(124,58,237,0.12)", "type": "color" },
+          "bg":     { "value": "rgba(99,102,241,0.12)", "type": "color" },
           "border": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
           "icon":   { "value": "{crewspace.color.primitive.violet.400}", "type": "color" }
         },
@@ -122,7 +122,7 @@
         },
         "selected": {
           "ring":   { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "2px ring around selected node" },
-          "glow":   { "value": "rgba(139,92,246,0.25)", "type": "color", "description": "Soft outer glow when selected" }
+          "glow":   { "value": "rgba(99,102,241,0.25)", "type": "color", "description": "Soft outer glow when selected" }
         },
         "state": {
           "idle-opacity":      { "value": "1",   "type": "number" },

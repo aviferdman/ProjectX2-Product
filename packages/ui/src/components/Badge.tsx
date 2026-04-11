@@ -6,7 +6,7 @@ import { type HTMLAttributes, forwardRef } from 'react';
 /* ------------------------------------------------------------------ */
 const variantStyles = {
   default: 'bg-surface-elevated text-slate-300 border-slate-600',
-  brand: 'bg-violet-900/40 text-violet-300 border-violet-700/50',
+  brand: 'bg-indigo-900/40 text-indigo-300 border-indigo-700/50',
   success: 'bg-emerald-900/30 text-emerald-300 border-emerald-700/50',
   warning: 'bg-amber-900/30 text-amber-300 border-amber-700/50',
   error: 'bg-rose-900/30 text-rose-300 border-rose-700/50',

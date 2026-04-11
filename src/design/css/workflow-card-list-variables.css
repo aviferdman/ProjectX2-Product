@@ -18,7 +18,7 @@
   --card-bg-selected: rgba(139, 92, 246, 0.06);
   --card-border: var(--cs-border-default);
   --card-border-hover: var(--cs-border-strong);
-  --card-border-selected: #8b5cf6;
+  --card-border-selected: #818cf8;
   --card-radius: var(--cs-radius-xl);
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
   --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
@@ -38,8 +38,8 @@
   --thumb-overlay-gradient: linear-gradient(180deg, transparent 60%, rgba(10, 14, 26, 0.6) 100%);
 
   /* Miniature node dots */
-  --thumb-node-agent: #a78bfa;
-  --thumb-node-task: #38bdf8;
+  --thumb-node-agent: #818cf8;
+  --thumb-node-task: #22d3ee;
   --thumb-node-tool: #34d399;
   --thumb-node-llm: #fbbf24;
   --thumb-node-size: 8px;
@@ -48,7 +48,7 @@
 
   /* Empty thumbnail placeholder */
   --thumb-placeholder-icon-size: 32px;
-  --thumb-placeholder-icon-color: #475569;
+  --thumb-placeholder-icon-color: #3f3f46;
 
   /* Running pulse overlay */
   --thumb-running-pulse: #34d399;
@@ -84,7 +84,7 @@
   --meta-line-height: 1.25;
   --meta-icon-size: 12px;
   --meta-icon-gap: 4px;
-  --meta-separator-color: #475569;
+  --meta-separator-color: #3f3f46;
   --meta-gap: 8px;
 }
 
@@ -116,9 +116,9 @@
 }
 
 .cs-workflow-card__status--draft {
-  --badge-text: #94a3b8;
+  --badge-text: #a1a1aa;
   --badge-bg: rgba(148, 163, 184, 0.1);
-  --badge-dot: #94a3b8;
+  --badge-dot: #a1a1aa;
 }
 
 .cs-workflow-card__status--active {
@@ -134,9 +134,9 @@
 }
 
 .cs-workflow-card__status--error {
-  --badge-text: #f43f5e;
+  --badge-text: #ef4444;
   --badge-bg: rgba(244, 63, 94, 0.1);
-  --badge-dot: #f43f5e;
+  --badge-dot: #ef4444;
 }
 
 .cs-workflow-card__status--paused {
@@ -146,9 +146,9 @@
 }
 
 .cs-workflow-card__status--archived {
-  --badge-text: #64748b;
+  --badge-text: #52525b;
   --badge-bg: rgba(100, 116, 139, 0.1);
-  --badge-dot: #64748b;
+  --badge-dot: #52525b;
 }
 
 /* ------------------------------------------------------------------ */
@@ -186,7 +186,7 @@
   --divider-color: var(--cs-border-subtle);
 
   /* Destructive items (delete) */
-  --destructive-color: #fb7185;
+  --destructive-color: #f87171;
   --destructive-color-hover: #fda4af;
   --destructive-bg-hover: rgba(244, 63, 94, 0.08);
 }
@@ -240,7 +240,7 @@
   --header-font-weight: 600;
   --header-letter-spacing: 0.05em;
   --header-sort-icon: var(--cs-text-tertiary);
-  --header-sort-icon-active: #a78bfa;
+  --header-sort-icon-active: #818cf8;
   --header-sort-icon-size: 12px;
 }
 
@@ -260,8 +260,8 @@
 .cs-workflow-list__checkbox {
   --checkbox-size: 16px;
   --checkbox-border: var(--cs-border-default);
-  --checkbox-border-checked: #8b5cf6;
-  --checkbox-bg-checked: #7c3aed;
+  --checkbox-border-checked: #818cf8;
+  --checkbox-bg-checked: #6366f1;
   --checkbox-check-color: #ffffff;
   --checkbox-radius: var(--cs-radius-sm);
 }
@@ -271,7 +271,7 @@
   --wf-icon-size: 32px;
   --wf-icon-radius: var(--cs-radius-md);
   --wf-icon-bg: rgba(139, 92, 246, 0.1);
-  --wf-icon-color: #a78bfa;
+  --wf-icon-color: #818cf8;
   --wf-icon-inner: 16px;
 }
 

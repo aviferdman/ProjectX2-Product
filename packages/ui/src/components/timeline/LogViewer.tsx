@@ -98,7 +98,7 @@ export const LogViewer: React.FC<LogViewerProps> = ({
             width: LOG_SIZING.timestampWidth,
             fontSize: 11,
             fontWeight: 600,
-            color: 'var(--cs-text-tertiary, #64748b)',
+            color: 'var(--cs-text-tertiary, #52525b)',
           }}
         >
           Time
@@ -109,7 +109,7 @@ export const LogViewer: React.FC<LogViewerProps> = ({
             width: LOG_SIZING.levelWidth,
             fontSize: 11,
             fontWeight: 600,
-            color: 'var(--cs-text-tertiary, #64748b)',
+            color: 'var(--cs-text-tertiary, #52525b)',
           }}
         >
           Level
@@ -120,7 +120,7 @@ export const LogViewer: React.FC<LogViewerProps> = ({
             width: LOG_SIZING.agentWidth,
             fontSize: 11,
             fontWeight: 600,
-            color: 'var(--cs-text-tertiary, #64748b)',
+            color: 'var(--cs-text-tertiary, #52525b)',
           }}
         >
           Agent
@@ -130,7 +130,7 @@ export const LogViewer: React.FC<LogViewerProps> = ({
           style={{
             fontSize: 11,
             fontWeight: 600,
-            color: 'var(--cs-text-tertiary, #64748b)',
+            color: 'var(--cs-text-tertiary, #52525b)',
           }}
         >
           Message
@@ -141,7 +141,7 @@ export const LogViewer: React.FC<LogViewerProps> = ({
           style={{
             fontSize: 11,
             fontWeight: 500,
-            color: 'var(--cs-text-tertiary, #64748b)',
+            color: 'var(--cs-text-tertiary, #52525b)',
           }}
         >
           {matchCount}
@@ -162,7 +162,7 @@ export const LogViewer: React.FC<LogViewerProps> = ({
             className="flex items-center justify-center"
             style={{
               height: 120,
-              color: 'var(--cs-text-tertiary, #64748b)',
+              color: 'var(--cs-text-tertiary, #52525b)',
               fontSize: 13,
             }}
           >

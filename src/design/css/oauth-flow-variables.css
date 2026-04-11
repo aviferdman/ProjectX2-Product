@@ -189,8 +189,8 @@
 
 .cs-oauth-flow-btn--primary {
   --btn-bg: var(--cs-brand-primary);
-  --btn-bg-hover: #7c3aed;
-  --btn-bg-active: #6d28d9;
+  --btn-bg-hover: #6366f1;
+  --btn-bg-active: #4f46e5;
   --btn-text: #ffffff;
   --btn-shadow: 0 1px 3px rgba(124, 58, 237, 0.3);
 }

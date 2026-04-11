@@ -49,7 +49,7 @@ const NODE_STYLES: Record<
   { fill: string; stroke: string; textFill: string }
 > = {
   agent: { fill: '#312e81', stroke: '#6366f1', textFill: '#c7d2fe' },
-  task: { fill: '#1e3a5f', stroke: '#38bdf8', textFill: '#bae6fd' },
+  task: { fill: '#1e3a5f', stroke: '#22d3ee', textFill: '#bae6fd' },
 };
 
 /* ------------------------------------------------------------------ */
@@ -182,7 +182,7 @@ export const WorkflowDiagram = forwardRef<SVGSVGElement, WorkflowDiagramProps>(
               key={`${edge.from}-${edge.to}`}
               d={`M${x1},${y1} C${cx},${y1} ${cx},${y2} ${x2},${y2}`}
               fill="none"
-              stroke="#475569"
+              stroke="#3f3f46"
               strokeWidth="1.5"
               markerEnd="url(#arrowhead)"
               data-testid={`edge-${edge.from}-${edge.to}`}
@@ -200,7 +200,7 @@ export const WorkflowDiagram = forwardRef<SVGSVGElement, WorkflowDiagramProps>(
             refY="3"
             orient="auto"
           >
-            <polygon points="0 0, 8 3, 0 6" fill="#475569" />
+            <polygon points="0 0, 8 3, 0 6" fill="#3f3f46" />
           </marker>
         </defs>
 

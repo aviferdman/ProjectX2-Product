@@ -48,9 +48,9 @@ export const EVENT_STYLES = {
   },
   'task-start': {
     bg: 'rgba(14,165,233,0.2)',
-    border: '#0ea5e9',
+    border: '#06b6d4',
     icon: '▶',
-    iconColor: '#38bdf8',
+    iconColor: '#22d3ee',
     label: 'Task Start',
   },
   'task-complete': {
@@ -62,16 +62,16 @@ export const EVENT_STYLES = {
   },
   error: {
     bg: 'rgba(244,63,94,0.2)',
-    border: '#f43f5e',
+    border: '#ef4444',
     icon: '✕',
-    iconColor: '#fb7185',
+    iconColor: '#f87171',
     label: 'Error',
   },
   message: {
-    bg: 'rgba(139,92,246,0.15)',
-    border: '#8b5cf6',
+    bg: 'rgba(99,102,241,0.15)',
+    border: '#818cf8',
     icon: '💬',
-    iconColor: '#a78bfa',
+    iconColor: '#818cf8',
     label: 'Message',
   },
 } as const;
@@ -80,8 +80,8 @@ export const EVENT_STYLES = {
 /* Selection / highlight colours                                       */
 /* ------------------------------------------------------------------ */
 export const SELECTION = {
-  ringColor: '#8b5cf6',
-  glowColor: 'rgba(139,92,246,0.25)',
+  ringColor: '#818cf8',
+  glowColor: 'rgba(99,102,241,0.25)',
   ringWidth: 2,
 } as const;
 
@@ -89,26 +89,26 @@ export const SELECTION = {
 /* Playhead colours                                                    */
 /* ------------------------------------------------------------------ */
 export const PLAYHEAD = {
-  color: '#8b5cf6',
-  glowColor: 'rgba(139,92,246,0.3)',
+  color: '#818cf8',
+  glowColor: 'rgba(99,102,241,0.3)',
 } as const;
 
 /* ------------------------------------------------------------------ */
 /* Grid line styling                                                   */
 /* ------------------------------------------------------------------ */
 export const GRID = {
-  lineColor: 'rgba(148,163,184,0.06)',
-  axisLineColor: '#334155',
-  axisTickColor: '#475569',
+  lineColor: 'rgba(113,113,122,0.06)',
+  axisLineColor: '#27272a',
+  axisTickColor: '#3f3f46',
 } as const;
 
 /* ------------------------------------------------------------------ */
 /* Lane colours                                                        */
 /* ------------------------------------------------------------------ */
 export const LANE = {
-  bg: 'rgba(15,23,42,0.6)',
-  bgAlt: 'rgba(15,23,42,0.8)',
-  borderColor: 'var(--cs-border-subtle, rgba(51,65,85,0.5))',
+  bg: 'rgba(17,17,19,0.6)',
+  bgAlt: 'rgba(17,17,19,0.8)',
+  borderColor: 'var(--cs-border-subtle, rgba(39,39,42,0.5))',
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -125,12 +125,12 @@ export const LOG_SIZING = {
 
 export const LOG_LEVEL_STYLES = {
   debug: {
-    color: '#94a3b8',
-    bg: 'rgba(148,163,184,0.1)',
+    color: '#a1a1aa',
+    bg: 'rgba(113,113,122,0.1)',
     label: 'DEBUG',
   },
   info: {
-    color: '#38bdf8',
+    color: '#22d3ee',
     bg: 'rgba(14,165,233,0.1)',
     label: 'INFO',
   },
@@ -140,21 +140,21 @@ export const LOG_LEVEL_STYLES = {
     label: 'WARN',
   },
   error: {
-    color: '#fb7185',
+    color: '#f87171',
     bg: 'rgba(244,63,94,0.1)',
     label: 'ERROR',
   },
 } as const;
 
 export const LOG_COLORS = {
-  background: 'var(--cs-surface-panel, #0f172a)',
-  headerBg: 'var(--cs-surface-card, #1e293b)',
+  background: 'var(--cs-surface-panel, #111113)',
+  headerBg: 'var(--cs-surface-card, #18181b)',
   rowBg: 'transparent',
-  rowBgAlt: 'rgba(30,41,59,0.3)',
-  rowBgHover: 'rgba(30,41,59,0.6)',
-  rowBgSelected: 'rgba(139,92,246,0.1)',
-  rowBorder: 'rgba(51,65,85,0.3)',
-  timestamp: '#64748b',
+  rowBgAlt: 'rgba(24,24,27,0.3)',
+  rowBgHover: 'rgba(24,24,27,0.6)',
+  rowBgSelected: 'rgba(99,102,241,0.1)',
+  rowBorder: 'rgba(39,39,42,0.3)',
+  timestamp: '#52525b',
   searchHighlight: 'rgba(251,191,36,0.3)',
   searchHighlightActive: 'rgba(251,191,36,0.6)',
 } as const;
@@ -164,10 +164,10 @@ export const LOG_COLORS = {
 export const SYNTAX_COLORS = {
   string: '#34d399',      // emerald-400
   number: '#fbbf24',      // amber-400
-  boolean: '#a78bfa',     // violet-400
-  null: '#a78bfa',        // violet-400
-  key: '#38bdf8',         // sky-400
-  error: '#fb7185',       // rose-400
-  punctuation: '#94a3b8', // slate-400
+  boolean: '#818cf8',     // indigo-400
+  null: '#818cf8',        // indigo-400
+  key: '#22d3ee',         // sky-400
+  error: '#f87171',       // rose-400
+  punctuation: '#a1a1aa', // slate-400
   default: 'var(--cs-text-secondary, #cbd5e1)',
 } as const;

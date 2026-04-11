@@ -24,24 +24,24 @@
   --cs-icon-stroke-bold: 2.25;
 
   /* Icon colors — semantic (inherit from design-system-variables.css) */
-  --cs-icon-color-default: var(--cs-text-secondary, #94a3b8);
-  --cs-icon-color-primary: var(--cs-text-primary, #f8fafc);
-  --cs-icon-color-muted: var(--cs-text-tertiary, #64748b);
-  --cs-icon-color-brand: var(--cs-brand-primary, #7c3aed);
+  --cs-icon-color-default: var(--cs-text-secondary, #a1a1aa);
+  --cs-icon-color-primary: var(--cs-text-primary, #fafafa);
+  --cs-icon-color-muted: var(--cs-text-tertiary, #52525b);
+  --cs-icon-color-brand: var(--cs-brand-primary, #6366f1);
   --cs-icon-color-success: var(--cs-status-success, #10b981);
   --cs-icon-color-warning: var(--cs-status-warning, #f59e0b);
-  --cs-icon-color-error: var(--cs-status-error, #f43f5e);
-  --cs-icon-color-info: var(--cs-status-info, #0ea5e9);
+  --cs-icon-color-error: var(--cs-status-error, #ef4444);
+  --cs-icon-color-info: var(--cs-status-info, #06b6d4);
 
   /* Node-type icon colors */
-  --cs-icon-color-agent: var(--cs-violet-400, #a78bfa);
-  --cs-icon-color-task: var(--cs-sky-400, #38bdf8);
+  --cs-icon-color-agent: var(--cs-indigo-400, #818cf8);
+  --cs-icon-color-task: var(--cs-sky-400, #22d3ee);
   --cs-icon-color-tool: var(--cs-emerald-400, #34d399);
   --cs-icon-color-llm: var(--cs-amber-400, #fbbf24);
 
   /* Interactive states */
-  --cs-icon-color-hover: var(--cs-text-primary, #f8fafc);
-  --cs-icon-color-disabled: var(--cs-text-disabled, #475569);
+  --cs-icon-color-hover: var(--cs-text-primary, #fafafa);
+  --cs-icon-color-disabled: var(--cs-text-disabled, #3f3f46);
   --cs-icon-opacity-disabled: var(--cs-opacity-disabled, 0.4);
 
   /* Transition for icon animations */
@@ -54,11 +54,11 @@
 /* Light mode overrides                                                */
 /* ================================================================== */
 [data-theme='light'] {
-  --cs-icon-color-default: var(--cs-text-secondary, #475569);
-  --cs-icon-color-primary: var(--cs-text-primary, #0f172a);
-  --cs-icon-color-muted: var(--cs-text-tertiary, #64748b);
-  --cs-icon-color-hover: var(--cs-text-primary, #0f172a);
-  --cs-icon-color-disabled: var(--cs-text-disabled, #94a3b8);
+  --cs-icon-color-default: var(--cs-text-secondary, #3f3f46);
+  --cs-icon-color-primary: var(--cs-text-primary, #111113);
+  --cs-icon-color-muted: var(--cs-text-tertiary, #52525b);
+  --cs-icon-color-hover: var(--cs-text-primary, #111113);
+  --cs-icon-color-disabled: var(--cs-text-disabled, #a1a1aa);
 }
 
 /* ================================================================== */

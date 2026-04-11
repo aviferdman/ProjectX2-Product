@@ -18,7 +18,7 @@
   --card-bg-hover: var(--cs-surface-elevated);
   --card-border: var(--cs-border-default);
   --card-border-hover: var(--cs-border-strong);
-  --card-border-focus: #8b5cf6;
+  --card-border-focus: #818cf8;
   --card-radius: var(--cs-radius-xl, 12px);
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
   --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
@@ -42,8 +42,8 @@
   --thumb-overlay-transition: 200ms ease-out;
 
   /* Mini node graph */
-  --thumb-node-agent: #a78bfa;
-  --thumb-node-task: #38bdf8;
+  --thumb-node-agent: #818cf8;
+  --thumb-node-task: #22d3ee;
   --thumb-node-tool: #34d399;
   --thumb-node-llm: #fbbf24;
   --thumb-edge-color: rgba(148, 163, 184, 0.2);
@@ -51,7 +51,7 @@
   --thumb-node-padding: 16px;
 
   /* Empty state */
-  --thumb-empty-icon-color: #475569;
+  --thumb-empty-icon-color: #3f3f46;
   --thumb-empty-icon-size: 40px;
 }
 
@@ -106,11 +106,11 @@
 }
 
 .cs-tpl-card__cat-icon--research {
-  --cat-icon-color: #38bdf8;
+  --cat-icon-color: #22d3ee;
   --cat-icon-bg: rgba(56, 189, 248, 0.15);
 }
 .cs-tpl-card__cat-icon--code {
-  --cat-icon-color: #a78bfa;
+  --cat-icon-color: #818cf8;
   --cat-icon-bg: rgba(167, 139, 250, 0.15);
 }
 .cs-tpl-card__cat-icon--support {
@@ -122,7 +122,7 @@
   --cat-icon-bg: rgba(251, 191, 36, 0.15);
 }
 .cs-tpl-card__cat-icon--data {
-  --cat-icon-color: #fb7185;
+  --cat-icon-color: #f87171;
   --cat-icon-bg: rgba(251, 113, 133, 0.15);
 }
 .cs-tpl-card__cat-icon--automation {
@@ -165,7 +165,7 @@
   --tag-border: var(--cs-border-subtle);
   --tag-border-hover: rgba(139, 92, 246, 0.25);
   --tag-text: var(--cs-text-tertiary);
-  --tag-text-hover: #c4b5fd;
+  --tag-text-hover: #a5b4fc;
   --tag-font-size: 0.625rem;
   --tag-font-weight: 500;
   --tag-letter-spacing: 0.02em;
@@ -186,7 +186,7 @@
   --meta-line-height: 1.25;
   --meta-icon-size: 12px;
   --meta-gap: 8px;
-  --meta-separator-color: #475569;
+  --meta-separator-color: #3f3f46;
   --meta-star-filled: #fbbf24;
   --meta-star-empty: var(--cs-text-tertiary);
   --meta-mt: 4px;
@@ -205,9 +205,9 @@
   --btn-h: 36px;
   --btn-bg: transparent;
   --btn-bg-hover: rgba(139, 92, 246, 0.12);
-  --btn-border: #7c3aed;
-  --btn-border-hover: #8b5cf6;
-  --btn-text: #c4b5fd;
+  --btn-border: #6366f1;
+  --btn-border-hover: #818cf8;
+  --btn-text: #a5b4fc;
   --btn-text-hover: #ddd6fe;
   --btn-radius: var(--cs-radius-lg, 8px);
   --btn-font-size: 0.8125rem;
@@ -218,9 +218,9 @@
 /* Use Template button (primary) */
 .cs-tpl-card__btn-use {
   --btn-h: 36px;
-  --btn-bg: #7c3aed;
-  --btn-bg-hover: #8b5cf6;
-  --btn-bg-active: #6d28d9;
+  --btn-bg: #6366f1;
+  --btn-bg-hover: #818cf8;
+  --btn-bg-active: #4f46e5;
   --btn-text: #ffffff;
   --btn-radius: var(--cs-radius-lg, 8px);
   --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);

@@ -9,7 +9,7 @@ import { type PlanTier, PLAN_DISPLAY_NAMES } from './types.js';
 
 const tierStyles: Record<PlanTier, string> = {
   free: 'bg-slate-800/60 text-slate-300 border-slate-600',
-  pro: 'bg-violet-900/40 text-violet-300 border-violet-700/50',
+  pro: 'bg-indigo-900/40 text-indigo-300 border-indigo-700/50',
   team: 'bg-sky-900/40 text-sky-300 border-sky-700/50',
   enterprise: 'bg-amber-900/30 text-amber-300 border-amber-700/50',
 };

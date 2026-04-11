@@ -54,7 +54,7 @@ export const TemplatePagination = forwardRef<
           currentPage === 1
             ? 'opacity-40 cursor-not-allowed'
             : 'hover:bg-tpl-pagination-bg-hover',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         )}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -87,7 +87,7 @@ export const TemplatePagination = forwardRef<
               page === currentPage
                 ? 'bg-tpl-pagination-bg-active text-tpl-pagination-text-active'
                 : 'text-tpl-pagination-text hover:bg-tpl-pagination-bg-hover',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
             )}
           >
             {page}
@@ -109,7 +109,7 @@ export const TemplatePagination = forwardRef<
           currentPage === totalPages
             ? 'opacity-40 cursor-not-allowed'
             : 'hover:bg-tpl-pagination-bg-hover',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         )}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">

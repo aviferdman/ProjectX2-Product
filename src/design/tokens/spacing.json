@@ -58,11 +58,11 @@
       "node": { "value": "10px",  "type": "borderRadius", "description": "Canvas node corner radius" }
     },
     "shadow": {
-      "node":     { "value": "0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.1)", "type": "boxShadow" },
-      "node-hover":{ "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.15)", "type": "boxShadow" },
-      "node-selected": { "value": "0 0 0 2px rgba(139,92,246,1), 0 4px 20px rgba(139,92,246,0.25)", "type": "boxShadow" },
+      "node":     { "value": "0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.1)", "type": "boxShadow" },
+      "node-hover":{ "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.15)", "type": "boxShadow" },
+      "node-selected": { "value": "0 0 0 2px rgba(99,102,241,1), 0 4px 20px rgba(99,102,241,0.25)", "type": "boxShadow" },
       "panel":    { "value": "0 1px 3px rgba(0,0,0,0.3)", "type": "boxShadow" },
-      "dropdown": { "value": "0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.1)", "type": "boxShadow" },
+      "dropdown": { "value": "0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.1)", "type": "boxShadow" },
       "toolbar":  { "value": "0 2px 12px rgba(0,0,0,0.35)", "type": "boxShadow" }
     },
     "transition": {

@@ -39,9 +39,9 @@ const FilterChip: React.FC<{
       'select-none cursor-pointer',
     )}
     style={{
-      borderColor: isActive ? (color ?? '#8b5cf6') : 'rgba(51,65,85,0.5)',
-      background: isActive ? `${color ?? '#8b5cf6'}20` : 'transparent',
-      color: isActive ? (color ?? '#c4b5fd') : '#64748b',
+      borderColor: isActive ? (color ?? '#818cf8') : 'rgba(51,65,85,0.5)',
+      background: isActive ? `${color ?? '#818cf8'}20` : 'transparent',
+      color: isActive ? (color ?? '#a5b4fc') : '#52525b',
     }}
   >
     {label}
@@ -125,7 +125,7 @@ export const LogFilterBar: React.FC<LogFilterBarProps> = ({
           height="14"
           viewBox="0 0 16 16"
           fill="none"
-          stroke="#64748b"
+          stroke="#52525b"
           strokeWidth="1.5"
           strokeLinecap="round"
           aria-hidden="true"
@@ -241,7 +241,7 @@ export const LogFilterBar: React.FC<LogFilterBarProps> = ({
           className="ml-auto h-6 rounded border px-2 text-[10px] font-medium transition-colors cursor-pointer"
           style={{
             borderColor: 'rgba(51,65,85,0.5)',
-            color: '#94a3b8',
+            color: '#a1a1aa',
             background: 'transparent',
           }}
           aria-label="Clear all filters"

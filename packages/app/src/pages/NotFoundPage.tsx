@@ -14,7 +14,7 @@ export function NotFoundPage(): React.JSX.Element {
       className="min-h-screen bg-[var(--cs-surface-app)] flex flex-col items-center justify-center p-6 hero-glow"
     >
       <div className="animate-fadeInUp text-center">
-        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center animate-float">
+        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center animate-float">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgb(167 139 250)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <path d="M16 16s-1.5-2-4-2-4 2-4 2" />

@@ -15,14 +15,14 @@ export const integrationCardTheme = {
       'bg-hover': 'var(--cs-surface-elevated)',
       border: 'var(--cs-border-default)',
       'border-hover': 'var(--cs-border-strong)',
-      'border-focus': '#8b5cf6',
+      'border-focus': '#818cf8',
     },
 
     // Logo
     'ic-logo': {
       bg: 'rgba(30,41,59,0.5)',
       border: 'var(--cs-border-subtle)',
-      placeholder: '#64748b',
+      placeholder: '#52525b',
     },
 
     // Title & provider
@@ -45,9 +45,9 @@ export const integrationCardTheme = {
       'connected-icon': '#34d399',
       'connected-border': 'rgba(52,211,153,0.25)',
 
-      'disconnected-bg': 'rgba(148,163,184,0.08)',
+      'disconnected-bg': 'rgba(113,113,122,0.08)',
       'disconnected-text': 'var(--cs-text-tertiary)',
-      'disconnected-icon': '#64748b',
+      'disconnected-icon': '#52525b',
       'disconnected-border': 'var(--cs-border-subtle)',
 
       'pending-bg': 'rgba(251,191,36,0.12)',
@@ -56,15 +56,15 @@ export const integrationCardTheme = {
       'pending-border': 'rgba(251,191,36,0.25)',
 
       'error-bg': 'rgba(251,113,133,0.1)',
-      'error-text': '#fb7185',
-      'error-icon': '#fb7185',
+      'error-text': '#f87171',
+      'error-icon': '#f87171',
       'error-border': 'rgba(251,113,133,0.25)',
     },
 
     // Connect button
     'ic-connect-btn': {
-      bg: '#7c3aed',
-      'bg-hover': '#8b5cf6',
+      bg: '#6366f1',
+      'bg-hover': '#818cf8',
       'bg-active': '#6d28d9',
       text: '#ffffff',
     },
@@ -74,7 +74,7 @@ export const integrationCardTheme = {
       bg: 'transparent',
       'bg-hover': 'rgba(251,113,133,0.1)',
       text: 'var(--cs-text-secondary)',
-      'text-hover': '#fb7185',
+      'text-hover': '#f87171',
       border: 'var(--cs-border-default)',
       'border-hover': 'rgba(251,113,133,0.3)',
     },
@@ -95,14 +95,14 @@ export const integrationCardTheme = {
     // Footer meta
     'ic-footer': {
       meta: 'var(--cs-text-tertiary)',
-      separator: '#475569',
+      separator: '#3f3f46',
     },
 
     // Scopes badge
     'ic-scopes': {
-      bg: 'rgba(139,92,246,0.1)',
-      text: '#c4b5fd',
-      border: 'rgba(139,92,246,0.2)',
+      bg: 'rgba(99,102,241,0.1)',
+      text: '#a5b4fc',
+      border: 'rgba(99,102,241,0.2)',
     },
 
     // Skeleton
@@ -181,12 +181,12 @@ export const integrationCardTheme = {
   },
 
   boxShadow: {
-    'ic-card': '0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.06)',
-    'ic-card-hover': '0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.1)',
-    'ic-card-focus': '0 0 0 3px rgba(139,92,246,0.25)',
+    'ic-card': '0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)',
+    'ic-card-hover': '0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)',
+    'ic-card-focus': '0 0 0 3px rgba(99,102,241,0.25)',
     'ic-logo': '0 1px 2px rgba(0,0,0,0.2)',
-    'ic-connect-btn': '0 2px 8px rgba(124,58,237,0.35)',
-    'ic-connect-btn-hover': '0 4px 12px rgba(124,58,237,0.45)',
+    'ic-connect-btn': '0 2px 8px rgba(99,102,241,0.35)',
+    'ic-connect-btn-hover': '0 4px 12px rgba(99,102,241,0.45)',
     'ic-connected-pulse': '0 0 0 0 rgba(52,211,153,0.4)',
   },
 

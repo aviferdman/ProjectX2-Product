@@ -43,7 +43,7 @@ export const TemplateCategoryFilter = forwardRef<
               isActive
                 ? 'border-tpl-filter-chip-border-active bg-tpl-filter-chip-bg-active text-tpl-filter-chip-text-active'
                 : 'border-tpl-filter-chip-border bg-tpl-filter-chip-bg text-tpl-filter-chip-text hover:text-tpl-filter-chip-text-active',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
             )}
           >
             {item.label}

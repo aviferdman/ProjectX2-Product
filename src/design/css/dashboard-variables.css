@@ -41,10 +41,10 @@
   --nav-item-radius: var(--cs-radius-md);
   --nav-item-color: var(--cs-text-secondary);
   --nav-item-color-hover: var(--cs-text-primary);
-  --nav-item-color-active: #c4b5fd;
+  --nav-item-color-active: #a5b4fc;
   --nav-item-bg-hover: rgba(30, 41, 59, 0.5);
   --nav-item-bg-active: rgba(139, 92, 246, 0.12);
-  --nav-item-border-active: #7c3aed;
+  --nav-item-border-active: #6366f1;
 }
 
 /* ------------------------------------------------------------------ */
@@ -59,7 +59,7 @@
   --search-max-w: 360px;
   --search-bg: var(--cs-surface-elevated);
   --search-border: var(--cs-border-default);
-  --search-border-focus: #8b5cf6;
+  --search-border-focus: #818cf8;
   --search-placeholder: var(--cs-text-tertiary);
   --search-icon: var(--cs-text-tertiary);
   --search-radius: var(--cs-radius-md);
@@ -69,9 +69,9 @@
   --chip-bg: var(--cs-surface-elevated);
   --chip-bg-active: rgba(139, 92, 246, 0.2);
   --chip-border: var(--cs-border-default);
-  --chip-border-active: #8b5cf6;
+  --chip-border-active: #818cf8;
   --chip-text: var(--cs-text-secondary);
-  --chip-text-active: #c4b5fd;
+  --chip-text-active: #a5b4fc;
   --chip-radius: 9999px;
 
   /* View toggle (grid/list) */
@@ -123,7 +123,7 @@
 /* Workflow status badges                                               */
 /* ------------------------------------------------------------------ */
 .cs-workflow-status-draft {
-  --status-color: #94a3b8;
+  --status-color: #a1a1aa;
   --status-bg: rgba(148, 163, 184, 0.1);
 }
 
@@ -133,12 +133,12 @@
 }
 
 .cs-workflow-status-error {
-  --status-color: #f43f5e;
+  --status-color: #ef4444;
   --status-bg: rgba(244, 63, 94, 0.1);
 }
 
 .cs-workflow-status-archived {
-  --status-color: #64748b;
+  --status-color: #52525b;
   --status-bg: rgba(100, 116, 139, 0.1);
 }
 
@@ -160,8 +160,8 @@
 /* ------------------------------------------------------------------ */
 .cs-create-workflow-btn {
   --btn-h: 40px;
-  --btn-bg: #7c3aed;
-  --btn-bg-hover: #8b5cf6;
+  --btn-bg: #6366f1;
+  --btn-bg-hover: #818cf8;
   --btn-text: #ffffff;
   --btn-icon: #ffffff;
   --btn-radius: var(--cs-radius-lg);
@@ -186,13 +186,13 @@
   --stat-label: var(--cs-text-secondary);
   --stat-value: var(--cs-text-primary);
   --stat-trend-up: #34d399;
-  --stat-trend-down: #fb7185;
+  --stat-trend-down: #f87171;
 
   /* Stat icons by category */
-  --stat-icon-workflows: #a78bfa;
-  --stat-icon-runs: #38bdf8;
+  --stat-icon-workflows: #818cf8;
+  --stat-icon-runs: #22d3ee;
   --stat-icon-agents: #34d399;
-  --stat-icon-errors: #fb7185;
+  --stat-icon-errors: #f87171;
 }
 
 /* ------------------------------------------------------------------ */
@@ -202,9 +202,9 @@
   --bar-h: 6px;
   --bar-radius: 9999px;
   --bar-bg: var(--cs-surface-elevated);
-  --bar-fill: #8b5cf6;
+  --bar-fill: #818cf8;
   --bar-fill-warning: #f59e0b;
-  --bar-fill-critical: #f43f5e;
+  --bar-fill-critical: #ef4444;
 }
 
 /* ------------------------------------------------------------------ */
@@ -212,11 +212,11 @@
 /* ------------------------------------------------------------------ */
 .cs-upgrade-prompt {
   --prompt-bg: rgba(124, 58, 237, 0.08);
-  --prompt-border: #6d28d9;
+  --prompt-border: #4f46e5;
   --prompt-radius: var(--cs-radius-xl);
   --prompt-text: var(--cs-text-secondary);
-  --prompt-cta-bg: #7c3aed;
-  --prompt-cta-bg-hover: #8b5cf6;
+  --prompt-cta-bg: #6366f1;
+  --prompt-cta-bg-hover: #818cf8;
   --prompt-cta-text: #ffffff;
 }
 
@@ -225,7 +225,7 @@
 /* ------------------------------------------------------------------ */
 .cs-empty-state {
   --empty-icon-size: 64px;
-  --empty-icon-color: #475569;
+  --empty-icon-color: #3f3f46;
   --empty-heading-color: var(--cs-text-primary);
   --empty-desc-color: var(--cs-text-secondary);
   --empty-border: var(--cs-border-default);

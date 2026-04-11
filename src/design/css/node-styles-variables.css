@@ -16,20 +16,20 @@
   /* -----------------------------------------------------------------------
      AGENT NODE — Extended palette
      ----------------------------------------------------------------------- */
-  --cs-node-agent-bg:            rgba(124,58,237,0.12);
-  --cs-node-agent-bg-hover:      rgba(124,58,237,0.18);
-  --cs-node-agent-bg-active:     rgba(124,58,237,0.24);
-  --cs-node-agent-bg-muted:      rgba(124,58,237,0.06);
-  --cs-node-agent-border:        #7c3aed;
-  --cs-node-agent-border-hover:  #8b5cf6;
-  --cs-node-agent-border-focus:  #a78bfa;
-  --cs-node-agent-icon:          #a78bfa;
+  --cs-node-agent-bg:            rgba(99,102,241,0.12);
+  --cs-node-agent-bg-hover:      rgba(99,102,241,0.18);
+  --cs-node-agent-bg-active:     rgba(99,102,241,0.24);
+  --cs-node-agent-bg-muted:      rgba(99,102,241,0.06);
+  --cs-node-agent-border:        #6366f1;
+  --cs-node-agent-border-hover:  #818cf8;
+  --cs-node-agent-border-focus:  #818cf8;
+  --cs-node-agent-icon:          #818cf8;
   --cs-node-agent-icon-muted:    rgba(167,139,250,0.6);
-  --cs-node-agent-badge-bg:      rgba(124,58,237,0.2);
-  --cs-node-agent-badge-text:    #c4b5fd;
-  --cs-node-agent-header-start:  rgba(124,58,237,0.16);
-  --cs-node-agent-header-end:    rgba(124,58,237,0.04);
-  --cs-node-agent-accent:        #7c3aed;
+  --cs-node-agent-badge-bg:      rgba(99,102,241,0.2);
+  --cs-node-agent-badge-text:    #a5b4fc;
+  --cs-node-agent-header-start:  rgba(99,102,241,0.16);
+  --cs-node-agent-header-end:    rgba(99,102,241,0.04);
+  --cs-node-agent-accent:        #6366f1;
 
   /* -----------------------------------------------------------------------
      TASK NODE — Extended palette
@@ -38,16 +38,16 @@
   --cs-node-task-bg-hover:       rgba(14,165,233,0.18);
   --cs-node-task-bg-active:      rgba(14,165,233,0.24);
   --cs-node-task-bg-muted:       rgba(14,165,233,0.06);
-  --cs-node-task-border:         #0284c7;
-  --cs-node-task-border-hover:   #0ea5e9;
-  --cs-node-task-border-focus:   #38bdf8;
-  --cs-node-task-icon:           #38bdf8;
+  --cs-node-task-border:         #0891b2;
+  --cs-node-task-border-hover:   #06b6d4;
+  --cs-node-task-border-focus:   #22d3ee;
+  --cs-node-task-icon:           #22d3ee;
   --cs-node-task-icon-muted:     rgba(56,189,248,0.6);
   --cs-node-task-badge-bg:       rgba(14,165,233,0.2);
   --cs-node-task-badge-text:     #7dd3fc;
   --cs-node-task-header-start:   rgba(14,165,233,0.16);
   --cs-node-task-header-end:     rgba(14,165,233,0.04);
-  --cs-node-task-accent:         #0284c7;
+  --cs-node-task-accent:         #0891b2;
 
   /* -----------------------------------------------------------------------
      TOOL NODE — Extended palette
@@ -98,10 +98,10 @@
      ----------------------------------------------------------------------- */
   --cs-node-body-padding:        8px 12px;
   --cs-node-body-field-gap:      4px;
-  --cs-node-body-label-color:    #64748b;
+  --cs-node-body-label-color:    #52525b;
   --cs-node-body-value-color:    #e2e8f0;
   --cs-node-body-label-width:    64px;
-  --cs-node-body-separator:      rgba(148,163,184,0.1);
+  --cs-node-body-separator:      rgba(113,113,122,0.1);
 
   /* -----------------------------------------------------------------------
      STATUS BADGE
@@ -120,29 +120,29 @@
      ----------------------------------------------------------------------- */
   --cs-node-idle-border-width:   1.5px;
   --cs-node-idle-opacity:        1;
-  --cs-node-idle-badge-text:     #94a3b8;
+  --cs-node-idle-badge-text:     #a1a1aa;
   --cs-node-idle-badge-bg:       rgba(100,116,139,0.2);
 
   /* -----------------------------------------------------------------------
      STATE: HOVER
      ----------------------------------------------------------------------- */
   --cs-node-hover-border-width:  2px;
-  --cs-node-hover-shadow:        0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.15);
+  --cs-node-hover-shadow:        0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.15);
   --cs-node-hover-transition:    all 100ms ease-out;
 
   /* -----------------------------------------------------------------------
      STATE: SELECTED
      ----------------------------------------------------------------------- */
   --cs-node-selected-ring-width: 2px;
-  --cs-node-selected-ring-color: #8b5cf6;
-  --cs-node-selected-glow:       0 0 0 2px #8b5cf6, 0 4px 20px rgba(139,92,246,0.25);
+  --cs-node-selected-ring-color: #818cf8;
+  --cs-node-selected-glow:       0 0 0 2px #818cf8, 0 4px 20px rgba(99,102,241,0.25);
   --cs-node-selected-transition: box-shadow 150ms ease-out;
 
   /* -----------------------------------------------------------------------
      STATE: DRAGGING
      ----------------------------------------------------------------------- */
   --cs-node-dragging-scale:      1.02;
-  --cs-node-dragging-shadow:     0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.2);
+  --cs-node-dragging-shadow:     0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.2);
   --cs-node-dragging-opacity:    0.95;
   --cs-node-dragging-transition: transform 100ms ease-out, box-shadow 100ms ease-out;
 
@@ -169,39 +169,39 @@
   /* -----------------------------------------------------------------------
      STATE: ERROR
      ----------------------------------------------------------------------- */
-  --cs-node-error-border:          #f43f5e;
+  --cs-node-error-border:          #ef4444;
   --cs-node-error-glow-color:      rgba(244,63,94,0.3);
   --cs-node-error-glow-spread:     6px;
   --cs-node-error-pulse-dur:       1.5s;
-  --cs-node-error-badge-text:      #fb7185;
+  --cs-node-error-badge-text:      #f87171;
   --cs-node-error-badge-bg:        rgba(244,63,94,0.2);
 
   /* -----------------------------------------------------------------------
      STATE: DISABLED
      ----------------------------------------------------------------------- */
   --cs-node-disabled-opacity:      0.4;
-  --cs-node-disabled-border:       #475569;
-  --cs-node-disabled-badge-text:   #64748b;
+  --cs-node-disabled-border:       #3f3f46;
+  --cs-node-disabled-badge-text:   #52525b;
   --cs-node-disabled-badge-bg:     rgba(71,85,105,0.2);
 
   /* -----------------------------------------------------------------------
      STATE: QUEUED
      ----------------------------------------------------------------------- */
   --cs-node-queued-opacity:        0.7;
-  --cs-node-queued-badge-text:     #94a3b8;
-  --cs-node-queued-badge-bg:       rgba(148,163,184,0.15);
+  --cs-node-queued-badge-text:     #a1a1aa;
+  --cs-node-queued-badge-bg:       rgba(113,113,122,0.15);
 
   /* -----------------------------------------------------------------------
      HANDLE — Type-aware connected colors
      ----------------------------------------------------------------------- */
-  --cs-handle-agent-connected:     #8b5cf6;
-  --cs-handle-task-connected:      #0ea5e9;
+  --cs-handle-agent-connected:     #818cf8;
+  --cs-handle-task-connected:      #06b6d4;
   --cs-handle-tool-connected:      #10b981;
   --cs-handle-llm-connected:       #f59e0b;
-  --cs-handle-compatible-pulse:    rgba(139,92,246,0.4);
+  --cs-handle-compatible-pulse:    rgba(99,102,241,0.4);
   --cs-handle-incompatible:        rgba(244,63,94,0.3);
   --cs-handle-label-font-size:     10px;
-  --cs-handle-label-color:         #94a3b8;
+  --cs-handle-label-color:         #a1a1aa;
   --cs-handle-label-offset:        6px;
 }
 

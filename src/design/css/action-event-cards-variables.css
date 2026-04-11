@@ -27,7 +27,7 @@
   --card-header-text: var(--cs-text-primary);
   --card-label-text: var(--cs-text-tertiary);
   --card-value-text: var(--cs-text-secondary);
-  --card-close-icon: #64748b;
+  --card-close-icon: #52525b;
   --card-close-icon-hover: #cbd5e1;
 
   /* Code blocks */
@@ -54,7 +54,7 @@
     0 0 0 1px rgba(148, 163, 184, 0.12);
 
   /* Selection */
-  --card-selected-ring: #8b5cf6;
+  --card-selected-ring: #818cf8;
   --card-selected-glow: rgba(139, 92, 246, 0.2);
 }
 
@@ -86,11 +86,11 @@
 /* Card type accents — Task Start (sky)                                */
 /* ------------------------------------------------------------------ */
 .cs-action-card--task-start {
-  --card-accent: #0ea5e9;
+  --card-accent: #06b6d4;
   --card-accent-subtle: rgba(14, 165, 233, 0.1);
   --card-icon-bg: rgba(14, 165, 233, 0.15);
-  --card-icon-color: #38bdf8;
-  --card-badge-text: #38bdf8;
+  --card-icon-color: #22d3ee;
+  --card-badge-text: #22d3ee;
   --card-badge-type-bg: rgba(14, 165, 233, 0.12);
 }
 
@@ -110,11 +110,11 @@
 /* Card type accents — Error (rose)                                    */
 /* ------------------------------------------------------------------ */
 .cs-action-card--error {
-  --card-accent: #f43f5e;
+  --card-accent: #ef4444;
   --card-accent-subtle: rgba(244, 63, 94, 0.1);
   --card-icon-bg: rgba(244, 63, 94, 0.15);
-  --card-icon-color: #fb7185;
-  --card-badge-text: #fb7185;
+  --card-icon-color: #f87171;
+  --card-badge-text: #f87171;
   --card-badge-type-bg: rgba(244, 63, 94, 0.12);
 }
 
@@ -122,11 +122,11 @@
 /* Card type accents — Message (violet)                                */
 /* ------------------------------------------------------------------ */
 .cs-action-card--message {
-  --card-accent: #8b5cf6;
+  --card-accent: #818cf8;
   --card-accent-subtle: rgba(139, 92, 246, 0.1);
   --card-icon-bg: rgba(139, 92, 246, 0.15);
-  --card-icon-color: #a78bfa;
-  --card-badge-text: #a78bfa;
+  --card-icon-color: #818cf8;
+  --card-badge-text: #818cf8;
   --card-badge-type-bg: rgba(139, 92, 246, 0.12);
 }
 
@@ -143,11 +143,11 @@
 }
 
 .cs-action-card__status--error {
-  --status-dot: #f43f5e;
+  --status-dot: #ef4444;
 }
 
 .cs-action-card__status--pending {
-  --status-dot: #64748b;
+  --status-dot: #52525b;
 }
 
 /* ------------------------------------------------------------------ */
@@ -161,16 +161,16 @@
 }
 .cs-action-card__code .token-boolean,
 .cs-action-card__code .token-null {
-  color: #a78bfa;
+  color: #818cf8;
 }
 .cs-action-card__code .token-key {
-  color: #38bdf8;
+  color: #22d3ee;
 }
 .cs-action-card__code .token-error {
-  color: #fb7185;
+  color: #f87171;
 }
 .cs-action-card__code .token-comment {
-  color: #64748b;
+  color: #52525b;
 }
 
 /* ------------------------------------------------------------------ */

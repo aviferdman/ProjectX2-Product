@@ -46,7 +46,7 @@ export function MarketplacePage(): React.JSX.Element {
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 focus-ring rounded-lg">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2L2 7l10 5 10-5-10-5z" />
                   <path d="M2 17l10 5 10-5" />
@@ -63,7 +63,7 @@ export function MarketplacePage(): React.JSX.Element {
             <button onClick={() => navigate('/templates')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Templates</button>
             <span className="text-sm text-[var(--cs-text-primary)] font-medium">Marketplace</span>
           </nav>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center text-xs font-bold text-[var(--cs-text-primary)]">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-[var(--cs-text-primary)]">
             D
           </div>
         </div>
@@ -93,7 +93,7 @@ export function MarketplacePage(): React.JSX.Element {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search integrations..."
               aria-label="Search integrations"
-              className="w-full bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] rounded-xl pl-10 pr-4 py-2.5 text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-violet-500/40 focus:shadow-sm focus:shadow-violet-500/10 transition-all"
+              className="w-full bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] rounded-xl pl-10 pr-4 py-2.5 text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-indigo-500/40 focus:shadow-sm focus:shadow-indigo-500/10 transition-all"
             />
           </div>
           <div className="flex items-center bg-[var(--cs-surface-card)]/20 rounded-xl p-1 border border-[var(--cs-border-subtle)] overflow-x-auto">
@@ -102,7 +102,7 @@ export function MarketplacePage(): React.JSX.Element {
                 key={c}
                 onClick={() => setCategory(c)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all capitalize whitespace-nowrap focus-ring ${
-                  category === c ? 'bg-violet-600/20 text-violet-300 shadow-sm' : 'text-[var(--cs-text-tertiary)] hover:text-slate-300'
+                  category === c ? 'bg-indigo-600/20 text-indigo-300 shadow-sm' : 'text-[var(--cs-text-tertiary)] hover:text-slate-300'
                 }`}
               >
                 {c}
@@ -124,7 +124,7 @@ export function MarketplacePage(): React.JSX.Element {
                 </div>
                 <IntegrationBadge status={integration.status} />
               </div>
-              <h3 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors mb-1.5">
+              <h3 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-indigo-300 transition-colors mb-1.5">
                 {integration.name}
               </h3>
               <p className="text-xs text-[var(--cs-text-tertiary)] mb-3 line-clamp-2">
@@ -133,7 +133,7 @@ export function MarketplacePage(): React.JSX.Element {
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[var(--cs-text-tertiary)] uppercase tracking-wider font-medium">{integration.category}</span>
                 {integration.status === 'available' && (
-                  <button className="px-3 py-1 rounded-lg bg-violet-600/20 border border-violet-500/30 text-[10px] font-semibold text-violet-300 hover:bg-violet-600/30 transition-colors focus-ring">
+                  <button className="px-3 py-1 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-[10px] font-semibold text-indigo-300 hover:bg-indigo-600/30 transition-colors focus-ring">
                     Install
                   </button>
                 )}
@@ -153,7 +153,7 @@ export function MarketplacePage(): React.JSX.Element {
 
 function IntegrationBadge({ status }: { status: Integration['status'] }): React.JSX.Element {
   const styles: Record<Integration['status'], string> = {
-    available: 'bg-violet-500/15 text-violet-400 border-violet-500/20',
+    available: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/20',
     installed: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
     'coming-soon': 'bg-slate-500/15 text-[var(--cs-text-secondary)] border-slate-500/20',
   };

@@ -17,7 +17,7 @@ export const MarketplaceSearchBar = forwardRef<
   return (
     <div className={clsx('relative', className)}>
       <svg
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cs-text-secondary,#94a3b8)]"
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cs-text-secondary,#a1a1aa)]"
         width="16"
         height="16"
         viewBox="0 0 24 24"
@@ -40,11 +40,11 @@ export const MarketplaceSearchBar = forwardRef<
         className={clsx(
           'w-full rounded-lg border pl-9 pr-3',
           'h-9',
-          'bg-[var(--cs-bg-surface,#020617)] border-[var(--cs-border-default,#1e293b)] text-[var(--cs-text-primary,#f8fafc)]',
+          'bg-[var(--cs-bg-surface,#09090b)] border-[var(--cs-border-default,#18181b)] text-[var(--cs-text-primary,#fafafa)]',
           'text-sm',
-          'placeholder:text-[var(--cs-text-secondary,#94a3b8)]',
+          'placeholder:text-[var(--cs-text-secondary,#a1a1aa)]',
           'transition-colors duration-150',
-          'focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500',
+          'focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500',
         )}
         {...props}
       />

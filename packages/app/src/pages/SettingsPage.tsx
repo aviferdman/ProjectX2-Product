@@ -58,7 +58,7 @@ export function SettingsPage(): React.JSX.Element {
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 focus-ring rounded-lg">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2L2 7l10 5 10-5-10-5z" />
                   <path d="M2 17l10 5 10-5" />
@@ -75,7 +75,7 @@ export function SettingsPage(): React.JSX.Element {
             <button onClick={() => navigate('/templates')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Templates</button>
             <span className="text-sm text-[var(--cs-text-primary)] font-medium">Settings</span>
           </nav>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center text-xs font-bold text-[var(--cs-text-primary)]">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-[var(--cs-text-primary)]">
             D
           </div>
         </div>
@@ -96,11 +96,11 @@ export function SettingsPage(): React.JSX.Element {
               className="w-full text-left card-hover rounded-xl border border-[var(--cs-border-subtle)] bg-white/[0.02] hover:bg-white/[0.05] hover:border-[var(--cs-border-default)] transition-all p-5 group focus-ring"
             >
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 flex-shrink-0 group-hover:bg-violet-500/20 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 flex-shrink-0 group-hover:bg-indigo-500/20 transition-colors">
                   {section.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors">{section.title}</h2>
+                  <h2 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-indigo-300 transition-colors">{section.title}</h2>
                   <p className="text-xs text-[var(--cs-text-tertiary)] mt-0.5">{section.description}</p>
                 </div>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--cs-text-tertiary)] group-hover:text-[var(--cs-text-secondary)] transition-colors flex-shrink-0 mt-1">

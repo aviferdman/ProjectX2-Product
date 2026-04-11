@@ -172,7 +172,7 @@ export const TimelineChart: React.FC<TimelineChartProps> = ({
             className="flex items-center justify-center"
             style={{
               height: TIMELINE_SIZING.axisHeight,
-              background: 'var(--cs-surface-panel, #0f172a)',
+              background: 'var(--cs-surface-panel, #111113)',
               borderBottom: `1px solid ${GRID.axisLineColor}`,
               borderRight: `1px solid ${LANE.borderColor}`,
             }}
@@ -181,7 +181,7 @@ export const TimelineChart: React.FC<TimelineChartProps> = ({
               style={{
                 fontSize: 11,
                 fontWeight: 600,
-                color: 'var(--cs-text-tertiary, #64748b)',
+                color: 'var(--cs-text-tertiary, #52525b)',
               }}
             >
               Agents
@@ -196,7 +196,7 @@ export const TimelineChart: React.FC<TimelineChartProps> = ({
               className="flex items-center gap-2 px-3"
               style={{
                 height: TIMELINE_SIZING.laneHeight,
-                background: 'var(--cs-surface-panel, #0f172a)',
+                background: 'var(--cs-surface-panel, #111113)',
                 borderBottom: `1px solid ${LANE.borderColor}`,
                 borderRight: `1px solid ${LANE.borderColor}`,
               }}
@@ -217,7 +217,7 @@ export const TimelineChart: React.FC<TimelineChartProps> = ({
                 style={{
                   fontSize: 12,
                   fontWeight: 600,
-                  color: 'var(--cs-text-secondary, #94a3b8)',
+                  color: 'var(--cs-text-secondary, #a1a1aa)',
                   fontFamily: 'Inter, sans-serif',
                 }}
               >

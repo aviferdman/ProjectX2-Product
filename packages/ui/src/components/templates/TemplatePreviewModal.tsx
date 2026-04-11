@@ -240,9 +240,9 @@ export const TemplatePreviewModal = forwardRef<
               onClick={() => onUseTemplate(template.id)}
               className={clsx(
                 'inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2',
-                'bg-violet-600 text-white shadow-sm',
+                'bg-indigo-600 text-white shadow-sm',
                 'text-sm font-medium transition-all',
-                'hover:bg-violet-500 hover:shadow-md',
+                'hover:bg-indigo-500 hover:shadow-md',
               )}
               aria-label={`Use template ${template.name}`}
             >

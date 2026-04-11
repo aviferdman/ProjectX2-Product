@@ -101,7 +101,7 @@ describe('canvas.json — design tokens', () => {
 
     it('has background color', () => {
       expect(viewport).toHaveProperty('background');
-      expect((viewport.background as { value: string }).value).toBe('#0a0e1a');
+      expect((viewport.background as { value: string }).value).toBe('#0c0c14');
     });
 
     it('has grid sizing tokens', () => {
@@ -193,10 +193,10 @@ describe('canvas.json — design tokens', () => {
       expect(edge).toHaveProperty('color-active');
       expect(edge).toHaveProperty('color-data-flow');
       expect(edge).toHaveProperty('color-error');
-      expect((edge['color-default'] as { value: string }).value).toBe('#64748b');
-      expect((edge['color-active'] as { value: string }).value).toBe('#a78bfa');
-      expect((edge['color-data-flow'] as { value: string }).value).toBe('#38bdf8');
-      expect((edge['color-error'] as { value: string }).value).toBe('#fb7185');
+      expect((edge['color-default'] as { value: string }).value).toBe('#52525b');
+      expect((edge['color-active'] as { value: string }).value).toBe('#818cf8');
+      expect((edge['color-data-flow'] as { value: string }).value).toBe('#22d3ee');
+      expect((edge['color-error'] as { value: string }).value).toBe('#f87171');
     });
 
     it('has label tokens', () => {
@@ -575,21 +575,21 @@ describe('canvas-theme.ts — consistency with tokens', () => {
 
     it('has node state colors', () => {
       expect(twSource).toContain("running: '#34d399'");
-      expect(twSource).toContain("error: '#fb7185'");
+      expect(twSource).toContain("error: '#f87171'");
     });
 
     it('has handle colors', () => {
-      expect(twSource).toContain("bg: '#1e293b'");
-      expect(twSource).toContain("border: '#64748b'");
-      expect(twSource).toContain("'hover-bg': '#7c3aed'");
-      expect(twSource).toContain("'hover-border': '#a78bfa'");
-      expect(twSource).toContain("'connected-bg': '#8b5cf6'");
+      expect(twSource).toContain("bg: '#18181b'");
+      expect(twSource).toContain("border: '#52525b'");
+      expect(twSource).toContain("'hover-bg': '#6366f1'");
+      expect(twSource).toContain("'hover-border': '#818cf8'");
+      expect(twSource).toContain("'connected-bg': '#818cf8'");
     });
 
     it('has edge colors', () => {
-      expect(twSource).toContain("DEFAULT: '#64748b'");
-      expect(twSource).toContain("active: '#a78bfa'");
-      expect(twSource).toContain("'data-flow': '#38bdf8'");
+      expect(twSource).toContain("DEFAULT: '#52525b'");
+      expect(twSource).toContain("active: '#818cf8'");
+      expect(twSource).toContain("'data-flow': '#22d3ee'");
     });
 
     it('has canvas utility colors', () => {
@@ -606,16 +606,16 @@ describe('canvas-theme.ts — consistency with tokens', () => {
     });
 
     it('has border semantic colors', () => {
-      expect(twSource).toContain("subtle: '#1e293b'");
-      expect(twSource).toContain("strong: '#64748b'");
-      expect(twSource).toContain("focus: '#8b5cf6'");
+      expect(twSource).toContain("subtle: '#1c1c1f'");
+      expect(twSource).toContain("strong: '#3f3f46'");
+      expect(twSource).toContain("focus: '#818cf8'");
     });
 
     it('has text semantic colors', () => {
-      expect(twSource).toContain("primary: '#f8fafc'");
-      expect(twSource).toContain("secondary: '#94a3b8'");
-      expect(twSource).toContain("tertiary: '#64748b'");
-      expect(twSource).toContain("inverse: '#0f172a'");
+      expect(twSource).toContain("primary: '#fafafa'");
+      expect(twSource).toContain("secondary: '#a1a1aa'");
+      expect(twSource).toContain("tertiary: '#71717a'");
+      expect(twSource).toContain("inverse: '#09090b'");
     });
   });
 
@@ -730,28 +730,28 @@ describe('canvas CSS ↔ Tailwind cross-file consistency', () => {
   const twSource = loadTailwind('canvas-theme.ts');
 
   it('both files reference the same background color', () => {
-    expect(css).toContain('--cs-surface-canvas: #0a0e1a');
-    expect(twSource).toContain("canvas: '#0a0e1a'");
+    expect(css).toContain('--cs-surface-canvas: #0c0c14');
+    expect(twSource).toContain("canvas: '#0c0c14'");
   });
 
   it('both files have matching node selection ring color', () => {
-    expect(css).toContain('--node-selected-ring: #8b5cf6');
-    expect(twSource).toContain("ring: '#8b5cf6'");
+    expect(css).toContain('--node-selected-ring: #818cf8');
+    expect(twSource).toContain("ring: '#818cf8'");
   });
 
   it('both files have matching handle bg color', () => {
-    expect(css).toContain('--handle-bg: #1e293b');
-    expect(twSource).toContain("bg: '#1e293b'");
+    expect(css).toContain('--handle-bg: #18181b');
+    expect(twSource).toContain("bg: '#18181b'");
   });
 
   it('both files have matching handle hover-bg color', () => {
-    expect(css).toContain('--handle-hover-bg: #7c3aed');
-    expect(twSource).toContain("'hover-bg': '#7c3aed'");
+    expect(css).toContain('--handle-hover-bg: #6366f1');
+    expect(twSource).toContain("'hover-bg': '#6366f1'");
   });
 
   it('both files have matching edge default color', () => {
-    expect(css).toContain('--edge-default: #64748b');
-    expect(twSource).toContain("DEFAULT: '#64748b'");
+    expect(css).toContain('--edge-default: #52525b');
+    expect(twSource).toContain("DEFAULT: '#52525b'");
   });
 
   it('both files have matching node disabled opacity', () => {
@@ -781,12 +781,12 @@ describe('canvas tokens match design spec values', () => {
   const tokens = loadTokens('canvas.json');
   const canvas = (tokens as { crewspace: { canvas: Record<string, unknown> } }).crewspace.canvas;
 
-  it('agent border color matches spec (violet-600: #7c3aed)', () => {
-    expect(((canvas.node as any)['agent-border'] as { value: string }).value).toBe('#7c3aed');
+  it('agent border color matches spec (indigo-600: #6366f1)', () => {
+    expect(((canvas.node as any)['agent-border'] as { value: string }).value).toBe('#6366f1');
   });
 
-  it('task border color matches spec (sky-600: #0284c7)', () => {
-    expect(((canvas.node as any)['task-border'] as { value: string }).value).toBe('#0284c7');
+  it('task border color matches spec (sky-600: #0891b2)', () => {
+    expect(((canvas.node as any)['task-border'] as { value: string }).value).toBe('#0891b2');
   });
 
   it('tool border color matches spec (emerald-600: #059669)', () => {
@@ -801,12 +801,12 @@ describe('canvas tokens match design spec values', () => {
     expect(((canvas.node as any)['running-pulse'] as { value: string }).value).toBe('#34d399');
   });
 
-  it('error-pulse color matches spec (rose: #fb7185)', () => {
-    expect(((canvas.node as any)['error-pulse'] as { value: string }).value).toBe('#fb7185');
+  it('error-pulse color matches spec (rose: #f87171)', () => {
+    expect(((canvas.node as any)['error-pulse'] as { value: string }).value).toBe('#f87171');
   });
 
-  it('handle connected-bg matches spec (#8b5cf6)', () => {
-    expect(((canvas.handle as any)['connected-bg'] as { value: string }).value).toBe('#8b5cf6');
+  it('handle connected-bg matches spec (#818cf8)', () => {
+    expect(((canvas.handle as any)['connected-bg'] as { value: string }).value).toBe('#818cf8');
   });
 
   it('edge smoothstep type matches spec', () => {

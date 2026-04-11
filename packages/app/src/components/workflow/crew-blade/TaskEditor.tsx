@@ -93,7 +93,7 @@ export function TaskEditor({ task, agents, tasks, onSave, onCancel, onDelete }: 
                   type="checkbox"
                   checked={dependencies.includes(t.id)}
                   onChange={() => toggleDependency(t.id)}
-                  className="mt-0.5 rounded border-[var(--cs-border-subtle)] bg-[var(--cs-surface-app)] text-violet-600 focus:ring-violet-500 focus:ring-offset-0"
+                  className="mt-0.5 rounded border-[var(--cs-border-subtle)] bg-[var(--cs-surface-app)] text-indigo-600 focus:ring-indigo-500 focus:ring-offset-0"
                 />
                 <span className="text-xs text-[var(--cs-text-secondary)] line-clamp-2">
                   {t.description}
@@ -121,7 +121,7 @@ export function TaskEditor({ task, agents, tasks, onSave, onCancel, onDelete }: 
         <button
           onClick={handleSave}
           disabled={!description.trim()}
-          className="flex-1 px-3 py-2 text-sm font-medium rounded-md bg-violet-600 text-white hover:bg-violet-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="flex-1 px-3 py-2 text-sm font-medium rounded-md bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           {task ? 'Save' : 'Add Task'}
         </button>

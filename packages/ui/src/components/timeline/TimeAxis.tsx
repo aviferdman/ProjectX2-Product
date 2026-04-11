@@ -111,7 +111,7 @@ export const TimeAxis: React.FC<TimeAxisProps> = ({
         y={0}
         width={width}
         height={TIMELINE_SIZING.axisHeight}
-        fill="var(--cs-surface-panel, #0f172a)"
+        fill="var(--cs-surface-panel, #111113)"
       />
 
       {/* Axis baseline */}
@@ -143,7 +143,7 @@ export const TimeAxis: React.FC<TimeAxisProps> = ({
                 x={x}
                 y={TIMELINE_SIZING.axisHeight - tickH - 4}
                 textAnchor="middle"
-                fill="var(--cs-text-tertiary, #64748b)"
+                fill="var(--cs-text-tertiary, #52525b)"
                 fontSize={11}
                 fontWeight={400}
                 fontFamily="Inter, sans-serif"

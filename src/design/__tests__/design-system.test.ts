@@ -126,7 +126,7 @@ describe('DTCG JSON tokens — design-system.json', () => {
 /* ================================================================== */
 describe('TypeScript tokens — completeness', () => {
   it('colors has brand.primary matching spec', () => {
-    expect(colors.brand.primary).toBe('#7c3aed');
+    expect(colors.brand.primary).toBe('#6366f1');
   });
 
   it('colors has all semantic groups', () => {
@@ -345,7 +345,7 @@ describe('Tailwind design-system-theme', () => {
 
   it('color values reference CSS variables with fallbacks', () => {
     expect(designSystemTheme.colors.brand.primary).toContain('var(--cs-brand-primary');
-    expect(designSystemTheme.colors.brand.primary).toContain('#7c3aed');
+    expect(designSystemTheme.colors.brand.primary).toContain('#6366f1');
   });
 
   it('has fontFamily with Inter and JetBrains Mono', () => {
@@ -427,7 +427,7 @@ describe('Cross-format consistency', () => {
     const brand = semantic.brand as Record<string, { $value: string }>;
     // JSON references primitive; TS has resolved value
     expect(brand.primary.$value).toContain('violet.600');
-    expect(colors.brand.primary).toBe('#7c3aed');
+    expect(colors.brand.primary).toBe('#6366f1');
   });
 
   it('JSON spacing.4 matches TS spacing[4] matches CSS --cs-space-4', () => {

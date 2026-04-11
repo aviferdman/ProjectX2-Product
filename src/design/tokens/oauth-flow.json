@@ -126,8 +126,8 @@
       "button": {
         "primary": {
           "background": { "value": "{crewspace.color.semantic.brand.primary}", "type": "color" },
-          "backgroundHover": { "value": "#7c3aed", "type": "color" },
-          "backgroundActive": { "value": "#6d28d9", "type": "color" },
+          "backgroundHover": { "value": "#6366f1", "type": "color" },
+          "backgroundActive": { "value": "#4f46e5", "type": "color" },
           "text": { "value": "#ffffff", "type": "color" },
           "shadow": { "value": "0 1px 3px rgba(124, 58, 237, 0.3)", "type": "boxShadow" }
         },

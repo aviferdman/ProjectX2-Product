@@ -10,9 +10,9 @@
         "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Default border" },
         "border-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color", "description": "Hover border" },
         "border-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Keyboard focus ring" },
-        "shadow": { "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.06)", "type": "boxShadow", "description": "Default card shadow" },
-        "shadow-hover": { "value": "0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.1)", "type": "boxShadow", "description": "Hover elevation shadow" },
-        "shadow-focus": { "value": "0 0 0 3px rgba(139,92,246,0.25)", "type": "boxShadow", "description": "Focus ring glow" },
+        "shadow": { "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)", "type": "boxShadow", "description": "Default card shadow" },
+        "shadow-hover": { "value": "0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)", "type": "boxShadow", "description": "Hover elevation shadow" },
+        "shadow-focus": { "value": "0 0 0 3px rgba(99,102,241,0.25)", "type": "boxShadow", "description": "Focus ring glow" },
         "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius", "description": "12px corner radius" }
       },
 
@@ -37,7 +37,7 @@
         "node-task": { "value": "{crewspace.color.primitive.sky.400}", "type": "color", "description": "Task node dot" },
         "node-tool": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color", "description": "Tool node dot" },
         "node-llm": { "value": "{crewspace.color.primitive.amber.400}", "type": "color", "description": "LLM node dot" },
-        "edge-color": { "value": "rgba(148,163,184,0.2)", "type": "color", "description": "Connection line between nodes" },
+        "edge-color": { "value": "rgba(113,113,122,0.2)", "type": "color", "description": "Connection line between nodes" },
         "node-ring": { "value": "rgba(255,255,255,0.1)", "type": "color", "description": "Subtle ring around node dots" },
         "empty-icon-color": { "value": "{crewspace.color.primitive.slate.600}", "type": "color", "description": "Empty state icon color" },
         "empty-icon-size": { "value": "40px", "type": "sizing" },
@@ -110,16 +110,16 @@
         "gap": { "value": "6px", "type": "sizing" },
         "radius": { "value": "{crewspace.radius.sm}", "type": "borderRadius" },
         "bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
-        "bg-hover": { "value": "rgba(139,92,246,0.12)", "type": "color" },
+        "bg-hover": { "value": "rgba(99,102,241,0.12)", "type": "color" },
         "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
-        "border-hover": { "value": "rgba(139,92,246,0.25)", "type": "color" },
+        "border-hover": { "value": "rgba(99,102,241,0.25)", "type": "color" },
         "text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
         "text-hover": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
         "font-size": { "value": "0.625rem", "type": "fontSize", "description": "10px" },
         "font-weight": { "value": "500", "type": "fontWeight" },
         "letter-spacing": { "value": "0.02em", "type": "letterSpacing" },
         "max-visible": { "value": "3", "type": "number" },
-        "overflow-bg": { "value": "rgba(148,163,184,0.08)", "type": "color", "description": "+N overflow pill" }
+        "overflow-bg": { "value": "rgba(113,113,122,0.08)", "type": "color", "description": "+N overflow pill" }
       },
 
       "meta": {
@@ -137,7 +137,7 @@
       "previewButton": {
         "height": { "value": "36px", "type": "sizing" },
         "bg": { "value": "transparent", "type": "color" },
-        "bg-hover": { "value": "rgba(139,92,246,0.12)", "type": "color" },
+        "bg-hover": { "value": "rgba(99,102,241,0.12)", "type": "color" },
         "border": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
         "border-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
         "text": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
@@ -155,9 +155,9 @@
         "bg-active": { "value": "{crewspace.color.primitive.violet.700}", "type": "color" },
         "text": { "value": "#ffffff", "type": "color" },
         "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
-        "shadow": { "value": "0 2px 8px rgba(124,58,237,0.35)", "type": "boxShadow" },
-        "shadow-hover": { "value": "0 4px 12px rgba(124,58,237,0.45)", "type": "boxShadow" },
-        "shadow-active": { "value": "0 1px 4px rgba(124,58,237,0.25)", "type": "boxShadow" },
+        "shadow": { "value": "0 2px 8px rgba(99,102,241,0.35)", "type": "boxShadow" },
+        "shadow-hover": { "value": "0 4px 12px rgba(99,102,241,0.45)", "type": "boxShadow" },
+        "shadow-active": { "value": "0 1px 4px rgba(99,102,241,0.25)", "type": "boxShadow" },
         "icon-size": { "value": "14px", "type": "sizing" },
         "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
         "font-weight": { "value": "600", "type": "fontWeight" }

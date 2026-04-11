@@ -48,11 +48,11 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
         onKeyDown={handleKeyDown}
         className={clsx(
           'group flex flex-col overflow-hidden rounded-xl',
-          'border border-[var(--cs-border-default,#1e293b)] bg-[var(--cs-bg-card,#0f172a)]',
+          'border border-[var(--cs-border-default,#18181b)] bg-[var(--cs-bg-card,#111113)]',
           'shadow-sm transition-all duration-150',
-          'hover:border-[var(--cs-border-hover,#334155)] hover:bg-[var(--cs-bg-card-hover,#1e293b)] hover:shadow-md',
+          'hover:border-[var(--cs-border-hover,#27272a)] hover:bg-[var(--cs-bg-card-hover,#18181b)] hover:shadow-md',
           'hover:-translate-y-0.5',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900',
           className,
         )}
         {...props}
@@ -61,8 +61,8 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
         <div
           className={clsx(
             'relative flex items-center justify-center overflow-hidden',
-            'h-28 bg-[var(--cs-bg-surface,#020617)]',
-            'border-b border-[var(--cs-border-default,#1e293b)]',
+            'h-28 bg-[var(--cs-bg-surface,#09090b)]',
+            'border-b border-[var(--cs-border-default,#18181b)]',
           )}
         >
           {/* Placeholder integration icon */}
@@ -116,11 +116,11 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
               className={clsx(
                 'inline-flex items-center gap-1.5 rounded-lg px-3',
                 'h-8',
-                'bg-violet-600 text-white',
+                'bg-indigo-600 text-white',
                 'shadow-sm',
                 'text-xs font-medium',
                 'transition-all duration-150',
-                'hover:bg-violet-500 hover:shadow-md',
+                'hover:bg-indigo-500 hover:shadow-md',
               )}
               aria-label={`Install ${integration.name}`}
             >
@@ -137,18 +137,18 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
           {/* Category + version */}
           <div className="flex items-center justify-between">
             <IntegrationCategoryBadge category={integration.category} />
-            <span className="text-[11px] text-[var(--cs-text-secondary,#94a3b8)]">
+            <span className="text-[11px] text-[var(--cs-text-secondary,#a1a1aa)]">
               v{integration.version}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="text-sm font-semibold text-[var(--cs-text-primary,#f8fafc)] truncate">
+          <h3 className="text-sm font-semibold text-[var(--cs-text-primary,#fafafa)] truncate">
             {integration.name}
           </h3>
 
           {/* Description */}
-          <p className="text-xs text-[var(--cs-text-secondary,#94a3b8)] line-clamp-2">
+          <p className="text-xs text-[var(--cs-text-secondary,#a1a1aa)] line-clamp-2">
             {integration.description}
           </p>
 
@@ -168,7 +168,7 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
                 </span>
               ))}
               {integration.tags.length > 3 && (
-                <span className="text-[11px] text-[var(--cs-text-secondary,#94a3b8)] self-center">
+                <span className="text-[11px] text-[var(--cs-text-secondary,#a1a1aa)] self-center">
                   +{integration.tags.length - 3}
                 </span>
               )}
@@ -176,11 +176,11 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
           )}
 
           {/* Footer: rating + install count + author */}
-          <div className="mt-1 flex items-center gap-2 text-[11px] text-[var(--cs-text-secondary,#94a3b8)]">
+          <div className="mt-1 flex items-center gap-2 text-[11px] text-[var(--cs-text-secondary,#a1a1aa)]">
             <StarRating rating={integration.rating} />
             <span className="ml-auto">{formatInstallCount(integration.installCount)} installs</span>
           </div>
-          <div className="flex items-center text-[11px] text-[var(--cs-text-secondary,#94a3b8)]">
+          <div className="flex items-center text-[11px] text-[var(--cs-text-secondary,#a1a1aa)]">
             <span>by {integration.author}</span>
           </div>
         </div>

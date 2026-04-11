@@ -12,6 +12,7 @@ interface LLMSettingsProps {
 }
 
 const PROVIDERS = [
+  { value: 'azure' as const, label: 'Azure OpenAI', placeholder: 'Managed by server', models: ['gpt-4o-mini'] },
   { value: 'openai' as const, label: 'OpenAI', placeholder: 'sk-…', models: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-3.5-turbo'] },
   { value: 'anthropic' as const, label: 'Anthropic', placeholder: 'sk-ant-…', models: ['claude-sonnet-4-20250514', 'claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-haiku-20240307'] },
   { value: 'ollama' as const, label: 'Ollama (local)', placeholder: 'No key needed', models: ['llama3', 'mistral', 'codellama', 'mixtral'] },
@@ -67,14 +68,14 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
                 key={p.value}
                 onClick={() => {
                   const next: LLMConfig = { ...config, provider: p.value, modelId: p.models[0] ?? '' };
-                  if (p.value === 'ollama') {
+                  if (p.value === 'ollama' || p.value === 'azure') {
                     delete next.apiKey;
                   }
                   setConfig(next);
                 }}
                 className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium border transition-all ${
                   config.provider === p.value
-                    ? 'border-purple-500 bg-purple-500/10 text-purple-400'
+                    ? 'border-indigo-600 bg-indigo-600/10 text-indigo-400'
                     : 'border-[var(--cs-border-default)] text-[var(--cs-text-secondary)] hover:border-[var(--cs-border-strong)]'
                 }`}
               >
@@ -85,7 +86,7 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
         </div>
 
         {/* API Key */}
-        {config.provider !== 'ollama' && (
+        {config.provider !== 'ollama' && config.provider !== 'azure' && (
           <div className="mb-4">
             <label className="block text-sm text-[var(--cs-text-secondary)] mb-1.5">API Key</label>
             <input
@@ -93,7 +94,7 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
               value={config.apiKey ?? ''}
               onChange={(e) => setConfig({ ...config, apiKey: e.target.value })}
               placeholder={providerInfo?.placeholder ?? 'Enter API key'}
-              className="w-full px-3 py-2 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-[var(--cs-text-primary)] placeholder-[var(--cs-text-tertiary)] text-sm focus:outline-none focus:border-purple-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-[var(--cs-text-primary)] placeholder-[var(--cs-text-tertiary)] text-sm focus:outline-none focus:border-indigo-600 transition-colors"
             />
             <p className="mt-1 text-xs text-[var(--cs-text-tertiary)]">
               {config.provider === 'openai'
@@ -112,7 +113,7 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
               value={config.baseUrl ?? 'http://localhost:11434'}
               onChange={(e) => setConfig({ ...config, baseUrl: e.target.value })}
               placeholder="http://localhost:11434"
-              className="w-full px-3 py-2 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-[var(--cs-text-primary)] placeholder-[var(--cs-text-tertiary)] text-sm focus:outline-none focus:border-purple-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-[var(--cs-text-primary)] placeholder-[var(--cs-text-tertiary)] text-sm focus:outline-none focus:border-indigo-600 transition-colors"
             />
           </div>
         )}
@@ -123,7 +124,7 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
           <select
             value={config.modelId}
             onChange={(e) => setConfig({ ...config, modelId: e.target.value })}
-            className="w-full px-3 py-2 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-[var(--cs-text-primary)] text-sm focus:outline-none focus:border-purple-500 transition-colors appearance-none"
+            className="w-full px-3 py-2 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-[var(--cs-text-primary)] text-sm focus:outline-none focus:border-indigo-600 transition-colors appearance-none"
           >
             {providerInfo?.models.map((m) => (
               <option key={m} value={m}>{m}</option>
@@ -141,8 +142,8 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
           </button>
           <button
             onClick={handleSave}
-            disabled={config.provider !== 'ollama' && !config.apiKey?.trim()}
-            className="flex-1 px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+            disabled={config.provider !== 'ollama' && config.provider !== 'azure' && !config.apiKey?.trim()}
+            className="flex-1 px-4 py-2 rounded-lg bg-indigo-700 text-white hover:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-sm font-medium"
           >
             Save
           </button>

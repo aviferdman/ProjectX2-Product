@@ -33,13 +33,13 @@ import type { HardcodedAgent } from '../data/hardcoded-agents.js';
 // ---------------------------------------------------------------------------
 
 export interface LLMConfig {
-  provider: 'openai' | 'anthropic' | 'ollama';
+  provider: 'openai' | 'anthropic' | 'ollama' | 'azure';
   modelId: string;
   apiKey?: string | undefined;
   baseUrl?: string | undefined;
 }
 
-const AGENT_COLORS = ['#8b5cf6', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
+const AGENT_COLORS = ['#6366f1', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
 
 /** Create an LLM provider from config. */
 export function createProvider(config: LLMConfig): LLMProvider {
@@ -55,6 +55,17 @@ export function createProvider(config: LLMConfig): LLMProvider {
       default: return config.baseUrl;
     }
   };
+
+  // Azure provider uses the server-side Azure Function proxy — no API key needed in the browser.
+  if (config.provider === 'azure') {
+    const azureBase: LLMProviderConfig = {
+      provider: 'openai',
+      modelId: config.modelId || 'gpt-4o-mini',
+      apiKey: 'azure-managed',
+      baseUrl: '/api/chat/v1',
+    };
+    return new OpenAIProvider(azureBase);
+  }
 
   const base: LLMProviderConfig = {
     provider: config.provider,
@@ -85,16 +96,20 @@ export function getDefaultLLMConfig(): LLMConfig {
       }
     }
   }
-  // Default to OpenAI
+  // Default to Azure OpenAI when deployed (no client-side API key needed)
   const envKey = import.meta.env['VITE_OPENAI_API_KEY'] as string | undefined;
-  const result: LLMConfig = {
-    provider: 'openai',
-    modelId: 'gpt-4o',
-  };
   if (envKey) {
-    result.apiKey = envKey;
+    return {
+      provider: 'openai',
+      modelId: 'gpt-4o',
+      apiKey: envKey,
+    };
   }
-  return result;
+  // No API key configured — use Azure backend proxy
+  return {
+    provider: 'azure',
+    modelId: 'gpt-4o-mini',
+  };
 }
 
 export function saveLLMConfig(config: LLMConfig): void {
@@ -155,7 +170,7 @@ function hardcodedToAgentNode(agent: HardcodedAgent, index: number): AgentNode {
     backstory: agent.backstory,
     tools: [...agent.tools],
     status: 'idle' as const,
-    color: AGENT_COLORS[index % AGENT_COLORS.length] ?? '#8b5cf6',
+    color: AGENT_COLORS[index % AGENT_COLORS.length] ?? '#6366f1',
     position: { x: 100 + (index % 4) * 300, y: 80 + Math.floor(index / 4) * 220 },
   };
 }

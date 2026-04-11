@@ -414,7 +414,7 @@ describe('Component library — Tailwind theme', () => {
   it('has component shadow utilities', async () => {
     const mod = await import('../tailwind/component-library-theme.js');
     const sh = mod.componentLibraryTheme.boxShadow;
-    expect(sh['btn-primary']).toContain('rgba(124,58,237');
+    expect(sh['btn-primary']).toContain('rgba(99,102,241');
     expect(sh['cs-card']).toContain('rgba(0,0,0');
     expect(sh.modal).toContain('rgba(0,0,0');
   });
@@ -447,7 +447,7 @@ describe('Component library — Tailwind theme', () => {
     const mod = await import('../tailwind/component-library-theme.js');
     const primary = mod.componentLibraryTheme.colors.btn.primary;
     expect(primary.bg).toContain('var(--cs-interactive-default');
-    expect(primary.bg).toContain('#7c3aed');
+    expect(primary.bg).toContain('#6366f1');
   });
 
   it('has backdrop blur for modal', async () => {

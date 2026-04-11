@@ -324,13 +324,13 @@ function GraphView({
   }, [contextMenu]);
 
   // ── Mutation helpers ──
-  const AGENT_COLORS = ['#8b5cf6', '#f59e0b', '#10b981', '#06b6d4', '#f43f5e', '#6366f1', '#ec4899', '#14b8a6'];
+  const AGENT_COLORS = ['#6366f1', '#f59e0b', '#10b981', '#06b6d4', '#ef4444', '#6366f1', '#ec4899', '#14b8a6'];
 
   const addAgent = useCallback(() => {
     if (!onWorkflowChange) return;
     const id = `agent-${Date.now()}`;
     const idx = workflow.agents.length;
-    const color = AGENT_COLORS[idx % AGENT_COLORS.length] ?? '#8b5cf6';
+    const color = AGENT_COLORS[idx % AGENT_COLORS.length] ?? '#6366f1';
     const newAgent: AgentNode = {
       id, role: `Agent ${idx + 1}`, goal: 'New agent', backstory: '', tools: [],
       status: 'idle', color, position: { x: 0, y: 0 },
@@ -418,7 +418,7 @@ function GraphView({
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle, rgba(148,163,184,0.08) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(113,113,122,0.08) 1px, transparent 1px)',
           backgroundSize: '20px 20px',
         }}
       />
@@ -430,13 +430,13 @@ function GraphView({
       >
         <defs>
           <marker id="n8n-arrow" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="8" orient="auto">
-            <path d="M 0 0 L 10 4 L 0 8 z" fill="rgba(148,163,184,0.5)" />
+            <path d="M 0 0 L 10 4 L 0 8 z" fill="rgba(113,113,122,0.5)" />
           </marker>
           <marker id="n8n-arrow-hover" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="8" orient="auto">
-            <path d="M 0 0 L 10 4 L 0 8 z" fill="#f43f5e" />
+            <path d="M 0 0 L 10 4 L 0 8 z" fill="#ef4444" />
           </marker>
           <marker id="n8n-arrow-draw" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="8" orient="auto">
-            <path d="M 0 0 L 10 4 L 0 8 z" fill="rgba(139,92,246,0.7)" />
+            <path d="M 0 0 L 10 4 L 0 8 z" fill="rgba(99,102,241,0.7)" />
           </marker>
           <marker id="n8n-arrow-active" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="8" orient="auto">
             <path d="M 0 0 L 10 4 L 0 8 z" fill="#22d3ee" />
@@ -470,7 +470,7 @@ function GraphView({
               <path
                 d={path}
                 fill="none"
-                stroke="rgba(148,163,184,0.25)"
+                stroke="rgba(113,113,122,0.25)"
                 strokeWidth="2"
                 markerEnd="url(#n8n-arrow)"
                 className="group-hover/edge:stroke-rose-400/60 transition-colors"
@@ -498,7 +498,7 @@ function GraphView({
             <path
               d={path}
               fill="none"
-              stroke="rgba(139,92,246,0.6)"
+              stroke="rgba(99,102,241,0.6)"
               strokeWidth="2"
               strokeDasharray="8 4"
               markerEnd="url(#n8n-arrow-draw)"
@@ -511,7 +511,7 @@ function GraphView({
       {/* Drawing tooltip */}
       {drawingConn && (
         <div
-          className="fixed z-50 px-2 py-1 rounded-md bg-violet-600/90 text-[10px] text-white font-medium pointer-events-none whitespace-nowrap shadow-lg"
+          className="fixed z-50 px-2 py-1 rounded-md bg-indigo-600/90 text-[10px] text-white font-medium pointer-events-none whitespace-nowrap shadow-lg"
           style={{
             left: drawingConn.mouseX + (containerRef.current?.getBoundingClientRect().left ?? 0) - (containerRef.current?.scrollLeft ?? 0) + 14,
             top: drawingConn.mouseY + (containerRef.current?.getBoundingClientRect().top ?? 0) - (containerRef.current?.scrollTop ?? 0) - 10,
@@ -531,7 +531,7 @@ function GraphView({
           const pos = getPos(task.id);
           if (!pos) return null;
           const agent = workflow.agents.find(a => a.id === task.agentId);
-          const color = agent?.color ?? '#64748b';
+          const color = agent?.color ?? '#52525b';
           const isSelected = selectedNodeId === task.id;
           const isDragging = dragging?.taskId === task.id;
           const isDiscussion = !!task.discussion;
@@ -556,20 +556,20 @@ function GraphView({
             >
               {/* Input port (left) */}
               <div
-                className="absolute -left-[5px] top-1/2 -translate-y-1/2 w-[10px] h-[10px] rounded-full border-2 border-[rgba(148,163,184,0.3)] bg-[var(--cs-surface-app)] z-20 opacity-0 group-hover/card:opacity-100 transition-opacity hover:!border-violet-400 hover:!bg-violet-400/20 hover:!scale-150 cursor-pointer"
+                className="absolute -left-[5px] top-1/2 -translate-y-1/2 w-[10px] h-[10px] rounded-full border-2 border-[rgba(113,113,122,0.3)] bg-[var(--cs-surface-app)] z-20 opacity-0 group-hover/card:opacity-100 transition-opacity hover:!border-indigo-400 hover:!bg-indigo-400/20 hover:!scale-150 cursor-pointer"
                 title="Input"
               />
 
               {/* Output port (right) — drag to connect */}
               <div
-                className="absolute -right-[5px] top-1/2 -translate-y-1/2 w-[10px] h-[10px] rounded-full border-2 border-[rgba(148,163,184,0.3)] bg-[var(--cs-surface-app)] z-20 opacity-0 group-hover/card:opacity-100 transition-opacity hover:!border-violet-400 hover:!bg-violet-500 hover:!scale-150 cursor-crosshair"
+                className="absolute -right-[5px] top-1/2 -translate-y-1/2 w-[10px] h-[10px] rounded-full border-2 border-[rgba(113,113,122,0.3)] bg-[var(--cs-surface-app)] z-20 opacity-0 group-hover/card:opacity-100 transition-opacity hover:!border-indigo-400 hover:!bg-indigo-500 hover:!scale-150 cursor-crosshair"
                 onPointerDown={(e) => handlePortDown(e, task.id)}
                 title="Drag to connect"
               />
 
               {/* Drop target highlight */}
               {drawingConn && drawingConn.fromTaskId !== task.id && (
-                <div className="absolute -inset-1 rounded-xl border-2 border-dashed border-violet-400/50 bg-violet-500/5 z-5 pointer-events-none animate-pulse" />
+                <div className="absolute -inset-1 rounded-xl border-2 border-dashed border-indigo-400/50 bg-indigo-500/5 z-5 pointer-events-none animate-pulse" />
               )}
 
               {/* The card — discussion variant or regular */}
@@ -579,7 +579,7 @@ function GraphView({
                     isSelected
                       ? 'border-cyan-400 bg-[var(--cs-surface-card)] shadow-lg shadow-cyan-400/20 ring-1 ring-cyan-400/30'
                       : discStatus === 'active'
-                        ? 'border-cyan-500/50 bg-gradient-to-br from-cyan-500/[0.06] to-violet-500/[0.04] hover:border-cyan-400/60 hover:shadow-md hover:shadow-cyan-500/10'
+                        ? 'border-cyan-500/50 bg-gradient-to-br from-cyan-500/[0.06] to-indigo-500/[0.04] hover:border-cyan-400/60 hover:shadow-md hover:shadow-cyan-500/10'
                         : discStatus === 'converged'
                           ? 'border-emerald-500/40 bg-gradient-to-br from-emerald-500/[0.05] to-cyan-500/[0.03] hover:border-emerald-400/50 hover:shadow-md'
                           : 'border-[var(--cs-border-subtle)] bg-gradient-to-br from-cyan-500/[0.03] to-[var(--cs-surface-card)]/80 hover:border-[var(--cs-border-default)] hover:shadow-md hover:shadow-black/10'
@@ -599,7 +599,7 @@ function GraphView({
                       {discStatus === 'converged' ? (
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12" /></svg>
                       ) : (
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={discStatus === 'active' ? '#22d3ee' : '#94a3b8'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={discStatus === 'active' ? '#22d3ee' : '#a1a1aa'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                         </svg>
                       )}
@@ -649,9 +649,9 @@ function GraphView({
                 <div
                   className={`w-full h-full rounded-xl border transition-all duration-150 flex items-center gap-3 px-3 select-none ${
                     isSelected
-                      ? 'border-violet-500 bg-[var(--cs-surface-card)] shadow-lg shadow-violet-500/20 ring-1 ring-violet-500/30'
+                      ? 'border-indigo-500 bg-[var(--cs-surface-card)] shadow-lg shadow-indigo-500/20 ring-1 ring-indigo-500/30'
                       : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/80 hover:border-[var(--cs-border-default)] hover:shadow-md hover:shadow-black/10'
-                  } ${isDragging ? 'shadow-xl scale-[1.02] ring-2 ring-violet-500/20' : ''}`}
+                  } ${isDragging ? 'shadow-xl scale-[1.02] ring-2 ring-indigo-500/20' : ''}`}
                   style={{ borderLeftWidth: 3, borderLeftColor: color, cursor: isDragging ? 'grabbing' : 'grab' }}
                   onPointerDown={(e) => handleNodePointerDown(e, task.id)}
                   onClick={(e) => { e.stopPropagation(); if (!dragging) onSelectNode(task.id); }}
@@ -674,7 +674,7 @@ function GraphView({
                             ) : task.status === 'running' ? (
                               <svg className="animate-spin" width="10" height="10" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="#f59e0b" strokeWidth="4" /><path className="opacity-75" fill="#f59e0b" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
                             ) : (
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="3" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="3" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                             )}
                           </div>
                         )}
@@ -741,13 +741,13 @@ function GraphView({
 
       {/* Hint strip */}
       <div className="absolute bottom-4 right-4 flex items-center gap-3 px-3 py-1.5 rounded-lg bg-[var(--cs-surface-panel)]/60 backdrop-blur-sm border border-[var(--cs-border-subtle)]">
-        <span className="text-[9px] text-[var(--cs-text-tertiary)]"><span className="text-violet-400">Drag</span> cards to move</span>
+        <span className="text-[9px] text-[var(--cs-text-tertiary)]"><span className="text-indigo-400">Drag</span> cards to move</span>
         <span className="text-[8px] text-[var(--cs-border-default)]">|</span>
-        <span className="text-[9px] text-[var(--cs-text-tertiary)]"><span className="text-violet-400">Drag port</span> to connect</span>
+        <span className="text-[9px] text-[var(--cs-text-tertiary)]"><span className="text-indigo-400">Drag port</span> to connect</span>
         <span className="text-[8px] text-[var(--cs-border-default)]">|</span>
         <span className="text-[9px] text-[var(--cs-text-tertiary)]"><span className="text-rose-400">Click edge</span> to remove</span>
         <span className="text-[8px] text-[var(--cs-border-default)]">|</span>
-        <span className="text-[9px] text-[var(--cs-text-tertiary)]"><span className="text-violet-400">Right-click</span> for menu</span>
+        <span className="text-[9px] text-[var(--cs-text-tertiary)]"><span className="text-indigo-400">Right-click</span> for menu</span>
       </div>
 
       {/* Context Menu */}
@@ -1010,7 +1010,7 @@ function TimelineView({
                       onClick={() => onSelectNode(task.id)}
                       className={`flex-shrink-0 px-3 py-2 rounded-lg border text-xs transition-all ${
                         selectedNodeId === task.id
-                          ? 'border-violet-500/40 bg-violet-500/10 text-white'
+                          ? 'border-indigo-500/40 bg-indigo-500/10 text-white'
                           : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/20 text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface-card)]/30 hover:text-[var(--cs-text-primary)]'
                       }`}
                       style={{
@@ -1059,7 +1059,7 @@ function AgentCard({
       onClick={onClick}
       className={`w-full text-left rounded-xl p-4 border transition-all duration-200 ${
         isSelected
-          ? 'border-violet-500/50 bg-violet-500/10 shadow-lg shadow-violet-500/10'
+          ? 'border-indigo-500/50 bg-indigo-500/10 shadow-lg shadow-indigo-500/10'
           : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/10 hover:bg-[var(--cs-surface-card)]/30 hover:border-[var(--cs-border-default)]'
       }`}
     >
@@ -1105,7 +1105,7 @@ function TaskCard({
       onClick={onClick}
       className={`flex-1 min-w-[260px] max-w-md text-left rounded-xl p-4 border transition-all duration-200 card-hover focus-ring ${
         isSelected
-          ? 'border-violet-500/50 bg-violet-500/10 shadow-lg shadow-violet-500/10'
+          ? 'border-indigo-500/50 bg-indigo-500/10 shadow-lg shadow-indigo-500/10'
           : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-card)]/10 hover:bg-[var(--cs-surface-card)]/30 hover:border-[var(--cs-border-default)]'
       }`}
     >
@@ -1208,7 +1208,7 @@ function DetailsPanel({
     }
   }, [onWorkflowChange, workflow, task]);
 
-  const inputClass = 'w-full bg-[var(--cs-surface-card)]/20 border border-[var(--cs-border-subtle)] rounded-lg px-2.5 py-1.5 text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors';
+  const inputClass = 'w-full bg-[var(--cs-surface-card)]/20 border border-[var(--cs-border-subtle)] rounded-lg px-2.5 py-1.5 text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 transition-colors';
   const textareaClass = inputClass + ' resize-none';
 
   return (
@@ -1292,7 +1292,7 @@ function DetailsPanel({
             <div>
               <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Color</label>
               <div className="flex gap-1.5 mt-1.5">
-                {['#8b5cf6', '#f59e0b', '#10b981', '#06b6d4', '#f43f5e', '#6366f1', '#ec4899', '#14b8a6'].map((c) => (
+                {['#6366f1', '#f59e0b', '#10b981', '#06b6d4', '#ef4444', '#6366f1', '#ec4899', '#14b8a6'].map((c) => (
                   <button
                     key={c}
                     onClick={() => canEdit && updateAgent({ color: c })}
@@ -1580,7 +1580,7 @@ function DetailsPanel({
                         {allMessages.map(msg => {
                           const msgAgent = workflow.agents.find(a => a.id === msg.fromAgentId);
                           const typeColors: Record<string, string> = {
-                            proposal: 'bg-violet-500/15 text-violet-400',
+                            proposal: 'bg-indigo-500/15 text-indigo-400',
                             feedback: 'bg-blue-500/15 text-blue-400',
                             revision: 'bg-amber-500/15 text-amber-400',
                             agreement: 'bg-emerald-500/15 text-emerald-400',
@@ -1597,7 +1597,7 @@ function DetailsPanel({
                                 >
                                   <AgentAvatar id={msgAgent?.id ?? ''} size={10} fallback={msgAgent?.role} />
                                 </div>
-                                <span className="text-[10px] font-semibold" style={{ color: msgAgent?.color ?? '#a78bfa' }}>
+                                <span className="text-[10px] font-semibold" style={{ color: msgAgent?.color ?? '#818cf8' }}>
                                   {msgAgent?.role ?? msg.fromAgentId}
                                 </span>
                                 <span className={`text-[8px] px-1 py-0.5 rounded font-medium ${typeColors[msg.type] ?? 'bg-slate-500/15 text-slate-400'}`}>
@@ -1640,9 +1640,9 @@ function GeneratingState(): React.JSX.Element {
     <div className="h-full flex items-center justify-center bg-[var(--cs-surface-app)]">
       <div className="text-center">
         <div className="relative w-16 h-16 mx-auto mb-6">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 animate-pulse" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 animate-pulse" />
           <div className="absolute inset-1 rounded-xl bg-[var(--cs-surface-app)] flex items-center justify-center">
-            <svg className="animate-spin h-6 w-6 text-violet-400" viewBox="0 0 24 24" fill="none">
+            <svg className="animate-spin h-6 w-6 text-indigo-400" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
@@ -1729,14 +1729,14 @@ function TaskStatusIcon({ status }: { status: TaskNode['status'] }): React.JSX.E
   }
   if (status === 'failed') {
     return (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <line x1="18" y1="6" x2="6" y2="18" />
         <line x1="6" y1="6" x2="18" y2="18" />
       </svg>
     );
   }
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#52525b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
     </svg>
   );

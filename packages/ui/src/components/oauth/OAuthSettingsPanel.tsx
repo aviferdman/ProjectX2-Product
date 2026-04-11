@@ -97,14 +97,14 @@ export const OAuthSettingsPanel = forwardRef<HTMLDivElement, OAuthSettingsPanelP
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-[var(--cs-text-primary,#f8fafc)]">
+            <h2 className="text-lg font-semibold text-[var(--cs-text-primary,#fafafa)]">
               OAuth Connections
             </h2>
-            <p className="mt-1 text-sm text-[var(--cs-text-secondary,#94a3b8)]">
+            <p className="mt-1 text-sm text-[var(--cs-text-secondary,#a1a1aa)]">
               Manage your connected OAuth providers for integrations.
             </p>
           </div>
-          <span className="text-xs text-[var(--cs-text-secondary,#94a3b8)]">
+          <span className="text-xs text-[var(--cs-text-secondary,#a1a1aa)]">
             {connectedCount} of {connections.length} connected
           </span>
         </div>
@@ -113,7 +113,7 @@ export const OAuthSettingsPanel = forwardRef<HTMLDivElement, OAuthSettingsPanelP
         {loading && (
           <div className="flex items-center justify-center py-12" role="status" aria-label="Loading OAuth providers">
             <svg
-              className="h-6 w-6 animate-spin text-violet-400"
+              className="h-6 w-6 animate-spin text-indigo-400"
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden="true"

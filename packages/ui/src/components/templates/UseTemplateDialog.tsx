@@ -139,7 +139,7 @@ function FormView({ template, onSubmit, onCancel }: FormViewProps) {
             'bg-slate-800/60 text-slate-100',
             'border-slate-600 placeholder:text-slate-500',
             'text-sm transition-colors',
-            'focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500',
+            'focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500',
           )}
           autoFocus
         />
@@ -165,7 +165,7 @@ function FormView({ template, onSubmit, onCancel }: FormViewProps) {
             'bg-slate-800/60 text-slate-100',
             'border-slate-600 placeholder:text-slate-500',
             'text-sm transition-colors resize-none',
-            'focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500',
+            'focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500',
           )}
         />
       </div>
@@ -191,7 +191,7 @@ function FormView({ template, onSubmit, onCancel }: FormViewProps) {
             'inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2',
             'text-sm font-medium transition-all',
             isValid
-              ? 'bg-violet-600 text-white shadow-sm hover:bg-violet-500 hover:shadow-md'
+              ? 'bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 hover:shadow-md'
               : 'bg-slate-700 text-slate-500 cursor-not-allowed',
           )}
           aria-label="Create workflow from template"
@@ -226,7 +226,7 @@ function LoadingView() {
       role="status"
     >
       <svg
-        className="h-8 w-8 animate-spin text-violet-500"
+        className="h-8 w-8 animate-spin text-indigo-500"
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"
@@ -309,9 +309,9 @@ function SuccessView({ result, onDone, onGoToWorkflow }: SuccessViewProps) {
             onClick={() => onGoToWorkflow(result.workflowId)}
             className={clsx(
               'inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2',
-              'bg-violet-600 text-white shadow-sm',
+              'bg-indigo-600 text-white shadow-sm',
               'text-sm font-medium transition-all',
-              'hover:bg-violet-500 hover:shadow-md',
+              'hover:bg-indigo-500 hover:shadow-md',
             )}
             aria-label="Go to workflow"
           >
@@ -394,9 +394,9 @@ function ErrorView({ message, onRetry, onCancel }: ErrorViewProps) {
           onClick={onRetry}
           className={clsx(
             'inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2',
-            'bg-violet-600 text-white shadow-sm',
+            'bg-indigo-600 text-white shadow-sm',
             'text-sm font-medium transition-all',
-            'hover:bg-violet-500 hover:shadow-md',
+            'hover:bg-indigo-500 hover:shadow-md',
           )}
           aria-label="Try again"
         >

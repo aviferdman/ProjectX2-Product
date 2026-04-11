@@ -8,8 +8,8 @@
 
   /* Invalid state */
   --cs-form-invalid-border: rgba(225, 29, 72, 0.6);
-  --cs-form-invalid-text: #fb7185;
-  --cs-form-invalid-icon: #fb7185;
+  --cs-form-invalid-text: #f87171;
+  --cs-form-invalid-icon: #f87171;
   --cs-form-invalid-bg: rgba(244, 63, 94, 0.06);
 
   /* Warning state */
@@ -20,10 +20,10 @@
 
   /* Label */
   --cs-form-label-color: #cbd5e1;
-  --cs-form-label-required: #fb7185;
+  --cs-form-label-required: #f87171;
 
   /* Helper */
-  --cs-form-helper-color: #64748b;
+  --cs-form-helper-color: #52525b;
 
   /* Transition */
   --cs-form-transition-duration: 150ms;

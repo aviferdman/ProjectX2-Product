@@ -42,7 +42,7 @@ import {
 const testAgents: TimelineAgent[] = [
   { id: 'agent-1', name: 'Analyst', color: '#f59e0b' },
   { id: 'agent-2', name: 'Writer', color: '#10b981' },
-  { id: 'agent-3', name: 'Reviewer', color: '#8b5cf6' },
+  { id: 'agent-3', name: 'Reviewer', color: '#818cf8' },
 ];
 
 const testEvents: TimelineEvent[] = [

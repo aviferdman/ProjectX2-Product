@@ -29,7 +29,7 @@
           "archived": { "value": "{crewspace.color.primitive.slate.500}", "type": "color" }
         },
         "status-bg": {
-          "draft": { "value": "rgba(148,163,184,0.1)", "type": "color" },
+          "draft": { "value": "rgba(113,113,122,0.1)", "type": "color" },
           "active": { "value": "rgba(16,185,129,0.1)", "type": "color" },
           "error": { "value": "rgba(244,63,94,0.1)", "type": "color" },
           "archived": { "value": "rgba(100,116,139,0.1)", "type": "color" }
@@ -38,7 +38,7 @@
       "workflowList": {
         "row-bg": { "value": "transparent", "type": "color" },
         "row-bg-hover": { "value": "rgba(30,41,59,0.5)", "type": "color" },
-        "row-bg-selected": { "value": "rgba(139,92,246,0.08)", "type": "color" },
+        "row-bg-selected": { "value": "rgba(99,102,241,0.08)", "type": "color" },
         "row-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
         "header-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
         "header-text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" }
@@ -48,7 +48,7 @@
         "bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
         "text": { "value": "#ffffff", "type": "color" },
         "icon": { "value": "#ffffff", "type": "color" },
-        "shadow": { "value": "0 2px 8px rgba(124,58,237,0.35)", "type": "boxShadow" }
+        "shadow": { "value": "0 2px 8px rgba(99,102,241,0.35)", "type": "boxShadow" }
       },
       "emptyState": {
         "icon": { "value": "{crewspace.color.primitive.slate.600}", "type": "color" },
@@ -65,7 +65,7 @@
       },
       "filterChip": {
         "bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
-        "bg-active": { "value": "rgba(139,92,246,0.2)", "type": "color" },
+        "bg-active": { "value": "rgba(99,102,241,0.2)", "type": "color" },
         "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
         "border-active": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
         "text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
@@ -95,7 +95,7 @@
         "icon-errors": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" }
       },
       "upgradePrompt": {
-        "bg": { "value": "rgba(124,58,237,0.08)", "type": "color" },
+        "bg": { "value": "rgba(99,102,241,0.08)", "type": "color" },
         "border": { "value": "{crewspace.color.primitive.violet.700}", "type": "color" },
         "text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
         "cta-bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
@@ -131,7 +131,7 @@
         "upgrade-prompt-height": { "value": "auto", "type": "sizing" }
       },
       "stat-card-shadow": {
-        "value": "0 1px 3px rgba(0,0,0,0.2), 0 0 0 1px rgba(148,163,184,0.06)",
+        "value": "0 1px 3px rgba(0,0,0,0.2), 0 0 0 1px rgba(113,113,122,0.06)",
         "type": "boxShadow",
         "description": "Stat card drop shadow"
       },

@@ -46,7 +46,7 @@ export function WorkflowToolbar({
 
       {/* Logo */}
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 rounded-md bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+        <div className="w-6 h-6 rounded-md bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z" />
             <path d="M2 17l10 5 10-5" />
@@ -131,7 +131,7 @@ export function WorkflowToolbar({
             onClick={onToggleCrewBlade}
             className={`p-2 rounded-lg transition-colors focus-ring ${
               isCrewBladeOpen
-                ? 'bg-violet-500/15 text-violet-400'
+                ? 'bg-indigo-500/15 text-indigo-400'
                 : 'hover:bg-[var(--cs-surface-card)] text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)]'
             }`}
             title={isCrewBladeOpen ? 'Close Crew panel' : 'Open Crew panel'}
@@ -151,7 +151,7 @@ export function WorkflowToolbar({
           <button
             onClick={onSaveAsCrew}
             disabled={!workflow}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-violet-500/30 text-violet-400 hover:bg-violet-500/10 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium transition-colors focus-ring"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium transition-colors focus-ring"
             title="Save workflow as a crew"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -234,7 +234,7 @@ function ViewModeButton({
       onClick={onClick}
       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
         active
-          ? 'bg-violet-500/15 text-violet-700 shadow-sm'
+          ? 'bg-indigo-500/15 text-indigo-300 shadow-sm'
           : 'text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-primary)]'
       }`}
       title={label}

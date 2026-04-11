@@ -15,20 +15,20 @@ export const templateCardTheme = {
       'bg-hover': 'var(--cs-surface-elevated)',
       border: 'var(--cs-border-default)',
       'border-hover': 'var(--cs-border-strong)',
-      'border-focus': '#8b5cf6',
+      'border-focus': '#818cf8',
     },
 
     // Thumbnail
     'tpl-thumb': {
       bg: 'rgba(10,14,26,0.8)',
       border: 'var(--cs-border-subtle)',
-      'node-agent': '#a78bfa',
-      'node-task': '#38bdf8',
+      'node-agent': '#818cf8',
+      'node-task': '#22d3ee',
       'node-tool': '#34d399',
       'node-llm': '#fbbf24',
-      edge: 'rgba(148,163,184,0.2)',
+      edge: 'rgba(113,113,122,0.2)',
       'node-ring': 'rgba(255,255,255,0.1)',
-      'empty-icon': '#475569',
+      'empty-icon': '#3f3f46',
     },
 
     // Thumbnail preview overlay button
@@ -54,15 +54,15 @@ export const templateCardTheme = {
 
     // Category icon backgrounds & colors
     'tpl-cat-icon': {
-      'research-color': '#38bdf8',
+      'research-color': '#22d3ee',
       'research-bg': 'rgba(56,189,248,0.15)',
-      'code-color': '#a78bfa',
+      'code-color': '#818cf8',
       'code-bg': 'rgba(167,139,250,0.15)',
       'support-color': '#34d399',
       'support-bg': 'rgba(52,211,153,0.15)',
       'content-color': '#fbbf24',
       'content-bg': 'rgba(251,191,36,0.15)',
-      'data-color': '#fb7185',
+      'data-color': '#f87171',
       'data-bg': 'rgba(251,113,133,0.15)',
       'automation-color': '#cbd5e1',
       'automation-bg': 'rgba(203,213,225,0.15)',
@@ -75,18 +75,18 @@ export const templateCardTheme = {
     // Tags
     'tpl-card-tag': {
       bg: 'var(--cs-surface-elevated)',
-      'bg-hover': 'rgba(139,92,246,0.12)',
+      'bg-hover': 'rgba(99,102,241,0.12)',
       border: 'var(--cs-border-subtle)',
-      'border-hover': 'rgba(139,92,246,0.25)',
+      'border-hover': 'rgba(99,102,241,0.25)',
       text: 'var(--cs-text-tertiary)',
-      'text-hover': '#c4b5fd',
-      'overflow-bg': 'rgba(148,163,184,0.08)',
+      'text-hover': '#a5b4fc',
+      'overflow-bg': 'rgba(113,113,122,0.08)',
     },
 
     // Meta row
     'tpl-card-meta': {
       text: 'var(--cs-text-tertiary)',
-      separator: '#475569',
+      separator: '#3f3f46',
       'star-filled': '#fbbf24',
       'star-empty': 'var(--cs-text-tertiary)',
     },
@@ -94,17 +94,17 @@ export const templateCardTheme = {
     // Preview button (secondary)
     'tpl-card-preview-btn': {
       bg: 'transparent',
-      'bg-hover': 'rgba(139,92,246,0.12)',
-      text: '#c4b5fd',
+      'bg-hover': 'rgba(99,102,241,0.12)',
+      text: '#a5b4fc',
       'text-hover': '#ddd6fe',
-      border: '#7c3aed',
-      'border-hover': '#8b5cf6',
+      border: '#6366f1',
+      'border-hover': '#818cf8',
     },
 
     // Use Template button (primary)
     'tpl-card-use-btn': {
-      bg: '#7c3aed',
-      'bg-hover': '#8b5cf6',
+      bg: '#6366f1',
+      'bg-hover': '#818cf8',
       'bg-active': '#6d28d9',
       text: '#ffffff',
     },
@@ -176,12 +176,12 @@ export const templateCardTheme = {
   },
 
   boxShadow: {
-    'tpl-card': '0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.06)',
-    'tpl-card-hover': '0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.1)',
-    'tpl-card-focus': '0 0 0 3px rgba(139,92,246,0.25)',
-    'tpl-card-use-btn': '0 2px 8px rgba(124,58,237,0.35)',
-    'tpl-card-use-btn-hover': '0 4px 12px rgba(124,58,237,0.45)',
-    'tpl-card-use-btn-active': '0 1px 4px rgba(124,58,237,0.25)',
+    'tpl-card': '0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)',
+    'tpl-card-hover': '0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)',
+    'tpl-card-focus': '0 0 0 3px rgba(99,102,241,0.25)',
+    'tpl-card-use-btn': '0 2px 8px rgba(99,102,241,0.35)',
+    'tpl-card-use-btn-hover': '0 4px 12px rgba(99,102,241,0.45)',
+    'tpl-card-use-btn-active': '0 1px 4px rgba(99,102,241,0.25)',
   },
 
   animation: {

@@ -70,7 +70,7 @@ export const TemplateSortDropdown = forwardRef<
           'text-tpl-sort-label font-medium',
           'transition-colors duration-150',
           'hover:bg-tpl-sort-bg-hover hover:text-tpl-sort-text-active',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         )}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">

@@ -129,10 +129,10 @@ export const MarketplaceBrowserPage = forwardRef<
     >
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-bold text-[var(--cs-text-primary,#f8fafc)]">
+        <h1 className="text-2xl font-bold text-[var(--cs-text-primary,#fafafa)]">
           Marketplace
         </h1>
-        <p className="text-sm text-[var(--cs-text-secondary,#94a3b8)] mt-1">
+        <p className="text-sm text-[var(--cs-text-secondary,#a1a1aa)] mt-1">
           Discover and install integrations to extend your workflows
         </p>
       </div>
@@ -153,7 +153,7 @@ export const MarketplaceBrowserPage = forwardRef<
       {loading ? (
         <div className="flex items-center justify-center py-20" role="status">
           <svg
-            className="h-8 w-8 animate-spin text-violet-500"
+            className="h-8 w-8 animate-spin text-indigo-500"
             viewBox="0 0 24 24"
             fill="none"
             aria-hidden="true"

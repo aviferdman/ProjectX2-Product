@@ -19,20 +19,20 @@
         "background": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Card base background" },
         "background-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
         "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "divider": { "value": "rgba(51,65,85,0.4)", "type": "color", "description": "Horizontal divider between card sections" },
+        "divider": { "value": "rgba(39,39,42,0.4)", "type": "color", "description": "Horizontal divider between card sections" },
         "header-text": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
         "label-text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Section labels (e.g., 'Model', 'Duration')" },
         "value-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
-        "code-bg": { "value": "rgba(15,23,42,0.6)", "type": "color", "description": "Code block background inside cards" },
-        "code-border": { "value": "rgba(51,65,85,0.5)", "type": "color" },
+        "code-bg": { "value": "rgba(17,17,19,0.6)", "type": "color", "description": "Code block background inside cards" },
+        "code-border": { "value": "rgba(39,39,42,0.5)", "type": "color" },
         "badge-bg": { "value": "rgba(30,41,59,0.6)", "type": "color", "description": "Metadata badge background" },
         "close-icon": { "value": "{crewspace.color.primitive.slate.500}", "type": "color" },
         "close-icon-hover": { "value": "{crewspace.color.primitive.slate.300}", "type": "color" }
       },
 
       "shadow": {
-        "default": { "value": "0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.08)", "type": "boxShadow" },
-        "hover": { "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.12)", "type": "boxShadow" }
+        "default": { "value": "0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.08)", "type": "boxShadow" },
+        "hover": { "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.12)", "type": "boxShadow" }
       },
 
       "typography": {
@@ -88,20 +88,20 @@
         },
         "message": {
           "accent": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
-          "accent-subtle": { "value": "rgba(139,92,246,0.1)", "type": "color" },
-          "icon-bg": { "value": "rgba(139,92,246,0.15)", "type": "color" },
+          "accent-subtle": { "value": "rgba(99,102,241,0.1)", "type": "color" },
+          "icon-bg": { "value": "rgba(99,102,241,0.15)", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
           "badge-text": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
-          "badge-bg": { "value": "rgba(139,92,246,0.12)", "type": "color" }
+          "badge-bg": { "value": "rgba(99,102,241,0.12)", "type": "color" }
         }
       },
 
       "metrics": {
-        "container-bg": { "value": "rgba(15,23,42,0.4)", "type": "color", "description": "Metrics row background" },
+        "container-bg": { "value": "rgba(17,17,19,0.4)", "type": "color", "description": "Metrics row background" },
         "container-radius": { "value": "8px", "type": "borderRadius" },
         "container-padding": { "value": "12px", "type": "spacing" },
         "item-gap": { "value": "16px", "type": "spacing", "description": "Gap between metric items" },
-        "divider": { "value": "rgba(51,65,85,0.5)", "type": "color", "description": "Vertical divider between metrics" }
+        "divider": { "value": "rgba(39,39,42,0.5)", "type": "color", "description": "Vertical divider between metrics" }
       },
 
       "codeBlock": {
@@ -131,7 +131,7 @@
 
       "state": {
         "selected-ring": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
-        "selected-glow": { "value": "rgba(139,92,246,0.2)", "type": "color" },
+        "selected-glow": { "value": "rgba(99,102,241,0.2)", "type": "color" },
         "running-dot": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" },
         "running-dot-glow": { "value": "rgba(52,211,153,0.4)", "type": "color" },
         "completed-dot": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },

@@ -39,7 +39,7 @@ export const FilterChips = forwardRef<HTMLDivElement, FilterChipsProps>(
             className={clsx(
               'h-7 rounded-full border px-3 text-xs font-medium transition-colors duration-100',
               value === option
-                ? 'border-violet-500 bg-violet-500/20 text-violet-300'
+                ? 'border-indigo-500 bg-indigo-500/20 text-indigo-300'
                 : 'border-slate-700 bg-surface-elevated text-slate-400 hover:text-slate-200 hover:border-slate-600',
             )}
           >

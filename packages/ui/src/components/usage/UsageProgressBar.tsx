@@ -17,7 +17,7 @@ export interface UsageProgressBarProps extends HTMLAttributes<HTMLDivElement> {
 function barColor(percent: number): string {
   if (percent >= USAGE_THRESHOLDS.critical) return 'bg-rose-500';
   if (percent >= USAGE_THRESHOLDS.warning) return 'bg-amber-500';
-  return 'bg-violet-500';
+  return 'bg-indigo-500';
 }
 
 export const UsageProgressBar = forwardRef<HTMLDivElement, UsageProgressBarProps>(

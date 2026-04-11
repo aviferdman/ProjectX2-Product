@@ -12,9 +12,9 @@ const categoryStyles: Record<
   { bg: string; text: string; border: string }
 > = {
   llm: {
-    bg: 'bg-violet-500/10',
-    text: 'text-violet-400',
-    border: 'border-violet-400/30',
+    bg: 'bg-indigo-500/10',
+    text: 'text-indigo-400',
+    border: 'border-indigo-400/30',
   },
   tool: {
     bg: 'bg-sky-500/10',

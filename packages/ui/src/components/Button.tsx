@@ -6,7 +6,7 @@ import { type ButtonHTMLAttributes, forwardRef } from 'react';
 /* ------------------------------------------------------------------ */
 const variantStyles = {
   primary:
-    'bg-brand-primary text-white hover:bg-violet-700 active:bg-violet-800 focus-visible:ring-brand-primary',
+    'bg-brand-primary text-white hover:bg-indigo-700 active:bg-indigo-800 focus-visible:ring-brand-primary',
   secondary:
     'bg-surface-elevated text-slate-200 hover:bg-slate-600 active:bg-slate-500 border border-slate-600 focus-visible:ring-brand-primary',
   ghost:

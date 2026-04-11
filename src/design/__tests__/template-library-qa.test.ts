@@ -446,11 +446,11 @@ describe('template-card.json — design tokens', () => {
       expect(useBtn.height.value).toBe('36px');
     });
 
-    it('use button bg is violet-600', () => {
+    it('use button bg is indigo-600', () => {
       expect(useBtn.bg.value).toContain('violet.600');
     });
 
-    it('preview button is transparent with violet-600 border', () => {
+    it('preview button is transparent with indigo-600 border', () => {
       expect(previewBtn.bg.value).toBe('transparent');
       expect(previewBtn.border.value).toContain('violet.600');
     });
@@ -540,8 +540,8 @@ describe('template-library-variables.css — consistency with tokens', () => {
       expect(css).toContain('--search-max-w: 400px');
     });
 
-    it('has search border focus (violet-500)', () => {
-      expect(css).toContain('--search-border-focus: #8b5cf6');
+    it('has search border focus (indigo-500)', () => {
+      expect(css).toContain('--search-border-focus: #818cf8');
     });
 
     it('has search radius', () => {
@@ -558,8 +558,8 @@ describe('template-library-variables.css — consistency with tokens', () => {
       expect(css).toContain('--chip-bg-active');
     });
 
-    it('has chip active border (violet-500)', () => {
-      expect(css).toContain('--chip-border-active: #8b5cf6');
+    it('has chip active border (indigo-500)', () => {
+      expect(css).toContain('--chip-border-active: #818cf8');
     });
 
     it('has pill radius (9999px)', () => {
@@ -641,9 +641,9 @@ describe('template-library-variables.css — consistency with tokens', () => {
   });
 
   describe('button variables', () => {
-    it('has Use Template button (violet-600 bg)', () => {
+    it('has Use Template button (indigo-600 bg)', () => {
       expect(css).toContain('.cs-use-template-btn');
-      expect(css).toContain('--btn-bg: #7c3aed');
+      expect(css).toContain('--btn-bg: #6366f1');
     });
 
     it('has Preview button (transparent bg)', () => {
@@ -748,7 +748,7 @@ describe('template-card-variables.css — consistency with tokens', () => {
     });
 
     it('has focus border for accessibility', () => {
-      expect(css).toContain('--card-border-focus: #8b5cf6');
+      expect(css).toContain('--card-border-focus: #818cf8');
     });
 
     it('has focus shadow ring', () => {
@@ -764,8 +764,8 @@ describe('template-card-variables.css — consistency with tokens', () => {
     });
 
     it('has node type colors', () => {
-      expect(css).toContain('--thumb-node-agent: #a78bfa');
-      expect(css).toContain('--thumb-node-task: #38bdf8');
+      expect(css).toContain('--thumb-node-agent: #818cf8');
+      expect(css).toContain('--thumb-node-task: #22d3ee');
       expect(css).toContain('--thumb-node-tool: #34d399');
       expect(css).toContain('--thumb-node-llm: #fbbf24');
     });
@@ -835,7 +835,7 @@ describe('template-card-variables.css — consistency with tokens', () => {
     });
 
     it('use button has active state tokens', () => {
-      expect(css).toContain('--btn-bg-active: #6d28d9');
+      expect(css).toContain('--btn-bg-active: #4f46e5');
       expect(css).toContain('--btn-shadow-active');
     });
   });
@@ -963,8 +963,8 @@ describe('template-preview-modal-variables.css — consistency with tokens', () 
 
   describe('composition section', () => {
     it('has composition type colors', () => {
-      expect(css).toContain('--comp-agent: #a78bfa');
-      expect(css).toContain('--comp-task: #38bdf8');
+      expect(css).toContain('--comp-agent: #818cf8');
+      expect(css).toContain('--comp-task: #22d3ee');
       expect(css).toContain('--comp-tool: #34d399');
       expect(css).toContain('--comp-llm: #fbbf24');
     });
@@ -987,7 +987,7 @@ describe('template-preview-modal-variables.css — consistency with tokens', () 
   describe('focus ring (accessibility)', () => {
     it('has :focus-visible styling', () => {
       expect(css).toContain(':focus-visible');
-      expect(css).toContain('outline: 2px solid #8b5cf6');
+      expect(css).toContain('outline: 2px solid #818cf8');
     });
   });
 
@@ -1202,8 +1202,8 @@ describe('template-card-theme.ts — consistency with tokens', () => {
   });
 
   it('has thumbnail node type colors', () => {
-    expect(twSource).toContain("'node-agent': '#a78bfa'");
-    expect(twSource).toContain("'node-task': '#38bdf8'");
+    expect(twSource).toContain("'node-agent': '#818cf8'");
+    expect(twSource).toContain("'node-task': '#22d3ee'");
     expect(twSource).toContain("'node-tool': '#34d399'");
     expect(twSource).toContain("'node-llm': '#fbbf24'");
   });
@@ -1246,8 +1246,8 @@ describe('template-preview-modal-theme.ts — consistency with tokens', () => {
   });
 
   it('has composition type colors', () => {
-    expect(twSource).toContain("'comp-agent': '#a78bfa'");
-    expect(twSource).toContain("'comp-task': '#38bdf8'");
+    expect(twSource).toContain("'comp-agent': '#818cf8'");
+    expect(twSource).toContain("'comp-task': '#22d3ee'");
     expect(twSource).toContain("'comp-tool': '#34d399'");
     expect(twSource).toContain("'comp-llm': '#fbbf24'");
   });
@@ -1311,11 +1311,11 @@ describe('template library cross-file consistency', () => {
     expect(cardTw).toContain('rgba(10,14,26,0.8)');
   });
 
-  it('use button violet-600 bg is consistent across files', () => {
-    expect(libraryCss).toContain('--btn-bg: #7c3aed');
-    expect(cardCss).toContain('--btn-bg: #7c3aed');
-    expect(libraryTw).toContain("bg: '#7c3aed'");
-    expect(cardTw).toContain("bg: '#7c3aed'");
+  it('use button indigo-600 bg is consistent across files', () => {
+    expect(libraryCss).toContain('--btn-bg: #6366f1');
+    expect(cardCss).toContain('--btn-bg: #6366f1');
+    expect(libraryTw).toContain("bg: '#6366f1'");
+    expect(cardTw).toContain("bg: '#6366f1'");
   });
 
   it('modal overlay is consistent', () => {
@@ -1369,9 +1369,9 @@ describe('template library cross-file consistency', () => {
   });
 
   it('composition colors match between modal CSS and Tailwind', () => {
-    expect(modalCss).toContain('--comp-agent: #a78bfa');
-    expect(modalTw).toContain("'comp-agent': '#a78bfa'");
-    expect(modalCss).toContain('--comp-task: #38bdf8');
-    expect(modalTw).toContain("'comp-task': '#38bdf8'");
+    expect(modalCss).toContain('--comp-agent: #818cf8');
+    expect(modalTw).toContain("'comp-agent': '#818cf8'");
+    expect(modalCss).toContain('--comp-task: #22d3ee');
+    expect(modalTw).toContain("'comp-task': '#22d3ee'");
   });
 });

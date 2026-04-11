@@ -64,7 +64,7 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
           aria-label={title}
           className={clsx(
             'w-full max-w-md rounded-xl',
-            'border border-slate-700 bg-[var(--cs-bg-panel,#0f172a)]',
+            'border border-slate-700 bg-[var(--cs-bg-panel,#111113)]',
             'shadow-xl',
             className,
           )}
@@ -79,7 +79,7 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
               disabled={isInProgress}
               className={clsx(
                 'rounded-md p-1 text-slate-400 transition-colors',
-                'hover:bg-[var(--cs-bg-card-hover,#1e293b)] hover:text-white',
+                'hover:bg-[var(--cs-bg-card-hover,#18181b)] hover:text-white',
                 'disabled:opacity-50 disabled:pointer-events-none',
               )}
               aria-label="Close"
@@ -104,7 +104,7 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
             {/* Confirming state */}
             {flowStatus === 'confirming' && (
               <div className="flex flex-col gap-4">
-                <p className="text-sm text-[var(--cs-text-secondary,#94a3b8)]">
+                <p className="text-sm text-[var(--cs-text-secondary,#a1a1aa)]">
                   {isDisconnect
                     ? `Are you sure you want to disconnect ${connection.providerName}? Integrations using this provider will stop working.`
                     : `You will be redirected to ${connection.providerName} to authorize access. This may open a new window.`}
@@ -130,7 +130,7 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
                       'text-xs font-medium transition-all',
                       isDisconnect
                         ? 'bg-rose-600 text-white hover:bg-rose-500'
-                        : 'bg-violet-600 text-white hover:bg-violet-500',
+                        : 'bg-indigo-600 text-white hover:bg-indigo-500',
                     )}
                     data-testid="oauth-confirm-btn"
                   >
@@ -144,7 +144,7 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
             {isInProgress && (
               <div className="flex flex-col items-center gap-3 py-4" role="status">
                 <svg
-                  className="h-8 w-8 animate-spin text-violet-400"
+                  className="h-8 w-8 animate-spin text-indigo-400"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
@@ -163,7 +163,7 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
                   />
                 </svg>
-                <p className="text-sm text-[var(--cs-text-secondary,#94a3b8)]">
+                <p className="text-sm text-[var(--cs-text-secondary,#a1a1aa)]">
                   {isDisconnect ? 'Disconnecting…' : 'Connecting…'}
                 </p>
               </div>
@@ -191,8 +191,8 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
                   onClick={onClose}
                   className={clsx(
                     'inline-flex items-center rounded-lg px-3 h-8',
-                    'bg-violet-600 text-white text-xs font-medium',
-                    'transition-all hover:bg-violet-500',
+                    'bg-indigo-600 text-white text-xs font-medium',
+                    'transition-all hover:bg-indigo-500',
                   )}
                 >
                   Done
@@ -218,7 +218,7 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
                   {isDisconnect ? 'Disconnect failed' : 'Connection failed'}
                 </p>
                 {error && (
-                  <p className="text-xs text-[var(--cs-text-secondary,#94a3b8)] text-center">
+                  <p className="text-xs text-[var(--cs-text-secondary,#a1a1aa)] text-center">
                     {error}
                   </p>
                 )}
@@ -240,8 +240,8 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
                     onClick={onConfirm}
                     className={clsx(
                       'inline-flex items-center rounded-lg px-3 h-8',
-                      'bg-violet-600 text-white text-xs font-medium',
-                      'transition-all hover:bg-violet-500',
+                      'bg-indigo-600 text-white text-xs font-medium',
+                      'transition-all hover:bg-indigo-500',
                     )}
                     data-testid="oauth-retry-btn"
                   >

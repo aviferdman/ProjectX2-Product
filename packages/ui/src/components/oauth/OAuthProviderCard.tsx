@@ -91,9 +91,9 @@ export const OAuthProviderCard = forwardRef<HTMLDivElement, OAuthProviderCardPro
         aria-label={`OAuth provider: ${connection.providerName}`}
         className={clsx(
           'flex items-center gap-4 rounded-xl p-4',
-          'border border-[var(--cs-border-default,#1e293b)] bg-[var(--cs-bg-card,#0f172a)]',
+          'border border-[var(--cs-border-default,#18181b)] bg-[var(--cs-bg-card,#111113)]',
           'transition-all duration-150',
-          'hover:border-[var(--cs-border-hover,#334155)] hover:bg-[var(--cs-bg-card-hover,#1e293b)]',
+          'hover:border-[var(--cs-border-hover,#27272a)] hover:bg-[var(--cs-bg-card-hover,#18181b)]',
           className,
         )}
         {...props}
@@ -102,7 +102,7 @@ export const OAuthProviderCard = forwardRef<HTMLDivElement, OAuthProviderCardPro
         <div
           className={clsx(
             'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg',
-            'bg-[var(--cs-bg-surface,#020617)] text-slate-300',
+            'bg-[var(--cs-bg-surface,#09090b)] text-slate-300',
           )}
         >
           {providerIcons[connection.provider] ?? providerIcons.custom}
@@ -111,20 +111,20 @@ export const OAuthProviderCard = forwardRef<HTMLDivElement, OAuthProviderCardPro
         {/* Info */}
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-[var(--cs-text-primary,#f8fafc)] truncate">
+            <span className="text-sm font-semibold text-[var(--cs-text-primary,#fafafa)] truncate">
               {connection.providerName}
             </span>
             <OAuthStatusBadge status={connection.status} />
           </div>
 
           {isConnected && connection.accountLabel && (
-            <span className="text-xs text-[var(--cs-text-secondary,#94a3b8)] truncate">
+            <span className="text-xs text-[var(--cs-text-secondary,#a1a1aa)] truncate">
               {connection.accountLabel}
             </span>
           )}
 
           {isConnected && connection.connectedAt && (
-            <span className="text-[11px] text-[var(--cs-text-secondary,#94a3b8)]">
+            <span className="text-[11px] text-[var(--cs-text-secondary,#a1a1aa)]">
               Connected {formatConnectedDate(connection.connectedAt)}
             </span>
           )}
@@ -179,10 +179,10 @@ export const OAuthProviderCard = forwardRef<HTMLDivElement, OAuthProviderCardPro
               disabled={isInProgress}
               className={clsx(
                 'inline-flex items-center gap-1.5 rounded-lg px-3 h-8',
-                'bg-violet-600 text-white',
+                'bg-indigo-600 text-white',
                 'text-xs font-medium',
                 'transition-all duration-150',
-                'hover:bg-violet-500',
+                'hover:bg-indigo-500',
                 'disabled:opacity-50 disabled:pointer-events-none',
               )}
               aria-label={`Connect ${connection.providerName}`}

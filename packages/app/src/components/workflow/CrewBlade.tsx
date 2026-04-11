@@ -87,7 +87,7 @@ export function CrewBlade({
             onClick={() => setActiveTab('agents')}
             className={`flex-1 px-4 py-2.5 text-sm font-medium transition-colors relative ${
               activeTab === 'agents'
-                ? 'text-violet-400'
+                ? 'text-indigo-400'
                 : 'text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)]'
             }`}
           >
@@ -95,14 +95,14 @@ export function CrewBlade({
               Agents
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
                 activeTab === 'agents'
-                  ? 'bg-violet-600/20 text-violet-400'
+                  ? 'bg-indigo-600/20 text-indigo-400'
                   : 'bg-white/5 text-[var(--cs-text-tertiary)]'
               }`}>
                 {agents.length}
               </span>
             </span>
             {activeTab === 'agents' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-violet-500" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500" />
             )}
           </button>
 
@@ -110,7 +110,7 @@ export function CrewBlade({
             onClick={() => setActiveTab('tasks')}
             className={`flex-1 px-4 py-2.5 text-sm font-medium transition-colors relative ${
               activeTab === 'tasks'
-                ? 'text-violet-400'
+                ? 'text-indigo-400'
                 : 'text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)]'
             }`}
           >
@@ -118,14 +118,14 @@ export function CrewBlade({
               Tasks
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
                 activeTab === 'tasks'
-                  ? 'bg-violet-600/20 text-violet-400'
+                  ? 'bg-indigo-600/20 text-indigo-400'
                   : 'bg-white/5 text-[var(--cs-text-tertiary)]'
               }`}>
                 {tasks.length}
               </span>
             </span>
             {activeTab === 'tasks' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-violet-500" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500" />
             )}
           </button>
         </div>

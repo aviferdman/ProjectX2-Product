@@ -29,7 +29,7 @@ export const MarketplaceEmptyState = forwardRef<
       className={clsx(
         'flex flex-col items-center justify-center rounded-xl border py-16 px-8',
         'border-dashed',
-        'border-[var(--cs-border-default,#1e293b)]',
+        'border-[var(--cs-border-default,#18181b)]',
         className,
       )}
       {...props}
@@ -51,10 +51,10 @@ export const MarketplaceEmptyState = forwardRef<
         </svg>
       </div>
 
-      <h3 className="text-base font-semibold text-[var(--cs-text-primary,#f8fafc)] mb-2">
+      <h3 className="text-base font-semibold text-[var(--cs-text-primary,#fafafa)] mb-2">
         {heading}
       </h3>
-      <p className="text-sm text-[var(--cs-text-secondary,#94a3b8)] text-center max-w-sm">
+      <p className="text-sm text-[var(--cs-text-secondary,#a1a1aa)] text-center max-w-sm">
         {description}
       </p>
 
@@ -64,11 +64,11 @@ export const MarketplaceEmptyState = forwardRef<
           onClick={onClearFilters}
           className={clsx(
             'mt-6 inline-flex items-center gap-2 rounded-lg px-4 py-2',
-            'bg-violet-600 text-white',
+            'bg-indigo-600 text-white',
             'text-sm font-medium',
             'transition-colors duration-150',
-            'hover:bg-violet-500',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+            'hover:bg-indigo-500',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
           )}
         >
           Clear Filters

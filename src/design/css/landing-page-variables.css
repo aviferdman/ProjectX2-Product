@@ -12,7 +12,7 @@
 /* Page layout                                                         */
 /* ------------------------------------------------------------------ */
 .cs-landing {
-  --lp-bg: #020617;
+  --lp-bg: #09090b;
   --lp-content-max-w: 1280px;
   --lp-content-padding: 24px;
   --lp-section-gap: 96px;
@@ -26,9 +26,9 @@
   --nav-bg-blur: 16px;
   --nav-border: rgba(148, 163, 184, 0.08);
   --nav-h: 64px;
-  --nav-link-color: #94a3b8;
-  --nav-link-color-hover: #f8fafc;
-  --nav-link-color-active: #c4b5fd;
+  --nav-link-color: #a1a1aa;
+  --nav-link-color-hover: #fafafa;
+  --nav-link-color-active: #a5b4fc;
   --nav-logo-h: 32px;
   --nav-mobile-bg: rgba(2, 6, 23, 0.95);
 }
@@ -47,17 +47,17 @@
   /* Version badge */
   --badge-bg: rgba(139, 92, 246, 0.12);
   --badge-border: rgba(139, 92, 246, 0.25);
-  --badge-text: #c4b5fd;
+  --badge-text: #a5b4fc;
   --badge-h: 28px;
   --badge-radius: 9999px;
 
   /* Headline */
-  --headline-color: #f8fafc;
-  --headline-gradient: linear-gradient(135deg, #f8fafc 0%, #c4b5fd 50%, #8b5cf6 100%);
+  --headline-color: #fafafa;
+  --headline-gradient: linear-gradient(135deg, #fafafa 0%, #a5b4fc 50%, #818cf8 100%);
   --headline-max-w: 800px;
 
   /* Subheadline */
-  --subheadline-color: #94a3b8;
+  --subheadline-color: #a1a1aa;
   --subheadline-max-w: 640px;
 }
 
@@ -65,9 +65,9 @@
 /* CTA buttons                                                         */
 /* ------------------------------------------------------------------ */
 .cs-landing-cta-primary {
-  --cta-bg: #7c3aed;
-  --cta-bg-hover: #8b5cf6;
-  --cta-bg-active: #6d28d9;
+  --cta-bg: #6366f1;
+  --cta-bg-hover: #818cf8;
+  --cta-bg-active: #4f46e5;
   --cta-text: #ffffff;
   --cta-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
   --cta-shadow-hover: 0 8px 24px rgba(124, 58, 237, 0.5);
@@ -91,8 +91,8 @@
 /* Feature section heading                                             */
 /* ------------------------------------------------------------------ */
 .cs-landing-features {
-  --section-heading-color: #f8fafc;
-  --section-subtext-color: #94a3b8;
+  --section-heading-color: #fafafa;
+  --section-subtext-color: #a1a1aa;
   --section-heading-max-w: 640px;
 }
 
@@ -112,12 +112,12 @@
   /* Icon */
   --card-icon-size: 48px;
   --card-icon-bg: rgba(139, 92, 246, 0.1);
-  --card-icon-color: #a78bfa;
+  --card-icon-color: #818cf8;
   --card-icon-radius: 12px;
 
   /* Text */
-  --card-title-color: #f8fafc;
-  --card-desc-color: #94a3b8;
+  --card-title-color: #fafafa;
+  --card-desc-color: #a1a1aa;
 }
 
 .cs-landing-feature-grid {
@@ -139,19 +139,19 @@
   --header-bg: rgba(15, 23, 42, 0.6);
   --header-h: 44px;
   --header-border: rgba(148, 163, 184, 0.08);
-  --dot-red: #f43f5e;
+  --dot-red: #ef4444;
   --dot-yellow: #fbbf24;
   --dot-green: #34d399;
   --dot-size: 12px;
-  --filename-color: #64748b;
+  --filename-color: #52525b;
 
   /* Syntax colors */
-  --line-number-color: #334155;
+  --line-number-color: #27272a;
   --text-color: #e2e8f0;
-  --keyword-color: #c4b5fd;
+  --keyword-color: #a5b4fc;
   --string-color: #34d399;
-  --comment-color: #475569;
-  --function-color: #38bdf8;
+  --comment-color: #3f3f46;
+  --function-color: #22d3ee;
   --type-color: #fbbf24;
 
   /* Active line */
@@ -161,9 +161,9 @@
   /* Tabs */
   --tab-bg: rgba(30, 41, 59, 0.5);
   --tab-bg-active: rgba(139, 92, 246, 0.12);
-  --tab-text: #64748b;
-  --tab-text-active: #c4b5fd;
-  --tab-border-active: #8b5cf6;
+  --tab-text: #52525b;
+  --tab-text-active: #a5b4fc;
+  --tab-border-active: #818cf8;
   --tab-h: 36px;
 }
 
@@ -178,25 +178,25 @@
   --shot-padding: 4px;
 
   /* Browser chrome */
-  --chrome-bg: #0f172a;
+  --chrome-bg: #111113;
   --chrome-h: 40px;
   --chrome-border: rgba(148, 163, 184, 0.1);
   --chrome-dot-size: 10px;
   --url-bg: rgba(30, 41, 59, 0.6);
-  --url-text: #64748b;
+  --url-text: #52525b;
   --url-radius: 6px;
   --url-h: 28px;
 
   /* Image area */
   --image-radius: 0 0 12px 12px;
-  --caption-color: #64748b;
+  --caption-color: #52525b;
 
   /* Thumbnail gallery */
   --gallery-gap: 24px;
   --thumb-size: 80px;
   --thumb-radius: 8px;
   --thumb-border: rgba(148, 163, 184, 0.1);
-  --thumb-border-active: #8b5cf6;
+  --thumb-border-active: #818cf8;
   --thumb-opacity: 0.5;
   --thumb-opacity-active: 1;
 }
@@ -205,7 +205,7 @@
 /* Video embed                                                         */
 /* ------------------------------------------------------------------ */
 .cs-landing-video {
-  --video-bg: #0f172a;
+  --video-bg: #111113;
   --video-border: rgba(148, 163, 184, 0.08);
   --video-radius: 16px;
   --video-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
@@ -229,7 +229,7 @@
 
   /* Progress */
   --progress-track: rgba(255, 255, 255, 0.2);
-  --progress-fill: #8b5cf6;
+  --progress-fill: #818cf8;
   --progress-h: 4px;
 }
 
@@ -247,8 +247,8 @@
   --quote-mark-color: rgba(139, 92, 246, 0.3);
 
   /* Author */
-  --author-name-color: #f8fafc;
-  --author-role-color: #64748b;
+  --author-name-color: #fafafa;
+  --author-role-color: #52525b;
   --avatar-size: 48px;
   --avatar-radius: 9999px;
   --avatar-border: rgba(139, 92, 246, 0.2);
@@ -269,8 +269,8 @@
   --stats-border: rgba(139, 92, 246, 0.12);
   --stats-radius: 16px;
   --stats-padding: 32px;
-  --stats-value-color: #f8fafc;
-  --stats-label-color: #94a3b8;
+  --stats-value-color: #fafafa;
+  --stats-label-color: #a1a1aa;
   --stats-divider: rgba(148, 163, 184, 0.1);
 }
 
@@ -279,8 +279,8 @@
 /* ------------------------------------------------------------------ */
 .cs-landing-footer-cta {
   --fcta-bg: radial-gradient(ellipse 80% 50% at 50% 120%, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
-  --fcta-heading-color: #f8fafc;
-  --fcta-subtext-color: #94a3b8;
+  --fcta-heading-color: #fafafa;
+  --fcta-subtext-color: #a1a1aa;
   --fcta-padding-y: 96px;
   --fcta-divider: rgba(148, 163, 184, 0.08);
 }
@@ -289,11 +289,11 @@
 /* Footer                                                              */
 /* ------------------------------------------------------------------ */
 .cs-landing-footer {
-  --footer-bg: #020617;
+  --footer-bg: #09090b;
   --footer-border: rgba(148, 163, 184, 0.08);
-  --footer-text: #64748b;
-  --footer-link: #94a3b8;
-  --footer-link-hover: #f8fafc;
+  --footer-text: #52525b;
+  --footer-link: #a1a1aa;
+  --footer-link-hover: #fafafa;
   --footer-heading: #e2e8f0;
   --footer-py: 64px;
   --footer-gap: 32px;

@@ -39,9 +39,9 @@
         "bg-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
         "border-color": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
         "border-color-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color" },
-        "shadow": { "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.06)", "type": "boxShadow", "description": "Resting card shadow — consistent across all card types" },
-        "shadow-hover": { "value": "0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.1)", "type": "boxShadow", "description": "Hover card shadow — consistent elevation" },
-        "shadow-active": { "value": "0 1px 2px rgba(0,0,0,0.2), 0 0 0 1px rgba(148,163,184,0.08)", "type": "boxShadow", "description": "Pressed/active card shadow" },
+        "shadow": { "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)", "type": "boxShadow", "description": "Resting card shadow — consistent across all card types" },
+        "shadow-hover": { "value": "0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)", "type": "boxShadow", "description": "Hover card shadow — consistent elevation" },
+        "shadow-active": { "value": "0 1px 2px rgba(0,0,0,0.2), 0 0 0 1px rgba(113,113,122,0.08)", "type": "boxShadow", "description": "Pressed/active card shadow" },
         "transition": { "value": "150ms ease-out", "type": "sizing", "description": "Card hover transition duration + easing" }
       },
 
@@ -51,7 +51,7 @@
         "ring-width": { "value": "2px", "type": "sizing", "description": "Focus ring width" },
         "ring-offset": { "value": "2px", "type": "sizing", "description": "Gap between element and focus ring" },
         "ring-offset-color": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Focus ring offset fill — matches app background" },
-        "ring-shadow": { "value": "0 0 0 2px #020617, 0 0 0 4px #8b5cf6", "type": "boxShadow", "description": "Composite focus ring using box-shadow (offset + ring)" }
+        "ring-shadow": { "value": "0 0 0 2px #09090b, 0 0 0 4px #818cf8", "type": "boxShadow", "description": "Composite focus ring using box-shadow (offset + ring)" }
       },
 
       "divider": {
@@ -97,10 +97,10 @@
         "primary-bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
         "primary-bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
         "primary-text": { "value": "#ffffff", "type": "color" },
-        "primary-shadow": { "value": "0 2px 8px rgba(124,58,237,0.35)", "type": "boxShadow" },
-        "primary-shadow-hover": { "value": "0 4px 12px rgba(124,58,237,0.45)", "type": "boxShadow" },
+        "primary-shadow": { "value": "0 2px 8px rgba(99,102,241,0.35)", "type": "boxShadow" },
+        "primary-shadow-hover": { "value": "0 4px 12px rgba(99,102,241,0.45)", "type": "boxShadow" },
         "ghost-bg": { "value": "transparent", "type": "color" },
-        "ghost-bg-hover": { "value": "rgba(148,163,184,0.08)", "type": "color" },
+        "ghost-bg-hover": { "value": "rgba(113,113,122,0.08)", "type": "color" },
         "ghost-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
         "ghost-text-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
         "danger-bg": { "value": "{crewspace.color.primitive.rose.600}", "type": "color" },
@@ -179,8 +179,8 @@
         "_description": "Custom scrollbar styling for panels and sidebars.",
         "width": { "value": "6px", "type": "sizing" },
         "track-bg": { "value": "transparent", "type": "color" },
-        "thumb-bg": { "value": "rgba(148,163,184,0.2)", "type": "color" },
-        "thumb-bg-hover": { "value": "rgba(148,163,184,0.35)", "type": "color" },
+        "thumb-bg": { "value": "rgba(113,113,122,0.2)", "type": "color" },
+        "thumb-bg-hover": { "value": "rgba(113,113,122,0.35)", "type": "color" },
         "thumb-radius": { "value": "9999px", "type": "borderRadius" }
       },
 

@@ -10,7 +10,7 @@ interface AgentAvatarProps {
   id: string;
   /** Icon size in pixels (default 20). */
   size?: number;
-  /** Additional CSS classes — use text-white, text-violet-300, etc. to tint. */
+  /** Additional CSS classes — use text-white, text-indigo-300, etc. to tint. */
   className?: string;
   /** Fallback role name (first letter is shown when ID is not recognized). */
   fallback?: string | undefined;

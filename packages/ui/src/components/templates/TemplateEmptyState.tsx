@@ -69,7 +69,7 @@ export const TemplateEmptyState = forwardRef<
             'text-sm font-medium',
             'transition-colors duration-150',
             'hover:bg-tpl-use-btn-bg-hover',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
           )}
         >
           Clear Filters

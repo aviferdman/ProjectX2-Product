@@ -49,7 +49,7 @@ export const StatusLoading = forwardRef<HTMLDivElement, StatusLoadingProps>(
         {...rest}
       >
         <svg
-          className="animate-spin text-violet-400"
+          className="animate-spin text-indigo-400"
           width={size}
           height={size}
           viewBox="0 0 24 24"
@@ -78,7 +78,7 @@ export const StatusLoading = forwardRef<HTMLDivElement, StatusLoadingProps>(
         {showProgress && (
           <div className="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-violet-500 rounded-full transition-all duration-300 ease-out"
+              className="h-full bg-indigo-500 rounded-full transition-all duration-300 ease-out"
               style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
               role="progressbar"
               aria-valuenow={progress}

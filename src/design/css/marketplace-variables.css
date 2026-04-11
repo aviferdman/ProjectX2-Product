@@ -48,21 +48,21 @@
   --cat-item-radius: var(--cs-radius-md, 6px);
   --cat-item-color: var(--cs-text-secondary);
   --cat-item-color-hover: var(--cs-text-primary);
-  --cat-item-color-active: #c4b5fd;
+  --cat-item-color-active: #a5b4fc;
   --cat-item-bg-hover: rgba(148, 163, 184, 0.08);
   --cat-item-bg-active: rgba(139, 92, 246, 0.1);
   --cat-item-icon-size: 18px;
 
   /* Category colors */
-  --cat-ai-ml: #a78bfa;
+  --cat-ai-ml: #818cf8;
   --cat-ai-ml-bg: rgba(167, 139, 250, 0.15);
-  --cat-communication: #38bdf8;
+  --cat-communication: #22d3ee;
   --cat-communication-bg: rgba(56, 189, 248, 0.15);
   --cat-data: #34d399;
   --cat-data-bg: rgba(52, 211, 153, 0.15);
   --cat-devtools: #fbbf24;
   --cat-devtools-bg: rgba(251, 191, 36, 0.15);
-  --cat-productivity: #fb7185;
+  --cat-productivity: #f87171;
   --cat-productivity-bg: rgba(251, 113, 133, 0.15);
   --cat-storage: #cbd5e1;
   --cat-storage-bg: rgba(203, 213, 225, 0.15);
@@ -83,7 +83,7 @@
   --search-h: 40px;
   --search-bg: rgba(30, 41, 59, 0.5);
   --search-border: var(--cs-border-default);
-  --search-border-focus: #8b5cf6;
+  --search-border-focus: #818cf8;
   --search-placeholder: var(--cs-text-tertiary);
   --search-text: var(--cs-text-primary);
   --search-icon: var(--cs-text-tertiary);
@@ -97,7 +97,7 @@
   --chip-border: var(--cs-border-subtle);
   --chip-border-active: rgba(139, 92, 246, 0.4);
   --chip-text: var(--cs-text-secondary);
-  --chip-text-active: #c4b5fd;
+  --chip-text-active: #a5b4fc;
   --chip-radius: 9999px;
   --chip-count-bg: rgba(148, 163, 184, 0.12);
   --chip-count-text: var(--cs-text-tertiary);
@@ -162,9 +162,9 @@
 
 /* Default state: Install */
 .cs-mp-install-btn--default {
-  --btn-bg: #7c3aed;
-  --btn-bg-hover: #8b5cf6;
-  --btn-bg-active: #6d28d9;
+  --btn-bg: #6366f1;
+  --btn-bg-hover: #818cf8;
+  --btn-bg-active: #4f46e5;
   --btn-text: #ffffff;
   --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
   --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
@@ -173,7 +173,7 @@
 /* Installing state: spinner + progress */
 .cs-mp-install-btn--installing {
   --btn-bg: rgba(139, 92, 246, 0.15);
-  --btn-text: #c4b5fd;
+  --btn-text: #a5b4fc;
   --btn-border: rgba(139, 92, 246, 0.3);
 }
 
@@ -190,7 +190,7 @@
   --btn-bg: transparent;
   --btn-bg-hover: rgba(251, 113, 133, 0.1);
   --btn-text: var(--cs-text-secondary);
-  --btn-text-hover: #fb7185;
+  --btn-text-hover: #f87171;
   --btn-border: var(--cs-border-default);
   --btn-border-hover: rgba(251, 113, 133, 0.3);
 }
@@ -202,9 +202,9 @@
   --progress-h: 4px;
   --progress-radius: 2px;
   --progress-track-bg: rgba(30, 41, 59, 0.5);
-  --progress-fill-bg: #8b5cf6;
+  --progress-fill-bg: #818cf8;
   --progress-fill-bg-complete: #10b981;
-  --progress-fill-bg-error: #f43f5e;
+  --progress-fill-bg-error: #ef4444;
   --progress-shimmer: rgba(255, 255, 255, 0.15);
   --progress-transition: 400ms ease-out;
 }
@@ -264,13 +264,13 @@
 /* ------------------------------------------------------------------ */
 .cs-mp-install-status {
   --status-pending-color: var(--cs-text-tertiary);
-  --status-pending-icon: #64748b;
-  --status-running-color: #c4b5fd;
-  --status-running-icon: #a78bfa;
+  --status-pending-icon: #52525b;
+  --status-running-color: #a5b4fc;
+  --status-running-icon: #818cf8;
   --status-success-color: #34d399;
   --status-success-icon: #34d399;
-  --status-error-color: #fb7185;
-  --status-error-icon: #fb7185;
+  --status-error-color: #f87171;
+  --status-error-icon: #f87171;
   --status-connector: var(--cs-border-subtle);
   --status-connector-done: #10b981;
   --status-step-transition: 200ms ease-out;
@@ -285,7 +285,7 @@
   --page-btn-bg-hover: rgba(148, 163, 184, 0.08);
   --page-btn-bg-active: rgba(139, 92, 246, 0.15);
   --page-btn-text: var(--cs-text-secondary);
-  --page-btn-text-active: #c4b5fd;
+  --page-btn-text-active: #a5b4fc;
   --page-btn-border: var(--cs-border-subtle);
   --page-btn-radius: var(--cs-radius-md, 6px);
   --page-gap: 4px;
@@ -296,7 +296,7 @@
 /* ------------------------------------------------------------------ */
 .cs-marketplace-empty {
   --empty-icon-size: 72px;
-  --empty-icon-color: #475569;
+  --empty-icon-color: #3f3f46;
   --empty-heading-color: var(--cs-text-primary);
   --empty-desc-color: var(--cs-text-secondary);
   --empty-border: var(--cs-border-subtle);

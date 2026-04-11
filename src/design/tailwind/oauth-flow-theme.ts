@@ -55,7 +55,7 @@ export const oauthFlowTheme = {
     },
     'oflow-btn-primary': {
       bg: 'var(--cs-brand-primary)',
-      'bg-hover': '#7c3aed',
+      'bg-hover': '#6366f1',
       'bg-active': '#6d28d9',
       text: '#ffffff',
     },

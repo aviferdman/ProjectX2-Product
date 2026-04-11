@@ -58,10 +58,10 @@ const TEMPLATES: Template[] = [
     name: 'Market Research Crew',
     description: 'A team of analysts that researches market trends, competitor strategies, and customer needs — delivering a comprehensive report with actionable insights.',
     category: 'Research',
-    categoryColor: '#38bdf8',
+    categoryColor: '#22d3ee',
     agents: [
-      { role: 'Industry Analyst', goal: 'Identify market trends and opportunities', color: '#38bdf8' },
-      { role: 'Competitor Researcher', goal: 'Analyze competitor strengths and weaknesses', color: '#a78bfa' },
+      { role: 'Industry Analyst', goal: 'Identify market trends and opportunities', color: '#22d3ee' },
+      { role: 'Competitor Researcher', goal: 'Analyze competitor strengths and weaknesses', color: '#818cf8' },
       { role: 'Customer Insights Specialist', goal: 'Synthesize customer feedback and needs', color: '#34d399' },
       { role: 'Report Writer', goal: 'Compile findings into executive summary', color: '#fbbf24' },
     ],
@@ -90,9 +90,9 @@ const TEMPLATES: Template[] = [
     categoryColor: '#fbbf24',
     agents: [
       { role: 'Content Strategist', goal: 'Define content themes and editorial calendar', color: '#fbbf24' },
-      { role: 'Copywriter', goal: 'Draft blog posts and social media content', color: '#fb7185' },
+      { role: 'Copywriter', goal: 'Draft blog posts and social media content', color: '#f87171' },
       { role: 'SEO Specialist', goal: 'Optimize content for search engines', color: '#34d399' },
-      { role: 'Editor', goal: 'Review and polish all written content', color: '#a78bfa' },
+      { role: 'Editor', goal: 'Review and polish all written content', color: '#818cf8' },
     ],
     tasks: [
       /* 0 */ { description: 'Define content themes and editorial calendar', agentRole: 'Content Strategist', expectedOutput: 'Monthly content calendar' },
@@ -117,11 +117,11 @@ const TEMPLATES: Template[] = [
     name: 'Code Review Pipeline',
     description: 'Automated multi-pass code review that checks for bugs, security vulnerabilities, performance issues, and style consistency across pull requests.',
     category: 'Engineering',
-    categoryColor: '#a78bfa',
+    categoryColor: '#818cf8',
     agents: [
-      { role: 'Security Auditor', goal: 'Identify security vulnerabilities and injection risks', color: '#fb7185' },
+      { role: 'Security Auditor', goal: 'Identify security vulnerabilities and injection risks', color: '#f87171' },
       { role: 'Performance Reviewer', goal: 'Flag performance bottlenecks and inefficiencies', color: '#fbbf24' },
-      { role: 'Style Checker', goal: 'Ensure code follows team style guidelines', color: '#a78bfa' },
+      { role: 'Style Checker', goal: 'Ensure code follows team style guidelines', color: '#818cf8' },
     ],
     tasks: [
       /* 0 */ { description: 'Scan for security vulnerabilities (OWASP Top 10)', agentRole: 'Security Auditor', expectedOutput: 'Security findings report' },
@@ -146,9 +146,9 @@ const TEMPLATES: Template[] = [
     category: 'Support',
     categoryColor: '#34d399',
     agents: [
-      { role: 'Ticket Classifier', goal: 'Categorize and prioritize support tickets', color: '#38bdf8' },
+      { role: 'Ticket Classifier', goal: 'Categorize and prioritize support tickets', color: '#22d3ee' },
       { role: 'Response Generator', goal: 'Draft helpful, empathetic replies', color: '#34d399' },
-      { role: 'Escalation Manager', goal: 'Route complex issues to human agents', color: '#fb7185' },
+      { role: 'Escalation Manager', goal: 'Route complex issues to human agents', color: '#f87171' },
     ],
     tasks: [
       /* 0 */ { description: 'Classify and prioritize incoming tickets', agentRole: 'Ticket Classifier', expectedOutput: 'Categorized ticket queue' },
@@ -170,10 +170,10 @@ const TEMPLATES: Template[] = [
     name: 'Data Analysis Pipeline',
     description: 'Ingest data from multiple sources, clean and transform it, run statistical analysis, and produce visualization-ready summaries and dashboards.',
     category: 'Data',
-    categoryColor: '#fb7185',
+    categoryColor: '#f87171',
     agents: [
-      { role: 'Data Engineer', goal: 'Collect and clean data from multiple sources', color: '#38bdf8' },
-      { role: 'Data Analyst', goal: 'Run statistical analysis and find patterns', color: '#fb7185' },
+      { role: 'Data Engineer', goal: 'Collect and clean data from multiple sources', color: '#22d3ee' },
+      { role: 'Data Analyst', goal: 'Run statistical analysis and find patterns', color: '#f87171' },
       { role: 'Visualization Specialist', goal: 'Create charts and dashboard summaries', color: '#fbbf24' },
     ],
     tasks: [
@@ -199,7 +199,7 @@ const TEMPLATES: Template[] = [
     category: 'Automation',
     categoryColor: '#cbd5e1',
     agents: [
-      { role: 'Onboarding Coordinator', goal: 'Orchestrate the full onboarding checklist', color: '#a78bfa' },
+      { role: 'Onboarding Coordinator', goal: 'Orchestrate the full onboarding checklist', color: '#818cf8' },
       { role: 'Document Generator', goal: 'Create personalized welcome materials', color: '#34d399' },
       { role: 'Training Scheduler', goal: 'Assign and schedule training modules', color: '#fbbf24' },
     ],
@@ -226,9 +226,9 @@ const TEMPLATES: Template[] = [
     category: 'Content',
     categoryColor: '#fbbf24',
     agents: [
-      { role: 'Launch Manager', goal: 'Coordinate cross-functional launch timeline', color: '#fb7185' },
+      { role: 'Launch Manager', goal: 'Coordinate cross-functional launch timeline', color: '#f87171' },
       { role: 'Messaging Strategist', goal: 'Craft positioning and key messaging', color: '#fbbf24' },
-      { role: 'Channel Coordinator', goal: 'Prepare assets for each distribution channel', color: '#38bdf8' },
+      { role: 'Channel Coordinator', goal: 'Prepare assets for each distribution channel', color: '#22d3ee' },
       { role: 'Analytics Lead', goal: 'Track launch KPIs and report results', color: '#34d399' },
     ],
     tasks: [
@@ -256,10 +256,10 @@ const TEMPLATES: Template[] = [
     name: 'Incident Response Crew',
     description: 'Detect, triage, and remediate production incidents — with automated root-cause analysis, stakeholder communication, and post-mortem generation.',
     category: 'Engineering',
-    categoryColor: '#a78bfa',
+    categoryColor: '#818cf8',
     agents: [
-      { role: 'Incident Commander', goal: 'Coordinate response and communication', color: '#fb7185' },
-      { role: 'Root Cause Analyst', goal: 'Investigate logs and identify root cause', color: '#a78bfa' },
+      { role: 'Incident Commander', goal: 'Coordinate response and communication', color: '#f87171' },
+      { role: 'Root Cause Analyst', goal: 'Investigate logs and identify root cause', color: '#818cf8' },
       { role: 'Comms Lead', goal: 'Draft status updates and stakeholder notifications', color: '#fbbf24' },
     ],
     tasks: [
@@ -285,7 +285,7 @@ const TEMPLATES: Template[] = [
     category: 'Automation',
     categoryColor: '#cbd5e1',
     agents: [
-      { role: 'Prospect Researcher', goal: 'Gather intelligence on target accounts', color: '#38bdf8' },
+      { role: 'Prospect Researcher', goal: 'Gather intelligence on target accounts', color: '#22d3ee' },
       { role: 'Outreach Writer', goal: 'Craft personalized email sequences', color: '#34d399' },
       { role: 'Follow-up Coordinator', goal: 'Schedule and execute follow-up touchpoints', color: '#fbbf24' },
     ],
@@ -404,7 +404,7 @@ export function TemplatesPage(): React.JSX.Element {
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <button onClick={() => navigate('/')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2L2 7l10 5 10-5-10-5z" />
                   <path d="M2 17l10 5 10-5" />
@@ -418,12 +418,12 @@ export function TemplatesPage(): React.JSX.Element {
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <button onClick={() => navigate('/crews')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">My Crews</button>
-            <button className="text-sm text-violet-400 font-medium">Templates</button>
+            <button className="text-sm text-indigo-400 font-medium">Templates</button>
             <button onClick={() => navigate('/marketplace')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Marketplace</button>
           </nav>
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/25 focus-ring"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-all shadow-lg shadow-indigo-500/25 focus-ring"
           >
             New Crew
           </button>
@@ -454,7 +454,7 @@ export function TemplatesPage(): React.JSX.Element {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search templates..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30 transition-colors"
             />
           </div>
 
@@ -466,7 +466,7 @@ export function TemplatesPage(): React.JSX.Element {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   activeCategory === cat
-                    ? 'bg-violet-500/15 text-violet-400 border border-violet-500/30'
+                    ? 'bg-indigo-500/15 text-indigo-400 border border-indigo-500/30'
                     : 'text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)] border border-transparent hover:border-[var(--cs-border-subtle)]'
                 }`}
               >
@@ -542,7 +542,7 @@ function FeaturedCard({
             >
               {template.category}
             </span>
-            <h3 className="text-base font-semibold text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors">
+            <h3 className="text-base font-semibold text-[var(--cs-text-primary)] group-hover:text-indigo-300 transition-colors">
               {template.name}
             </h3>
           </div>
@@ -591,7 +591,7 @@ function FeaturedCard({
 
         <button
           onClick={() => onUse(template)}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/20 focus-ring"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-all shadow-lg shadow-indigo-500/20 focus-ring"
         >
           Use this Crew
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -631,7 +631,7 @@ function TemplateCard({
           <span className="text-[10px] text-[var(--cs-text-tertiary)] tabular-nums">{template.usageCount.toLocaleString()} uses</span>
         </div>
 
-        <h3 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors mb-1.5">
+        <h3 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-indigo-300 transition-colors mb-1.5">
           {template.name}
         </h3>
         <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed mb-4 line-clamp-2 flex-1">
@@ -668,7 +668,7 @@ function TemplateCard({
 
         <button
           onClick={() => onUse(template)}
-          className="mt-auto w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-violet-500/30 text-violet-400 hover:bg-violet-500/10 text-xs font-medium transition-colors focus-ring"
+          className="mt-auto w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 text-xs font-medium transition-colors focus-ring"
         >
           Use this Crew
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

@@ -16,7 +16,7 @@
   --ic-bg-hover: var(--cs-surface-elevated);
   --ic-border: var(--cs-border-default);
   --ic-border-hover: var(--cs-border-strong);
-  --ic-border-focus: #8b5cf6;
+  --ic-border-focus: #818cf8;
   --ic-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
   --ic-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
   --ic-shadow-focus: 0 0 0 3px rgba(139, 92, 246, 0.25);
@@ -36,7 +36,7 @@
   --logo-radius: var(--cs-radius-lg, 8px);
   --logo-bg: rgba(30, 41, 59, 0.5);
   --logo-border: var(--cs-border-subtle);
-  --logo-placeholder-color: #64748b;
+  --logo-placeholder-color: #52525b;
   --logo-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -95,7 +95,7 @@
 .cs-integration-card-oauth--disconnected {
   --oauth-bg: rgba(148, 163, 184, 0.08);
   --oauth-text: var(--cs-text-tertiary);
-  --oauth-icon: #64748b;
+  --oauth-icon: #52525b;
   --oauth-border: var(--cs-border-subtle);
 }
 
@@ -110,8 +110,8 @@
 /* Error / revoked */
 .cs-integration-card-oauth--error {
   --oauth-bg: rgba(251, 113, 133, 0.1);
-  --oauth-text: #fb7185;
-  --oauth-icon: #fb7185;
+  --oauth-text: #f87171;
+  --oauth-icon: #f87171;
   --oauth-border: rgba(251, 113, 133, 0.25);
 }
 
@@ -128,9 +128,9 @@
 
 /* Connect (primary CTA) */
 .cs-integration-card-btn--connect {
-  --btn-bg: #7c3aed;
-  --btn-bg-hover: #8b5cf6;
-  --btn-bg-active: #6d28d9;
+  --btn-bg: #6366f1;
+  --btn-bg-hover: #818cf8;
+  --btn-bg-active: #4f46e5;
   --btn-text: #ffffff;
   --btn-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
   --btn-shadow-hover: 0 4px 12px rgba(124, 58, 237, 0.45);
@@ -141,7 +141,7 @@
   --btn-bg: transparent;
   --btn-bg-hover: rgba(251, 113, 133, 0.1);
   --btn-text: var(--cs-text-secondary);
-  --btn-text-hover: #fb7185;
+  --btn-text-hover: #f87171;
   --btn-border: var(--cs-border-default);
   --btn-border-hover: rgba(251, 113, 133, 0.3);
 }
@@ -173,7 +173,7 @@
   --footer-meta-line-height: 1.25;
   --footer-meta-icon-size: 12px;
   --footer-meta-gap: 12px;
-  --footer-meta-separator: #475569;
+  --footer-meta-separator: #3f3f46;
 }
 
 /* ------------------------------------------------------------------ */
@@ -183,7 +183,7 @@
   --scopes-h: 20px;
   --scopes-radius: var(--cs-radius-sm, 4px);
   --scopes-bg: rgba(139, 92, 246, 0.1);
-  --scopes-text: #c4b5fd;
+  --scopes-text: #a5b4fc;
   --scopes-border: rgba(139, 92, 246, 0.2);
   --scopes-font-size: 0.625rem;
   --scopes-font-weight: 500;

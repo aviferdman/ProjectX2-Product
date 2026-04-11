@@ -46,7 +46,7 @@ export const UpgradePrompt = forwardRef<HTMLDivElement, UpgradePromptProps>(
         ref={ref}
         className={clsx(
           'cs-upgrade-prompt relative overflow-hidden rounded-lg border',
-          'border-violet-700/50 bg-gradient-to-br from-violet-900/30 to-indigo-900/20 p-5',
+          'border-indigo-700/50 bg-gradient-to-br from-indigo-900/30 to-indigo-900/20 p-5',
           className,
         )}
         {...rest}
@@ -67,7 +67,7 @@ export const UpgradePrompt = forwardRef<HTMLDivElement, UpgradePromptProps>(
 
         {/* Decorative sparkle */}
         <svg
-          className="mb-3 h-8 w-8 text-violet-400"
+          className="mb-3 h-8 w-8 text-indigo-400"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -91,9 +91,9 @@ export const UpgradePrompt = forwardRef<HTMLDivElement, UpgradePromptProps>(
             onClick={onUpgrade}
             className={clsx(
               'mt-4 inline-flex items-center gap-1.5 rounded-md px-4 py-2',
-              'bg-violet-600 text-sm font-semibold text-white',
-              'hover:bg-violet-500 transition-colors',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-app',
+              'bg-indigo-600 text-sm font-semibold text-white',
+              'hover:bg-indigo-500 transition-colors',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-app',
             )}
           >
             {buttonLabel ?? defaultButtonLabel}

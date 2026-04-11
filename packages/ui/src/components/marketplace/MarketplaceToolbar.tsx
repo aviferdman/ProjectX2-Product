@@ -48,7 +48,7 @@ export const MarketplaceToolbar = forwardRef<HTMLDivElement, MarketplaceToolbarP
           />
           <div className="flex-1" />
           {resultCount !== undefined && totalCount !== undefined && (
-            <span className="text-[11px] text-[var(--cs-text-secondary,#94a3b8)] whitespace-nowrap">
+            <span className="text-[11px] text-[var(--cs-text-secondary,#a1a1aa)] whitespace-nowrap">
               {resultCount === totalCount
                 ? `${totalCount} integrations`
                 : `${resultCount} of ${totalCount} integrations`}

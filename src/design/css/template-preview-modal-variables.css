@@ -93,11 +93,11 @@
 
   /* Node type colors */
   --node-agent-bg: rgba(124, 58, 237, 0.15);
-  --node-agent-border: #8b5cf6;
-  --node-agent-icon: #a78bfa;
+  --node-agent-border: #818cf8;
+  --node-agent-icon: #818cf8;
   --node-task-bg: rgba(14, 165, 233, 0.15);
-  --node-task-border: #0ea5e9;
-  --node-task-icon: #38bdf8;
+  --node-task-border: #06b6d4;
+  --node-task-icon: #22d3ee;
   --node-tool-bg: rgba(16, 185, 129, 0.15);
   --node-tool-border: #10b981;
   --node-tool-icon: #34d399;
@@ -107,7 +107,7 @@
 
   /* Edges */
   --edge-color: rgba(148, 163, 184, 0.25);
-  --edge-color-active: #a78bfa;
+  --edge-color-active: #818cf8;
   --edge-width: 1.5px;
   --edge-dash: 4 4;
   --edge-arrow-size: 8px;
@@ -126,7 +126,7 @@
 
   /* Empty state */
   --empty-icon-size: 56px;
-  --empty-icon-color: #475569;
+  --empty-icon-color: #3f3f46;
   --empty-text-color: var(--cs-text-tertiary);
 }
 
@@ -159,7 +159,7 @@
   --avatar-size: 28px;
   --avatar-radius: 9999px;
   --avatar-bg: rgba(139, 92, 246, 0.15);
-  --avatar-text: #c4b5fd;
+  --avatar-text: #a5b4fc;
   --name-color: var(--cs-text-primary);
   --author-gap: 8px;
 }
@@ -190,8 +190,8 @@
   --item-count-color: var(--cs-text-primary);
 
   /* Type colors */
-  --comp-agent: #a78bfa;
-  --comp-task: #38bdf8;
+  --comp-agent: #818cf8;
+  --comp-task: #22d3ee;
   --comp-tool: #34d399;
   --comp-llm: #fbbf24;
 }
@@ -207,7 +207,7 @@
   --tag-bg-hover: rgba(139, 92, 246, 0.12);
   --tag-border: var(--cs-border-subtle);
   --tag-text: var(--cs-text-tertiary);
-  --tag-text-hover: #c4b5fd;
+  --tag-text-hover: #a5b4fc;
   --tag-gap: 6px;
 }
 
@@ -230,9 +230,9 @@
 .cs-preview-modal-use-btn {
   --btn-h: 40px;
   --btn-min-w: 160px;
-  --btn-bg: #7c3aed;
-  --btn-bg-hover: #8b5cf6;
-  --btn-bg-active: #6d28d9;
+  --btn-bg: #6366f1;
+  --btn-bg-hover: #818cf8;
+  --btn-bg-active: #4f46e5;
   --btn-bg-disabled: rgba(124, 58, 237, 0.3);
   --btn-text: #ffffff;
   --btn-text-disabled: rgba(255, 255, 255, 0.5);
@@ -250,10 +250,10 @@
   --btn-h: 40px;
   --btn-bg: transparent;
   --btn-bg-hover: rgba(139, 92, 246, 0.12);
-  --btn-text: #c4b5fd;
+  --btn-text: #a5b4fc;
   --btn-text-hover: #ddd6fe;
-  --btn-border: #7c3aed;
-  --btn-border-hover: #8b5cf6;
+  --btn-border: #6366f1;
+  --btn-border-hover: #818cf8;
   --btn-radius: var(--cs-radius-lg);
   --btn-icon-size: 16px;
 }
@@ -262,7 +262,7 @@
 /* Focus ring (keyboard navigation)                                    */
 /* ------------------------------------------------------------------ */
 .cs-preview-modal :focus-visible {
-  outline: 2px solid #8b5cf6;
+  outline: 2px solid #818cf8;
   outline-offset: 2px;
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
 }

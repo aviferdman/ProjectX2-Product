@@ -20,35 +20,36 @@
 @layer base {
   :root {
     /* Brand */
-    --cs-brand-primary: #7c3aed;
-    --cs-brand-secondary: #a78bfa;
-    --cs-brand-subtle: #ede9fe;
+    --cs-brand-primary: #6366f1;
+    --cs-brand-secondary: #818cf8;
+    --cs-brand-subtle: #eef2ff;
+    --cs-brand-accent: #06b6d4;
 
     /* Surfaces */
-    --cs-surface-app: #020617;
-    --cs-surface-canvas: #0a0e1a;
-    --cs-surface-panel: #0f172a;
-    --cs-surface-card: #1e293b;
-    --cs-surface-elevated: #334155;
-    --cs-surface-overlay: rgba(0, 0, 0, 0.6);
+    --cs-surface-app: #09090b;
+    --cs-surface-canvas: #0c0c14;
+    --cs-surface-panel: #111113;
+    --cs-surface-card: #18181b;
+    --cs-surface-elevated: #27272a;
+    --cs-surface-overlay: rgba(0, 0, 0, 0.7);
 
     /* Borders */
-    --cs-border-default: #334155;
-    --cs-border-subtle: #1e293b;
-    --cs-border-strong: #64748b;
-    --cs-border-focus: #8b5cf6;
+    --cs-border-default: #27272a;
+    --cs-border-subtle: #1c1c1f;
+    --cs-border-strong: #3f3f46;
+    --cs-border-focus: #818cf8;
 
     /* Text */
-    --cs-text-primary: #f8fafc;
-    --cs-text-secondary: #94a3b8;
-    --cs-text-tertiary: #64748b;
-    --cs-text-inverse: #0f172a;
+    --cs-text-primary: #fafafa;
+    --cs-text-secondary: #a1a1aa;
+    --cs-text-tertiary: #71717a;
+    --cs-text-inverse: #09090b;
 
     /* Status */
     --cs-status-success: #10b981;
     --cs-status-warning: #f59e0b;
-    --cs-status-error: #f43f5e;
-    --cs-status-info: #0ea5e9;
+    --cs-status-error: #ef4444;
+    --cs-status-info: #06b6d4;
 
     /* Typography */
     --cs-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system,
@@ -63,14 +64,14 @@
     --cs-radius-node: 10px;
 
     /* Shadows */
-    --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.3),
-      0 0 0 1px rgba(148, 163, 184, 0.1);
-    --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.4),
-      0 0 0 1px rgba(148, 163, 184, 0.15);
-    --cs-shadow-node-selected: 0 0 0 2px #8b5cf6,
-      0 4px 20px rgba(139, 92, 246, 0.25);
-    --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.35);
+    --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(63, 63, 70, 0.5);
+    --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(63, 63, 70, 0.6);
+    --cs-shadow-node-selected: 0 0 0 2px #818cf8,
+      0 4px 20px rgba(99, 102, 241, 0.25);
+    --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.45);
 
     /* Transitions */
     --cs-transition-fast: 100ms ease-out;
@@ -89,52 +90,53 @@
   /* Light mode overrides */
   [data-theme='light'] {
     /* Brand */
-    --cs-brand-primary: #7c3aed;
-    --cs-brand-secondary: #8b5cf6;
-    --cs-brand-subtle: #f5f3ff;
+    --cs-brand-primary: #6366f1;
+    --cs-brand-secondary: #818cf8;
+    --cs-brand-subtle: #eef2ff;
+    --cs-brand-accent: #06b6d4;
 
     /* Surfaces */
-    --cs-surface-app: #f8fafc;
-    --cs-surface-canvas: #f1f5f9;
+    --cs-surface-app: #fafafa;
+    --cs-surface-canvas: #f4f4f5;
     --cs-surface-panel: #ffffff;
-    --cs-surface-card: #f1f5f9;
+    --cs-surface-card: #f4f4f5;
     --cs-surface-elevated: #ffffff;
     --cs-surface-overlay: rgba(0, 0, 0, 0.4);
 
     /* Borders */
-    --cs-border-default: #e2e8f0;
-    --cs-border-subtle: #f1f5f9;
-    --cs-border-strong: #cbd5e1;
-    --cs-border-focus: #8b5cf6;
+    --cs-border-default: #e4e4e7;
+    --cs-border-subtle: #f4f4f5;
+    --cs-border-strong: #d4d4d8;
+    --cs-border-focus: #818cf8;
 
     /* Text */
-    --cs-text-primary: #0f172a;
-    --cs-text-secondary: #475569;
-    --cs-text-tertiary: #64748b;
-    --cs-text-inverse: #f8fafc;
+    --cs-text-primary: #09090b;
+    --cs-text-secondary: #52525b;
+    --cs-text-tertiary: #71717a;
+    --cs-text-inverse: #fafafa;
 
     /* Status */
     --cs-status-success: #059669;
     --cs-status-warning: #d97706;
-    --cs-status-error: #e11d48;
-    --cs-status-info: #0284c7;
+    --cs-status-error: #dc2626;
+    --cs-status-info: #0891b2;
 
     /* Shadows — lighter for light mode */
-    --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.08),
+    --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(0, 0, 0, 0.04);
+    --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.08),
       0 0 0 1px rgba(0, 0, 0, 0.05);
-    --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.1),
-      0 0 0 1px rgba(0, 0, 0, 0.06);
-    --cs-shadow-node-selected: 0 0 0 2px #8b5cf6,
-      0 4px 20px rgba(139, 92, 246, 0.15);
-    --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --cs-shadow-node-selected: 0 0 0 2px #818cf8,
+      0 4px 20px rgba(99, 102, 241, 0.15);
+    --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.06);
 
     /* Component aliases — light mode values */
     --cs-bg-surface: var(--cs-surface-app);
     --cs-bg-card: var(--cs-surface-card);
     --cs-bg-card-hover: var(--cs-surface-elevated);
     --cs-bg-panel: var(--cs-surface-panel);
-    --cs-border-hover: #cbd5e1;
+    --cs-border-hover: #d4d4d8;
   }
 
   body {
@@ -147,13 +149,13 @@
 
   /* Selection */
   ::selection {
-    background-color: rgba(139, 92, 246, 0.3);
-    color: #f8fafc;
+    background-color: rgba(99, 102, 241, 0.3);
+    color: #fafafa;
   }
 
   [data-theme='light'] ::selection {
-    background-color: rgba(139, 92, 246, 0.2);
-    color: #0f172a;
+    background-color: rgba(99, 102, 241, 0.2);
+    color: #09090b;
   }
 }
 
@@ -163,7 +165,7 @@
 @layer utilities {
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: rgba(148, 163, 184, 0.15) transparent;
+    scrollbar-color: rgba(113, 113, 122, 0.2) transparent;
   }
 
   .scrollbar-thin::-webkit-scrollbar {
@@ -176,37 +178,37 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: rgba(148, 163, 184, 0.15);
+    background-color: rgba(113, 113, 122, 0.2);
     border-radius: 3px;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(148, 163, 184, 0.3);
+    background-color: rgba(113, 113, 122, 0.35);
   }
 
   /* Glass effect */
   .glass {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background: rgba(17, 17, 19, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
   }
 
   .glass-subtle {
-    background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(8px) saturate(150%);
-    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    background: rgba(17, 17, 19, 0.5);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
   }
 
   [data-theme='light'] .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
   }
 
   [data-theme='light'] .glass-subtle {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(8px) saturate(150%);
-    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
   }
 }
 
@@ -259,8 +261,8 @@
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
-  50% { box-shadow: 0 0 20px 4px rgba(139, 92, 246, 0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(99, 102, 241, 0.15); }
 }
 
 @keyframes spin-slow {
@@ -340,7 +342,7 @@
 /* Gradient text utility                                               */
 /* ------------------------------------------------------------------ */
 .gradient-text {
-  background: linear-gradient(135deg, #a78bfa, #c084fc, #e879f9, #a78bfa);
+  background: linear-gradient(135deg, #818cf8, #6366f1, #06b6d4, #818cf8);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -352,8 +354,8 @@
 /* Glow effects                                                        */
 /* ------------------------------------------------------------------ */
 .glow-violet {
-  box-shadow: 0 0 24px -4px rgba(139, 92, 246, 0.35),
-              0 0 8px -2px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 24px -4px rgba(99, 102, 241, 0.35),
+              0 0 8px -2px rgba(99, 102, 241, 0.2);
 }
 
 .glow-emerald {
@@ -366,14 +368,19 @@
               0 0 8px -2px rgba(245, 158, 11, 0.2);
 }
 
+.glow-cyan {
+  box-shadow: 0 0 24px -4px rgba(6, 182, 212, 0.35),
+              0 0 8px -2px rgba(6, 182, 212, 0.2);
+}
+
 /* ------------------------------------------------------------------ */
 /* Hero background radial gradient                                     */
 /* ------------------------------------------------------------------ */
 .hero-glow {
   background: radial-gradient(
     ellipse 60% 50% at 50% 0%,
-    rgba(139, 92, 246, 0.15) 0%,
-    rgba(139, 92, 246, 0.05) 40%,
+    rgba(99, 102, 241, 0.12) 0%,
+    rgba(6, 182, 212, 0.06) 40%,
     transparent 70%
   );
 }
@@ -381,8 +388,8 @@
 [data-theme='light'] .hero-glow {
   background: radial-gradient(
     ellipse 60% 50% at 50% 0%,
-    rgba(139, 92, 246, 0.08) 0%,
-    rgba(139, 92, 246, 0.03) 40%,
+    rgba(99, 102, 241, 0.06) 0%,
+    rgba(6, 182, 212, 0.03) 40%,
     transparent 70%
   );
 }
@@ -396,21 +403,21 @@
 
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.4),
-              0 0 0 1px rgba(148, 163, 184, 0.1);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(63, 63, 70, 0.5);
 }
 
 [data-theme='light'] .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.1),
-              0 0 0 1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.08),
+              0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 /* ------------------------------------------------------------------ */
 /* Focus visible ring for accessibility                                */
 /* ------------------------------------------------------------------ */
 .focus-ring:focus-visible {
-  outline: 2px solid #8b5cf6;
+  outline: 2px solid #818cf8;
   outline-offset: 2px;
   border-radius: 8px;
 }

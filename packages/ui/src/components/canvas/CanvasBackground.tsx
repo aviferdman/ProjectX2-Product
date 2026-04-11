@@ -21,7 +21,7 @@ export function CanvasBackground({
       variant={BackgroundVariant.Dots}
       gap={gap}
       size={size}
-      color="rgba(148,163,184,0.12)"
+      color="rgba(113,113,122,0.12)"
     />
   );
 }

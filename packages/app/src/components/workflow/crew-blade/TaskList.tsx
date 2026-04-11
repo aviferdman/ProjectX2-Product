@@ -90,8 +90,8 @@ export function TaskList({
       <div className="flex-1 overflow-y-auto scrollbar-thin p-3 space-y-2">
         {tasks.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="w-10 h-10 rounded-full bg-violet-600/10 flex items-center justify-center mb-3">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-violet-400">
+            <div className="w-10 h-10 rounded-full bg-indigo-600/10 flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-indigo-400">
                 <rect x="3" y="3" width="14" height="14" rx="2" />
                 <path d="M7 10l2 2 4-4" />
               </svg>
@@ -154,7 +154,7 @@ export function TaskList({
       <div className="p-3 border-t border-[var(--cs-border-subtle)]">
         <button
           onClick={() => setIsAdding(true)}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-md border border-dashed border-[var(--cs-border-subtle)] text-[var(--cs-text-secondary)] hover:text-violet-400 hover:border-violet-500/40 hover:bg-violet-600/5 transition-colors"
+          className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-md border border-dashed border-[var(--cs-border-subtle)] text-[var(--cs-text-secondary)] hover:text-indigo-400 hover:border-indigo-500/40 hover:bg-indigo-600/5 transition-colors"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M7 1v12M1 7h12" />

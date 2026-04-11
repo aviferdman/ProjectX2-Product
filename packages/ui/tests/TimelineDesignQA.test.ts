@@ -28,15 +28,15 @@ describe('Time Axis (§3.1)', () => {
   });
 
   it('grid line color matches spec', () => {
-    expect(GRID.lineColor).toBe('rgba(148,163,184,0.06)');
+    expect(GRID.lineColor).toBe('rgba(113,113,122,0.06)');
   });
 
   it('axis tick color matches slate-600', () => {
-    expect(GRID.axisTickColor).toBe('#475569');
+    expect(GRID.axisTickColor).toBe('#3f3f46');
   });
 
   it('axis line color matches slate-700', () => {
-    expect(GRID.axisLineColor).toBe('#334155');
+    expect(GRID.axisLineColor).toBe('#27272a');
   });
 });
 
@@ -53,8 +53,8 @@ describe('Agent Lanes (§3.2)', () => {
   });
 
   it('lane background matches spec', () => {
-    expect(LANE.bg).toBe('rgba(15,23,42,0.6)');
-    expect(LANE.bgAlt).toBe('rgba(15,23,42,0.8)');
+    expect(LANE.bg).toBe('rgba(17,17,19,0.6)');
+    expect(LANE.bgAlt).toBe('rgba(17,17,19,0.8)');
   });
 });
 
@@ -104,8 +104,8 @@ describe('Event Blocks (§3.3)', () => {
   it('Task Start — sky palette', () => {
     const s = EVENT_STYLES['task-start'];
     expect(s.bg).toBe('rgba(14,165,233,0.2)');
-    expect(s.border).toBe('#0ea5e9');
-    expect(s.iconColor).toBe('#38bdf8');
+    expect(s.border).toBe('#06b6d4');
+    expect(s.iconColor).toBe('#22d3ee');
   });
 
   it('Task Complete — emerald palette', () => {
@@ -118,15 +118,15 @@ describe('Event Blocks (§3.3)', () => {
   it('Error — rose palette', () => {
     const s = EVENT_STYLES.error;
     expect(s.bg).toBe('rgba(244,63,94,0.2)');
-    expect(s.border).toBe('#f43f5e');
-    expect(s.iconColor).toBe('#fb7185');
+    expect(s.border).toBe('#ef4444');
+    expect(s.iconColor).toBe('#f87171');
   });
 
   it('Message — violet palette', () => {
     const s = EVENT_STYLES.message;
-    expect(s.bg).toBe('rgba(139,92,246,0.15)');
-    expect(s.border).toBe('#8b5cf6');
-    expect(s.iconColor).toBe('#a78bfa');
+    expect(s.bg).toBe('rgba(99,102,241,0.15)');
+    expect(s.border).toBe('#818cf8');
+    expect(s.iconColor).toBe('#818cf8');
   });
 });
 
@@ -135,11 +135,11 @@ describe('Event Blocks (§3.3)', () => {
 /* ================================================================== */
 describe('Event selection (§3.3)', () => {
   it('selection ring is violet-500', () => {
-    expect(SELECTION.ringColor).toBe('#8b5cf6');
+    expect(SELECTION.ringColor).toBe('#818cf8');
   });
 
   it('selection glow matches spec', () => {
-    expect(SELECTION.glowColor).toBe('rgba(139,92,246,0.25)');
+    expect(SELECTION.glowColor).toBe('rgba(99,102,241,0.25)');
   });
 
   it('ring width is 2px', () => {
@@ -152,11 +152,11 @@ describe('Event selection (§3.3)', () => {
 /* ================================================================== */
 describe('Playhead (§3.4)', () => {
   it('playhead color is violet-500', () => {
-    expect(PLAYHEAD.color).toBe('#8b5cf6');
+    expect(PLAYHEAD.color).toBe('#818cf8');
   });
 
   it('playhead glow matches spec', () => {
-    expect(PLAYHEAD.glowColor).toBe('rgba(139,92,246,0.3)');
+    expect(PLAYHEAD.glowColor).toBe('rgba(99,102,241,0.3)');
   });
 
   it('playhead width is 2px', () => {
@@ -190,17 +190,17 @@ describe('Log Viewer (§4)', () => {
 
   it('row background colors match spec', () => {
     expect(LOG_COLORS.rowBg).toBe('transparent');
-    expect(LOG_COLORS.rowBgAlt).toBe('rgba(30,41,59,0.3)');
-    expect(LOG_COLORS.rowBgHover).toBe('rgba(30,41,59,0.6)');
-    expect(LOG_COLORS.rowBgSelected).toBe('rgba(139,92,246,0.1)');
+    expect(LOG_COLORS.rowBgAlt).toBe('rgba(24,24,27,0.3)');
+    expect(LOG_COLORS.rowBgHover).toBe('rgba(24,24,27,0.6)');
+    expect(LOG_COLORS.rowBgSelected).toBe('rgba(99,102,241,0.1)');
   });
 
   it('row border matches spec', () => {
-    expect(LOG_COLORS.rowBorder).toBe('rgba(51,65,85,0.3)');
+    expect(LOG_COLORS.rowBorder).toBe('rgba(39,39,42,0.3)');
   });
 
-  it('timestamp color is #64748b', () => {
-    expect(LOG_COLORS.timestamp).toBe('#64748b');
+  it('timestamp color is #52525b', () => {
+    expect(LOG_COLORS.timestamp).toBe('#52525b');
   });
 
   it('search highlight colors match spec', () => {
@@ -214,12 +214,12 @@ describe('Log Viewer (§4)', () => {
 /* ================================================================== */
 describe('Level Badges (§4.3)', () => {
   it('DEBUG — slate-400 on slate bg', () => {
-    expect(LOG_LEVEL_STYLES.debug.color).toBe('#94a3b8');
-    expect(LOG_LEVEL_STYLES.debug.bg).toBe('rgba(148,163,184,0.1)');
+    expect(LOG_LEVEL_STYLES.debug.color).toBe('#a1a1aa');
+    expect(LOG_LEVEL_STYLES.debug.bg).toBe('rgba(113,113,122,0.1)');
   });
 
   it('INFO — sky-400 on sky bg', () => {
-    expect(LOG_LEVEL_STYLES.info.color).toBe('#38bdf8');
+    expect(LOG_LEVEL_STYLES.info.color).toBe('#22d3ee');
     expect(LOG_LEVEL_STYLES.info.bg).toBe('rgba(14,165,233,0.1)');
   });
 
@@ -229,7 +229,7 @@ describe('Level Badges (§4.3)', () => {
   });
 
   it('ERROR — rose-400 on rose bg', () => {
-    expect(LOG_LEVEL_STYLES.error.color).toBe('#fb7185');
+    expect(LOG_LEVEL_STYLES.error.color).toBe('#f87171');
     expect(LOG_LEVEL_STYLES.error.bg).toBe('rgba(244,63,94,0.1)');
   });
 });
@@ -247,23 +247,23 @@ describe('Syntax Highlighting (§4.5)', () => {
   });
 
   it('boolean token is violet-400', () => {
-    expect(SYNTAX_COLORS.boolean).toBe('#a78bfa');
+    expect(SYNTAX_COLORS.boolean).toBe('#818cf8');
   });
 
   it('null token is violet-400', () => {
-    expect(SYNTAX_COLORS.null).toBe('#a78bfa');
+    expect(SYNTAX_COLORS.null).toBe('#818cf8');
   });
 
   it('key token is sky-400', () => {
-    expect(SYNTAX_COLORS.key).toBe('#38bdf8');
+    expect(SYNTAX_COLORS.key).toBe('#22d3ee');
   });
 
   it('error token is rose-400', () => {
-    expect(SYNTAX_COLORS.error).toBe('#fb7185');
+    expect(SYNTAX_COLORS.error).toBe('#f87171');
   });
 
   it('punctuation token is slate-400', () => {
-    expect(SYNTAX_COLORS.punctuation).toBe('#94a3b8');
+    expect(SYNTAX_COLORS.punctuation).toBe('#a1a1aa');
   });
 });
 
@@ -310,11 +310,11 @@ describe('Design tokens JSON', () => {
   it('syntax tokens exist and match spec', () => {
     expect(tokens.syntax.string.value).toBe('#34d399');
     expect(tokens.syntax.number.value).toBe('#fbbf24');
-    expect(tokens.syntax.boolean.value).toBe('#a78bfa');
-    expect(tokens.syntax.null.value).toBe('#a78bfa');
-    expect(tokens.syntax.key.value).toBe('#38bdf8');
-    expect(tokens.syntax.error.value).toBe('#fb7185');
-    expect(tokens.syntax.punctuation.value).toBe('#94a3b8');
+    expect(tokens.syntax.boolean.value).toBe('#818cf8');
+    expect(tokens.syntax.null.value).toBe('#818cf8');
+    expect(tokens.syntax.key.value).toBe('#22d3ee');
+    expect(tokens.syntax.error.value).toBe('#f87171');
+    expect(tokens.syntax.punctuation.value).toBe('#a1a1aa');
   });
 
   it('event color tokens match spec', () => {
@@ -323,7 +323,7 @@ describe('Design tokens JSON', () => {
     expect(tokens.event['task-start'].bg.value).toBe('rgba(14,165,233,0.2)');
     expect(tokens.event['task-complete'].bg.value).toBe('rgba(16,185,129,0.15)');
     expect(tokens.event.error.bg.value).toBe('rgba(244,63,94,0.2)');
-    expect(tokens.event.message.bg.value).toBe('rgba(139,92,246,0.15)');
+    expect(tokens.event.message.bg.value).toBe('rgba(99,102,241,0.15)');
   });
 });
 
@@ -354,11 +354,11 @@ describe('Tailwind theme', () => {
   it('syntax color theme values match spec', () => {
     expect(timelineTheme.colors.syntax.string).toBe('#34d399');
     expect(timelineTheme.colors.syntax.number).toBe('#fbbf24');
-    expect(timelineTheme.colors.syntax.boolean).toBe('#a78bfa');
-    expect(timelineTheme.colors.syntax.null).toBe('#a78bfa');
-    expect(timelineTheme.colors.syntax.key).toBe('#38bdf8');
-    expect(timelineTheme.colors.syntax.error).toBe('#fb7185');
-    expect(timelineTheme.colors.syntax.punctuation).toBe('#94a3b8');
+    expect(timelineTheme.colors.syntax.boolean).toBe('#818cf8');
+    expect(timelineTheme.colors.syntax.null).toBe('#818cf8');
+    expect(timelineTheme.colors.syntax.key).toBe('#22d3ee');
+    expect(timelineTheme.colors.syntax.error).toBe('#f87171');
+    expect(timelineTheme.colors.syntax.punctuation).toBe('#a1a1aa');
   });
 
   it('event color theme values match spec', () => {
@@ -367,7 +367,7 @@ describe('Tailwind theme', () => {
     expect(timelineTheme.colors.event['task-start'].bg).toBe('rgba(14,165,233,0.2)');
     expect(timelineTheme.colors.event['task-complete'].bg).toBe('rgba(16,185,129,0.15)');
     expect(timelineTheme.colors.event.error.bg).toBe('rgba(244,63,94,0.2)');
-    expect(timelineTheme.colors.event.message.bg).toBe('rgba(139,92,246,0.15)');
+    expect(timelineTheme.colors.event.message.bg).toBe('rgba(99,102,241,0.15)');
   });
 
   it('playhead animation is 2s ease-in-out infinite', () => {

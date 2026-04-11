@@ -20,28 +20,28 @@ export const visualPolishTheme = {
       'border-hover': 'var(--cs-border-strong)',
     },
     'polish-btn': {
-      'primary-bg': '#7c3aed',
-      'primary-bg-hover': '#8b5cf6',
+      'primary-bg': '#6366f1',
+      'primary-bg-hover': '#818cf8',
       'primary-text': '#ffffff',
       'ghost-bg': 'transparent',
-      'ghost-bg-hover': 'rgba(148,163,184,0.08)',
+      'ghost-bg-hover': 'rgba(113,113,122,0.08)',
       'ghost-text': 'var(--cs-text-secondary)',
       'ghost-text-hover': 'var(--cs-text-primary)',
       'danger-bg': '#e11d48',
-      'danger-bg-hover': '#f43f5e',
+      'danger-bg-hover': '#ef4444',
       'danger-text': '#ffffff',
     },
     'polish-input': {
       bg: 'var(--cs-surface-elevated)',
       border: 'var(--cs-border-default)',
       'border-hover': 'var(--cs-border-strong)',
-      'border-focus': '#8b5cf6',
+      'border-focus': '#818cf8',
       placeholder: 'var(--cs-text-tertiary)',
       text: 'var(--cs-text-primary)',
     },
     'polish-focus': {
-      ring: '#8b5cf6',
-      'ring-offset': '#020617',
+      ring: '#818cf8',
+      'ring-offset': '#09090b',
     },
     'polish-divider': {
       DEFAULT: 'var(--cs-border-subtle)',
@@ -54,8 +54,8 @@ export const visualPolishTheme = {
     },
     'polish-scrollbar': {
       track: 'transparent',
-      thumb: 'rgba(148,163,184,0.2)',
-      'thumb-hover': 'rgba(148,163,184,0.35)',
+      thumb: 'rgba(113,113,122,0.2)',
+      'thumb-hover': 'rgba(113,113,122,0.35)',
     },
   },
 
@@ -145,12 +145,12 @@ export const visualPolishTheme = {
   },
 
   boxShadow: {
-    'card-polished': '0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.06)',
-    'card-polished-hover': '0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.1)',
-    'card-polished-active': '0 1px 2px rgba(0,0,0,0.2), 0 0 0 1px rgba(148,163,184,0.08)',
-    'btn-primary': '0 2px 8px rgba(124,58,237,0.35)',
-    'btn-primary-hover': '0 4px 12px rgba(124,58,237,0.45)',
-    'focus-ring': '0 0 0 2px #020617, 0 0 0 4px #8b5cf6',
+    'card-polished': '0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)',
+    'card-polished-hover': '0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)',
+    'card-polished-active': '0 1px 2px rgba(0,0,0,0.2), 0 0 0 1px rgba(113,113,122,0.08)',
+    'btn-primary': '0 2px 8px rgba(99,102,241,0.35)',
+    'btn-primary-hover': '0 4px 12px rgba(99,102,241,0.45)',
+    'focus-ring': '0 0 0 2px #09090b, 0 0 0 4px #818cf8',
   },
 
   opacity: {

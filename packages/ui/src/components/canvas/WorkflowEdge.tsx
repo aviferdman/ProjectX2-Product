@@ -16,10 +16,10 @@ import { clsx } from 'clsx';
 import type { WorkflowEdgeData } from './types.js';
 
 const variantColors: Record<string, string> = {
-  default: 'var(--edge-default, #64748b)',
-  active: 'var(--edge-active, #a78bfa)',
-  dataFlow: 'var(--edge-data-flow, #38bdf8)',
-  error: 'var(--edge-error, #fb7185)',
+  default: 'var(--edge-default, #52525b)',
+  active: 'var(--edge-active, #818cf8)',
+  dataFlow: 'var(--edge-data-flow, #22d3ee)',
+  error: 'var(--edge-error, #f87171)',
 };
 
 function WorkflowEdgeComponent({

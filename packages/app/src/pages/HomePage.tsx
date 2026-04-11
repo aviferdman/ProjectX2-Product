@@ -17,7 +17,7 @@ const EXAMPLE_PROMPTS = [
 ];
 
 const RECENT_CREWS = [
-  { id: 'crew-1', name: 'Research Team Alpha', description: 'Market research specialists', agentCount: 4, workflowCount: 2, color: '#8b5cf6', updatedAt: '2 hours ago' },
+  { id: 'crew-1', name: 'Research Team Alpha', description: 'Market research specialists', agentCount: 4, workflowCount: 2, color: '#6366f1', updatedAt: '2 hours ago' },
   { id: 'crew-2', name: 'Content Marketing Squad', description: 'Content creation and distribution', agentCount: 6, workflowCount: 3, color: '#06b6d4', updatedAt: '1 day ago' },
   { id: 'crew-3', name: 'Data Analysis Crew', description: 'Data processing and insights', agentCount: 3, workflowCount: 1, color: '#f59e0b', updatedAt: '3 days ago' },
 ];
@@ -132,7 +132,7 @@ export function HomePage(): React.JSX.Element {
       <header className="glass sticky top-0 z-50 border-b border-[var(--cs-border-subtle)]">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center animate-pulseGlow">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center animate-pulseGlow">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                 <path d="M2 17l10 5 10-5" />
@@ -153,7 +153,7 @@ export function HomePage(): React.JSX.Element {
               <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setShowUserMenu((v) => !v)}
-                  className="flex items-center gap-2 p-1 rounded-full hover:ring-2 hover:ring-violet-500/30 transition-all focus-ring"
+                  className="flex items-center gap-2 p-1 rounded-full hover:ring-2 hover:ring-indigo-500/30 transition-all focus-ring"
                   aria-label="User menu"
                 >
                   {user.avatarUrl ? (
@@ -163,7 +163,7 @@ export function HomePage(): React.JSX.Element {
                       className="w-8 h-8 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center text-xs font-bold text-white">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-white">
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                   )}
@@ -200,7 +200,7 @@ export function HomePage(): React.JSX.Element {
                 </button>
                 <button
                   onClick={() => navigate(ROUTES.LOGIN)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/25 focus-ring"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-all shadow-lg shadow-indigo-500/25 focus-ring"
                 >
                   Get Started
                 </button>
@@ -227,7 +227,7 @@ export function HomePage(): React.JSX.Element {
 
       {/* ── Prompt Input Card ────────────────────────────────── */}
       <section className="max-w-2xl w-full mx-auto px-4 -mt-2 animate-fadeInUp" style={{ animationDelay: '240ms' }}>
-        <div className="relative rounded-2xl border border-[var(--cs-border-default)] bg-[var(--cs-surface-panel)] shadow-2xl shadow-violet-500/5 overflow-hidden transition-all duration-300 focus-within:border-violet-500/40 focus-within:shadow-violet-500/10 focus-within:shadow-2xl">
+        <div className="relative rounded-2xl border border-[var(--cs-border-default)] bg-[var(--cs-surface-panel)] shadow-2xl shadow-indigo-500/5 overflow-hidden transition-all duration-300 focus-within:border-indigo-500/40 focus-within:shadow-indigo-500/10 focus-within:shadow-2xl">
           <textarea
             ref={textareaRef}
             value={prompt}
@@ -260,7 +260,7 @@ export function HomePage(): React.JSX.Element {
             <button
               onClick={handleSubmit}
               disabled={!prompt.trim() || isGenerating}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:bg-violet-600/40 disabled:cursor-not-allowed text-white text-sm font-medium transition-all duration-200 shadow-lg shadow-violet-500/25 focus-ring"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-600/40 disabled:cursor-not-allowed text-white text-sm font-medium transition-all duration-200 shadow-lg shadow-indigo-500/25 focus-ring"
             >
               {isGenerating ? (
                 <>
@@ -289,7 +289,7 @@ export function HomePage(): React.JSX.Element {
             <button
               key={example}
               onClick={() => handleExampleClick(example)}
-              className="card-hover px-3.5 py-2 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-xs text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] hover:border-violet-500/30 transition-all duration-200 text-left leading-relaxed focus-ring"
+              className="card-hover px-3.5 py-2 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-xs text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] hover:border-indigo-500/30 transition-all duration-200 text-left leading-relaxed focus-ring"
             >
               {example}
             </button>
@@ -306,7 +306,7 @@ export function HomePage(): React.JSX.Element {
           {HOW_IT_WORKS.map((step) => (
             <div key={step.num} className="flex flex-col items-start text-left rounded-xl border border-[var(--cs-border-subtle)] bg-white/[0.02] p-5 group hover:bg-white/[0.04] hover:border-[var(--cs-border-default)] transition-all">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-sm font-semibold text-violet-400">{step.num}.</span>
+                <span className="text-sm font-semibold text-indigo-400">{step.num}.</span>
                 <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">{step.title}</h3>
               </div>
               <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{step.description}</p>
@@ -357,7 +357,7 @@ export function HomePage(): React.JSX.Element {
                       {initials}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors truncate">
+                      <p className="text-sm font-medium text-[var(--cs-text-primary)] group-hover:text-indigo-300 transition-colors truncate">
                         {crew.name}
                       </p>
                       <p className="text-[11px] text-[var(--cs-text-tertiary)] truncate">{crew.description}</p>

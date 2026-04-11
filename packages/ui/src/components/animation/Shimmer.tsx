@@ -46,7 +46,7 @@ export const Shimmer = forwardRef<HTMLDivElement, ShimmerProps>(
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(90deg, transparent 0%, rgba(148,163,184,0.12) 50%, transparent 100%)',
+              background: 'linear-gradient(90deg, transparent 0%, rgba(113,113,122,0.12) 50%, transparent 100%)',
               animation: 'cs-loading-shimmer 2s linear infinite',
             }}
           />

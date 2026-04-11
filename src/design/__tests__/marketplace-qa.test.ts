@@ -153,12 +153,12 @@ describe('TASK-168: Marketplace Tokens ↔ CSS consistency', () => {
 
   describe('install button state tokens reflected in CSS', () => {
     it('default state bg matches token', () => {
-      expect(mpCSS).toContain('--btn-bg: #7c3aed');
+      expect(mpCSS).toContain('--btn-bg: #6366f1');
     });
 
     it('installing state has bg, text, border', () => {
       expect(mpCSS).toContain('--btn-bg: rgba(139, 92, 246, 0.15)');
-      expect(mpCSS).toContain('--btn-text: #c4b5fd');
+      expect(mpCSS).toContain('--btn-text: #a5b4fc');
       expect(mpCSS).toContain('--btn-border: rgba(139, 92, 246, 0.3)');
     });
 
@@ -169,7 +169,7 @@ describe('TASK-168: Marketplace Tokens ↔ CSS consistency', () => {
     });
 
     it('uninstall hover state has rose accent', () => {
-      expect(mpCSS).toContain('--btn-text-hover: #fb7185');
+      expect(mpCSS).toContain('--btn-text-hover: #f87171');
       expect(mpCSS).toContain('--btn-bg-hover: rgba(251, 113, 133, 0.1)');
     });
   });
@@ -180,9 +180,9 @@ describe('TASK-168: Marketplace Tokens ↔ CSS consistency', () => {
     });
 
     it('fill colors for all states', () => {
-      expect(mpCSS).toContain('--progress-fill-bg: #8b5cf6');
+      expect(mpCSS).toContain('--progress-fill-bg: #818cf8');
       expect(mpCSS).toContain('--progress-fill-bg-complete: #10b981');
-      expect(mpCSS).toContain('--progress-fill-bg-error: #f43f5e');
+      expect(mpCSS).toContain('--progress-fill-bg-error: #ef4444');
     });
 
     it('shimmer highlight present', () => {
@@ -435,13 +435,13 @@ describe('TASK-168: Marketplace Tokens ↔ Tailwind consistency', () => {
 
 describe('TASK-168: Marketplace CSS ↔ Tailwind cross-file consistency', () => {
   it('both files use same install button default bg color', () => {
-    expect(mpCSS).toContain('--btn-bg: #7c3aed');
-    expect(mpTW).toContain("bg: '#7c3aed'");
+    expect(mpCSS).toContain('--btn-bg: #6366f1');
+    expect(mpTW).toContain("bg: '#6366f1'");
   });
 
   it('both files use same install button hover bg color', () => {
-    expect(mpCSS).toContain('--btn-bg-hover: #8b5cf6');
-    expect(mpTW).toContain("'bg-hover': '#8b5cf6'");
+    expect(mpCSS).toContain('--btn-bg-hover: #818cf8');
+    expect(mpTW).toContain("'bg-hover': '#818cf8'");
   });
 
   it('both files use same installed state text color', () => {
@@ -450,8 +450,8 @@ describe('TASK-168: Marketplace CSS ↔ Tailwind cross-file consistency', () => 
   });
 
   it('both files use same progress fill color', () => {
-    expect(mpCSS).toContain('--progress-fill-bg: #8b5cf6');
-    expect(mpTW).toContain("fill: '#8b5cf6'");
+    expect(mpCSS).toContain('--progress-fill-bg: #818cf8');
+    expect(mpTW).toContain("fill: '#818cf8'");
   });
 
   it('both files use same progress complete color', () => {
@@ -460,8 +460,8 @@ describe('TASK-168: Marketplace CSS ↔ Tailwind cross-file consistency', () => 
   });
 
   it('both files use same progress error color', () => {
-    expect(mpCSS).toContain('--progress-fill-bg-error: #f43f5e');
-    expect(mpTW).toContain("'fill-error': '#f43f5e'");
+    expect(mpCSS).toContain('--progress-fill-bg-error: #ef4444');
+    expect(mpTW).toContain("'fill-error': '#ef4444'");
   });
 
   it('both files use same featured badge text color', () => {
@@ -470,8 +470,8 @@ describe('TASK-168: Marketplace CSS ↔ Tailwind cross-file consistency', () => 
   });
 
   it('both files use same empty state icon color', () => {
-    expect(mpCSS).toContain('--empty-icon-color: #475569');
-    expect(mpTW).toContain("icon: '#475569'");
+    expect(mpCSS).toContain('--empty-icon-color: #3f3f46');
+    expect(mpTW).toContain("icon: '#3f3f46'");
   });
 
   describe('animation keyframes exist in both CSS and Tailwind', () => {
@@ -499,11 +499,11 @@ describe('TASK-168: Marketplace CSS ↔ Tailwind cross-file consistency', () => 
   describe('category colors match across files', () => {
     const categories = ['ai-ml', 'communication', 'data', 'devtools', 'productivity', 'storage'];
     const catColors: Record<string, string> = {
-      'ai-ml': '#a78bfa',
-      'communication': '#38bdf8',
+      'ai-ml': '#818cf8',
+      'communication': '#22d3ee',
       'data': '#34d399',
       'devtools': '#fbbf24',
-      'productivity': '#fb7185',
+      'productivity': '#f87171',
       'storage': '#cbd5e1',
     };
 
@@ -521,9 +521,9 @@ describe('TASK-168: Marketplace CSS ↔ Tailwind cross-file consistency', () => 
 describe('TASK-168: Marketplace ↔ Integration Card cross-component consistency', () => {
   describe('shared color palette alignment', () => {
     it('both use same violet accent for primary actions', () => {
-      // Marketplace install button bg = #7c3aed
-      expect(mpCSS).toContain('#7c3aed');
-      expect(icCSS).toContain('#7c3aed');
+      // Marketplace install button bg = #6366f1
+      expect(mpCSS).toContain('#6366f1');
+      expect(icCSS).toContain('#6366f1');
     });
 
     it('both use same green for success/connected state', () => {
@@ -532,8 +532,8 @@ describe('TASK-168: Marketplace ↔ Integration Card cross-component consistency
     });
 
     it('both use same rose for error/uninstall state', () => {
-      expect(mpCSS).toContain('#fb7185');
-      expect(icCSS).toContain('#fb7185');
+      expect(mpCSS).toContain('#f87171');
+      expect(icCSS).toContain('#f87171');
     });
 
     it('both use same amber for pending/warning state', () => {
@@ -572,7 +572,7 @@ describe('TASK-168: Marketplace ↔ Integration Card cross-component consistency
 
     it('disconnect/uninstall hover text uses same rose color', () => {
       expect(mpBtn['uninstall-text-hover'].value).toContain('rose');
-      expect(icBtn['disconnect-text-hover'].value).toBe('#fb7185');
+      expect(icBtn['disconnect-text-hover'].value).toBe('#f87171');
     });
   });
 

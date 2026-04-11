@@ -34,7 +34,7 @@
   /* Focus ring */
   --btn-focus-ring-width: 2px;
   --btn-focus-ring-offset: 2px;
-  --btn-focus-ring-color: var(--cs-violet-500, #8b5cf6);
+  --btn-focus-ring-color: var(--cs-indigo-500, #818cf8);
 
   /* Disabled */
   --btn-disabled-opacity: 0.4;
@@ -87,9 +87,9 @@
 /* Button variants */
 .cs-btn--secondary {
   --btn-bg: transparent;
-  --btn-bg-hover: rgba(139, 92, 246, 0.1);
-  --btn-bg-active: rgba(139, 92, 246, 0.15);
-  --btn-text: var(--cs-violet-400, #a78bfa);
+  --btn-bg-hover: rgba(99, 102, 241, 0.1);
+  --btn-bg-active: rgba(99, 102, 241, 0.15);
+  --btn-text: var(--cs-indigo-400, #818cf8);
   --btn-border-color: var(--cs-border-default);
   --btn-shadow: none;
   --btn-shadow-hover: none;
@@ -107,7 +107,7 @@
 
 .cs-btn--danger {
   --btn-bg: var(--cs-rose-600, #e11d48);
-  --btn-bg-hover: var(--cs-rose-500, #f43f5e);
+  --btn-bg-hover: var(--cs-rose-500, #ef4444);
   --btn-bg-active: rgba(225, 29, 72, 0.9);
   --btn-text: #ffffff;
   --btn-border-color: transparent;
@@ -140,16 +140,16 @@
   --input-transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
 
   /* Colors */
-  --input-bg: var(--cs-slate-900, #0f172a);
-  --input-bg-hover: var(--cs-slate-800, #1e293b);
-  --input-bg-disabled: var(--cs-slate-900, #0f172a);
+  --input-bg: var(--cs-slate-900, #111113);
+  --input-bg-hover: var(--cs-slate-800, #18181b);
+  --input-bg-disabled: var(--cs-slate-900, #111113);
   --input-text: var(--cs-text-primary);
   --input-text-disabled: var(--cs-text-disabled);
-  --input-placeholder: var(--cs-slate-500, #64748b);
+  --input-placeholder: var(--cs-slate-500, #52525b);
   --input-border: var(--cs-border-default);
-  --input-border-hover: var(--cs-slate-500, #64748b);
-  --input-border-focus: var(--cs-violet-500, #8b5cf6);
-  --input-border-error: var(--cs-rose-500, #f43f5e);
+  --input-border-hover: var(--cs-slate-500, #52525b);
+  --input-border-focus: var(--cs-indigo-500, #818cf8);
+  --input-border-error: var(--cs-rose-500, #ef4444);
   --input-border-success: var(--cs-emerald-500, #10b981);
 
   /* Label */
@@ -162,21 +162,21 @@
   --input-helper-font-size: 0.75rem;
   --input-helper-color: var(--cs-text-tertiary);
   --input-helper-margin-top: 4px;
-  --input-error-color: var(--cs-rose-400, #fb7185);
+  --input-error-color: var(--cs-rose-400, #f87171);
   --input-success-color: var(--cs-emerald-400, #34d399);
 
   /* Icons */
-  --input-icon-color: var(--cs-slate-400, #94a3b8);
-  --input-icon-focus-color: var(--cs-violet-400, #a78bfa);
+  --input-icon-color: var(--cs-slate-400, #a1a1aa);
+  --input-icon-focus-color: var(--cs-indigo-400, #818cf8);
 
   /* Focus ring */
   --input-focus-ring-width: 2px;
   --input-focus-ring-offset: 1px;
-  --input-focus-ring-color: var(--cs-violet-500, #8b5cf6);
+  --input-focus-ring-color: var(--cs-indigo-500, #818cf8);
 
   /* Error ring */
   --input-error-ring-width: 2px;
-  --input-error-ring-color: var(--cs-rose-500, #f43f5e);
+  --input-error-ring-color: var(--cs-rose-500, #ef4444);
 
   /* Disabled */
   --input-disabled-opacity: 0.4;
@@ -215,10 +215,10 @@
   /* Colors */
   --card-bg: var(--cs-surface-card);
   --card-bg-hover: var(--cs-surface-elevated);
-  --card-bg-selected: rgba(139, 92, 246, 0.08);
+  --card-bg-selected: rgba(99, 102, 241, 0.08);
   --card-border: var(--cs-border-default);
-  --card-border-hover: var(--cs-slate-500, #64748b);
-  --card-border-selected: var(--cs-violet-500, #8b5cf6);
+  --card-border-hover: var(--cs-slate-500, #52525b);
+  --card-border-selected: var(--cs-indigo-500, #818cf8);
   --card-header-text: var(--cs-text-primary);
   --card-body-text: var(--cs-text-secondary);
   --card-meta-text: var(--cs-text-tertiary);
@@ -227,7 +227,7 @@
   /* Shadows */
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(148, 163, 184, 0.06);
   --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.1);
-  --card-shadow-selected: 0 0 0 2px rgba(139, 92, 246, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
+  --card-shadow-selected: 0 0 0 2px rgba(99, 102, 241, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
 
   /* Header */
   --card-header-height: 48px;
@@ -274,12 +274,12 @@
   --modal-z: 300;
 
   /* Colors */
-  --modal-bg: var(--cs-slate-900, #0f172a);
+  --modal-bg: var(--cs-slate-900, #111113);
   --modal-border: var(--cs-border-default);
   --modal-header-text: var(--cs-text-primary);
   --modal-body-text: var(--cs-text-secondary);
   --modal-divider: rgba(51, 65, 85, 0.4);
-  --modal-close-icon: var(--cs-slate-400, #94a3b8);
+  --modal-close-icon: var(--cs-slate-400, #a1a1aa);
   --modal-close-icon-hover: var(--cs-text-primary);
 
   /* Shadow */
@@ -340,9 +340,9 @@
 }
 
 [data-theme='light'] .cs-btn--secondary {
-  --btn-bg-hover: rgba(139, 92, 246, 0.06);
-  --btn-bg-active: rgba(139, 92, 246, 0.1);
-  --btn-text: var(--cs-violet-600, #7c3aed);
+  --btn-bg-hover: rgba(99, 102, 241, 0.06);
+  --btn-bg-active: rgba(99, 102, 241, 0.1);
+  --btn-text: var(--cs-indigo-600, #6366f1);
 }
 
 [data-theme='light'] .cs-btn--ghost {
@@ -352,18 +352,18 @@
 
 [data-theme='light'] .cs-input {
   --input-bg: #ffffff;
-  --input-bg-hover: var(--cs-slate-50, #f8fafc);
+  --input-bg-hover: var(--cs-slate-50, #fafafa);
   --input-bg-disabled: var(--cs-slate-100, #f1f5f9);
-  --input-placeholder: var(--cs-slate-400, #94a3b8);
+  --input-placeholder: var(--cs-slate-400, #a1a1aa);
 }
 
 [data-theme='light'] .cs-card {
   --card-bg: #ffffff;
-  --card-bg-hover: var(--cs-slate-50, #f8fafc);
+  --card-bg-hover: var(--cs-slate-50, #fafafa);
   --card-divider: rgba(203, 213, 225, 0.5);
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
   --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.06);
-  --card-footer-bg: var(--cs-slate-50, #f8fafc);
+  --card-footer-bg: var(--cs-slate-50, #fafafa);
 }
 
 [data-theme='light'] .cs-modal-overlay {

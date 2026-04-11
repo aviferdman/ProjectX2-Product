@@ -177,7 +177,7 @@ function WorkflowCanvasInner({
   return (
     <div
       className={clsx('cs-canvas relative w-full h-full', className)}
-      style={{ background: 'var(--canvas-bg, #0a0e1a)', zIndex: Z_INDEX.canvas }}
+      style={{ background: 'var(--canvas-bg, #0c0c14)', zIndex: Z_INDEX.canvas }}
       data-testid="workflow-canvas"
     >
       <ReactFlow

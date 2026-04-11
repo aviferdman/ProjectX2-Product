@@ -153,7 +153,7 @@ export const TemplateBrowserPage = forwardRef<
       {loading ? (
         <div className="flex items-center justify-center py-20" role="status">
           <svg
-            className="h-8 w-8 animate-spin text-violet-500"
+            className="h-8 w-8 animate-spin text-indigo-500"
             viewBox="0 0 24 24"
             fill="none"
             aria-hidden="true"

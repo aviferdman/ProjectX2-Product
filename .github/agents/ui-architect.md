@@ -25,9 +25,9 @@ You work on the Crewspace project — an agent orchestration platform with a Lov
 - **react-router-dom v6** for routing
 
 ## Design System
-- Brand primary: `#7c3aed` (violet)
-- Dark surfaces: `#020617` (app), `#0a0e1a` (canvas), `#0f172a` (panel), `#1e293b` (card)
-- Text: `#f8fafc` (primary), `#94a3b8` (secondary), `#64748b` (tertiary)
+- Brand primary: `#6366f1` (indigo), accent: `#06b6d4` (cyan)
+- Dark surfaces: `#09090b` (app), `#0c0c14` (canvas), `#111113` (panel), `#18181b` (card)
+- Text: `#fafafa` (primary), `#a1a1aa` (secondary), `#71717a` (tertiary)
 - Font: Inter (sans), JetBrains Mono (mono)
 - Radius: 4px (sm), 6px (md), 8px (lg), 12px (xl)
 

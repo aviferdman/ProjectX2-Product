@@ -26,7 +26,7 @@ export const OAuthProviderList = forwardRef<HTMLDivElement, OAuthProviderListPro
           ref={ref}
           className={clsx(
             'flex flex-col items-center justify-center rounded-xl p-8',
-            'border border-dashed border-[var(--cs-border-default,#1e293b)]',
+            'border border-dashed border-[var(--cs-border-default,#18181b)]',
             'text-center',
             className,
           )}
@@ -45,10 +45,10 @@ export const OAuthProviderList = forwardRef<HTMLDivElement, OAuthProviderListPro
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
-          <p className="text-sm font-medium text-[var(--cs-text-primary,#f8fafc)]">
+          <p className="text-sm font-medium text-[var(--cs-text-primary,#fafafa)]">
             No OAuth providers configured
           </p>
-          <p className="mt-1 text-xs text-[var(--cs-text-secondary,#94a3b8)]">
+          <p className="mt-1 text-xs text-[var(--cs-text-secondary,#a1a1aa)]">
             Connect an OAuth provider to enable integrations.
           </p>
         </div>

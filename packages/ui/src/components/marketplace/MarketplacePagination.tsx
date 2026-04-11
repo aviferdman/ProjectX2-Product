@@ -49,12 +49,12 @@ export const MarketplacePagination = forwardRef<
         className={clsx(
           'inline-flex items-center justify-center rounded-md',
           'w-8 h-8',
-          'text-[var(--cs-text-secondary,#94a3b8)]',
+          'text-[var(--cs-text-secondary,#a1a1aa)]',
           'transition-colors duration-150',
           currentPage === 1
             ? 'opacity-40 cursor-not-allowed'
-            : 'hover:bg-[var(--cs-bg-card,#0f172a)]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+            : 'hover:bg-[var(--cs-bg-card,#111113)]',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         )}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -67,7 +67,7 @@ export const MarketplacePagination = forwardRef<
         page === 'ellipsis' ? (
           <span
             key={`ellipsis-${i}`}
-            className="inline-flex items-center justify-center w-8 h-8 text-[var(--cs-text-secondary,#94a3b8)]"
+            className="inline-flex items-center justify-center w-8 h-8 text-[var(--cs-text-secondary,#a1a1aa)]"
             aria-hidden="true"
           >
             …
@@ -85,9 +85,9 @@ export const MarketplacePagination = forwardRef<
               'text-xs font-medium',
               'transition-colors duration-150',
               page === currentPage
-                ? 'bg-violet-500/20 text-violet-300'
-                : 'text-[var(--cs-text-secondary,#94a3b8)] hover:bg-[var(--cs-bg-card,#0f172a)]',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+                ? 'bg-indigo-500/20 text-indigo-300'
+                : 'text-[var(--cs-text-secondary,#a1a1aa)] hover:bg-[var(--cs-bg-card,#111113)]',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
             )}
           >
             {page}
@@ -104,12 +104,12 @@ export const MarketplacePagination = forwardRef<
         className={clsx(
           'inline-flex items-center justify-center rounded-md',
           'w-8 h-8',
-          'text-[var(--cs-text-secondary,#94a3b8)]',
+          'text-[var(--cs-text-secondary,#a1a1aa)]',
           'transition-colors duration-150',
           currentPage === totalPages
             ? 'opacity-40 cursor-not-allowed'
-            : 'hover:bg-[var(--cs-bg-card,#0f172a)]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+            : 'hover:bg-[var(--cs-bg-card,#111113)]',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         )}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">

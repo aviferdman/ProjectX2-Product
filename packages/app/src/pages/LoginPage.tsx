@@ -81,7 +81,7 @@ export function LoginPage(): React.JSX.Element {
     >
       {/* Logo */}
       <div className="flex items-center gap-3 mb-8 animate-fadeInDown">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center animate-pulseGlow">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center animate-pulseGlow">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z" />
             <path d="M2 17l10 5 10-5" />
@@ -161,7 +161,7 @@ export function LoginPage(): React.JSX.Element {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="you@example.com"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 transition-colors"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30 transition-colors"
             />
           </div>
           <div>
@@ -173,13 +173,13 @@ export function LoginPage(): React.JSX.Element {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="••••••••"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 transition-colors"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30 transition-colors"
             />
           </div>
           <button
             type="submit"
             disabled={isLoading || oauthLoading !== null}
-            className="w-full mt-1 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:bg-violet-600/40 disabled:cursor-not-allowed text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/20 focus-ring"
+            className="w-full mt-1 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-600/40 disabled:cursor-not-allowed text-white text-sm font-medium transition-all shadow-lg shadow-indigo-500/20 focus-ring"
           >
             {isLoading && !oauthLoading ? 'Signing in…' : 'Sign in'}
           </button>
@@ -187,7 +187,7 @@ export function LoginPage(): React.JSX.Element {
 
         <p className="mt-6 text-center text-xs text-[var(--cs-text-tertiary)]">
           Don't have an account?{' '}
-          <button className="text-violet-400 hover:text-violet-300 transition-colors focus-ring">
+          <button className="text-indigo-400 hover:text-indigo-300 transition-colors focus-ring">
             Get started free
           </button>
         </p>

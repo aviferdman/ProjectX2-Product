@@ -22,7 +22,7 @@ export const actionEventCardsTheme = {
       'metrics-bg': 'rgba(15,23,42,0.4)',
       'metrics-divider': 'rgba(51,65,85,0.5)',
       'badge-bg': 'rgba(30,41,59,0.6)',
-      'close-icon': '#64748b',
+      'close-icon': '#52525b',
       'close-icon-hover': '#cbd5e1',
     },
     'card-llm': {
@@ -42,11 +42,11 @@ export const actionEventCardsTheme = {
       'badge-bg': 'rgba(16,185,129,0.12)',
     },
     'card-task-start': {
-      accent: '#0ea5e9',
+      accent: '#06b6d4',
       'accent-subtle': 'rgba(14,165,233,0.1)',
       'icon-bg': 'rgba(14,165,233,0.15)',
-      icon: '#38bdf8',
-      'badge-text': '#38bdf8',
+      icon: '#22d3ee',
+      'badge-text': '#22d3ee',
       'badge-bg': 'rgba(14,165,233,0.12)',
     },
     'card-task-complete': {
@@ -58,27 +58,27 @@ export const actionEventCardsTheme = {
       'badge-bg': 'rgba(16,185,129,0.12)',
     },
     'card-error': {
-      accent: '#f43f5e',
+      accent: '#ef4444',
       'accent-subtle': 'rgba(244,63,94,0.1)',
       'icon-bg': 'rgba(244,63,94,0.15)',
-      icon: '#fb7185',
-      'badge-text': '#fb7185',
+      icon: '#f87171',
+      'badge-text': '#f87171',
       'badge-bg': 'rgba(244,63,94,0.12)',
     },
     'card-message': {
-      accent: '#8b5cf6',
-      'accent-subtle': 'rgba(139,92,246,0.1)',
-      'icon-bg': 'rgba(139,92,246,0.15)',
-      icon: '#a78bfa',
-      'badge-text': '#a78bfa',
-      'badge-bg': 'rgba(139,92,246,0.12)',
+      accent: '#818cf8',
+      'accent-subtle': 'rgba(99,102,241,0.1)',
+      'icon-bg': 'rgba(99,102,241,0.15)',
+      icon: '#818cf8',
+      'badge-text': '#818cf8',
+      'badge-bg': 'rgba(99,102,241,0.12)',
     },
     'card-status': {
       running: '#34d399',
       'running-glow': 'rgba(52,211,153,0.4)',
       completed: '#10b981',
-      error: '#f43f5e',
-      pending: '#64748b',
+      error: '#ef4444',
+      pending: '#52525b',
     },
   },
 
@@ -115,9 +115,9 @@ export const actionEventCardsTheme = {
   },
 
   boxShadow: {
-    'action-card': '0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.08)',
-    'action-card-hover': '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.12)',
-    'action-card-selected': '0 0 0 2px #8b5cf6, 0 4px 24px rgba(139,92,246,0.2)',
+    'action-card': '0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.08)',
+    'action-card-hover': '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.12)',
+    'action-card-selected': '0 0 0 2px #818cf8, 0 4px 24px rgba(99,102,241,0.2)',
   },
 
   animation: {

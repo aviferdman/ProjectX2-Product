@@ -310,7 +310,7 @@ describe('integration-card-variables.css — custom properties', () => {
 
     it('defines error status variables', () => {
       expect(css).toContain('--oauth-bg: rgba(251, 113, 133');
-      expect(css).toContain('--oauth-text: #fb7185');
+      expect(css).toContain('--oauth-text: #f87171');
     });
   });
 
@@ -330,7 +330,7 @@ describe('integration-card-variables.css — custom properties', () => {
 
   describe('connect button variables', () => {
     it('defines connect button background', () => {
-      expect(css).toContain('--btn-bg: #7c3aed');
+      expect(css).toContain('--btn-bg: #6366f1');
     });
 
     it('defines disconnect button hover', () => {

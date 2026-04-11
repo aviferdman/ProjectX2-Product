@@ -53,36 +53,36 @@
       "color": {
         "_description": "Extended color palette per node type with hover, active, focus, and muted variants",
         "agent": {
-          "bg":              { "value": "rgba(124,58,237,0.12)",  "type": "color" },
-          "bg-hover":        { "value": "rgba(124,58,237,0.18)",  "type": "color" },
-          "bg-active":       { "value": "rgba(124,58,237,0.24)",  "type": "color" },
-          "bg-muted":        { "value": "rgba(124,58,237,0.06)",  "type": "color" },
-          "border":          { "value": "#7c3aed", "type": "color" },
-          "border-hover":    { "value": "#8b5cf6", "type": "color" },
-          "border-focus":    { "value": "#a78bfa", "type": "color" },
-          "icon":            { "value": "#a78bfa", "type": "color" },
+          "bg":              { "value": "rgba(99,102,241,0.12)",  "type": "color" },
+          "bg-hover":        { "value": "rgba(99,102,241,0.18)",  "type": "color" },
+          "bg-active":       { "value": "rgba(99,102,241,0.24)",  "type": "color" },
+          "bg-muted":        { "value": "rgba(99,102,241,0.06)",  "type": "color" },
+          "border":          { "value": "#6366f1", "type": "color" },
+          "border-hover":    { "value": "#818cf8", "type": "color" },
+          "border-focus":    { "value": "#818cf8", "type": "color" },
+          "icon":            { "value": "#818cf8", "type": "color" },
           "icon-muted":      { "value": "rgba(167,139,250,0.6)", "type": "color" },
-          "badge-bg":        { "value": "rgba(124,58,237,0.2)",   "type": "color" },
-          "badge-text":      { "value": "#c4b5fd", "type": "color" },
-          "header-gradient-start": { "value": "rgba(124,58,237,0.16)", "type": "color" },
-          "header-gradient-end":   { "value": "rgba(124,58,237,0.04)", "type": "color" },
-          "accent-line":     { "value": "#7c3aed", "type": "color", "description": "3px left accent stripe on header" }
+          "badge-bg":        { "value": "rgba(99,102,241,0.2)",   "type": "color" },
+          "badge-text":      { "value": "#a5b4fc", "type": "color" },
+          "header-gradient-start": { "value": "rgba(99,102,241,0.16)", "type": "color" },
+          "header-gradient-end":   { "value": "rgba(99,102,241,0.04)", "type": "color" },
+          "accent-line":     { "value": "#6366f1", "type": "color", "description": "3px left accent stripe on header" }
         },
         "task": {
           "bg":              { "value": "rgba(14,165,233,0.12)",  "type": "color" },
           "bg-hover":        { "value": "rgba(14,165,233,0.18)",  "type": "color" },
           "bg-active":       { "value": "rgba(14,165,233,0.24)",  "type": "color" },
           "bg-muted":        { "value": "rgba(14,165,233,0.06)",  "type": "color" },
-          "border":          { "value": "#0284c7", "type": "color" },
-          "border-hover":    { "value": "#0ea5e9", "type": "color" },
-          "border-focus":    { "value": "#38bdf8", "type": "color" },
-          "icon":            { "value": "#38bdf8", "type": "color" },
+          "border":          { "value": "#0891b2", "type": "color" },
+          "border-hover":    { "value": "#06b6d4", "type": "color" },
+          "border-focus":    { "value": "#22d3ee", "type": "color" },
+          "icon":            { "value": "#22d3ee", "type": "color" },
           "icon-muted":      { "value": "rgba(56,189,248,0.6)",  "type": "color" },
           "badge-bg":        { "value": "rgba(14,165,233,0.2)",   "type": "color" },
           "badge-text":      { "value": "#7dd3fc", "type": "color" },
           "header-gradient-start": { "value": "rgba(14,165,233,0.16)", "type": "color" },
           "header-gradient-end":   { "value": "rgba(14,165,233,0.04)", "type": "color" },
-          "accent-line":     { "value": "#0284c7", "type": "color" }
+          "accent-line":     { "value": "#0891b2", "type": "color" }
         },
         "tool": {
           "bg":              { "value": "rgba(16,185,129,0.12)",  "type": "color" },
@@ -123,25 +123,25 @@
         "idle": {
           "border-width":     { "value": "1.5px", "type": "borderWidth" },
           "opacity":          { "value": "1", "type": "number" },
-          "badge-text":       { "value": "#94a3b8", "type": "color" },
+          "badge-text":       { "value": "#a1a1aa", "type": "color" },
           "badge-bg":         { "value": "rgba(100,116,139,0.2)", "type": "color" },
           "badge-label":      { "value": "IDLE", "type": "string" }
         },
         "hover": {
           "border-width":     { "value": "2px", "type": "borderWidth" },
-          "shadow":           { "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.15)", "type": "boxShadow" },
+          "shadow":           { "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.15)", "type": "boxShadow" },
           "scale":            { "value": "1.0", "type": "number" },
           "transition":       { "value": "all 100ms ease-out", "type": "transition" }
         },
         "selected": {
           "ring-width":       { "value": "2px", "type": "borderWidth" },
-          "ring-color":       { "value": "#8b5cf6", "type": "color" },
-          "glow":             { "value": "0 0 0 2px #8b5cf6, 0 4px 20px rgba(139,92,246,0.25)", "type": "boxShadow" },
+          "ring-color":       { "value": "#818cf8", "type": "color" },
+          "glow":             { "value": "0 0 0 2px #818cf8, 0 4px 20px rgba(99,102,241,0.25)", "type": "boxShadow" },
           "transition":       { "value": "box-shadow 150ms ease-out", "type": "transition" }
         },
         "dragging": {
           "scale":            { "value": "1.02", "type": "number" },
-          "shadow":           { "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(148,163,184,0.2)", "type": "boxShadow" },
+          "shadow":           { "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.2)", "type": "boxShadow" },
           "opacity":          { "value": "0.95", "type": "number" },
           "cursor":           { "value": "grabbing", "type": "string" },
           "transition":       { "value": "transform 100ms ease-out, box-shadow 100ms ease-out", "type": "transition" }
@@ -168,12 +168,12 @@
           "badge-icon":       { "value": "check", "type": "string", "description": "Lucide check icon shown on success" }
         },
         "error": {
-          "border-color":     { "value": "#f43f5e", "type": "color" },
+          "border-color":     { "value": "#ef4444", "type": "color" },
           "glow-color":       { "value": "rgba(244,63,94,0.3)", "type": "color" },
           "glow-spread":      { "value": "6px", "type": "sizing" },
           "pulse-duration":   { "value": "1.5s", "type": "duration" },
           "pulse-easing":     { "value": "ease-in-out", "type": "string" },
-          "badge-text":       { "value": "#fb7185", "type": "color" },
+          "badge-text":       { "value": "#f87171", "type": "color" },
           "badge-bg":         { "value": "rgba(244,63,94,0.2)", "type": "color" },
           "badge-label":      { "value": "ERROR", "type": "string" },
           "badge-icon":       { "value": "alert-circle", "type": "string" },
@@ -181,17 +181,17 @@
         },
         "disabled": {
           "opacity":          { "value": "0.4", "type": "number" },
-          "border-color":     { "value": "#475569", "type": "color" },
+          "border-color":     { "value": "#3f3f46", "type": "color" },
           "pointer-events":   { "value": "none", "type": "string" },
-          "badge-text":       { "value": "#64748b", "type": "color" },
+          "badge-text":       { "value": "#52525b", "type": "color" },
           "badge-bg":         { "value": "rgba(71,85,105,0.2)", "type": "color" },
           "badge-label":      { "value": "DISABLED", "type": "string" }
         },
         "queued": {
           "opacity":          { "value": "0.7", "type": "number" },
           "border-style":     { "value": "dashed", "type": "string" },
-          "badge-text":       { "value": "#94a3b8", "type": "color" },
-          "badge-bg":         { "value": "rgba(148,163,184,0.15)", "type": "color" },
+          "badge-text":       { "value": "#a1a1aa", "type": "color" },
+          "badge-bg":         { "value": "rgba(113,113,122,0.15)", "type": "color" },
           "badge-label":      { "value": "QUEUED", "type": "string" },
           "badge-icon":       { "value": "clock", "type": "string" }
         }
@@ -225,25 +225,25 @@
         "_description": "Node body region — displays key configuration fields",
         "padding":            { "value": "8px 12px", "type": "spacing" },
         "field-gap":          { "value": "4px", "type": "spacing" },
-        "label-color":        { "value": "#64748b", "type": "color" },
+        "label-color":        { "value": "#52525b", "type": "color" },
         "value-color":        { "value": "#e2e8f0", "type": "color" },
         "label-width":        { "value": "64px", "type": "sizing" },
         "max-lines":          { "value": "3", "type": "number", "description": "Max visible body lines before truncation" },
         "truncation":         { "value": "ellipsis", "type": "string" },
-        "separator-color":    { "value": "rgba(148,163,184,0.1)", "type": "color" },
+        "separator-color":    { "value": "rgba(113,113,122,0.1)", "type": "color" },
         "separator-margin":   { "value": "0 12px", "type": "spacing" }
       },
 
       "handle": {
         "_description": "Extended handle tokens for connection ports — type-aware coloring",
-        "agent-connected":    { "value": "#8b5cf6", "type": "color" },
-        "task-connected":     { "value": "#0ea5e9", "type": "color" },
+        "agent-connected":    { "value": "#818cf8", "type": "color" },
+        "task-connected":     { "value": "#06b6d4", "type": "color" },
         "tool-connected":     { "value": "#10b981", "type": "color" },
         "llm-connected":      { "value": "#f59e0b", "type": "color" },
-        "compatible-pulse":   { "value": "rgba(139,92,246,0.4)", "type": "color", "description": "Pulse effect on compatible handles during drag" },
+        "compatible-pulse":   { "value": "rgba(99,102,241,0.4)", "type": "color", "description": "Pulse effect on compatible handles during drag" },
         "incompatible":       { "value": "rgba(244,63,94,0.3)", "type": "color" },
         "label-font-size":    { "value": "10px", "type": "fontSize" },
-        "label-color":        { "value": "#94a3b8", "type": "color" },
+        "label-color":        { "value": "#a1a1aa", "type": "color" },
         "label-offset":       { "value": "6px", "type": "spacing", "description": "Distance from handle circle to label text" }
       },
 

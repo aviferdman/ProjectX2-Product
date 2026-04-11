@@ -13,35 +13,36 @@
 /* ------------------------------------------------------------------ */
 :root {
   /* Brand */
-  --cs-brand-primary: #7c3aed;
-  --cs-brand-secondary: #a78bfa;
-  --cs-brand-subtle: #ede9fe;
+  --cs-brand-primary: #6366f1;
+  --cs-brand-secondary: #818cf8;
+  --cs-brand-subtle: #eef2ff;
+  --cs-brand-accent: #06b6d4;
 
   /* Surfaces */
-  --cs-surface-app: #020617;
-  --cs-surface-canvas: #0a0e1a;
-  --cs-surface-panel: #0f172a;
-  --cs-surface-card: #1e293b;
-  --cs-surface-elevated: #334155;
-  --cs-surface-overlay: rgba(0, 0, 0, 0.6);
+  --cs-surface-app: #09090b;
+  --cs-surface-canvas: #0c0c14;
+  --cs-surface-panel: #111113;
+  --cs-surface-card: #18181b;
+  --cs-surface-elevated: #27272a;
+  --cs-surface-overlay: rgba(0, 0, 0, 0.7);
 
   /* Borders */
-  --cs-border-default: #334155;
-  --cs-border-subtle: #1e293b;
-  --cs-border-strong: #64748b;
-  --cs-border-focus: #8b5cf6;
+  --cs-border-default: #27272a;
+  --cs-border-subtle: #1c1c1f;
+  --cs-border-strong: #3f3f46;
+  --cs-border-focus: #818cf8;
 
   /* Text */
-  --cs-text-primary: #f8fafc;
-  --cs-text-secondary: #94a3b8;
-  --cs-text-tertiary: #64748b;
-  --cs-text-inverse: #0f172a;
+  --cs-text-primary: #fafafa;
+  --cs-text-secondary: #a1a1aa;
+  --cs-text-tertiary: #71717a;
+  --cs-text-inverse: #09090b;
 
   /* Status */
   --cs-status-success: #10b981;
   --cs-status-warning: #f59e0b;
-  --cs-status-error: #f43f5e;
-  --cs-status-info: #0ea5e9;
+  --cs-status-error: #ef4444;
+  --cs-status-info: #06b6d4;
 
   /* Typography */
   --cs-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -55,16 +56,16 @@
   --cs-radius-node: 10px;
 
   /* Shadows */
-  --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(148, 163, 184, 0.1);
-  --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(148, 163, 184, 0.15);
-  --cs-shadow-node-selected: 0 0 0 2px #8b5cf6,
-    0 4px 20px rgba(139, 92, 246, 0.25);
-  --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.35);
-  --cs-shadow-dropdown: 0 4px 24px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(148, 163, 184, 0.1);
+  --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(63, 63, 70, 0.5);
+  --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(63, 63, 70, 0.6);
+  --cs-shadow-node-selected: 0 0 0 2px #818cf8,
+    0 4px 20px rgba(99, 102, 241, 0.25);
+  --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.45);
+  --cs-shadow-dropdown: 0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(63, 63, 70, 0.5);
 
   /* Transitions */
   --cs-transition-fast: 100ms ease-out;
@@ -79,8 +80,8 @@
 .cs-canvas {
   /* Viewport */
   --canvas-bg: var(--cs-surface-canvas);
-  --canvas-grid-dot: rgba(148, 163, 184, 0.12);
-  --canvas-grid-line: rgba(148, 163, 184, 0.06);
+  --canvas-grid-dot: rgba(113, 113, 122, 0.12);
+  --canvas-grid-line: rgba(113, 113, 122, 0.06);
   --canvas-grid-size: 20px;
   --canvas-grid-dot-radius: 1px;
   --canvas-min-zoom: 0.1;
@@ -102,14 +103,14 @@
   --node-gap: 6px;
 
   /* Node — Agent */
-  --node-agent-bg: rgba(124, 58, 237, 0.12);
-  --node-agent-border: #7c3aed;
-  --node-agent-icon: #a78bfa;
+  --node-agent-bg: rgba(99, 102, 241, 0.12);
+  --node-agent-border: #6366f1;
+  --node-agent-icon: #818cf8;
 
   /* Node — Task */
-  --node-task-bg: rgba(14, 165, 233, 0.12);
-  --node-task-border: #0284c7;
-  --node-task-icon: #38bdf8;
+  --node-task-bg: rgba(6, 182, 212, 0.12);
+  --node-task-border: #0891b2;
+  --node-task-icon: #22d3ee;
 
   /* Node — Tool */
   --node-tool-bg: rgba(16, 185, 129, 0.12);
@@ -122,26 +123,26 @@
   --node-llm-icon: #fbbf24;
 
   /* Node selection */
-  --node-selected-ring: #8b5cf6;
-  --node-selected-glow: rgba(139, 92, 246, 0.25);
+  --node-selected-ring: #818cf8;
+  --node-selected-glow: rgba(99, 102, 241, 0.25);
 
   /* Node states */
   --node-running-pulse: #34d399;
-  --node-error-pulse: #fb7185;
+  --node-error-pulse: #f87171;
   --node-disabled-opacity: 0.4;
 
   /* Edges */
-  --edge-default: #64748b;
-  --edge-active: #a78bfa;
-  --edge-data-flow: #38bdf8;
-  --edge-error: #fb7185;
+  --edge-default: #52525b;
+  --edge-active: #818cf8;
+  --edge-data-flow: #22d3ee;
+  --edge-error: #f87171;
   --edge-width: 2px;
   --edge-width-hover: 3px;
   --edge-type: smoothstep;
   --edge-animated: true;
   --edge-dash-array: 5 5;
   --edge-arrow-size: 12px;
-  --edge-label-bg: rgba(15, 23, 42, 0.9);
+  --edge-label-bg: rgba(17, 17, 19, 0.9);
   --edge-label-padding: 2px 6px;
   --edge-label-radius: 4px;
   --edge-label-font-size: 12px;
@@ -150,21 +151,21 @@
   /* Connection handles */
   --handle-size: 10px;
   --handle-border-width: 2px;
-  --handle-bg: #1e293b;
-  --handle-border: #64748b;
-  --handle-hover-bg: #7c3aed;
-  --handle-hover-border: #a78bfa;
-  --handle-connected-bg: #8b5cf6;
+  --handle-bg: #18181b;
+  --handle-border: #52525b;
+  --handle-hover-bg: #6366f1;
+  --handle-hover-border: #818cf8;
+  --handle-connected-bg: #818cf8;
   --handle-hit-area: 20px;
 
   /* Selection marquee */
-  --selection-bg: rgba(139, 92, 246, 0.08);
-  --selection-border: rgba(139, 92, 246, 0.5);
+  --selection-bg: rgba(99, 102, 241, 0.08);
+  --selection-border: rgba(99, 102, 241, 0.5);
   --selection-dash: 4 4;
 
   /* Minimap */
-  --minimap-bg: rgba(15, 23, 42, 0.9);
-  --minimap-viewport: rgba(139, 92, 246, 0.3);
+  --minimap-bg: rgba(17, 17, 19, 0.9);
+  --minimap-viewport: rgba(99, 102, 241, 0.3);
   --minimap-margin: 16px;
   --minimap-border-radius: 8px;
   --minimap-opacity: 0.85;
@@ -265,30 +266,30 @@
 /* Light mode overrides                                                */
 /* ------------------------------------------------------------------ */
 [data-theme='light'] {
-  --cs-surface-canvas: #f1f5f9;
+  --cs-surface-canvas: #f4f4f5;
 }
 
 [data-theme='light'] .cs-canvas {
-  --canvas-bg: #f1f5f9;
-  --canvas-grid-dot: rgba(100, 116, 139, 0.18);
-  --canvas-grid-line: rgba(100, 116, 139, 0.08);
+  --canvas-bg: #f4f4f5;
+  --canvas-grid-dot: rgba(113, 113, 122, 0.18);
+  --canvas-grid-line: rgba(113, 113, 122, 0.08);
 
   /* Node backgrounds — slightly more opaque for light */
-  --node-agent-bg: rgba(124, 58, 237, 0.08);
-  --node-task-bg: rgba(14, 165, 233, 0.08);
+  --node-agent-bg: rgba(99, 102, 241, 0.08);
+  --node-task-bg: rgba(6, 182, 212, 0.08);
   --node-tool-bg: rgba(16, 185, 129, 0.08);
   --node-llm-bg: rgba(245, 158, 11, 0.08);
 
   /* Edges */
-  --edge-default: #94a3b8;
+  --edge-default: #a1a1aa;
   --edge-label-bg: rgba(255, 255, 255, 0.9);
 
   /* Connection handles */
   --handle-bg: #ffffff;
-  --handle-border: #94a3b8;
+  --handle-border: #a1a1aa;
 
   /* Selection marquee */
-  --selection-bg: rgba(139, 92, 246, 0.06);
+  --selection-bg: rgba(99, 102, 241, 0.06);
 
   /* Minimap */
   --minimap-bg: rgba(255, 255, 255, 0.9);
