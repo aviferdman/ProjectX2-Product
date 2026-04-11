@@ -310,12 +310,13 @@ export function WorkflowPage(): React.JSX.Element {
   // -----------------------------------------------------------------------
   const AGENT_COLORS = ['#8b5cf6', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
 
-  const handleAgentAdd = useCallback((agentData: Omit<AgentNode, 'id' | 'status' | 'position'>) => {
+  const handleAgentAdd = useCallback((agentData: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) => {
     setWorkflow((prev) => {
       if (!prev) return null;
+      const { id: inputId, ...rest } = agentData;
       const agent: AgentNode = {
-        ...agentData,
-        id: `agent-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        ...rest,
+        id: inputId ?? `agent-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
         status: 'idle',
         color: agentData.color || AGENT_COLORS[prev.agents.length % AGENT_COLORS.length]!,
         position: { x: prev.agents.length * 200, y: 100 },

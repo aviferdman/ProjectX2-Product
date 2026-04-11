@@ -29,9 +29,13 @@ export interface LoginCredentials {
   readonly password: string;
 }
 
+/** Supported OAuth providers. */
+export type OAuthProviderType = 'github' | 'google' | 'microsoft';
+
 /** Actions exposed by the auth context. */
 export interface AuthActions {
   login(credentials: LoginCredentials): Promise<void>;
+  loginWithOAuth(provider: OAuthProviderType): Promise<void>;
   logout(): Promise<void>;
   refreshSession(): Promise<void>;
 }

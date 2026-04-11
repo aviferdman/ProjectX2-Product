@@ -3,7 +3,7 @@
  * TASK-131: Provides login, logout, and session management.
  */
 import React, { createContext, useContext, useReducer, useCallback, useMemo } from 'react';
-import type { AuthState, AuthContextValue, LoginCredentials, User } from './types.js';
+import type { AuthState, AuthContextValue, LoginCredentials, OAuthProviderType, User } from './types.js';
 
 /* ------------------------------------------------------------------ */
 /* Reducer                                                             */
@@ -73,6 +73,7 @@ export function useAuth(): AuthContextValue {
 /** Adapter interface for pluggable auth backends. */
 export interface AuthAdapter {
   login(credentials: LoginCredentials): Promise<User>;
+  loginWithOAuth?(provider: OAuthProviderType): Promise<User>;
   logout(): Promise<void>;
   refreshSession(): Promise<User>;
 }
@@ -103,6 +104,23 @@ export function AuthProvider({ adapter, children }: AuthProviderProps): React.JS
     [adapter],
   );
 
+  const loginWithOAuth = useCallback(
+    async (provider: OAuthProviderType) => {
+      dispatch({ type: 'LOGIN_START' });
+      try {
+        if (!adapter.loginWithOAuth) {
+          throw new Error('OAuth login is not supported by this auth adapter');
+        }
+        const user = await adapter.loginWithOAuth(provider);
+        dispatch({ type: 'LOGIN_SUCCESS', user });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'OAuth login failed';
+        dispatch({ type: 'LOGIN_FAILURE', error: message });
+      }
+    },
+    [adapter],
+  );
+
   const logout = useCallback(async () => {
     try {
       await adapter.logout();
@@ -123,8 +141,8 @@ export function AuthProvider({ adapter, children }: AuthProviderProps): React.JS
   }, [adapter]);
 
   const value = useMemo<AuthContextValue>(
-    () => ({ ...state, login, logout, refreshSession }),
-    [state, login, logout, refreshSession],
+    () => ({ ...state, login, loginWithOAuth, logout, refreshSession }),
+    [state, login, loginWithOAuth, logout, refreshSession],
   );
 
   return React.createElement(AuthContext.Provider, { value }, children);

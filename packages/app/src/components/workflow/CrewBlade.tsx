@@ -9,7 +9,7 @@ interface CrewBladeProps {
   agents: AgentNode[];
   tasks: TaskNode[];
   selectedNodeId: string | null;
-  onAgentAdd: (agent: Omit<AgentNode, 'id' | 'status' | 'position'>) => void;
+  onAgentAdd: (agent: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) => void;
   onAgentUpdate: (agentId: string, updates: Partial<Omit<AgentNode, 'id'>>) => void;
   onAgentDelete: (agentId: string) => void;
   onTaskAdd: (task: Omit<TaskNode, 'id' | 'status'>) => void;

@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCrewStore } from '../../store/index.js';
 import { ROUTES, workflowPath } from '../../router/routes.js';
+import { ALL_HARDCODED_AGENTS, BUSINESS_PRODUCT_AGENTS, RESEARCH_ANALYSIS_AGENTS } from '../../data/hardcoded-agents.js';
+import type { HardcodedAgent } from '../../data/hardcoded-agents.js';
+
+type CategoryFilter = 'all' | 'business-product' | 'research-analysis';
+
+const AGENT_COLORS = [
+  '#7c3aed', '#2563eb', '#059669', '#d97706',
+  '#dc2626', '#ec4899', '#06b6d4', '#8b5cf6',
+];
 
 function relativeTime(timestamp: number): string {
   const diff = Date.now() - timestamp;
@@ -21,7 +30,7 @@ function relativeTime(timestamp: number): string {
 export function CrewDetail(): React.JSX.Element {
   const { crewId } = useParams<{ crewId: string }>();
   const navigate = useNavigate();
-  const { getCrewById, updateCrew, deleteCrew } = useCrewStore();
+  const { getCrewById, updateCrew, deleteCrew, addAgentToCrew, removeAgentFromCrew } = useCrewStore();
 
   const crew = crewId ? getCrewById(crewId) : undefined;
 
@@ -30,6 +39,10 @@ export function CrewDetail(): React.JSX.Element {
   const [editingDesc, setEditingDesc] = useState(false);
   const [descValue, setDescValue] = useState(crew?.description ?? '');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showAgentPicker, setShowAgentPicker] = useState(false);
+  const [agentToRemove, setAgentToRemove] = useState<string | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
+  const [agentSearch, setAgentSearch] = useState('');
 
   if (!crew) {
     return (
@@ -69,6 +82,51 @@ export function CrewDetail(): React.JSX.Element {
   function handleDeleteCrew() {
     deleteCrew(crew!.id);
     navigate(ROUTES.CREWS);
+  }
+
+  // ── Agent management helpers ─────────────────────
+  const existingAgentIds = crew?.agents.map((a) => a.id) ?? [];
+
+  const filteredCatalogAgents = (() => {
+    let list: readonly HardcodedAgent[];
+    switch (categoryFilter) {
+      case 'business-product': list = BUSINESS_PRODUCT_AGENTS; break;
+      case 'research-analysis': list = RESEARCH_ANALYSIS_AGENTS; break;
+      default: list = ALL_HARDCODED_AGENTS;
+    }
+    if (agentSearch.trim()) {
+      const q = agentSearch.toLowerCase();
+      list = list.filter(
+        (a) => a.role.toLowerCase().includes(q) || a.subtitle.toLowerCase().includes(q) || a.goal.toLowerCase().includes(q),
+      );
+    }
+    return list;
+  })();
+
+  function handlePickAgent(def: HardcodedAgent) {
+    if (!crew) return;
+    addAgentToCrew(crew.id, {
+      id: def.id,
+      role: def.role,
+      goal: def.goal,
+      backstory: def.backstory,
+      tools: [...def.tools],
+      color: AGENT_COLORS[crew.agents.length % AGENT_COLORS.length] ?? '#7c3aed',
+    });
+    setShowAgentPicker(false);
+    setAgentSearch('');
+    setCategoryFilter('all');
+  }
+
+  /** Tasks in this crew that reference the given agent. */
+  function dependentTasks(agentId: string) {
+    return crew?.tasks.filter((t) => t.agentId === agentId) ?? [];
+  }
+
+  function confirmRemoveAgent() {
+    if (!crew || !agentToRemove) return;
+    removeAgentFromCrew(crew.id, agentToRemove);
+    setAgentToRemove(null);
   }
 
   return (
@@ -176,13 +234,148 @@ export function CrewDetail(): React.JSX.Element {
 
         {/* ── Agents Section ───────────────────────────────── */}
         <section className="mb-10 animate-fadeIn">
-          <h2 className="text-sm font-semibold text-[var(--cs-text-primary)] uppercase tracking-wider mb-4">
-            Agents <span className="ml-2 text-xs font-normal text-[var(--cs-text-tertiary)]">({crew.agents.length})</span>
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-semibold text-[var(--cs-text-primary)] uppercase tracking-wider">
+              Agents <span className="ml-2 text-xs font-normal text-[var(--cs-text-tertiary)]">({crew.agents.length})</span>
+            </h2>
+            <button
+              onClick={() => setShowAgentPicker(!showAgentPicker)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-medium transition-colors focus-ring"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Add Agent
+            </button>
+          </div>
+
+          {/* ── Agent Picker ─────────────────────────────── */}
+          {showAgentPicker && (
+            <div className="mb-4 bg-[var(--cs-surface-card)] border border-violet-500/30 rounded-xl p-4 space-y-3 animate-fadeIn">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">Select Agent</h3>
+                <button
+                  onClick={() => { setShowAgentPicker(false); setAgentSearch(''); setCategoryFilter('all'); }}
+                  className="text-xs text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)] transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+              <input
+                type="text"
+                value={agentSearch}
+                onChange={(e) => setAgentSearch(e.target.value)}
+                placeholder="Search agents..."
+                className="w-full px-3 py-2 text-sm rounded-md bg-[var(--cs-surface-app)] border border-[var(--cs-border-subtle)] text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] focus-ring transition-colors"
+              />
+              <div className="flex gap-1.5">
+                {(['all', 'business-product', 'research-analysis'] as const).map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setCategoryFilter(cat)}
+                    className={`px-2.5 py-1 text-xs rounded-md border transition-colors ${
+                      categoryFilter === cat
+                        ? 'bg-violet-600/20 border-violet-500/40 text-violet-300'
+                        : 'bg-[var(--cs-surface-app)] border-[var(--cs-border-subtle)] text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)]'
+                    }`}
+                  >
+                    {cat === 'all' ? 'All' : cat === 'business-product' ? 'Business & Product' : 'Research & Analysis'}
+                  </button>
+                ))}
+              </div>
+              <div className="max-h-64 overflow-y-auto space-y-1.5 scrollbar-thin">
+                {filteredCatalogAgents.map((def) => {
+                  const alreadyAdded = existingAgentIds.includes(def.id);
+                  return (
+                    <button
+                      key={def.id}
+                      onClick={() => !alreadyAdded && handlePickAgent(def)}
+                      disabled={alreadyAdded}
+                      className={`w-full text-left p-3 rounded-lg border transition-all ${
+                        alreadyAdded
+                          ? 'opacity-40 cursor-not-allowed border-[var(--cs-border-subtle)] bg-[var(--cs-surface-app)]/30'
+                          : 'border-[var(--cs-border-subtle)] bg-[var(--cs-surface-app)]/50 hover:bg-white/5 hover:border-violet-500/30'
+                      }`}
+                    >
+                      <div className="flex items-start gap-2">
+                        <div
+                          className="w-2 h-2 rounded-full mt-1.5 shrink-0"
+                          style={{ backgroundColor: def.category === 'business-product' ? '#f59e0b' : '#06b6d4' }}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-[var(--cs-text-primary)]">{def.role}</span>
+                            {alreadyAdded && (
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-[var(--cs-text-tertiary)]">Added</span>
+                            )}
+                          </div>
+                          <p className="text-xs text-[var(--cs-text-tertiary)] mt-0.5">{def.subtitle}</p>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+                {filteredCatalogAgents.length === 0 && (
+                  <p className="text-xs text-[var(--cs-text-tertiary)] text-center py-4">No agents match your search.</p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ── Remove agent confirmation ────────────────── */}
+          {agentToRemove && (() => {
+            const deps = dependentTasks(agentToRemove);
+            const agentName = crew.agents.find((a) => a.id === agentToRemove)?.role ?? 'this agent';
+            return (
+              <div className="mb-4 bg-[var(--cs-surface-card)] border border-red-500/30 rounded-xl p-4 space-y-3 animate-fadeIn">
+                <p className="text-sm text-[var(--cs-text-primary)]">
+                  Remove <strong>{agentName}</strong>?
+                </p>
+                {deps.length > 0 && (
+                  <div className="text-xs text-red-400 space-y-1">
+                    <p className="font-medium">This agent is assigned to {deps.length} task{deps.length > 1 ? 's' : ''} that will lose their assignment:</p>
+                    <ul className="list-disc list-inside pl-1 text-[var(--cs-text-tertiary)]">
+                      {deps.map((t) => (
+                        <li key={t.id} className="truncate">{t.description || t.id}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={confirmRemoveAgent}
+                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-medium transition-colors focus-ring"
+                  >
+                    {deps.length > 0 ? 'Remove anyway' : 'Yes, remove'}
+                  </button>
+                  <button
+                    onClick={() => setAgentToRemove(null)}
+                    className="px-3 py-1.5 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-subtle)] text-[var(--cs-text-secondary)] text-xs font-medium transition-colors hover:text-[var(--cs-text-primary)] focus-ring"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+
           {crew.agents.length > 0 ? (
             <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
               {crew.agents.map((agent) => (
-                <div key={agent.id} className="shrink-0 w-44 bg-[var(--cs-surface-card)] border border-[var(--cs-border-subtle)] rounded-xl p-4">
+                <div key={agent.id} className="shrink-0 w-44 bg-[var(--cs-surface-card)] border border-[var(--cs-border-subtle)] rounded-xl p-4 relative group">
+                  {/* Remove button */}
+                  <button
+                    onClick={() => setAgentToRemove(agent.id)}
+                    className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-[var(--cs-text-tertiary)] hover:text-red-400 hover:bg-red-400/10 opacity-0 group-hover:opacity-100 transition-all focus-ring"
+                    aria-label={`Remove ${agent.role}`}
+                    title="Remove agent"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold text-white mb-3"
                     style={{ backgroundColor: agent.color }}

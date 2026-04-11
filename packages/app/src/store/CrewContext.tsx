@@ -49,7 +49,7 @@ export interface CrewStoreActions {
   createCrew(input: CreateCrewInput): CrewDefinition;
   updateCrew(crewId: string, input: UpdateCrewInput): void;
   deleteCrew(crewId: string): void;
-  addAgentToCrew(crewId: string, agent: Omit<AgentNode, 'id' | 'status' | 'position'>): AgentNode;
+  addAgentToCrew(crewId: string, agent: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }): AgentNode;
   updateAgentInCrew(crewId: string, agentId: string, updates: Partial<Omit<AgentNode, 'id'>>): void;
   removeAgentFromCrew(crewId: string, agentId: string): void;
   addTaskToCrew(crewId: string, task: Omit<TaskNode, 'id' | 'status'>): TaskNode;
@@ -172,11 +172,12 @@ export function CrewProvider({ initialCrews, children }: CrewProviderProps): Rea
   }, []);
 
   const addAgentToCrew = useCallback(
-    (crewId: string, agentInput: Omit<AgentNode, 'id' | 'status' | 'position'>): AgentNode => {
+    (crewId: string, agentInput: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }): AgentNode => {
       const crew = state.crews.find((c) => c.id === crewId);
+      const { id: inputId, ...rest } = agentInput;
       const agent: AgentNode = {
-        ...agentInput,
-        id: generateId('agent'),
+        ...rest,
+        id: inputId ?? generateId('agent'),
         status: 'idle',
         position: { x: (crew?.agents.length ?? 0) * 200, y: 100 },
       };

@@ -25,6 +25,8 @@ import type {
   DiscussionResult,
 } from '@crewspace/core/types';
 import type { AgentNode, TaskNode, WorkflowState, DiscussionEdge } from '../types/workflow.js';
+import { ALL_HARDCODED_AGENTS } from '../data/hardcoded-agents.js';
+import type { HardcodedAgent } from '../data/hardcoded-agents.js';
 
 // ---------------------------------------------------------------------------
 // LLM provider configuration
@@ -105,42 +107,30 @@ export function saveLLMConfig(config: LLMConfig): void {
 // Prompt → Workflow plan (LLM-driven)
 // ---------------------------------------------------------------------------
 
-const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner that outputs ONLY valid JSON. Never output prose, markdown, or explanations. Your entire response must be a single JSON object.
+// Build a compact agent catalog for the system prompt (minimize tokens for local models)
+const AGENT_CATALOG = ALL_HARDCODED_AGENTS.map(
+  (a) => `${a.id} (${a.role})`,
+).join('\n');
 
-The user describes a goal. You decompose it into specialist AI agents and tasks.
+const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner. Output ONLY valid JSON — no prose, no markdown, no comments, no trailing commas.
 
-Agent rules:
-- id: must start with "agent-", alphanumeric with dashes
-- role: specific professional title (e.g. "Senior Content Strategist specializing in tech blogs" NOT "Writer")
-- goal: what this agent specifically contributes to the workflow
-- backstory: 2-3 sentences establishing domain expertise (years of experience, methodology, quality standards)
-- tools: array from [web-search, web-scraper, document-reader, data-processor, chart-generator, document-writer, code-executor, api-caller]
+The user describes a goal. Decompose it into agents and tasks.
 
-Task rules:
-- id: must start with "task-"
-- description: 1-2 detailed sentences on WHAT to do and HOW
-- agentId: MUST be one of the agent ids you defined
-- dependencies: array of task ids that must complete first (must exist in your output)
-- expectedOutput: specific description of the deliverable
-- discussion: optional object { participantIds: [agent ids], maxRounds: 1-10, convergenceStrategy: "unanimous"|"majority"|"stable-output", topic: string } for tasks needing multi-agent collaboration
+You MUST pick agents from this catalog using their exact id:
+${AGENT_CATALOG}
 
-Constraints:
-- Every task MUST have a valid agentId. Every agent MUST have at least one task.
-- 2-6 agents, 3-8 tasks, 0-4 discussions
-- Tasks form a DAG (no circular dependencies)
+Rules:
+- agentIds: pick 2-6 ids from the catalog
+- tasks: 3-8 tasks, each with id ("task-*"), description, agentId (from catalog), dependencies (array of task ids), expectedOutput
+- Every agent must have ≥1 task. No circular deps.
+- discussion field is optional, set to null when not needed
 
-Output ONLY this JSON:
-{"name":"string","agents":[{"id":"string","role":"string","goal":"string","backstory":"string","tools":["string"]}],"tasks":[{"id":"string","description":"string","agentId":"string","dependencies":["string"],"expectedOutput":"string","discussion":null}]}`;
+Output exactly:
+{"name":"string","agentIds":["id1","id2"],"tasks":[{"id":"task-1","description":"...","agentId":"id1","dependencies":[],"expectedOutput":"...","discussion":null}]}`;
 
 interface WorkflowPlan {
   name: string;
-  agents: Array<{
-    id: string;
-    role: string;
-    goal: string;
-    backstory: string;
-    tools: string[];
-  }>;
+  agentIds: string[];
   tasks: Array<{
     id: string;
     description: string;
@@ -156,6 +146,20 @@ interface WorkflowPlan {
   }>;
 }
 
+/** Build an AgentNode from a HardcodedAgent definition with a color and position. */
+function hardcodedToAgentNode(agent: HardcodedAgent, index: number): AgentNode {
+  return {
+    id: agent.id,
+    role: agent.role,
+    goal: agent.goal,
+    backstory: agent.backstory,
+    tools: [...agent.tools],
+    status: 'idle' as const,
+    color: AGENT_COLORS[index % AGENT_COLORS.length] ?? '#8b5cf6',
+    position: { x: 100 + (index % 4) * 300, y: 80 + Math.floor(index / 4) * 220 },
+  };
+}
+
 /** Ask the LLM to decompose a user prompt into agents + tasks with optional discussions. */
 export async function generateWorkflowPlan(
   prompt: string,
@@ -168,16 +172,43 @@ export async function generateWorkflowPlan(
 
   const plan = parseJsonResponse<WorkflowPlan>(response.content);
 
-  const agents: AgentNode[] = plan.agents.map((a, i) => ({
-    id: a.id ?? `agent-${i + 1}`,
-    role: a.role ?? `Agent ${i + 1}`,
-    goal: a.goal ?? '',
-    backstory: a.backstory ?? '',
-    tools: a.tools ?? [],
-    status: 'idle' as const,
-    color: AGENT_COLORS[i % AGENT_COLORS.length] ?? '#8b5cf6',
-    position: { x: 100 + (i % 4) * 300, y: 80 + Math.floor(i / 4) * 220 },
-  }));
+  // Resolve agents from the hardcoded catalog
+  const hardcodedMap = new Map(ALL_HARDCODED_AGENTS.map((a) => [a.id, a]));
+
+  // The LLM may return agentIds or the old agents array format — handle both.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const rawPlan = plan as any;
+  let selectedIds: string[] = plan.agentIds ?? [];
+  if ((!selectedIds || selectedIds.length === 0) && rawPlan.agents) {
+    // Fallback: LLM returned old format with agents array — extract ids
+    selectedIds = (rawPlan.agents as Array<{ id: string }>).map((a) => a.id);
+  }
+
+  // Filter to only valid hardcoded agent IDs
+  const validIds = selectedIds.filter((id) => hardcodedMap.has(id));
+
+  // Also collect any agentIds referenced by tasks that are valid
+  for (const t of plan.tasks) {
+    if (t.agentId && hardcodedMap.has(t.agentId) && !validIds.includes(t.agentId)) {
+      validIds.push(t.agentId);
+    }
+  }
+
+  // Ensure we have at least 2 agents
+  if (validIds.length < 2) {
+    // Pick the first 2 from the catalog as fallback
+    for (const a of ALL_HARDCODED_AGENTS) {
+      if (!validIds.includes(a.id)) {
+        validIds.push(a.id);
+        if (validIds.length >= 2) break;
+      }
+    }
+  }
+
+  const agents: AgentNode[] = validIds.map((id, i) => {
+    const def = hardcodedMap.get(id)!;
+    return hardcodedToAgentNode(def, i);
+  });
 
   // Build a set of valid agent IDs for lookup
   const validAgentIds = new Set(agents.map((a) => a.id));
@@ -266,12 +297,13 @@ function buildDiscussionEdges(tasks: TaskNode[]): DiscussionEdge[] {
 // Chat follow-up (LLM-driven)
 // ---------------------------------------------------------------------------
 
-const CHAT_SYSTEM_PROMPT = `You are an AI assistant helping the user refine their agent workflow. The user may ask to modify agents, tasks, discussions, or run the workflow.
+const CHAT_SYSTEM_PROMPT = `You are an AI assistant helping the user refine their agent workflow.
 
-Tasks may include a "discussion" object where agents collaborate before execution. When modifying, you can add/remove/update discussions.
+Agents come from a fixed catalog (only these ids are valid):
+${AGENT_CATALOG}
 
-If the user wants to modify the workflow, respond with JSON wrapped in <json>...</json> tags with the full updated workflow plan (same schema: agents, tasks with optional discussion fields).
-If the user is asking a question or chatting, respond normally in markdown.
+If the user wants to modify the workflow, respond with JSON (no trailing commas) wrapped in <json>...</json> tags containing {"name","agentIds":[...],"tasks":[...]}.
+Otherwise respond in markdown.
 
 Current workflow:
 `;
@@ -316,16 +348,27 @@ export async function chatWithWorkflow(
   if (jsonMatch?.[1] && workflow) {
     try {
       const plan = JSON.parse(jsonMatch[1]) as WorkflowPlan;
-      const agents: AgentNode[] = plan.agents.map((a, i) => ({
-        id: a.id,
-        role: a.role,
-        goal: a.goal,
-        backstory: a.backstory ?? '',
-        tools: a.tools ?? [],
-        status: 'idle' as const,
-        color: AGENT_COLORS[i % AGENT_COLORS.length] ?? '#8b5cf6',
-        position: { x: 100 + (i % 4) * 300, y: 80 + Math.floor(i / 4) * 220 },
-      }));
+      const hardcodedMap = new Map(ALL_HARDCODED_AGENTS.map((a) => [a.id, a]));
+
+      // Resolve agent IDs from the hardcoded catalog
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const rawPlan = plan as any;
+      let selectedIds: string[] = plan.agentIds ?? [];
+      if ((!selectedIds || selectedIds.length === 0) && rawPlan.agents) {
+        selectedIds = (rawPlan.agents as Array<{ id: string }>).map((a) => a.id);
+      }
+      const validIds = selectedIds.filter((id) => hardcodedMap.has(id));
+      // Also include any agentIds from tasks
+      for (const t of plan.tasks) {
+        if (t.agentId && hardcodedMap.has(t.agentId) && !validIds.includes(t.agentId)) {
+          validIds.push(t.agentId);
+        }
+      }
+
+      const agents: AgentNode[] = validIds.map((id, i) => {
+        const def = hardcodedMap.get(id)!;
+        return hardcodedToAgentNode(def, i);
+      });
       const tasks: TaskNode[] = plan.tasks.map((t) => ({
         id: t.id,
         description: t.description,
@@ -546,16 +589,60 @@ function parseJsonResponse<T>(content: string): T {
 
   // Local models (Ollama) sometimes emit preamble text before the JSON object.
   // Try a direct parse first; if it fails, extract the first { ... } block.
-  try {
-    return JSON.parse(cleaned) as T;
-  } catch {
-    const start = cleaned.indexOf('{');
-    const end = cleaned.lastIndexOf('}');
-    if (start !== -1 && end > start) {
-      return JSON.parse(cleaned.slice(start, end + 1)) as T;
-    }
-    throw new Error(`LLM response is not valid JSON:\n${cleaned.slice(0, 300)}`);
+  const attempts: string[] = [cleaned];
+
+  // Extract {…} block if there's preamble/postamble text
+  const braceStart = cleaned.indexOf('{');
+  const braceEnd = cleaned.lastIndexOf('}');
+  if (braceStart !== -1 && braceEnd > braceStart) {
+    attempts.push(cleaned.slice(braceStart, braceEnd + 1));
   }
+
+  for (const raw of attempts) {
+    // Try raw first
+    try {
+      return JSON.parse(raw) as T;
+    } catch {
+      // Apply common LLM JSON fixes and retry
+      try {
+        return JSON.parse(fixLlmJson(raw)) as T;
+      } catch {
+        // continue to next attempt
+      }
+    }
+  }
+
+  throw new Error(`LLM response is not valid JSON:\n${cleaned.slice(0, 300)}`);
+}
+
+/**
+ * Fix common JSON mistakes that LLMs (especially local models) produce:
+ * - Trailing commas before ] or }
+ * - Single-line // comments
+ * - Single quotes instead of double quotes (only outside existing double-quoted strings)
+ * - Unquoted object keys
+ */
+function fixLlmJson(raw: string): string {
+  let s = raw;
+
+  // Remove single-line comments (// ...)
+  s = s.replace(/\/\/[^\n]*/g, '');
+
+  // Remove multi-line comments (/* ... */)
+  s = s.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  // Trailing commas: ",]" → "]"  and ",}" → "}"
+  // We need to be careful not to touch commas inside strings.
+  // Simple approach: repeatedly strip trailing commas outside strings.
+  s = s.replace(/,\s*([\]\}])/g, '$1');
+
+  // Handle control characters that break JSON.parse
+  s = s.replace(/[\x00-\x1f]/g, (ch) => {
+    if (ch === '\n' || ch === '\r' || ch === '\t') return ch;
+    return '';
+  });
+
+  return s;
 }
 
 /**

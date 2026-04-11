@@ -1,91 +1,504 @@
 /**
- * TemplatesPage — template browser with instantiation support.
- * TASK-131: Protected page scaffold.
- * TASK-161: Wired to TemplateBrowserWithInstantiation container.
+ * TemplatesPage — Crew & workflow template gallery.
+ * Browse pre-built team configurations and spin up new workflows instantly.
  */
-import React, { useState, useCallback } from 'react';
-import {
-  TemplateBrowserWithInstantiation,
-  type InstantiationResult,
-} from '@crewspace/ui';
-import type { TemplateSummary } from '@crewspace/ui';
+import React, { useState, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { workflowPath, ROUTES } from '../router/routes.js';
 
-// Placeholder templates for development — will be replaced by API data
-const DEMO_TEMPLATES: TemplateSummary[] = [
+/* ------------------------------------------------------------------ */
+/* Template data                                                       */
+/* ------------------------------------------------------------------ */
+
+interface TemplateAgent {
+  role: string;
+  goal: string;
+  color: string;
+}
+
+interface Template {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  categoryColor: string;
+  agents: TemplateAgent[];
+  taskCount: number;
+  usageCount: number;
+  featured: boolean;
+  tags: string[];
+}
+
+const TEMPLATES: Template[] = [
   {
-    id: 'tpl-research',
-    name: 'Research Pipeline',
-    description: 'Automated research workflow with web scraping and summarization using GPT-4.',
-    category: 'research',
-    tags: ['research', 'scraping', 'GPT-4'],
-    author: 'Crewspace',
-    usageCount: 1250,
-    agentCount: 2,
-    taskCount: 4,
+    id: 'tpl-market-research',
+    name: 'Market Research Crew',
+    description: 'A team of analysts that researches market trends, competitor strategies, and customer needs — delivering a comprehensive report with actionable insights.',
+    category: 'Research',
+    categoryColor: '#38bdf8',
+    agents: [
+      { role: 'Industry Analyst', goal: 'Identify market trends and opportunities', color: '#38bdf8' },
+      { role: 'Competitor Researcher', goal: 'Analyze competitor strengths and weaknesses', color: '#a78bfa' },
+      { role: 'Customer Insights Specialist', goal: 'Synthesize customer feedback and needs', color: '#34d399' },
+      { role: 'Report Writer', goal: 'Compile findings into executive summary', color: '#fbbf24' },
+    ],
+    taskCount: 6,
+    usageCount: 2340,
     featured: true,
-    popular: true,
-    createdAt: '2026-01-15T10:00:00Z',
-    updatedAt: '2026-03-20T14:00:00Z',
+    tags: ['market analysis', 'competitive intelligence', 'strategy'],
   },
   {
-    id: 'tpl-codereview',
-    name: 'Code Review Bot',
-    description: 'Automated code review pipeline that analyzes PRs for quality, security, and style.',
-    category: 'code',
-    tags: ['code-review', 'automation', 'CI/CD'],
-    author: 'DevTeam',
-    usageCount: 890,
-    agentCount: 3,
+    id: 'tpl-content-marketing',
+    name: 'Content Marketing Squad',
+    description: 'Plan, write, review, and schedule a full content calendar — from ideation to publish-ready blog posts, social media copy, and email campaigns.',
+    category: 'Content',
+    categoryColor: '#fbbf24',
+    agents: [
+      { role: 'Content Strategist', goal: 'Define content themes and editorial calendar', color: '#fbbf24' },
+      { role: 'Copywriter', goal: 'Draft blog posts and social media content', color: '#fb7185' },
+      { role: 'SEO Specialist', goal: 'Optimize content for search engines', color: '#34d399' },
+      { role: 'Editor', goal: 'Review and polish all written content', color: '#a78bfa' },
+    ],
+    taskCount: 7,
+    usageCount: 1870,
+    featured: true,
+    tags: ['blogging', 'social media', 'SEO', 'campaigns'],
+  },
+  {
+    id: 'tpl-code-review',
+    name: 'Code Review Pipeline',
+    description: 'Automated multi-pass code review that checks for bugs, security vulnerabilities, performance issues, and style consistency across pull requests.',
+    category: 'Engineering',
+    categoryColor: '#a78bfa',
+    agents: [
+      { role: 'Security Auditor', goal: 'Identify security vulnerabilities and injection risks', color: '#fb7185' },
+      { role: 'Performance Reviewer', goal: 'Flag performance bottlenecks and inefficiencies', color: '#fbbf24' },
+      { role: 'Style Checker', goal: 'Ensure code follows team style guidelines', color: '#a78bfa' },
+    ],
     taskCount: 5,
+    usageCount: 1450,
     featured: false,
-    popular: true,
-    createdAt: '2026-02-01T08:00:00Z',
-    updatedAt: '2026-03-25T16:00:00Z',
+    tags: ['code review', 'security', 'CI/CD', 'quality'],
   },
   {
-    id: 'tpl-support',
-    name: 'Customer Support Agent',
-    description: 'Multi-tier support workflow with ticket classification, response generation, and escalation.',
-    category: 'support',
-    tags: ['support', 'tickets', 'escalation'],
-    author: 'Crewspace',
-    usageCount: 650,
-    agentCount: 2,
-    taskCount: 3,
+    id: 'tpl-customer-support',
+    name: 'Customer Support Crew',
+    description: 'Triage incoming tickets, generate contextual responses, and escalate complex issues — reducing response time and improving customer satisfaction.',
+    category: 'Support',
+    categoryColor: '#34d399',
+    agents: [
+      { role: 'Ticket Classifier', goal: 'Categorize and prioritize support tickets', color: '#38bdf8' },
+      { role: 'Response Generator', goal: 'Draft helpful, empathetic replies', color: '#34d399' },
+      { role: 'Escalation Manager', goal: 'Route complex issues to human agents', color: '#fb7185' },
+    ],
+    taskCount: 4,
+    usageCount: 980,
     featured: true,
-    popular: false,
-    createdAt: '2026-01-20T12:00:00Z',
-    updatedAt: '2026-03-18T10:00:00Z',
+    tags: ['helpdesk', 'automation', 'ticketing', 'SLA'],
+  },
+  {
+    id: 'tpl-data-pipeline',
+    name: 'Data Analysis Pipeline',
+    description: 'Ingest data from multiple sources, clean and transform it, run statistical analysis, and produce visualization-ready summaries and dashboards.',
+    category: 'Data',
+    categoryColor: '#fb7185',
+    agents: [
+      { role: 'Data Engineer', goal: 'Collect and clean data from multiple sources', color: '#38bdf8' },
+      { role: 'Data Analyst', goal: 'Run statistical analysis and find patterns', color: '#fb7185' },
+      { role: 'Visualization Specialist', goal: 'Create charts and dashboard summaries', color: '#fbbf24' },
+    ],
+    taskCount: 5,
+    usageCount: 760,
+    featured: false,
+    tags: ['analytics', 'ETL', 'dashboards', 'statistics'],
+  },
+  {
+    id: 'tpl-onboarding',
+    name: 'Employee Onboarding Crew',
+    description: 'Automate new hire onboarding — generate personalized welcome docs, schedule orientation meetings, assign training modules, and track completion.',
+    category: 'Automation',
+    categoryColor: '#cbd5e1',
+    agents: [
+      { role: 'Onboarding Coordinator', goal: 'Orchestrate the full onboarding checklist', color: '#a78bfa' },
+      { role: 'Document Generator', goal: 'Create personalized welcome materials', color: '#34d399' },
+      { role: 'Training Scheduler', goal: 'Assign and schedule training modules', color: '#fbbf24' },
+    ],
+    taskCount: 6,
+    usageCount: 540,
+    featured: false,
+    tags: ['HR', 'onboarding', 'training', 'automation'],
+  },
+  {
+    id: 'tpl-product-launch',
+    name: 'Product Launch Team',
+    description: 'Coordinate a product launch across marketing, engineering, and sales — from positioning and messaging to launch-day execution and post-launch analysis.',
+    category: 'Content',
+    categoryColor: '#fbbf24',
+    agents: [
+      { role: 'Launch Manager', goal: 'Coordinate cross-functional launch timeline', color: '#fb7185' },
+      { role: 'Messaging Strategist', goal: 'Craft positioning and key messaging', color: '#fbbf24' },
+      { role: 'Channel Coordinator', goal: 'Prepare assets for each distribution channel', color: '#38bdf8' },
+      { role: 'Analytics Lead', goal: 'Track launch KPIs and report results', color: '#34d399' },
+    ],
+    taskCount: 8,
+    usageCount: 430,
+    featured: true,
+    tags: ['GTM', 'launch', 'marketing', 'cross-functional'],
+  },
+  {
+    id: 'tpl-incident-response',
+    name: 'Incident Response Crew',
+    description: 'Detect, triage, and remediate production incidents — with automated root-cause analysis, stakeholder communication, and post-mortem generation.',
+    category: 'Engineering',
+    categoryColor: '#a78bfa',
+    agents: [
+      { role: 'Incident Commander', goal: 'Coordinate response and communication', color: '#fb7185' },
+      { role: 'Root Cause Analyst', goal: 'Investigate logs and identify root cause', color: '#a78bfa' },
+      { role: 'Comms Lead', goal: 'Draft status updates and stakeholder notifications', color: '#fbbf24' },
+    ],
+    taskCount: 5,
+    usageCount: 670,
+    featured: false,
+    tags: ['SRE', 'incident management', 'post-mortem', 'ops'],
+  },
+  {
+    id: 'tpl-sales-outreach',
+    name: 'Sales Outreach Squad',
+    description: 'Research prospects, personalize outreach sequences, and follow up — driving pipeline with data-driven, multi-touch engagement campaigns.',
+    category: 'Automation',
+    categoryColor: '#cbd5e1',
+    agents: [
+      { role: 'Prospect Researcher', goal: 'Gather intelligence on target accounts', color: '#38bdf8' },
+      { role: 'Outreach Writer', goal: 'Craft personalized email sequences', color: '#34d399' },
+      { role: 'Follow-up Coordinator', goal: 'Schedule and execute follow-up touchpoints', color: '#fbbf24' },
+    ],
+    taskCount: 5,
+    usageCount: 890,
+    featured: false,
+    tags: ['sales', 'email', 'outreach', 'prospecting'],
   },
 ];
 
-/** Simulates instantiation — will be replaced with real API call. */
-async function simulateInstantiation(
-  templateId: string,
-  options: { workflowName: string; workflowDescription?: string },
-): Promise<InstantiationResult> {
-  await new Promise((r) => setTimeout(r, 800));
-  return {
-    workflowId: `wf-${Date.now()}`,
-    templateId,
-    workflowName: options.workflowName,
-    instantiatedAt: new Date().toISOString(),
-  };
-}
+const CATEGORIES = ['All', 'Research', 'Content', 'Engineering', 'Support', 'Data', 'Automation'];
+
+/* ------------------------------------------------------------------ */
+/* Component                                                           */
+/* ------------------------------------------------------------------ */
 
 export function TemplatesPage(): React.JSX.Element {
-  const handleGoToWorkflow = useCallback((workflowId: string) => {
-    // Will integrate with router navigation
-    console.log(`Navigate to workflow: ${workflowId}`);
-  }, []);
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  return React.createElement(
-    'main',
-    { 'data-testid': 'templates-page' },
-    React.createElement(TemplateBrowserWithInstantiation, {
-      templates: DEMO_TEMPLATES,
-      onInstantiate: simulateInstantiation,
-      onGoToWorkflow: handleGoToWorkflow,
-    }),
+  const filtered = useMemo(() => {
+    let result = TEMPLATES;
+    if (activeCategory !== 'All') {
+      result = result.filter((t) => t.category === activeCategory);
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(
+        (t) =>
+          t.name.toLowerCase().includes(q) ||
+          t.description.toLowerCase().includes(q) ||
+          t.tags.some((tag) => tag.includes(q)),
+      );
+    }
+    return result;
+  }, [search, activeCategory]);
+
+  const handleUseTemplate = useCallback(
+    (template: Template) => {
+      const workflowId = `wf-${Date.now()}`;
+      navigate(workflowPath(workflowId), {
+        state: {
+          prompt: `Create a workflow for: ${template.name} — ${template.description}`,
+        },
+      });
+    },
+    [navigate],
+  );
+
+  return (
+    <div className="min-h-screen bg-[var(--cs-surface-app)] flex flex-col scrollbar-thin" data-testid="templates-page">
+      {/* ── Sticky Glass Nav ─────────────────────────────────── */}
+      <header className="glass sticky top-0 z-50 border-b border-[var(--cs-border-subtle)]">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg>
+              </div>
+              <span className="text-lg font-semibold text-[var(--cs-text-primary)] tracking-tight">
+                <span className="gradient-text">Crew</span>Space
+              </span>
+            </button>
+          </div>
+          <nav className="hidden md:flex items-center gap-6">
+            <button onClick={() => navigate('/crews')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">My Crews</button>
+            <button className="text-sm text-violet-400 font-medium">Templates</button>
+            <button onClick={() => navigate('/marketplace')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Marketplace</button>
+          </nav>
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/25 focus-ring"
+          >
+            New Crew
+          </button>
+        </div>
+      </header>
+
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="pt-16 pb-10 text-center px-6">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-[var(--cs-text-primary)] tracking-tight mb-3">
+          Crew <span className="gradient-text">Templates</span>
+        </h1>
+        <p className="text-base text-[var(--cs-text-secondary)] max-w-xl mx-auto leading-relaxed">
+          Pre-built team configurations with specialized agents and workflows. Pick a template and customize it for your needs.
+        </p>
+      </section>
+
+      {/* ── Search + Filters ─────────────────────────────────── */}
+      <div className="max-w-5xl mx-auto w-full px-6 mb-8">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          {/* Search */}
+          <div className="relative flex-1">
+            <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--cs-text-tertiary)] pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search templates..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 transition-colors"
+            />
+          </div>
+
+          {/* Category pills */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  activeCategory === cat
+                    ? 'bg-violet-500/15 text-violet-400 border border-violet-500/30'
+                    : 'text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)] border border-transparent hover:border-[var(--cs-border-subtle)]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Featured Section ─────────────────────────────────── */}
+      {activeCategory === 'All' && !search.trim() && (
+        <section className="max-w-5xl mx-auto w-full px-6 mb-10">
+          <p className="text-xs uppercase tracking-wider text-[var(--cs-text-tertiary)] mb-4 font-medium">Featured</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {TEMPLATES.filter((t) => t.featured).map((template) => (
+              <FeaturedCard key={template.id} template={template} onUse={handleUseTemplate} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── All Templates Grid ───────────────────────────────── */}
+      <section className="max-w-5xl mx-auto w-full px-6 pb-20">
+        {activeCategory === 'All' && !search.trim() && (
+          <p className="text-xs uppercase tracking-wider text-[var(--cs-text-tertiary)] mb-4 font-medium">All templates</p>
+        )}
+        {filtered.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-[var(--cs-text-tertiary)] text-sm">No templates found matching your search.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filtered.map((template) => (
+              <TemplateCard key={template.id} template={template} onUse={handleUseTemplate} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ── Footer ───────────────────────────────────────────── */}
+      <footer className="mt-auto px-6 py-8 border-t border-[var(--cs-border-subtle)] flex items-center justify-center">
+        <p className="text-xs text-[var(--cs-text-tertiary)]">
+          © {new Date().getFullYear()} CrewSpace — AI Agent Orchestration Platform
+        </p>
+      </footer>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Featured card (larger, with agent list)                             */
+/* ------------------------------------------------------------------ */
+
+function FeaturedCard({
+  template,
+  onUse,
+}: {
+  template: Template;
+  onUse: (t: Template) => void;
+}): React.JSX.Element {
+  return (
+    <div className="group relative rounded-2xl border border-[var(--cs-border-default)] bg-white/[0.02] hover:bg-white/[0.05] hover:border-[var(--cs-border-hover)] transition-all duration-200 overflow-hidden">
+      {/* Color accent */}
+      <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: template.categoryColor }} />
+
+      <div className="p-6">
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <span
+              className="inline-block text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full mb-2"
+              style={{ color: template.categoryColor, backgroundColor: `${template.categoryColor}20` }}
+            >
+              {template.category}
+            </span>
+            <h3 className="text-base font-semibold text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors">
+              {template.name}
+            </h3>
+          </div>
+          <span className="shrink-0 text-[10px] text-[var(--cs-text-tertiary)] tabular-nums mt-1">{template.usageCount.toLocaleString()} uses</span>
+        </div>
+
+        <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed mb-4">
+          {template.description}
+        </p>
+
+        {/* Agent circles */}
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex -space-x-1.5">
+            {template.agents.map((agent, i) => (
+              <div
+                key={i}
+                className="w-7 h-7 rounded-full border-2 border-[var(--cs-surface-app)] flex items-center justify-center text-[9px] font-bold text-white"
+                style={{ backgroundColor: agent.color }}
+                title={agent.role}
+              >
+                {agent.role.charAt(0)}
+              </div>
+            ))}
+          </div>
+          <span className="text-[11px] text-[var(--cs-text-tertiary)]">
+            {template.agents.length} agents · {template.taskCount} tasks
+          </span>
+        </div>
+
+        {/* Agent roles */}
+        <div className="flex flex-wrap gap-1.5 mb-5">
+          {template.agents.map((agent, i) => (
+            <span
+              key={i}
+              className="text-[10px] px-2 py-0.5 rounded-full border"
+              style={{
+                color: agent.color,
+                borderColor: `${agent.color}40`,
+                backgroundColor: `${agent.color}10`,
+              }}
+            >
+              {agent.role}
+            </span>
+          ))}
+        </div>
+
+        <button
+          onClick={() => onUse(template)}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/20 focus-ring"
+        >
+          Use Template
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Standard template card                                              */
+/* ------------------------------------------------------------------ */
+
+function TemplateCard({
+  template,
+  onUse,
+}: {
+  template: Template;
+  onUse: (t: Template) => void;
+}): React.JSX.Element {
+  return (
+    <div className="group flex flex-col rounded-xl border border-[var(--cs-border-subtle)] bg-white/[0.02] hover:bg-white/[0.05] hover:border-[var(--cs-border-default)] transition-all duration-200 overflow-hidden">
+      {/* Color accent */}
+      <div className="h-0.5" style={{ backgroundColor: template.categoryColor }} />
+
+      <div className="flex flex-col flex-1 p-5">
+        <div className="flex items-center justify-between mb-2">
+          <span
+            className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full"
+            style={{ color: template.categoryColor, backgroundColor: `${template.categoryColor}20` }}
+          >
+            {template.category}
+          </span>
+          <span className="text-[10px] text-[var(--cs-text-tertiary)] tabular-nums">{template.usageCount.toLocaleString()} uses</span>
+        </div>
+
+        <h3 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors mb-1.5">
+          {template.name}
+        </h3>
+        <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed mb-4 line-clamp-2 flex-1">
+          {template.description}
+        </p>
+
+        {/* Agents preview */}
+        <div className="flex items-center gap-2 mb-3">
+          <div className="flex -space-x-1">
+            {template.agents.slice(0, 4).map((agent, i) => (
+              <div
+                key={i}
+                className="w-6 h-6 rounded-full border-2 border-[var(--cs-surface-app)] flex items-center justify-center text-[8px] font-bold text-white"
+                style={{ backgroundColor: agent.color }}
+                title={agent.role}
+              >
+                {agent.role.charAt(0)}
+              </div>
+            ))}
+          </div>
+          <span className="text-[11px] text-[var(--cs-text-tertiary)]">
+            {template.agents.length} agents · {template.taskCount} tasks
+          </span>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1 mb-4">
+          {template.tags.slice(0, 3).map((tag) => (
+            <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded-md bg-white/[0.04] text-[var(--cs-text-tertiary)] border border-[var(--cs-border-subtle)]">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <button
+          onClick={() => onUse(template)}
+          className="mt-auto w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-violet-500/30 text-violet-400 hover:bg-violet-500/10 text-xs font-medium transition-colors focus-ring"
+        >
+          Use Template
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 }

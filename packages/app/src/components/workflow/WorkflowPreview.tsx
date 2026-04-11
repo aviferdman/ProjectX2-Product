@@ -742,12 +742,6 @@ function GraphView({
                   onClick={() => { addTask(a.id); setContextMenu(null); }}
                 />
               ))}
-              <div className="border-t border-[var(--cs-border-subtle)]" />
-              <ContextMenuItem
-                label="Add new agent"
-                icon={<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4" /><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" /></svg>}
-                onClick={() => { addAgent(); setContextMenu(null); }}
-              />
             </>
           )}
           {contextMenu.type === 'task' && contextMenu.taskId && (() => {

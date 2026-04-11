@@ -4,7 +4,8 @@
  */
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { workflowPath, crewPath } from '../router/routes.js';
+import { workflowPath, crewPath, ROUTES } from '../router/routes.js';
+import { useAuth } from '../auth/index.js';
 
 const EXAMPLE_PROMPTS = [
   'Conduct market research in the mobile gaming industry — identify user needs and MVP strategy',
@@ -65,10 +66,13 @@ const STATS = [
 
 export function HomePage(): React.JSX.Element {
   const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
   const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   // Rotate placeholder text
   useEffect(() => {
@@ -76,6 +80,17 @@ export function HomePage(): React.JSX.Element {
       setPlaceholderIndex((prev) => (prev + 1) % EXAMPLE_PROMPTS.length);
     }, 4000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Close user menu on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setShowUserMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, []);
 
   // Auto-resize textarea
@@ -134,15 +149,63 @@ export function HomePage(): React.JSX.Element {
             <button onClick={() => navigate('/marketplace')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Marketplace</button>
           </nav>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => textareaRef.current?.focus()}
-              className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/25 focus-ring"
-            >
-              Get Started
-            </button>
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center text-xs font-bold text-[var(--cs-text-primary)]">
-              D
-            </div>
+            {isAuthenticated && user ? (
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  onClick={() => setShowUserMenu((v) => !v)}
+                  className="flex items-center gap-2 p-1 rounded-full hover:ring-2 hover:ring-violet-500/30 transition-all focus-ring"
+                  aria-label="User menu"
+                >
+                  {user.avatarUrl ? (
+                    <img
+                      src={user.avatarUrl}
+                      alt={user.name}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center text-xs font-bold text-white">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </button>
+
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-2 w-56 rounded-xl border border-[var(--cs-border-default)] bg-[var(--cs-surface-panel)] shadow-2xl shadow-black/30 py-2 z-50 animate-fadeIn">
+                    <div className="px-4 py-2.5 border-b border-[var(--cs-border-subtle)]">
+                      <p className="text-sm font-medium text-[var(--cs-text-primary)] truncate">{user.name}</p>
+                      <p className="text-xs text-[var(--cs-text-tertiary)] truncate">{user.email}</p>
+                    </div>
+                    <button
+                      onClick={() => { setShowUserMenu(false); navigate('/settings'); }}
+                      className="w-full text-left px-4 py-2 text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] hover:bg-white/[0.04] transition-colors"
+                    >
+                      Settings
+                    </button>
+                    <button
+                      onClick={() => { setShowUserMenu(false); logout(); }}
+                      className="w-full text-left px-4 py-2 text-sm text-rose-400 hover:bg-rose-500/10 transition-colors"
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate(ROUTES.LOGIN)}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--cs-border-default)] hover:border-[var(--cs-border-hover)] text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] text-sm font-medium transition-all focus-ring"
+                >
+                  Sign in
+                </button>
+                <button
+                  onClick={() => navigate(ROUTES.LOGIN)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all shadow-lg shadow-violet-500/25 focus-ring"
+                >
+                  Get Started
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>

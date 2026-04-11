@@ -6,7 +6,7 @@ interface AgentListProps {
   agents: AgentNode[];
   selectedAgentId: string | null;
   onSelect: (agentId: string | null) => void;
-  onAdd: (agent: Omit<AgentNode, 'id' | 'status' | 'position'>) => void;
+  onAdd: (agent: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) => void;
   onUpdate: (agentId: string, updates: Partial<Omit<AgentNode, 'id'>>) => void;
   onDelete: (agentId: string) => void;
 }
@@ -31,13 +31,15 @@ export function AgentList({
   const selectedAgent = agents.find((a) => a.id === selectedAgentId);
 
   const handleSave = (
-    data: Omit<AgentNode, 'id' | 'status' | 'position'> | { id: string } & Partial<Omit<AgentNode, 'id'>>,
+    data: (Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) | ({ id: string } & Partial<Omit<AgentNode, 'id'>>),
   ) => {
-    if ('id' in data) {
+    if ('id' in data && data.id && agents.some((a) => a.id === data.id)) {
+      // Editing an existing agent
       const { id, ...updates } = data;
       onUpdate(id, updates);
     } else {
-      onAdd(data);
+      // Adding a new agent (with optional hardcoded ID)
+      onAdd(data as Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string });
     }
     onSelect(null);
     setIsAdding(false);
@@ -53,6 +55,8 @@ export function AgentList({
     onSelect(null);
   };
 
+  const existingAgentIds = agents.map((a) => a.id);
+
   if (selectedAgent) {
     return (
       <div className="h-full overflow-y-auto scrollbar-thin">
@@ -61,6 +65,7 @@ export function AgentList({
           onSave={handleSave}
           onCancel={handleCancel}
           onDelete={handleDelete}
+          existingAgentIds={existingAgentIds}
         />
       </div>
     );
@@ -69,7 +74,11 @@ export function AgentList({
   if (isAdding) {
     return (
       <div className="h-full overflow-y-auto scrollbar-thin">
-        <AgentEditor onSave={handleSave} onCancel={handleCancel} />
+        <AgentEditor
+          onSave={handleSave}
+          onCancel={handleCancel}
+          existingAgentIds={existingAgentIds}
+        />
       </div>
     );
   }
