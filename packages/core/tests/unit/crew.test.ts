@@ -1423,7 +1423,8 @@ describe('Crew', () => {
 
       const userMsg = capturedMessages.find((m) => m.role === 'user');
       expect(userMsg).toBeDefined();
-      expect(userMsg!.content).toBe('Plain task');
+      expect(userMsg!.content).toContain('Plain task');
+      expect(userMsg!.content).not.toContain('Context from Previous Tasks');
     });
   });
 

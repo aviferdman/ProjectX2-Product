@@ -1149,10 +1149,28 @@ function DetailsPanel({
   // ── Task field updater ──
   const updateTask = useCallback((patch: Partial<TaskNode>) => {
     if (!onWorkflowChange || !task) return;
-    onWorkflowChange({
-      ...workflow,
-      tasks: workflow.tasks.map((t) => (t.id === task.id ? { ...t, ...patch } : t)),
-    });
+    const updatedTasks = workflow.tasks.map((t) => (t.id === task.id ? { ...t, ...patch } : t));
+    // If discussion participantIds changed, rebuild discussion edges for this task
+    if (patch.discussion?.participantIds) {
+      const newParticipants = patch.discussion.participantIds;
+      const otherEdges = (workflow.discussionEdges ?? []).filter(e => e.taskId !== task.id);
+      const newEdges: typeof workflow.discussionEdges = [];
+      for (let i = 0; i < newParticipants.length; i++) {
+        for (let j = i + 1; j < newParticipants.length; j++) {
+          newEdges.push({
+            id: `edge-${task.id}-${newParticipants[i]}-${newParticipants[j]}`,
+            fromAgentId: newParticipants[i]!,
+            toAgentId: newParticipants[j]!,
+            taskId: task.id,
+            status: 'idle',
+            messages: [],
+          });
+        }
+      }
+      onWorkflowChange({ ...workflow, tasks: updatedTasks, discussionEdges: [...otherEdges, ...newEdges] });
+    } else {
+      onWorkflowChange({ ...workflow, tasks: updatedTasks });
+    }
   }, [onWorkflowChange, workflow, task]);
 
   const inputClass = 'w-full bg-[var(--cs-surface-card)]/20 border border-[var(--cs-border-subtle)] rounded-lg px-2.5 py-1.5 text-sm text-[var(--cs-text-primary)] placeholder:text-[var(--cs-text-tertiary)] focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors';
@@ -1427,17 +1445,60 @@ function DetailsPanel({
 
                   {/* Participants */}
                   <div>
-                    <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">Participants</label>
+                    <label className="text-[10px] font-semibold text-[var(--cs-text-tertiary)] uppercase tracking-wider">
+                      Participants ({participants.length})
+                    </label>
                     <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                       {participants.map(a => (
-                        <div key={a.id} className="flex items-center gap-1 px-1.5 py-1 rounded-lg bg-[var(--cs-surface-card)]/15 border border-[var(--cs-border-subtle)]">
+                        <div key={a.id} className="flex items-center gap-1 px-1.5 py-1 rounded-lg bg-[var(--cs-surface-card)]/15 border border-[var(--cs-border-subtle)] group/chip">
                           <div className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold text-white" style={{ backgroundColor: a.color }}>
                             {a.role.charAt(0)}
                           </div>
                           <span className="text-[10px] text-[var(--cs-text-secondary)]">{a.role}</span>
+                          {canEdit && participants.length > 2 && (
+                            <button
+                              className="ml-0.5 w-3.5 h-3.5 rounded-full flex items-center justify-center text-[var(--cs-text-tertiary)] hover:text-rose-400 hover:bg-rose-500/15 transition-colors opacity-0 group-hover/chip:opacity-100"
+                              title={`Remove ${a.role} from discussion`}
+                              onClick={() => {
+                                const newIds = task.discussion!.participantIds.filter(pid => pid !== a.id);
+                                updateTask({ discussion: { ...task.discussion!, participantIds: newIds } });
+                              }}
+                            >
+                              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                              </svg>
+                            </button>
+                          )}
                         </div>
                       ))}
                     </div>
+
+                    {/* Add participant dropdown */}
+                    {canEdit && (() => {
+                      const available = workflow.agents.filter(a => !task.discussion!.participantIds.includes(a.id));
+                      if (available.length === 0) return null;
+                      return (
+                        <select
+                          className="mt-2 w-full bg-[var(--cs-surface-card)]/20 border border-dashed border-cyan-500/30 rounded-lg px-2 py-1.5 text-[10px] text-cyan-400 cursor-pointer hover:border-cyan-400/50 hover:bg-cyan-500/5 transition-colors focus:outline-none focus:border-cyan-400"
+                          value=""
+                          onChange={(e) => {
+                            if (!e.target.value) return;
+                            const newIds = [...task.discussion!.participantIds, e.target.value];
+                            updateTask({ discussion: { ...task.discussion!, participantIds: newIds } });
+                            e.target.value = '';
+                          }}
+                        >
+                          <option value="">+ Add participant…</option>
+                          {available.map(a => (
+                            <option key={a.id} value={a.id}>{a.role}</option>
+                          ))}
+                        </select>
+                      );
+                    })()}
+
+                    {canEdit && participants.length <= 2 && (
+                      <p className="text-[9px] text-amber-400/60 mt-1">Minimum 2 participants required</p>
+                    )}
                   </div>
 
                   {/* Settings row */}

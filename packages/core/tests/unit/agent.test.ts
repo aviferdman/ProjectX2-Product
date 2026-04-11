@@ -270,7 +270,7 @@ describe('Agent', () => {
 
       const generateText = provider.generateText as ReturnType<typeof vi.fn>;
       const messages = generateText.mock.calls[0]![0] as LLMMessage[];
-      expect(messages[1]!.content).toContain('Expected output format: A bullet-point list');
+      expect(messages[1]!.content).toContain('Format and content: A bullet-point list');
     });
 
     it('should include context in user prompt', async () => {
@@ -281,7 +281,7 @@ describe('Agent', () => {
 
       const generateText = provider.generateText as ReturnType<typeof vi.fn>;
       const messages = generateText.mock.calls[0]![0] as LLMMessage[];
-      expect(messages[1]!.content).toContain('Context:');
+      expect(messages[1]!.content).toContain('Context from Previous Tasks');
       expect(messages[1]!.content).toContain('"source": "test-data"');
     });
 

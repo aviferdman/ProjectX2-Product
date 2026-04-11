@@ -300,12 +300,13 @@ export class Agent {
    */
   buildSystemPrompt(): string {
     const parts: string[] = [
-      `You are an AI agent with the role: ${this.role}`,
-      `Your goal: ${this.goal}`,
+      `You are a specialist AI agent.`,
+      `Role: ${this.role}`,
+      `Primary objective: ${this.goal}`,
     ];
 
     if (this.backstory) {
-      parts.push(`Background: ${this.backstory}`);
+      parts.push(`Professional background: ${this.backstory}`);
     }
 
     if (this._tools.size > 0) {
@@ -314,6 +315,16 @@ export class Agent {
         .join('\n');
       parts.push(`Available tools:\n${toolLines}`);
     }
+
+    parts.push(
+      `Operating principles:\n` +
+      `- Think step by step before producing your final answer\n` +
+      `- Draw on your specialized expertise and methodology described in your background\n` +
+      `- Be thorough and precise — quality over speed\n` +
+      `- Structure your output clearly with headings or bullet points when appropriate\n` +
+      `- If you lack information to confidently answer, state what you know and what remains uncertain\n` +
+      `- Stay focused on your assigned task — do not drift into areas outside your specialty`
+    );
 
     return parts.join('\n\n');
   }
@@ -325,15 +336,17 @@ export class Agent {
   private _buildMessages(taskInput: TaskInput): LLMMessage[] {
     const systemPrompt = this.buildSystemPrompt();
 
-    let userPrompt = taskInput.description;
+    let userPrompt = `## Task Assignment\n\n${taskInput.description}`;
 
     if (taskInput.expectedOutput) {
-      userPrompt += `\n\nExpected output format: ${taskInput.expectedOutput}`;
+      userPrompt += `\n\n## Expected Output\nFormat and content: ${taskInput.expectedOutput}`;
     }
 
     if (taskInput.context && Object.keys(taskInput.context).length > 0) {
-      userPrompt += `\n\nContext:\n${JSON.stringify(taskInput.context, null, 2)}`;
+      userPrompt += `\n\n## Context from Previous Tasks\n${JSON.stringify(taskInput.context, null, 2)}`;
     }
+
+    userPrompt += `\n\n## Instructions\nApply your specialist expertise to complete this task. Think through your approach step by step, then provide your final output.`;
 
     return [
       { role: LLMRole.SYSTEM, content: systemPrompt },

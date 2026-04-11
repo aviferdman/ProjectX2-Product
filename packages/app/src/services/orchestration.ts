@@ -105,26 +105,32 @@ export function saveLLMConfig(config: LLMConfig): void {
 // Prompt → Workflow plan (LLM-driven)
 // ---------------------------------------------------------------------------
 
-const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner. The user will describe a goal. You must output a JSON workflow plan with agents, tasks, and optional collaborative discussions between agents.
+const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner that outputs ONLY valid JSON. Never output prose, markdown, or explanations. Your entire response must be a single JSON object.
 
-Rules:
-- Each agent has: id (alphanumeric with dashes), role (short title), goal, backstory, tools (array of tool names from: web-search, web-scraper, document-reader, data-processor, chart-generator, document-writer, code-executor, api-caller)
-- Each task has: id (alphanumeric), description, agentId (MUST be one of the agent ids you defined above), dependencies (array of task ids that must complete first), expectedOutput
-- IMPORTANT: Every task MUST have agentId set to one of the agent ids you defined. Never leave agentId empty or null.
-- Tasks that benefit from collaboration may include a "discussion" object with: participantIds (array of 2+ agent ids who should discuss), maxRounds (1-10), convergenceStrategy ("unanimous", "majority", or "stable-output"), and an optional topic
-- When agents have complementary expertise (e.g., researcher + analyst, writer + editor), add a discussion so they iterate and refine together before the task executes
-- Discussions happen BEFORE the task runs — the discussion result feeds into the task as context
-- Tasks should form a logical DAG — earlier tasks feed later ones. Dependencies MUST only reference task IDs that exist in YOUR output.
-- IMPORTANT: Every agent must have at least one task assigned. Create at least one task per agent.
-- Keep it practical: 2-6 agents, 3-8 tasks (always create at least as many tasks as agents), 0-4 discussions
-- Agent IDs must start with "agent-", task IDs must start with "task-"
+The user describes a goal. You decompose it into specialist AI agents and tasks.
 
-Respond ONLY with valid JSON matching this schema:
-{
-  "name": "string — short workflow name",
-  "agents": [{ "id": "string", "role": "string", "goal": "string", "backstory": "string", "tools": ["string"] }],
-  "tasks": [{ "id": "string", "description": "string", "agentId": "string", "dependencies": ["string"], "expectedOutput": "string", "discussion": { "participantIds": ["string"], "maxRounds": number, "convergenceStrategy": "string", "topic": "string" } | null }]
-}`;
+Agent rules:
+- id: must start with "agent-", alphanumeric with dashes
+- role: specific professional title (e.g. "Senior Content Strategist specializing in tech blogs" NOT "Writer")
+- goal: what this agent specifically contributes to the workflow
+- backstory: 2-3 sentences establishing domain expertise (years of experience, methodology, quality standards)
+- tools: array from [web-search, web-scraper, document-reader, data-processor, chart-generator, document-writer, code-executor, api-caller]
+
+Task rules:
+- id: must start with "task-"
+- description: 1-2 detailed sentences on WHAT to do and HOW
+- agentId: MUST be one of the agent ids you defined
+- dependencies: array of task ids that must complete first (must exist in your output)
+- expectedOutput: specific description of the deliverable
+- discussion: optional object { participantIds: [agent ids], maxRounds: 1-10, convergenceStrategy: "unanimous"|"majority"|"stable-output", topic: string } for tasks needing multi-agent collaboration
+
+Constraints:
+- Every task MUST have a valid agentId. Every agent MUST have at least one task.
+- 2-6 agents, 3-8 tasks, 0-4 discussions
+- Tasks form a DAG (no circular dependencies)
+
+Output ONLY this JSON:
+{"name":"string","agents":[{"id":"string","role":"string","goal":"string","backstory":"string","tools":["string"]}],"tasks":[{"id":"string","description":"string","agentId":"string","dependencies":["string"],"expectedOutput":"string","discussion":null}]}`;
 
 interface WorkflowPlan {
   name: string;
@@ -157,7 +163,7 @@ export async function generateWorkflowPlan(
 ): Promise<WorkflowState> {
   const response: LLMResponse = await provider.generateText([
     { role: LLMRole.SYSTEM, content: PLAN_SYSTEM_PROMPT },
-    { role: LLMRole.USER, content: prompt },
+    { role: LLMRole.USER, content: `Create a JSON workflow plan for this goal: ${prompt}` },
   ]);
 
   const plan = parseJsonResponse<WorkflowPlan>(response.content);
@@ -393,17 +399,42 @@ export async function executeWorkflow(
   provider: LLMProvider,
   callbacks: ExecutionCallbacks,
 ): Promise<CrewRunResult> {
-  // 1. Create real Agent instances with the LLM provider
+  // Tool capability descriptions injected into agent backstories
+  // (real Tool objects use Node.js APIs; in-browser we enrich the persona instead)
+  const TOOL_DESCRIPTIONS: Record<string, string> = {
+    'web-search': 'You can search the web to find current information, articles, and data.',
+    'web-scraper': 'You can extract structured data from web pages.',
+    'document-reader': 'You can read and analyze documents, PDFs, and text files.',
+    'data-processor': 'You can process, transform, and analyze structured data and datasets.',
+    'chart-generator': 'You can create data visualizations, charts, and graphs.',
+    'document-writer': 'You can compose well-structured documents, reports, and articles.',
+    'code-executor': 'You can write and reason about code to solve computational problems.',
+    'api-caller': 'You can interact with external APIs to fetch or send data.',
+  };
+
+  // 1. Create real Agent instances with enriched personas
   const agents: Agent[] = workflow.agents.map(
-    (agentNode) =>
-      new Agent({
+    (agentNode) => {
+      // Build enriched backstory with tool capability context
+      const toolCapabilities = (agentNode.tools ?? [])
+        .map((t) => TOOL_DESCRIPTIONS[t])
+        .filter(Boolean);
+      const enrichedBackstory = [
+        agentNode.backstory,
+        ...(toolCapabilities.length > 0
+          ? [`Capabilities: ${toolCapabilities.join(' ')}`]
+          : []),
+      ].filter(Boolean).join('\n\n');
+
+      return new Agent({
         id: agentNode.id,
         role: agentNode.role,
         goal: agentNode.goal,
-        backstory: agentNode.backstory,
+        backstory: enrichedBackstory,
         llmProvider: provider,
         verbose: true,
-      }),
+      });
+    },
   );
 
   // 2. Build CrewTask array, including discussion configs
