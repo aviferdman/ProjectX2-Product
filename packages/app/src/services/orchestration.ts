@@ -109,12 +109,14 @@ const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner. The user will descri
 
 Rules:
 - Each agent has: id (alphanumeric with dashes), role (short title), goal, backstory, tools (array of tool names from: web-search, web-scraper, document-reader, data-processor, chart-generator, document-writer, code-executor, api-caller)
-- Each task has: id (alphanumeric), description, agentId (must reference an agent id), dependencies (array of task ids that must complete first), expectedOutput
+- Each task has: id (alphanumeric), description, agentId (MUST be one of the agent ids you defined above), dependencies (array of task ids that must complete first), expectedOutput
+- IMPORTANT: Every task MUST have agentId set to one of the agent ids you defined. Never leave agentId empty or null.
 - Tasks that benefit from collaboration may include a "discussion" object with: participantIds (array of 2+ agent ids who should discuss), maxRounds (1-10), convergenceStrategy ("unanimous", "majority", or "stable-output"), and an optional topic
 - When agents have complementary expertise (e.g., researcher + analyst, writer + editor), add a discussion so they iterate and refine together before the task executes
 - Discussions happen BEFORE the task runs — the discussion result feeds into the task as context
-- Tasks should form a logical DAG — earlier tasks feed later ones
-- Keep it practical: 2-6 agents, 3-8 tasks, 0-4 discussions
+- Tasks should form a logical DAG — earlier tasks feed later ones. Dependencies MUST only reference task IDs that exist in YOUR output.
+- IMPORTANT: Every agent must have at least one task assigned. Create at least one task per agent.
+- Keep it practical: 2-6 agents, 3-8 tasks (always create at least as many tasks as agents), 0-4 discussions
 - Agent IDs must start with "agent-", task IDs must start with "task-"
 
 Respond ONLY with valid JSON matching this schema:
@@ -161,34 +163,59 @@ export async function generateWorkflowPlan(
   const plan = parseJsonResponse<WorkflowPlan>(response.content);
 
   const agents: AgentNode[] = plan.agents.map((a, i) => ({
-    id: a.id,
-    role: a.role,
-    goal: a.goal,
-    backstory: a.backstory,
-    tools: a.tools,
+    id: a.id ?? `agent-${i + 1}`,
+    role: a.role ?? `Agent ${i + 1}`,
+    goal: a.goal ?? '',
+    backstory: a.backstory ?? '',
+    tools: a.tools ?? [],
     status: 'idle' as const,
     color: AGENT_COLORS[i % AGENT_COLORS.length] ?? '#8b5cf6',
     position: { x: 100 + (i % 4) * 300, y: 80 + Math.floor(i / 4) * 220 },
   }));
 
-  const tasks: TaskNode[] = plan.tasks.map((t) => ({
-    id: t.id,
-    description: t.description,
-    agentId: t.agentId,
-    dependencies: t.dependencies ?? [],
-    expectedOutput: t.expectedOutput,
-    status: 'pending' as const,
-    ...(t.discussion
-      ? {
-          discussion: {
-            participantIds: t.discussion.participantIds,
-            maxRounds: t.discussion.maxRounds,
-            convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<TaskNode['discussion']>['convergenceStrategy'],
-            ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
-          },
-        }
-      : {}),
-  }));
+  // Build a set of valid agent IDs for lookup
+  const validAgentIds = new Set(agents.map((a) => a.id));
+
+  const tasks: TaskNode[] = plan.tasks.map((t, i) => {
+    // Resolve agentId: use the LLM value if it matches a real agent, else
+    // try to match by index reference ("agent-1" style), else round-robin assign.
+    let resolvedAgentId = t.agentId ?? '';
+    if (!validAgentIds.has(resolvedAgentId)) {
+      // Fallback: round-robin assign to agents so no task is orphaned
+      resolvedAgentId = agents[i % agents.length]?.id ?? '';
+    }
+    return {
+      id: t.id ?? `task-${i + 1}`,
+      description: t.description ?? 'No description',
+      agentId: resolvedAgentId,
+      dependencies: t.dependencies ?? [],
+      expectedOutput: t.expectedOutput ?? '',
+      status: 'pending' as const,
+      ...(t.discussion
+        ? {
+            discussion: {
+              participantIds: t.discussion.participantIds,
+              maxRounds: t.discussion.maxRounds,
+              convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<TaskNode['discussion']>['convergenceStrategy'],
+              ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
+            },
+          }
+        : {}),
+    };
+  });
+
+  // Strip invalid dependency references (deps pointing to task IDs not in the plan)
+  const validTaskIds = new Set(tasks.map((t) => t.id));
+  for (const task of tasks) {
+    task.dependencies = task.dependencies.filter((depId) => validTaskIds.has(depId) && depId !== task.id);
+    // Also strip invalid discussion participant IDs
+    if (task.discussion) {
+      task.discussion.participantIds = task.discussion.participantIds.filter((pid) => validAgentIds.has(pid));
+    }
+  }
+
+  // Break circular dependencies using topological sort (Kahn's algorithm)
+  breakCycles(tasks);
 
   // Build discussion edges from task discussion configs
   const discussionEdges = buildDiscussionEdges(tasks);
@@ -380,7 +407,17 @@ export async function executeWorkflow(
   );
 
   // 2. Build CrewTask array, including discussion configs
-  const crewTasks = workflow.tasks.map((t) => {
+  // Ensure every task has a valid agentId that maps to a real agent
+  const agentIdSet = new Set(agents.map((a) => a.id));
+  const taskIdSet = new Set(workflow.tasks.map((t) => t.id));
+  const crewTasks = workflow.tasks.map((t, i) => {
+    let safeAgentId = t.agentId;
+    if (!safeAgentId || !agentIdSet.has(safeAgentId)) {
+      // Fallback: round-robin so Crew validation doesn't fail
+      safeAgentId = agents[i % agents.length]?.id ?? t.agentId;
+    }
+    // Strip dependencies that reference non-existent tasks
+    const safeDeps = t.dependencies.filter((d) => taskIdSet.has(d) && d !== t.id);
     const task: {
       id: string;
       description: string;
@@ -395,18 +432,18 @@ export async function executeWorkflow(
       };
     } = {
       id: t.id,
-      description: t.description,
-      agentId: t.agentId,
+      description: t.description || 'Execute task',
+      agentId: safeAgentId,
     };
     if (t.expectedOutput) {
       task.expectedOutput = t.expectedOutput;
     }
-    if (t.dependencies.length > 0) {
-      task.dependencies = t.dependencies;
+    if (safeDeps.length > 0) {
+      task.dependencies = safeDeps;
     }
     if (t.discussion) {
       task.discussion = {
-        participantIds: t.discussion.participantIds,
+        participantIds: t.discussion.participantIds.filter((pid) => agentIdSet.has(pid)),
         maxRounds: t.discussion.maxRounds,
         convergenceStrategy: mapConvergenceStrategy(t.discussion.convergenceStrategy),
         ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
@@ -414,6 +451,9 @@ export async function executeWorkflow(
     }
     return task;
   });
+
+  // Break circular dependencies before handing to Crew
+  breakCycles(crewTasks as Array<{ id: string; dependencies?: string[] }>);
 
   // 3. Create and configure Crew
   const crew = new Crew({
@@ -484,5 +524,54 @@ function parseJsonResponse<T>(content: string): T {
       return JSON.parse(cleaned.slice(start, end + 1)) as T;
     }
     throw new Error(`LLM response is not valid JSON:\n${cleaned.slice(0, 300)}`);
+  }
+}
+
+/**
+ * Break circular dependencies by removing back-edges.
+ * Uses Kahn's algorithm: tasks that can't be resolved are stripped of the offending deps.
+ */
+function breakCycles(tasks: Array<{ id: string; dependencies?: string[] }>): void {
+  const taskMap = new Map(tasks.map((t) => [t.id, t]));
+  const inDegree = new Map<string, number>();
+  const adj = new Map<string, string[]>();
+
+  for (const t of tasks) {
+    inDegree.set(t.id, 0);
+    adj.set(t.id, []);
+  }
+  for (const t of tasks) {
+    for (const dep of t.dependencies ?? []) {
+      if (taskMap.has(dep)) {
+        adj.get(dep)!.push(t.id);
+        inDegree.set(t.id, (inDegree.get(t.id) ?? 0) + 1);
+      }
+    }
+  }
+
+  // Kahn's: find all nodes with in-degree 0
+  const queue: string[] = [];
+  for (const [id, deg] of inDegree) {
+    if (deg === 0) queue.push(id);
+  }
+  const resolved = new Set<string>();
+  while (queue.length > 0) {
+    const id = queue.shift()!;
+    resolved.add(id);
+    for (const next of adj.get(id) ?? []) {
+      const newDeg = (inDegree.get(next) ?? 1) - 1;
+      inDegree.set(next, newDeg);
+      if (newDeg === 0) queue.push(next);
+    }
+  }
+
+  // Any tasks NOT resolved are in cycles — strip their cycle-causing deps
+  if (resolved.size < tasks.length) {
+    for (const t of tasks) {
+      if (!resolved.has(t.id) && t.dependencies) {
+        // Remove deps that are themselves unresolved (cycle participants)
+        t.dependencies = t.dependencies.filter((d) => resolved.has(d));
+      }
+    }
   }
 }

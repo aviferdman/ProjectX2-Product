@@ -25,12 +25,14 @@ const MOCK_PROJECTS: Project[] = [
   { id: 'proj-6', name: 'QA Pipeline', description: 'Automated quality assurance for dev team', agents: 4, tasks: 6, status: 'draft', updatedAt: '2 weeks ago' },
 ];
 
-const QUICK_STATS = [
-  { label: 'Total Projects', value: '6', icon: '📁' },
-  { label: 'Running', value: '1', icon: '🔄' },
-  { label: 'Completed', value: '2', icon: '✅' },
-  { label: 'Total Agents', value: '24', icon: '🤖' },
-];
+const PROJECT_COLORS: Record<string, string> = {
+  'proj-1': '#10b981',
+  'proj-2': '#f59e0b',
+  'proj-3': '#8b5cf6',
+  'proj-4': '#06b6d4',
+  'proj-5': '#f43f5e',
+  'proj-6': '#6366f1',
+};
 
 export function DashboardPage(): React.JSX.Element {
   const navigate = useNavigate();
@@ -85,9 +87,13 @@ export function DashboardPage(): React.JSX.Element {
       <main className="max-w-6xl mx-auto px-6 py-8">
         {/* ── Header ───────────────────────────────────────────── */}
         <div className="flex items-center justify-between mb-8 animate-fadeInDown">
-          <div>
+          <div className="flex items-center gap-4">
             <h1 className="text-2xl font-bold text-[var(--cs-text-primary)]">Projects</h1>
-            <p className="text-sm text-[var(--cs-text-tertiary)] mt-1">Manage and monitor your AI agent workflows</p>
+            <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-[var(--cs-text-tertiary)]">
+              <span className="px-2 py-0.5 rounded-md bg-[var(--cs-surface-card)] border border-[var(--cs-border-subtle)] tabular-nums">{MOCK_PROJECTS.length} total</span>
+              <span className="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/15 tabular-nums">{MOCK_PROJECTS.filter((p) => p.status === 'running').length} running</span>
+              <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/15 tabular-nums">{MOCK_PROJECTS.filter((p) => p.status === 'completed').length} done</span>
+            </div>
           </div>
           <button
             onClick={() => navigate('/')}
@@ -99,22 +105,6 @@ export function DashboardPage(): React.JSX.Element {
             </svg>
             New Project
           </button>
-        </div>
-
-        {/* ── Quick Stats ──────────────────────────────────────── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 stagger-children">
-          {QUICK_STATS.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-xl border border-[var(--cs-border-subtle)] bg-white/[0.02] px-4 py-4 hover:bg-white/[0.04] transition-colors"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-base">{stat.icon}</span>
-                <span className="text-[11px] text-[var(--cs-text-tertiary)] uppercase tracking-wider font-medium">{stat.label}</span>
-              </div>
-              <p className="text-2xl font-bold text-[var(--cs-text-primary)]">{stat.value}</p>
-            </div>
-          ))}
         </div>
 
         {/* ── Search & Filter ──────────────────────────────────── */}
@@ -148,48 +138,66 @@ export function DashboardPage(): React.JSX.Element {
           </div>
         </div>
 
-        {/* ── Project Grid ─────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 stagger-children">
-          {filtered.map((project) => {
-            const borderColor =
-              project.status === 'completed' ? 'border-l-emerald-400' :
-              project.status === 'running' ? 'border-l-amber-400' :
-              project.status === 'failed' ? 'border-l-rose-400' :
-              'border-l-slate-600';
+        {/* ── Project Table ────────────────────────────────────── */}
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] overflow-hidden stagger-children">
+          {/* Table header */}
+          <div className="hidden md:grid grid-cols-[1fr_100px_80px_80px_100px] gap-4 px-5 py-2.5 bg-white/[0.02] border-b border-[var(--cs-border-subtle)] text-[10px] text-[var(--cs-text-tertiary)] uppercase tracking-wider font-medium">
+            <span>Project</span>
+            <span>Status</span>
+            <span>Agents</span>
+            <span>Tasks</span>
+            <span className="text-right">Updated</span>
+          </div>
+
+          {filtered.map((project, idx) => {
+            const initials = project.name.split(' ').map((w) => w[0]).join('').slice(0, 2);
+            const color = PROJECT_COLORS[project.id] ?? '#8b5cf6';
             return (
               <button
                 key={project.id}
                 onClick={() => navigate(workflowPath(project.id))}
-                className={`card-hover text-left rounded-xl border border-[var(--cs-border-subtle)] border-l-[3px] ${borderColor} bg-white/[0.02] hover:bg-white/[0.05] hover:border-[var(--cs-border-default)] transition-all p-5 group focus-ring`}
+                className={`w-full text-left flex md:grid md:grid-cols-[1fr_100px_80px_80px_100px] items-center gap-4 px-5 py-3.5 hover:bg-white/[0.04] transition-all group focus-ring ${
+                  idx < filtered.length - 1 ? 'border-b border-[var(--cs-border-subtle)]' : ''
+                }`}
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/20 border border-violet-500/20 flex items-center justify-center group-hover:from-violet-500/30 group-hover:to-purple-500/30 transition-all">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(167 139 250)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                      <path d="M2 17l10 5 10-5" />
-                      <path d="M2 12l10 5 10-5" />
-                    </svg>
+                {/* Project name & description */}
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                    style={{ backgroundColor: `${color}25`, color, border: `1px solid ${color}30` }}
+                  >
+                    {initials}
                   </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors truncate">
+                      {project.name}
+                    </p>
+                    <p className="text-xs text-[var(--cs-text-tertiary)] truncate hidden sm:block">
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Status */}
+                <div className="hidden md:block">
                   <ProjectStatusBadge status={project.status} />
                 </div>
-                <h3 className="text-sm font-semibold text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors mb-1.5 truncate">
-                  {project.name}
-                </h3>
-                <p className="text-xs text-[var(--cs-text-tertiary)] mb-4 line-clamp-2">
-                  {project.description}
-                </p>
-                <div className="flex items-center justify-between text-[11px] text-[var(--cs-text-tertiary)]">
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-1">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="7" r="4" /><path d="M5 21v-2a7 7 0 0114 0v2" /></svg>
-                      {project.agents} agents
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
-                      {project.tasks} tasks
-                    </span>
-                  </div>
-                  <span>{project.updatedAt}</span>
+
+                {/* Agents */}
+                <span className="hidden md:block text-xs text-[var(--cs-text-secondary)] tabular-nums">{project.agents}</span>
+
+                {/* Tasks */}
+                <span className="hidden md:block text-xs text-[var(--cs-text-secondary)] tabular-nums">{project.tasks}</span>
+
+                {/* Updated */}
+                <span className="hidden md:block text-xs text-[var(--cs-text-tertiary)] text-right">{project.updatedAt}</span>
+
+                {/* Mobile: status dot + chevron */}
+                <div className="flex md:hidden items-center gap-2 flex-shrink-0">
+                  <ProjectStatusBadge status={project.status} />
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--cs-text-tertiary)]">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
                 </div>
               </button>
             );

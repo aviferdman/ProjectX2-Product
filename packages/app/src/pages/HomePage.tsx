@@ -16,9 +16,9 @@ const EXAMPLE_PROMPTS = [
 ];
 
 const RECENT_PROJECTS = [
-  { id: 'proj-1', name: 'Mobile Game MVP Research', agents: 4, status: 'completed' as const, updatedAt: '2 hours ago' },
-  { id: 'proj-2', name: 'SaaS Launch Campaign', agents: 6, status: 'running' as const, updatedAt: '1 day ago' },
-  { id: 'proj-3', name: 'Competitor Analysis Pipeline', agents: 3, status: 'draft' as const, updatedAt: '3 days ago' },
+  { id: 'proj-1', name: 'Mobile Game MVP Research', agents: 4, tasks: 5, completedTasks: 5, status: 'completed' as const, updatedAt: '2 hours ago' },
+  { id: 'proj-2', name: 'SaaS Launch Campaign', agents: 6, tasks: 8, completedTasks: 3, status: 'running' as const, updatedAt: '1 day ago' },
+  { id: 'proj-3', name: 'Competitor Analysis Pipeline', agents: 3, tasks: 4, completedTasks: 0, status: 'draft' as const, updatedAt: '3 days ago' },
 ];
 
 const HOW_IT_WORKS = [
@@ -221,12 +221,12 @@ export function HomePage(): React.JSX.Element {
         </div>
 
         {/* Example prompts */}
-        <div className="mt-6 flex flex-wrap gap-2 justify-center animate-fadeInUp" style={{ animationDelay: '360ms' }}>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl mx-auto animate-fadeInUp" style={{ animationDelay: '360ms' }}>
           {EXAMPLE_PROMPTS.slice(0, 4).map((example) => (
             <button
               key={example}
               onClick={() => handleExampleClick(example)}
-              className="card-hover px-3 py-1.5 rounded-full bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-xs text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] hover:border-violet-500/30 transition-all duration-200 max-w-[260px] truncate focus-ring"
+              className="card-hover px-3.5 py-2 rounded-xl bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-xs text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] hover:border-violet-500/30 transition-all duration-200 text-left leading-relaxed focus-ring"
             >
               {example}
             </button>
@@ -235,79 +235,87 @@ export function HomePage(): React.JSX.Element {
       </section>
 
       {/* ── How It Works ─────────────────────────────────────── */}
-      <section className="max-w-5xl mx-auto px-6 mt-28">
+      <section className="max-w-4xl mx-auto px-6 mt-28">
         <h2 className="animate-fadeInUp text-center text-2xl md:text-3xl font-bold text-[var(--cs-text-primary)] tracking-tight mb-14">
-          How it <span className="gradient-text">works</span>
+          How it works
         </h2>
-        <div className="stagger-children grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="stagger-children grid grid-cols-1 md:grid-cols-3 gap-6">
           {HOW_IT_WORKS.map((step) => (
-            <div key={step.num} className="flex flex-col items-center text-center group">
-              <div className="w-14 h-14 rounded-2xl bg-violet-600/15 border border-violet-500/25 flex items-center justify-center text-violet-400 group-hover:bg-violet-600/25 group-hover:border-violet-500/40 transition-all duration-300">
-                {step.icon}
+            <div key={step.num} className="flex flex-col items-start text-left rounded-xl border border-[var(--cs-border-subtle)] bg-white/[0.02] p-5 group hover:bg-white/[0.04] hover:border-[var(--cs-border-default)] transition-all">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-sm font-semibold text-violet-400">{step.num}.</span>
+                <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">{step.title}</h3>
               </div>
-              <div className="w-8 h-8 rounded-full bg-violet-600/20 border border-violet-500/30 flex items-center justify-center text-sm font-bold text-violet-400 mt-4">
-                {step.num}
-              </div>
-              <h3 className="mt-4 text-lg font-semibold text-[var(--cs-text-primary)]">{step.title}</h3>
-              <p className="mt-2 text-sm text-[var(--cs-text-secondary)] leading-relaxed max-w-[280px]">{step.description}</p>
+              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── Stats ────────────────────────────────────────────── */}
-      <section className="max-w-4xl mx-auto px-6 mt-28">
-        <div className="grid grid-cols-3 divide-x divide-white/10 rounded-2xl border border-[var(--cs-border-default)] bg-white/[0.02] py-10 animate-fadeIn">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center gap-1.5">
-              <span className="gradient-text text-3xl md:text-4xl font-extrabold animate-countUp">{stat.value}</span>
-              <span className="text-xs text-[var(--cs-text-tertiary)]">{stat.label}</span>
-            </div>
+      {/* ── Platform Metrics ─────────────────────────────────── */}
+      <section className="max-w-3xl mx-auto px-6 mt-24">
+        <div className="flex items-center justify-center gap-8 md:gap-14 py-6 animate-fadeIn">
+          {STATS.map((stat, i) => (
+            <React.Fragment key={stat.label}>
+              {i > 0 && <div className="w-px h-8 bg-[var(--cs-border-subtle)]" />}
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xl md:text-3xl font-bold text-[var(--cs-text-primary)] tabular-nums">{stat.value}</span>
+                <span className="text-[11px] text-[var(--cs-text-tertiary)] tracking-wide uppercase">{stat.label}</span>
+              </div>
+            </React.Fragment>
           ))}
         </div>
       </section>
 
       {/* ── Recent Projects ──────────────────────────────────── */}
       {RECENT_PROJECTS.length > 0 && (
-        <section className="max-w-3xl mx-auto px-6 mt-28 w-full">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-[var(--cs-text-primary)]">Recent projects</h2>
+        <section className="max-w-3xl mx-auto px-6 mt-24 w-full">
+          <div className="flex items-center justify-between mb-5">
+            <p className="text-sm text-[var(--cs-text-secondary)]">Pick up where you left off</p>
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-xs text-violet-400 hover:text-violet-300 transition-colors focus-ring"
+              className="text-xs text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
             >
-              View all →
+              All projects
             </button>
           </div>
-          <div className="stagger-children space-y-2">
+          <div className="stagger-children grid grid-cols-1 sm:grid-cols-3 gap-3">
             {RECENT_PROJECTS.map((project) => {
-              const borderColor = project.status === 'completed' ? 'border-l-emerald-400' : project.status === 'running' ? 'border-l-amber-400' : 'border-l-slate-600';
+              const initials = project.name.split(' ').map((w) => w[0]).join('').slice(0, 2);
+              const bgColor = project.status === 'completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                : project.status === 'running' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                : 'bg-slate-500/10 text-slate-400 border-slate-500/20';
+              const progress = project.tasks > 0 ? (project.completedTasks / project.tasks) * 100 : 0;
               return (
                 <button
                   key={project.id}
                   onClick={() => navigate(workflowPath(project.id))}
-                  className={`card-hover w-full flex items-center gap-4 px-4 py-3.5 rounded-xl bg-white/[0.02] border border-[var(--cs-border-subtle)] border-l-[3px] ${borderColor} hover:bg-white/[0.05] hover:border-[var(--cs-border-default)] transition-all duration-200 group focus-ring`}
+                  className="card-hover text-left rounded-xl bg-white/[0.02] border border-[var(--cs-border-subtle)] hover:bg-white/[0.05] hover:border-[var(--cs-border-default)] transition-all duration-200 p-4 group focus-ring"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500/20 to-purple-500/20 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgb(167 139 250)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                      <path d="M2 17l10 5 10-5" />
-                      <path d="M2 12l10 5 10-5" />
-                    </svg>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs font-bold flex-shrink-0 ${bgColor}`}>
+                      {initials}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors truncate">
+                        {project.name}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1 text-left min-w-0">
-                    <p className="text-sm font-medium text-slate-200 group-hover:text-[var(--cs-text-primary)] transition-colors truncate">
-                      {project.name}
-                    </p>
-                    <p className="text-xs text-[var(--cs-text-tertiary)]">
-                      {project.agents} agents · {project.updatedAt}
-                    </p>
+                  <div className="flex items-center justify-between text-[11px] text-[var(--cs-text-tertiary)]">
+                    <span>{project.agents} agents · {project.tasks} tasks</span>
+                    <span>{project.updatedAt}</span>
                   </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <StatusDot status={project.status} />
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--cs-text-tertiary)] group-hover:text-[var(--cs-text-secondary)] transition-colors">
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
+                  {/* Progress bar */}
+                  <div className="mt-2.5 w-full h-1 rounded-full bg-[var(--cs-surface-card)] overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        project.status === 'completed' ? 'bg-emerald-500'
+                          : project.status === 'running' ? 'bg-amber-400'
+                          : 'bg-slate-600'
+                      }`}
+                      style={{ width: `${progress}%` }}
+                    />
                   </div>
                 </button>
               );
@@ -324,13 +332,4 @@ export function HomePage(): React.JSX.Element {
       </footer>
     </div>
   );
-}
-
-function StatusDot({ status }: { status: 'completed' | 'running' | 'draft' }): React.JSX.Element {
-  const colors = {
-    completed: 'bg-emerald-400',
-    running: 'bg-amber-400 animate-pulse',
-    draft: 'bg-slate-500',
-  };
-  return <span className={`w-2 h-2 rounded-full ${colors[status]}`} aria-label={status} />;
 }

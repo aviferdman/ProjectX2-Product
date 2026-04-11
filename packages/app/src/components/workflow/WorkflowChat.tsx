@@ -111,13 +111,39 @@ export function WorkflowChat({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick Actions */}
+      {/* Contextual Suggestions */}
       {workflow && !isGenerating && (
         <div className="px-4 pb-2 flex gap-1.5 flex-wrap">
-          <QuickAction label="▶ Run workflow" onClick={() => onSendMessage('Run the workflow')} />
-          <QuickAction label="+ Add agent" onClick={() => onSendMessage('Add a new agent')} />
-          <QuickAction label="✎ Modify tasks" onClick={() => onSendMessage('Modify the tasks')} />
-          <QuickAction label="📊 View results" onClick={() => onSendMessage('Show me the task results')} />
+          {workflow.status === 'completed' ? (
+            <>
+              <QuickAction label="Summarize the results" onClick={() => onSendMessage('Summarize the workflow results')} />
+              <QuickAction label="Export as report" onClick={() => onSendMessage('Export the results as a structured report')} />
+            </>
+          ) : workflow.status === 'failed' ? (
+            <>
+              <QuickAction label="What went wrong?" onClick={() => onSendMessage('Explain what failed and suggest fixes')} />
+              <QuickAction label="Retry failed tasks" onClick={() => onSendMessage('Retry the failed tasks')} />
+            </>
+          ) : (
+            <>
+              {workflow.agents.length > 0 && (
+                <QuickAction
+                  label={`Explain ${workflow.agents[0]?.role ?? 'agent'}'s role`}
+                  onClick={() => onSendMessage(`Explain what the ${workflow.agents[0]?.role ?? 'first agent'} does in this workflow`)}
+                />
+              )}
+              {workflow.tasks.length > 0 && (
+                <QuickAction
+                  label="Show task dependencies"
+                  onClick={() => onSendMessage('Show me how the tasks depend on each other')}
+                />
+              )}
+              <QuickAction
+                label="Optimize this workflow"
+                onClick={() => onSendMessage('Suggest optimizations for this workflow')}
+              />
+            </>
+          )}
         </div>
       )}
 

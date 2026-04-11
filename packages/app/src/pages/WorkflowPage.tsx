@@ -83,7 +83,7 @@ export function WorkflowPage(): React.JSX.Element {
         const discussionNote = discussionCount > 0 ? `\n\n**Discussions:** ${discussionCount} collaborative task(s) where agents will discuss and iterate until convergence.` : '';
         pushMessage(
           'assistant',
-          `I've assembled a team of **${generated.agents.length} agents** with **${generated.tasks.length} tasks** to execute your initiative.${discussionNote}\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}${t.discussion ? ' 💬' : ''}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
+          `I've assembled a team of **${generated.agents.length} agents** with **${generated.tasks.length} tasks** to execute your initiative.${discussionNote}\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}${t.discussion ? ' (collaborative)' : ''}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
         );
       } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
@@ -212,7 +212,7 @@ export function WorkflowPage(): React.JSX.Element {
           const participantNames = participantIds
             .map((pid) => workflow.agents.find((a) => a.id === pid)?.role ?? pid)
             .join(' & ');
-          pushMessage('system', `💬 Discussion started for task **${taskId}**: ${participantNames} are collaborating…`);
+          pushMessage('system', `Discussion started for task **${taskId}** — ${participantNames} are collaborating`);
 
           // Update discussion edge statuses to active
           setWorkflow((prev) => {
@@ -266,9 +266,9 @@ export function WorkflowPage(): React.JSX.Element {
           });
 
           // Show abbreviated message in chat
-          const typeEmoji = message.type === 'agreement' ? '✅' : message.type === 'disagreement' ? '❌' : message.type === 'revision' ? '📝' : message.type === 'question' ? '❓' : '💬';
+          const typeLabel = message.type === 'agreement' ? '[agreed]' : message.type === 'disagreement' ? '[disagreed]' : message.type === 'revision' ? '[revised]' : message.type === 'question' ? '[asked]' : '[said]';
           const shortContent = message.content.replace(/^\[(?:AGREE|DISAGREE|REVISE|QUESTION|PROPOSAL)\]\s*/i, '').slice(0, 100);
-          pushMessage('system', `${typeEmoji} **${fromAgent?.role ?? message.fromAgentId}** (R${message.round}): ${shortContent}${message.content.length > 100 ? '…' : ''}`);
+          pushMessage('system', `**${fromAgent?.role ?? message.fromAgentId}** ${typeLabel} (round ${message.round}): ${shortContent}${message.content.length > 100 ? '…' : ''}`);
         },
 
         onDiscussionComplete(discussionId, result) {
@@ -277,7 +277,7 @@ export function WorkflowPage(): React.JSX.Element {
             ? `converged at round ${result.convergenceRound}`
             : `completed after ${result.rounds.length} rounds (${result.status})`;
 
-          pushMessage('system', `💬 Discussion for **${taskId}** ${statusLabel} with ${result.totalMessages} messages.`);
+          pushMessage('system', `Discussion for **${taskId}** ${statusLabel} with ${result.totalMessages} messages`);
 
           // Update edge status
           setWorkflow((prev) => {
@@ -375,6 +375,7 @@ export function WorkflowPage(): React.JSX.Element {
             selectedNodeId={selectedNodeId}
             onSelectNode={setSelectedNodeId}
             isGenerating={isGenerating}
+            onWorkflowChange={setWorkflow}
           />
         </div>
       </div>
