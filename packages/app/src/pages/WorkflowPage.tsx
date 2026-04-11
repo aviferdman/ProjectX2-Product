@@ -8,7 +8,8 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { WorkflowChat } from '../components/workflow/WorkflowChat.js';
 import { WorkflowPreview } from '../components/workflow/WorkflowPreview.js';
 import { WorkflowToolbar } from '../components/workflow/WorkflowToolbar.js';
-import type { WorkflowState, ChatMessage } from '../types/workflow.js';
+import { CrewBlade } from '../components/workflow/CrewBlade.js';
+import type { WorkflowState, ChatMessage, AgentNode, TaskNode } from '../types/workflow.js';
 import {
   createProvider,
   getDefaultLLMConfig,
@@ -18,6 +19,7 @@ import {
 } from '../services/orchestration.js';
 import type { LLMProvider } from '@crewspace/core/types';
 import { LLMSettings } from '../components/workflow/LLMSettings.js';
+import { useCrewStore } from '../store/index.js';
 
 export function WorkflowPage(): React.JSX.Element {
   const { workflowId } = useParams<{ workflowId: string }>();
@@ -34,6 +36,9 @@ export function WorkflowPage(): React.JSX.Element {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [llmError, setLlmError] = useState<string | null>(null);
   const [showSettings, setShowSettings] = useState(false);
+  const [isCrewBladeOpen, setIsCrewBladeOpen] = useState(false);
+
+  const { importCrewFromWorkflow } = useCrewStore();
 
   // Stable LLM provider ref — created once, survives re-renders
   const providerRef = useRef<LLMProvider | null>(null);
@@ -300,6 +305,88 @@ export function WorkflowPage(): React.JSX.Element {
     }
   }, [workflow, getProvider, pushMessage]);
 
+  // -----------------------------------------------------------------------
+  // 4. Crew Blade CRUD handlers
+  // -----------------------------------------------------------------------
+  const AGENT_COLORS = ['#8b5cf6', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
+
+  const handleAgentAdd = useCallback((agentData: Omit<AgentNode, 'id' | 'status' | 'position'>) => {
+    setWorkflow((prev) => {
+      if (!prev) return null;
+      const agent: AgentNode = {
+        ...agentData,
+        id: `agent-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        status: 'idle',
+        color: agentData.color || AGENT_COLORS[prev.agents.length % AGENT_COLORS.length]!,
+        position: { x: prev.agents.length * 200, y: 100 },
+      };
+      return { ...prev, agents: [...prev.agents, agent], updatedAt: Date.now() };
+    });
+  }, []);
+
+  const handleAgentUpdate = useCallback((agentId: string, updates: Partial<Omit<AgentNode, 'id'>>) => {
+    setWorkflow((prev) => {
+      if (!prev) return null;
+      return { ...prev, agents: prev.agents.map((a) => a.id === agentId ? { ...a, ...updates } : a), updatedAt: Date.now() };
+    });
+  }, []);
+
+  const handleAgentDelete = useCallback((agentId: string) => {
+    setWorkflow((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        agents: prev.agents.filter((a) => a.id !== agentId),
+        tasks: prev.tasks.map((t) => t.agentId === agentId ? { ...t, agentId: '' } : t),
+        updatedAt: Date.now(),
+      };
+    });
+    if (selectedNodeId === agentId) setSelectedNodeId(null);
+  }, [selectedNodeId]);
+
+  const handleTaskAdd = useCallback((taskData: Omit<TaskNode, 'id' | 'status'>) => {
+    setWorkflow((prev) => {
+      if (!prev) return null;
+      const task: TaskNode = {
+        ...taskData,
+        id: `task-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        status: 'pending',
+      };
+      return { ...prev, tasks: [...prev.tasks, task], updatedAt: Date.now() };
+    });
+  }, []);
+
+  const handleTaskUpdate = useCallback((taskId: string, updates: Partial<Omit<TaskNode, 'id'>>) => {
+    setWorkflow((prev) => {
+      if (!prev) return null;
+      return { ...prev, tasks: prev.tasks.map((t) => t.id === taskId ? { ...t, ...updates } : t), updatedAt: Date.now() };
+    });
+  }, []);
+
+  const handleTaskDelete = useCallback((taskId: string) => {
+    setWorkflow((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        tasks: prev.tasks.filter((t) => t.id !== taskId),
+        updatedAt: Date.now(),
+      };
+    });
+    if (selectedNodeId === taskId) setSelectedNodeId(null);
+  }, [selectedNodeId]);
+
+  const handleSaveAsCrew = useCallback(() => {
+    if (!workflow) return;
+    const crew = importCrewFromWorkflow(
+      workflow.name || 'Untitled Crew',
+      workflow.description || '',
+      workflow.agents,
+      workflow.tasks,
+    );
+    setWorkflow((prev) => prev ? { ...prev, crewId: crew.id } : null);
+    pushMessage('system', `Crew "${crew.name}" saved with ${crew.agents.length} agents and ${crew.tasks.length} tasks. You can find it in My Crews.`);
+  }, [workflow, importCrewFromWorkflow, pushMessage]);
+
   return (
     <div className="h-screen flex flex-col bg-[var(--cs-surface-app)] overflow-hidden">
       {/* Top Toolbar */}
@@ -311,6 +398,9 @@ export function WorkflowPage(): React.JSX.Element {
         onBack={() => navigate('/')}
         onSettings={() => setShowSettings(true)}
         isGenerating={isGenerating}
+        onToggleCrewBlade={() => setIsCrewBladeOpen(!isCrewBladeOpen)}
+        isCrewBladeOpen={isCrewBladeOpen}
+        onSaveAsCrew={handleSaveAsCrew}
       />
 
       {/* Error Banner */}
@@ -379,6 +469,22 @@ export function WorkflowPage(): React.JSX.Element {
           />
         </div>
       </div>
+
+      {/* Crew Blade (right side) */}
+      <CrewBlade
+        isOpen={isCrewBladeOpen}
+        onClose={() => setIsCrewBladeOpen(false)}
+        agents={workflow?.agents ?? []}
+        tasks={workflow?.tasks ?? []}
+        selectedNodeId={selectedNodeId}
+        onAgentAdd={handleAgentAdd}
+        onAgentUpdate={handleAgentUpdate}
+        onAgentDelete={handleAgentDelete}
+        onTaskAdd={handleTaskAdd}
+        onTaskUpdate={handleTaskUpdate}
+        onTaskDelete={handleTaskDelete}
+        onNodeSelect={setSelectedNodeId}
+      />
 
       {/* LLM Settings Modal */}
       <LLMSettings

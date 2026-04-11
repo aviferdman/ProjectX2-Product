@@ -57,6 +57,8 @@ export interface WorkflowState {
   id: string;
   name: string;
   description: string;
+  /** The crew this workflow belongs to (set when saved). */
+  crewId?: string | undefined;
   agents: AgentNode[];
   tasks: TaskNode[];
   /** Discussion edges between agents (generated from task discussion configs). */

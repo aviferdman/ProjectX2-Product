@@ -15,6 +15,8 @@ import { TemplatesPage } from '../pages/TemplatesPage.js';
 import { MarketplacePage } from '../pages/MarketplacePage.js';
 import { SettingsPage } from '../pages/SettingsPage.js';
 import { NotFoundPage } from '../pages/NotFoundPage.js';
+import { CrewsPage } from '../pages/CrewsPage.js';
+import { CrewDetail } from '../components/crews/CrewDetail.js';
 
 export interface AppRouterProps {
   children?: React.ReactNode;
@@ -50,6 +52,15 @@ export function AppRouter({ children }: AppRouterProps): React.JSX.Element {
       React.createElement(Route, {
         path: ROUTES.DASHBOARD,
         element: React.createElement(DashboardPage),
+      }),
+      /* Crews */
+      React.createElement(Route, {
+        path: ROUTES.CREWS,
+        element: React.createElement(CrewsPage),
+      }),
+      React.createElement(Route, {
+        path: ROUTES.CREW_DETAIL,
+        element: React.createElement(CrewDetail),
       }),
       React.createElement(Route, {
         path: ROUTES.CANVAS,

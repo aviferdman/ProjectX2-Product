@@ -4,7 +4,7 @@
  */
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { workflowPath } from '../router/routes.js';
+import { workflowPath, crewPath } from '../router/routes.js';
 
 const EXAMPLE_PROMPTS = [
   'Conduct market research in the mobile gaming industry — identify user needs and MVP strategy',
@@ -15,10 +15,10 @@ const EXAMPLE_PROMPTS = [
   'Design a quality assurance pipeline for a software development team',
 ];
 
-const RECENT_PROJECTS = [
-  { id: 'proj-1', name: 'Mobile Game MVP Research', agents: 4, tasks: 5, completedTasks: 5, status: 'completed' as const, updatedAt: '2 hours ago' },
-  { id: 'proj-2', name: 'SaaS Launch Campaign', agents: 6, tasks: 8, completedTasks: 3, status: 'running' as const, updatedAt: '1 day ago' },
-  { id: 'proj-3', name: 'Competitor Analysis Pipeline', agents: 3, tasks: 4, completedTasks: 0, status: 'draft' as const, updatedAt: '3 days ago' },
+const RECENT_CREWS = [
+  { id: 'crew-1', name: 'Research Team Alpha', description: 'Market research specialists', agentCount: 4, workflowCount: 2, color: '#8b5cf6', updatedAt: '2 hours ago' },
+  { id: 'crew-2', name: 'Content Marketing Squad', description: 'Content creation and distribution', agentCount: 6, workflowCount: 3, color: '#06b6d4', updatedAt: '1 day ago' },
+  { id: 'crew-3', name: 'Data Analysis Crew', description: 'Data processing and insights', agentCount: 3, workflowCount: 1, color: '#f59e0b', updatedAt: '3 days ago' },
 ];
 
 const HOW_IT_WORKS = [
@@ -129,7 +129,7 @@ export function HomePage(): React.JSX.Element {
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <button onClick={() => navigate('/dashboard')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Projects</button>
+            <button onClick={() => navigate('/crews')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">My Crews</button>
             <button onClick={() => navigate('/templates')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Templates</button>
             <button onClick={() => navigate('/marketplace')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Marketplace</button>
           </nav>
@@ -267,55 +267,42 @@ export function HomePage(): React.JSX.Element {
         </div>
       </section>
 
-      {/* ── Recent Projects ──────────────────────────────────── */}
-      {RECENT_PROJECTS.length > 0 && (
+      {/* ── Recent Crews ──────────────────────────────────── */}
+      {RECENT_CREWS.length > 0 && (
         <section className="max-w-3xl mx-auto px-6 mt-24 w-full">
           <div className="flex items-center justify-between mb-5">
-            <p className="text-sm text-[var(--cs-text-secondary)]">Pick up where you left off</p>
+            <p className="text-sm text-[var(--cs-text-secondary)]">Your crews</p>
             <button
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate('/crews')}
               className="text-xs text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
             >
-              All projects
+              All crews →
             </button>
           </div>
           <div className="stagger-children grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {RECENT_PROJECTS.map((project) => {
-              const initials = project.name.split(' ').map((w) => w[0]).join('').slice(0, 2);
-              const bgColor = project.status === 'completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                : project.status === 'running' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                : 'bg-slate-500/10 text-slate-400 border-slate-500/20';
-              const progress = project.tasks > 0 ? (project.completedTasks / project.tasks) * 100 : 0;
+            {RECENT_CREWS.map((crew) => {
+              const initials = crew.name.split(' ').map((w) => w[0]).join('').slice(0, 2);
               return (
                 <button
-                  key={project.id}
-                  onClick={() => navigate(workflowPath(project.id))}
+                  key={crew.id}
+                  onClick={() => navigate(crewPath(crew.id))}
                   className="card-hover text-left rounded-xl bg-white/[0.02] border border-[var(--cs-border-subtle)] hover:bg-white/[0.05] hover:border-[var(--cs-border-default)] transition-all duration-200 p-4 group focus-ring"
+                  style={{ borderTopColor: crew.color, borderTopWidth: '3px' }}
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-8 h-8 rounded-lg border flex items-center justify-center text-xs font-bold flex-shrink-0 ${bgColor}`}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0 text-white" style={{ backgroundColor: crew.color }}>
                       {initials}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors truncate">
-                        {project.name}
+                        {crew.name}
                       </p>
+                      <p className="text-[11px] text-[var(--cs-text-tertiary)] truncate">{crew.description}</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between text-[11px] text-[var(--cs-text-tertiary)]">
-                    <span>{project.agents} agents · {project.tasks} tasks</span>
-                    <span>{project.updatedAt}</span>
-                  </div>
-                  {/* Progress bar */}
-                  <div className="mt-2.5 w-full h-1 rounded-full bg-[var(--cs-surface-card)] overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all duration-500 ${
-                        project.status === 'completed' ? 'bg-emerald-500'
-                          : project.status === 'running' ? 'bg-amber-400'
-                          : 'bg-slate-600'
-                      }`}
-                      style={{ width: `${progress}%` }}
-                    />
+                    <span>{crew.agentCount} agents · {crew.workflowCount} workflows</span>
+                    <span>{crew.updatedAt}</span>
                   </div>
                 </button>
               );

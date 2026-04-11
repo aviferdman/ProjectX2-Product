@@ -13,3 +13,7 @@ export type {
   AppActions,
   AppContextValue,
 } from './types.js';
+
+// Crew store
+export { CrewProvider, useCrewStore } from './CrewContext.js';
+export type { CrewProviderProps, CrewStoreState, CrewStoreActions, CrewContextValue } from './CrewContext.js';
