@@ -236,12 +236,9 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
               }`}
             >
               <div className="flex items-start gap-2">
-                <div
-                  className="w-2 h-2 rounded-full mt-1.5 shrink-0"
-                  style={{
-                    backgroundColor: def.category === 'business-product' ? '#f59e0b' : '#06b6d4',
-                  }}
-                />
+                <span className="text-base mt-0.5 shrink-0" role="img" aria-label={def.role}>
+                  {def.avatar}
+                </span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-[var(--cs-text-primary)]">

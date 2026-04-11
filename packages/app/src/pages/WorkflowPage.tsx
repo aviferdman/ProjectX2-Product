@@ -25,7 +25,9 @@ export function WorkflowPage(): React.JSX.Element {
   const { workflowId } = useParams<{ workflowId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const initialPrompt = (location.state as { prompt?: string } | null)?.prompt ?? '';
+  const locState = location.state as { prompt?: string; workflow?: WorkflowState } | null;
+  const initialPrompt = locState?.prompt ?? '';
+  const initialWorkflow = locState?.workflow ?? null;
 
   const [workflow, setWorkflow] = useState<WorkflowState | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -61,10 +63,29 @@ export function WorkflowPage(): React.JSX.Element {
   const hasTriggeredGeneration = useRef(false);
 
   // -----------------------------------------------------------------------
+  // 0. Pre-built workflow from template — skip LLM generation
+  // -----------------------------------------------------------------------
+  useEffect(() => {
+    if (!initialWorkflow || workflow || hasTriggeredGeneration.current) return undefined;
+    hasTriggeredGeneration.current = true;
+
+    setWorkflow(initialWorkflow);
+
+    const discussionCount = initialWorkflow.tasks.filter((t) => t.discussion).length;
+    const discussionNote = discussionCount > 0 ? `\n\n**Discussions:** ${discussionCount} collaborative task(s).` : '';
+    pushMessage(
+      'assistant',
+      `Workflow **${initialWorkflow.name}** is ready with **${initialWorkflow.agents.length} agents** and **${initialWorkflow.tasks.length} tasks**.${discussionNote}\n\n**Agents:**\n${initialWorkflow.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${initialWorkflow.tasks.map((t, i) => `${i + 1}. ${t.description}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
+    );
+
+    return undefined;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // -----------------------------------------------------------------------
   // 1. Generate workflow from initial prompt via LLM
   // -----------------------------------------------------------------------
   useEffect(() => {
-    if (!initialPrompt || workflow || hasTriggeredGeneration.current) return undefined;
+    if (!initialPrompt || initialWorkflow || workflow || hasTriggeredGeneration.current) return undefined;
     hasTriggeredGeneration.current = true;
 
     pushMessage('system', `Analyzing your request: "${initialPrompt}"`);

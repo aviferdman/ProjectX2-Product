@@ -24,6 +24,8 @@ export interface HardcodedAgent {
   model: string;
   /** Which category this agent belongs to. */
   category: 'business-product' | 'research-analysis';
+  /** Unique emoji avatar shown consistently across the app. */
+  avatar: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -40,6 +42,7 @@ const businessAnalyst: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'sonnet',
   category: 'business-product',
+  avatar: '📊',
 };
 
 const contentMarketer: HardcodedAgent = {
@@ -52,6 +55,7 @@ const contentMarketer: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'haiku',
   category: 'business-product',
+  avatar: '✍️',
 };
 
 const customerSuccessManager: HardcodedAgent = {
@@ -64,6 +68,7 @@ const customerSuccessManager: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'sonnet',
   category: 'business-product',
+  avatar: '🤝',
 };
 
 const legalAdvisor: HardcodedAgent = {
@@ -76,6 +81,7 @@ const legalAdvisor: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'sonnet',
   category: 'business-product',
+  avatar: '⚖️',
 };
 
 const licenseEngineer: HardcodedAgent = {
@@ -88,6 +94,7 @@ const licenseEngineer: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'opus',
   category: 'business-product',
+  avatar: '📜',
 };
 
 const productManager: HardcodedAgent = {
@@ -100,6 +107,7 @@ const productManager: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'haiku',
   category: 'business-product',
+  avatar: '🎯',
 };
 
 const projectManager: HardcodedAgent = {
@@ -112,6 +120,7 @@ const projectManager: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'haiku',
   category: 'business-product',
+  avatar: '📋',
 };
 
 const salesEngineer: HardcodedAgent = {
@@ -124,6 +133,7 @@ const salesEngineer: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'sonnet',
   category: 'business-product',
+  avatar: '💼',
 };
 
 const scrumMaster: HardcodedAgent = {
@@ -136,6 +146,7 @@ const scrumMaster: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'haiku',
   category: 'business-product',
+  avatar: '🔄',
 };
 
 const technicalWriter: HardcodedAgent = {
@@ -148,6 +159,7 @@ const technicalWriter: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'haiku',
   category: 'business-product',
+  avatar: '📝',
 };
 
 const uxResearcher: HardcodedAgent = {
@@ -160,6 +172,7 @@ const uxResearcher: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'business-product',
+  avatar: '🔍',
 };
 
 const wordpressMaster: HardcodedAgent = {
@@ -172,6 +185,7 @@ const wordpressMaster: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer', 'code-executor'],
   model: 'sonnet',
   category: 'business-product',
+  avatar: '🌐',
 };
 
 // ---------------------------------------------------------------------------
@@ -188,6 +202,7 @@ const researchAnalyst: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '🔬',
 };
 
 const searchSpecialist: HardcodedAgent = {
@@ -200,6 +215,7 @@ const searchSpecialist: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '🕵️',
 };
 
 const trendAnalyst: HardcodedAgent = {
@@ -212,6 +228,7 @@ const trendAnalyst: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '📈',
 };
 
 const competitiveAnalyst: HardcodedAgent = {
@@ -224,6 +241,7 @@ const competitiveAnalyst: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '🏆',
 };
 
 const marketResearcher: HardcodedAgent = {
@@ -236,6 +254,7 @@ const marketResearcher: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '🛒',
 };
 
 const projectIdeaValidator: HardcodedAgent = {
@@ -248,6 +267,7 @@ const projectIdeaValidator: HardcodedAgent = {
   tools: ['web-search', 'web-scraper', 'document-reader', 'document-writer'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '💡',
 };
 
 const dataResearcher: HardcodedAgent = {
@@ -260,6 +280,7 @@ const dataResearcher: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '📉',
 };
 
 const scientificLiteratureResearcher: HardcodedAgent = {
@@ -272,6 +293,7 @@ const scientificLiteratureResearcher: HardcodedAgent = {
   tools: ['web-search', 'document-reader'],
   model: 'sonnet',
   category: 'research-analysis',
+  avatar: '🧬',
 };
 
 // ---------------------------------------------------------------------------
@@ -318,4 +340,11 @@ export function getAgentById(id: string): HardcodedAgent | undefined {
 /** Get agents by category. */
 export function getAgentsByCategory(category: HardcodedAgent['category']): readonly HardcodedAgent[] {
   return ALL_HARDCODED_AGENTS.filter((a) => a.category === category);
+}
+
+/** Resolve the avatar emoji for an agent. Falls back to the first letter of the role. */
+export function getAgentAvatar(agentId: string, fallbackRole?: string): string {
+  const agent = ALL_HARDCODED_AGENTS.find((a) => a.id === agentId);
+  if (agent) return agent.avatar;
+  return fallbackRole ? fallbackRole.charAt(0).toUpperCase() : '?';
 }

@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCrewStore } from '../../store/index.js';
 import { ROUTES, workflowPath } from '../../router/routes.js';
-import { ALL_HARDCODED_AGENTS, BUSINESS_PRODUCT_AGENTS, RESEARCH_ANALYSIS_AGENTS } from '../../data/hardcoded-agents.js';
+import type { WorkflowState } from '../../types/workflow.js';
+import { ALL_HARDCODED_AGENTS, BUSINESS_PRODUCT_AGENTS, RESEARCH_ANALYSIS_AGENTS, getAgentAvatar } from '../../data/hardcoded-agents.js';
 import type { HardcodedAgent } from '../../data/hardcoded-agents.js';
 
 type CategoryFilter = 'all' | 'business-product' | 'research-analysis';
@@ -299,10 +300,9 @@ export function CrewDetail(): React.JSX.Element {
                       }`}
                     >
                       <div className="flex items-start gap-2">
-                        <div
-                          className="w-2 h-2 rounded-full mt-1.5 shrink-0"
-                          style={{ backgroundColor: def.category === 'business-product' ? '#f59e0b' : '#06b6d4' }}
-                        />
+                        <span className="text-base mt-0.5 shrink-0" role="img" aria-label={def.role}>
+                          {def.avatar}
+                        </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="text-sm font-medium text-[var(--cs-text-primary)]">{def.role}</span>
@@ -377,10 +377,10 @@ export function CrewDetail(): React.JSX.Element {
                     </svg>
                   </button>
                   <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold text-white mb-3"
+                    className="w-9 h-9 rounded-lg flex items-center justify-center text-lg mb-3"
                     style={{ backgroundColor: agent.color }}
                   >
-                    {agent.role.charAt(0).toUpperCase()}
+                    {getAgentAvatar(agent.id, agent.role)}
                   </div>
                   <p className="text-sm font-medium text-[var(--cs-text-primary)] truncate mb-1">{agent.role}</p>
                   {agent.tools.length > 0 && (
@@ -409,7 +409,7 @@ export function CrewDetail(): React.JSX.Element {
         <section className="mb-10 animate-fadeIn">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold text-[var(--cs-text-primary)] uppercase tracking-wider">
-              Workflows <span className="ml-2 text-xs font-normal text-[var(--cs-text-tertiary)]">({crew.workflowIds.length})</span>
+              Workflows <span className="ml-2 text-xs font-normal text-[var(--cs-text-tertiary)]">({(crew.workflows ?? []).length || crew.workflowIds.length})</span>
             </h2>
             <button
               onClick={() => navigate('/', { state: { crewId: crew.id } })}
@@ -422,7 +422,58 @@ export function CrewDetail(): React.JSX.Element {
               New Workflow
             </button>
           </div>
-          {crew.workflowIds.length > 0 ? (
+          {(crew.workflows ?? []).length > 0 ? (
+            <div className="space-y-3">
+              {(crew.workflows ?? []).map((wf) => (
+                <div
+                  key={wf.id}
+                  className="group bg-[var(--cs-surface-card)] border border-[var(--cs-border-subtle)] rounded-xl px-5 py-4 flex items-center justify-between transition-all hover:border-violet-500/40 hover:-translate-y-0.5"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-[var(--cs-text-primary)] group-hover:text-violet-300 transition-colors truncate">
+                      {wf.name}
+                    </p>
+                    {wf.description && (
+                      <p className="text-xs text-[var(--cs-text-tertiary)] mt-0.5 truncate">{wf.description}</p>
+                    )}
+                    <p className="text-[10px] text-[var(--cs-text-tertiary)] mt-1">
+                      {crew.tasks.length} task{crew.tasks.length !== 1 ? 's' : ''} · {crew.agents.length} agent{crew.agents.length !== 1 ? 's' : ''}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0 ml-4">
+                    <button
+                      onClick={() => {
+                        const now = Date.now();
+                        const preBuiltWorkflow: WorkflowState = {
+                          id: wf.id,
+                          name: wf.name,
+                          description: wf.description,
+                          crewId: crew.id,
+                          agents: crew.agents.map((a) => ({ ...a, status: 'idle' as const })),
+                          tasks: crew.tasks.map((t) => ({ ...t, status: 'pending' as const })),
+                          discussionEdges: [],
+                          status: 'draft',
+                          createdAt: now,
+                          updatedAt: now,
+                        };
+                        navigate(workflowPath(wf.id), { state: { workflow: preBuiltWorkflow } });
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-violet-500/30 text-violet-400 hover:bg-violet-500/10 text-xs font-medium transition-colors focus-ring"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                      </svg>
+                      Clone &amp; Run
+                    </button>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--cs-text-tertiary)] group-hover:text-[var(--cs-text-primary)] transition-colors">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : crew.workflowIds.length > 0 ? (
             <div className="space-y-3">
               {crew.workflowIds.map((wfId) => (
                 <button

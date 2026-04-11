@@ -17,6 +17,14 @@ export interface CrewSummary {
   readonly color: string;
 }
 
+/** Lightweight workflow metadata stored on a crew. */
+export interface CrewWorkflow {
+  readonly id: string;
+  readonly name: string;
+  readonly description: string;
+  readonly createdAt: number;
+}
+
 /** Full crew definition with agents and optional default tasks. */
 export interface CrewDefinition {
   readonly id: string;
@@ -25,7 +33,10 @@ export interface CrewDefinition {
   readonly agents: AgentNode[];
   /** Default tasks that ship with this crew (template). */
   readonly tasks: TaskNode[];
+  /** Ordered list of workflow IDs (kept for backward compat). */
   readonly workflowIds: string[];
+  /** Rich workflow metadata keyed by workflow ID. */
+  readonly workflows: CrewWorkflow[];
   readonly color: string;
   readonly createdAt: number;
   readonly updatedAt: number;
@@ -37,6 +48,7 @@ export interface CreateCrewInput {
   readonly description: string;
   readonly agents?: AgentNode[];
   readonly tasks?: TaskNode[];
+  readonly workflows?: ReadonlyArray<{ name: string; description: string }>;
   readonly color?: string;
 }
 

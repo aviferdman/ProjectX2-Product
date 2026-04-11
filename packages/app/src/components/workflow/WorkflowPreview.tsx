@@ -4,6 +4,7 @@
  */
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import type { WorkflowState, AgentNode, TaskNode, DiscussionEdge, DiscussionMessageUI } from '../../types/workflow.js';
+import { getAgentAvatar } from '../../data/hardcoded-agents.js';
 
 interface WorkflowPreviewProps {
   workflow: WorkflowState | null;
@@ -624,11 +625,11 @@ function GraphView({
                       {discParticipants.slice(0, 4).map((a) => (
                         <div
                           key={a.id}
-                          className="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold text-white border border-[var(--cs-surface-card)]"
+                          className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] text-white border border-[var(--cs-surface-card)]"
                           style={{ backgroundColor: a.color }}
                           title={a.role}
                         >
-                          {a.role.charAt(0)}
+                          {getAgentAvatar(a.id, a.role)}
                         </div>
                       ))}
                     </div>
@@ -1326,10 +1327,10 @@ function DetailsPanel({
                   return a ? (
                     <div className="flex items-center gap-2 mt-1.5">
                       <div
-                        className="w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold text-white"
+                        className="w-6 h-6 rounded-md flex items-center justify-center text-xs text-white"
                         style={{ backgroundColor: `${a.color}30` }}
                       >
-                        {a.role.charAt(0)}
+                        {getAgentAvatar(a.id, a.role)}
                       </div>
                       <span className="text-sm text-[var(--cs-text-secondary)]">{a.role}</span>
                     </div>
@@ -1445,8 +1446,8 @@ function DetailsPanel({
                     <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                       {participants.map(a => (
                         <div key={a.id} className="flex items-center gap-1 px-1.5 py-1 rounded-lg bg-[var(--cs-surface-card)]/15 border border-[var(--cs-border-subtle)] group/chip">
-                          <div className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold text-white" style={{ backgroundColor: a.color }}>
-                            {a.role.charAt(0)}
+                          <div className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] text-white" style={{ backgroundColor: a.color }}>
+                            {getAgentAvatar(a.id, a.role)}
                           </div>
                           <span className="text-[10px] text-[var(--cs-text-secondary)]">{a.role}</span>
                           {canEdit && participants.length > 2 && (
@@ -1551,10 +1552,10 @@ function DetailsPanel({
                             <div key={msg.id} className="rounded-lg bg-[var(--cs-surface-card)]/10 border border-[var(--cs-border-subtle)] p-2">
                               <div className="flex items-center gap-1.5 mb-1">
                                 <div
-                                  className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold text-white flex-shrink-0"
+                                  className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] text-white flex-shrink-0"
                                   style={{ backgroundColor: msgAgent?.color ?? '#6366f1' }}
                                 >
-                                  {msgAgent?.role.charAt(0) ?? '?'}
+                                  {msgAgent ? getAgentAvatar(msgAgent.id, msgAgent.role) : '?'}
                                 </div>
                                 <span className="text-[10px] font-semibold" style={{ color: msgAgent?.color ?? '#a78bfa' }}>
                                   {msgAgent?.role ?? msg.fromAgentId}

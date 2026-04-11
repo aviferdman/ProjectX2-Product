@@ -146,13 +146,20 @@ export function CrewProvider({ initialCrews, children }: CrewProviderProps): Rea
   const createCrew = useCallback(
     (input: CreateCrewInput): CrewDefinition => {
       const now = Date.now();
+      const builtWorkflows = (input.workflows ?? []).map((w, i) => ({
+        id: generateId(`wf-${i}`),
+        name: w.name,
+        description: w.description,
+        createdAt: now,
+      }));
       const crew: CrewDefinition = {
         id: generateId('crew'),
         name: input.name,
         description: input.description,
         agents: input.agents ?? [],
         tasks: input.tasks ?? [],
-        workflowIds: [],
+        workflowIds: builtWorkflows.map((w) => w.id),
+        workflows: builtWorkflows,
         color: input.color ?? pickColor(state.crews.length),
         createdAt: now,
         updatedAt: now,
@@ -279,6 +286,7 @@ export function CrewProvider({ initialCrews, children }: CrewProviderProps): Rea
       const updated: CrewDefinition = {
         ...crew,
         workflowIds: [...crew.workflowIds, workflowId],
+        workflows: [...(crew.workflows ?? []), { id: workflowId, name: `Workflow ${workflowId.slice(0, 8)}`, description: '', createdAt: Date.now() }],
         updatedAt: Date.now(),
       };
       dispatch({ type: 'REPLACE_CREW', crew: updated });
@@ -296,6 +304,7 @@ export function CrewProvider({ initialCrews, children }: CrewProviderProps): Rea
         agents,
         tasks,
         workflowIds: [],
+        workflows: [],
         color: pickColor(state.crews.length),
         createdAt: now,
         updatedAt: now,
