@@ -318,12 +318,12 @@ export class Agent {
 
     parts.push(
       `Operating principles:\n` +
-      `- Think step by step before producing your final answer\n` +
-      `- Draw on your specialized expertise and methodology described in your background\n` +
-      `- Be thorough and precise — quality over speed\n` +
-      `- Structure your output clearly with headings or bullet points when appropriate\n` +
-      `- If you lack information to confidently answer, state what you know and what remains uncertain\n` +
-      `- Stay focused on your assigned task — do not drift into areas outside your specialty`
+        `- Think step by step before producing your final answer\n` +
+        `- Draw on your specialized expertise and methodology described in your background\n` +
+        `- Be thorough and precise — quality over speed\n` +
+        `- Structure your output clearly with headings or bullet points when appropriate\n` +
+        `- If you lack information to confidently answer, state what you know and what remains uncertain\n` +
+        `- Stay focused on your assigned task — do not drift into areas outside your specialty`,
     );
 
     return parts.join('\n\n');

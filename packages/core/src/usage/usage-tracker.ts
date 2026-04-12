@@ -7,10 +7,7 @@
  * @packageDocumentation
  */
 
-import {
-  UsageAccountNotFoundError,
-  UsageLimitExceededError,
-} from './usage-errors.js';
+import { UsageAccountNotFoundError, UsageLimitExceededError } from './usage-errors.js';
 import type {
   AccountPlanProvider,
   CompleteRunInput,
@@ -193,11 +190,7 @@ export class UsageTracker {
     // Check monthly run limit
     if (limits.maxRunsPerMonth !== -1) {
       const now = new Date().toISOString();
-      const runsThisPeriod = await this._storage.countRuns(
-        accountId,
-        plan.billingPeriodStart,
-        now,
-      );
+      const runsThisPeriod = await this._storage.countRuns(accountId, plan.billingPeriodStart, now);
 
       if (runsThisPeriod >= limits.maxRunsPerMonth) {
         return {
@@ -238,17 +231,11 @@ export class UsageTracker {
     const limits = this._resolveEffectiveLimits(plan.planTier, plan.customLimits);
     const now = new Date().toISOString();
 
-    const runsThisPeriod = await this._storage.countRuns(
-      accountId,
-      plan.billingPeriodStart,
-      now,
-    );
+    const runsThisPeriod = await this._storage.countRuns(accountId, plan.billingPeriodStart, now);
     const activeRuns = await this._storage.countActiveRuns(accountId);
 
     const remainingRuns =
-      limits.maxRunsPerMonth === -1
-        ? -1
-        : Math.max(0, limits.maxRunsPerMonth - runsThisPeriod);
+      limits.maxRunsPerMonth === -1 ? -1 : Math.max(0, limits.maxRunsPerMonth - runsThisPeriod);
 
     const usagePercent =
       limits.maxRunsPerMonth === -1
@@ -273,8 +260,8 @@ export class UsageTracker {
     planTier: string,
     customLimits?: Partial<PlanLimits>,
   ): PlanLimits {
-    const defaults = DEFAULT_PLAN_LIMITS[planTier as keyof typeof DEFAULT_PLAN_LIMITS] ??
-      DEFAULT_PLAN_LIMITS.free;
+    const defaults =
+      DEFAULT_PLAN_LIMITS[planTier as keyof typeof DEFAULT_PLAN_LIMITS] ?? DEFAULT_PLAN_LIMITS.free;
 
     if (!customLimits) {
       return defaults;

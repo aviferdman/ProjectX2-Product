@@ -165,7 +165,10 @@ export const templateLibraryTheme = {
     'tpl-sort-label': ['0.75rem', { lineHeight: '1', fontWeight: '500' }],
     'tpl-modal-title': ['1.25rem', { lineHeight: '1.25', fontWeight: '700' }],
     'tpl-modal-desc': ['0.875rem', { lineHeight: '1.625', fontWeight: '400' }],
-    'tpl-modal-detail-label': ['0.6875rem', { lineHeight: '1.25', fontWeight: '600', letterSpacing: '0.05em' }],
+    'tpl-modal-detail-label': [
+      '0.6875rem',
+      { lineHeight: '1.25', fontWeight: '600', letterSpacing: '0.05em' },
+    ],
     'tpl-modal-detail-value': ['0.8125rem', { lineHeight: '1.5', fontWeight: '400' }],
     'tpl-empty-heading': ['1.125rem', { lineHeight: '1.25', fontWeight: '600' }],
     'tpl-empty-desc': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],

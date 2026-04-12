@@ -90,9 +90,7 @@ export const AsyncStateView = forwardRef<HTMLDivElement, AsyncStateViewProps>(
 
     // Idle — render nothing (not yet started)
     if (status === 'idle') {
-      return (
-        <div ref={ref} className={clsx('cs-async-state-view', className)} {...rest} />
-      );
+      return <div ref={ref} className={clsx('cs-async-state-view', className)} {...rest} />;
     }
 
     // Success — check for empty
@@ -122,7 +120,9 @@ export const AsyncStateView = forwardRef<HTMLDivElement, AsyncStateViewProps>(
     // Success with data — render children
     return (
       <div ref={ref} className={clsx('cs-async-state-view', className)} {...rest}>
-        {typeof children === 'function' ? (children as (data: never) => ReactNode)(data as never) : children}
+        {typeof children === 'function'
+          ? (children as (data: never) => ReactNode)(data as never)
+          : children}
       </div>
     );
   },

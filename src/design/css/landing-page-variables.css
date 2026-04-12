@@ -37,7 +37,11 @@
 /* Hero section                                                        */
 /* ------------------------------------------------------------------ */
 .cs-landing-hero {
-  --hero-bg: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  --hero-bg: radial-gradient(
+    ellipse 80% 60% at 50% -20%,
+    rgba(139, 92, 246, 0.15) 0%,
+    transparent 70%
+  );
   --hero-grid-color: rgba(148, 163, 184, 0.04);
   --hero-grid-size: 32px;
   --hero-min-h: 640px;
@@ -278,7 +282,11 @@
 /* Footer CTA                                                          */
 /* ------------------------------------------------------------------ */
 .cs-landing-footer-cta {
-  --fcta-bg: radial-gradient(ellipse 80% 50% at 50% 120%, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+  --fcta-bg: radial-gradient(
+    ellipse 80% 50% at 50% 120%,
+    rgba(139, 92, 246, 0.12) 0%,
+    transparent 70%
+  );
   --fcta-heading-color: #fafafa;
   --fcta-subtext-color: #a1a1aa;
   --fcta-padding-y: 96px;
@@ -341,7 +349,8 @@
 
 /* Code typing cursor blink */
 @keyframes cs-lp-cursor-blink {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -361,7 +370,8 @@
 
 /* Slow gradient shift for hero background */
 @keyframes cs-lp-gradient-shift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -371,7 +381,8 @@
 
 /* Floating decorative element */
 @keyframes cs-lp-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {

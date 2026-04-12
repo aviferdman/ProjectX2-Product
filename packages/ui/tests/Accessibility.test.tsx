@@ -33,7 +33,14 @@ describe('SkipLink', () => {
 
   it('forwards ref', () => {
     let el: HTMLAnchorElement | null = null;
-    render(<SkipLink targetId="main" ref={(r) => { el = r; }} />);
+    render(
+      <SkipLink
+        targetId="main"
+        ref={(r) => {
+          el = r;
+        }}
+      />,
+    );
     expect(el).toBeInstanceOf(HTMLAnchorElement);
   });
 
@@ -68,7 +75,11 @@ describe('LiveRegion', () => {
   });
 
   it('can be made visible', () => {
-    render(<LiveRegion visuallyHidden={false} data-testid="live">Visible</LiveRegion>);
+    render(
+      <LiveRegion visuallyHidden={false} data-testid="live">
+        Visible
+      </LiveRegion>,
+    );
     const el = screen.getByTestId('live');
     expect(el.className).not.toContain('sr-only');
   });
@@ -80,7 +91,15 @@ describe('LiveRegion', () => {
 
   it('forwards ref', () => {
     let el: HTMLDivElement | null = null;
-    render(<LiveRegion ref={(r) => { el = r; }}>Ref test</LiveRegion>);
+    render(
+      <LiveRegion
+        ref={(r) => {
+          el = r;
+        }}
+      >
+        Ref test
+      </LiveRegion>,
+    );
     expect(el).toBeInstanceOf(HTMLDivElement);
   });
 });
@@ -100,9 +119,7 @@ describe('useKeyboardShortcuts', () => {
     ignoreInputFields?: boolean;
   }) {
     const result = useKeyboardShortcuts({ shortcuts, enabled, ignoreInputFields });
-    return (
-      <div data-testid="shortcut-count">{result.shortcuts.length}</div>
-    );
+    return <div data-testid="shortcut-count">{result.shortcuts.length}</div>;
   }
 
   it('fires handler on matching key press', () => {
@@ -140,9 +157,7 @@ describe('useKeyboardShortcuts', () => {
 
   it('does not fire when hook is globally disabled', () => {
     const handler = vi.fn();
-    const shortcuts: KeyboardShortcut[] = [
-      { id: 'test', key: 'a', handler, description: 'Test' },
-    ];
+    const shortcuts: KeyboardShortcut[] = [{ id: 'test', key: 'a', handler, description: 'Test' }];
 
     render(<TestShortcuts shortcuts={shortcuts} enabled={false} />);
     fireEvent.keyDown(document, { key: 'a' });
@@ -198,9 +213,7 @@ describe('useKeyboardShortcuts', () => {
 
   it('handles shortcuts without modifiers', () => {
     const handler = vi.fn();
-    const shortcuts: KeyboardShortcut[] = [
-      { id: 'help', key: '?', handler, description: 'Help' },
-    ];
+    const shortcuts: KeyboardShortcut[] = [{ id: 'help', key: '?', handler, description: 'Help' }];
 
     render(<TestShortcuts shortcuts={shortcuts} />);
     fireEvent.keyDown(document, { key: '?' });
@@ -340,7 +353,9 @@ describe('useAriaAnnouncer', () => {
     render(<AnnouncerTest />);
 
     fireEvent.click(screen.getByText('Announce'));
-    act(() => { vi.advanceTimersByTime(100); });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
 
     const region = document.getElementById('crewspace-aria-live-polite');
     expect(region).toBeTruthy();
@@ -355,7 +370,9 @@ describe('useAriaAnnouncer', () => {
     render(<AnnouncerTest />);
 
     fireEvent.click(screen.getByText('Alert'));
-    act(() => { vi.advanceTimersByTime(100); });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
 
     const region = document.getElementById('crewspace-aria-live-assertive');
     expect(region).toBeTruthy();
@@ -370,7 +387,9 @@ describe('useAriaAnnouncer', () => {
     render(<AnnouncerTest />);
 
     fireEvent.click(screen.getByText('Announce'));
-    act(() => { vi.advanceTimersByTime(100); });
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
 
     fireEvent.click(screen.getByText('Clear'));
 
@@ -432,9 +451,23 @@ describe('FocusScope', () => {
 
 describe('ShortcutHelpDialog', () => {
   const sampleShortcuts: KeyboardShortcut[] = [
-    { id: 'search', key: 'k', modifiers: ['ctrl'], handler: () => {}, description: 'Open search', category: 'Navigation' },
+    {
+      id: 'search',
+      key: 'k',
+      modifiers: ['ctrl'],
+      handler: () => {},
+      description: 'Open search',
+      category: 'Navigation',
+    },
     { id: 'help', key: '?', handler: () => {}, description: 'Show shortcuts', category: 'General' },
-    { id: 'save', key: 's', modifiers: ['ctrl'], handler: () => {}, description: 'Save workflow', category: 'Editing' },
+    {
+      id: 'save',
+      key: 's',
+      modifiers: ['ctrl'],
+      handler: () => {},
+      description: 'Save workflow',
+      category: 'Editing',
+    },
   ];
 
   it('does not render when closed', () => {

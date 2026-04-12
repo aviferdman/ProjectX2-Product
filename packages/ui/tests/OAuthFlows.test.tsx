@@ -117,16 +117,12 @@ describe('OAuthProviderCard', () => {
 
   it('shows Disconnect button when connected', () => {
     render(<OAuthProviderCard connection={mockConnected} />);
-    expect(
-      screen.getByLabelText('Disconnect GitHub'),
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Disconnect GitHub')).toBeInTheDocument();
   });
 
   it('shows Connect button when disconnected', () => {
     render(<OAuthProviderCard connection={mockDisconnected} />);
-    expect(
-      screen.getByLabelText('Connect Google'),
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Connect Google')).toBeInTheDocument();
   });
 
   it('calls onConnect when Connect button clicked', () => {
@@ -157,9 +153,7 @@ describe('OAuthProviderCard', () => {
 
   it('has correct aria-label', () => {
     render(<OAuthProviderCard connection={mockConnected} />);
-    expect(
-      screen.getByLabelText('OAuth provider: GitHub'),
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText('OAuth provider: GitHub')).toBeInTheDocument();
   });
 
   it('disables Connect button when connecting', () => {
@@ -245,9 +239,7 @@ describe('OAuthConnectDialog', () => {
       />,
     );
     expect(screen.getByText('Connect Google')).toBeInTheDocument();
-    expect(
-      screen.getByText(/redirected to Google to authorize/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/redirected to Google to authorize/)).toBeInTheDocument();
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByTestId('oauth-confirm-btn')).toHaveTextContent('Connect');
   });
@@ -263,9 +255,7 @@ describe('OAuthConnectDialog', () => {
       />,
     );
     expect(screen.getByText('Disconnect GitHub')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Are you sure you want to disconnect GitHub/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Are you sure you want to disconnect GitHub/)).toBeInTheDocument();
     expect(screen.getByTestId('oauth-confirm-btn')).toHaveTextContent('Disconnect');
   });
 
@@ -418,10 +408,7 @@ describe('OAuthConnectDialog', () => {
         flowStatus="confirming"
       />,
     );
-    expect(screen.getByRole('dialog')).toHaveAttribute(
-      'aria-label',
-      'Connect Google',
-    );
+    expect(screen.getByRole('dialog')).toHaveAttribute('aria-label', 'Connect Google');
   });
 });
 
@@ -461,45 +448,26 @@ describe('OAuthSettingsPanel', () => {
   });
 
   it('opens dialog on Connect click and shows confirmation', async () => {
-    render(
-      <OAuthSettingsPanel
-        connections={[mockDisconnected]}
-        onConnect={vi.fn()}
-      />,
-    );
+    render(<OAuthSettingsPanel connections={[mockDisconnected]} onConnect={vi.fn()} />);
     fireEvent.click(screen.getByLabelText('Connect Google'));
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
-    expect(
-      screen.getByText(/redirected to Google to authorize/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/redirected to Google to authorize/)).toBeInTheDocument();
   });
 
   it('opens dialog on Disconnect click and shows confirmation', async () => {
-    render(
-      <OAuthSettingsPanel
-        connections={[mockConnected]}
-        onDisconnect={vi.fn()}
-      />,
-    );
+    render(<OAuthSettingsPanel connections={[mockConnected]} onDisconnect={vi.fn()} />);
     fireEvent.click(screen.getByLabelText('Disconnect GitHub'));
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
-    expect(
-      screen.getByText(/Are you sure you want to disconnect GitHub/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Are you sure you want to disconnect GitHub/)).toBeInTheDocument();
   });
 
   it('calls onConnect and shows success on confirm', async () => {
     const onConnect = vi.fn().mockResolvedValue(undefined);
-    render(
-      <OAuthSettingsPanel
-        connections={[mockDisconnected]}
-        onConnect={onConnect}
-      />,
-    );
+    render(<OAuthSettingsPanel connections={[mockDisconnected]} onConnect={onConnect} />);
     fireEvent.click(screen.getByLabelText('Connect Google'));
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -517,12 +485,7 @@ describe('OAuthSettingsPanel', () => {
 
   it('calls onDisconnect and shows success on confirm', async () => {
     const onDisconnect = vi.fn().mockResolvedValue(undefined);
-    render(
-      <OAuthSettingsPanel
-        connections={[mockConnected]}
-        onDisconnect={onDisconnect}
-      />,
-    );
+    render(<OAuthSettingsPanel connections={[mockConnected]} onDisconnect={onDisconnect} />);
     fireEvent.click(screen.getByLabelText('Disconnect GitHub'));
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -540,12 +503,7 @@ describe('OAuthSettingsPanel', () => {
 
   it('shows error state when connect fails', async () => {
     const onConnect = vi.fn().mockRejectedValue(new Error('Auth failed'));
-    render(
-      <OAuthSettingsPanel
-        connections={[mockDisconnected]}
-        onConnect={onConnect}
-      />,
-    );
+    render(<OAuthSettingsPanel connections={[mockDisconnected]} onConnect={onConnect} />);
     fireEvent.click(screen.getByLabelText('Connect Google'));
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -560,9 +518,7 @@ describe('OAuthSettingsPanel', () => {
   });
 
   it('closes dialog when Cancel clicked', async () => {
-    render(
-      <OAuthSettingsPanel connections={[mockDisconnected]} onConnect={vi.fn()} />,
-    );
+    render(<OAuthSettingsPanel connections={[mockDisconnected]} onConnect={vi.fn()} />);
     fireEvent.click(screen.getByLabelText('Connect Google'));
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

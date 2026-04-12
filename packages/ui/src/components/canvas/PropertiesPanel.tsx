@@ -82,7 +82,10 @@ interface SectionProps {
 
 function Section({ title, children }: SectionProps) {
   return (
-    <div className="space-y-3" data-testid={`properties-section-${title.toLowerCase().replace(/\s/g, '-')}`}>
+    <div
+      className="space-y-3"
+      data-testid={`properties-section-${title.toLowerCase().replace(/\s/g, '-')}`}
+    >
       <h3 className="text-xs font-semibold uppercase tracking-wider text-text-tertiary border-b border-border-default pb-1">
         {title}
       </h3>
@@ -178,9 +181,7 @@ function TaskMetaFields({
                 style={{ width: `${Math.min(100, Math.max(0, meta.progress))}%` }}
               />
             </div>
-            <span className="text-xs text-text-secondary w-8 text-right">
-              {meta.progress}%
-            </span>
+            <span className="text-xs text-text-secondary w-8 text-right">{meta.progress}%</span>
           </div>
         </FieldRow>
       )}
@@ -223,10 +224,7 @@ function ToolMetaFields({ meta }: { meta: ToolNodeMeta }) {
         <FieldRow label="Parameters">
           <div className="space-y-1" data-testid="property-tool-parameters">
             {meta.parameters.map((param) => (
-              <div
-                key={param.name}
-                className="flex items-center gap-1 text-xs"
-              >
+              <div key={param.name} className="flex items-center gap-1 text-xs">
                 <span className="text-text-primary font-mono">{param.name}</span>
                 <span className="text-text-tertiary">:</span>
                 <span className="text-text-secondary font-mono">{param.type}</span>

@@ -33,25 +33,61 @@ export interface ResponsiveLayoutProps extends HTMLAttributes<HTMLDivElement> {
 /* Icons                                                               */
 /* ------------------------------------------------------------------ */
 const MenuIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
     <path d="M3 5h14M3 10h14M3 15h14" />
   </svg>
 );
 
 const CloseIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
     <path d="M4 4l10 10M14 4L4 14" />
   </svg>
 );
 
 const ChevronLeftIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
     <path d="M10 4L6 8l4 4" />
   </svg>
 );
 
 const ChevronRightIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
     <path d="M6 4l4 4-4 4" />
   </svg>
 );
@@ -144,9 +180,7 @@ const Sidebar = ({
           {collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </button>
       </div>
-      <div className="flex-1 overflow-y-auto p-3">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto p-3">{children}</div>
     </aside>
   );
 };
@@ -165,11 +199,7 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
 
   return (
     <>
-      <div
-        className="fixed inset-0 z-40 bg-black/40"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0 z-40 bg-black/40" onClick={onClose} aria-hidden="true" />
       <div
         role="complementary"
         aria-label="Properties panel"
@@ -190,9 +220,7 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
             <CloseIcon />
           </button>
         </div>
-        <div className="overflow-y-auto p-4 max-h-[calc(60vh-48px)]">
-          {children}
-        </div>
+        <div className="overflow-y-auto p-4 max-h-[calc(60vh-48px)]">{children}</div>
       </div>
     </>
   );
@@ -214,11 +242,7 @@ const PropertiesPanel = ({ mode, open, onClose, children }: PropertiesPanelProps
   if (mode === 'overlay') {
     return (
       <>
-        <div
-          className="fixed inset-0 z-40 bg-black/30"
-          onClick={onClose}
-          aria-hidden="true"
-        />
+        <div className="fixed inset-0 z-40 bg-black/30" onClick={onClose} aria-hidden="true" />
         <aside
           role="complementary"
           aria-label="Properties panel"
@@ -240,9 +264,7 @@ const PropertiesPanel = ({ mode, open, onClose, children }: PropertiesPanelProps
               <CloseIcon />
             </button>
           </div>
-          <div className="overflow-y-auto h-[calc(100%-56px)] p-4">
-            {children}
-          </div>
+          <div className="overflow-y-auto h-[calc(100%-56px)] p-4">{children}</div>
         </aside>
       </>
     );
@@ -266,9 +288,7 @@ const PropertiesPanel = ({ mode, open, onClose, children }: PropertiesPanelProps
           <CloseIcon />
         </button>
       </div>
-      <div className="flex-1 overflow-y-auto p-4">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto p-4">{children}</div>
     </aside>
   );
 };
@@ -368,9 +388,7 @@ export const ResponsiveLayout = forwardRef<HTMLDivElement, ResponsiveLayoutProps
           </h1>
 
           {headerContent && (
-            <div className="flex-1 flex items-center justify-end gap-2">
-              {headerContent}
-            </div>
+            <div className="flex-1 flex items-center justify-end gap-2">{headerContent}</div>
           )}
         </header>
 
@@ -397,19 +415,14 @@ export const ResponsiveLayout = forwardRef<HTMLDivElement, ResponsiveLayoutProps
               'py-4 md:py-6',
             )}
           >
-            <div className="w-full max-w-content-xl 2xl:max-w-content-2xl mx-auto">
-              {children}
-            </div>
+            <div className="w-full max-w-content-xl 2xl:max-w-content-2xl mx-auto">{children}</div>
           </main>
 
           {/* Properties panel */}
           {propertiesContent && (
             <>
               {isMobile && (
-                <BottomSheet
-                  open={propertiesOpen}
-                  onClose={handlePropertiesClose}
-                >
+                <BottomSheet open={propertiesOpen} onClose={handlePropertiesClose}>
                   {propertiesContent}
                 </BottomSheet>
               )}

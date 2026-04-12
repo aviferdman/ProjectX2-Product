@@ -58,7 +58,11 @@ export function filterLogEntries(entries: LogEntry[], filters: LogFilters): LogE
       const name = (entry.agentName ?? entry.agentId).toLowerCase();
       const msg = entry.message.toLowerCase();
       const task = (entry.taskName ?? '').toLowerCase();
-      if (!msg.includes(lowerSearch) && !name.includes(lowerSearch) && !task.includes(lowerSearch)) {
+      if (
+        !msg.includes(lowerSearch) &&
+        !name.includes(lowerSearch) &&
+        !task.includes(lowerSearch)
+      ) {
         return false;
       }
     }

@@ -3,45 +3,137 @@
   "crewspace": {
     "feedback": {
       "success": {
-        "bg":     { "value": "rgba(16,185,129,0.08)", "type": "color", "description": "Success state background" },
-        "border": { "value": "rgba(5,150,105,0.5)", "type": "color", "description": "Success state border" },
-        "icon":   { "value": "{crewspace.color.primitive.emerald.400}", "type": "color", "description": "Success icon fill" }
+        "bg": {
+          "value": "rgba(16,185,129,0.08)",
+          "type": "color",
+          "description": "Success state background"
+        },
+        "border": {
+          "value": "rgba(5,150,105,0.5)",
+          "type": "color",
+          "description": "Success state border"
+        },
+        "icon": {
+          "value": "{crewspace.color.primitive.emerald.400}",
+          "type": "color",
+          "description": "Success icon fill"
+        }
       },
       "error": {
-        "bg":     { "value": "rgba(244,63,94,0.08)", "type": "color", "description": "Error state background" },
-        "border": { "value": "rgba(225,29,72,0.5)", "type": "color", "description": "Error state border" },
-        "icon":   { "value": "{crewspace.color.primitive.rose.400}", "type": "color", "description": "Error icon fill" }
+        "bg": {
+          "value": "rgba(244,63,94,0.08)",
+          "type": "color",
+          "description": "Error state background"
+        },
+        "border": {
+          "value": "rgba(225,29,72,0.5)",
+          "type": "color",
+          "description": "Error state border"
+        },
+        "icon": {
+          "value": "{crewspace.color.primitive.rose.400}",
+          "type": "color",
+          "description": "Error icon fill"
+        }
       },
       "warning": {
-        "bg":     { "value": "rgba(245,158,11,0.08)", "type": "color", "description": "Warning state background" },
-        "border": { "value": "rgba(217,119,6,0.5)", "type": "color", "description": "Warning state border" },
-        "icon":   { "value": "{crewspace.color.primitive.amber.400}", "type": "color", "description": "Warning icon fill" }
+        "bg": {
+          "value": "rgba(245,158,11,0.08)",
+          "type": "color",
+          "description": "Warning state background"
+        },
+        "border": {
+          "value": "rgba(217,119,6,0.5)",
+          "type": "color",
+          "description": "Warning state border"
+        },
+        "icon": {
+          "value": "{crewspace.color.primitive.amber.400}",
+          "type": "color",
+          "description": "Warning icon fill"
+        }
       },
       "info": {
-        "bg":     { "value": "rgba(14,165,233,0.08)", "type": "color", "description": "Info state background" },
-        "border": { "value": "rgba(2,132,199,0.5)", "type": "color", "description": "Info state border" },
-        "icon":   { "value": "{crewspace.color.primitive.sky.400}", "type": "color", "description": "Info icon fill" }
+        "bg": {
+          "value": "rgba(14,165,233,0.08)",
+          "type": "color",
+          "description": "Info state background"
+        },
+        "border": {
+          "value": "rgba(2,132,199,0.5)",
+          "type": "color",
+          "description": "Info state border"
+        },
+        "icon": {
+          "value": "{crewspace.color.primitive.sky.400}",
+          "type": "color",
+          "description": "Info icon fill"
+        }
       },
       "empty": {
-        "border": { "value": "{crewspace.color.primitive.slate.700}", "type": "color", "description": "Empty state dashed border" },
-        "icon":   { "value": "{crewspace.color.primitive.slate.600}", "type": "color", "description": "Empty state icon" }
+        "border": {
+          "value": "{crewspace.color.primitive.slate.700}",
+          "type": "color",
+          "description": "Empty state dashed border"
+        },
+        "icon": {
+          "value": "{crewspace.color.primitive.slate.600}",
+          "type": "color",
+          "description": "Empty state icon"
+        }
       },
       "loading": {
-        "spinner": { "value": "{crewspace.color.primitive.violet.400}", "type": "color", "description": "Loading spinner color" },
-        "track":   { "value": "{crewspace.color.primitive.slate.800}", "type": "color", "description": "Progress bar track" },
-        "bar":     { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Progress bar fill" }
+        "spinner": {
+          "value": "{crewspace.color.primitive.violet.400}",
+          "type": "color",
+          "description": "Loading spinner color"
+        },
+        "track": {
+          "value": "{crewspace.color.primitive.slate.800}",
+          "type": "color",
+          "description": "Progress bar track"
+        },
+        "bar": {
+          "value": "{crewspace.color.primitive.violet.500}",
+          "type": "color",
+          "description": "Progress bar fill"
+        }
       },
       "toast": {
-        "bg":        { "value": "{crewspace.color.primitive.slate.900}", "type": "color", "description": "Toast background" },
-        "max-width": { "value": "420px", "type": "dimension", "description": "Maximum toast width" },
-        "min-width": { "value": "280px", "type": "dimension", "description": "Minimum toast width" },
-        "z-index":   { "value": "50", "type": "number", "description": "Toast container z-index" },
-        "gap":       { "value": "0.5rem", "type": "dimension", "description": "Gap between stacked toasts" }
+        "bg": {
+          "value": "{crewspace.color.primitive.slate.900}",
+          "type": "color",
+          "description": "Toast background"
+        },
+        "max-width": {
+          "value": "420px",
+          "type": "dimension",
+          "description": "Maximum toast width"
+        },
+        "min-width": {
+          "value": "280px",
+          "type": "dimension",
+          "description": "Minimum toast width"
+        },
+        "z-index": { "value": "50", "type": "number", "description": "Toast container z-index" },
+        "gap": {
+          "value": "0.5rem",
+          "type": "dimension",
+          "description": "Gap between stacked toasts"
+        }
       },
       "transition": {
-        "default":  { "value": "150ms", "type": "duration", "description": "Default feedback transition" },
-        "enter":    { "value": "200ms", "type": "duration", "description": "Enter animation duration" },
-        "exit":     { "value": "150ms", "type": "duration", "description": "Exit animation duration" }
+        "default": {
+          "value": "150ms",
+          "type": "duration",
+          "description": "Default feedback transition"
+        },
+        "enter": {
+          "value": "200ms",
+          "type": "duration",
+          "description": "Enter animation duration"
+        },
+        "exit": { "value": "150ms", "type": "duration", "description": "Exit animation duration" }
       }
     }
   }

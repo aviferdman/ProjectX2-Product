@@ -10,8 +10,11 @@ import { CrewspaceError, ErrorCode } from '../errors/base.js';
 // Error codes
 // ---------------------------------------------------------------------------
 
+/** Error code for canvas not found. */
 export const CANVAS_NOT_FOUND = 'CANVAS_NOT_FOUND' as unknown as ErrorCode;
+/** Error code for canvas validation failure. */
 export const CANVAS_VALIDATION = 'CANVAS_VALIDATION' as unknown as ErrorCode;
+/** Error code for empty canvas history. */
 export const CANVAS_HISTORY_EMPTY = 'CANVAS_HISTORY_EMPTY' as unknown as ErrorCode;
 
 // ---------------------------------------------------------------------------

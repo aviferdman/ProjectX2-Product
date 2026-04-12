@@ -141,14 +141,18 @@ All notable changes to this project will be documented in this file.
 
     it('parses all flags together', () => {
       const args = parseCreateReleaseArgs([
-        '--version', '1.0.0',
+        '--version',
+        '1.0.0',
         '--dry-run',
         '--skip-push',
         '--skip-github',
         '--draft',
-        '--output', 'notes.md',
-        '--repo', 'test/repo',
-        '--token', 'tok',
+        '--output',
+        'notes.md',
+        '--repo',
+        'test/repo',
+        '--token',
+        'tok',
       ]);
       expect(args.version).toBe('1.0.0');
       expect(args.dryRun).toBe(true);
@@ -290,9 +294,7 @@ All notable changes to this project will be documented in this file.
       });
 
       expect(result.success).toBe(false);
-      expect(result.steps.some((s) => s.name === 'build-output' && s.status === 'fail')).toBe(
-        true,
-      );
+      expect(result.steps.some((s) => s.name === 'build-output' && s.status === 'fail')).toBe(true);
     });
 
     it('fails when tag already exists', async () => {
@@ -643,9 +645,7 @@ All notable changes to this project will be documented in this file.
         success: false,
         version: '0.1.0',
         tag: 'v0.1.0',
-        steps: [
-          { name: 'publish-validation', status: 'fail', message: 'Version mismatch' },
-        ],
+        steps: [{ name: 'publish-validation', status: 'fail', message: 'Version mismatch' }],
         releaseNotes: null,
         githubRelease: null,
       };

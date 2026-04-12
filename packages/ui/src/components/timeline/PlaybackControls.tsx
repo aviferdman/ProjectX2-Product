@@ -139,10 +139,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
   return (
     <div
       data-testid="playback-controls"
-      className={clsx(
-        'cs-playback-controls flex items-center gap-2',
-        className,
-      )}
+      className={clsx('cs-playback-controls flex items-center gap-2', className)}
       style={{
         padding: '8px 12px',
         background: 'var(--cs-surface-card, #18181b)',
@@ -294,9 +291,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
         className={clsx(
           'inline-flex items-center justify-center rounded px-2',
           'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
-          disabled
-            ? 'opacity-40 cursor-not-allowed'
-            : 'hover:bg-white/10 cursor-pointer',
+          disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-white/10 cursor-pointer',
         )}
         style={{
           height: 28,

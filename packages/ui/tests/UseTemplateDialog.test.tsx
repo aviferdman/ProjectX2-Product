@@ -38,16 +38,18 @@ const mockResult: InstantiationResult = {
 
 /* ---------- Helpers ---------- */
 
-function renderDialog(overrides: {
-  template?: TemplateSummary | null;
-  status?: InstantiationStatus;
-  result?: InstantiationResult | null;
-  error?: string | null;
-  onConfirm?: () => void;
-  onCancel?: () => void;
-  onDone?: () => void;
-  onGoToWorkflow?: (id: string) => void;
-} = {}) {
+function renderDialog(
+  overrides: {
+    template?: TemplateSummary | null;
+    status?: InstantiationStatus;
+    result?: InstantiationResult | null;
+    error?: string | null;
+    onConfirm?: () => void;
+    onCancel?: () => void;
+    onDone?: () => void;
+    onGoToWorkflow?: (id: string) => void;
+  } = {},
+) {
   const defaultProps = {
     template: mockTemplate,
     status: 'configuring' as InstantiationStatus,
@@ -88,10 +90,7 @@ describe('UseTemplateDialog', () => {
     renderDialog({ status: 'configuring' });
     const dialog = screen.getByRole('dialog');
     expect(dialog).toBeInTheDocument();
-    expect(dialog).toHaveAttribute(
-      'aria-label',
-      'Use Template: Research Assistant',
-    );
+    expect(dialog).toHaveAttribute('aria-label', 'Use Template: Research Assistant');
   });
 
   it('renders form with pre-filled workflow name', () => {
@@ -124,8 +123,7 @@ describe('UseTemplateDialog', () => {
 
     expect(onConfirm).toHaveBeenCalledWith({
       workflowName: 'Research Assistant',
-      workflowDescription:
-        'Automated research pipeline with web scraping and summarization',
+      workflowDescription: 'Automated research pipeline with web scraping and summarization',
     });
   });
 
@@ -219,10 +217,7 @@ describe('UseTemplateDialog', () => {
 
   it('has correct dialog title while instantiating', () => {
     renderDialog({ status: 'instantiating' });
-    expect(screen.getByRole('dialog')).toHaveAttribute(
-      'aria-label',
-      'Creating Workflow…',
-    );
+    expect(screen.getByRole('dialog')).toHaveAttribute('aria-label', 'Creating Workflow…');
   });
 
   it('does not render close button while instantiating', () => {
@@ -331,10 +326,7 @@ describe('UseTemplateDialog', () => {
 
   it('renders overlay with presentation role', () => {
     renderDialog({ status: 'configuring' });
-    expect(screen.getByTestId('instantiate-overlay')).toHaveAttribute(
-      'role',
-      'presentation',
-    );
+    expect(screen.getByTestId('instantiate-overlay')).toHaveAttribute('role', 'presentation');
   });
 
   it('renders loading state with status role', () => {
@@ -346,9 +338,7 @@ describe('UseTemplateDialog', () => {
 
   it('renders Create Workflow button with correct aria-label', () => {
     renderDialog({ status: 'configuring' });
-    expect(
-      screen.getByLabelText('Create workflow from template'),
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Create workflow from template')).toBeInTheDocument();
   });
 
   it('disables Create Workflow when name is empty', () => {

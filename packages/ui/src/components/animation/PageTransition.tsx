@@ -52,7 +52,10 @@ const ENTERED_STYLE: React.CSSProperties = {
 };
 
 export const PageTransition = forwardRef<HTMLDivElement, PageTransitionProps>(
-  ({ variant = 'fade', duration: durationProp, delay = 0, className, style, children, ...rest }, ref) => {
+  (
+    { variant = 'fade', duration: durationProp, delay = 0, className, style, children, ...rest },
+    ref,
+  ) => {
     const config = VARIANT_CONFIG[variant];
     const dur = durationProp ?? config.duration;
     const [entered, setEntered] = useState(false);

@@ -12,6 +12,7 @@ import { CrewspaceError, ErrorCode } from '../errors/base.js';
 
 /** Error code for template-specific errors. */
 export const TEMPLATE_NOT_FOUND = 'TEMPLATE_NOT_FOUND' as unknown as ErrorCode;
+/** Error code for template validation failure. */
 export const TEMPLATE_VALIDATION = 'TEMPLATE_VALIDATION' as unknown as ErrorCode;
 
 // ---------------------------------------------------------------------------

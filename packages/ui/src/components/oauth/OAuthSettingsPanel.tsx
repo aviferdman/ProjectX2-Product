@@ -11,8 +11,10 @@ import type { OAuthConnection, OAuthFlowStatus } from './types.js';
 import { OAuthProviderList } from './OAuthProviderList.js';
 import { OAuthConnectDialog } from './OAuthConnectDialog.js';
 
-export interface OAuthSettingsPanelProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface OAuthSettingsPanelProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   connections: readonly OAuthConnection[];
   /** Async callback to perform the connect action. */
   onConnect?: (id: string) => Promise<void>;
@@ -28,8 +30,7 @@ export const OAuthSettingsPanel = forwardRef<HTMLDivElement, OAuthSettingsPanelP
     ref,
   ) {
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [activeConnection, setActiveConnection] =
-      useState<OAuthConnection | null>(null);
+    const [activeConnection, setActiveConnection] = useState<OAuthConnection | null>(null);
     const [isDisconnect, setIsDisconnect] = useState(false);
     const [flowStatus, setFlowStatus] = useState<OAuthFlowStatus>('idle');
     const [flowError, setFlowError] = useState<string | null>(null);
@@ -47,15 +48,9 @@ export const OAuthSettingsPanel = forwardRef<HTMLDivElement, OAuthSettingsPanelP
       [connections],
     );
 
-    const handleConnect = useCallback(
-      (id: string) => openDialog(id, false),
-      [openDialog],
-    );
+    const handleConnect = useCallback((id: string) => openDialog(id, false), [openDialog]);
 
-    const handleDisconnect = useCallback(
-      (id: string) => openDialog(id, true),
-      [openDialog],
-    );
+    const handleDisconnect = useCallback((id: string) => openDialog(id, true), [openDialog]);
 
     const handleClose = useCallback(() => {
       setDialogOpen(false);
@@ -77,23 +72,16 @@ export const OAuthSettingsPanel = forwardRef<HTMLDivElement, OAuthSettingsPanelP
         }
         setFlowStatus('success');
       } catch (err) {
-        const msg =
-          err instanceof Error ? err.message : 'An unknown error occurred';
+        const msg = err instanceof Error ? err.message : 'An unknown error occurred';
         setFlowError(msg);
         setFlowStatus('error');
       }
     }, [activeConnection, isDisconnect, onConnect, onDisconnect]);
 
-    const connectedCount = connections.filter(
-      (c) => c.status === 'connected',
-    ).length;
+    const connectedCount = connections.filter((c) => c.status === 'connected').length;
 
     return (
-      <div
-        ref={ref}
-        className={clsx('flex flex-col gap-5', className)}
-        {...props}
-      >
+      <div ref={ref} className={clsx('flex flex-col gap-5', className)} {...props}>
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
@@ -111,7 +99,11 @@ export const OAuthSettingsPanel = forwardRef<HTMLDivElement, OAuthSettingsPanelP
 
         {/* Loading state */}
         {loading && (
-          <div className="flex items-center justify-center py-12" role="status" aria-label="Loading OAuth providers">
+          <div
+            className="flex items-center justify-center py-12"
+            role="status"
+            aria-label="Loading OAuth providers"
+          >
             <svg
               className="h-6 w-6 animate-spin text-indigo-400"
               viewBox="0 0 24 24"

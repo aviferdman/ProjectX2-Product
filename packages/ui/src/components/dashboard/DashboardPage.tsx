@@ -30,19 +30,14 @@ export interface DashboardPageProps extends HTMLAttributes<HTMLDivElement> {
   defaultViewMode?: ViewMode | undefined;
 }
 
-function applyFilters(
-  workflows: WorkflowSummary[],
-  filters: DashboardFilters,
-): WorkflowSummary[] {
+function applyFilters(workflows: WorkflowSummary[], filters: DashboardFilters): WorkflowSummary[] {
   let result = [...workflows];
 
   // Text search
   if (filters.search) {
     const q = filters.search.toLowerCase();
     result = result.filter(
-      (wf) =>
-        wf.name.toLowerCase().includes(q) ||
-        wf.description?.toLowerCase().includes(q),
+      (wf) => wf.name.toLowerCase().includes(q) || wf.description?.toLowerCase().includes(q),
     );
   }
 
@@ -122,11 +117,7 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
     return (
       <div
         ref={ref}
-        className={clsx(
-          'cs-dashboard flex flex-col',
-          'gap-4 md:gap-6',
-          className,
-        )}
+        className={clsx('cs-dashboard flex flex-col', 'gap-4 md:gap-6', className)}
         {...rest}
       >
         {/* Toolbar */}
@@ -158,8 +149,19 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
                 fill="none"
                 aria-label="Loading"
               >
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
               </svg>
               <span className="text-sm text-slate-400">Loading workflows…</span>
             </div>
@@ -171,9 +173,7 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
             heading="No matching workflows"
             description="Try adjusting your search or filter criteria."
             actionLabel="Clear Filters"
-            onAction={() =>
-              setFilters({ search: '', status: 'all', sort: filters.sort })
-            }
+            onAction={() => setFilters({ search: '', status: 'all', sort: filters.sort })}
           />
         ) : effectiveViewMode === 'grid' ? (
           <WorkflowGrid
@@ -197,7 +197,8 @@ export const DashboardPage = forwardRef<HTMLDivElement, DashboardPageProps>(
         {/* Result count */}
         {hasWorkflows && !loading && (
           <p className="text-xs text-slate-500 text-center">
-            Showing {filtered.length} of {workflows.length} workflow{workflows.length !== 1 ? 's' : ''}
+            Showing {filtered.length} of {workflows.length} workflow
+            {workflows.length !== 1 ? 's' : ''}
           </p>
         )}
       </div>

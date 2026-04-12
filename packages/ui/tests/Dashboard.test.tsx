@@ -140,7 +140,11 @@ describe('WorkflowCard', () => {
 /* ------------------------------------------------------------------ */
 describe('WorkflowListRow', () => {
   const renderInTable = (ui: React.ReactElement) =>
-    render(<table><tbody>{ui}</tbody></table>);
+    render(
+      <table>
+        <tbody>{ui}</tbody>
+      </table>,
+    );
 
   it('renders workflow name', () => {
     renderInTable(<WorkflowListRow workflow={mockWorkflow} />);
@@ -229,8 +233,12 @@ describe('ViewToggle', () => {
 
   it('marks the active mode', () => {
     render(<ViewToggle value="list" onChange={() => {}} />);
-    expect(screen.getByRole('radio', { name: 'List view' }).getAttribute('aria-checked')).toBe('true');
-    expect(screen.getByRole('radio', { name: 'Grid view' }).getAttribute('aria-checked')).toBe('false');
+    expect(screen.getByRole('radio', { name: 'List view' }).getAttribute('aria-checked')).toBe(
+      'true',
+    );
+    expect(screen.getByRole('radio', { name: 'Grid view' }).getAttribute('aria-checked')).toBe(
+      'false',
+    );
   });
 
   it('calls onChange on click', () => {
@@ -413,17 +421,13 @@ describe('DashboardPage', () => {
 
   it('calls onRetry when retry button is clicked in error state', () => {
     const onRetry = vi.fn();
-    render(
-      <DashboardPage workflows={[]} error="Server error" onRetry={onRetry} />,
-    );
+    render(<DashboardPage workflows={[]} error="Server error" onRetry={onRetry} />);
     fireEvent.click(screen.getByRole('button', { name: /try again/i }));
     expect(onRetry).toHaveBeenCalledOnce();
   });
 
   it('error state takes priority over loading state', () => {
-    render(
-      <DashboardPage workflows={[]} loading error="Connection failed" />,
-    );
+    render(<DashboardPage workflows={[]} loading error="Connection failed" />);
     expect(screen.getByRole('alert')).toBeInTheDocument();
     expect(screen.queryByText('Loading workflows…')).not.toBeInTheDocument();
   });

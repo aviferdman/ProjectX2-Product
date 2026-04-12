@@ -123,14 +123,23 @@ export const visualPolishTheme = {
   },
 
   fontSize: {
-    'polish-page-title': ['1.5rem', { lineHeight: '1.25', fontWeight: '700', letterSpacing: '-0.01em' }],
+    'polish-page-title': [
+      '1.5rem',
+      { lineHeight: '1.25', fontWeight: '700', letterSpacing: '-0.01em' },
+    ],
     'polish-section-title': ['1rem', { lineHeight: '1.25', fontWeight: '600' }],
     'polish-card-title': ['0.875rem', { lineHeight: '1.25', fontWeight: '600' }],
     'polish-card-body': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
     'polish-card-meta': ['0.6875rem', { lineHeight: '1.25', fontWeight: '400' }],
     'polish-label': ['0.75rem', { lineHeight: '1.5', fontWeight: '500' }],
-    'polish-caption': ['0.6875rem', { lineHeight: '1.25', fontWeight: '500', letterSpacing: '0.025em' }],
-    'polish-overline': ['0.625rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
+    'polish-caption': [
+      '0.6875rem',
+      { lineHeight: '1.25', fontWeight: '500', letterSpacing: '0.025em' },
+    ],
+    'polish-overline': [
+      '0.625rem',
+      { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' },
+    ],
     'polish-btn': ['0.8125rem', { lineHeight: '1.25', fontWeight: '500' }],
     'polish-input': ['0.8125rem', { lineHeight: '1.5', fontWeight: '400' }],
     'polish-badge': ['0.6875rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.025em' }],
@@ -172,7 +181,7 @@ export const visualPolishTheme = {
   },
 
   backdropBlur: {
-    'overlay': '8px',
+    overlay: '8px',
     'overlay-sm': '4px',
   },
 
@@ -193,10 +202,14 @@ export const visualPolishTheme = {
   },
 
   animation: {
-    'polish-fade-in': 'polish-fade-in var(--cs-duration-moderate, 200ms) var(--cs-easing-out, ease-out)',
-    'polish-slide-up': 'polish-slide-up var(--cs-duration-enter, 250ms) var(--cs-easing-out, ease-out)',
-    'polish-scale-in': 'polish-scale-in var(--cs-duration-enter, 250ms) var(--cs-easing-spring, cubic-bezier(0.34,1.56,0.64,1))',
-    'polish-spring-in': 'polish-spring-in var(--cs-duration-enter, 250ms) var(--cs-easing-spring, cubic-bezier(0.34,1.56,0.64,1))',
+    'polish-fade-in':
+      'polish-fade-in var(--cs-duration-moderate, 200ms) var(--cs-easing-out, ease-out)',
+    'polish-slide-up':
+      'polish-slide-up var(--cs-duration-enter, 250ms) var(--cs-easing-out, ease-out)',
+    'polish-scale-in':
+      'polish-scale-in var(--cs-duration-enter, 250ms) var(--cs-easing-spring, cubic-bezier(0.34,1.56,0.64,1))',
+    'polish-spring-in':
+      'polish-spring-in var(--cs-duration-enter, 250ms) var(--cs-easing-spring, cubic-bezier(0.34,1.56,0.64,1))',
     'polish-shimmer': 'polish-shimmer 1.5s ease-in-out infinite',
     'polish-spin': 'polish-spin 1s linear infinite',
     'polish-pulse': 'polish-pulse 2s ease-in-out infinite',

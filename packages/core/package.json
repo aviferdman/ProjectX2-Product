@@ -49,6 +49,18 @@
       "import": "./dist/testing/index.js",
       "require": "./dist/cjs/testing/index.js",
       "default": "./dist/testing/index.js"
+    },
+    "./crew": {
+      "types": "./dist/crew/index.d.ts",
+      "import": "./dist/crew/index.js",
+      "require": "./dist/cjs/crew/index.js",
+      "default": "./dist/crew/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "require": "./dist/cjs/types/index.js",
+      "default": "./dist/types/index.js"
     }
   },
   "files": [

@@ -35,9 +35,11 @@ function createMockChatProvider(responseMap?: Record<string, string>): LLMProvid
       .fn<(messages: readonly LLMMessage[]) => Promise<LLMResponse>>()
       .mockImplementation(async (messages) => {
         const lastUserMsg = [...messages].reverse().find((m) => m.role === LLMRole.USER);
-        // Match on just the first line (the description), not the full context
-        const firstLine = (lastUserMsg?.content ?? '').split('\n')[0].toLowerCase().trim();
-        const key = Object.keys(responses).find((k) => firstLine.includes(k));
+        // Extract just the task description (between "## Task Assignment\n\n" and "\n\n##")
+        const raw = lastUserMsg?.content ?? '';
+        const descMatch = raw.match(/## Task Assignment\n\n([\s\S]*?)(?:\n\n##|$)/);
+        const description = (descMatch ? descMatch[1] : raw).toLowerCase();
+        const key = Object.keys(responses).find((k) => description.includes(k));
         const content = key ? responses[key] : responses['default'];
 
         return {

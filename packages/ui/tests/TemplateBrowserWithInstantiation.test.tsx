@@ -54,7 +54,9 @@ const mockResult: InstantiationResult = {
 
 /* ---------- Helpers ---------- */
 
-function renderBrowser(overrides: Partial<React.ComponentProps<typeof TemplateBrowserWithInstantiation>> = {}) {
+function renderBrowser(
+  overrides: Partial<React.ComponentProps<typeof TemplateBrowserWithInstantiation>> = {},
+) {
   const defaultProps = {
     templates: mockTemplates,
     onInstantiate: vi.fn().mockResolvedValue(mockResult),
@@ -87,9 +89,7 @@ describe('TemplateBrowserWithInstantiation', () => {
 
   it('renders container with test id', () => {
     renderBrowser();
-    expect(
-      screen.getByTestId('template-browser-with-instantiation'),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('template-browser-with-instantiation')).toBeInTheDocument();
   });
 
   it('passes loading state to browser', () => {
@@ -106,10 +106,7 @@ describe('TemplateBrowserWithInstantiation', () => {
     fireEvent.click(previewBtn);
     // Preview modal should appear
     expect(screen.getByTestId('preview-overlay')).toBeInTheDocument();
-    expect(screen.getByRole('dialog')).toHaveAttribute(
-      'aria-label',
-      'Preview: Research Pipeline',
-    );
+    expect(screen.getByRole('dialog')).toHaveAttribute('aria-label', 'Preview: Research Pipeline');
   });
 
   it('closes preview modal on close', () => {
@@ -174,9 +171,12 @@ describe('TemplateBrowserWithInstantiation', () => {
     });
 
     expect(screen.getByText('Workflow Created')).toBeInTheDocument();
-    expect(onInstantiate).toHaveBeenCalledWith('tpl-1', expect.objectContaining({
-      workflowName: 'Research Pipeline',
-    }));
+    expect(onInstantiate).toHaveBeenCalledWith(
+      'tpl-1',
+      expect.objectContaining({
+        workflowName: 'Research Pipeline',
+      }),
+    );
     expect(onSuccess).toHaveBeenCalledWith(mockResult);
   });
 
@@ -322,9 +322,12 @@ describe('TemplateBrowserWithInstantiation', () => {
     fireEvent.submit(screen.getByTestId('instantiate-form'));
 
     await waitFor(() => {
-      expect(onInstantiate).toHaveBeenCalledWith('tpl-1', expect.objectContaining({
-        workflowName: 'My Custom Name',
-      }));
+      expect(onInstantiate).toHaveBeenCalledWith(
+        'tpl-1',
+        expect.objectContaining({
+          workflowName: 'My Custom Name',
+        }),
+      );
     });
   });
 
@@ -349,9 +352,12 @@ describe('TemplateBrowserWithInstantiation', () => {
     fireEvent.submit(screen.getByTestId('instantiate-form'));
 
     await waitFor(() => {
-      expect(onInstantiate).toHaveBeenCalledWith('tpl-2', expect.objectContaining({
-        workflowName: 'Code Review Bot',
-      }));
+      expect(onInstantiate).toHaveBeenCalledWith(
+        'tpl-2',
+        expect.objectContaining({
+          workflowName: 'Code Review Bot',
+        }),
+      );
     });
   });
 

@@ -352,7 +352,12 @@ export {
 } from './components/index.js';
 
 // Theme
-export { crewspaceTailwindPreset, crewspaceTheme, responsiveTheme, mergedTheme } from './theme/index.js';
+export {
+  crewspaceTailwindPreset,
+  crewspaceTheme,
+  responsiveTheme,
+  mergedTheme,
+} from './theme/index.js';
 
 // Hooks (TASK-172)
 export {
@@ -406,18 +411,10 @@ export {
 } from './hooks/index.js';
 
 // Hooks — OAuth Flow (TASK-167)
-export {
-  useOAuthFlow,
-  type UseOAuthFlowOptions,
-  type UseOAuthFlowResult,
-} from './hooks/index.js';
+export { useOAuthFlow, type UseOAuthFlowOptions, type UseOAuthFlowResult } from './hooks/index.js';
 
 // Hooks — Animation (TASK-173)
-export {
-  useAnimation,
-  type UseAnimationOptions,
-  type UseAnimationResult,
-} from './hooks/index.js';
+export { useAnimation, type UseAnimationOptions, type UseAnimationResult } from './hooks/index.js';
 
 // Hooks — Accessibility (TASK-174)
 export {
@@ -445,11 +442,7 @@ export {
 } from './hooks/index.js';
 
 // Hooks — Toast (TASK-182)
-export {
-  useToast,
-  type UseToastOptions,
-  type UseToastResult,
-} from './hooks/index.js';
+export { useToast, type UseToastOptions, type UseToastResult } from './hooks/index.js';
 
 // Hooks — Form Validation (TASK-187)
 export {
@@ -474,10 +467,7 @@ export {
 } from './theme/tokens.js';
 
 // Performance (TASK-180)
-export {
-  createLazyComponent,
-  LoadingFallback,
-} from './performance/index.js';
+export { createLazyComponent, LoadingFallback } from './performance/index.js';
 export type {
   LazyComponentOptions,
   LazyComponentResult,

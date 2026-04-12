@@ -1,10 +1,7 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import {
-  TemplatePreviewModal,
-  WorkflowDiagram,
-} from '../src/components/templates/index.js';
+import { TemplatePreviewModal, WorkflowDiagram } from '../src/components/templates/index.js';
 import type {
   TemplateSummary,
   WorkflowDiagramNode,
@@ -107,9 +104,7 @@ describe('WorkflowDiagram', () => {
   });
 
   it('skips edges referencing non-existent nodes', () => {
-    const singleNode: WorkflowDiagramNode[] = [
-      { id: 'a', label: 'Agent', type: 'agent' },
-    ];
+    const singleNode: WorkflowDiagramNode[] = [{ id: 'a', label: 'Agent', type: 'agent' }];
     const badEdges: WorkflowDiagramEdge[] = [{ from: 'a', to: 'missing' }];
     render(<WorkflowDiagram nodes={singleNode} edges={badEdges} />);
     // Should not crash; node renders fine
@@ -123,103 +118,75 @@ describe('WorkflowDiagram', () => {
 
 describe('TemplatePreviewModal', () => {
   it('renders nothing when template is null', () => {
-    const { container } = render(
-      <TemplatePreviewModal template={null} onClose={() => {}} />,
-    );
+    const { container } = render(<TemplatePreviewModal template={null} onClose={() => {}} />);
     expect(container.firstChild).toBeNull();
   });
 
   it('renders modal with template name', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     const dialog = screen.getByRole('dialog');
     expect(dialog).toBeInTheDocument();
     expect(dialog).toHaveAttribute('aria-label', 'Preview: Research Assistant');
   });
 
   it('renders template description', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
-    expect(
-      screen.getByText(/Automated research pipeline/),
-    ).toBeInTheDocument();
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
+    expect(screen.getByText(/Automated research pipeline/)).toBeInTheDocument();
   });
 
   it('renders category badge', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.getByText('Research')).toBeInTheDocument();
   });
 
   it('renders featured badge when featured', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.getByText('★ Featured')).toBeInTheDocument();
   });
 
   it('renders popular badge when popular', () => {
     const popular = { ...mockTemplate, popular: true };
-    render(
-      <TemplatePreviewModal template={popular} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={popular} onClose={() => {}} />);
     expect(screen.getByText('🔥 Popular')).toBeInTheDocument();
   });
 
   it('renders tags', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.getByText('research')).toBeInTheDocument();
     expect(screen.getByText('scraping')).toBeInTheDocument();
     expect(screen.getByText('GPT-4')).toBeInTheDocument();
   });
 
   it('does not render tags section when no tags', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplateNoTags} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplateNoTags} onClose={() => {}} />);
     // The tags section should not be present
     expect(screen.queryByText('research')).toBeNull();
   });
 
   it('renders agent and task counts', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.getByText('2 agents')).toBeInTheDocument();
     expect(screen.getByText('4 tasks')).toBeInTheDocument();
   });
 
   it('renders usage count', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.getByText('1.2k uses')).toBeInTheDocument();
   });
 
   it('renders author', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.getByText('by Crewspace')).toBeInTheDocument();
   });
 
   it('renders workflow diagram section', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.getByText('Workflow')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'Workflow diagram' })).toBeInTheDocument();
   });
 
   it('renders workflow diagram with generated nodes', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     // 2 agents + 4 tasks
     expect(screen.getByTestId('node-agent-0')).toBeInTheDocument();
     expect(screen.getByTestId('node-agent-1')).toBeInTheDocument();
@@ -229,18 +196,14 @@ describe('TemplatePreviewModal', () => {
 
   it('calls onClose when close button clicked', () => {
     const handler = vi.fn();
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={handler} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={handler} />);
     fireEvent.click(screen.getByLabelText('Close preview'));
     expect(handler).toHaveBeenCalledTimes(1);
   });
 
   it('calls onClose when Close footer button clicked', () => {
     const handler = vi.fn();
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={handler} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={handler} />);
     // Footer close button
     const buttons = screen.getAllByText('Close');
     fireEvent.click(buttons[0]);
@@ -249,18 +212,14 @@ describe('TemplatePreviewModal', () => {
 
   it('calls onClose on Escape key', () => {
     const handler = vi.fn();
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={handler} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={handler} />);
     fireEvent.keyDown(document, { key: 'Escape' });
     expect(handler).toHaveBeenCalledTimes(1);
   });
 
   it('calls onClose when clicking overlay', () => {
     const handler = vi.fn();
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={handler} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={handler} />);
     const overlay = screen.getByTestId('preview-overlay');
     fireEvent.click(overlay);
     expect(handler).toHaveBeenCalledTimes(1);
@@ -268,9 +227,7 @@ describe('TemplatePreviewModal', () => {
 
   it('does not close when clicking inside dialog', () => {
     const handler = vi.fn();
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={handler} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={handler} />);
     const dialog = screen.getByRole('dialog');
     fireEvent.click(dialog);
     expect(handler).not.toHaveBeenCalled();
@@ -279,11 +236,7 @@ describe('TemplatePreviewModal', () => {
   it('renders Use Template button when onUseTemplate provided', () => {
     const handler = vi.fn();
     render(
-      <TemplatePreviewModal
-        template={mockTemplate}
-        onClose={() => {}}
-        onUseTemplate={handler}
-      />,
+      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} onUseTemplate={handler} />,
     );
     const btn = screen.getByLabelText('Use template Research Assistant');
     expect(btn).toBeInTheDocument();
@@ -292,27 +245,19 @@ describe('TemplatePreviewModal', () => {
   it('calls onUseTemplate with template id', () => {
     const handler = vi.fn();
     render(
-      <TemplatePreviewModal
-        template={mockTemplate}
-        onClose={() => {}}
-        onUseTemplate={handler}
-      />,
+      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} onUseTemplate={handler} />,
     );
     fireEvent.click(screen.getByLabelText('Use template Research Assistant'));
     expect(handler).toHaveBeenCalledWith('tpl-1');
   });
 
   it('does not render Use Template button when onUseTemplate not provided', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     expect(screen.queryByText('Use Template')).toBeNull();
   });
 
   it('has correct accessibility attributes', () => {
-    render(
-      <TemplatePreviewModal template={mockTemplate} onClose={() => {}} />,
-    );
+    render(<TemplatePreviewModal template={mockTemplate} onClose={() => {}} />);
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(dialog).toHaveAttribute('aria-label', 'Preview: Research Assistant');

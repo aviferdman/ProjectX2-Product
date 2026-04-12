@@ -342,10 +342,7 @@ export class DiscussionManager {
     return allMessages[allMessages.length - 1]?.content ?? '';
   }
 
-  private _getNextParticipant(
-    currentId: string,
-    participantIds: readonly string[],
-  ): string {
+  private _getNextParticipant(currentId: string, participantIds: readonly string[]): string {
     const idx = participantIds.indexOf(currentId);
     return participantIds[(idx + 1) % participantIds.length] ?? participantIds[0] ?? currentId;
   }

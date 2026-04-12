@@ -224,26 +224,17 @@ describe('Publish Readiness — @crewspace/core', () => {
     });
 
     it('publish.yml triggers on version tags', () => {
-      const workflow = readFileSync(
-        join(ROOT, '.github', 'workflows', 'publish.yml'),
-        'utf-8',
-      );
+      const workflow = readFileSync(join(ROOT, '.github', 'workflows', 'publish.yml'), 'utf-8');
       expect(workflow).toContain("- 'v*'");
     });
 
     it('publish.yml uses NPM_TOKEN secret', () => {
-      const workflow = readFileSync(
-        join(ROOT, '.github', 'workflows', 'publish.yml'),
-        'utf-8',
-      );
+      const workflow = readFileSync(join(ROOT, '.github', 'workflows', 'publish.yml'), 'utf-8');
       expect(workflow).toContain('NPM_TOKEN');
     });
 
     it('publish.yml uses npm-publish environment', () => {
-      const workflow = readFileSync(
-        join(ROOT, '.github', 'workflows', 'publish.yml'),
-        'utf-8',
-      );
+      const workflow = readFileSync(join(ROOT, '.github', 'workflows', 'publish.yml'), 'utf-8');
       expect(workflow).toContain('environment: npm-publish');
     });
   });

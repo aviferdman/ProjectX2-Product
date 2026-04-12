@@ -62,6 +62,8 @@ const CrewConfigSchema = z.object({
     .min(1, 'Crew must have at least one agent'),
   tasks: z.array(CrewTaskSchema).min(1, 'Crew must have at least one task'),
   verbose: z.boolean().optional(),
+  parallel: z.boolean().optional(),
+  maxConcurrency: z.number().int().positive().optional(),
 });
 
 // ---------------------------------------------------------------------------
@@ -96,6 +98,12 @@ export class Crew {
   /** Whether verbose logging is enabled. */
   public readonly verbose: boolean;
 
+  /** Whether parallel execution of independent tasks is enabled. */
+  public readonly parallel: boolean;
+
+  /** Maximum concurrent tasks when parallel is enabled. */
+  public readonly maxConcurrency: number;
+
   private readonly _agents: ReadonlyMap<string, Agent>;
   private readonly _tasks: readonly CrewTask[];
   private readonly _emitter: EventEmitter<CrewEventMap>;
@@ -108,6 +116,8 @@ export class Crew {
       this.id = parsed.id;
       this.name = parsed.name ?? parsed.id;
       this.verbose = parsed.verbose ?? false;
+      this.parallel = parsed.parallel ?? false;
+      this.maxConcurrency = parsed.maxConcurrency ?? Infinity;
 
       // Build an agent lookup map
       const agentMap = new Map<string, Agent>();
@@ -247,8 +257,8 @@ export class Crew {
   /**
    * Execute the crew workflow.
    *
-   * Tasks are executed in dependency order. Each task's assigned agent
-   * receives the task description along with any context from prior tasks.
+   * Tasks are executed in dependency order. When `parallel` is enabled,
+   * independent tasks (those with all dependencies satisfied) run concurrently.
    *
    * @returns The aggregated results of all tasks
    * @throws {CrewExecutionError} If any task fails or the crew is already running
@@ -265,32 +275,10 @@ export class Crew {
     const taskResults = new Map<string, TaskResult>();
 
     try {
-      const executionOrder = this._topologicalSort();
-
-      for (const task of executionOrder) {
-        const agent = this._agents.get(task.agentId);
-        if (!agent) {
-          throw new CrewExecutionError(this.id, `Agent "${task.agentId}" not found`, task.id);
-        }
-
-        // Run pre-task discussion if configured
-        let discussionResult: DiscussionResult | undefined;
-        if (task.discussion) {
-          discussionResult = await this._runTaskDiscussion(task, taskResults);
-        }
-
-        this._emit('crew:task:start', this.id, task.id, task.agentId);
-
-        try {
-          const taskInput = this._buildTaskInput(task, taskResults, discussionResult);
-          const result = await agent.execute(taskInput);
-          taskResults.set(task.id, result);
-          this._emit('crew:task:complete', this.id, task.id, result);
-        } catch (error) {
-          const wrappedError = error instanceof Error ? error : new Error(String(error));
-          this._emit('crew:task:error', this.id, task.id, wrappedError);
-          throw new CrewExecutionError(this.id, wrappedError.message, task.id, wrappedError);
-        }
+      if (this.parallel) {
+        await this._runParallel(taskResults);
+      } else {
+        await this._runSequential(taskResults);
       }
 
       const runResult: CrewRunResult = {
@@ -333,6 +321,138 @@ export class Crew {
   // -------------------------------------------------------------------------
   // Private helpers
   // -------------------------------------------------------------------------
+
+  /**
+   * Execute a single task: run optional discussion, then agent execution.
+   */
+  private async _executeSingleTask(
+    task: CrewTask,
+    taskResults: Map<string, TaskResult>,
+  ): Promise<void> {
+    const agent = this._agents.get(task.agentId);
+    if (!agent) {
+      throw new CrewExecutionError(this.id, `Agent "${task.agentId}" not found`, task.id);
+    }
+
+    let discussionResult: DiscussionResult | undefined;
+    if (task.discussion) {
+      discussionResult = await this._runTaskDiscussion(task, taskResults);
+    }
+
+    this._emit('crew:task:start', this.id, task.id, task.agentId);
+
+    try {
+      const taskInput = this._buildTaskInput(task, taskResults, discussionResult);
+      const result = await agent.execute(taskInput);
+      taskResults.set(task.id, result);
+      this._emit('crew:task:complete', this.id, task.id, result);
+    } catch (error) {
+      const wrappedError = error instanceof Error ? error : new Error(String(error));
+      this._emit('crew:task:error', this.id, task.id, wrappedError);
+      throw new CrewExecutionError(this.id, wrappedError.message, task.id, wrappedError);
+    }
+  }
+
+  /**
+   * Run all tasks sequentially in topological order.
+   */
+  private async _runSequential(taskResults: Map<string, TaskResult>): Promise<void> {
+    const executionOrder = this._topologicalSort();
+    for (const task of executionOrder) {
+      await this._executeSingleTask(task, taskResults);
+    }
+  }
+
+  /**
+   * Run tasks in parallel where possible, respecting dependency constraints.
+   * Uses in-degree tracking to schedule tasks as their dependencies complete.
+   */
+  private async _runParallel(taskResults: Map<string, TaskResult>): Promise<void> {
+    const taskMap = new Map<string, CrewTask>();
+    const inDegree = new Map<string, number>();
+    const adjacency = new Map<string, string[]>();
+
+    for (const task of this._tasks) {
+      taskMap.set(task.id, task);
+      inDegree.set(task.id, 0);
+      adjacency.set(task.id, []);
+    }
+
+    for (const task of this._tasks) {
+      if (task.dependencies) {
+        for (const depId of task.dependencies) {
+          adjacency.get(depId)?.push(task.id);
+          inDegree.set(task.id, (inDegree.get(task.id) ?? 0) + 1);
+        }
+      }
+    }
+
+    // Find initially ready tasks (no dependencies)
+    const readyQueue: string[] = [];
+    for (const [taskId, degree] of inDegree) {
+      if (degree === 0) {
+        readyQueue.push(taskId);
+      }
+    }
+
+    let activeTasks = 0;
+    let completedCount = 0;
+    const totalTasks = this._tasks.length;
+
+    return new Promise<void>((resolve, reject) => {
+      let settled = false;
+
+      const settle = (fn: () => void): void => {
+        if (!settled) {
+          settled = true;
+          fn();
+        }
+      };
+
+      const unlockDependents = (completedTaskId: string): void => {
+        for (const neighbor of adjacency.get(completedTaskId) ?? []) {
+          const newDegree = (inDegree.get(neighbor) ?? 0) - 1;
+          inDegree.set(neighbor, newDegree);
+          if (newDegree === 0) {
+            readyQueue.push(neighbor);
+          }
+        }
+      };
+
+      const scheduleReady = (): void => {
+        if (settled) return;
+
+        while (readyQueue.length > 0 && activeTasks < this.maxConcurrency && !settled) {
+          const taskId = readyQueue.shift()!;
+          const task = taskMap.get(taskId);
+          if (!task) continue;
+
+          activeTasks++;
+
+          this._executeSingleTask(task, taskResults)
+            .then(() => {
+              activeTasks--;
+              completedCount++;
+              unlockDependents(taskId);
+              scheduleReady();
+              if (completedCount >= totalTasks) {
+                settle(() => resolve());
+              }
+            })
+            .catch((error: unknown) => {
+              settle(() => reject(error));
+            });
+        }
+
+        // Nothing running and nothing queued → done
+        if (activeTasks === 0 && readyQueue.length === 0 && !settled) {
+          settle(() => resolve());
+        }
+      };
+
+      scheduleReady();
+    });
+  }
 
   /**
    * Build a TaskInput for an agent, injecting dependency results as context.

@@ -74,9 +74,7 @@ export const StatusEmpty = forwardRef<HTMLDivElement, StatusEmptyProps>(
 
         <div className="text-center">
           <h3 className="text-lg font-semibold text-slate-100">{heading}</h3>
-          {description && (
-            <p className="mt-1 text-sm text-slate-400 max-w-md">{description}</p>
-          )}
+          {description && <p className="mt-1 text-sm text-slate-400 max-w-md">{description}</p>}
         </div>
 
         <div className="flex items-center gap-3">

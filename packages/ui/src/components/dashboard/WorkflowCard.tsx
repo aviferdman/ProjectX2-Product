@@ -40,7 +40,9 @@ export const WorkflowCard = forwardRef<HTMLDivElement, WorkflowCardProps>(
         tabIndex={0}
         aria-label={`Open workflow ${workflow.name}`}
         onClick={handleClick}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClick(); }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') handleClick();
+        }}
         className={clsx(
           'cs-workflow-card group flex flex-col overflow-hidden rounded-xl border',
           'border-slate-700 bg-surface-card shadow-node cursor-pointer',
@@ -83,7 +85,8 @@ export const WorkflowCard = forwardRef<HTMLDivElement, WorkflowCardProps>(
 
           <div className="mt-auto flex items-center justify-between pt-2">
             <span className="text-[11px] text-slate-500">
-              {workflow.agentCount} agent{workflow.agentCount !== 1 ? 's' : ''} · {workflow.taskCount} task{workflow.taskCount !== 1 ? 's' : ''}
+              {workflow.agentCount} agent{workflow.agentCount !== 1 ? 's' : ''} ·{' '}
+              {workflow.taskCount} task{workflow.taskCount !== 1 ? 's' : ''}
             </span>
             <span className="text-[11px] text-slate-500">
               {formatRelativeTime(workflow.updatedAt)}
@@ -101,7 +104,15 @@ export const WorkflowCard = forwardRef<HTMLDivElement, WorkflowCardProps>(
               aria-label={`Duplicate ${workflow.name}`}
               title="Duplicate"
             >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              >
                 <rect x="5" y="5" width="9" height="9" rx="1.5" />
                 <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-7A1.5 1.5 0 001 3.5v7A1.5 1.5 0 002.5 12H5" />
               </svg>
@@ -115,7 +126,15 @@ export const WorkflowCard = forwardRef<HTMLDivElement, WorkflowCardProps>(
               aria-label={`Delete ${workflow.name}`}
               title="Delete"
             >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              >
                 <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 011.334-1.334h2.666a1.333 1.333 0 011.334 1.334V4M12.667 4v9.333a1.333 1.333 0 01-1.334 1.334H4.667a1.333 1.333 0 01-1.334-1.334V4" />
               </svg>
             </button>

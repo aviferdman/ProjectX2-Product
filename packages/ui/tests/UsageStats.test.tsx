@@ -180,11 +180,7 @@ describe('UsageStatCard', () => {
 describe('UsageLimitAlert', () => {
   it('renders heading and description', () => {
     render(
-      <UsageLimitAlert
-        severity="warning"
-        heading="Approaching limit"
-        description="80% used"
-      />,
+      <UsageLimitAlert severity="warning" heading="Approaching limit" description="80% used" />,
     );
     expect(screen.getByText('Approaching limit')).toBeInTheDocument();
     expect(screen.getByText('80% used')).toBeInTheDocument();
@@ -211,17 +207,13 @@ describe('UsageLimitAlert', () => {
 
   it('renders dismiss button and fires callback', () => {
     const onDismiss = vi.fn();
-    render(
-      <UsageLimitAlert severity="info" heading="Info" onDismiss={onDismiss} />,
-    );
+    render(<UsageLimitAlert severity="info" heading="Info" onDismiss={onDismiss} />);
     fireEvent.click(screen.getByLabelText('Dismiss'));
     expect(onDismiss).toHaveBeenCalled();
   });
 
   it('does not render action button without onAction', () => {
-    render(
-      <UsageLimitAlert severity="info" heading="Info" actionLabel="Click" />,
-    );
+    render(<UsageLimitAlert severity="info" heading="Info" actionLabel="Click" />);
     expect(screen.queryByText('Click')).toBeNull();
   });
 });
@@ -266,25 +258,13 @@ describe('UpgradePrompt', () => {
   });
 
   it('renders custom heading and description', () => {
-    render(
-      <UpgradePrompt
-        currentTier="free"
-        heading="Custom title"
-        description="Custom desc"
-      />,
-    );
+    render(<UpgradePrompt currentTier="free" heading="Custom title" description="Custom desc" />);
     expect(screen.getByText('Custom title')).toBeInTheDocument();
     expect(screen.getByText('Custom desc')).toBeInTheDocument();
   });
 
   it('renders custom button label', () => {
-    render(
-      <UpgradePrompt
-        currentTier="free"
-        onUpgrade={() => {}}
-        buttonLabel="Go Pro Now"
-      />,
-    );
+    render(<UpgradePrompt currentTier="free" onUpgrade={() => {}} buttonLabel="Go Pro Now" />);
     expect(screen.getByText('Go Pro Now')).toBeInTheDocument();
   });
 });

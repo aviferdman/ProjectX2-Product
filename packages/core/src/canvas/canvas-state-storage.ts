@@ -41,7 +41,10 @@ export function _resetCanvasIdCounter(): void {
 // Validation
 // ---------------------------------------------------------------------------
 
-function validateSnapshot(input: CreateCanvasStateInput | UpdateCanvasStateInput, isCreate: boolean): void {
+function validateSnapshot(
+  input: CreateCanvasStateInput | UpdateCanvasStateInput,
+  isCreate: boolean,
+): void {
   if (isCreate) {
     const createInput = input as CreateCanvasStateInput;
     if (!createInput.workflowId || createInput.workflowId.trim().length === 0) {
@@ -74,7 +77,12 @@ function validateSnapshot(input: CreateCanvasStateInput | UpdateCanvasStateInput
     if (!Array.isArray(snapshot.edges)) {
       throw new CanvasValidationError('Snapshot edges must be an array');
     }
-    if (!snapshot.viewport || typeof snapshot.viewport.x !== 'number' || typeof snapshot.viewport.y !== 'number' || typeof snapshot.viewport.zoom !== 'number') {
+    if (
+      !snapshot.viewport ||
+      typeof snapshot.viewport.x !== 'number' ||
+      typeof snapshot.viewport.y !== 'number' ||
+      typeof snapshot.viewport.zoom !== 'number'
+    ) {
       throw new CanvasValidationError('Snapshot viewport must have numeric x, y, and zoom');
     }
     if (snapshot.viewport.zoom <= 0) {
@@ -94,7 +102,9 @@ function validateSnapshot(input: CreateCanvasStateInput | UpdateCanvasStateInput
         throw new CanvasValidationError(`Node "${node.id}" must have a non-empty label`);
       }
       if (typeof node.position?.x !== 'number' || typeof node.position?.y !== 'number') {
-        throw new CanvasValidationError(`Node "${node.id}" must have a position with numeric x and y`);
+        throw new CanvasValidationError(
+          `Node "${node.id}" must have a position with numeric x and y`,
+        );
       }
       if (nodeIds.has(node.id)) {
         throw new CanvasValidationError(`Duplicate node id: "${node.id}"`);
@@ -124,9 +134,7 @@ function validateSnapshot(input: CreateCanvasStateInput | UpdateCanvasStateInput
         );
       }
       if (edge.source === edge.target) {
-        throw new CanvasValidationError(
-          `Edge "${edge.id}" cannot connect a node to itself`,
-        );
+        throw new CanvasValidationError(`Edge "${edge.id}" cannot connect a node to itself`);
       }
     }
   }

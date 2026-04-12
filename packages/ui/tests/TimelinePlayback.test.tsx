@@ -166,9 +166,7 @@ describe('useTimelinePlayback', () => {
   });
 
   it('accepts initial speed option', () => {
-    const { result } = renderHook(() =>
-      useTimelinePlayback(testEvents, { initialSpeed: 2 }),
-    );
+    const { result } = renderHook(() => useTimelinePlayback(testEvents, { initialSpeed: 2 }));
     expect(result.current.state.speed).toBe(2);
   });
 
@@ -285,9 +283,7 @@ describe('useTimelinePlayback', () => {
   /* -------------------------------------------------------------- */
   describe('reset', () => {
     it('resets to initial state', () => {
-      const { result } = renderHook(() =>
-        useTimelinePlayback(testEvents, { initialSpeed: 2 }),
-      );
+      const { result } = renderHook(() => useTimelinePlayback(testEvents, { initialSpeed: 2 }));
       hookAct(() => result.current.play());
       hookAct(() => result.current.seek(4000));
       hookAct(() => result.current.setSpeed(4));
@@ -305,9 +301,7 @@ describe('useTimelinePlayback', () => {
   describe('callbacks', () => {
     it('calls onPlayheadChange when position changes', () => {
       const onPlayheadChange = vi.fn();
-      const { result } = renderHook(() =>
-        useTimelinePlayback(testEvents, { onPlayheadChange }),
-      );
+      const { result } = renderHook(() => useTimelinePlayback(testEvents, { onPlayheadChange }));
       hookAct(() => result.current.seek(3000));
       expect(onPlayheadChange).toHaveBeenCalledWith(3000);
     });
@@ -331,9 +325,7 @@ describe('useTimelinePlayback', () => {
 
     it('pauses when reaching the end', () => {
       const onPlaybackComplete = vi.fn();
-      const { result } = renderHook(() =>
-        useTimelinePlayback(testEvents, { onPlaybackComplete }),
-      );
+      const { result } = renderHook(() => useTimelinePlayback(testEvents, { onPlaybackComplete }));
 
       hookAct(() => result.current.play());
       // First frame init

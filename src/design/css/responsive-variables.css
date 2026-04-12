@@ -109,7 +109,7 @@
     --cs-sidebar-mode: collapsible;
     --cs-sidebar-visible: 1;
     --cs-sidebar-w: 64px;
-    --cs-canvas-default-zoom: 1.0;
+    --cs-canvas-default-zoom: 1;
     --cs-grid-columns: 3;
     --cs-grid-gap: 20px;
     --cs-stat-min-w: 180px;

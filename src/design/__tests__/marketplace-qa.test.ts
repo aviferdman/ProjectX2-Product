@@ -36,7 +36,12 @@ function collectTokenLeaves(
       'type' in (val as Record<string, unknown>)
     ) {
       const token = val as { value: unknown; type: string; description?: string };
-      results.push({ path: current, value: token.value, type: token.type, description: token.description });
+      results.push({
+        path: current,
+        value: token.value,
+        type: token.type,
+        description: token.description,
+      });
     } else if (val && typeof val === 'object') {
       results.push(...collectTokenLeaves(val as Record<string, unknown>, current));
     }
@@ -46,19 +51,24 @@ function collectTokenLeaves(
 
 // Normalize CSS value for comparison (strip spaces around commas / inside rgba)
 function normalizeCSSValue(v: string): string {
-  return String(v).replace(/\s+/g, ' ').replace(/\s*,\s*/g, ',').trim();
+  return String(v)
+    .replace(/\s+/g, ' ')
+    .replace(/\s*,\s*/g, ',')
+    .trim();
 }
 
 // ── Load all three marketplace files ──────────────────────────────
 
 const mpTokens = loadTokens('marketplace.json');
-const marketplace = (mpTokens as { crewspace: { marketplace: Record<string, unknown> } }).crewspace.marketplace;
+const marketplace = (mpTokens as { crewspace: { marketplace: Record<string, unknown> } }).crewspace
+  .marketplace;
 const mpCSS = loadCSS('marketplace-variables.css');
 const mpTW = loadTailwind('marketplace-theme.ts');
 
 // Also load integration card for cross-component checks
 const icTokens = loadTokens('integration-card.json');
-const integrationCard = (icTokens as { crewspace: { integrationCard: Record<string, unknown> } }).crewspace.integrationCard;
+const integrationCard = (icTokens as { crewspace: { integrationCard: Record<string, unknown> } })
+  .crewspace.integrationCard;
 const icCSS = loadCSS('integration-card-variables.css');
 const icTW = loadTailwind('integration-card-theme.ts');
 
@@ -81,7 +91,9 @@ describe('TASK-168: Marketplace Tokens ↔ CSS consistency', () => {
     });
 
     it('sidebar collapsed width matches', () => {
-      expect(mpCSS).toContain(`--mp-sidebar-collapsed-w: ${sizing['sidebar-collapsed-width'].value}`);
+      expect(mpCSS).toContain(
+        `--mp-sidebar-collapsed-w: ${sizing['sidebar-collapsed-width'].value}`,
+      );
     });
 
     it('content max width matches', () => {
@@ -500,11 +512,11 @@ describe('TASK-168: Marketplace CSS ↔ Tailwind cross-file consistency', () => 
     const categories = ['ai-ml', 'communication', 'data', 'devtools', 'productivity', 'storage'];
     const catColors: Record<string, string> = {
       'ai-ml': '#818cf8',
-      'communication': '#22d3ee',
-      'data': '#34d399',
-      'devtools': '#fbbf24',
-      'productivity': '#f87171',
-      'storage': '#cbd5e1',
+      communication: '#22d3ee',
+      data: '#34d399',
+      devtools: '#fbbf24',
+      productivity: '#f87171',
+      storage: '#cbd5e1',
     };
 
     for (const cat of categories) {
@@ -563,7 +575,8 @@ describe('TASK-168: Marketplace ↔ Integration Card cross-component consistency
 
   describe('button style alignment', () => {
     const mpBtn = marketplace.installButton as Record<string, { value: string }>;
-    const icBtn = (integrationCard as { connectButton: Record<string, { value: string }> }).connectButton;
+    const icBtn = (integrationCard as { connectButton: Record<string, { value: string }> })
+      .connectButton;
 
     it('primary button text is white in both', () => {
       expect(mpBtn['default-text'].value).toBe('#ffffff');

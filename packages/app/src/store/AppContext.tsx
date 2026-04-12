@@ -2,7 +2,14 @@
  * AppContext — React context for global application state.
  * TASK-131: Centralized state management via useReducer.
  */
-import React, { createContext, useContext, useReducer, useCallback, useMemo, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useCallback,
+  useMemo,
+  useEffect,
+} from 'react';
 import type {
   AppState,
   AppContextValue,
@@ -103,7 +110,10 @@ export interface AppProviderProps {
   children: React.ReactNode;
 }
 
-export function AppProvider({ initialState: overrides, children }: AppProviderProps): React.JSX.Element {
+export function AppProvider({
+  initialState: overrides,
+  children,
+}: AppProviderProps): React.JSX.Element {
   const merged: AppState = { ...initialState, ...overrides };
   const [state, dispatch] = useReducer(appReducer, merged);
 
@@ -165,7 +175,15 @@ export function AppProvider({ initialState: overrides, children }: AppProviderPr
       clearNotifications,
       setActiveWorkflow,
     }),
-    [state, setSidebarMode, setTheme, addNotification, dismissNotification, clearNotifications, setActiveWorkflow],
+    [
+      state,
+      setSidebarMode,
+      setTheme,
+      addNotification,
+      dismissNotification,
+      clearNotifications,
+      setActiveWorkflow,
+    ],
   );
 
   return React.createElement(AppContext.Provider, { value }, children);

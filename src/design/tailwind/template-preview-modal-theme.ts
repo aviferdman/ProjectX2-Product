@@ -137,10 +137,7 @@ export const templatePreviewModalTheme = {
 
   fontSize: {
     'pm-title': ['1.25rem', { lineHeight: '1.25', fontWeight: '700' }],
-    'pm-badge': [
-      '0.6875rem',
-      { lineHeight: '1.25', fontWeight: '600', letterSpacing: '0.03em' },
-    ],
+    'pm-badge': ['0.6875rem', { lineHeight: '1.25', fontWeight: '600', letterSpacing: '0.03em' }],
     'pm-rating': ['0.8125rem', { lineHeight: '1.25', fontWeight: '500' }],
     'pm-section-label': [
       '0.6875rem',
@@ -165,8 +162,7 @@ export const templatePreviewModalTheme = {
   },
 
   boxShadow: {
-    'pm-modal':
-      '0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.08)',
+    'pm-modal': '0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.08)',
     'pm-node': '0 1px 4px rgba(0,0,0,0.3)',
     'pm-use-btn': '0 2px 8px rgba(99,102,241,0.35)',
     'pm-use-btn-hover': '0 4px 12px rgba(99,102,241,0.45)',
@@ -176,11 +172,9 @@ export const templatePreviewModalTheme = {
   animation: {
     'pm-overlay-enter': 'pm-overlay-enter 200ms ease-out',
     'pm-overlay-exit': 'pm-overlay-exit 150ms ease-in',
-    'pm-modal-enter':
-      'pm-modal-enter 300ms cubic-bezier(0.34,1.56,0.64,1)',
+    'pm-modal-enter': 'pm-modal-enter 300ms cubic-bezier(0.34,1.56,0.64,1)',
     'pm-modal-exit': 'pm-modal-exit 200ms ease-in',
-    'pm-node-enter':
-      'pm-node-enter 250ms cubic-bezier(0.34,1.56,0.64,1)',
+    'pm-node-enter': 'pm-node-enter 250ms cubic-bezier(0.34,1.56,0.64,1)',
     'pm-edge-draw': 'pm-edge-draw 400ms ease-out',
     'pm-sidebar-enter': 'pm-sidebar-enter 200ms ease-out 150ms',
   },

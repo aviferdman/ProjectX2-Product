@@ -125,9 +125,10 @@ export function checkNpmVersion(): { checks: CredentialCheck[]; version: string 
 /**
  * Check npm authentication status.
  */
-export function checkNpmAuth(
-  skipAuth: boolean,
-): { checks: CredentialCheck[]; user: string | null } {
+export function checkNpmAuth(skipAuth: boolean): {
+  checks: CredentialCheck[];
+  user: string | null;
+} {
   const checks: CredentialCheck[] = [];
 
   if (skipAuth) {
@@ -145,8 +146,7 @@ export function checkNpmAuth(
     checks.push({
       name: 'npm-auth',
       status: 'fail',
-      message:
-        'Not authenticated with npm — run "npm login" or set NPM_TOKEN environment variable',
+      message: 'Not authenticated with npm — run "npm login" or set NPM_TOKEN environment variable',
     });
     return { checks, user: null };
   }
@@ -164,9 +164,7 @@ export function checkNpmAuth(
 /**
  * Check that the @crewspace scope resolves to the correct registry.
  */
-export function checkScopeRegistry(
-  rootDir: string,
-): CredentialCheck[] {
+export function checkScopeRegistry(rootDir: string): CredentialCheck[] {
   const checks: CredentialCheck[] = [];
 
   const result = execSafe(`npm config get ${EXPECTED_SCOPE}:registry`, rootDir);
@@ -318,9 +316,10 @@ export function checkPackagePublishConfig(rootDir: string): CredentialCheck[] {
   const issues: string[] = [];
 
   for (const { name: dirName, path: pkgDir } of packageDirs) {
-    const pkgJson = JSON.parse(
-      readFileSync(join(pkgDir, 'package.json'), 'utf-8'),
-    ) as Record<string, unknown>;
+    const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+      string,
+      unknown
+    >;
 
     const pkgName = String(pkgJson['name'] ?? dirName);
 
@@ -341,7 +340,9 @@ export function checkPackagePublishConfig(rootDir: string): CredentialCheck[] {
 
     if (publishConfig.access !== 'public') {
       allPublic = false;
-      issues.push(`${pkgName}: publishConfig.access is "${publishConfig.access}", expected "public"`);
+      issues.push(
+        `${pkgName}: publishConfig.access is "${publishConfig.access}", expected "public"`,
+      );
     }
 
     if (
@@ -481,9 +482,7 @@ export function validateNpmCredentials(
   allChecks.push(...checkPackagePublishConfig(options.rootDir));
   allChecks.push(...checkOrgAccess(options.skipAuth ?? false));
 
-  const passed = allChecks
-    .filter((c) => c.status !== 'skip')
-    .every((c) => c.status !== 'fail');
+  const passed = allChecks.filter((c) => c.status !== 'skip').every((c) => c.status !== 'fail');
 
   return {
     passed,

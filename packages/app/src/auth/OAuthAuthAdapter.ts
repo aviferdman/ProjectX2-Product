@@ -22,7 +22,10 @@ interface StoredSession {
   expiresAt: number;
 }
 
-const OAUTH_ENDPOINTS: Record<OAuthProviderType, { authorizeUrl: string; tokenUrl: string; userInfoUrl: string }> = {
+const OAUTH_ENDPOINTS: Record<
+  OAuthProviderType,
+  { authorizeUrl: string; tokenUrl: string; userInfoUrl: string }
+> = {
   github: {
     authorizeUrl: 'https://github.com/login/oauth/authorize',
     tokenUrl: 'https://github.com/login/oauth/access_token',
@@ -168,7 +171,9 @@ export function createOAuthAuthAdapter(config: OAuthConfig): AuthAdapter {
               popup.close();
 
               if (error) {
-                reject(new Error(`OAuth error: ${url.searchParams.get('error_description') ?? error}`));
+                reject(
+                  new Error(`OAuth error: ${url.searchParams.get('error_description') ?? error}`),
+                );
                 return;
               }
               if (returnedState !== state) {
@@ -187,11 +192,14 @@ export function createOAuthAuthAdapter(config: OAuthConfig): AuthAdapter {
         }, 200);
 
         // Timeout after 5 minutes
-        setTimeout(() => {
-          clearInterval(checkInterval);
-          popup.close();
-          reject(new Error('OAuth login timed out'));
-        }, 5 * 60 * 1000);
+        setTimeout(
+          () => {
+            clearInterval(checkInterval);
+            popup.close();
+            reject(new Error('OAuth login timed out'));
+          },
+          5 * 60 * 1000,
+        );
       });
 
       // Exchange code for token — in production this goes through your backend.
@@ -199,7 +207,10 @@ export function createOAuthAuthAdapter(config: OAuthConfig): AuthAdapter {
       // Google with PKCE, and Microsoft with SPA flow).
       const tokenResponse = await fetch(endpoints.tokenUrl.replace('{tenantId}', tenantId), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
+        },
         body: new URLSearchParams({
           client_id: providerConfig.clientId,
           code,
@@ -214,7 +225,10 @@ export function createOAuthAuthAdapter(config: OAuthConfig): AuthAdapter {
         throw new Error(`Token exchange failed: ${text}`);
       }
 
-      const tokenData = (await tokenResponse.json()) as { access_token: string; expires_in?: number };
+      const tokenData = (await tokenResponse.json()) as {
+        access_token: string;
+        expires_in?: number;
+      };
       const accessToken = tokenData.access_token;
       const expiresIn = tokenData.expires_in ?? 3600;
 

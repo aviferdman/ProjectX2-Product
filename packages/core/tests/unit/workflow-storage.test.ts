@@ -3,15 +3,9 @@
  */
 import { describe, it, expect, beforeEach } from 'vitest';
 
-import {
-  InMemoryWorkflowStorage,
-  _resetIdCounter,
-} from '../../src/workflow/index.js';
+import { InMemoryWorkflowStorage, _resetIdCounter } from '../../src/workflow/index.js';
 import { WorkflowNotFoundError, WorkflowValidationError } from '../../src/workflow/index.js';
-import type {
-  CreateWorkflowInput,
-  StoredWorkflow,
-} from '../../src/workflow/index.js';
+import type { CreateWorkflowInput, StoredWorkflow } from '../../src/workflow/index.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -368,9 +362,9 @@ describe('InMemoryWorkflowStorage', () => {
         WorkflowValidationError,
       );
 
-      await expect(
-        storage.update(created.id, { status: 'invalid' as any }),
-      ).rejects.toThrow(WorkflowValidationError);
+      await expect(storage.update(created.id, { status: 'invalid' as any })).rejects.toThrow(
+        WorkflowValidationError,
+      );
     });
 
     it('cross-validates agents and tasks on update', async () => {

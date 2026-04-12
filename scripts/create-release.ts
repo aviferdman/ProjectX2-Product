@@ -16,7 +16,7 @@
  */
 
 import { writeFileSync } from 'node:fs';
-import { resolve, join, dirname } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import {
@@ -262,10 +262,7 @@ export async function createRelease(options: CreateReleaseOptions): Promise<Crea
 /**
  * Format the full release result for console output.
  */
-export function formatCreateReleaseOutput(
-  result: CreateReleaseResult,
-  dryRun: boolean,
-): string {
+export function formatCreateReleaseOutput(result: CreateReleaseResult, dryRun: boolean): string {
   const lines: string[] = [];
 
   lines.push(`=== Crewspace Release ${result.tag} ===`);
@@ -366,9 +363,7 @@ async function main(): Promise<void> {
   const args = parseCreateReleaseArgs(process.argv.slice(2));
 
   if (!args.version) {
-    console.error(
-      'Usage: create-release.ts --version <version> [options]',
-    );
+    console.error('Usage: create-release.ts --version <version> [options]');
     console.error('');
     console.error('Options:');
     console.error('  --dry-run        Validate without creating release');

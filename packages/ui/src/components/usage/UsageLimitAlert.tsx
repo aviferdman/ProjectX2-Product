@@ -37,7 +37,10 @@ export interface UsageLimitAlertProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const UsageLimitAlert = forwardRef<HTMLDivElement, UsageLimitAlertProps>(
-  ({ severity, heading, description, actionLabel, onAction, onDismiss, className, ...rest }, ref) => {
+  (
+    { severity, heading, description, actionLabel, onAction, onDismiss, className, ...rest },
+    ref,
+  ) => {
     const styles = severityStyles[severity];
 
     return (
@@ -99,7 +102,14 @@ export const UsageLimitAlert = forwardRef<HTMLDivElement, UsageLimitAlertProps>(
             className="flex-shrink-0 rounded p-1 opacity-60 hover:opacity-100 transition-opacity"
             aria-label="Dismiss"
           >
-            <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            >
               <path d="M4 4l8 8M12 4l-8 8" />
             </svg>
           </button>

@@ -2,15 +2,11 @@ import React, { forwardRef } from 'react';
 import { clsx } from 'clsx';
 import type { IntegrationCategory } from './types.js';
 
-export interface IntegrationCategoryBadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement> {
+export interface IntegrationCategoryBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   category: IntegrationCategory;
 }
 
-const categoryStyles: Record<
-  IntegrationCategory,
-  { bg: string; text: string; border: string }
-> = {
+const categoryStyles: Record<IntegrationCategory, { bg: string; text: string; border: string }> = {
   llm: {
     bg: 'bg-indigo-500/10',
     text: 'text-indigo-400',
@@ -52,26 +48,25 @@ const categoryLabels: Record<IntegrationCategory, string> = {
   monitoring: 'Monitoring',
 };
 
-export const IntegrationCategoryBadge = forwardRef<
-  HTMLSpanElement,
-  IntegrationCategoryBadgeProps
->(function IntegrationCategoryBadge({ category, className, ...props }, ref) {
-  const style = categoryStyles[category];
-  return (
-    <span
-      ref={ref}
-      className={clsx(
-        'inline-flex items-center rounded-sm border px-1.5',
-        'text-[10px] font-semibold uppercase tracking-wider',
-        'h-5',
-        style.bg,
-        style.text,
-        style.border,
-        className,
-      )}
-      {...props}
-    >
-      {categoryLabels[category]}
-    </span>
-  );
-});
+export const IntegrationCategoryBadge = forwardRef<HTMLSpanElement, IntegrationCategoryBadgeProps>(
+  function IntegrationCategoryBadge({ category, className, ...props }, ref) {
+    const style = categoryStyles[category];
+    return (
+      <span
+        ref={ref}
+        className={clsx(
+          'inline-flex items-center rounded-sm border px-1.5',
+          'text-[10px] font-semibold uppercase tracking-wider',
+          'h-5',
+          style.bg,
+          style.text,
+          style.border,
+          className,
+        )}
+        {...props}
+      >
+        {categoryLabels[category]}
+      </span>
+    );
+  },
+);

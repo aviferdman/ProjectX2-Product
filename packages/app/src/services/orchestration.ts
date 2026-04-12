@@ -8,11 +8,7 @@
  */
 import { Agent } from '@crewspace/core/agent';
 import { Crew } from '@crewspace/core/crew';
-import {
-  OpenAIProvider,
-  AnthropicProvider,
-  OllamaProvider,
-} from '@crewspace/core/llm';
+import { OpenAIProvider, AnthropicProvider, OllamaProvider } from '@crewspace/core/llm';
 import { LLMRole } from '@crewspace/core/types';
 import { ConvergenceStrategy } from '@crewspace/core/types';
 import type {
@@ -39,7 +35,16 @@ export interface LLMConfig {
   baseUrl?: string | undefined;
 }
 
-const AGENT_COLORS = ['#6366f1', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
+const AGENT_COLORS = [
+  '#6366f1',
+  '#06b6d4',
+  '#f59e0b',
+  '#10b981',
+  '#ef4444',
+  '#ec4899',
+  '#6366f1',
+  '#14b8a6',
+];
 
 /** Create an LLM provider from config. */
 export function createProvider(config: LLMConfig): LLMProvider {
@@ -50,9 +55,12 @@ export function createProvider(config: LLMConfig): LLMProvider {
   const proxyBaseUrl = (provider: string): string | undefined => {
     if (!isBrowser) return config.baseUrl;
     switch (provider) {
-      case 'openai': return config.baseUrl ?? '/api/openai/v1';
-      case 'anthropic': return config.baseUrl ?? '/api/anthropic';
-      default: return config.baseUrl;
+      case 'openai':
+        return config.baseUrl ?? '/api/openai/v1';
+      case 'anthropic':
+        return config.baseUrl ?? '/api/anthropic';
+      default:
+        return config.baseUrl;
     }
   };
 
@@ -123,9 +131,7 @@ export function saveLLMConfig(config: LLMConfig): void {
 // ---------------------------------------------------------------------------
 
 // Build a compact agent catalog for the system prompt (minimize tokens for local models)
-const AGENT_CATALOG = ALL_HARDCODED_AGENTS.map(
-  (a) => `${a.id} (${a.role})`,
-).join('\n');
+const AGENT_CATALOG = ALL_HARDCODED_AGENTS.map((a) => `${a.id} (${a.role})`).join('\n');
 
 const PLAN_SYSTEM_PROMPT = `You are an AI workflow planner. Output ONLY valid JSON — no prose, no markdown, no comments, no trailing commas.
 
@@ -248,7 +254,9 @@ export async function generateWorkflowPlan(
             discussion: {
               participantIds: t.discussion.participantIds,
               maxRounds: t.discussion.maxRounds,
-              convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<TaskNode['discussion']>['convergenceStrategy'],
+              convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<
+                TaskNode['discussion']
+              >['convergenceStrategy'],
               ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
             },
           }
@@ -259,10 +267,14 @@ export async function generateWorkflowPlan(
   // Strip invalid dependency references (deps pointing to task IDs not in the plan)
   const validTaskIds = new Set(tasks.map((t) => t.id));
   for (const task of tasks) {
-    task.dependencies = task.dependencies.filter((depId) => validTaskIds.has(depId) && depId !== task.id);
+    task.dependencies = task.dependencies.filter(
+      (depId) => validTaskIds.has(depId) && depId !== task.id,
+    );
     // Also strip invalid discussion participant IDs
     if (task.discussion) {
-      task.discussion.participantIds = task.discussion.participantIds.filter((pid) => validAgentIds.has(pid));
+      task.discussion.participantIds = task.discussion.participantIds.filter((pid) =>
+        validAgentIds.has(pid),
+      );
     }
   }
 
@@ -359,7 +371,7 @@ export async function chatWithWorkflow(
   const content = response.content;
 
   // Check if the response contains a JSON workflow update
-  const jsonMatch = content.match(/<json>([\s\S]*?)<\/json>/);
+  const jsonMatch = /<json>([\s\S]*?)<\/json>/.exec(content);
   if (jsonMatch?.[1] && workflow) {
     try {
       const plan = JSON.parse(jsonMatch[1]) as WorkflowPlan;
@@ -396,7 +408,9 @@ export async function chatWithWorkflow(
               discussion: {
                 participantIds: t.discussion.participantIds,
                 maxRounds: t.discussion.maxRounds,
-                convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<TaskNode['discussion']>['convergenceStrategy'],
+                convergenceStrategy: t.discussion.convergenceStrategy as NonNullable<
+                  TaskNode['discussion']
+                >['convergenceStrategy'],
                 ...(t.discussion.topic ? { topic: t.discussion.topic } : {}),
               },
             }
@@ -443,11 +457,16 @@ export interface ExecutionCallbacks {
 /** Map UI convergence strategy string to core enum. */
 function mapConvergenceStrategy(strategy: string): ConvergenceStrategy {
   switch (strategy) {
-    case 'unanimous': return ConvergenceStrategy.UNANIMOUS;
-    case 'majority': return ConvergenceStrategy.MAJORITY;
-    case 'llm-judge': return ConvergenceStrategy.LLM_JUDGE;
-    case 'stable-output': return ConvergenceStrategy.STABLE_OUTPUT;
-    default: return ConvergenceStrategy.UNANIMOUS;
+    case 'unanimous':
+      return ConvergenceStrategy.UNANIMOUS;
+    case 'majority':
+      return ConvergenceStrategy.MAJORITY;
+    case 'llm-judge':
+      return ConvergenceStrategy.LLM_JUDGE;
+    case 'stable-output':
+      return ConvergenceStrategy.STABLE_OUTPUT;
+    default:
+      return ConvergenceStrategy.UNANIMOUS;
   }
 }
 
@@ -471,29 +490,27 @@ export async function executeWorkflow(
   };
 
   // 1. Create real Agent instances with enriched personas
-  const agents: Agent[] = workflow.agents.map(
-    (agentNode) => {
-      // Build enriched backstory with tool capability context
-      const toolCapabilities = (agentNode.tools ?? [])
-        .map((t) => TOOL_DESCRIPTIONS[t])
-        .filter(Boolean);
-      const enrichedBackstory = [
-        agentNode.backstory,
-        ...(toolCapabilities.length > 0
-          ? [`Capabilities: ${toolCapabilities.join(' ')}`]
-          : []),
-      ].filter(Boolean).join('\n\n');
+  const agents: Agent[] = workflow.agents.map((agentNode) => {
+    // Build enriched backstory with tool capability context
+    const toolCapabilities = (agentNode.tools ?? [])
+      .map((t) => TOOL_DESCRIPTIONS[t])
+      .filter(Boolean);
+    const enrichedBackstory = [
+      agentNode.backstory,
+      ...(toolCapabilities.length > 0 ? [`Capabilities: ${toolCapabilities.join(' ')}`] : []),
+    ]
+      .filter(Boolean)
+      .join('\n\n');
 
-      return new Agent({
-        id: agentNode.id,
-        role: agentNode.role,
-        goal: agentNode.goal,
-        backstory: enrichedBackstory,
-        llmProvider: provider,
-        verbose: true,
-      });
-    },
-  );
+    return new Agent({
+      id: agentNode.id,
+      role: agentNode.role,
+      goal: agentNode.goal,
+      backstory: enrichedBackstory,
+      llmProvider: provider,
+      verbose: true,
+    });
+  });
 
   // 2. Build CrewTask array, including discussion configs
   // Ensure every task has a valid agentId that maps to a real agent
@@ -551,6 +568,7 @@ export async function executeWorkflow(
     agents,
     tasks: crewTasks,
     verbose: true,
+    parallel: true,
   });
 
   // 4. Wire up event listeners
@@ -567,17 +585,26 @@ export async function executeWorkflow(
   });
 
   // 5. Wire discussion events
-  crew.on('crew:discussion:start', (_crewId: string, discussionId: string, participantIds: readonly string[]) => {
-    callbacks.onDiscussionStart?.(discussionId, participantIds);
-  });
+  crew.on(
+    'crew:discussion:start',
+    (_crewId: string, discussionId: string, participantIds: readonly string[]) => {
+      callbacks.onDiscussionStart?.(discussionId, participantIds);
+    },
+  );
 
-  crew.on('crew:discussion:message', (_crewId: string, discussionId: string, message: DiscussionMessage) => {
-    callbacks.onDiscussionMessage?.(discussionId, message);
-  });
+  crew.on(
+    'crew:discussion:message',
+    (_crewId: string, discussionId: string, message: DiscussionMessage) => {
+      callbacks.onDiscussionMessage?.(discussionId, message);
+    },
+  );
 
-  crew.on('crew:discussion:complete', (_crewId: string, discussionId: string, result: DiscussionResult) => {
-    callbacks.onDiscussionComplete?.(discussionId, result);
-  });
+  crew.on(
+    'crew:discussion:complete',
+    (_crewId: string, discussionId: string, result: DiscussionResult) => {
+      callbacks.onDiscussionComplete?.(discussionId, result);
+    },
+  );
 
   // 5. Run!
   try {
@@ -649,9 +676,10 @@ function fixLlmJson(raw: string): string {
   // Trailing commas: ",]" → "]"  and ",}" → "}"
   // We need to be careful not to touch commas inside strings.
   // Simple approach: repeatedly strip trailing commas outside strings.
-  s = s.replace(/,\s*([\]\}])/g, '$1');
+  s = s.replace(/,\s*([\]}])/g, '$1');
 
   // Handle control characters that break JSON.parse
+  // eslint-disable-next-line no-control-regex
   s = s.replace(/[\x00-\x1f]/g, (ch) => {
     if (ch === '\n' || ch === '\r' || ch === '\t') return ch;
     return '';

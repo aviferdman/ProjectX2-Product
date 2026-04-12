@@ -10,11 +10,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import type {
-  CanvasSnapshot,
-  StoredCanvasState,
-  CanvasHistoryEntry,
-} from '@crewspace/core';
+import type { CanvasSnapshot, StoredCanvasState, CanvasHistoryEntry } from '@crewspace/core';
 
 // ---------------------------------------------------------------------------
 // Service interface (avoids hard dependency on concrete class)
@@ -122,12 +118,7 @@ export interface UseCanvasStateResult {
  * ```
  */
 export function useCanvasState(options: UseCanvasStateOptions): UseCanvasStateResult {
-  const {
-    service,
-    canvasId,
-    enableShortcuts = true,
-    autoSaveMs = 0,
-  } = options;
+  const { service, canvasId, enableShortcuts = true, autoSaveMs = 0 } = options;
 
   // State
   const [canvasState, setCanvasState] = useState<StoredCanvasState | null>(null);
@@ -294,7 +285,7 @@ export function useCanvasState(options: UseCanvasStateOptions): UseCanvasStateRe
   useEffect(() => {
     if (!enableShortcuts) return;
 
-    const handler = (event: KeyboardEvent) => {
+    const handler = (event: KeyboardEvent): void => {
       const isMeta = event.metaKey || event.ctrlKey;
       if (!isMeta) return;
 

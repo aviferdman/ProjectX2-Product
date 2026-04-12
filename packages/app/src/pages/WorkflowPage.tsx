@@ -55,7 +55,12 @@ export function WorkflowPage(): React.JSX.Element {
 
   // Helper to push a chat message
   const pushMessage = useCallback((role: 'user' | 'assistant' | 'system', content: string) => {
-    const msg: ChatMessage = { id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`, role, content, timestamp: Date.now() };
+    const msg: ChatMessage = {
+      id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      role,
+      content,
+      timestamp: Date.now(),
+    };
     setChatMessages((prev) => [...prev, msg]);
   }, []);
 
@@ -72,7 +77,8 @@ export function WorkflowPage(): React.JSX.Element {
     setWorkflow(initialWorkflow);
 
     const discussionCount = initialWorkflow.tasks.filter((t) => t.discussion).length;
-    const discussionNote = discussionCount > 0 ? `\n\n**Discussions:** ${discussionCount} collaborative task(s).` : '';
+    const discussionNote =
+      discussionCount > 0 ? `\n\n**Discussions:** ${discussionCount} collaborative task(s).` : '';
     pushMessage(
       'assistant',
       `Workflow **${initialWorkflow.name}** is ready with **${initialWorkflow.agents.length} agents** and **${initialWorkflow.tasks.length} tasks**.${discussionNote}\n\n**Agents:**\n${initialWorkflow.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${initialWorkflow.tasks.map((t, i) => `${i + 1}. ${t.description}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
@@ -85,7 +91,8 @@ export function WorkflowPage(): React.JSX.Element {
   // 1. Generate workflow from initial prompt via LLM
   // -----------------------------------------------------------------------
   useEffect(() => {
-    if (!initialPrompt || initialWorkflow || workflow || hasTriggeredGeneration.current) return undefined;
+    if (!initialPrompt || initialWorkflow || workflow || hasTriggeredGeneration.current)
+      return undefined;
     hasTriggeredGeneration.current = true;
 
     pushMessage('system', `Analyzing your request: "${initialPrompt}"`);
@@ -106,7 +113,10 @@ export function WorkflowPage(): React.JSX.Element {
         setWorkflow(generated);
         setIsGenerating(false);
         const discussionCount = generated.tasks.filter((t) => t.discussion).length;
-        const discussionNote = discussionCount > 0 ? `\n\n**Discussions:** ${discussionCount} collaborative task(s) where agents will discuss and iterate until convergence.` : '';
+        const discussionNote =
+          discussionCount > 0
+            ? `\n\n**Discussions:** ${discussionCount} collaborative task(s) where agents will discuss and iterate until convergence.`
+            : '';
         pushMessage(
           'assistant',
           `I've assembled a team of **${generated.agents.length} agents** with **${generated.tasks.length} tasks** to execute your initiative.${discussionNote}\n\n**Agents:**\n${generated.agents.map((a) => `• **${a.role}** — ${a.goal}`).join('\n')}\n\n**Task pipeline:**\n${generated.tasks.map((t, i) => `${i + 1}. ${t.description}${t.discussion ? ' (collaborative)' : ''}`).join('\n')}\n\nYou can modify agents, reorder tasks, or hit **Run** to execute.`,
@@ -115,7 +125,10 @@ export function WorkflowPage(): React.JSX.Element {
         const msg = error instanceof Error ? error.message : String(error);
         setIsGenerating(false);
         setLlmError(msg);
-        pushMessage('assistant', `Failed to generate workflow: ${msg}\n\nPlease check your API key in Settings (gear icon) and try again.`);
+        pushMessage(
+          'assistant',
+          `Failed to generate workflow: ${msg}\n\nPlease check your API key in Settings (gear icon) and try again.`,
+        );
       }
     })();
 
@@ -175,7 +188,10 @@ export function WorkflowPage(): React.JSX.Element {
             };
           });
           const agent = workflow.agents.find((a) => a.id === agentId);
-          pushMessage('system', `▶ **${agent?.role ?? agentId}** is working on: ${workflow.tasks.find((t) => t.id === taskId)?.description ?? taskId}`);
+          pushMessage(
+            'system',
+            `▶ **${agent?.role ?? agentId}** is working on: ${workflow.tasks.find((t) => t.id === taskId)?.description ?? taskId}`,
+          );
         },
 
         onTaskComplete(taskId, result) {
@@ -184,9 +200,7 @@ export function WorkflowPage(): React.JSX.Element {
             return {
               ...prev,
               tasks: prev.tasks.map((t) =>
-                t.id === taskId
-                  ? { ...t, status: 'completed' as const, output: result.output }
-                  : t,
+                t.id === taskId ? { ...t, status: 'completed' as const, output: result.output } : t,
               ),
               agents: prev.agents.map((a) => {
                 // Set agent back to idle if none of its remaining tasks are running
@@ -218,7 +232,10 @@ export function WorkflowPage(): React.JSX.Element {
         onCrewComplete(result) {
           setWorkflow((prev) => (prev ? { ...prev, status: 'completed' } : null));
           const outputs = Array.from(result.taskResults.entries())
-            .map(([tid, r]) => `**${tid}**: ${r.output.slice(0, 200)}${r.output.length > 200 ? '…' : ''}`)
+            .map(
+              ([tid, r]) =>
+                `**${tid}**: ${r.output.slice(0, 200)}${r.output.length > 200 ? '…' : ''}`,
+            )
             .join('\n\n');
           pushMessage(
             'assistant',
@@ -238,7 +255,10 @@ export function WorkflowPage(): React.JSX.Element {
           const participantNames = participantIds
             .map((pid) => workflow.agents.find((a) => a.id === pid)?.role ?? pid)
             .join(' & ');
-          pushMessage('system', `Discussion started for task **${taskId}** — ${participantNames} are collaborating`);
+          pushMessage(
+            'system',
+            `Discussion started for task **${taskId}** — ${participantNames} are collaborating`,
+          );
 
           // Update discussion edge statuses to active
           setWorkflow((prev) => {
@@ -249,7 +269,9 @@ export function WorkflowPage(): React.JSX.Element {
                 edge.taskId === taskId ? { ...edge, status: 'active' as const } : edge,
               ),
               agents: prev.agents.map((a) =>
-                (participantIds as readonly string[]).includes(a.id) ? { ...a, status: 'working' as const } : a,
+                (participantIds as readonly string[]).includes(a.id)
+                  ? { ...a, status: 'working' as const }
+                  : a,
               ),
             };
           });
@@ -280,7 +302,14 @@ export function WorkflowPage(): React.JSX.Element {
                         toAgentId: message.toAgentId,
                         content: message.content,
                         round: message.round,
-                        type: message.type as 'proposal' | 'feedback' | 'revision' | 'agreement' | 'disagreement' | 'question' | 'answer',
+                        type: message.type as
+                          | 'proposal'
+                          | 'feedback'
+                          | 'revision'
+                          | 'agreement'
+                          | 'disagreement'
+                          | 'question'
+                          | 'answer',
                         timestamp: message.timestamp,
                       },
                     ],
@@ -292,18 +321,36 @@ export function WorkflowPage(): React.JSX.Element {
           });
 
           // Show abbreviated message in chat
-          const typeLabel = message.type === 'agreement' ? '[agreed]' : message.type === 'disagreement' ? '[disagreed]' : message.type === 'revision' ? '[revised]' : message.type === 'question' ? '[asked]' : '[said]';
-          const shortContent = message.content.replace(/^\[(?:AGREE|DISAGREE|REVISE|QUESTION|PROPOSAL)\]\s*/i, '').slice(0, 100);
-          pushMessage('system', `**${fromAgent?.role ?? message.fromAgentId}** ${typeLabel} (round ${message.round}): ${shortContent}${message.content.length > 100 ? '…' : ''}`);
+          const typeLabel =
+            message.type === 'agreement'
+              ? '[agreed]'
+              : message.type === 'disagreement'
+                ? '[disagreed]'
+                : message.type === 'revision'
+                  ? '[revised]'
+                  : message.type === 'question'
+                    ? '[asked]'
+                    : '[said]';
+          const shortContent = message.content
+            .replace(/^\[(?:AGREE|DISAGREE|REVISE|QUESTION|PROPOSAL)\]\s*/i, '')
+            .slice(0, 100);
+          pushMessage(
+            'system',
+            `**${fromAgent?.role ?? message.fromAgentId}** ${typeLabel} (round ${message.round}): ${shortContent}${message.content.length > 100 ? '…' : ''}`,
+          );
         },
 
         onDiscussionComplete(discussionId, result) {
           const taskId = discussionId.split('-disc-')[1];
-          const statusLabel = result.status === 'converged'
-            ? `converged at round ${result.convergenceRound}`
-            : `completed after ${result.rounds.length} rounds (${result.status})`;
+          const statusLabel =
+            result.status === 'converged'
+              ? `converged at round ${result.convergenceRound}`
+              : `completed after ${result.rounds.length} rounds (${result.status})`;
 
-          pushMessage('system', `Discussion for **${taskId}** ${statusLabel} with ${result.totalMessages} messages`);
+          pushMessage(
+            'system',
+            `Discussion for **${taskId}** ${statusLabel} with ${result.totalMessages} messages`,
+          );
 
           // Update edge status
           setWorkflow((prev) => {
@@ -312,7 +359,12 @@ export function WorkflowPage(): React.JSX.Element {
               ...prev,
               discussionEdges: (prev.discussionEdges ?? []).map((edge) =>
                 edge.taskId === taskId
-                  ? { ...edge, status: (result.status === 'converged' ? 'converged' : 'max-rounds') as 'converged' | 'max-rounds' }
+                  ? {
+                      ...edge,
+                      status: (result.status === 'converged' ? 'converged' : 'max-rounds') as
+                        | 'converged'
+                        | 'max-rounds',
+                    }
                   : edge,
               ),
             };
@@ -329,42 +381,64 @@ export function WorkflowPage(): React.JSX.Element {
   // -----------------------------------------------------------------------
   // 4. Crew Blade CRUD handlers
   // -----------------------------------------------------------------------
-  const AGENT_COLORS = ['#6366f1', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
+  const AGENT_COLORS = [
+    '#6366f1',
+    '#06b6d4',
+    '#f59e0b',
+    '#10b981',
+    '#ef4444',
+    '#ec4899',
+    '#6366f1',
+    '#14b8a6',
+  ];
 
-  const handleAgentAdd = useCallback((agentData: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) => {
-    setWorkflow((prev) => {
-      if (!prev) return null;
-      const { id: inputId, ...rest } = agentData;
-      const agent: AgentNode = {
-        ...rest,
-        id: inputId ?? `agent-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-        status: 'idle',
-        color: agentData.color || AGENT_COLORS[prev.agents.length % AGENT_COLORS.length]!,
-        position: { x: prev.agents.length * 200, y: 100 },
-      };
-      return { ...prev, agents: [...prev.agents, agent], updatedAt: Date.now() };
-    });
-  }, []);
+  const handleAgentAdd = useCallback(
+    (agentData: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) => {
+      setWorkflow((prev) => {
+        if (!prev) return null;
+        const { id: inputId, ...rest } = agentData;
+        const agent: AgentNode = {
+          ...rest,
+          id: inputId ?? `agent-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          status: 'idle',
+          color: agentData.color || AGENT_COLORS[prev.agents.length % AGENT_COLORS.length]!,
+          position: { x: prev.agents.length * 200, y: 100 },
+        };
+        return { ...prev, agents: [...prev.agents, agent], updatedAt: Date.now() };
+      });
+    },
+    [],
+  );
 
-  const handleAgentUpdate = useCallback((agentId: string, updates: Partial<Omit<AgentNode, 'id'>>) => {
-    setWorkflow((prev) => {
-      if (!prev) return null;
-      return { ...prev, agents: prev.agents.map((a) => a.id === agentId ? { ...a, ...updates } : a), updatedAt: Date.now() };
-    });
-  }, []);
+  const handleAgentUpdate = useCallback(
+    (agentId: string, updates: Partial<Omit<AgentNode, 'id'>>) => {
+      setWorkflow((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          agents: prev.agents.map((a) => (a.id === agentId ? { ...a, ...updates } : a)),
+          updatedAt: Date.now(),
+        };
+      });
+    },
+    [],
+  );
 
-  const handleAgentDelete = useCallback((agentId: string) => {
-    setWorkflow((prev) => {
-      if (!prev) return null;
-      return {
-        ...prev,
-        agents: prev.agents.filter((a) => a.id !== agentId),
-        tasks: prev.tasks.map((t) => t.agentId === agentId ? { ...t, agentId: '' } : t),
-        updatedAt: Date.now(),
-      };
-    });
-    if (selectedNodeId === agentId) setSelectedNodeId(null);
-  }, [selectedNodeId]);
+  const handleAgentDelete = useCallback(
+    (agentId: string) => {
+      setWorkflow((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          agents: prev.agents.filter((a) => a.id !== agentId),
+          tasks: prev.tasks.map((t) => (t.agentId === agentId ? { ...t, agentId: '' } : t)),
+          updatedAt: Date.now(),
+        };
+      });
+      if (selectedNodeId === agentId) setSelectedNodeId(null);
+    },
+    [selectedNodeId],
+  );
 
   const handleTaskAdd = useCallback((taskData: Omit<TaskNode, 'id' | 'status'>) => {
     setWorkflow((prev) => {
@@ -381,21 +455,28 @@ export function WorkflowPage(): React.JSX.Element {
   const handleTaskUpdate = useCallback((taskId: string, updates: Partial<Omit<TaskNode, 'id'>>) => {
     setWorkflow((prev) => {
       if (!prev) return null;
-      return { ...prev, tasks: prev.tasks.map((t) => t.id === taskId ? { ...t, ...updates } : t), updatedAt: Date.now() };
-    });
-  }, []);
-
-  const handleTaskDelete = useCallback((taskId: string) => {
-    setWorkflow((prev) => {
-      if (!prev) return null;
       return {
         ...prev,
-        tasks: prev.tasks.filter((t) => t.id !== taskId),
+        tasks: prev.tasks.map((t) => (t.id === taskId ? { ...t, ...updates } : t)),
         updatedAt: Date.now(),
       };
     });
-    if (selectedNodeId === taskId) setSelectedNodeId(null);
-  }, [selectedNodeId]);
+  }, []);
+
+  const handleTaskDelete = useCallback(
+    (taskId: string) => {
+      setWorkflow((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          tasks: prev.tasks.filter((t) => t.id !== taskId),
+          updatedAt: Date.now(),
+        };
+      });
+      if (selectedNodeId === taskId) setSelectedNodeId(null);
+    },
+    [selectedNodeId],
+  );
 
   const handleSaveAsCrew = useCallback(() => {
     if (!workflow) return;
@@ -405,8 +486,11 @@ export function WorkflowPage(): React.JSX.Element {
       workflow.agents,
       workflow.tasks,
     );
-    setWorkflow((prev) => prev ? { ...prev, crewId: crew.id } : null);
-    pushMessage('system', `Crew "${crew.name}" saved with ${crew.agents.length} agents and ${crew.tasks.length} tasks. You can find it in My Crews.`);
+    setWorkflow((prev) => (prev ? { ...prev, crewId: crew.id } : null));
+    pushMessage(
+      'system',
+      `Crew "${crew.name}" saved with ${crew.agents.length} agents and ${crew.tasks.length} tasks. You can find it in My Crews.`,
+    );
   }, [workflow, importCrewFromWorkflow, pushMessage]);
 
   return (
@@ -428,13 +512,26 @@ export function WorkflowPage(): React.JSX.Element {
       {/* Error Banner */}
       {llmError && (
         <div className="flex items-center gap-3 px-4 py-2.5 bg-rose-500/10 border-b border-rose-500/20 animate-fadeInDown">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ef4444"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <circle cx="12" cy="12" r="10" />
             <line x1="15" y1="9" x2="9" y2="15" />
             <line x1="9" y1="9" x2="15" y2="15" />
           </svg>
           <span className="text-xs text-rose-300 flex-1 truncate">{llmError}</span>
-          <button onClick={() => setLlmError(null)} className="text-xs text-rose-400 hover:text-rose-300 transition-colors focus-ring" aria-label="Dismiss error">
+          <button
+            onClick={() => setLlmError(null)}
+            className="text-xs text-rose-400 hover:text-rose-300 transition-colors focus-ring"
+            aria-label="Dismiss error"
+          >
             Dismiss
           </button>
         </div>
@@ -512,7 +609,9 @@ export function WorkflowPage(): React.JSX.Element {
       <LLMSettings
         open={showSettings}
         onClose={() => setShowSettings(false)}
-        onSaved={() => { providerRef.current = null; }}
+        onSaved={() => {
+          providerRef.current = null;
+        }}
       />
     </div>
   );

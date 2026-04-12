@@ -90,7 +90,7 @@ export const radius = {
 /* ------------------------------------------------------------------ */
 export const typography = {
   fontFamily: {
-    sans: "Inter, ui-sans-serif, system-ui, -apple-system, sans-serif",
+    sans: 'Inter, ui-sans-serif, system-ui, -apple-system, sans-serif',
     mono: "'JetBrains Mono', 'Fira Code', ui-monospace, monospace",
   },
   fontSize: {

@@ -13,7 +13,7 @@ interface AgentListProps {
 
 const STATUS_STYLES: Record<AgentNode['status'], { dot: string; label: string }> = {
   idle: { dot: 'bg-gray-400', label: 'Idle' },
-  working: { dot: 'bg-amber-400 animate-pulse', label: 'Working' },
+  working: { dot: 'bg-amber-400 animate-flicker', label: 'Working' },
   error: { dot: 'bg-red-400', label: 'Error' },
   completed: { dot: 'bg-emerald-400', label: 'Completed' },
 };
@@ -31,7 +31,9 @@ export function AgentList({
   const selectedAgent = agents.find((a) => a.id === selectedAgentId);
 
   const handleSave = (
-    data: (Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }) | ({ id: string } & Partial<Omit<AgentNode, 'id'>>),
+    data:
+      | (Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string })
+      | ({ id: string } & Partial<Omit<AgentNode, 'id'>>),
   ) => {
     if ('id' in data && data.id && agents.some((a) => a.id === data.id)) {
       // Editing an existing agent
@@ -89,13 +91,23 @@ export function AgentList({
         {agents.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <div className="w-10 h-10 rounded-full bg-indigo-600/10 flex items-center justify-center mb-3">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-indigo-400">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-indigo-400"
+              >
                 <circle cx="10" cy="7" r="3" />
                 <path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6" />
               </svg>
             </div>
             <p className="text-sm text-[var(--cs-text-tertiary)]">No agents yet</p>
-            <p className="text-xs text-[var(--cs-text-tertiary)] mt-1">Add your first agent to get started</p>
+            <p className="text-xs text-[var(--cs-text-tertiary)] mt-1">
+              Add your first agent to get started
+            </p>
           </div>
         ) : (
           agents.map((agent) => {
@@ -118,7 +130,9 @@ export function AgentList({
                       </span>
                       <div className="flex items-center gap-1.5 shrink-0">
                         <div className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
-                        <span className="text-[10px] text-[var(--cs-text-tertiary)]">{status.label}</span>
+                        <span className="text-[10px] text-[var(--cs-text-tertiary)]">
+                          {status.label}
+                        </span>
                       </div>
                     </div>
                     {agent.goal && (
@@ -152,7 +166,15 @@ export function AgentList({
           onClick={() => setIsAdding(true)}
           className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-md border border-dashed border-[var(--cs-border-subtle)] text-[var(--cs-text-secondary)] hover:text-indigo-400 hover:border-indigo-500/40 hover:bg-indigo-600/5 transition-colors"
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          >
             <path d="M7 1v12M1 7h12" />
           </svg>
           Add Agent

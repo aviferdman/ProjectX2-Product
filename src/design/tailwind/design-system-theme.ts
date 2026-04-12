@@ -164,13 +164,13 @@ export const designSystemTheme = {
     inner: 'var(--cs-shadow-inner, inset 0 2px 4px rgba(0,0,0,0.3))',
     none: 'none',
     node: 'var(--cs-shadow-node, 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(63,63,70,0.5))',
-    'node-hover': 'var(--cs-shadow-node-hover, 0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(63,63,70,0.6))',
+    'node-hover':
+      'var(--cs-shadow-node-hover, 0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(63,63,70,0.6))',
     'node-selected':
       'var(--cs-shadow-node-selected, 0 0 0 2px #818cf8, 0 4px 20px rgba(99,102,241,0.25))',
     panel: 'var(--cs-shadow-panel, 0 1px 3px rgba(0,0,0,0.4))',
     toolbar: 'var(--cs-shadow-toolbar, 0 2px 12px rgba(0,0,0,0.45))',
-    dropdown:
-      'var(--cs-shadow-dropdown, 0 4px 24px rgba(0,0,0,0.6), 0 0 0 1px rgba(63,63,70,0.5))',
+    dropdown: 'var(--cs-shadow-dropdown, 0 4px 24px rgba(0,0,0,0.6), 0 0 0 1px rgba(63,63,70,0.5))',
   },
 
   /* -------------------------------------------------------------- */

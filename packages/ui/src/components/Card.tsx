@@ -50,10 +50,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
     return (
       <div
         ref={ref}
-        className={clsx(
-          'flex items-center gap-2 pb-3 border-b border-slate-700',
-          className,
-        )}
+        className={clsx('flex items-center gap-2 pb-3 border-b border-slate-700', className)}
         {...rest}
       >
         {children}

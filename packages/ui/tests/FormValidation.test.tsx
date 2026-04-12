@@ -6,10 +6,7 @@ import { render, screen, act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react';
 import { FormField } from '../src/components/FormField.js';
 import { Textarea } from '../src/components/Textarea.js';
-import {
-  useFormValidation,
-  type FieldConfig,
-} from '../src/hooks/useFormValidation.js';
+import { useFormValidation, type FieldConfig } from '../src/hooks/useFormValidation.js';
 import {
   required,
   minLength,
@@ -99,11 +96,7 @@ describe('FormField', () => {
 
   it('hides helper text when error is shown', () => {
     render(
-      <FormField
-        validationState="invalid"
-        errorMessage="Bad"
-        helperText="Enter your username"
-      >
+      <FormField validationState="invalid" errorMessage="Bad" helperText="Enter your username">
         <input />
       </FormField>,
     );
@@ -117,10 +110,7 @@ describe('FormField', () => {
         <input />
       </FormField>,
     );
-    expect(screen.getByTestId('form-field')).toHaveAttribute(
-      'data-validation',
-      'invalid',
-    );
+    expect(screen.getByTestId('form-field')).toHaveAttribute('data-validation', 'invalid');
   });
 
   it('applies disabled styling', () => {
@@ -137,7 +127,11 @@ describe('FormField', () => {
   it('forwards ref', () => {
     let el: HTMLDivElement | null = null;
     render(
-      <FormField ref={(r) => { el = r; }}>
+      <FormField
+        ref={(r) => {
+          el = r;
+        }}
+      >
         <input />
       </FormField>,
     );
@@ -219,9 +213,7 @@ describe('Textarea', () => {
   });
 
   it('hides helper text when error is present', () => {
-    render(
-      <Textarea label="Bio" helperText="Tell us" error="Too short" />,
-    );
+    render(<Textarea label="Bio" helperText="Tell us" error="Too short" />);
     expect(screen.queryByText('Tell us')).not.toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('Too short');
   });
@@ -250,7 +242,13 @@ describe('Textarea', () => {
 
   it('forwards ref', () => {
     let el: HTMLTextAreaElement | null = null;
-    render(<Textarea ref={(r) => { el = r; }} />);
+    render(
+      <Textarea
+        ref={(r) => {
+          el = r;
+        }}
+      />,
+    );
     expect(el).toBeInstanceOf(HTMLTextAreaElement);
   });
 });
@@ -359,9 +357,7 @@ describe('useFormValidation', () => {
   };
 
   it('starts with none state and untouched fields', () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
     expect(result.current.fieldStates.name.state).toBe('none');
     expect(result.current.fieldStates.name.touched).toBe(false);
     expect(result.current.fieldStates.email.state).toBe('none');
@@ -369,9 +365,7 @@ describe('useFormValidation', () => {
   });
 
   it('validates a single field as invalid', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     let res: unknown;
     await act(async () => {
@@ -384,9 +378,7 @@ describe('useFormValidation', () => {
   });
 
   it('validates a single field as valid (none = passes)', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     await act(async () => {
       await result.current.validateField('name', 'Alice');
@@ -397,9 +389,7 @@ describe('useFormValidation', () => {
   });
 
   it('runs validators in order, first non-none wins', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     await act(async () => {
       await result.current.validateField('name', 'A');
@@ -410,9 +400,7 @@ describe('useFormValidation', () => {
   });
 
   it('validateAll returns true when all fields pass', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     let valid: boolean | undefined;
     await act(async () => {
@@ -426,9 +414,7 @@ describe('useFormValidation', () => {
   });
 
   it('validateAll returns false when any field fails', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     let valid: boolean | undefined;
     await act(async () => {
@@ -442,9 +428,7 @@ describe('useFormValidation', () => {
   });
 
   it('clearField resets a field state', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     await act(async () => {
       await result.current.validateField('name', '');
@@ -459,9 +443,7 @@ describe('useFormValidation', () => {
   });
 
   it('resetAll restores all fields to initial state', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     await act(async () => {
       await result.current.validateAll({ name: '', email: '' });
@@ -479,9 +461,7 @@ describe('useFormValidation', () => {
   });
 
   it('handles unknown field name gracefully', async () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ fields: fieldConfigs }),
-    );
+    const { result } = renderHook(() => useFormValidation({ fields: fieldConfigs }));
 
     let res: unknown;
     await act(async () => {

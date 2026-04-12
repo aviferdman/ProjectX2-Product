@@ -13,22 +13,29 @@ export {
   email,
   showValid,
 } from './validators.js';
-export { Card, CardHeader, CardBody, type CardProps, type CardHeaderProps, type CardBodyProps } from './Card.js';
+export {
+  Card,
+  CardHeader,
+  CardBody,
+  type CardProps,
+  type CardHeaderProps,
+  type CardBodyProps,
+} from './Card.js';
 export { Badge, type BadgeProps, type BadgeVariant } from './Badge.js';
 export { Modal, type ModalProps } from './Modal.js';
 export { Tooltip, type TooltipProps } from './Tooltip.js';
 export { Spinner, type SpinnerProps } from './Spinner.js';
 
 // Error Handling (TASK-181)
-export { ErrorBoundary, type ErrorBoundaryProps, type ErrorBoundaryState } from './ErrorBoundary.js';
+export {
+  ErrorBoundary,
+  type ErrorBoundaryProps,
+  type ErrorBoundaryState,
+} from './ErrorBoundary.js';
 export { ErrorFallback, type ErrorFallbackProps, type ErrorSeverity } from './ErrorFallback.js';
 
 // Layout (TASK-172)
-export {
-  ResponsiveLayout,
-  type ResponsiveLayoutProps,
-  type SidebarMode,
-} from './layout/index.js';
+export { ResponsiveLayout, type ResponsiveLayoutProps, type SidebarMode } from './layout/index.js';
 
 // Canvas (TASK-135, TASK-136, TASK-137)
 export {

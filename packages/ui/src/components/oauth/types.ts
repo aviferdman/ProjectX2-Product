@@ -3,12 +3,7 @@
  */
 
 /** Supported OAuth provider identifiers. */
-export type OAuthProvider =
-  | 'github'
-  | 'google'
-  | 'slack'
-  | 'microsoft'
-  | 'custom';
+export type OAuthProvider = 'github' | 'google' | 'slack' | 'microsoft' | 'custom';
 
 /** Connection status of an OAuth provider. */
 export type OAuthConnectionStatus =
@@ -31,12 +26,7 @@ export interface OAuthConnection {
 }
 
 /** Lifecycle status of an OAuth flow (connect or disconnect). */
-export type OAuthFlowStatus =
-  | 'idle'
-  | 'confirming'
-  | 'in-progress'
-  | 'success'
-  | 'error';
+export type OAuthFlowStatus = 'idle' | 'confirming' | 'in-progress' | 'success' | 'error';
 
 /** Display metadata for providers. */
 export interface OAuthProviderMeta {

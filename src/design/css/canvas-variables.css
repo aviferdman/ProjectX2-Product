@@ -56,16 +56,12 @@
   --cs-radius-node: 10px;
 
   /* Shadows */
-  --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(63, 63, 70, 0.5);
-  --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(63, 63, 70, 0.6);
-  --cs-shadow-node-selected: 0 0 0 2px #818cf8,
-    0 4px 20px rgba(99, 102, 241, 0.25);
+  --cs-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(63, 63, 70, 0.5);
+  --cs-shadow-node-hover: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(63, 63, 70, 0.6);
+  --cs-shadow-node-selected: 0 0 0 2px #818cf8, 0 4px 20px rgba(99, 102, 241, 0.25);
   --cs-shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.4);
   --cs-shadow-toolbar: 0 2px 12px rgba(0, 0, 0, 0.45);
-  --cs-shadow-dropdown: 0 4px 24px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(63, 63, 70, 0.5);
+  --cs-shadow-dropdown: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(63, 63, 70, 0.5);
 
   /* Transitions */
   --cs-transition-fast: 100ms ease-out;
@@ -85,8 +81,8 @@
   --canvas-grid-size: 20px;
   --canvas-grid-dot-radius: 1px;
   --canvas-min-zoom: 0.1;
-  --canvas-max-zoom: 2.0;
-  --canvas-default-zoom: 1.0;
+  --canvas-max-zoom: 2;
+  --canvas-default-zoom: 1;
   --canvas-zoom-step: 0.1;
   --canvas-snap-grid: 10px;
 

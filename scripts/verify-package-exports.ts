@@ -41,9 +41,7 @@ export interface VerifyExportsResult {
 /**
  * Parse the "exports" field from package.json into a flat list of entries.
  */
-export function parseExportsField(
-  exports: Record<string, unknown>,
-): ExportEntry[] {
+export function parseExportsField(exports: Record<string, unknown>): ExportEntry[] {
   const entries: ExportEntry[] = [];
 
   for (const [subpath, value] of Object.entries(exports)) {
@@ -68,9 +66,7 @@ export function parseExportsField(
 /**
  * Verify that all export targets resolve to existing files.
  */
-export function verifyExports(
-  pkgDir: string,
-): VerifyExportsResult {
+export function verifyExports(pkgDir: string): VerifyExportsResult {
   const errors: string[] = [];
   const warnings: string[] = [];
   const checks: ExportCheckResult[] = [];
@@ -111,9 +107,7 @@ export function verifyExports(
         });
 
         if (!exists) {
-          errors.push(
-            `exports["${entry.subpath}"].${condition} → "${filePath}" not found`,
-          );
+          errors.push(`exports["${entry.subpath}"].${condition} → "${filePath}" not found`);
         }
       }
     }
@@ -193,10 +187,9 @@ export function formatVerifyExportsOutput(result: VerifyExportsResult): string {
 
   for (const check of result.checks) {
     const icon = check.exists ? '✓' : '✗';
-    const label =
-      check.subpath.startsWith('(')
-        ? check.subpath
-        : `exports["${check.subpath}"].${check.condition}`;
+    const label = check.subpath.startsWith('(')
+      ? check.subpath
+      : `exports["${check.subpath}"].${check.condition}`;
     lines.push(`  ${icon} ${label} → ${check.filePath}`);
   }
 

@@ -70,7 +70,7 @@ export function createLazyComponent<P extends Record<string, unknown>>(
   };
 
   if (preload) {
-    prefetch();
+    void prefetch();
   }
 
   return { Component, prefetch };
@@ -108,9 +108,7 @@ export interface LoadingFallbackProps {
 /**
  * Simple loading fallback component for use with Suspense boundaries.
  */
-export const LoadingFallback: React.FC<LoadingFallbackProps> = ({
-  message = 'Loading…',
-}) => {
+export const LoadingFallback: React.FC<LoadingFallbackProps> = ({ message = 'Loading…' }) => {
   return React.createElement(
     'div',
     {

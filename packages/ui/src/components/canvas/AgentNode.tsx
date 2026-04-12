@@ -25,7 +25,8 @@ function AgentNodeComponent({ data, selected }: NodeProps) {
       footer={
         meta?.capabilities && meta.capabilities.length > 0 ? (
           <span data-testid="agent-capabilities-count">
-            {meta.capabilities.length} {meta.capabilities.length === 1 ? 'capability' : 'capabilities'}
+            {meta.capabilities.length}{' '}
+            {meta.capabilities.length === 1 ? 'capability' : 'capabilities'}
           </span>
         ) : undefined
       }

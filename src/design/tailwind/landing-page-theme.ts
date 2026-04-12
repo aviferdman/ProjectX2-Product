@@ -233,8 +233,14 @@ export const landingPageTheme = {
   fontSize: {
     // Hero typography
     'lp-headline': ['3.5rem', { lineHeight: '1.1', fontWeight: '800', letterSpacing: '-0.025em' }],
-    'lp-headline-tablet': ['2.75rem', { lineHeight: '1.1', fontWeight: '800', letterSpacing: '-0.025em' }],
-    'lp-headline-mobile': ['2rem', { lineHeight: '1.15', fontWeight: '800', letterSpacing: '-0.02em' }],
+    'lp-headline-tablet': [
+      '2.75rem',
+      { lineHeight: '1.1', fontWeight: '800', letterSpacing: '-0.025em' },
+    ],
+    'lp-headline-mobile': [
+      '2rem',
+      { lineHeight: '1.15', fontWeight: '800', letterSpacing: '-0.02em' },
+    ],
     'lp-subheadline': ['1.25rem', { lineHeight: '1.6', fontWeight: '400' }],
     'lp-subheadline-mobile': ['1rem', { lineHeight: '1.6', fontWeight: '400' }],
     'lp-badge': ['0.8125rem', { lineHeight: '1', fontWeight: '500' }],

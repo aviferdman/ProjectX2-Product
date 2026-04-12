@@ -47,9 +47,18 @@ function prefersReducedMotion(): boolean {
 }
 
 export function useAnimation(options: UseAnimationOptions): UseAnimationResult {
-  const { show, variant = 'fade', duration: durationOverride, delay = 0, onEntered, onExited } = options;
+  const {
+    show,
+    variant = 'fade',
+    duration: durationOverride,
+    delay = 0,
+    onEntered,
+    onExited,
+  } = options;
 
-  const resolvedDuration = prefersReducedMotion() ? 0 : (durationOverride ?? VARIANT_DURATION[variant]);
+  const resolvedDuration = prefersReducedMotion()
+    ? 0
+    : (durationOverride ?? VARIANT_DURATION[variant]);
   const easing = VARIANT_EASING[variant];
   const keyframes = ENTER_KEYFRAMES[variant];
 
@@ -82,7 +91,6 @@ export function useAnimation(options: UseAnimationOptions): UseAnimationResult {
     }
 
     return clearTimer;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
   const shouldMount = phase !== 'exited';

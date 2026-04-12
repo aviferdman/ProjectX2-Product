@@ -8,10 +8,7 @@
  * keeping the hook decoupled from any transport layer.
  */
 import { useState, useCallback, useRef } from 'react';
-import type {
-  OAuthConnection,
-  OAuthFlowStatus,
-} from '../components/oauth/types.js';
+import type { OAuthConnection, OAuthFlowStatus } from '../components/oauth/types.js';
 
 /* ------------------------------------------------------------------ */
 /* Types                                                               */
@@ -53,12 +50,9 @@ export interface UseOAuthFlowResult {
 /* Hook                                                                */
 /* ------------------------------------------------------------------ */
 
-export function useOAuthFlow(
-  options: UseOAuthFlowOptions,
-): UseOAuthFlowResult {
+export function useOAuthFlow(options: UseOAuthFlowOptions): UseOAuthFlowResult {
   const [flowStatus, setFlowStatus] = useState<OAuthFlowStatus>('idle');
-  const [activeConnection, setActiveConnection] =
-    useState<OAuthConnection | null>(null);
+  const [activeConnection, setActiveConnection] = useState<OAuthConnection | null>(null);
   const [isDisconnect, setIsDisconnect] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -92,13 +86,9 @@ export function useOAuthFlow(
         await optionsRef.current.onConnect(activeConnection.id);
       }
       setFlowStatus('success');
-      optionsRef.current.onSuccess?.(
-        activeConnection.id,
-        isDisconnect ? 'disconnect' : 'connect',
-      );
+      optionsRef.current.onSuccess?.(activeConnection.id, isDisconnect ? 'disconnect' : 'connect');
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'An unknown error occurred';
+      const message = err instanceof Error ? err.message : 'An unknown error occurred';
       setError(message);
       setFlowStatus('error');
       optionsRef.current.onError?.(

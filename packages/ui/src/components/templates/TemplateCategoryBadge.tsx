@@ -2,15 +2,11 @@ import React, { forwardRef } from 'react';
 import { clsx } from 'clsx';
 import type { TemplateCategory } from './types.js';
 
-export interface TemplateCategoryBadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement> {
+export interface TemplateCategoryBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   category: TemplateCategory;
 }
 
-const categoryStyles: Record<
-  TemplateCategory,
-  { bg: string; text: string; border: string }
-> = {
+const categoryStyles: Record<TemplateCategory, { bg: string; text: string; border: string }> = {
   research: {
     bg: 'bg-tpl-category-research-bg',
     text: 'text-tpl-category-research',
@@ -52,26 +48,25 @@ const categoryLabels: Record<TemplateCategory, string> = {
   automation: 'Automation',
 };
 
-export const TemplateCategoryBadge = forwardRef<
-  HTMLSpanElement,
-  TemplateCategoryBadgeProps
->(function TemplateCategoryBadge({ category, className, ...props }, ref) {
-  const style = categoryStyles[category];
-  return (
-    <span
-      ref={ref}
-      className={clsx(
-        'inline-flex items-center rounded-sm border px-1.5',
-        'text-tpl-badge font-semibold uppercase tracking-wider',
-        'h-tpl-badge-h',
-        style.bg,
-        style.text,
-        style.border,
-        className,
-      )}
-      {...props}
-    >
-      {categoryLabels[category]}
-    </span>
-  );
-});
+export const TemplateCategoryBadge = forwardRef<HTMLSpanElement, TemplateCategoryBadgeProps>(
+  function TemplateCategoryBadge({ category, className, ...props }, ref) {
+    const style = categoryStyles[category];
+    return (
+      <span
+        ref={ref}
+        className={clsx(
+          'inline-flex items-center rounded-sm border px-1.5',
+          'text-tpl-badge font-semibold uppercase tracking-wider',
+          'h-tpl-badge-h',
+          style.bg,
+          style.text,
+          style.border,
+          className,
+        )}
+        {...props}
+      >
+        {categoryLabels[category]}
+      </span>
+    );
+  },
+);

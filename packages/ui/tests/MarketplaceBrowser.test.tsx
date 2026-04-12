@@ -79,7 +79,14 @@ describe('IntegrationCategoryBadge', () => {
   });
 
   it('renders all categories without crashing', () => {
-    const categories = ['llm', 'tool', 'storage', 'communication', 'analytics', 'monitoring'] as const;
+    const categories = [
+      'llm',
+      'tool',
+      'storage',
+      'communication',
+      'analytics',
+      'monitoring',
+    ] as const;
     for (const cat of categories) {
       const { unmount } = render(<IntegrationCategoryBadge category={cat} />);
       unmount();
@@ -121,9 +128,7 @@ describe('IntegrationCard', () => {
   it('renders integration name and description', () => {
     render(<IntegrationCard integration={mockIntegration} />);
     expect(screen.getByText('OpenAI GPT-4')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Connect to OpenAI GPT-4/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Connect to OpenAI GPT-4/)).toBeInTheDocument();
   });
 
   it('renders category badge', () => {
@@ -194,9 +199,7 @@ describe('IntegrationCard', () => {
 
   it('has correct aria-label', () => {
     render(<IntegrationCard integration={mockIntegration} />);
-    expect(
-      screen.getByLabelText('Integration: OpenAI GPT-4'),
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Integration: OpenAI GPT-4')).toBeInTheDocument();
   });
 });
 
@@ -309,9 +312,7 @@ describe('MarketplaceEmptyState', () => {
 
   it('renders Clear Filters button when isSearchResult', () => {
     const handler = vi.fn();
-    render(
-      <MarketplaceEmptyState isSearchResult onClearFilters={handler} />,
-    );
+    render(<MarketplaceEmptyState isSearchResult onClearFilters={handler} />);
     const btn = screen.getByText('Clear Filters');
     fireEvent.click(btn);
     expect(handler).toHaveBeenCalled();
@@ -334,41 +335,31 @@ describe('MarketplacePagination', () => {
   });
 
   it('renders page buttons', () => {
-    render(
-      <MarketplacePagination currentPage={1} totalPages={3} onChange={() => {}} />,
-    );
+    render(<MarketplacePagination currentPage={1} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Page 1')).toBeInTheDocument();
     expect(screen.getByLabelText('Page 2')).toBeInTheDocument();
     expect(screen.getByLabelText('Page 3')).toBeInTheDocument();
   });
 
   it('marks current page', () => {
-    render(
-      <MarketplacePagination currentPage={2} totalPages={3} onChange={() => {}} />,
-    );
+    render(<MarketplacePagination currentPage={2} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Page 2')).toHaveAttribute('aria-current', 'page');
   });
 
   it('calls onChange on page click', () => {
     const handler = vi.fn();
-    render(
-      <MarketplacePagination currentPage={1} totalPages={3} onChange={handler} />,
-    );
+    render(<MarketplacePagination currentPage={1} totalPages={3} onChange={handler} />);
     fireEvent.click(screen.getByLabelText('Page 2'));
     expect(handler).toHaveBeenCalledWith(2);
   });
 
   it('disables previous on first page', () => {
-    render(
-      <MarketplacePagination currentPage={1} totalPages={3} onChange={() => {}} />,
-    );
+    render(<MarketplacePagination currentPage={1} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Previous page')).toBeDisabled();
   });
 
   it('disables next on last page', () => {
-    render(
-      <MarketplacePagination currentPage={3} totalPages={3} onChange={() => {}} />,
-    );
+    render(<MarketplacePagination currentPage={3} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Next page')).toBeDisabled();
   });
 });

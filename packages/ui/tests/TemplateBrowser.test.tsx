@@ -116,9 +116,7 @@ describe('TemplateCard', () => {
   it('renders template name and description', () => {
     render(<TemplateCard template={mockTemplate} />);
     expect(screen.getByText('Research Assistant')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Automated research pipeline/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Automated research pipeline/)).toBeInTheDocument();
   });
 
   it('renders category badge', () => {
@@ -180,9 +178,7 @@ describe('TemplateCard', () => {
 
   it('has correct aria-label', () => {
     render(<TemplateCard template={mockTemplate} />);
-    expect(
-      screen.getByLabelText('Template: Research Assistant'),
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Template: Research Assistant')).toBeInTheDocument();
   });
 });
 
@@ -294,9 +290,7 @@ describe('TemplateEmptyState', () => {
 
   it('renders Clear Filters button when isSearchResult', () => {
     const handler = vi.fn();
-    render(
-      <TemplateEmptyState isSearchResult onClearFilters={handler} />,
-    );
+    render(<TemplateEmptyState isSearchResult onClearFilters={handler} />);
     const btn = screen.getByText('Clear Filters');
     fireEvent.click(btn);
     expect(handler).toHaveBeenCalled();
@@ -319,41 +313,31 @@ describe('TemplatePagination', () => {
   });
 
   it('renders page buttons', () => {
-    render(
-      <TemplatePagination currentPage={1} totalPages={3} onChange={() => {}} />,
-    );
+    render(<TemplatePagination currentPage={1} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Page 1')).toBeInTheDocument();
     expect(screen.getByLabelText('Page 2')).toBeInTheDocument();
     expect(screen.getByLabelText('Page 3')).toBeInTheDocument();
   });
 
   it('marks current page', () => {
-    render(
-      <TemplatePagination currentPage={2} totalPages={3} onChange={() => {}} />,
-    );
+    render(<TemplatePagination currentPage={2} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Page 2')).toHaveAttribute('aria-current', 'page');
   });
 
   it('calls onChange on page click', () => {
     const handler = vi.fn();
-    render(
-      <TemplatePagination currentPage={1} totalPages={3} onChange={handler} />,
-    );
+    render(<TemplatePagination currentPage={1} totalPages={3} onChange={handler} />);
     fireEvent.click(screen.getByLabelText('Page 2'));
     expect(handler).toHaveBeenCalledWith(2);
   });
 
   it('disables previous on first page', () => {
-    render(
-      <TemplatePagination currentPage={1} totalPages={3} onChange={() => {}} />,
-    );
+    render(<TemplatePagination currentPage={1} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Previous page')).toBeDisabled();
   });
 
   it('disables next on last page', () => {
-    render(
-      <TemplatePagination currentPage={3} totalPages={3} onChange={() => {}} />,
-    );
+    render(<TemplatePagination currentPage={3} totalPages={3} onChange={() => {}} />);
     expect(screen.getByLabelText('Next page')).toBeDisabled();
   });
 });

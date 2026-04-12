@@ -106,7 +106,8 @@ export const ErrorFallback = forwardRef<HTMLDivElement, ErrorFallbackProps>(
                 'transition-all duration-150',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-app',
                 severity === 'error' && 'bg-red-600 hover:bg-red-500 focus-visible:ring-red-500',
-                severity === 'warning' && 'bg-amber-600 hover:bg-amber-500 focus-visible:ring-amber-500',
+                severity === 'warning' &&
+                  'bg-amber-600 hover:bg-amber-500 focus-visible:ring-amber-500',
               )}
             >
               <svg

@@ -88,9 +88,7 @@ describe('useTemplateInstantiation', () => {
   it('transitions through instantiating → success on confirm', async () => {
     const onInstantiate = vi.fn().mockResolvedValue(mockResult);
     const onSuccess = vi.fn();
-    const { result } = renderHook(() =>
-      useTemplateInstantiation({ onInstantiate, onSuccess }),
-    );
+    const { result } = renderHook(() => useTemplateInstantiation({ onInstantiate, onSuccess }));
 
     act(() => {
       result.current.startInstantiation(mockTemplate);
@@ -116,9 +114,7 @@ describe('useTemplateInstantiation', () => {
   it('transitions to error when instantiation fails', async () => {
     const onInstantiate = vi.fn().mockRejectedValue(new Error('Network error'));
     const onError = vi.fn();
-    const { result } = renderHook(() =>
-      useTemplateInstantiation({ onInstantiate, onError }),
-    );
+    const { result } = renderHook(() => useTemplateInstantiation({ onInstantiate, onError }));
 
     act(() => {
       result.current.startInstantiation(mockTemplate);
@@ -139,9 +135,7 @@ describe('useTemplateInstantiation', () => {
 
   it('handles non-Error rejection', async () => {
     const onInstantiate = vi.fn().mockRejectedValue('string error');
-    const { result } = renderHook(() =>
-      useTemplateInstantiation({ onInstantiate }),
-    );
+    const { result } = renderHook(() => useTemplateInstantiation({ onInstantiate }));
 
     act(() => {
       result.current.startInstantiation(mockTemplate);
@@ -184,9 +178,7 @@ describe('useTemplateInstantiation', () => {
 
   it('resets from error back to idle', async () => {
     const onInstantiate = vi.fn().mockRejectedValue(new Error('fail'));
-    const { result } = renderHook(() =>
-      useTemplateInstantiation({ onInstantiate }),
-    );
+    const { result } = renderHook(() => useTemplateInstantiation({ onInstantiate }));
 
     act(() => {
       result.current.startInstantiation(mockTemplate);
@@ -207,9 +199,7 @@ describe('useTemplateInstantiation', () => {
 
   it('does nothing if confirmInstantiation is called without a selected template', async () => {
     const onInstantiate = vi.fn();
-    const { result } = renderHook(() =>
-      useTemplateInstantiation({ onInstantiate }),
-    );
+    const { result } = renderHook(() => useTemplateInstantiation({ onInstantiate }));
 
     await act(async () => {
       await result.current.confirmInstantiation({ workflowName: 'Test' });
@@ -223,9 +213,7 @@ describe('useTemplateInstantiation', () => {
 
   it('passes workflowDescription to onInstantiate', async () => {
     const onInstantiate = vi.fn().mockResolvedValue(mockResult);
-    const { result } = renderHook(() =>
-      useTemplateInstantiation({ onInstantiate }),
-    );
+    const { result } = renderHook(() => useTemplateInstantiation({ onInstantiate }));
 
     act(() => {
       result.current.startInstantiation(mockTemplate);

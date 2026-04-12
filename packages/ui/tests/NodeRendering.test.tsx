@@ -118,9 +118,7 @@ describe('NodeShell', () => {
   });
 
   it('renders footer when provided', () => {
-    render(
-      <NodeShell nodeType="agent" label="A" footer={<span>Footer content</span>} />,
-    );
+    render(<NodeShell nodeType="agent" label="A" footer={<span>Footer content</span>} />);
     expect(screen.getByTestId('node-footer')).toHaveTextContent('Footer content');
   });
 

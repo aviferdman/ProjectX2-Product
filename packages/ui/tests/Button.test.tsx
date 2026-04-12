@@ -62,7 +62,15 @@ describe('Button', () => {
 
   it('calls onClick handler', () => {
     let clicked = false;
-    render(<Button onClick={() => { clicked = true; }}>Click</Button>);
+    render(
+      <Button
+        onClick={() => {
+          clicked = true;
+        }}
+      >
+        Click
+      </Button>,
+    );
     fireEvent.click(screen.getByRole('button'));
     expect(clicked).toBe(true);
   });
@@ -74,7 +82,15 @@ describe('Button', () => {
 
   it('forwards ref', () => {
     let buttonEl: HTMLButtonElement | null = null;
-    render(<Button ref={(el) => { buttonEl = el; }}>Ref</Button>);
+    render(
+      <Button
+        ref={(el) => {
+          buttonEl = el;
+        }}
+      >
+        Ref
+      </Button>,
+    );
     expect(buttonEl).toBeInstanceOf(HTMLButtonElement);
   });
 });

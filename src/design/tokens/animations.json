@@ -19,11 +19,27 @@
       "easing": {
         "_description": "Named easing curves for different animation types.",
         "default": { "value": "cubic-bezier(0.4, 0, 0.2, 1)", "type": "cubicBezier" },
-        "in": { "value": "cubic-bezier(0.4, 0, 1, 1)", "type": "cubicBezier", "description": "Accelerate (exit)" },
-        "out": { "value": "cubic-bezier(0, 0, 0.2, 1)", "type": "cubicBezier", "description": "Decelerate (enter)" },
+        "in": {
+          "value": "cubic-bezier(0.4, 0, 1, 1)",
+          "type": "cubicBezier",
+          "description": "Accelerate (exit)"
+        },
+        "out": {
+          "value": "cubic-bezier(0, 0, 0.2, 1)",
+          "type": "cubicBezier",
+          "description": "Decelerate (enter)"
+        },
         "in-out": { "value": "cubic-bezier(0.4, 0, 0.2, 1)", "type": "cubicBezier" },
-        "spring": { "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "type": "cubicBezier", "description": "Spring bounce" },
-        "bounce": { "value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)", "type": "cubicBezier", "description": "Playful bounce" }
+        "spring": {
+          "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+          "type": "cubicBezier",
+          "description": "Spring bounce"
+        },
+        "bounce": {
+          "value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+          "type": "cubicBezier",
+          "description": "Playful bounce"
+        }
       },
 
       "pageTransition": {
@@ -83,7 +99,11 @@
       "stagger": {
         "delay": { "value": "40ms", "type": "duration" },
         "maxDelay": { "value": "500ms", "type": "duration" },
-        "maxItems": { "value": "12", "type": "number", "description": "Items beyond this threshold appear instantly" }
+        "maxItems": {
+          "value": "12",
+          "type": "number",
+          "description": "Items beyond this threshold appear instantly"
+        }
       }
     }
   }

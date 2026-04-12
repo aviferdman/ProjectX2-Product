@@ -10,11 +10,7 @@
  * - Minimap and zoom controls
  * - Drop handler for adding new nodes from external drag sources
  */
-import {
-  useCallback,
-  useMemo,
-  type DragEvent,
-} from 'react';
+import { useCallback, useMemo, type DragEvent } from 'react';
 import {
   ReactFlow,
   addEdge,

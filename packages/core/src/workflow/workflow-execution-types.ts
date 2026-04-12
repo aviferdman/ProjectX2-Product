@@ -15,12 +15,7 @@ import type { TaskResult } from '../types/task.js';
 // ---------------------------------------------------------------------------
 
 /** Lifecycle status of a workflow execution run. */
-export type WorkflowExecutionStatus =
-  | 'pending'
-  | 'running'
-  | 'completed'
-  | 'failed'
-  | 'cancelled';
+export type WorkflowExecutionStatus = 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
 
 // ---------------------------------------------------------------------------
 // Execution config

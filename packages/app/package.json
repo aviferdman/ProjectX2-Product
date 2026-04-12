@@ -64,6 +64,9 @@
   ],
   "author": "Crewspace Contributors",
   "homepage": "https://github.com/aviferdman/ProjectX2-Product#readme",
+  "bugs": {
+    "url": "https://github.com/aviferdman/ProjectX2-Product/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/aviferdman/ProjectX2-Product.git",

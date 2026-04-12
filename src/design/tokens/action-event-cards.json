@@ -5,51 +5,136 @@
       "_description": "TASK-141: Action/event detail cards for LLM calls, tool use, task completion, errors, and messages in the debugging timeline",
 
       "layout": {
-        "width": { "value": "380px", "type": "sizing", "description": "Default card width in detail panel" },
-        "min-width": { "value": "320px", "type": "sizing", "description": "Minimum card width (responsive)" },
+        "width": {
+          "value": "380px",
+          "type": "sizing",
+          "description": "Default card width in detail panel"
+        },
+        "min-width": {
+          "value": "320px",
+          "type": "sizing",
+          "description": "Minimum card width (responsive)"
+        },
         "max-width": { "value": "480px", "type": "sizing", "description": "Maximum card width" },
         "border-radius": { "value": "10px", "type": "borderRadius" },
         "padding": { "value": "16px", "type": "spacing" },
-        "gap": { "value": "12px", "type": "spacing", "description": "Vertical gap between card sections" },
+        "gap": {
+          "value": "12px",
+          "type": "spacing",
+          "description": "Vertical gap between card sections"
+        },
         "header-height": { "value": "44px", "type": "sizing" },
-        "section-gap": { "value": "8px", "type": "spacing", "description": "Gap between section label and content" }
+        "section-gap": {
+          "value": "8px",
+          "type": "spacing",
+          "description": "Gap between section label and content"
+        }
       },
 
       "color": {
-        "background": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Card base background" },
-        "background-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "background": {
+          "value": "{crewspace.color.semantic.surface.card}",
+          "type": "color",
+          "description": "Card base background"
+        },
+        "background-hover": {
+          "value": "{crewspace.color.semantic.surface.elevated}",
+          "type": "color"
+        },
         "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "divider": { "value": "rgba(39,39,42,0.4)", "type": "color", "description": "Horizontal divider between card sections" },
+        "divider": {
+          "value": "rgba(39,39,42,0.4)",
+          "type": "color",
+          "description": "Horizontal divider between card sections"
+        },
         "header-text": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
-        "label-text": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Section labels (e.g., 'Model', 'Duration')" },
+        "label-text": {
+          "value": "{crewspace.color.semantic.text.tertiary}",
+          "type": "color",
+          "description": "Section labels (e.g., 'Model', 'Duration')"
+        },
         "value-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
-        "code-bg": { "value": "rgba(17,17,19,0.6)", "type": "color", "description": "Code block background inside cards" },
+        "code-bg": {
+          "value": "rgba(17,17,19,0.6)",
+          "type": "color",
+          "description": "Code block background inside cards"
+        },
         "code-border": { "value": "rgba(39,39,42,0.5)", "type": "color" },
-        "badge-bg": { "value": "rgba(30,41,59,0.6)", "type": "color", "description": "Metadata badge background" },
+        "badge-bg": {
+          "value": "rgba(30,41,59,0.6)",
+          "type": "color",
+          "description": "Metadata badge background"
+        },
         "close-icon": { "value": "{crewspace.color.primitive.slate.500}", "type": "color" },
         "close-icon-hover": { "value": "{crewspace.color.primitive.slate.300}", "type": "color" }
       },
 
       "shadow": {
-        "default": { "value": "0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.08)", "type": "boxShadow" },
-        "hover": { "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.12)", "type": "boxShadow" }
+        "default": {
+          "value": "0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.08)",
+          "type": "boxShadow"
+        },
+        "hover": {
+          "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.12)",
+          "type": "boxShadow"
+        }
       },
 
       "typography": {
-        "title": { "value": "0.875rem / 600", "type": "typography", "description": "14px semibold Inter — card title" },
-        "subtitle": { "value": "0.75rem / 500", "type": "typography", "description": "12px medium — agent name, event subtype" },
-        "label": { "value": "0.6875rem / 600", "type": "typography", "description": "11px semibold uppercase — section labels" },
-        "value": { "value": "0.75rem / 400", "type": "typography", "description": "12px regular — metadata values" },
-        "code": { "value": "0.75rem / 400", "type": "typography", "description": "12px JetBrains Mono — code content" },
-        "metric": { "value": "1.125rem / 700", "type": "typography", "description": "18px bold — large metric values (tokens, duration)" },
-        "metric-label": { "value": "0.625rem / 500", "type": "typography", "description": "10px medium — below metric value" }
+        "title": {
+          "value": "0.875rem / 600",
+          "type": "typography",
+          "description": "14px semibold Inter — card title"
+        },
+        "subtitle": {
+          "value": "0.75rem / 500",
+          "type": "typography",
+          "description": "12px medium — agent name, event subtype"
+        },
+        "label": {
+          "value": "0.6875rem / 600",
+          "type": "typography",
+          "description": "11px semibold uppercase — section labels"
+        },
+        "value": {
+          "value": "0.75rem / 400",
+          "type": "typography",
+          "description": "12px regular — metadata values"
+        },
+        "code": {
+          "value": "0.75rem / 400",
+          "type": "typography",
+          "description": "12px JetBrains Mono — code content"
+        },
+        "metric": {
+          "value": "1.125rem / 700",
+          "type": "typography",
+          "description": "18px bold — large metric values (tokens, duration)"
+        },
+        "metric-label": {
+          "value": "0.625rem / 500",
+          "type": "typography",
+          "description": "10px medium — below metric value"
+        }
       },
 
       "type": {
         "llm-call": {
-          "accent": { "value": "{crewspace.color.primitive.amber.500}", "type": "color", "description": "Left border accent + icon tint" },
-          "accent-subtle": { "value": "rgba(245,158,11,0.1)", "type": "color", "description": "Header tint background" },
-          "icon-bg": { "value": "rgba(245,158,11,0.15)", "type": "color", "description": "Icon circle background" },
+          "accent": {
+            "value": "{crewspace.color.primitive.amber.500}",
+            "type": "color",
+            "description": "Left border accent + icon tint"
+          },
+          "accent-subtle": {
+            "value": "rgba(245,158,11,0.1)",
+            "type": "color",
+            "description": "Header tint background"
+          },
+          "icon-bg": {
+            "value": "rgba(245,158,11,0.15)",
+            "type": "color",
+            "description": "Icon circle background"
+          },
           "icon": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" },
           "badge-text": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" },
           "badge-bg": { "value": "rgba(245,158,11,0.12)", "type": "color" }
@@ -97,15 +182,31 @@
       },
 
       "metrics": {
-        "container-bg": { "value": "rgba(17,17,19,0.4)", "type": "color", "description": "Metrics row background" },
+        "container-bg": {
+          "value": "rgba(17,17,19,0.4)",
+          "type": "color",
+          "description": "Metrics row background"
+        },
         "container-radius": { "value": "8px", "type": "borderRadius" },
         "container-padding": { "value": "12px", "type": "spacing" },
-        "item-gap": { "value": "16px", "type": "spacing", "description": "Gap between metric items" },
-        "divider": { "value": "rgba(39,39,42,0.5)", "type": "color", "description": "Vertical divider between metrics" }
+        "item-gap": {
+          "value": "16px",
+          "type": "spacing",
+          "description": "Gap between metric items"
+        },
+        "divider": {
+          "value": "rgba(39,39,42,0.5)",
+          "type": "color",
+          "description": "Vertical divider between metrics"
+        }
       },
 
       "codeBlock": {
-        "max-height": { "value": "200px", "type": "sizing", "description": "Max height before scroll" },
+        "max-height": {
+          "value": "200px",
+          "type": "sizing",
+          "description": "Max height before scroll"
+        },
         "border-radius": { "value": "6px", "type": "borderRadius" },
         "padding": { "value": "12px", "type": "spacing" },
         "line-height": { "value": "1.6", "type": "number" },
@@ -120,13 +221,41 @@
       },
 
       "animation": {
-        "card-enter": { "value": "200ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Card open animation (scale + fade)" },
-        "card-exit": { "value": "150ms ease-in", "type": "transition", "description": "Card close animation" },
-        "section-expand": { "value": "200ms ease-out", "type": "transition", "description": "Collapsible section toggle" },
-        "metric-count": { "value": "600ms ease-out", "type": "transition", "description": "Animated number count-up" },
-        "success-pulse": { "value": "1.5s ease-in-out", "type": "transition", "description": "Success checkmark pulse" },
-        "error-shake": { "value": "400ms ease-out", "type": "transition", "description": "Error icon shake" },
-        "status-dot-pulse": { "value": "2s ease-in-out infinite", "type": "transition", "description": "Running status dot pulse" }
+        "card-enter": {
+          "value": "200ms cubic-bezier(0.34,1.56,0.64,1)",
+          "type": "transition",
+          "description": "Card open animation (scale + fade)"
+        },
+        "card-exit": {
+          "value": "150ms ease-in",
+          "type": "transition",
+          "description": "Card close animation"
+        },
+        "section-expand": {
+          "value": "200ms ease-out",
+          "type": "transition",
+          "description": "Collapsible section toggle"
+        },
+        "metric-count": {
+          "value": "600ms ease-out",
+          "type": "transition",
+          "description": "Animated number count-up"
+        },
+        "success-pulse": {
+          "value": "1.5s ease-in-out",
+          "type": "transition",
+          "description": "Success checkmark pulse"
+        },
+        "error-shake": {
+          "value": "400ms ease-out",
+          "type": "transition",
+          "description": "Error icon shake"
+        },
+        "status-dot-pulse": {
+          "value": "2s ease-in-out infinite",
+          "type": "transition",
+          "description": "Running status dot pulse"
+        }
       },
 
       "state": {

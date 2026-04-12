@@ -15,7 +15,16 @@ export function NotFoundPage(): React.JSX.Element {
     >
       <div className="animate-fadeInUp text-center">
         <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center animate-float">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgb(167 139 250)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="rgb(167 139 250)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <circle cx="12" cy="12" r="10" />
             <path d="M16 16s-1.5-2-4-2-4 2-4 2" />
             <line x1="9" y1="9" x2="9.01" y2="9" />
@@ -23,9 +32,7 @@ export function NotFoundPage(): React.JSX.Element {
           </svg>
         </div>
         <h1 className="text-6xl font-extrabold gradient-text mb-3">404</h1>
-        <p className="text-lg text-[var(--cs-text-secondary)] mb-2">
-          Page not found
-        </p>
+        <p className="text-lg text-[var(--cs-text-secondary)] mb-2">Page not found</p>
         <p className="text-sm text-[var(--cs-text-tertiary)] mb-8 max-w-sm mx-auto">
           The page you’re looking for doesn’t exist or has been moved.
         </p>

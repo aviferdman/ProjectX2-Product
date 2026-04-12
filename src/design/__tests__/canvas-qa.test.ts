@@ -36,7 +36,12 @@ function collectTokenLeaves(
       'type' in (val as Record<string, unknown>)
     ) {
       const token = val as { value: unknown; type: string; description?: string };
-      results.push({ path: current, value: token.value, type: token.type, description: token.description });
+      results.push({
+        path: current,
+        value: token.value,
+        type: token.type,
+        description: token.description,
+      });
     } else if (val && typeof val === 'object') {
       results.push(...collectTokenLeaves(val as Record<string, unknown>, current));
     }
@@ -63,8 +68,16 @@ describe('canvas.json — design tokens', () => {
 
   it('contains required top-level sections', () => {
     const requiredSections = [
-      'viewport', 'node', 'edge', 'handle', 'selection',
-      'minimap', 'toolbar', 'sidebar', 'properties', 'animation',
+      'viewport',
+      'node',
+      'edge',
+      'handle',
+      'selection',
+      'minimap',
+      'toolbar',
+      'sidebar',
+      'properties',
+      'animation',
     ];
     for (const section of requiredSections) {
       expect(canvas, `missing section: ${section}`).toHaveProperty(section);
@@ -81,14 +94,24 @@ describe('canvas.json — design tokens', () => {
     it('every leaf has a non-empty value', () => {
       for (const leaf of leaves) {
         expect(leaf.value, `${leaf.path} should have a value`).toBeDefined();
-        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(0);
+        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(
+          0,
+        );
       }
     });
 
     it('every leaf has a valid type', () => {
       const validTypes = [
-        'color', 'number', 'string', 'boolean', 'sizing', 'spacing',
-        'borderWidth', 'borderRadius', 'transition', 'boxShadow',
+        'color',
+        'number',
+        'string',
+        'boolean',
+        'sizing',
+        'spacing',
+        'borderWidth',
+        'borderRadius',
+        'transition',
+        'boxShadow',
       ];
       for (const leaf of leaves) {
         expect(validTypes, `${leaf.path} has type "${leaf.type}"`).toContain(leaf.type);
@@ -350,7 +373,8 @@ describe('canvas-variables.css — consistency with tokens', () => {
 
   describe('viewport tokens reflected in CSS', () => {
     it('has --canvas-grid-size matching token', () => {
-      const tokenVal = ((canvas.viewport as Record<string, any>)['grid-size'] as { value: string }).value;
+      const tokenVal = ((canvas.viewport as Record<string, any>)['grid-size'] as { value: string })
+        .value;
       expect(css).toContain(`--canvas-grid-size: ${tokenVal}px`);
     });
 
@@ -669,7 +693,9 @@ describe('canvas-theme.ts — consistency with tokens', () => {
     });
 
     it('has minimap radius matching token', () => {
-      const minimapRadius = ((canvas.minimap as Record<string, any>)['border-radius'] as { value: string }).value;
+      const minimapRadius = (
+        (canvas.minimap as Record<string, any>)['border-radius'] as { value: string }
+      ).value;
       expect(twSource).toContain(`minimap: '${minimapRadius}'`);
     });
 
@@ -713,7 +739,8 @@ describe('canvas-theme.ts — consistency with tokens', () => {
 
   describe('opacity tokens in Tailwind', () => {
     it('has minimap opacity matching token', () => {
-      const minimapOpacity = ((canvas.minimap as Record<string, any>).opacity as { value: string }).value;
+      const minimapOpacity = ((canvas.minimap as Record<string, any>).opacity as { value: string })
+        .value;
       expect(twSource).toContain(`minimap: '${minimapOpacity}'`);
     });
 

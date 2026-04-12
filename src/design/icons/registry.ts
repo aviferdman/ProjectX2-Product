@@ -53,11 +53,7 @@ export const iconRegistry: Record<string, IconPathData> = {
     paths: ['M19 12H5', 'M12 19l-7-7 7-7'],
   },
   'external-link': {
-    paths: [
-      'M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6',
-      'M15 3h6v6',
-      'M10 14L21 3',
-    ],
+    paths: ['M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6', 'M15 3h6v6', 'M10 14L21 3'],
   },
   'more-horizontal': {
     paths: [],
@@ -90,12 +86,16 @@ export const iconRegistry: Record<string, IconPathData> = {
     paths: ['M20 6L9 17l-5-5'],
   },
   pencil: {
-    paths: [
-      'M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z',
-    ],
+    paths: ['M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z'],
   },
   'trash-2': {
-    paths: ['M3 6h18', 'M8 6V4h8v2', 'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6', 'M10 11v6', 'M14 11v6'],
+    paths: [
+      'M3 6h18',
+      'M8 6V4h8v2',
+      'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6',
+      'M10 11v6',
+      'M14 11v6',
+    ],
   },
   copy: {
     paths: [
@@ -110,7 +110,12 @@ export const iconRegistry: Record<string, IconPathData> = {
     paths: ['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4', 'M17 8l-5-5-5 5', 'M12 3v12'],
   },
   'refresh-cw': {
-    paths: ['M23 4v6h-6', 'M1 20v-6h6', 'M3.51 9a9 9 0 0 1 14.85-3.36L23 10', 'M1 14l4.64 4.36A9 9 0 0 0 20.49 15'],
+    paths: [
+      'M23 4v6h-6',
+      'M1 20v-6h6',
+      'M3.51 9a9 9 0 0 1 14.85-3.36L23 10',
+      'M1 14l4.64 4.36A9 9 0 0 0 20.49 15',
+    ],
   },
   search: {
     paths: ['M21 21l-6-6'],
@@ -141,15 +146,8 @@ export const iconRegistry: Record<string, IconPathData> = {
 
   // --- Node types ---
   bot: {
-    paths: [
-      'M12 8V4H8',
-      'M2 14h20',
-      'M6 18h.01',
-      'M18 18h.01',
-    ],
-    elements: [
-      '<rect width="16" height="12" x="4" y="8" rx="2"/>',
-    ],
+    paths: ['M12 8V4H8', 'M2 14h20', 'M6 18h.01', 'M18 18h.01'],
+    elements: ['<rect width="16" height="12" x="4" y="8" rx="2"/>'],
   },
   'clipboard-list': {
     paths: [
@@ -159,9 +157,7 @@ export const iconRegistry: Record<string, IconPathData> = {
       'M8 11h.01',
       'M8 16h.01',
     ],
-    elements: [
-      '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>',
-    ],
+    elements: ['<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>'],
   },
   wrench: {
     paths: [
@@ -176,10 +172,7 @@ export const iconRegistry: Record<string, IconPathData> = {
     ],
   },
   'pen-line': {
-    paths: [
-      'M12 20h9',
-      'M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z',
-    ],
+    paths: ['M12 20h9', 'M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z'],
   },
   'bar-chart-3': {
     paths: ['M18 20V10', 'M12 20V4', 'M6 20v-6'],
@@ -197,10 +190,7 @@ export const iconRegistry: Record<string, IconPathData> = {
     paths: ['M17 17l5-5-5-5', 'M7 7l-5 5 5 5'],
   },
   'shield-check': {
-    paths: [
-      'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-      'M9 12l2 2 4-4',
-    ],
+    paths: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'M9 12l2 2 4-4'],
   },
 
   // --- Status ---
@@ -223,7 +213,16 @@ export const iconRegistry: Record<string, IconPathData> = {
     elements: ['<circle cx="12" cy="12" r="10"/>'],
   },
   loader: {
-    paths: ['M12 2v4', 'M12 18v4', 'M4.93 4.93l2.83 2.83', 'M16.24 16.24l2.83 2.83', 'M2 12h4', 'M18 12h4', 'M4.93 19.07l2.83-2.83', 'M16.24 7.76l2.83-2.83'],
+    paths: [
+      'M12 2v4',
+      'M12 18v4',
+      'M4.93 4.93l2.83 2.83',
+      'M16.24 16.24l2.83 2.83',
+      'M2 12h4',
+      'M18 12h4',
+      'M4.93 19.07l2.83-2.83',
+      'M16.24 7.76l2.83-2.83',
+    ],
   },
   clock: {
     paths: ['M12 6v6l4 2'],
@@ -248,9 +247,7 @@ export const iconRegistry: Record<string, IconPathData> = {
     ],
   },
   folder: {
-    paths: [
-      'M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z',
-    ],
+    paths: ['M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'],
   },
   image: {
     paths: [
@@ -263,10 +260,17 @@ export const iconRegistry: Record<string, IconPathData> = {
     paths: ['M4 17l6-6-6-6', 'M12 19h8'],
   },
   database: {
-    paths: ['M12 8c4.97 0 9-1.34 9-3s-4.03-3-9-3-9 1.34-9 3 4.03 3 9 3z', 'M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5', 'M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3'],
+    paths: [
+      'M12 8c4.97 0 9-1.34 9-3s-4.03-3-9-3-9 1.34-9 3 4.03 3 9 3z',
+      'M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5',
+      'M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3',
+    ],
   },
   globe: {
-    paths: ['M2 12h20', 'M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'],
+    paths: [
+      'M2 12h20',
+      'M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z',
+    ],
     elements: ['<circle cx="12" cy="12" r="10"/>'],
   },
   link: {
@@ -281,18 +285,22 @@ export const iconRegistry: Record<string, IconPathData> = {
     ],
   },
   lock: {
-    paths: ['M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z', 'M7 11V7a5 5 0 0 1 10 0v4'],
+    paths: [
+      'M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z',
+      'M7 11V7a5 5 0 0 1 10 0v4',
+    ],
   },
   unlock: {
-    paths: ['M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z', 'M7 11V7a5 5 0 0 1 9.9-1'],
+    paths: [
+      'M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z',
+      'M7 11V7a5 5 0 0 1 9.9-1',
+    ],
   },
 
   // --- Layout ---
   'panel-left': {
     paths: ['M9 3v18'],
-    elements: [
-      '<rect width="18" height="18" x="3" y="3" rx="2"/>',
-    ],
+    elements: ['<rect width="18" height="18" x="3" y="3" rx="2"/>'],
   },
   'layout-grid': {
     paths: [],
@@ -308,9 +316,7 @@ export const iconRegistry: Record<string, IconPathData> = {
   },
   columns: {
     paths: ['M12 3v18'],
-    elements: [
-      '<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>',
-    ],
+    elements: ['<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>'],
   },
   'maximize-2': {
     paths: ['M15 3h6v6', 'M9 21H3v-6', 'M21 3l-7 7', 'M3 21l7-7'],
@@ -327,15 +333,17 @@ export const iconRegistry: Record<string, IconPathData> = {
     elements: ['<circle cx="11" cy="11" r="8"/>'],
   },
   scan: {
-    paths: ['M3 7V5a2 2 0 0 1 2-2h2', 'M17 3h2a2 2 0 0 1 2 2v2', 'M21 17v2a2 2 0 0 1-2 2h-2', 'M7 21H5a2 2 0 0 1-2-2v-2'],
+    paths: [
+      'M3 7V5a2 2 0 0 1 2-2h2',
+      'M17 3h2a2 2 0 0 1 2 2v2',
+      'M21 17v2a2 2 0 0 1-2 2h-2',
+      'M7 21H5a2 2 0 0 1-2-2v-2',
+    ],
   },
 
   // --- Communication ---
   bell: {
-    paths: [
-      'M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9',
-      'M13.73 21a2 2 0 0 1-3.46 0',
-    ],
+    paths: ['M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9', 'M13.73 21a2 2 0 0 1-3.46 0'],
   },
   'message-square': {
     paths: ['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'],
@@ -369,9 +377,7 @@ export const iconRegistry: Record<string, IconPathData> = {
   },
   square: {
     paths: [],
-    elements: [
-      '<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>',
-    ],
+    elements: ['<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>'],
   },
   'skip-forward': {
     paths: ['M5 4l10 8-10 8V4z', 'M19 5v14'],
@@ -380,13 +386,29 @@ export const iconRegistry: Record<string, IconPathData> = {
     paths: ['M11 19l-9-7 9-7v14z', 'M22 19l-9-7 9-7v14z'],
   },
   'git-branch': {
-    paths: ['M6 3v12', 'M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M18 9a9 9 0 0 1-9 9'],
+    paths: [
+      'M6 3v12',
+      'M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+      'M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+      'M18 9a9 9 0 0 1-9 9',
+    ],
   },
   'git-fork': {
-    paths: ['M12 15V3', 'M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M12 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9'],
+    paths: [
+      'M12 15V3',
+      'M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+      'M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+      'M12 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+      'M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9',
+    ],
   },
   repeat: {
-    paths: ['M17 1l4 4-4 4', 'M3 11V9a4 4 0 0 1 4-4h14', 'M7 23l-4-4 4-4', 'M21 13v2a4 4 0 0 1-4 4H3'],
+    paths: [
+      'M17 1l4 4-4 4',
+      'M3 11V9a4 4 0 0 1 4-4h14',
+      'M7 23l-4-4 4-4',
+      'M21 13v2a4 4 0 0 1-4 4H3',
+    ],
   },
   shuffle: {
     paths: ['M16 3h5v5', 'M4 20L21 3', 'M21 16v5h-5', 'M15 15l6 6', 'M4 4l5 5'],
@@ -410,23 +432,19 @@ export const iconRegistry: Record<string, IconPathData> = {
     ],
   },
   cpu: {
-    paths: [
-      'M9 2v2',
-      'M15 2v2',
-      'M9 20v2',
-      'M15 20v2',
-      'M2 9h2',
-      'M2 15h2',
-      'M20 9h2',
-      'M20 15h2',
-    ],
+    paths: ['M9 2v2', 'M15 2v2', 'M9 20v2', 'M15 20v2', 'M2 9h2', 'M2 15h2', 'M20 9h2', 'M20 15h2'],
     elements: [
       '<rect width="12" height="12" x="6" y="6" rx="2"/>',
       '<rect width="4" height="4" x="10" y="10"/>',
     ],
   },
   'hard-drive': {
-    paths: ['M22 12H2', 'M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z', 'M6 16h.01', 'M10 16h.01'],
+    paths: [
+      'M22 12H2',
+      'M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z',
+      'M6 16h.01',
+      'M10 16h.01',
+    ],
   },
   rocket: {
     paths: [
@@ -437,16 +455,25 @@ export const iconRegistry: Record<string, IconPathData> = {
     ],
   },
   star: {
-    paths: ['M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'],
+    paths: [
+      'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
+    ],
   },
   heart: {
-    paths: ['M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'],
+    paths: [
+      'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+    ],
   },
   shield: {
     paths: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'],
   },
   award: {
-    paths: ['M7.21 15L2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15', 'M11 12L5.12 2.2', 'M13 12l5.88-9.8', 'M8 7h8'],
+    paths: [
+      'M7.21 15L2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15',
+      'M11 12L5.12 2.2',
+      'M13 12l5.88-9.8',
+      'M8 7h8',
+    ],
     elements: ['<circle cx="12" cy="17" r="5"/>'],
   },
 
@@ -456,7 +483,14 @@ export const iconRegistry: Record<string, IconPathData> = {
     elements: ['<circle cx="12" cy="10" r="4"/>', '<circle cx="12" cy="12" r="10"/>'],
   },
   'list-ordered': {
-    paths: ['M10 6h11', 'M10 12h11', 'M10 18h11', 'M4 6h1v4', 'M4 10h2', 'M6 18H4c0-1 2-2 2-3s-1-1.5-2-1'],
+    paths: [
+      'M10 6h11',
+      'M10 12h11',
+      'M10 18h11',
+      'M4 6h1v4',
+      'M4 10h2',
+      'M6 18H4c0-1 2-2 2-3s-1-1.5-2-1',
+    ],
   },
   hand: {
     paths: [
@@ -476,9 +510,7 @@ export const iconRegistry: Record<string, IconPathData> = {
   },
   'square-check': {
     paths: ['M9 11l3 3L22 4'],
-    elements: [
-      '<rect width="18" height="18" x="3" y="3" rx="2"/>',
-    ],
+    elements: ['<rect width="18" height="18" x="3" y="3" rx="2"/>'],
   },
   puzzle: {
     paths: [
@@ -486,14 +518,7 @@ export const iconRegistry: Record<string, IconPathData> = {
     ],
   },
   calculator: {
-    paths: [
-      'M8 19H5',
-      'M8 15H5',
-      'M19 15h-3',
-      'M19 19h-3',
-      'M8 11H5',
-      'M19 11h-3',
-    ],
+    paths: ['M8 19H5', 'M8 15H5', 'M19 15h-3', 'M19 19h-3', 'M8 11H5', 'M19 11h-3'],
     elements: [
       '<rect width="18" height="18" x="3" y="3" rx="2"/>',
       '<rect width="10" height="2" x="7" y="6"/>',
@@ -508,42 +533,86 @@ export const iconRegistry: Record<string, IconPathData> = {
 /** Icon categories mapping to logical groups */
 export const ICON_CATEGORIES = {
   navigation: [
-    'home', 'menu', 'chevron-right', 'chevron-left', 'chevron-down',
-    'chevron-up', 'arrow-right', 'arrow-left', 'external-link',
-    'more-horizontal', 'more-vertical',
+    'home',
+    'menu',
+    'chevron-right',
+    'chevron-left',
+    'chevron-down',
+    'chevron-up',
+    'arrow-right',
+    'arrow-left',
+    'external-link',
+    'more-horizontal',
+    'more-vertical',
   ],
   action: [
-    'plus', 'minus', 'x', 'check', 'pencil', 'trash-2', 'copy',
-    'download', 'upload', 'refresh-cw', 'search', 'filter', 'settings',
-    'save', 'undo', 'redo',
+    'plus',
+    'minus',
+    'x',
+    'check',
+    'pencil',
+    'trash-2',
+    'copy',
+    'download',
+    'upload',
+    'refresh-cw',
+    'search',
+    'filter',
+    'settings',
+    'save',
+    'undo',
+    'redo',
   ],
   node: [
-    'bot', 'clipboard-list', 'wrench', 'sparkles', 'pen-line',
-    'bar-chart-3', 'network', 'code-2', 'shield-check',
+    'bot',
+    'clipboard-list',
+    'wrench',
+    'sparkles',
+    'pen-line',
+    'bar-chart-3',
+    'network',
+    'code-2',
+    'shield-check',
   ],
-  status: [
-    'check-circle', 'alert-triangle', 'x-circle', 'info', 'loader',
-    'clock', 'pause',
-  ],
+  status: ['check-circle', 'alert-triangle', 'x-circle', 'info', 'loader', 'clock', 'pause'],
   content: [
-    'file-text', 'folder', 'image', 'code-2', 'terminal', 'database',
-    'globe', 'link', 'key', 'lock', 'unlock',
+    'file-text',
+    'folder',
+    'image',
+    'code-2',
+    'terminal',
+    'database',
+    'globe',
+    'link',
+    'key',
+    'lock',
+    'unlock',
   ],
   layout: [
-    'panel-left', 'layout-grid', 'list', 'columns', 'maximize-2',
-    'minimize-2', 'zoom-in', 'zoom-out', 'scan',
+    'panel-left',
+    'layout-grid',
+    'list',
+    'columns',
+    'maximize-2',
+    'minimize-2',
+    'zoom-in',
+    'zoom-out',
+    'scan',
   ],
-  communication: [
-    'bell', 'message-square', 'mail', 'share-2', 'users', 'user',
-  ],
+  communication: ['bell', 'message-square', 'mail', 'share-2', 'users', 'user'],
   workflow: [
-    'play', 'square', 'skip-forward', 'rewind', 'git-branch',
-    'git-fork', 'repeat', 'shuffle', 'workflow', 'zap',
+    'play',
+    'square',
+    'skip-forward',
+    'rewind',
+    'git-branch',
+    'git-fork',
+    'repeat',
+    'shuffle',
+    'workflow',
+    'zap',
   ],
-  brand: [
-    'brain', 'sparkles', 'cpu', 'hard-drive', 'rocket', 'star',
-    'heart', 'shield', 'award',
-  ],
+  brand: ['brain', 'sparkles', 'cpu', 'hard-drive', 'rocket', 'star', 'heart', 'shield', 'award'],
 } as const;
 
 export type IconCategory = keyof typeof ICON_CATEGORIES;

@@ -6,12 +6,7 @@
 
 import { clsx } from 'clsx';
 import { type HTMLAttributes, forwardRef, useMemo, useState } from 'react';
-import {
-  type UsageStats,
-  isUnlimited,
-  getAlertSeverity,
-  PLAN_DISPLAY_NAMES,
-} from './types.js';
+import { type UsageStats, isUnlimited, getAlertSeverity, PLAN_DISPLAY_NAMES } from './types.js';
 import { PlanBadge } from './PlanBadge.js';
 import { UsageProgressBar } from './UsageProgressBar.js';
 import { UsageStatCard } from './UsageStatCard.js';
@@ -59,8 +54,19 @@ export const UsageStatsPanel = forwardRef<HTMLDivElement, UsageStatsPanelProps>(
               fill="none"
               aria-label="Loading"
             >
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
             </svg>
             <span className="text-sm text-slate-400">Loading usage data…</span>
           </div>
@@ -84,11 +90,7 @@ export const UsageStatsPanel = forwardRef<HTMLDivElement, UsageStatsPanelProps>(
         {alertSeverity && !alertDismissed && (
           <UsageLimitAlert
             severity={alertSeverity}
-            heading={
-              alertSeverity === 'critical'
-                ? 'Run limit reached'
-                : 'Approaching run limit'
-            }
+            heading={alertSeverity === 'critical' ? 'Run limit reached' : 'Approaching run limit'}
             description={
               alertSeverity === 'critical'
                 ? `You've used ${stats.usagePercent}% of your monthly run limit. Upgrade to continue running workflows.`
@@ -118,9 +120,7 @@ export const UsageStatsPanel = forwardRef<HTMLDivElement, UsageStatsPanelProps>(
             value={stats.runsThisPeriod.toLocaleString()}
             limit={runsUnlimited ? '∞' : stats.limits.maxRunsPerMonth.toLocaleString()}
             footer={
-              runsUnlimited
-                ? 'Unlimited'
-                : `${stats.remainingRuns.toLocaleString()} remaining`
+              runsUnlimited ? 'Unlimited' : `${stats.remainingRuns.toLocaleString()} remaining`
             }
           />
           <UsageStatCard
@@ -128,14 +128,8 @@ export const UsageStatsPanel = forwardRef<HTMLDivElement, UsageStatsPanelProps>(
             value={stats.activeRuns}
             limit={concurrentUnlimited ? '∞' : stats.limits.maxConcurrentRuns}
           />
-          <UsageStatCard
-            label="Max agents"
-            value={formatLimit(stats.limits.maxAgents)}
-          />
-          <UsageStatCard
-            label="Max workflows"
-            value={formatLimit(stats.limits.maxWorkflows)}
-          />
+          <UsageStatCard label="Max agents" value={formatLimit(stats.limits.maxAgents)} />
+          <UsageStatCard label="Max workflows" value={formatLimit(stats.limits.maxWorkflows)} />
         </div>
 
         {/* Upgrade prompt */}

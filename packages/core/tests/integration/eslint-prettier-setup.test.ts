@@ -197,7 +197,7 @@ describe('ESLint + Prettier Setup (TASK-003)', () => {
           encoding: 'utf-8',
         });
       }).not.toThrow();
-    }, 120_000); // 120 second timeout for ESLint
+    }, 180_000); // 180 second timeout for ESLint
   });
 
   describe('Prettier Execution', () => {

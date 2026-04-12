@@ -46,10 +46,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
-          <label
-            htmlFor={textareaId}
-            className="text-xs font-medium text-slate-300"
-          >
+          <label htmlFor={textareaId} className="text-xs font-medium text-slate-300">
             {label}
           </label>
         )}
@@ -68,21 +65,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
           aria-invalid={effectiveState === 'invalid' ? true : undefined}
           aria-describedby={
-            error
-              ? `${textareaId}-error`
-              : helperText
-                ? `${textareaId}-helper`
-                : undefined
+            error ? `${textareaId}-error` : helperText ? `${textareaId}-helper` : undefined
           }
           {...rest}
         />
 
         {error && (
-          <p
-            id={`${textareaId}-error`}
-            className="text-xs text-form-invalid-text"
-            role="alert"
-          >
+          <p id={`${textareaId}-error`} className="text-xs text-form-invalid-text" role="alert">
             {error}
           </p>
         )}

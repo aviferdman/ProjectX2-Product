@@ -162,12 +162,12 @@ export const LOG_COLORS = {
 /** Syntax highlighting token colors for JSON/code in log messages.
  * Aligned with TASK-140 spec §4.5 (emerald/amber/violet/sky/rose palette). */
 export const SYNTAX_COLORS = {
-  string: '#34d399',      // emerald-400
-  number: '#fbbf24',      // amber-400
-  boolean: '#818cf8',     // indigo-400
-  null: '#818cf8',        // indigo-400
-  key: '#22d3ee',         // sky-400
-  error: '#f87171',       // rose-400
+  string: '#34d399', // emerald-400
+  number: '#fbbf24', // amber-400
+  boolean: '#818cf8', // indigo-400
+  null: '#818cf8', // indigo-400
+  key: '#22d3ee', // sky-400
+  error: '#f87171', // rose-400
   punctuation: '#a1a1aa', // slate-400
   default: 'var(--cs-text-secondary, #cbd5e1)',
 } as const;

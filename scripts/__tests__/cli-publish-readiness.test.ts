@@ -29,30 +29,34 @@ describe('@crewspace/cli publish readiness', () => {
     });
 
     it('is not marked as private', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       expect(pkgJson['private']).not.toBe(true);
     });
 
     it('has correct package name', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       expect(pkgJson['name']).toBe('@crewspace/cli');
     });
 
     it('has version 0.1.0', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       expect(pkgJson['version']).toBe('0.1.0');
     });
 
     it('has the same version as @crewspace/core', () => {
-      const cliPkg = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const cliPkg = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const corePkg = JSON.parse(
         readFileSync(resolve(ROOT, 'packages', 'core', 'package.json'), 'utf-8'),
       ) as Record<string, unknown>;
@@ -60,23 +64,26 @@ describe('@crewspace/cli publish readiness', () => {
     });
 
     it('has MIT license', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       expect(pkgJson['license']).toBe('MIT');
     });
 
     it('has "type": "module"', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       expect(pkgJson['type']).toBe('module');
     });
 
     it('has proper exports configuration', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const exports = pkgJson['exports'] as Record<string, Record<string, string>>;
       expect(exports).toBeDefined();
       expect(exports['.']).toBeDefined();
@@ -86,27 +93,30 @@ describe('@crewspace/cli publish readiness', () => {
     });
 
     it('has dual ESM/CJS entry points', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       expect(pkgJson['main']).toBe('./dist/cjs/index.js');
       expect(pkgJson['module']).toBe('./dist/index.js');
       expect(pkgJson['types']).toBe('./dist/index.d.ts');
     });
 
     it('has bin entry for "crewspace" command', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const bin = pkgJson['bin'] as Record<string, string>;
       expect(bin).toBeDefined();
       expect(bin['crewspace']).toBe('./dist/bin.js');
     });
 
     it('has "files" field including dist, README.md, and LICENSE', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const files = pkgJson['files'] as string[];
       expect(files).toContain('dist');
       expect(files).toContain('README.md');
@@ -114,59 +124,62 @@ describe('@crewspace/cli publish readiness', () => {
     });
 
     it('has sideEffects set to false', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       expect(pkgJson['sideEffects']).toBe(false);
     });
 
     it('has engines field requiring Node >= 18', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const engines = pkgJson['engines'] as Record<string, string>;
       expect(engines).toBeDefined();
       expect(engines['node']).toBe('>=18.0.0');
     });
 
     it('has repository field pointing to packages/cli', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const repo = pkgJson['repository'] as Record<string, string>;
       expect(repo).toBeDefined();
       expect(repo['directory']).toBe('packages/cli');
     });
 
     it('has keywords including "crewspace" and "cli"', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const keywords = pkgJson['keywords'] as string[];
       expect(keywords).toContain('crewspace');
       expect(keywords).toContain('cli');
     });
 
     it('has @crewspace/core as optional peer dependency', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const peerDeps = pkgJson['peerDependencies'] as Record<string, string>;
       expect(peerDeps).toBeDefined();
       expect(peerDeps['@crewspace/core']).toBeDefined();
 
-      const peerMeta = pkgJson['peerDependenciesMeta'] as Record<
-        string,
-        Record<string, boolean>
-      >;
+      const peerMeta = pkgJson['peerDependenciesMeta'] as Record<string, Record<string, boolean>>;
       expect(peerMeta).toBeDefined();
       expect(peerMeta['@crewspace/core']!['optional']).toBe(true);
     });
 
     it('has prepublishOnly script that builds and typechecks', () => {
-      const pkgJson = JSON.parse(
-        readFileSync(join(CLI_DIR, 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>;
+      const pkgJson = JSON.parse(readFileSync(join(CLI_DIR, 'package.json'), 'utf-8')) as Record<
+        string,
+        unknown
+      >;
       const scripts = pkgJson['scripts'] as Record<string, string>;
       expect(scripts['prepublishOnly']).toBeDefined();
       expect(scripts['prepublishOnly']).toContain('build');
@@ -247,35 +260,23 @@ describe('@crewspace/cli publish readiness', () => {
     });
 
     it('publish.yml workflow publishes cli package', () => {
-      const content = readFileSync(
-        resolve(ROOT, '.github', 'workflows', 'publish.yml'),
-        'utf-8',
-      );
+      const content = readFileSync(resolve(ROOT, '.github', 'workflows', 'publish.yml'), 'utf-8');
       expect(content).toContain('workspace=packages/cli');
       expect(content).toContain('Publish @crewspace/cli');
     });
 
     it('publish.yml workflow verifies cli dist output', () => {
-      const content = readFileSync(
-        resolve(ROOT, '.github', 'workflows', 'publish.yml'),
-        'utf-8',
-      );
+      const content = readFileSync(resolve(ROOT, '.github', 'workflows', 'publish.yml'), 'utf-8');
       expect(content).toContain('packages/cli/dist');
     });
 
     it('publish.yml workflow uploads cli dist artifacts', () => {
-      const content = readFileSync(
-        resolve(ROOT, '.github', 'workflows', 'publish.yml'),
-        'utf-8',
-      );
+      const content = readFileSync(resolve(ROOT, '.github', 'workflows', 'publish.yml'), 'utf-8');
       expect(content).toContain('packages/cli/dist/');
     });
 
     it('publish.yml workflow verifies cli after publish', () => {
-      const content = readFileSync(
-        resolve(ROOT, '.github', 'workflows', 'publish.yml'),
-        'utf-8',
-      );
+      const content = readFileSync(resolve(ROOT, '.github', 'workflows', 'publish.yml'), 'utf-8');
       expect(content).toContain('@crewspace/cli');
     });
 

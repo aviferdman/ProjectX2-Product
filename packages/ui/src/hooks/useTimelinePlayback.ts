@@ -68,7 +68,7 @@ function getSortedEventTimestamps(events: TimelineEvent[]): number[] {
   const set = new Set<number>();
   for (const e of events) {
     set.add(e.startMs);
-    if (e.endMs != null) set.add(e.endMs);
+    if (e.endMs !== undefined) set.add(e.endMs);
   }
   return Array.from(set).sort((a, b) => a - b);
 }
@@ -153,7 +153,7 @@ export function useTimelinePlayback(
       return;
     }
 
-    if (lastFrameTimeRef.current == null) {
+    if (lastFrameTimeRef.current === null) {
       lastFrameTimeRef.current = now;
       rafRef.current = requestAnimationFrame(tick);
       return;
@@ -182,7 +182,7 @@ export function useTimelinePlayback(
       lastFrameTimeRef.current = null;
       rafRef.current = requestAnimationFrame(tick);
     } else {
-      if (rafRef.current != null) {
+      if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
       }
@@ -190,7 +190,7 @@ export function useTimelinePlayback(
     }
 
     return () => {
-      if (rafRef.current != null) {
+      if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
       }

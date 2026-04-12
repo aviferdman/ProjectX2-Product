@@ -3,55 +3,135 @@
   "crewspace": {
     "templateLibrary": {
       "color": {
-        "background": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Template library page background" },
-        "header-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Page header background" },
-        "header-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Header bottom border" },
-        "sidebar-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Category sidebar background" },
-        "sidebar-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Sidebar right border" },
-        "content-bg": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Main grid content area background" }
+        "background": {
+          "value": "{crewspace.color.semantic.surface.app}",
+          "type": "color",
+          "description": "Template library page background"
+        },
+        "header-bg": {
+          "value": "{crewspace.color.semantic.surface.panel}",
+          "type": "color",
+          "description": "Page header background"
+        },
+        "header-border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Header bottom border"
+        },
+        "sidebar-bg": {
+          "value": "{crewspace.color.semantic.surface.panel}",
+          "type": "color",
+          "description": "Category sidebar background"
+        },
+        "sidebar-border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Sidebar right border"
+        },
+        "content-bg": {
+          "value": "{crewspace.color.semantic.surface.app}",
+          "type": "color",
+          "description": "Main grid content area background"
+        }
       },
       "templateCard": {
-        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Template card background" },
-        "bg-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color", "description": "Card hover background" },
-        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Card border" },
-        "border-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color", "description": "Card hover border" },
-        "thumbnail-bg": { "value": "rgba(10,14,26,0.8)", "type": "color", "description": "Workflow preview thumbnail area" },
-        "thumbnail-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Thumbnail bottom border" },
-        "thumbnail-overlay": { "value": "rgba(10,14,26,0.6)", "type": "color", "description": "Gradient overlay on thumbnail hover" },
+        "bg": {
+          "value": "{crewspace.color.semantic.surface.card}",
+          "type": "color",
+          "description": "Template card background"
+        },
+        "bg-hover": {
+          "value": "{crewspace.color.semantic.surface.elevated}",
+          "type": "color",
+          "description": "Card hover background"
+        },
+        "border": {
+          "value": "{crewspace.color.semantic.border.default}",
+          "type": "color",
+          "description": "Card border"
+        },
+        "border-hover": {
+          "value": "{crewspace.color.semantic.border.strong}",
+          "type": "color",
+          "description": "Card hover border"
+        },
+        "thumbnail-bg": {
+          "value": "rgba(10,14,26,0.8)",
+          "type": "color",
+          "description": "Workflow preview thumbnail area"
+        },
+        "thumbnail-border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Thumbnail bottom border"
+        },
+        "thumbnail-overlay": {
+          "value": "rgba(10,14,26,0.6)",
+          "type": "color",
+          "description": "Gradient overlay on thumbnail hover"
+        },
         "title": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
         "description": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
-        "meta": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Author, usage count, etc." },
+        "meta": {
+          "value": "{crewspace.color.semantic.text.tertiary}",
+          "type": "color",
+          "description": "Author, usage count, etc."
+        },
         "action-icon": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
         "action-icon-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" }
       },
       "category": {
         "research": {
-          "color": { "value": "{crewspace.color.primitive.sky.400}", "type": "color", "description": "Research assistant templates" },
+          "color": {
+            "value": "{crewspace.color.primitive.sky.400}",
+            "type": "color",
+            "description": "Research assistant templates"
+          },
           "bg": { "value": "rgba(56,189,248,0.1)", "type": "color" },
           "icon-bg": { "value": "rgba(56,189,248,0.15)", "type": "color" }
         },
         "code": {
-          "color": { "value": "{crewspace.color.primitive.violet.400}", "type": "color", "description": "Code & dev tool templates" },
+          "color": {
+            "value": "{crewspace.color.primitive.violet.400}",
+            "type": "color",
+            "description": "Code & dev tool templates"
+          },
           "bg": { "value": "rgba(167,139,250,0.1)", "type": "color" },
           "icon-bg": { "value": "rgba(167,139,250,0.15)", "type": "color" }
         },
         "support": {
-          "color": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color", "description": "Customer support templates" },
+          "color": {
+            "value": "{crewspace.color.primitive.emerald.400}",
+            "type": "color",
+            "description": "Customer support templates"
+          },
           "bg": { "value": "rgba(52,211,153,0.1)", "type": "color" },
           "icon-bg": { "value": "rgba(52,211,153,0.15)", "type": "color" }
         },
         "content": {
-          "color": { "value": "{crewspace.color.primitive.amber.400}", "type": "color", "description": "Content creation templates" },
+          "color": {
+            "value": "{crewspace.color.primitive.amber.400}",
+            "type": "color",
+            "description": "Content creation templates"
+          },
           "bg": { "value": "rgba(251,191,36,0.1)", "type": "color" },
           "icon-bg": { "value": "rgba(251,191,36,0.15)", "type": "color" }
         },
         "data": {
-          "color": { "value": "{crewspace.color.primitive.rose.400}", "type": "color", "description": "Data & analytics templates" },
+          "color": {
+            "value": "{crewspace.color.primitive.rose.400}",
+            "type": "color",
+            "description": "Data & analytics templates"
+          },
           "bg": { "value": "rgba(251,113,133,0.1)", "type": "color" },
           "icon-bg": { "value": "rgba(251,113,133,0.15)", "type": "color" }
         },
         "automation": {
-          "color": { "value": "{crewspace.color.primitive.slate.300}", "type": "color", "description": "General automation templates" },
+          "color": {
+            "value": "{crewspace.color.primitive.slate.300}",
+            "type": "color",
+            "description": "General automation templates"
+          },
           "bg": { "value": "rgba(203,213,225,0.1)", "type": "color" },
           "icon-bg": { "value": "rgba(203,213,225,0.15)", "type": "color" }
         }
@@ -79,14 +159,34 @@
         "border-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" }
       },
       "previewModal": {
-        "overlay": { "value": "rgba(0,0,0,0.7)", "type": "color", "description": "Modal backdrop overlay" },
-        "bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Modal background" },
+        "overlay": {
+          "value": "rgba(0,0,0,0.7)",
+          "type": "color",
+          "description": "Modal backdrop overlay"
+        },
+        "bg": {
+          "value": "{crewspace.color.semantic.surface.panel}",
+          "type": "color",
+          "description": "Modal background"
+        },
         "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "header-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Modal header background" },
+        "header-bg": {
+          "value": "{crewspace.color.semantic.surface.card}",
+          "type": "color",
+          "description": "Modal header background"
+        },
         "header-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
-        "diagram-bg": { "value": "rgba(10,14,26,0.9)", "type": "color", "description": "Workflow diagram preview area" },
+        "diagram-bg": {
+          "value": "rgba(10,14,26,0.9)",
+          "type": "color",
+          "description": "Workflow diagram preview area"
+        },
         "diagram-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
-        "sidebar-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Modal detail sidebar" },
+        "sidebar-bg": {
+          "value": "{crewspace.color.semantic.surface.card}",
+          "type": "color",
+          "description": "Modal detail sidebar"
+        },
         "sidebar-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
         "close-icon": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
         "close-icon-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" }
@@ -115,16 +215,35 @@
         "menu-bg": { "value": "{crewspace.color.semantic.surface.overlay}", "type": "color" },
         "menu-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
         "item-bg-hover": { "value": "rgba(30,41,59,0.5)", "type": "color" },
-        "menu-shadow": { "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.06)", "type": "boxShadow", "description": "Sort dropdown menu shadow" }
+        "menu-shadow": {
+          "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.06)",
+          "type": "boxShadow",
+          "description": "Sort dropdown menu shadow"
+        }
       },
       "featured": {
-        "badge-bg": { "value": "rgba(251,191,36,0.15)", "type": "color", "description": "Featured/staff-pick badge" },
+        "badge-bg": {
+          "value": "rgba(251,191,36,0.15)",
+          "type": "color",
+          "description": "Featured/staff-pick badge"
+        },
         "badge-text": { "value": "{crewspace.color.primitive.amber.300}", "type": "color" },
         "badge-border": { "value": "rgba(251,191,36,0.3)", "type": "color" },
-        "popular-badge-bg": { "value": "rgba(52,211,153,0.15)", "type": "color", "description": "Popular badge" },
-        "popular-badge-text": { "value": "{crewspace.color.primitive.emerald.300}", "type": "color" },
+        "popular-badge-bg": {
+          "value": "rgba(52,211,153,0.15)",
+          "type": "color",
+          "description": "Popular badge"
+        },
+        "popular-badge-text": {
+          "value": "{crewspace.color.primitive.emerald.300}",
+          "type": "color"
+        },
         "popular-badge-border": { "value": "rgba(52,211,153,0.3)", "type": "color" },
-        "new-badge-bg": { "value": "rgba(56,189,248,0.15)", "type": "color", "description": "New badge" },
+        "new-badge-bg": {
+          "value": "rgba(56,189,248,0.15)",
+          "type": "color",
+          "description": "New badge"
+        },
         "new-badge-text": { "value": "{crewspace.color.primitive.sky.300}", "type": "color" },
         "new-badge-border": { "value": "rgba(56,189,248,0.3)", "type": "color" }
       },
@@ -132,7 +251,11 @@
         "icon": { "value": "{crewspace.color.primitive.slate.600}", "type": "color" },
         "heading": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
         "description": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
-        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Dashed border for empty search results" }
+        "border": {
+          "value": "{crewspace.color.semantic.border.default}",
+          "type": "color",
+          "description": "Dashed border for empty search results"
+        }
       },
       "pagination": {
         "bg": { "value": "transparent", "type": "color" },
@@ -144,50 +267,138 @@
       },
       "sizing": {
         "header-height": { "value": "56px", "type": "sizing" },
-        "sidebar-width": { "value": "220px", "type": "sizing", "description": "Category navigation sidebar" },
-        "sidebar-collapsed-width": { "value": "0px", "type": "sizing", "description": "Sidebar hidden on small screens" },
-        "content-max-width": { "value": "1440px", "type": "sizing", "description": "Wider than dashboard for gallery" },
+        "sidebar-width": {
+          "value": "220px",
+          "type": "sizing",
+          "description": "Category navigation sidebar"
+        },
+        "sidebar-collapsed-width": {
+          "value": "0px",
+          "type": "sizing",
+          "description": "Sidebar hidden on small screens"
+        },
+        "content-max-width": {
+          "value": "1440px",
+          "type": "sizing",
+          "description": "Wider than dashboard for gallery"
+        },
         "content-padding": { "value": "24px", "type": "sizing" },
-        "toolbar-height": { "value": "52px", "type": "sizing", "description": "Search/filter/sort toolbar" },
+        "toolbar-height": {
+          "value": "52px",
+          "type": "sizing",
+          "description": "Search/filter/sort toolbar"
+        },
         "card-width": { "value": "300px", "type": "sizing", "description": "Grid card base width" },
         "card-min-width": { "value": "260px", "type": "sizing" },
         "card-max-width": { "value": "360px", "type": "sizing" },
-        "card-thumbnail-height": { "value": "180px", "type": "sizing", "description": "Taller thumbnails for template previews" },
+        "card-thumbnail-height": {
+          "value": "180px",
+          "type": "sizing",
+          "description": "Taller thumbnails for template previews"
+        },
         "card-body-padding": { "value": "16px", "type": "sizing" },
         "card-gap": { "value": "20px", "type": "sizing" },
         "tag-height": { "value": "22px", "type": "sizing" },
         "tag-gap": { "value": "6px", "type": "sizing" },
         "category-icon-size": { "value": "32px", "type": "sizing" },
         "search-height": { "value": "40px", "type": "sizing" },
-        "search-width": { "value": "320px", "type": "sizing", "description": "Search bar default width" },
-        "search-max-width": { "value": "400px", "type": "sizing", "description": "Search bar maximum width" },
+        "search-width": {
+          "value": "320px",
+          "type": "sizing",
+          "description": "Search bar default width"
+        },
+        "search-max-width": {
+          "value": "400px",
+          "type": "sizing",
+          "description": "Search bar maximum width"
+        },
         "filter-chip-height": { "value": "30px", "type": "sizing" },
         "use-button-height": { "value": "36px", "type": "sizing" },
         "preview-button-height": { "value": "36px", "type": "sizing" },
         "modal-width": { "value": "900px", "type": "sizing", "description": "Preview modal width" },
         "modal-max-height": { "value": "85vh", "type": "sizing" },
-        "modal-diagram-height": { "value": "400px", "type": "sizing", "description": "Workflow diagram preview height" },
-        "modal-sidebar-width": { "value": "300px", "type": "sizing", "description": "Modal right sidebar for details" },
+        "modal-diagram-height": {
+          "value": "400px",
+          "type": "sizing",
+          "description": "Workflow diagram preview height"
+        },
+        "modal-sidebar-width": {
+          "value": "300px",
+          "type": "sizing",
+          "description": "Modal right sidebar for details"
+        },
         "featured-badge-height": { "value": "20px", "type": "sizing" },
         "empty-state-icon-size": { "value": "72px", "type": "sizing" },
         "pagination-button-size": { "value": "32px", "type": "sizing" }
       },
       "grid": {
-        "columns-sm": { "value": "1", "type": "number", "description": "Grid columns at small breakpoint" },
-        "columns-md": { "value": "2", "type": "number", "description": "Grid columns at medium breakpoint" },
-        "columns-lg": { "value": "3", "type": "number", "description": "Grid columns at large breakpoint" },
-        "columns-xl": { "value": "4", "type": "number", "description": "Grid columns at extra-large breakpoint" }
+        "columns-sm": {
+          "value": "1",
+          "type": "number",
+          "description": "Grid columns at small breakpoint"
+        },
+        "columns-md": {
+          "value": "2",
+          "type": "number",
+          "description": "Grid columns at medium breakpoint"
+        },
+        "columns-lg": {
+          "value": "3",
+          "type": "number",
+          "description": "Grid columns at large breakpoint"
+        },
+        "columns-xl": {
+          "value": "4",
+          "type": "number",
+          "description": "Grid columns at extra-large breakpoint"
+        }
       },
       "animation": {
-        "card-enter": { "value": "250ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Card scale-in when appearing" },
-        "card-hover": { "value": "150ms ease-out", "type": "transition", "description": "Card hover elevation transition" },
-        "modal-enter": { "value": "300ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Preview modal scale-in" },
-        "modal-overlay": { "value": "200ms ease-out", "type": "transition", "description": "Modal backdrop fade" },
-        "filter-toggle": { "value": "150ms ease-out", "type": "transition", "description": "Filter chip active/inactive" },
-        "tag-hover": { "value": "100ms ease-out", "type": "transition", "description": "Tag hover highlight" },
-        "empty-state-in": { "value": "300ms ease-out", "type": "transition", "description": "Empty state fade in" },
-        "grid-reflow": { "value": "200ms ease-out", "type": "transition", "description": "Grid reflow when filters change" },
-        "card-stagger-delay": { "value": "40ms", "type": "duration", "description": "Stagger delay between card entry animations" }
+        "card-enter": {
+          "value": "250ms cubic-bezier(0.34,1.56,0.64,1)",
+          "type": "transition",
+          "description": "Card scale-in when appearing"
+        },
+        "card-hover": {
+          "value": "150ms ease-out",
+          "type": "transition",
+          "description": "Card hover elevation transition"
+        },
+        "modal-enter": {
+          "value": "300ms cubic-bezier(0.34,1.56,0.64,1)",
+          "type": "transition",
+          "description": "Preview modal scale-in"
+        },
+        "modal-overlay": {
+          "value": "200ms ease-out",
+          "type": "transition",
+          "description": "Modal backdrop fade"
+        },
+        "filter-toggle": {
+          "value": "150ms ease-out",
+          "type": "transition",
+          "description": "Filter chip active/inactive"
+        },
+        "tag-hover": {
+          "value": "100ms ease-out",
+          "type": "transition",
+          "description": "Tag hover highlight"
+        },
+        "empty-state-in": {
+          "value": "300ms ease-out",
+          "type": "transition",
+          "description": "Empty state fade in"
+        },
+        "grid-reflow": {
+          "value": "200ms ease-out",
+          "type": "transition",
+          "description": "Grid reflow when filters change"
+        },
+        "card-stagger-delay": {
+          "value": "40ms",
+          "type": "duration",
+          "description": "Stagger delay between card entry animations"
+        }
       }
     }
   }

@@ -5,47 +5,155 @@
       "_description": "TASK-157: Design template cards (thumbnail, title, description, tags). Detailed design tokens for the Template Card component.",
 
       "card": {
-        "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color", "description": "Default card background" },
-        "bg-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color", "description": "Hover state background" },
-        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Default border" },
-        "border-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color", "description": "Hover border" },
-        "border-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Keyboard focus ring" },
-        "shadow": { "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)", "type": "boxShadow", "description": "Default card shadow" },
-        "shadow-hover": { "value": "0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)", "type": "boxShadow", "description": "Hover elevation shadow" },
-        "shadow-focus": { "value": "0 0 0 3px rgba(99,102,241,0.25)", "type": "boxShadow", "description": "Focus ring glow" },
-        "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius", "description": "12px corner radius" }
+        "bg": {
+          "value": "{crewspace.color.semantic.surface.card}",
+          "type": "color",
+          "description": "Default card background"
+        },
+        "bg-hover": {
+          "value": "{crewspace.color.semantic.surface.elevated}",
+          "type": "color",
+          "description": "Hover state background"
+        },
+        "border": {
+          "value": "{crewspace.color.semantic.border.default}",
+          "type": "color",
+          "description": "Default border"
+        },
+        "border-hover": {
+          "value": "{crewspace.color.semantic.border.strong}",
+          "type": "color",
+          "description": "Hover border"
+        },
+        "border-focus": {
+          "value": "{crewspace.color.primitive.violet.500}",
+          "type": "color",
+          "description": "Keyboard focus ring"
+        },
+        "shadow": {
+          "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)",
+          "type": "boxShadow",
+          "description": "Default card shadow"
+        },
+        "shadow-hover": {
+          "value": "0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)",
+          "type": "boxShadow",
+          "description": "Hover elevation shadow"
+        },
+        "shadow-focus": {
+          "value": "0 0 0 3px rgba(99,102,241,0.25)",
+          "type": "boxShadow",
+          "description": "Focus ring glow"
+        },
+        "radius": {
+          "value": "{crewspace.radius.xl}",
+          "type": "borderRadius",
+          "description": "12px corner radius"
+        }
       },
 
       "sizing": {
         "width": { "value": "300px", "type": "sizing", "description": "Target card width in grid" },
-        "min-width": { "value": "260px", "type": "sizing", "description": "Minimum card width for responsive grid" },
+        "min-width": {
+          "value": "260px",
+          "type": "sizing",
+          "description": "Minimum card width for responsive grid"
+        },
         "max-width": { "value": "360px", "type": "sizing", "description": "Maximum card width" },
         "gap": { "value": "20px", "type": "sizing", "description": "Gap between cards in grid" },
-        "body-padding": { "value": "16px", "type": "sizing", "description": "Card body inner padding" },
-        "body-gap": { "value": "10px", "type": "sizing", "description": "Gap between body sections" }
+        "body-padding": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Card body inner padding"
+        },
+        "body-gap": {
+          "value": "10px",
+          "type": "sizing",
+          "description": "Gap between body sections"
+        }
       },
 
       "thumbnail": {
         "height": { "value": "180px", "type": "sizing", "description": "Thumbnail zone height" },
-        "height-md": { "value": "160px", "type": "sizing", "description": "Thumbnail height at md breakpoint" },
-        "height-sm": { "value": "140px", "type": "sizing", "description": "Thumbnail height at sm breakpoint" },
-        "bg": { "value": "rgba(10,14,26,0.8)", "type": "color", "description": "Dark background for mini graph" },
-        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Bottom separator" },
-        "overlay-gradient": { "value": "linear-gradient(180deg, transparent 30%, rgba(10,14,26,0.7) 100%)", "type": "gradient", "description": "Hover gradient overlay" },
-        "radius": { "value": "12px 12px 0 0", "type": "borderRadius", "description": "Top corners only" },
-        "node-agent": { "value": "{crewspace.color.primitive.violet.400}", "type": "color", "description": "Agent node dot" },
-        "node-task": { "value": "{crewspace.color.primitive.sky.400}", "type": "color", "description": "Task node dot" },
-        "node-tool": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color", "description": "Tool node dot" },
-        "node-llm": { "value": "{crewspace.color.primitive.amber.400}", "type": "color", "description": "LLM node dot" },
-        "edge-color": { "value": "rgba(113,113,122,0.2)", "type": "color", "description": "Connection line between nodes" },
-        "node-ring": { "value": "rgba(255,255,255,0.1)", "type": "color", "description": "Subtle ring around node dots" },
-        "empty-icon-color": { "value": "{crewspace.color.primitive.slate.600}", "type": "color", "description": "Empty state icon color" },
+        "height-md": {
+          "value": "160px",
+          "type": "sizing",
+          "description": "Thumbnail height at md breakpoint"
+        },
+        "height-sm": {
+          "value": "140px",
+          "type": "sizing",
+          "description": "Thumbnail height at sm breakpoint"
+        },
+        "bg": {
+          "value": "rgba(10,14,26,0.8)",
+          "type": "color",
+          "description": "Dark background for mini graph"
+        },
+        "border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Bottom separator"
+        },
+        "overlay-gradient": {
+          "value": "linear-gradient(180deg, transparent 30%, rgba(10,14,26,0.7) 100%)",
+          "type": "gradient",
+          "description": "Hover gradient overlay"
+        },
+        "radius": {
+          "value": "12px 12px 0 0",
+          "type": "borderRadius",
+          "description": "Top corners only"
+        },
+        "node-agent": {
+          "value": "{crewspace.color.primitive.violet.400}",
+          "type": "color",
+          "description": "Agent node dot"
+        },
+        "node-task": {
+          "value": "{crewspace.color.primitive.sky.400}",
+          "type": "color",
+          "description": "Task node dot"
+        },
+        "node-tool": {
+          "value": "{crewspace.color.primitive.emerald.400}",
+          "type": "color",
+          "description": "Tool node dot"
+        },
+        "node-llm": {
+          "value": "{crewspace.color.primitive.amber.400}",
+          "type": "color",
+          "description": "LLM node dot"
+        },
+        "edge-color": {
+          "value": "rgba(113,113,122,0.2)",
+          "type": "color",
+          "description": "Connection line between nodes"
+        },
+        "node-ring": {
+          "value": "rgba(255,255,255,0.1)",
+          "type": "color",
+          "description": "Subtle ring around node dots"
+        },
+        "empty-icon-color": {
+          "value": "{crewspace.color.primitive.slate.600}",
+          "type": "color",
+          "description": "Empty state icon color"
+        },
         "empty-icon-size": { "value": "40px", "type": "sizing" },
-        "node-padding": { "value": "16px", "type": "sizing", "description": "Padding around node graph within thumbnail" }
+        "node-padding": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Padding around node graph within thumbnail"
+        }
       },
 
       "previewOverlay": {
-        "btn-size": { "value": "40px", "type": "sizing", "description": "Centered preview circle button" },
+        "btn-size": {
+          "value": "40px",
+          "type": "sizing",
+          "description": "Centered preview circle button"
+        },
         "btn-bg": { "value": "rgba(255,255,255,0.1)", "type": "color" },
         "btn-bg-hover": { "value": "rgba(255,255,255,0.2)", "type": "color" },
         "btn-border": { "value": "rgba(255,255,255,0.2)", "type": "color" },
@@ -56,7 +164,11 @@
       "badge": {
         "height": { "value": "20px", "type": "sizing" },
         "radius": { "value": "{crewspace.radius.sm}", "type": "borderRadius" },
-        "inset": { "value": "8px", "type": "sizing", "description": "Distance from thumbnail corner" },
+        "inset": {
+          "value": "8px",
+          "type": "sizing",
+          "description": "Distance from thumbnail corner"
+        },
         "featured-bg": { "value": "rgba(251,191,36,0.15)", "type": "color" },
         "featured-text": { "value": "#fcd34d", "type": "color" },
         "featured-border": { "value": "rgba(251,191,36,0.3)", "type": "color" },
@@ -69,8 +181,16 @@
       },
 
       "categoryIcon": {
-        "container-size": { "value": "36px", "type": "sizing", "description": "Icon container dimensions" },
-        "container-size-sm": { "value": "28px", "type": "sizing", "description": "Smaller container for mobile" },
+        "container-size": {
+          "value": "36px",
+          "type": "sizing",
+          "description": "Icon container dimensions"
+        },
+        "container-size-sm": {
+          "value": "28px",
+          "type": "sizing",
+          "description": "Smaller container for mobile"
+        },
         "icon-size": { "value": "18px", "type": "sizing" },
         "container-radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
         "margin-right": { "value": "12px", "type": "sizing" },
@@ -102,7 +222,11 @@
         "font-weight": { "value": "400", "type": "fontWeight" },
         "line-height": { "value": "1.5", "type": "lineHeight" },
         "max-lines": { "value": "2", "type": "number" },
-        "min-height": { "value": "36px", "type": "sizing", "description": "Reserve 2-line space to prevent layout shift" }
+        "min-height": {
+          "value": "36px",
+          "type": "sizing",
+          "description": "Reserve 2-line space to prevent layout shift"
+        }
       },
 
       "tag": {
@@ -119,7 +243,11 @@
         "font-weight": { "value": "500", "type": "fontWeight" },
         "letter-spacing": { "value": "0.02em", "type": "letterSpacing" },
         "max-visible": { "value": "3", "type": "number" },
-        "overflow-bg": { "value": "rgba(113,113,122,0.08)", "type": "color", "description": "+N overflow pill" }
+        "overflow-bg": {
+          "value": "rgba(113,113,122,0.08)",
+          "type": "color",
+          "description": "+N overflow pill"
+        }
       },
 
       "meta": {
@@ -130,8 +258,16 @@
         "icon-size": { "value": "12px", "type": "sizing" },
         "gap": { "value": "8px", "type": "sizing" },
         "separator-color": { "value": "{crewspace.color.primitive.slate.600}", "type": "color" },
-        "star-filled": { "value": "{crewspace.color.primitive.amber.400}", "type": "color", "description": "Rating star when >= 4.0" },
-        "star-empty": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Rating star when < 4.0" }
+        "star-filled": {
+          "value": "{crewspace.color.primitive.amber.400}",
+          "type": "color",
+          "description": "Rating star when >= 4.0"
+        },
+        "star-empty": {
+          "value": "{crewspace.color.semantic.text.tertiary}",
+          "type": "color",
+          "description": "Rating star when < 4.0"
+        }
       },
 
       "previewButton": {
@@ -165,16 +301,32 @@
 
       "skeleton": {
         "bg": { "value": "rgba(30,41,59,0.3)", "type": "color", "description": "Shimmer base" },
-        "bg-highlight": { "value": "rgba(30,41,59,0.5)", "type": "color", "description": "Shimmer highlight" },
-        "bg-static": { "value": "rgba(30,41,59,0.4)", "type": "color", "description": "Reduced-motion fallback" },
+        "bg-highlight": {
+          "value": "rgba(30,41,59,0.5)",
+          "type": "color",
+          "description": "Shimmer highlight"
+        },
+        "bg-static": {
+          "value": "rgba(30,41,59,0.4)",
+          "type": "color",
+          "description": "Reduced-motion fallback"
+        },
         "animation-duration": { "value": "1.5s", "type": "duration" }
       },
 
       "animation": {
         "card-enter-duration": { "value": "250ms", "type": "duration" },
         "card-enter-easing": { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier" },
-        "stagger-delay": { "value": "40ms", "type": "duration", "description": "Delay between consecutive card enter animations" },
-        "max-stagger": { "value": "500ms", "type": "duration", "description": "Maximum total stagger (12 cards)" },
+        "stagger-delay": {
+          "value": "40ms",
+          "type": "duration",
+          "description": "Delay between consecutive card enter animations"
+        },
+        "max-stagger": {
+          "value": "500ms",
+          "type": "duration",
+          "description": "Maximum total stagger (12 cards)"
+        },
         "hover-duration": { "value": "150ms", "type": "duration" },
         "hover-easing": { "value": "ease-out", "type": "cubicBezier" },
         "overlay-duration": { "value": "200ms", "type": "duration" },

@@ -60,7 +60,13 @@ describe('StatusEmpty', () => {
 
   it('forwards ref', () => {
     let element: HTMLDivElement | null = null;
-    render(<StatusEmpty ref={(el) => { element = el; }} />);
+    render(
+      <StatusEmpty
+        ref={(el) => {
+          element = el;
+        }}
+      />,
+    );
     expect(element).toBeInstanceOf(HTMLDivElement);
   });
 
@@ -122,7 +128,13 @@ describe('StatusLoading', () => {
 
   it('forwards ref', () => {
     let element: HTMLDivElement | null = null;
-    render(<StatusLoading ref={(el) => { element = el; }} />);
+    render(
+      <StatusLoading
+        ref={(el) => {
+          element = el;
+        }}
+      />,
+    );
     expect(element).toBeInstanceOf(HTMLDivElement);
   });
 
@@ -177,7 +189,13 @@ describe('StatusSuccess', () => {
 
   it('forwards ref', () => {
     let element: HTMLDivElement | null = null;
-    render(<StatusSuccess ref={(el) => { element = el; }} />);
+    render(
+      <StatusSuccess
+        ref={(el) => {
+          element = el;
+        }}
+      />,
+    );
     expect(element).toBeInstanceOf(HTMLDivElement);
   });
 
@@ -252,7 +270,14 @@ describe('Toast', () => {
 
   it('forwards ref', () => {
     let element: HTMLDivElement | null = null;
-    render(<Toast title="Ref" ref={(el) => { element = el; }} />);
+    render(
+      <Toast
+        title="Ref"
+        ref={(el) => {
+          element = el;
+        }}
+      />,
+    );
     expect(element).toBeInstanceOf(HTMLDivElement);
   });
 });
@@ -386,11 +411,7 @@ describe('AsyncStateView', () => {
     const onEmpty = vi.fn();
     const state: AsyncState<string[]> = { status: 'success', data: [], error: null };
     render(
-      <AsyncStateView
-        state={state}
-        emptyActionLabel="Create"
-        onEmptyAction={onEmpty}
-      >
+      <AsyncStateView state={state} emptyActionLabel="Create" onEmptyAction={onEmpty}>
         Content
       </AsyncStateView>,
     );
@@ -461,7 +482,16 @@ describe('AsyncStateView', () => {
   it('forwards ref', () => {
     let element: HTMLDivElement | null = null;
     const state: AsyncState<string[]> = { status: 'idle', data: null, error: null };
-    render(<AsyncStateView state={state} ref={(el) => { element = el; }}>Content</AsyncStateView>);
+    render(
+      <AsyncStateView
+        state={state}
+        ref={(el) => {
+          element = el;
+        }}
+      >
+        Content
+      </AsyncStateView>,
+    );
     expect(element).toBeInstanceOf(HTMLDivElement);
   });
 });

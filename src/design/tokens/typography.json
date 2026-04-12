@@ -3,43 +3,113 @@
   "crewspace": {
     "typography": {
       "fontFamily": {
-        "sans":  { "value": "Inter, ui-sans-serif, system-ui, -apple-system, sans-serif", "type": "fontFamily" },
-        "mono":  { "value": "'JetBrains Mono', 'Fira Code', ui-monospace, monospace", "type": "fontFamily" }
+        "sans": {
+          "value": "Inter, ui-sans-serif, system-ui, -apple-system, sans-serif",
+          "type": "fontFamily"
+        },
+        "mono": {
+          "value": "'JetBrains Mono', 'Fira Code', ui-monospace, monospace",
+          "type": "fontFamily"
+        }
       },
       "fontSize": {
-        "xs":    { "value": "0.75rem",  "type": "fontSize", "description": "12px — labels, badges" },
-        "sm":    { "value": "0.8125rem","type": "fontSize", "description": "13px — node body text, properties" },
-        "base":  { "value": "0.875rem", "type": "fontSize", "description": "14px — default UI text" },
-        "md":    { "value": "1rem",     "type": "fontSize", "description": "16px — section titles" },
-        "lg":    { "value": "1.125rem", "type": "fontSize", "description": "18px — panel headings" },
-        "xl":    { "value": "1.25rem",  "type": "fontSize", "description": "20px — page headings" },
-        "2xl":   { "value": "1.5rem",   "type": "fontSize", "description": "24px — large headings" }
+        "xs": { "value": "0.75rem", "type": "fontSize", "description": "12px — labels, badges" },
+        "sm": {
+          "value": "0.8125rem",
+          "type": "fontSize",
+          "description": "13px — node body text, properties"
+        },
+        "base": {
+          "value": "0.875rem",
+          "type": "fontSize",
+          "description": "14px — default UI text"
+        },
+        "md": { "value": "1rem", "type": "fontSize", "description": "16px — section titles" },
+        "lg": { "value": "1.125rem", "type": "fontSize", "description": "18px — panel headings" },
+        "xl": { "value": "1.25rem", "type": "fontSize", "description": "20px — page headings" },
+        "2xl": { "value": "1.5rem", "type": "fontSize", "description": "24px — large headings" }
       },
       "fontWeight": {
-        "normal":   { "value": "400", "type": "fontWeight" },
-        "medium":   { "value": "500", "type": "fontWeight" },
+        "normal": { "value": "400", "type": "fontWeight" },
+        "medium": { "value": "500", "type": "fontWeight" },
         "semibold": { "value": "600", "type": "fontWeight" },
-        "bold":     { "value": "700", "type": "fontWeight" }
+        "bold": { "value": "700", "type": "fontWeight" }
       },
       "lineHeight": {
-        "tight":  { "value": "1.25", "type": "lineHeight" },
-        "normal": { "value": "1.5",  "type": "lineHeight" },
-        "relaxed":{ "value": "1.625","type": "lineHeight" }
+        "tight": { "value": "1.25", "type": "lineHeight" },
+        "normal": { "value": "1.5", "type": "lineHeight" },
+        "relaxed": { "value": "1.625", "type": "lineHeight" }
       },
       "letterSpacing": {
-        "tight":  { "value": "-0.01em", "type": "letterSpacing" },
-        "normal": { "value": "0",       "type": "letterSpacing" },
-        "wide":   { "value": "0.025em", "type": "letterSpacing" },
-        "wider":  { "value": "0.05em",  "type": "letterSpacing" }
+        "tight": { "value": "-0.01em", "type": "letterSpacing" },
+        "normal": { "value": "0", "type": "letterSpacing" },
+        "wide": { "value": "0.025em", "type": "letterSpacing" },
+        "wider": { "value": "0.05em", "type": "letterSpacing" }
       },
       "presets": {
-        "node-title":     { "value": { "fontSize": "0.8125rem", "fontWeight": "600", "lineHeight": "1.25", "letterSpacing": "0" }, "type": "typography" },
-        "node-body":      { "value": { "fontSize": "0.75rem",   "fontWeight": "400", "lineHeight": "1.5",  "letterSpacing": "0" }, "type": "typography" },
-        "node-badge":     { "value": { "fontSize": "0.625rem",  "fontWeight": "600", "lineHeight": "1",    "letterSpacing": "0.05em" }, "type": "typography" },
-        "panel-heading":  { "value": { "fontSize": "0.8125rem", "fontWeight": "600", "lineHeight": "1.25", "letterSpacing": "0.025em" }, "type": "typography" },
-        "toolbar-label":  { "value": { "fontSize": "0.6875rem", "fontWeight": "500", "lineHeight": "1",    "letterSpacing": "0.025em" }, "type": "typography" },
-        "property-label": { "value": { "fontSize": "0.75rem",   "fontWeight": "500", "lineHeight": "1.5",  "letterSpacing": "0" }, "type": "typography" },
-        "property-value": { "value": { "fontSize": "0.8125rem", "fontWeight": "400", "lineHeight": "1.5",  "letterSpacing": "0" }, "type": "typography" }
+        "node-title": {
+          "value": {
+            "fontSize": "0.8125rem",
+            "fontWeight": "600",
+            "lineHeight": "1.25",
+            "letterSpacing": "0"
+          },
+          "type": "typography"
+        },
+        "node-body": {
+          "value": {
+            "fontSize": "0.75rem",
+            "fontWeight": "400",
+            "lineHeight": "1.5",
+            "letterSpacing": "0"
+          },
+          "type": "typography"
+        },
+        "node-badge": {
+          "value": {
+            "fontSize": "0.625rem",
+            "fontWeight": "600",
+            "lineHeight": "1",
+            "letterSpacing": "0.05em"
+          },
+          "type": "typography"
+        },
+        "panel-heading": {
+          "value": {
+            "fontSize": "0.8125rem",
+            "fontWeight": "600",
+            "lineHeight": "1.25",
+            "letterSpacing": "0.025em"
+          },
+          "type": "typography"
+        },
+        "toolbar-label": {
+          "value": {
+            "fontSize": "0.6875rem",
+            "fontWeight": "500",
+            "lineHeight": "1",
+            "letterSpacing": "0.025em"
+          },
+          "type": "typography"
+        },
+        "property-label": {
+          "value": {
+            "fontSize": "0.75rem",
+            "fontWeight": "500",
+            "lineHeight": "1.5",
+            "letterSpacing": "0"
+          },
+          "type": "typography"
+        },
+        "property-value": {
+          "value": {
+            "fontSize": "0.8125rem",
+            "fontWeight": "400",
+            "lineHeight": "1.5",
+            "letterSpacing": "0"
+          },
+          "type": "typography"
+        }
       }
     }
   }

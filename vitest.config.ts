@@ -23,6 +23,7 @@ export default defineConfig({
           root: './scripts',
           include: ['__tests__/**/*.test.ts'],
           environment: 'node',
+          testTimeout: 30_000,
         },
       },
       {

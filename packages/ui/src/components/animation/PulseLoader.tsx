@@ -46,7 +46,15 @@ export const PulseLoader = forwardRef<HTMLDivElement, PulseLoaderProps>(
             }}
           />
         ))}
-        <span style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)' }}>
+        <span
+          style={{
+            position: 'absolute',
+            width: '1px',
+            height: '1px',
+            overflow: 'hidden',
+            clip: 'rect(0,0,0,0)',
+          }}
+        >
           Loading...
         </span>
       </div>

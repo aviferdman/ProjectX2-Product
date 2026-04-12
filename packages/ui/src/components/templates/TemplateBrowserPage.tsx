@@ -13,18 +13,14 @@ import { TemplateGrid } from './TemplateGrid.js';
 import { TemplateEmptyState } from './TemplateEmptyState.js';
 import { TemplatePagination } from './TemplatePagination.js';
 
-export interface TemplateBrowserPageProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface TemplateBrowserPageProps extends React.HTMLAttributes<HTMLDivElement> {
   templates: TemplateSummary[];
   loading?: boolean;
   onUseTemplate?: ((id: string) => void) | undefined;
   onPreview?: ((id: string) => void) | undefined;
 }
 
-function applyFilters(
-  templates: TemplateSummary[],
-  filters: TemplateFilters,
-): TemplateSummary[] {
+function applyFilters(templates: TemplateSummary[], filters: TemplateFilters): TemplateSummary[] {
   let result = [...templates];
 
   // Search filter
@@ -65,136 +61,124 @@ function applyFilters(
   return result;
 }
 
-export const TemplateBrowserPage = forwardRef<
-  HTMLDivElement,
-  TemplateBrowserPageProps
->(function TemplateBrowserPage(
-  { templates, loading = false, onUseTemplate, onPreview, className, ...props },
-  ref,
-) {
-  const [filters, setFilters] = useState<TemplateFilters>({
-    search: '',
-    category: 'all',
-    sort: { field: 'popularity', direction: 'desc' },
-  });
-  const [currentPage, setCurrentPage] = useState(1);
+export const TemplateBrowserPage = forwardRef<HTMLDivElement, TemplateBrowserPageProps>(
+  function TemplateBrowserPage(
+    { templates, loading = false, onUseTemplate, onPreview, className, ...props },
+    ref,
+  ) {
+    const [filters, setFilters] = useState<TemplateFilters>({
+      search: '',
+      category: 'all',
+      sort: { field: 'popularity', direction: 'desc' },
+    });
+    const [currentPage, setCurrentPage] = useState(1);
 
-  const filtered = useMemo(
-    () => applyFilters(templates, filters),
-    [templates, filters],
-  );
+    const filtered = useMemo(() => applyFilters(templates, filters), [templates, filters]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
-  const safePage = Math.min(currentPage, totalPages);
-  const paginated = filtered.slice(
-    (safePage - 1) * ITEMS_PER_PAGE,
-    safePage * ITEMS_PER_PAGE,
-  );
+    const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+    const safePage = Math.min(currentPage, totalPages);
+    const paginated = filtered.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
 
-  const handleSearchChange = (value: string) => {
-    setFilters((prev) => ({ ...prev, search: value }));
-    setCurrentPage(1);
-  };
+    const handleSearchChange = (value: string) => {
+      setFilters((prev) => ({ ...prev, search: value }));
+      setCurrentPage(1);
+    };
 
-  const handleCategoryChange = (category: TemplateCategory | 'all') => {
-    setFilters((prev) => ({ ...prev, category }));
-    setCurrentPage(1);
-  };
+    const handleCategoryChange = (category: TemplateCategory | 'all') => {
+      setFilters((prev) => ({ ...prev, category }));
+      setCurrentPage(1);
+    };
 
-  const handleSortChange = (sort: {
-    field: TemplateSortField;
-    direction: SortDirection;
-  }) => {
-    setFilters((prev) => ({ ...prev, sort }));
-    setCurrentPage(1);
-  };
+    const handleSortChange = (sort: { field: TemplateSortField; direction: SortDirection }) => {
+      setFilters((prev) => ({ ...prev, sort }));
+      setCurrentPage(1);
+    };
 
-  const handleClearFilters = () => {
-    setFilters({ search: '', category: 'all', sort: { field: 'popularity', direction: 'desc' } });
-    setCurrentPage(1);
-  };
+    const handleClearFilters = () => {
+      setFilters({ search: '', category: 'all', sort: { field: 'popularity', direction: 'desc' } });
+      setCurrentPage(1);
+    };
 
-  const hasActiveFilters = filters.search !== '' || filters.category !== 'all';
+    const hasActiveFilters = filters.search !== '' || filters.category !== 'all';
 
-  return (
-    <div
-      ref={ref}
-      className={clsx(
-        'flex flex-col gap-6',
-        'max-w-[var(--tpl-content-max-w,1440px)] mx-auto',
-        'p-tpl-content-p',
-        className,
-      )}
-      {...props}
-    >
-      {/* Page header */}
-      <div>
-        <h1 className="text-tpl-page-title text-[var(--cs-text-primary)]">
-          Template Library
-        </h1>
-        <p className="text-tpl-page-subtitle text-[var(--cs-text-secondary)] mt-1">
-          Browse pre-built workflow templates to get started quickly
-        </p>
-      </div>
-
-      {/* Toolbar: search, filters, sort */}
-      <TemplateToolbar
-        search={filters.search}
-        onSearchChange={handleSearchChange}
-        category={filters.category}
-        onCategoryChange={handleCategoryChange}
-        sort={filters.sort}
-        onSortChange={handleSortChange}
-        resultCount={filtered.length}
-        totalCount={templates.length}
-      />
-
-      {/* Content area */}
-      {loading ? (
-        <div className="flex items-center justify-center py-20" role="status">
-          <svg
-            className="h-8 w-8 animate-spin text-indigo-500"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-          >
-            <circle
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeDasharray="31.4 31.4"
-              strokeLinecap="round"
-            />
-          </svg>
-          <span className="sr-only">Loading templates…</span>
+    return (
+      <div
+        ref={ref}
+        className={clsx(
+          'flex flex-col gap-6',
+          'max-w-[var(--tpl-content-max-w,1440px)] mx-auto',
+          'p-tpl-content-p',
+          className,
+        )}
+        {...props}
+      >
+        {/* Page header */}
+        <div>
+          <h1 className="text-tpl-page-title text-[var(--cs-text-primary)]">Template Library</h1>
+          <p className="text-tpl-page-subtitle text-[var(--cs-text-secondary)] mt-1">
+            Browse pre-built workflow templates to get started quickly
+          </p>
         </div>
-      ) : paginated.length === 0 ? (
-        <TemplateEmptyState
-          heading={hasActiveFilters ? 'No matching templates' : 'No templates yet'}
-          description={
-            hasActiveFilters
-              ? 'Try adjusting your search or filters to find what you\'re looking for.'
-              : 'Templates will appear here once they are created.'
-          }
-          isSearchResult={hasActiveFilters}
-          onClearFilters={handleClearFilters}
+
+        {/* Toolbar: search, filters, sort */}
+        <TemplateToolbar
+          search={filters.search}
+          onSearchChange={handleSearchChange}
+          category={filters.category}
+          onCategoryChange={handleCategoryChange}
+          sort={filters.sort}
+          onSortChange={handleSortChange}
+          resultCount={filtered.length}
+          totalCount={templates.length}
         />
-      ) : (
-        <>
-          <TemplateGrid
-            templates={paginated}
-            onUseTemplate={onUseTemplate}
-            onPreview={onPreview}
+
+        {/* Content area */}
+        {loading ? (
+          <div className="flex items-center justify-center py-20" role="status">
+            <svg
+              className="h-8 w-8 animate-spin text-indigo-500"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeDasharray="31.4 31.4"
+                strokeLinecap="round"
+              />
+            </svg>
+            <span className="sr-only">Loading templates…</span>
+          </div>
+        ) : paginated.length === 0 ? (
+          <TemplateEmptyState
+            heading={hasActiveFilters ? 'No matching templates' : 'No templates yet'}
+            description={
+              hasActiveFilters
+                ? "Try adjusting your search or filters to find what you're looking for."
+                : 'Templates will appear here once they are created.'
+            }
+            isSearchResult={hasActiveFilters}
+            onClearFilters={handleClearFilters}
           />
-          <TemplatePagination
-            currentPage={safePage}
-            totalPages={totalPages}
-            onChange={setCurrentPage}
-          />
-        </>
-      )}
-    </div>
-  );
-});
+        ) : (
+          <>
+            <TemplateGrid
+              templates={paginated}
+              onUseTemplate={onUseTemplate}
+              onPreview={onPreview}
+            />
+            <TemplatePagination
+              currentPage={safePage}
+              totalPages={totalPages}
+              onChange={setCurrentPage}
+            />
+          </>
+        )}
+      </div>
+    );
+  },
+);

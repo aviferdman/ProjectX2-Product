@@ -48,8 +48,10 @@ describe('Form validation design tokens (TASK-187)', () => {
   });
 
   it('contains all required token groups', () => {
-    const form = (tokens as Record<string, Record<string, unknown>>).crewspace
-      .form as Record<string, unknown>;
+    const form = (tokens as Record<string, Record<string, unknown>>).crewspace.form as Record<
+      string,
+      unknown
+    >;
     expect(form).toHaveProperty('validation');
     expect(form).toHaveProperty('label');
     expect(form).toHaveProperty('helper');
@@ -59,8 +61,10 @@ describe('Form validation design tokens (TASK-187)', () => {
 
   it('each validation variant has border, text, icon, and bg tokens', () => {
     const validation = (
-      (tokens as Record<string, Record<string, unknown>>).crewspace
-        .form as Record<string, Record<string, unknown>>
+      (tokens as Record<string, Record<string, unknown>>).crewspace.form as Record<
+        string,
+        Record<string, unknown>
+      >
     ).validation as Record<string, Record<string, unknown>>;
     for (const variant of ['valid', 'invalid', 'warning']) {
       const group = validation[variant];

@@ -23,8 +23,10 @@ import {
 /* Public types                                                        */
 /* ------------------------------------------------------------------ */
 
-export interface TemplateBrowserWithInstantiationProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface TemplateBrowserWithInstantiationProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   /** Templates to display in the browser. */
   templates: TemplateSummary[];
 
@@ -59,20 +61,11 @@ export const TemplateBrowserWithInstantiation = forwardRef<
   HTMLDivElement,
   TemplateBrowserWithInstantiationProps
 >(function TemplateBrowserWithInstantiation(
-  {
-    templates,
-    loading = false,
-    onInstantiate,
-    onSuccess,
-    onError,
-    onGoToWorkflow,
-    ...props
-  },
+  { templates, loading = false, onInstantiate, onSuccess, onError, onGoToWorkflow, ...props },
   ref,
 ) {
   // Preview modal state
-  const [previewTemplate, setPreviewTemplate] =
-    useState<TemplateSummary | null>(null);
+  const [previewTemplate, setPreviewTemplate] = useState<TemplateSummary | null>(null);
 
   // Template instantiation hook
   const instantiation = useTemplateInstantiation({

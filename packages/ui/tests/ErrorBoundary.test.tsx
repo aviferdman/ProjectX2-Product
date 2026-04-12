@@ -61,11 +61,7 @@ describe('ErrorBoundary', () => {
 
   it('renders custom fallback render prop with error info', () => {
     render(
-      <ErrorBoundary
-        fallback={({ error }) => (
-          <div>Error: {error.message}</div>
-        )}
-      >
+      <ErrorBoundary fallback={({ error }) => <div>Error: {error.message}</div>}>
         <ThrowingComponent shouldThrow />
       </ErrorBoundary>,
     );
@@ -126,9 +122,7 @@ describe('ErrorBoundary', () => {
 
     const { rerender } = render(
       <ErrorBoundary
-        fallback={({ resetErrorBoundary }) => (
-          <button onClick={resetErrorBoundary}>Reset</button>
-        )}
+        fallback={({ resetErrorBoundary }) => <button onClick={resetErrorBoundary}>Reset</button>}
       >
         <Conditional />
       </ErrorBoundary>,
@@ -140,9 +134,7 @@ describe('ErrorBoundary', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
     rerender(
       <ErrorBoundary
-        fallback={({ resetErrorBoundary }) => (
-          <button onClick={resetErrorBoundary}>Reset</button>
-        )}
+        fallback={({ resetErrorBoundary }) => <button onClick={resetErrorBoundary}>Reset</button>}
       >
         <Conditional />
       </ErrorBoundary>,

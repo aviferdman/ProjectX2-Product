@@ -41,9 +41,7 @@ describe('useAsyncError', () => {
   it('transitions to error on failure', async () => {
     const fn = vi.fn().mockRejectedValue(new Error('Network failure'));
     const onError = vi.fn();
-    const { result } = renderHook(() =>
-      useAsyncError(fn, { onError }),
-    );
+    const { result } = renderHook(() => useAsyncError(fn, { onError }));
 
     await act(async () => {
       await result.current.execute();
@@ -88,9 +86,7 @@ describe('useAsyncError', () => {
       .mockRejectedValueOnce(new Error('Fail 2'))
       .mockResolvedValue('success');
 
-    const { result } = renderHook(() =>
-      useAsyncError(fn, { maxRetries: 2, retryDelayMs: 100 }),
-    );
+    const { result } = renderHook(() => useAsyncError(fn, { maxRetries: 2, retryDelayMs: 100 }));
 
     const promise = act(async () => {
       const executePromise = result.current.execute();

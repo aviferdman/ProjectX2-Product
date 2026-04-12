@@ -20,7 +20,10 @@ export interface ShimmerProps extends HTMLAttributes<HTMLDivElement> {
 const toUnit = (v: string | number): string => (typeof v === 'number' ? `${v}px` : v);
 
 export const Shimmer = forwardRef<HTMLDivElement, ShimmerProps>(
-  ({ width = '100%', height = '100%', animate = true, className, style, children, ...rest }, ref) => {
+  (
+    { width = '100%', height = '100%', animate = true, className, style, children, ...rest },
+    ref,
+  ) => {
     return (
       <div
         ref={ref}
@@ -46,12 +49,21 @@ export const Shimmer = forwardRef<HTMLDivElement, ShimmerProps>(
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(90deg, transparent 0%, rgba(113,113,122,0.12) 50%, transparent 100%)',
+              background:
+                'linear-gradient(90deg, transparent 0%, rgba(113,113,122,0.12) 50%, transparent 100%)',
               animation: 'cs-loading-shimmer 2s linear infinite',
             }}
           />
         )}
-        <span style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)' }}>
+        <span
+          style={{
+            position: 'absolute',
+            width: '1px',
+            height: '1px',
+            overflow: 'hidden',
+            clip: 'rect(0,0,0,0)',
+          }}
+        >
           Loading...
         </span>
       </div>

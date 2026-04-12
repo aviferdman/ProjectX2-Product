@@ -5,8 +5,10 @@ import { IntegrationCategoryBadge } from './IntegrationCategoryBadge.js';
 import { VerifiedBadge } from './VerifiedBadge.js';
 import { StarRating } from './StarRating.js';
 
-export interface IntegrationCardProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
+export interface IntegrationCardProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'onClick'
+> {
   integration: IntegrationSummary;
   onInstall?: ((id: string) => void) | undefined;
   onViewDetails?: ((id: string) => void) | undefined;
@@ -18,10 +20,7 @@ function formatInstallCount(count: number): string {
 }
 
 export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
-  function IntegrationCard(
-    { integration, onInstall, onViewDetails, className, ...props },
-    ref,
-  ) {
+  function IntegrationCard({ integration, onInstall, onViewDetails, className, ...props }, ref) {
     const handleInstall = (e: React.MouseEvent) => {
       e.stopPropagation();
       onInstall?.(integration.id);
@@ -74,8 +73,21 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
             className="text-slate-600 opacity-40"
             aria-hidden="true"
           >
-            <rect x="8" y="8" width="32" height="32" rx="8" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M18 24h12M24 18v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <rect
+              x="8"
+              y="8"
+              width="32"
+              height="32"
+              rx="8"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M18 24h12M24 18v12"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
 
           {/* Badge overlays */}
@@ -104,7 +116,15 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
               )}
               aria-label={`View details for ${integration.name}`}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
@@ -124,7 +144,15 @@ export const IntegrationCard = forwardRef<HTMLDivElement, IntegrationCardProps>(
               )}
               aria-label={`Install ${integration.name}`}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
               </svg>
               Install

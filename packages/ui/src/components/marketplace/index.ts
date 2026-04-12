@@ -5,18 +5,9 @@ export {
 } from './IntegrationCategoryBadge.js';
 export { VerifiedBadge, type VerifiedBadgeProps } from './VerifiedBadge.js';
 export { StarRating, type StarRatingProps } from './StarRating.js';
-export {
-  IntegrationCard,
-  type IntegrationCardProps,
-} from './IntegrationCard.js';
-export {
-  IntegrationGrid,
-  type IntegrationGridProps,
-} from './IntegrationGrid.js';
-export {
-  MarketplaceSearchBar,
-  type MarketplaceSearchBarProps,
-} from './MarketplaceSearchBar.js';
+export { IntegrationCard, type IntegrationCardProps } from './IntegrationCard.js';
+export { IntegrationGrid, type IntegrationGridProps } from './IntegrationGrid.js';
+export { MarketplaceSearchBar, type MarketplaceSearchBarProps } from './MarketplaceSearchBar.js';
 export {
   MarketplaceCategoryFilter,
   type MarketplaceCategoryFilterProps,
@@ -25,18 +16,9 @@ export {
   MarketplaceSortDropdown,
   type MarketplaceSortDropdownProps,
 } from './MarketplaceSortDropdown.js';
-export {
-  MarketplaceToolbar,
-  type MarketplaceToolbarProps,
-} from './MarketplaceToolbar.js';
-export {
-  MarketplaceEmptyState,
-  type MarketplaceEmptyStateProps,
-} from './MarketplaceEmptyState.js';
-export {
-  MarketplacePagination,
-  type MarketplacePaginationProps,
-} from './MarketplacePagination.js';
+export { MarketplaceToolbar, type MarketplaceToolbarProps } from './MarketplaceToolbar.js';
+export { MarketplaceEmptyState, type MarketplaceEmptyStateProps } from './MarketplaceEmptyState.js';
+export { MarketplacePagination, type MarketplacePaginationProps } from './MarketplacePagination.js';
 export {
   MarketplaceBrowserPage,
   type MarketplaceBrowserPageProps,

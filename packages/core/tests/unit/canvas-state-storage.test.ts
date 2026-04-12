@@ -10,7 +10,10 @@ import {
   InMemoryCanvasStateStorage,
   _resetCanvasIdCounter,
 } from '../../src/canvas/canvas-state-storage.js';
-import { CanvasNotFoundError, CanvasValidationError } from '../../src/canvas/canvas-state-errors.js';
+import {
+  CanvasNotFoundError,
+  CanvasValidationError,
+} from '../../src/canvas/canvas-state-errors.js';
 import type {
   CreateCanvasStateInput,
   CanvasSnapshot,
@@ -26,9 +29,7 @@ function makeSnapshot(overrides?: Partial<CanvasSnapshot>): CanvasSnapshot {
       { id: 'n1', kind: 'agent', label: 'Researcher', position: { x: 100, y: 200 } },
       { id: 'n2', kind: 'task', label: 'Search', position: { x: 300, y: 200 } },
     ],
-    edges: overrides?.edges ?? [
-      { id: 'e1', source: 'n1', target: 'n2' },
-    ],
+    edges: overrides?.edges ?? [{ id: 'e1', source: 'n1', target: 'n2' }],
     viewport: overrides?.viewport ?? { x: 0, y: 0, zoom: 1.0 },
   };
 }
@@ -81,9 +82,7 @@ describe('InMemoryCanvasStateStorage', () => {
     });
 
     it('should store metadata', async () => {
-      const result = await storage.create(
-        makeCreateInput({ metadata: { author: 'test-user' } }),
-      );
+      const result = await storage.create(makeCreateInput({ metadata: { author: 'test-user' } }));
       expect(result.metadata).toEqual({ author: 'test-user' });
     });
 
@@ -100,9 +99,9 @@ describe('InMemoryCanvasStateStorage', () => {
     });
 
     it('should reject name over 200 chars', async () => {
-      await expect(
-        storage.create(makeCreateInput({ name: 'a'.repeat(201) })),
-      ).rejects.toThrow(CanvasValidationError);
+      await expect(storage.create(makeCreateInput({ name: 'a'.repeat(201) }))).rejects.toThrow(
+        CanvasValidationError,
+      );
     });
 
     it('should reject duplicate node ids', async () => {
@@ -113,66 +112,56 @@ describe('InMemoryCanvasStateStorage', () => {
         ],
         edges: [],
       });
-      await expect(
-        storage.create(makeCreateInput({ snapshot })),
-      ).rejects.toThrow(/Duplicate node id/);
+      await expect(storage.create(makeCreateInput({ snapshot }))).rejects.toThrow(
+        /Duplicate node id/,
+      );
     });
 
     it('should reject edges referencing unknown nodes', async () => {
       const snapshot = makeSnapshot({
-        nodes: [
-          { id: 'n1', kind: 'agent', label: 'A', position: { x: 0, y: 0 } },
-        ],
+        nodes: [{ id: 'n1', kind: 'agent', label: 'A', position: { x: 0, y: 0 } }],
         edges: [{ id: 'e1', source: 'n1', target: 'unknown' }],
       });
-      await expect(
-        storage.create(makeCreateInput({ snapshot })),
-      ).rejects.toThrow(/unknown target node/);
+      await expect(storage.create(makeCreateInput({ snapshot }))).rejects.toThrow(
+        /unknown target node/,
+      );
     });
 
     it('should reject self-referencing edges', async () => {
       const snapshot = makeSnapshot({
-        nodes: [
-          { id: 'n1', kind: 'agent', label: 'A', position: { x: 0, y: 0 } },
-        ],
+        nodes: [{ id: 'n1', kind: 'agent', label: 'A', position: { x: 0, y: 0 } }],
         edges: [{ id: 'e1', source: 'n1', target: 'n1' }],
       });
-      await expect(
-        storage.create(makeCreateInput({ snapshot })),
-      ).rejects.toThrow(/cannot connect a node to itself/);
+      await expect(storage.create(makeCreateInput({ snapshot }))).rejects.toThrow(
+        /cannot connect a node to itself/,
+      );
     });
 
     it('should reject non-positive zoom', async () => {
       const snapshot = makeSnapshot({
         viewport: { x: 0, y: 0, zoom: 0 },
       });
-      await expect(
-        storage.create(makeCreateInput({ snapshot })),
-      ).rejects.toThrow(/zoom must be positive/);
+      await expect(storage.create(makeCreateInput({ snapshot }))).rejects.toThrow(
+        /zoom must be positive/,
+      );
     });
 
     it('should reject nodes without position', async () => {
       const snapshot = makeSnapshot({
-        nodes: [
-          { id: 'n1', kind: 'agent', label: 'A', position: undefined as any },
-        ],
+        nodes: [{ id: 'n1', kind: 'agent', label: 'A', position: undefined as any }],
         edges: [],
       });
-      await expect(
-        storage.create(makeCreateInput({ snapshot })),
-      ).rejects.toThrow(/position/);
+      await expect(storage.create(makeCreateInput({ snapshot }))).rejects.toThrow(/position/);
     });
 
     it('should reject nodes without label', async () => {
       const snapshot = makeSnapshot({
-        nodes: [
-          { id: 'n1', kind: 'agent', label: '', position: { x: 0, y: 0 } },
-        ],
+        nodes: [{ id: 'n1', kind: 'agent', label: '', position: { x: 0, y: 0 } }],
         edges: [],
       });
-      await expect(
-        storage.create(makeCreateInput({ snapshot })),
-      ).rejects.toThrow(/non-empty label/);
+      await expect(storage.create(makeCreateInput({ snapshot }))).rejects.toThrow(
+        /non-empty label/,
+      );
     });
   });
 
@@ -271,9 +260,7 @@ describe('InMemoryCanvasStateStorage', () => {
     it('should increment version when snapshot changes', async () => {
       const created = await storage.create(makeCreateInput());
       const newSnapshot = makeSnapshot({
-        nodes: [
-          { id: 'n1', kind: 'agent', label: 'Updated Agent', position: { x: 50, y: 50 } },
-        ],
+        nodes: [{ id: 'n1', kind: 'agent', label: 'Updated Agent', position: { x: 50, y: 50 } }],
         edges: [],
         viewport: { x: 10, y: 20, zoom: 1.5 },
       });
@@ -293,16 +280,16 @@ describe('InMemoryCanvasStateStorage', () => {
     });
 
     it('should throw CanvasNotFoundError for unknown ID', async () => {
-      await expect(
-        storage.update('nonexistent', { name: 'Fail' }),
-      ).rejects.toThrow(CanvasNotFoundError);
+      await expect(storage.update('nonexistent', { name: 'Fail' })).rejects.toThrow(
+        CanvasNotFoundError,
+      );
     });
 
     it('should reject empty name on update', async () => {
       const created = await storage.create(makeCreateInput());
-      await expect(
-        storage.update(created.id, { name: '   ' }),
-      ).rejects.toThrow(CanvasValidationError);
+      await expect(storage.update(created.id, { name: '   ' })).rejects.toThrow(
+        CanvasValidationError,
+      );
     });
 
     it('should update updatedAt timestamp', async () => {

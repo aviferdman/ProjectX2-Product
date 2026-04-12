@@ -8,14 +8,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { Agent } from '../../src/agent/agent.js';
 import type { LLMProvider, LLMResponse, LLMMessage } from '../../src/types/index.js';
-import {
-  InMemoryWorkflowStorage,
-  _resetIdCounter,
-} from '../../src/workflow/index.js';
-import {
-  WorkflowExecutor,
-  _resetRunCounter,
-} from '../../src/workflow/workflow-executor.js';
+import { InMemoryWorkflowStorage, _resetIdCounter } from '../../src/workflow/index.js';
+import { WorkflowExecutor, _resetRunCounter } from '../../src/workflow/workflow-executor.js';
 import { WorkflowNotFoundError } from '../../src/workflow/workflow-errors.js';
 import {
   WorkflowNotActiveError,
@@ -120,8 +114,12 @@ function createMockUsageTracker() {
     listRuns: vi.fn(),
     checkLimits: vi.fn().mockResolvedValue({ allowed: true }),
     getUsageSummary: vi.fn(),
-    get storage() { return {} as any; },
-    get plans() { return {} as any; },
+    get storage() {
+      return {} as any;
+    },
+    get plans() {
+      return {} as any;
+    },
   };
 }
 
@@ -292,17 +290,18 @@ describe('WorkflowExecutor', () => {
       const slowProvider: LLMProvider = {
         name: 'slow-provider',
         generateText: vi.fn(
-          () => new Promise<LLMResponse>((resolve) => {
-            setTimeout(
-              () =>
-                resolve({
-                  content: 'Slow response',
-                  tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
-                  finishReason: 'stop',
-                }),
-              5000,
-            );
-          }),
+          () =>
+            new Promise<LLMResponse>((resolve) => {
+              setTimeout(
+                () =>
+                  resolve({
+                    content: 'Slow response',
+                    tokenUsage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+                    finishReason: 'stop',
+                  }),
+                5000,
+              );
+            }),
         ),
       };
 
@@ -324,9 +323,9 @@ describe('WorkflowExecutor', () => {
       });
 
       const workflow = await storage.create(makeWorkflowInput());
-      await expect(
-        slowExecutor.execute(workflow.id, { timeout: 50 }),
-      ).rejects.toThrow(WorkflowExecutionTimeoutError);
+      await expect(slowExecutor.execute(workflow.id, { timeout: 50 })).rejects.toThrow(
+        WorkflowExecutionTimeoutError,
+      );
     });
   });
 
@@ -563,9 +562,24 @@ describe('WorkflowExecutor', () => {
 
       const tasks = [
         { id: 't1', description: 'Task 1', agentId: 'a1' },
-        { id: 't2', description: 'Task 2', agentId: 'a2', dependencies: ['t1'] as readonly string[] },
-        { id: 't3', description: 'Task 3', agentId: 'a3', dependencies: ['t1'] as readonly string[] },
-        { id: 't4', description: 'Task 4', agentId: 'a1', dependencies: ['t2', 't3'] as readonly string[] },
+        {
+          id: 't2',
+          description: 'Task 2',
+          agentId: 'a2',
+          dependencies: ['t1'] as readonly string[],
+        },
+        {
+          id: 't3',
+          description: 'Task 3',
+          agentId: 'a3',
+          dependencies: ['t1'] as readonly string[],
+        },
+        {
+          id: 't4',
+          description: 'Task 4',
+          agentId: 'a1',
+          dependencies: ['t2', 't3'] as readonly string[],
+        },
       ];
 
       const workflow = await storage.create(makeWorkflowInput({ agents, tasks }));
@@ -655,8 +669,7 @@ describe('WorkflowExecutor', () => {
         storage,
         agentResolver: (defs) =>
           defs.map(
-            (d) =>
-              new Agent({ id: d.id, role: d.role, goal: d.goal, llmProvider: slowProvider }),
+            (d) => new Agent({ id: d.id, role: d.role, goal: d.goal, llmProvider: slowProvider }),
           ),
         requireActive: false,
       });

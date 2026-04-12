@@ -23,12 +23,12 @@ function pickInterval(durationMs: number, widthPx: number): { major: number; min
   const targetMajorMs = targetMajorPx / pxPerMs;
 
   const candidates = [
-    { major: 100, minor: 20 },       // 100ms
-    { major: 500, minor: 100 },      // 500ms
-    { major: 1_000, minor: 200 },    // 1s
-    { major: 5_000, minor: 1_000 },  // 5s
+    { major: 100, minor: 20 }, // 100ms
+    { major: 500, minor: 100 }, // 500ms
+    { major: 1_000, minor: 200 }, // 1s
+    { major: 5_000, minor: 1_000 }, // 5s
     { major: 30_000, minor: 5_000 }, // 30s
-    { major: 60_000, minor: 10_000 },// 1min
+    { major: 60_000, minor: 10_000 }, // 1min
     { major: 300_000, minor: 60_000 }, // 5min
     { major: 3_600_000, minor: 600_000 }, // 1h
   ];
@@ -79,12 +79,7 @@ function generateTicks(startMs: number, endMs: number, widthPx: number): Tick[] 
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 
-export const TimeAxis: React.FC<TimeAxisProps> = ({
-  width,
-  startMs,
-  endMs,
-  onAxisClick,
-}) => {
+export const TimeAxis: React.FC<TimeAxisProps> = ({ width, startMs, endMs, onAxisClick }) => {
   const duration = endMs - startMs;
   const ticks = generateTicks(startMs, endMs, width);
 

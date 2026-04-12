@@ -52,7 +52,9 @@ describe('LazyModule', () => {
   it('sets error status on failure and calls onError', async () => {
     const onError = vi.fn();
     const lazy = new LazyModule({
-      loader: async () => { throw new Error('network'); },
+      loader: async () => {
+        throw new Error('network');
+      },
       onError,
     });
 
@@ -93,7 +95,9 @@ describe('LazyModule', () => {
 
     it('fails after exhausting all retries', async () => {
       vi.useRealTimers(); // use real timers for this specific test
-      const loader = vi.fn(async () => { throw new Error('permanent'); });
+      const loader = vi.fn(async () => {
+        throw new Error('permanent');
+      });
 
       const lazy = new LazyModule({
         loader,

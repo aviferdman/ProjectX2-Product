@@ -17,11 +17,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { clsx } from 'clsx';
 import { TimelineChart } from './TimelineChart.js';
 import { PlaybackControls } from './PlaybackControls.js';
-import type {
-  TimelineAgent,
-  TimelineEvent,
-  PlaybackSpeed,
-} from './types.js';
+import type { TimelineAgent, TimelineEvent, PlaybackSpeed } from './types.js';
 import { useTimelinePlayback } from '../../hooks/useTimelinePlayback.js';
 import type { UseTimelinePlaybackOptions } from '../../hooks/useTimelinePlayback.js';
 
@@ -79,17 +75,8 @@ export const TimelinePlayer: React.FC<TimelinePlayerProps> = ({
     [initialSpeed, onPlayheadChange, onPlaybackComplete],
   );
 
-  const {
-    state,
-    play,
-    pause,
-    stepForward,
-    stepBackward,
-    jumpToStart,
-    jumpToEnd,
-    seek,
-    setSpeed,
-  } = useTimelinePlayback(events, hookOptions);
+  const { state, play, pause, stepForward, stepBackward, jumpToStart, jumpToEnd, seek, setSpeed } =
+    useTimelinePlayback(events, hookOptions);
 
   // Determine which event is currently active for highlighting
   const currentEventId = useMemo(() => {
@@ -133,8 +120,10 @@ export const TimelinePlayer: React.FC<TimelinePlayerProps> = ({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       // Only handle shortcuts when focus is within the player
-      if (!containerRef.current?.contains(document.activeElement) &&
-          document.activeElement !== containerRef.current) {
+      if (
+        !containerRef.current?.contains(document.activeElement) &&
+        document.activeElement !== containerRef.current
+      ) {
         return;
       }
 
@@ -149,15 +138,13 @@ export const TimelinePlayer: React.FC<TimelinePlayerProps> = ({
           break;
         case 'ArrowRight':
           // Only handle when not focused on the scrubber (which has its own handlers)
-          if (!(e.target instanceof HTMLElement) ||
-              e.target.getAttribute('role') !== 'slider') {
+          if (!(e.target instanceof HTMLElement) || e.target.getAttribute('role') !== 'slider') {
             e.preventDefault();
             stepForward();
           }
           break;
         case 'ArrowLeft':
-          if (!(e.target instanceof HTMLElement) ||
-              e.target.getAttribute('role') !== 'slider') {
+          if (!(e.target instanceof HTMLElement) || e.target.getAttribute('role') !== 'slider') {
             e.preventDefault();
             stepBackward();
           }

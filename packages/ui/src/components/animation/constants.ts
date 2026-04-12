@@ -11,7 +11,14 @@
 /* ------------------------------------------------------------------ */
 
 /** Animation variant for enter/exit transitions */
-export type AnimationVariant = 'fade' | 'slideUp' | 'slideDown' | 'slideLeft' | 'slideRight' | 'scale' | 'spring';
+export type AnimationVariant =
+  | 'fade'
+  | 'slideUp'
+  | 'slideDown'
+  | 'slideLeft'
+  | 'slideRight'
+  | 'scale'
+  | 'spring';
 
 /** Current phase of an animation lifecycle */
 export type AnimationPhase = 'idle' | 'entering' | 'entered' | 'exiting' | 'exited';

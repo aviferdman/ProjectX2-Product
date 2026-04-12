@@ -40,11 +40,7 @@ export function maxLength(maxLen: number, message?: string): FieldValidator {
 }
 
 /** Creates a validator that warns when value approaches maxLen */
-export function maxLengthWarning(
-  warnAt: number,
-  maxLen: number,
-  message?: string,
-): FieldValidator {
+export function maxLengthWarning(warnAt: number, maxLen: number, message?: string): FieldValidator {
   return (value: string): FieldValidationResult => {
     if (value.length >= warnAt && value.length <= maxLen) {
       return {

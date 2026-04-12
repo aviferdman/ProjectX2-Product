@@ -15,5 +15,9 @@ if (!root) {
 }
 
 createRoot(root).render(
-  React.createElement(React.StrictMode, null, React.createElement(App, { authAdapter: stubAuthAdapter })),
+  React.createElement(
+    React.StrictMode,
+    null,
+    React.createElement(App, { authAdapter: stubAuthAdapter }),
+  ),
 );

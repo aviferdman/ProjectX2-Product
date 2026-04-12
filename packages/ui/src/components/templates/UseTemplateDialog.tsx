@@ -19,8 +19,10 @@ import type {
 /* Public types                                                        */
 /* ------------------------------------------------------------------ */
 
-export interface UseTemplateDialogProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface UseTemplateDialogProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   /** The template being instantiated, or `null` to hide the dialog. */
   template: TemplateSummary | null;
 
@@ -121,10 +123,7 @@ function FormView({ template, onSubmit, onCancel }: FormViewProps) {
 
       {/* Workflow name */}
       <div>
-        <label
-          htmlFor="workflow-name"
-          className="block text-sm font-medium text-slate-300 mb-1"
-        >
+        <label htmlFor="workflow-name" className="block text-sm font-medium text-slate-300 mb-1">
           Workflow Name
         </label>
         <input
@@ -151,8 +150,7 @@ function FormView({ template, onSubmit, onCancel }: FormViewProps) {
           htmlFor="workflow-description"
           className="block text-sm font-medium text-slate-300 mb-1"
         >
-          Description{' '}
-          <span className="text-slate-500 font-normal">(optional)</span>
+          Description <span className="text-slate-500 font-normal">(optional)</span>
         </label>
         <textarea
           id="workflow-description"
@@ -281,12 +279,10 @@ function SuccessView({ result, onDone, onGoToWorkflow }: SuccessViewProps) {
       </div>
 
       <div>
-        <h3 className="text-base font-semibold text-slate-100">
-          Workflow Created
-        </h3>
+        <h3 className="text-base font-semibold text-slate-100">Workflow Created</h3>
         <p className="text-sm text-slate-400 mt-1">
-          <span className="text-slate-200 font-medium">{result.workflowName}</span>{' '}
-          has been created from the template.
+          <span className="text-slate-200 font-medium">{result.workflowName}</span> has been created
+          from the template.
         </p>
       </div>
 
@@ -370,9 +366,7 @@ function ErrorView({ message, onRetry, onCancel }: ErrorViewProps) {
       </div>
 
       <div>
-        <h3 className="text-base font-semibold text-slate-100">
-          Something went wrong
-        </h3>
+        <h3 className="text-base font-semibold text-slate-100">Something went wrong</h3>
         <p className="text-sm text-red-400 mt-1">{message}</p>
       </div>
 
@@ -411,10 +405,7 @@ function ErrorView({ message, onRetry, onCancel }: ErrorViewProps) {
 /* Dialog title helpers                                                 */
 /* ------------------------------------------------------------------ */
 
-function getDialogTitle(
-  status: InstantiationStatus,
-  templateName: string,
-): string {
+function getDialogTitle(status: InstantiationStatus, templateName: string): string {
   switch (status) {
     case 'configuring':
       return `Use Template: ${templateName}`;
@@ -433,126 +424,111 @@ function getDialogTitle(
 /* Main dialog component                                               */
 /* ------------------------------------------------------------------ */
 
-export const UseTemplateDialog = forwardRef<
-  HTMLDivElement,
-  UseTemplateDialogProps
->(function UseTemplateDialog(
-  {
-    template,
-    status,
-    result,
-    error,
-    onConfirm,
-    onCancel,
-    onDone,
-    onGoToWorkflow,
-    className,
-    ...props
-  },
-  ref,
-) {
-  const handleKeyDown = useCallback(
-    (e: globalThis.KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        if (status === 'success') {
-          onDone();
-        } else if (status !== 'instantiating') {
-          onCancel();
-        }
-      }
+export const UseTemplateDialog = forwardRef<HTMLDivElement, UseTemplateDialogProps>(
+  function UseTemplateDialog(
+    {
+      template,
+      status,
+      result,
+      error,
+      onConfirm,
+      onCancel,
+      onDone,
+      onGoToWorkflow,
+      className,
+      ...props
     },
-    [status, onCancel, onDone],
-  );
+    ref,
+  ) {
+    const handleKeyDown = useCallback(
+      (e: globalThis.KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          if (status === 'success') {
+            onDone();
+          } else if (status !== 'instantiating') {
+            onCancel();
+          }
+        }
+      },
+      [status, onCancel, onDone],
+    );
 
-  useEffect(() => {
-    if (!template) return;
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [template, handleKeyDown]);
+    useEffect(() => {
+      if (!template) return;
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [template, handleKeyDown]);
 
-  // Retry from error state goes back to configuring
-  const handleRetry = useCallback(() => {
-    if (template) {
-      onConfirm({
-        workflowName: result?.workflowName ?? template.name,
-      });
-    }
-  }, [template, result, onConfirm]);
+    // Retry from error state goes back to configuring
+    const handleRetry = useCallback(() => {
+      if (template) {
+        onConfirm({
+          workflowName: result?.workflowName ?? template.name,
+        });
+      }
+    }, [template, result, onConfirm]);
 
-  if (!template || status === 'idle') return null;
+    if (!template || status === 'idle') return null;
 
-  const title = getDialogTitle(status, template.name);
+    const title = getDialogTitle(status, template.name);
 
-  return (
-    <Overlay onClose={status === 'instantiating' ? () => {} : onCancel}>
-      <div
-        ref={ref}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        className={clsx(
-          'w-full max-w-md bg-surface-panel shadow-xl',
-          'animate-in zoom-in-95 duration-200',
-          'h-full rounded-none border-0',
-          'md:h-auto md:max-h-[85vh] md:rounded-xl md:border md:border-slate-700',
-          'flex flex-col overflow-hidden',
-          className,
-        )}
-        {...props}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-700 px-5 py-3">
-          <h2 className="text-lg font-semibold text-slate-100 truncate">
-            {title}
-          </h2>
-          {status !== 'instantiating' && (
-            <button
-              type="button"
-              onClick={status === 'success' ? onDone : onCancel}
-              className="rounded-md p-1 text-slate-400 hover:bg-surface-elevated hover:text-white transition-colors flex items-center justify-center"
-              aria-label="Close dialog"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
+    return (
+      <Overlay onClose={status === 'instantiating' ? () => {} : onCancel}>
+        <div
+          ref={ref}
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+          className={clsx(
+            'w-full max-w-md bg-surface-panel shadow-xl',
+            'animate-in zoom-in-95 duration-200',
+            'h-full rounded-none border-0',
+            'md:h-auto md:max-h-[85vh] md:rounded-xl md:border md:border-slate-700',
+            'flex flex-col overflow-hidden',
+            className,
+          )}
+          {...props}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-slate-700 px-5 py-3">
+            <h2 className="text-lg font-semibold text-slate-100 truncate">{title}</h2>
+            {status !== 'instantiating' && (
+              <button
+                type="button"
+                onClick={status === 'success' ? onDone : onCancel}
+                className="rounded-md p-1 text-slate-400 hover:bg-surface-elevated hover:text-white transition-colors flex items-center justify-center"
+                aria-label="Close dialog"
               >
-                <path d="M4 4l10 10M14 4L4 14" />
-              </svg>
-            </button>
-          )}
-        </div>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <path d="M4 4l10 10M14 4L4 14" />
+                </svg>
+              </button>
+            )}
+          </div>
 
-        {/* Body */}
-        <div className="flex-1 overflow-y-auto p-5">
-          {status === 'configuring' && (
-            <FormView
-              template={template}
-              onSubmit={onConfirm}
-              onCancel={onCancel}
-            />
-          )}
-          {status === 'instantiating' && <LoadingView />}
-          {status === 'success' && result && (
-            <SuccessView
-              result={result}
-              onDone={onDone}
-              onGoToWorkflow={onGoToWorkflow}
-            />
-          )}
-          {status === 'error' && error && (
-            <ErrorView
-              message={error}
-              onRetry={handleRetry}
-              onCancel={onCancel}
-            />
-          )}
+          {/* Body */}
+          <div className="flex-1 overflow-y-auto p-5">
+            {status === 'configuring' && (
+              <FormView template={template} onSubmit={onConfirm} onCancel={onCancel} />
+            )}
+            {status === 'instantiating' && <LoadingView />}
+            {status === 'success' && result && (
+              <SuccessView result={result} onDone={onDone} onGoToWorkflow={onGoToWorkflow} />
+            )}
+            {status === 'error' && error && (
+              <ErrorView message={error} onRetry={handleRetry} onCancel={onCancel} />
+            )}
+          </div>
         </div>
-      </div>
-    </Overlay>
-  );
-});
+      </Overlay>
+    );
+  },
+);

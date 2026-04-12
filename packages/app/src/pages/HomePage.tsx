@@ -17,18 +17,52 @@ const EXAMPLE_PROMPTS = [
 ];
 
 const RECENT_CREWS = [
-  { id: 'crew-1', name: 'Research Team Alpha', description: 'Market research specialists', agentCount: 4, workflowCount: 2, color: '#6366f1', updatedAt: '2 hours ago' },
-  { id: 'crew-2', name: 'Content Marketing Squad', description: 'Content creation and distribution', agentCount: 6, workflowCount: 3, color: '#06b6d4', updatedAt: '1 day ago' },
-  { id: 'crew-3', name: 'Data Analysis Crew', description: 'Data processing and insights', agentCount: 3, workflowCount: 1, color: '#f59e0b', updatedAt: '3 days ago' },
+  {
+    id: 'crew-1',
+    name: 'Research Team Alpha',
+    description: 'Market research specialists',
+    agentCount: 4,
+    workflowCount: 2,
+    color: '#6366f1',
+    updatedAt: '2 hours ago',
+  },
+  {
+    id: 'crew-2',
+    name: 'Content Marketing Squad',
+    description: 'Content creation and distribution',
+    agentCount: 6,
+    workflowCount: 3,
+    color: '#06b6d4',
+    updatedAt: '1 day ago',
+  },
+  {
+    id: 'crew-3',
+    name: 'Data Analysis Crew',
+    description: 'Data processing and insights',
+    agentCount: 3,
+    workflowCount: 1,
+    color: '#f59e0b',
+    updatedAt: '3 days ago',
+  },
 ];
 
 const HOW_IT_WORKS = [
   {
     num: 1,
     title: 'Start with an idea',
-    description: 'Describe your initiative in plain language — no setup, no config, just your vision.',
+    description:
+      'Describe your initiative in plain language — no setup, no config, just your vision.',
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 2L2 7l10 5 10-5-10-5z" />
         <path d="M2 17l10 5 10-5" />
         <path d="M2 12l10 5 10-5" />
@@ -38,9 +72,19 @@ const HOW_IT_WORKS = [
   {
     num: 2,
     title: 'Watch it come to life',
-    description: 'CrewSpace assembles specialized AI agents, wires them together, and builds your workflow in seconds.',
+    description:
+      'CrewSpace assembles specialized AI agents, wires them together, and builds your workflow in seconds.',
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="12" cy="12" r="10" />
         <polygon points="10 8 16 12 10 16 10 8" />
       </svg>
@@ -49,9 +93,19 @@ const HOW_IT_WORKS = [
   {
     num: 3,
     title: 'Refine and ship',
-    description: 'Iterate on the result, tweak agent roles and hand-offs, then run your workflow at scale.',
+    description:
+      'Iterate on the result, tweak agent roles and hand-offs, then run your workflow at scale.',
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <polyline points="20 6 9 17 4 12" />
       </svg>
     ),
@@ -133,7 +187,16 @@ export function HomePage(): React.JSX.Element {
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center animate-pulseGlow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                 <path d="M2 17l10 5 10-5" />
                 <path d="M2 12l10 5 10-5" />
@@ -144,9 +207,24 @@ export function HomePage(): React.JSX.Element {
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <button onClick={() => navigate('/crews')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">My Crews</button>
-            <button onClick={() => navigate('/templates')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Templates</button>
-            <button onClick={() => navigate('/marketplace')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Marketplace</button>
+            <button
+              onClick={() => navigate('/crews')}
+              className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
+            >
+              My Crews
+            </button>
+            <button
+              onClick={() => navigate('/templates')}
+              className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
+            >
+              Templates
+            </button>
+            <button
+              onClick={() => navigate('/marketplace')}
+              className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
+            >
+              Marketplace
+            </button>
           </nav>
           <div className="flex items-center gap-3">
             {isAuthenticated && user ? (
@@ -172,17 +250,27 @@ export function HomePage(): React.JSX.Element {
                 {showUserMenu && (
                   <div className="absolute right-0 mt-2 w-56 rounded-xl border border-[var(--cs-border-default)] bg-[var(--cs-surface-panel)] shadow-2xl shadow-black/30 py-2 z-50 animate-fadeIn">
                     <div className="px-4 py-2.5 border-b border-[var(--cs-border-subtle)]">
-                      <p className="text-sm font-medium text-[var(--cs-text-primary)] truncate">{user.name}</p>
-                      <p className="text-xs text-[var(--cs-text-tertiary)] truncate">{user.email}</p>
+                      <p className="text-sm font-medium text-[var(--cs-text-primary)] truncate">
+                        {user.name}
+                      </p>
+                      <p className="text-xs text-[var(--cs-text-tertiary)] truncate">
+                        {user.email}
+                      </p>
                     </div>
                     <button
-                      onClick={() => { setShowUserMenu(false); navigate('/settings'); }}
+                      onClick={() => {
+                        setShowUserMenu(false);
+                        navigate('/settings');
+                      }}
                       className="w-full text-left px-4 py-2 text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] hover:bg-white/[0.04] transition-colors"
                     >
                       Settings
                     </button>
                     <button
-                      onClick={() => { setShowUserMenu(false); logout(); }}
+                      onClick={() => {
+                        setShowUserMenu(false);
+                        logout();
+                      }}
                       className="w-full text-left px-4 py-2 text-sm text-rose-400 hover:bg-rose-500/10 transition-colors"
                     >
                       Sign out
@@ -214,19 +302,24 @@ export function HomePage(): React.JSX.Element {
       <section className="hero-glow relative overflow-hidden pt-20 md:pt-32 pb-8">
         <div className="text-center max-w-3xl mx-auto px-6">
           <h1 className="animate-fadeInUp text-4xl md:text-6xl font-extrabold text-[var(--cs-text-primary)] tracking-tight leading-tight mb-6">
-            Build something{' '}
-            <span className="gradient-text">extraordinary</span>
-            <br className="hidden md:block" />
-            {' '}with AI agents
+            Build something <span className="gradient-text">extraordinary</span>
+            <br className="hidden md:block" /> with AI agents
           </h1>
-          <p className="animate-fadeInUp text-lg md:text-xl text-[var(--cs-text-secondary)] leading-relaxed max-w-xl mx-auto" style={{ animationDelay: '120ms' }}>
-            Describe what you need and CrewSpace will assemble the perfect team of AI agents to get it done.
+          <p
+            className="animate-fadeInUp text-lg md:text-xl text-[var(--cs-text-secondary)] leading-relaxed max-w-xl mx-auto"
+            style={{ animationDelay: '120ms' }}
+          >
+            Describe what you need and CrewSpace will assemble the perfect team of AI agents to get
+            it done.
           </p>
         </div>
       </section>
 
       {/* ── Prompt Input Card ────────────────────────────────── */}
-      <section className="max-w-2xl w-full mx-auto px-4 -mt-2 animate-fadeInUp" style={{ animationDelay: '240ms' }}>
+      <section
+        className="max-w-2xl w-full mx-auto px-4 -mt-2 animate-fadeInUp"
+        style={{ animationDelay: '240ms' }}
+      >
         <div className="relative rounded-2xl border border-[var(--cs-border-default)] bg-[var(--cs-surface-panel)] shadow-2xl shadow-indigo-500/5 overflow-hidden transition-all duration-300 focus-within:border-indigo-500/40 focus-within:shadow-indigo-500/10 focus-within:shadow-2xl">
           <textarea
             ref={textareaRef}
@@ -240,13 +333,39 @@ export function HomePage(): React.JSX.Element {
           />
           <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-4 py-3 glass-subtle border-t border-[var(--cs-border-subtle)]">
             <div className="flex items-center gap-2">
-              <button className="p-1.5 rounded-lg text-[var(--cs-text-tertiary)] hover:text-slate-300 hover:bg-[var(--cs-surface-card)]/20 transition-colors focus-ring" title="Attach file" aria-label="Attach file">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <button
+                className="p-1.5 rounded-lg text-[var(--cs-text-tertiary)] hover:text-slate-300 hover:bg-[var(--cs-surface-card)]/20 transition-colors focus-ring"
+                title="Attach file"
+                aria-label="Attach file"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" />
                 </svg>
               </button>
-              <button className="p-1.5 rounded-lg text-[var(--cs-text-tertiary)] hover:text-slate-300 hover:bg-[var(--cs-surface-card)]/20 transition-colors focus-ring" title="Use template" aria-label="Use template">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <button
+                className="p-1.5 rounded-lg text-[var(--cs-text-tertiary)] hover:text-slate-300 hover:bg-[var(--cs-surface-card)]/20 transition-colors focus-ring"
+                title="Use template"
+                aria-label="Use template"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <rect x="3" y="3" width="7" height="7" />
                   <rect x="14" y="3" width="7" height="7" />
                   <rect x="14" y="14" width="7" height="7" />
@@ -254,7 +373,10 @@ export function HomePage(): React.JSX.Element {
                 </svg>
               </button>
               <span className="hidden sm:inline text-[11px] text-[var(--cs-text-tertiary)] ml-1">
-                <kbd className="px-1.5 py-0.5 rounded border border-[var(--cs-border-default)] bg-[var(--cs-surface-card)] font-mono text-[10px] text-[var(--cs-text-secondary)]">Enter</kbd> to build
+                <kbd className="px-1.5 py-0.5 rounded border border-[var(--cs-border-default)] bg-[var(--cs-surface-card)] font-mono text-[10px] text-[var(--cs-text-secondary)]">
+                  Enter
+                </kbd>{' '}
+                to build
               </span>
             </div>
             <button
@@ -265,15 +387,35 @@ export function HomePage(): React.JSX.Element {
               {isGenerating ? (
                 <>
                   <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
                   </svg>
                   Generating...
                 </>
               ) : (
                 <>
                   Build
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
@@ -284,7 +426,10 @@ export function HomePage(): React.JSX.Element {
         </div>
 
         {/* Example prompts */}
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl mx-auto animate-fadeInUp" style={{ animationDelay: '360ms' }}>
+        <div
+          className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl mx-auto animate-fadeInUp"
+          style={{ animationDelay: '360ms' }}
+        >
           {EXAMPLE_PROMPTS.slice(0, 4).map((example) => (
             <button
               key={example}
@@ -304,12 +449,19 @@ export function HomePage(): React.JSX.Element {
         </h2>
         <div className="stagger-children grid grid-cols-1 md:grid-cols-3 gap-6">
           {HOW_IT_WORKS.map((step) => (
-            <div key={step.num} className="flex flex-col items-start text-left rounded-xl border border-[var(--cs-border-subtle)] bg-white/[0.02] p-5 group hover:bg-white/[0.04] hover:border-[var(--cs-border-default)] transition-all">
+            <div
+              key={step.num}
+              className="flex flex-col items-start text-left rounded-xl border border-[var(--cs-border-subtle)] bg-white/[0.02] p-5 group hover:bg-white/[0.04] hover:border-[var(--cs-border-default)] transition-all"
+            >
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-sm font-semibold text-indigo-400">{step.num}.</span>
-                <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">{step.title}</h3>
+                <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">
+                  {step.title}
+                </h3>
               </div>
-              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{step.description}</p>
+              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">
+                {step.description}
+              </p>
             </div>
           ))}
         </div>
@@ -322,8 +474,12 @@ export function HomePage(): React.JSX.Element {
             <React.Fragment key={stat.label}>
               {i > 0 && <div className="w-px h-8 bg-[var(--cs-border-subtle)]" />}
               <div className="flex flex-col items-center gap-1">
-                <span className="text-2xl md:text-3xl font-bold text-[var(--cs-text-primary)] tabular-nums">{stat.value}</span>
-                <span className="text-[11px] text-[var(--cs-text-tertiary)] tracking-wide uppercase">{stat.label}</span>
+                <span className="text-2xl md:text-3xl font-bold text-[var(--cs-text-primary)] tabular-nums">
+                  {stat.value}
+                </span>
+                <span className="text-[11px] text-[var(--cs-text-tertiary)] tracking-wide uppercase">
+                  {stat.label}
+                </span>
               </div>
             </React.Fragment>
           ))}
@@ -344,7 +500,11 @@ export function HomePage(): React.JSX.Element {
           </div>
           <div className="stagger-children grid grid-cols-1 sm:grid-cols-3 gap-3">
             {RECENT_CREWS.map((crew) => {
-              const initials = crew.name.split(' ').map((w) => w[0]).join('').slice(0, 2);
+              const initials = crew.name
+                .split(' ')
+                .map((w) => w[0])
+                .join('')
+                .slice(0, 2);
               return (
                 <button
                   key={crew.id}
@@ -353,18 +513,25 @@ export function HomePage(): React.JSX.Element {
                   style={{ borderTopColor: crew.color, borderTopWidth: '3px' }}
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0 text-white" style={{ backgroundColor: crew.color }}>
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0 text-white"
+                      style={{ backgroundColor: crew.color }}
+                    >
                       {initials}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-[var(--cs-text-primary)] group-hover:text-indigo-300 transition-colors truncate">
                         {crew.name}
                       </p>
-                      <p className="text-[11px] text-[var(--cs-text-tertiary)] truncate">{crew.description}</p>
+                      <p className="text-[11px] text-[var(--cs-text-tertiary)] truncate">
+                        {crew.description}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between text-[11px] text-[var(--cs-text-tertiary)]">
-                    <span>{crew.agentCount} agents · {crew.workflowCount} workflows</span>
+                    <span>
+                      {crew.agentCount} agents · {crew.workflowCount} workflows
+                    </span>
                     <span>{crew.updatedAt}</span>
                   </div>
                 </button>

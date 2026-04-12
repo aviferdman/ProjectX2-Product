@@ -33,7 +33,10 @@
       },
       "providerCard": {
         "background": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
-        "backgroundHover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "backgroundHover": {
+          "value": "{crewspace.color.semantic.surface.elevated}",
+          "type": "color"
+        },
         "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
         "borderHover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color" },
         "borderSelected": { "value": "{crewspace.color.semantic.brand.primary}", "type": "color" },
@@ -97,7 +100,10 @@
         "messageLineHeight": { "value": "1.5", "type": "lineHeight" },
         "gap": { "value": "20px", "type": "sizing" },
         "progressHeight": { "value": "4px", "type": "sizing" },
-        "progressBackground": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
+        "progressBackground": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color"
+        },
         "progressFill": { "value": "{crewspace.color.semantic.brand.primary}", "type": "color" },
         "progressRadius": { "value": "{crewspace.radius.full}", "type": "sizing" }
       },
@@ -117,7 +123,10 @@
           "titleColor": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
           "messageColor": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
           "retryColor": { "value": "{crewspace.color.semantic.brand.primary}", "type": "color" },
-          "errorCodeColor": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
+          "errorCodeColor": {
+            "value": "{crewspace.color.semantic.text.tertiary}",
+            "type": "color"
+          },
           "errorCodeFontSize": { "value": "0.75rem", "type": "fontSize" },
           "errorCodeFontWeight": { "value": "400", "type": "fontWeight" },
           "errorCodeLineHeight": { "value": "1.5", "type": "lineHeight" }
@@ -133,7 +142,10 @@
         },
         "secondary": {
           "background": { "value": "transparent", "type": "color" },
-          "backgroundHover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+          "backgroundHover": {
+            "value": "{crewspace.color.semantic.surface.elevated}",
+            "type": "color"
+          },
           "text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
           "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" }
         },

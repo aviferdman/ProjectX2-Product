@@ -22,8 +22,7 @@ export interface WorkflowDiagramEdge {
   to: string;
 }
 
-export interface WorkflowDiagramProps
-  extends Omit<React.SVGAttributes<SVGSVGElement>, 'children'> {
+export interface WorkflowDiagramProps extends Omit<React.SVGAttributes<SVGSVGElement>, 'children'> {
   nodes: WorkflowDiagramNode[];
   edges: WorkflowDiagramEdge[];
 }
@@ -79,10 +78,7 @@ function layoutNodes(
   const col1: WorkflowDiagramNode[] = [];
 
   for (const node of nodes) {
-    if (
-      node.type === 'agent' ||
-      (hasOutgoing.has(node.id) && !hasIncoming.has(node.id))
-    ) {
+    if (node.type === 'agent' || (hasOutgoing.has(node.id) && !hasIncoming.has(node.id))) {
       col0.push(node);
     } else {
       col1.push(node);
@@ -107,8 +103,7 @@ function layoutNodes(
 
   const position = (col: WorkflowDiagramNode[], colIndex: number): PositionedNode[] => {
     const colOffset = PAD_X + colIndex * (NODE_W + GAP_X);
-    const verticalOffset =
-      PAD_Y + ((maxRows - col.length) * (NODE_H + GAP_Y)) / 2;
+    const verticalOffset = PAD_Y + ((maxRows - col.length) * (NODE_H + GAP_Y)) / 2;
     return col.map((n, i) => ({
       ...n,
       x: colOffset,
@@ -130,10 +125,7 @@ function layoutNodes(
 
 export const WorkflowDiagram = forwardRef<SVGSVGElement, WorkflowDiagramProps>(
   function WorkflowDiagram({ nodes, edges, className, ...props }, ref) {
-    const { positioned, width, height } = useMemo(
-      () => layoutNodes(nodes, edges),
-      [nodes, edges],
-    );
+    const { positioned, width, height } = useMemo(() => layoutNodes(nodes, edges), [nodes, edges]);
 
     const posMap = useMemo(() => {
       const m = new Map<string, PositionedNode>();
@@ -192,14 +184,7 @@ export const WorkflowDiagram = forwardRef<SVGSVGElement, WorkflowDiagramProps>(
 
         {/* Arrow marker */}
         <defs>
-          <marker
-            id="arrowhead"
-            markerWidth="8"
-            markerHeight="6"
-            refX="8"
-            refY="3"
-            orient="auto"
-          >
+          <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
             <polygon points="0 0, 8 3, 0 6" fill="#3f3f46" />
           </marker>
         </defs>
@@ -228,9 +213,7 @@ export const WorkflowDiagram = forwardRef<SVGSVGElement, WorkflowDiagramProps>(
                 fontSize="12"
                 fontWeight="500"
               >
-                {node.label.length > 16
-                  ? `${node.label.slice(0, 15)}…`
-                  : node.label}
+                {node.label.length > 16 ? `${node.label.slice(0, 15)}…` : node.label}
               </text>
             </g>
           );

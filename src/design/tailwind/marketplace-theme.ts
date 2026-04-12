@@ -244,7 +244,10 @@ export const marketplaceTheme = {
     'mp-section-title': ['1.125rem', { lineHeight: '1.25', fontWeight: '600' }],
 
     // Sidebar
-    'mp-sidebar-label': ['0.6875rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
+    'mp-sidebar-label': [
+      '0.6875rem',
+      { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' },
+    ],
     'mp-sidebar-item': ['0.8125rem', { lineHeight: '1.25', fontWeight: '500' }],
 
     // Filter/sort
@@ -272,7 +275,10 @@ export const marketplaceTheme = {
     // Featured
     'mp-featured-title': ['1.25rem', { lineHeight: '1.25', fontWeight: '700' }],
     'mp-featured-desc': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
-    'mp-featured-badge': ['0.5625rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
+    'mp-featured-badge': [
+      '0.5625rem',
+      { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' },
+    ],
 
     // Pagination
     'mp-page-btn': ['0.75rem', { lineHeight: '1', fontWeight: '500' }],

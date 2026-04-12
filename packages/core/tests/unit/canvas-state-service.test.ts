@@ -14,7 +14,10 @@ import {
   CanvasNotFoundError,
   CanvasHistoryEmptyError,
 } from '../../src/canvas/canvas-state-errors.js';
-import type { CanvasSnapshot, CreateCanvasStateInput } from '../../src/canvas/canvas-state-types.js';
+import type {
+  CanvasSnapshot,
+  CreateCanvasStateInput,
+} from '../../src/canvas/canvas-state-types.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -71,9 +74,9 @@ describe('CanvasStateService', () => {
     });
 
     it('should throw CanvasNotFoundError for unknown canvas', async () => {
-      await expect(
-        service.save('nonexistent', makeSnapshot()),
-      ).rejects.toThrow(CanvasNotFoundError);
+      await expect(service.save('nonexistent', makeSnapshot())).rejects.toThrow(
+        CanvasNotFoundError,
+      );
     });
 
     it('should clear redo history on save', async () => {
@@ -302,9 +305,7 @@ describe('CanvasStateService', () => {
     });
 
     it('should throw for unknown canvas', async () => {
-      await expect(service.initializeHistory('nonexistent')).rejects.toThrow(
-        CanvasNotFoundError,
-      );
+      await expect(service.initializeHistory('nonexistent')).rejects.toThrow(CanvasNotFoundError);
     });
 
     it('should not duplicate history if already initialized', async () => {

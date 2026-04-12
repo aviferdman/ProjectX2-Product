@@ -20,13 +20,23 @@ const TOOLS_PACKAGES = [
     dir: 'packages/tools-file',
     name: '@crewspace/tools-file',
     description: 'File tools',
-    expectedExports: ['createFileTools', 'createReadFileTool', 'createWriteFileTool', 'createListFilesTool'],
+    expectedExports: [
+      'createFileTools',
+      'createReadFileTool',
+      'createWriteFileTool',
+      'createListFilesTool',
+    ],
   },
   {
     dir: 'packages/tools-web',
     name: '@crewspace/tools-web',
     description: 'Web tools',
-    expectedExports: ['createWebTools', 'createFetchUrlTool', 'createParseHtmlTool', 'createWebSearchTool'],
+    expectedExports: [
+      'createWebTools',
+      'createFetchUrlTool',
+      'createParseHtmlTool',
+      'createWebSearchTool',
+    ],
   },
   {
     dir: 'packages/tools-shell',
@@ -44,36 +54,57 @@ describe('tools-* publish readiness', () => {
       it('has a valid package.json with all required fields', () => {
         const checks = checkPackageMetadata(pkgDir);
         const failures = checks.filter((c) => c.status === 'fail');
-        expect(failures, `Failed checks: ${failures.map((f) => f.message).join(', ')}`).toHaveLength(0);
+        expect(
+          failures,
+          `Failed checks: ${failures.map((f) => f.message).join(', ')}`,
+        ).toHaveLength(0);
       });
 
       it('is not marked as private', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         expect(pkgJson['private']).not.toBe(true);
       });
 
       it('has correct package name', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         expect(pkgJson['name']).toBe(pkg.name);
       });
 
       it('has version 0.1.0', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         expect(pkgJson['version']).toBe('0.1.0');
       });
 
       it('has MIT license', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         expect(pkgJson['license']).toBe('MIT');
       });
 
       it('has "type": "module"', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         expect(pkgJson['type']).toBe('module');
       });
 
       it('has proper exports configuration', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         const exports = pkgJson['exports'] as Record<string, Record<string, string>>;
         expect(exports).toBeDefined();
         expect(exports['.']).toBeDefined();
@@ -83,14 +114,20 @@ describe('tools-* publish readiness', () => {
       });
 
       it('has dual ESM/CJS entry points', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         expect(pkgJson['main']).toBe('./dist/cjs/index.js');
         expect(pkgJson['module']).toBe('./dist/index.js');
         expect(pkgJson['types']).toBe('./dist/index.d.ts');
       });
 
       it('has "files" field including dist, README.md, and LICENSE', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         const files = pkgJson['files'] as string[];
         expect(files).toContain('dist');
         expect(files).toContain('README.md');
@@ -98,40 +135,58 @@ describe('tools-* publish readiness', () => {
       });
 
       it('has sideEffects set to false', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         expect(pkgJson['sideEffects']).toBe(false);
       });
 
       it('has engines field requiring Node >= 18', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         const engines = pkgJson['engines'] as Record<string, string>;
         expect(engines).toBeDefined();
         expect(engines['node']).toBe('>=18.0.0');
       });
 
       it('has repository field pointing to correct directory', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         const repo = pkgJson['repository'] as Record<string, string>;
         expect(repo).toBeDefined();
         expect(repo['directory']).toBe(pkg.dir);
       });
 
       it('has @crewspace/core as a dependency', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         const deps = pkgJson['dependencies'] as Record<string, string>;
         expect(deps).toBeDefined();
         expect(deps['@crewspace/core']).toBeDefined();
       });
 
       it('has keywords including "crewspace" and "tools"', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         const keywords = pkgJson['keywords'] as string[];
         expect(keywords).toContain('crewspace');
         expect(keywords).toContain('tools');
       });
 
       it('has prepublishOnly script', () => {
-        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<string, unknown>;
+        const pkgJson = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) as Record<
+          string,
+          unknown
+        >;
         const scripts = pkgJson['scripts'] as Record<string, string>;
         expect(scripts['prepublishOnly']).toBeDefined();
         expect(scripts['prepublishOnly']).toContain('build');
@@ -251,9 +306,11 @@ describe('tools-* publish readiness', () => {
     });
 
     it('all tools packages have the same version as core', () => {
-      const coreVersion = (JSON.parse(
-        readFileSync(resolve(ROOT, 'packages', 'core', 'package.json'), 'utf-8'),
-      ) as Record<string, unknown>)['version'];
+      const coreVersion = (
+        JSON.parse(
+          readFileSync(resolve(ROOT, 'packages', 'core', 'package.json'), 'utf-8'),
+        ) as Record<string, unknown>
+      )['version'];
 
       for (const pkg of TOOLS_PACKAGES) {
         const pkgJson = JSON.parse(

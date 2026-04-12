@@ -7,22 +7,13 @@ describe('ErrorFallback', () => {
     render(<ErrorFallback />);
     expect(screen.getByRole('alert')).toBeInTheDocument();
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-    expect(
-      screen.getByText('An unexpected error occurred. Please try again.'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('An unexpected error occurred. Please try again.')).toBeInTheDocument();
   });
 
   it('renders custom heading and message', () => {
-    render(
-      <ErrorFallback
-        heading="Connection failed"
-        message="Could not reach the server."
-      />,
-    );
+    render(<ErrorFallback heading="Connection failed" message="Could not reach the server." />);
     expect(screen.getByText('Connection failed')).toBeInTheDocument();
-    expect(
-      screen.getByText('Could not reach the server.'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Could not reach the server.')).toBeInTheDocument();
   });
 
   it('renders retry button when onRetry is provided', () => {
@@ -37,26 +28,17 @@ describe('ErrorFallback', () => {
 
   it('does not render retry button when onRetry is not provided', () => {
     render(<ErrorFallback />);
-    expect(
-      screen.queryByRole('button', { name: /try again/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /try again/i })).not.toBeInTheDocument();
   });
 
   it('renders custom retry label', () => {
     render(<ErrorFallback onRetry={() => {}} retryLabel="Reload Data" />);
-    expect(
-      screen.getByRole('button', { name: /reload data/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /reload data/i })).toBeInTheDocument();
   });
 
   it('renders secondary action button', () => {
     const onSecondary = vi.fn();
-    render(
-      <ErrorFallback
-        onSecondary={onSecondary}
-        secondaryLabel="Go Back"
-      />,
-    );
+    render(<ErrorFallback onSecondary={onSecondary} secondaryLabel="Go Back" />);
 
     const secondaryButton = screen.getByRole('button', { name: /go back/i });
     expect(secondaryButton).toBeInTheDocument();
@@ -66,9 +48,7 @@ describe('ErrorFallback', () => {
 
   it('does not render secondary button without both label and handler', () => {
     render(<ErrorFallback secondaryLabel="Go Back" />);
-    expect(
-      screen.queryByRole('button', { name: /go back/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /go back/i })).not.toBeInTheDocument();
   });
 
   it('applies error severity styling by default', () => {
@@ -97,7 +77,13 @@ describe('ErrorFallback', () => {
 
   it('forwards ref', () => {
     let element: HTMLDivElement | null = null;
-    render(<ErrorFallback ref={(el) => { element = el; }} />);
+    render(
+      <ErrorFallback
+        ref={(el) => {
+          element = el;
+        }}
+      />,
+    );
     expect(element).toBeInstanceOf(HTMLDivElement);
   });
 

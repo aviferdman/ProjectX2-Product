@@ -95,7 +95,11 @@ describe('SlideIn', () => {
   });
 
   it('starts translated and transitions in', () => {
-    const { container } = render(<SlideIn direction="left" distance={20}>Left</SlideIn>);
+    const { container } = render(
+      <SlideIn direction="left" distance={20}>
+        Left
+      </SlideIn>,
+    );
     const el = container.firstElementChild as HTMLElement;
     expect(el.style.transform).toContain('translateX(20px)');
 

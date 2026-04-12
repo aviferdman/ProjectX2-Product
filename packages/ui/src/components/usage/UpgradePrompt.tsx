@@ -30,15 +30,17 @@ export interface UpgradePromptProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const UpgradePrompt = forwardRef<HTMLDivElement, UpgradePromptProps>(
-  ({ currentTier, heading, description, buttonLabel, onUpgrade, onDismiss, className, ...rest }, ref) => {
+  (
+    { currentTier, heading, description, buttonLabel, onUpgrade, onDismiss, className, ...rest },
+    ref,
+  ) => {
     const targetTier = UPGRADE_TARGETS[currentTier];
 
     // Enterprise users have no upgrade path
     if (!targetTier) return null;
 
     const defaultHeading = 'Unlock more with ' + PLAN_DISPLAY_NAMES[targetTier];
-    const defaultDescription =
-      `You're on the ${PLAN_DISPLAY_NAMES[currentTier]} plan. Upgrade to ${PLAN_DISPLAY_NAMES[targetTier]} for higher limits and more features.`;
+    const defaultDescription = `You're on the ${PLAN_DISPLAY_NAMES[currentTier]} plan. Upgrade to ${PLAN_DISPLAY_NAMES[targetTier]} for higher limits and more features.`;
     const defaultButtonLabel = `Upgrade to ${PLAN_DISPLAY_NAMES[targetTier]}`;
 
     return (
@@ -59,7 +61,14 @@ export const UpgradePrompt = forwardRef<HTMLDivElement, UpgradePromptProps>(
             className="absolute top-3 right-3 rounded p-1 text-slate-500 hover:text-slate-300 transition-colors"
             aria-label="Dismiss upgrade prompt"
           >
-            <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            >
               <path d="M4 4l8 8M12 4l-8 8" />
             </svg>
           </button>
@@ -74,16 +83,16 @@ export const UpgradePrompt = forwardRef<HTMLDivElement, UpgradePromptProps>(
           strokeWidth="1.5"
           aria-hidden="true"
         >
-          <path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
 
-        <h3 className="text-sm font-semibold text-slate-100">
-          {heading ?? defaultHeading}
-        </h3>
+        <h3 className="text-sm font-semibold text-slate-100">{heading ?? defaultHeading}</h3>
 
-        <p className="mt-1 text-xs text-slate-400 max-w-md">
-          {description ?? defaultDescription}
-        </p>
+        <p className="mt-1 text-xs text-slate-400 max-w-md">{description ?? defaultDescription}</p>
 
         {onUpgrade && (
           <button
@@ -97,7 +106,14 @@ export const UpgradePrompt = forwardRef<HTMLDivElement, UpgradePromptProps>(
             )}
           >
             {buttonLabel ?? defaultButtonLabel}
-            <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
               <path d="M6 3l5 5-5 5" />
             </svg>
           </button>

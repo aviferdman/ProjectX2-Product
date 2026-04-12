@@ -3,15 +3,9 @@
  */
 import { describe, it, expect, beforeEach } from 'vitest';
 
-import {
-  InMemoryTemplateStorage,
-  _resetTemplateIdCounter,
-} from '../../src/template/index.js';
+import { InMemoryTemplateStorage, _resetTemplateIdCounter } from '../../src/template/index.js';
 import { TemplateNotFoundError, TemplateValidationError } from '../../src/template/index.js';
-import type {
-  CreateTemplateInput,
-  StoredTemplate,
-} from '../../src/template/index.js';
+import type { CreateTemplateInput, StoredTemplate } from '../../src/template/index.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -123,9 +117,9 @@ describe('InMemoryTemplateStorage', () => {
 
     // Validation — category
     it('rejects invalid category', async () => {
-      await expect(
-        storage.create(makeInput({ category: 'invalid' as any })),
-      ).rejects.toThrow(TemplateValidationError);
+      await expect(storage.create(makeInput({ category: 'invalid' as any }))).rejects.toThrow(
+        TemplateValidationError,
+      );
     });
 
     it('accepts all valid categories', async () => {
@@ -437,13 +431,13 @@ describe('InMemoryTemplateStorage', () => {
         TemplateValidationError,
       );
 
-      await expect(
-        storage.update(created.id, { status: 'invalid' as any }),
-      ).rejects.toThrow(TemplateValidationError);
+      await expect(storage.update(created.id, { status: 'invalid' as any })).rejects.toThrow(
+        TemplateValidationError,
+      );
 
-      await expect(
-        storage.update(created.id, { category: 'invalid' as any }),
-      ).rejects.toThrow(TemplateValidationError);
+      await expect(storage.update(created.id, { category: 'invalid' as any })).rejects.toThrow(
+        TemplateValidationError,
+      );
     });
 
     it('cross-validates agents and tasks on update', async () => {

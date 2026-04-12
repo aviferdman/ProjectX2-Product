@@ -8,18 +8,17 @@ import { clsx } from 'clsx';
 import type { OAuthConnection } from './types.js';
 import { OAuthProviderCard } from './OAuthProviderCard.js';
 
-export interface OAuthProviderListProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface OAuthProviderListProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   connections: readonly OAuthConnection[];
   onConnect?: (id: string) => void;
   onDisconnect?: (id: string) => void;
 }
 
 export const OAuthProviderList = forwardRef<HTMLDivElement, OAuthProviderListProps>(
-  function OAuthProviderList(
-    { connections, onConnect, onDisconnect, className, ...props },
-    ref,
-  ) {
+  function OAuthProviderList({ connections, onConnect, onDisconnect, className, ...props }, ref) {
     if (connections.length === 0) {
       return (
         <div

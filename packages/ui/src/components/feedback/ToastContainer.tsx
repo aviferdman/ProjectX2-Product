@@ -26,16 +26,7 @@ const POSITION_STYLES: Record<ToastPosition, string> = {
 };
 
 export const ToastContainer = forwardRef<HTMLDivElement, ToastContainerProps>(
-  (
-    {
-      toasts,
-      position = 'top-right',
-      onDismiss,
-      className,
-      ...rest
-    },
-    ref,
-  ) => {
+  ({ toasts, position = 'top-right', onDismiss, className, ...rest }, ref) => {
     if (toasts.length === 0) return null;
 
     return (

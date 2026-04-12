@@ -33,13 +33,14 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 
   // Pen nib
-  'agent-content-marketer': (
-    <path d="M15.5 2.5L21 8 8.5 20.5H3V15L15.5 2.5z" fill="currentColor" />
-  ),
+  'agent-content-marketer': <path d="M15.5 2.5L21 8 8.5 20.5H3V15L15.5 2.5z" fill="currentColor" />,
 
   // Heart (connection)
   'agent-customer-success-manager': (
-    <path d="M12 21c-.5-.4-8-6.3-8-11.7C4 5.9 6 4 8.5 4c1.4 0 2.7.7 3.5 1.7C12.8 4.7 14.1 4 15.5 4 18 4 20 5.9 20 9.3 20 14.7 12.5 20.6 12 21z" fill="currentColor" />
+    <path
+      d="M12 21c-.5-.4-8-6.3-8-11.7C4 5.9 6 4 8.5 4c1.4 0 2.7.7 3.5 1.7C12.8 4.7 14.1 4 15.5 4 18 4 20 5.9 20 9.3 20 14.7 12.5 20.6 12 21z"
+      fill="currentColor"
+    />
   ),
 
   // Shield
@@ -84,14 +85,16 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 
   // Hexagon (team sprint)
-  'agent-scrum-master': (
-    <path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="currentColor" />
-  ),
+  'agent-scrum-master': <path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="currentColor" />,
 
   // Open book
   'agent-technical-writer': (
     <>
-      <path d="M2 4h8c1.1 0 2 .9 2 2v14c-1-1-2.5-1.5-4-1.5H2V4z" fill="currentColor" opacity=".55" />
+      <path
+        d="M2 4h8c1.1 0 2 .9 2 2v14c-1-1-2.5-1.5-4-1.5H2V4z"
+        fill="currentColor"
+        opacity=".55"
+      />
       <path d="M22 4h-8c-1.1 0-2 .9-2 2v14c1-1 2.5-1.5 4-1.5h6V4z" fill="currentColor" />
     </>
   ),
@@ -107,8 +110,22 @@ const ICONS: Record<string, React.ReactNode> = {
   // Code brackets
   'agent-wordpress-master': (
     <>
-      <path d="M9 4L3 12l6 8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M15 4l6 8-6 8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M9 4L3 12l6 8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15 4l6 8-6 8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </>
   ),
 
@@ -116,22 +133,39 @@ const ICONS: Record<string, React.ReactNode> = {
 
   // Flask / beaker
   'agent-research-analyst': (
-    <path d="M9 2h6v7l5 9.5c.6 1.2-.2 2.5-1.7 2.5H5.7c-1.5 0-2.3-1.3-1.7-2.5L9 9V2z" fill="currentColor" />
+    <path
+      d="M9 2h6v7l5 9.5c.6 1.2-.2 2.5-1.7 2.5H5.7c-1.5 0-2.3-1.3-1.7-2.5L9 9V2z"
+      fill="currentColor"
+    />
   ),
 
   // Radar rings
   'agent-search-specialist': (
     <>
       <circle cx="12" cy="12" r="2.5" fill="currentColor" />
-      <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" strokeWidth="2" opacity=".5" />
-      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" opacity=".25" />
+      <circle
+        cx="12"
+        cy="12"
+        r="6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        opacity=".5"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        opacity=".25"
+      />
     </>
   ),
 
   // Lightning bolt
-  'agent-trend-analyst': (
-    <path d="M13 2L4 14h7l-2 8 11-12h-7z" fill="currentColor" />
-  ),
+  'agent-trend-analyst': <path d="M13 2L4 14h7l-2 8 11-12h-7z" fill="currentColor" />,
 
   // Flag / banner
   'agent-competitive-analyst': (
@@ -150,9 +184,7 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 
   // Diamond / gem
-  'agent-project-idea-validator': (
-    <path d="M12 2L2 10l10 12 10-12L12 2z" fill="currentColor" />
-  ),
+  'agent-project-idea-validator': <path d="M12 2L2 10l10 12 10-12L12 2z" fill="currentColor" />,
 
   // Stacked discs (database)
   'agent-data-researcher': (
@@ -168,8 +200,26 @@ const ICONS: Record<string, React.ReactNode> = {
     <>
       <circle cx="12" cy="12" r="2.5" fill="currentColor" />
       <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)" />
-      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(120 12 12)" />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        transform="rotate(60 12 12)"
+      />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        transform="rotate(120 12 12)"
+      />
     </>
   ),
 };
@@ -181,7 +231,10 @@ const ICONS: Record<string, React.ReactNode> = {
 const ROLE_KEYWORDS: Array<[string[], string]> = [
   // Business & Product
   [['business', 'analyst', 'requirements', 'stakeholder'], 'agent-business-analyst'],
-  [['content', 'marketer', 'marketing', 'copywriter', 'copy', 'writer', 'blog', 'editorial'], 'agent-content-marketer'],
+  [
+    ['content', 'marketer', 'marketing', 'copywriter', 'copy', 'writer', 'blog', 'editorial'],
+    'agent-content-marketer',
+  ],
   [['customer', 'success', 'support', 'onboarding', 'retention'], 'agent-customer-success-manager'],
   [['legal', 'lawyer', 'compliance', 'privacy', 'regulation'], 'agent-legal-advisor'],
   [['license', 'licensing', 'oss', 'ip'], 'agent-license-engineer'],
@@ -194,13 +247,19 @@ const ROLE_KEYWORDS: Array<[string[], string]> = [
   [['wordpress', 'cms', 'theme', 'plugin'], 'agent-wordpress-master'],
   // Research & Analysis
   [['research', 'analyst', 'investigation'], 'agent-research-analyst'],
-  [['search', 'specialist', 'retrieval', 'discovery', 'seo', 'keyword', 'optimization'], 'agent-search-specialist'],
+  [
+    ['search', 'specialist', 'retrieval', 'discovery', 'seo', 'keyword', 'optimization'],
+    'agent-search-specialist',
+  ],
   [['trend', 'forecast', 'signal', 'emerging'], 'agent-trend-analyst'],
   [['competitive', 'competitor', 'benchmark', 'swot'], 'agent-competitive-analyst'],
   [['market', 'researcher', 'consumer', 'segmentation'], 'agent-market-researcher'],
   [['idea', 'validator', 'mvp', 'validate', 'feasibility'], 'agent-project-idea-validator'],
   [['data', 'researcher', 'mining', 'dataset', 'statistical'], 'agent-data-researcher'],
-  [['scientific', 'literature', 'paper', 'evidence', 'systematic'], 'agent-scientific-literature-researcher'],
+  [
+    ['scientific', 'literature', 'paper', 'evidence', 'systematic'],
+    'agent-scientific-literature-researcher',
+  ],
 ];
 
 /** Match a role string to the best icon ID by keyword overlap. */
@@ -229,7 +288,12 @@ function matchRoleToIcon(role: string): string | null {
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 
-export function AgentAvatar({ id, size = 20, className = '', fallback }: AgentAvatarProps): React.JSX.Element {
+export function AgentAvatar({
+  id,
+  size = 20,
+  className = '',
+  fallback,
+}: AgentAvatarProps): React.JSX.Element {
   // 1. Try exact ID match
   let icon = ICONS[id];
 
@@ -241,23 +305,14 @@ export function AgentAvatar({ id, size = 20, className = '', fallback }: AgentAv
 
   if (!icon) {
     return (
-      <span
-        className={`font-bold leading-none ${className}`}
-        style={{ fontSize: size * 0.55 }}
-      >
+      <span className={`font-bold leading-none ${className}`} style={{ fontSize: size * 0.55 }}>
         {fallback?.charAt(0).toUpperCase() ?? '?'}
       </span>
     );
   }
 
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      className={className}
-      aria-hidden="true"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden="true">
       {icon}
     </svg>
   );

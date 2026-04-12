@@ -342,7 +342,9 @@ export function checkPackContents(pkgDir: string): {
       }
 
       const testFiles = files.filter(
-        (f) => f.includes('.test.') || f.includes('.spec.') || f.includes('__tests__'),
+        (f) =>
+          (f.includes('.test.') || f.includes('.spec.') || f.includes('__tests__')) &&
+          !f.endsWith('.tsbuildinfo'),
       );
       if (testFiles.length > 0) {
         checks.push({

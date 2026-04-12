@@ -15,15 +15,78 @@ interface Integration {
 }
 
 const MOCK_INTEGRATIONS: Integration[] = [
-  { id: 'int-1', name: 'OpenAI GPT-4', description: 'Connect GPT-4 and GPT-4o models for advanced reasoning and generation.', category: 'LLM', icon: '🧠', status: 'available' },
-  { id: 'int-2', name: 'Anthropic Claude', description: 'Use Claude 3.5 Sonnet for long-context analysis and safe AI outputs.', category: 'LLM', icon: '🤖', status: 'available' },
-  { id: 'int-3', name: 'Web Search', description: 'Enable agents to search the web for real-time information.', category: 'Tools', icon: '🔍', status: 'installed' },
-  { id: 'int-4', name: 'File System', description: 'Read and write files on your local machine or cloud storage.', category: 'Tools', icon: '📁', status: 'installed' },
-  { id: 'int-5', name: 'Slack', description: 'Send workflow results and notifications to Slack channels.', category: 'Communication', icon: '💬', status: 'available' },
-  { id: 'int-6', name: 'GitHub', description: 'Create PRs, review code, and manage repos from your workflows.', category: 'DevTools', icon: '🐙', status: 'available' },
-  { id: 'int-7', name: 'Notion', description: 'Sync workflow outputs to Notion pages and databases.', category: 'Productivity', icon: '📝', status: 'coming-soon' },
-  { id: 'int-8', name: 'Google Sheets', description: 'Read data from and write results to Google Sheets.', category: 'Productivity', icon: '📊', status: 'coming-soon' },
-  { id: 'int-9', name: 'Jira', description: 'Create and manage Jira issues from workflow task outputs.', category: 'DevTools', icon: '📌', status: 'coming-soon' },
+  {
+    id: 'int-1',
+    name: 'OpenAI GPT-4',
+    description: 'Connect GPT-4 and GPT-4o models for advanced reasoning and generation.',
+    category: 'LLM',
+    icon: '🧠',
+    status: 'available',
+  },
+  {
+    id: 'int-2',
+    name: 'Anthropic Claude',
+    description: 'Use Claude 3.5 Sonnet for long-context analysis and safe AI outputs.',
+    category: 'LLM',
+    icon: '🤖',
+    status: 'available',
+  },
+  {
+    id: 'int-3',
+    name: 'Web Search',
+    description: 'Enable agents to search the web for real-time information.',
+    category: 'Tools',
+    icon: '🔍',
+    status: 'installed',
+  },
+  {
+    id: 'int-4',
+    name: 'File System',
+    description: 'Read and write files on your local machine or cloud storage.',
+    category: 'Tools',
+    icon: '📁',
+    status: 'installed',
+  },
+  {
+    id: 'int-5',
+    name: 'Slack',
+    description: 'Send workflow results and notifications to Slack channels.',
+    category: 'Communication',
+    icon: '💬',
+    status: 'available',
+  },
+  {
+    id: 'int-6',
+    name: 'GitHub',
+    description: 'Create PRs, review code, and manage repos from your workflows.',
+    category: 'DevTools',
+    icon: '🐙',
+    status: 'available',
+  },
+  {
+    id: 'int-7',
+    name: 'Notion',
+    description: 'Sync workflow outputs to Notion pages and databases.',
+    category: 'Productivity',
+    icon: '📝',
+    status: 'coming-soon',
+  },
+  {
+    id: 'int-8',
+    name: 'Google Sheets',
+    description: 'Read data from and write results to Google Sheets.',
+    category: 'Productivity',
+    icon: '📊',
+    status: 'coming-soon',
+  },
+  {
+    id: 'int-9',
+    name: 'Jira',
+    description: 'Create and manage Jira issues from workflow task outputs.',
+    category: 'DevTools',
+    icon: '📌',
+    status: 'coming-soon',
+  },
 ];
 
 export function MarketplacePage(): React.JSX.Element {
@@ -47,7 +110,16 @@ export function MarketplacePage(): React.JSX.Element {
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 focus-ring rounded-lg">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M12 2L2 7l10 5 10-5-10-5z" />
                   <path d="M2 17l10 5 10-5" />
                   <path d="M2 12l10 5 10-5" />
@@ -59,8 +131,18 @@ export function MarketplacePage(): React.JSX.Element {
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <button onClick={() => navigate('/dashboard')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Projects</button>
-            <button onClick={() => navigate('/templates')} className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring">Templates</button>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
+            >
+              Projects
+            </button>
+            <button
+              onClick={() => navigate('/templates')}
+              className="text-sm text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors focus-ring"
+            >
+              Templates
+            </button>
             <span className="text-sm text-[var(--cs-text-primary)] font-medium">Marketplace</span>
           </nav>
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-[var(--cs-text-primary)]">
@@ -69,10 +151,7 @@ export function MarketplacePage(): React.JSX.Element {
         </div>
       </header>
 
-      <main
-        data-testid="marketplace-page"
-        className="max-w-6xl mx-auto px-6 py-8"
-      >
+      <main data-testid="marketplace-page" className="max-w-6xl mx-auto px-6 py-8">
         <div className="animate-fadeInDown mb-8">
           <h1 className="text-2xl font-bold text-[var(--cs-text-primary)]">Marketplace</h1>
           <p className="text-sm text-[var(--cs-text-tertiary)] mt-1">
@@ -83,7 +162,17 @@ export function MarketplacePage(): React.JSX.Element {
         {/* Search & Category Filter */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6 animate-fadeIn">
           <div className="flex-1 relative">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cs-text-tertiary)]">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--cs-text-tertiary)]"
+            >
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
@@ -102,7 +191,9 @@ export function MarketplacePage(): React.JSX.Element {
                 key={c}
                 onClick={() => setCategory(c)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all capitalize whitespace-nowrap focus-ring ${
-                  category === c ? 'bg-indigo-600/20 text-indigo-300 shadow-sm' : 'text-[var(--cs-text-tertiary)] hover:text-slate-300'
+                  category === c
+                    ? 'bg-indigo-600/20 text-indigo-300 shadow-sm'
+                    : 'text-[var(--cs-text-tertiary)] hover:text-slate-300'
                 }`}
               >
                 {c}
@@ -131,7 +222,9 @@ export function MarketplacePage(): React.JSX.Element {
                 {integration.description}
               </p>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-[var(--cs-text-tertiary)] uppercase tracking-wider font-medium">{integration.category}</span>
+                <span className="text-[10px] text-[var(--cs-text-tertiary)] uppercase tracking-wider font-medium">
+                  {integration.category}
+                </span>
                 {integration.status === 'available' && (
                   <button className="px-3 py-1 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-[10px] font-semibold text-indigo-300 hover:bg-indigo-600/30 transition-colors focus-ring">
                     Install

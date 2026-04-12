@@ -38,13 +38,7 @@ export const AgentLane: React.FC<AgentLaneProps> = ({
   return (
     <g data-testid={`agent-lane-${agent.id}`} transform={`translate(0, ${yOffset})`}>
       {/* Lane background */}
-      <rect
-        x={0}
-        y={0}
-        width={timelineWidth}
-        height={TIMELINE_SIZING.laneHeight}
-        fill={bg}
-      />
+      <rect x={0} y={0} width={timelineWidth} height={TIMELINE_SIZING.laneHeight} fill={bg} />
 
       {/* Bottom border */}
       <line

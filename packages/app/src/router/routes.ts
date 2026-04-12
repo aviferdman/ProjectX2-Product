@@ -42,8 +42,8 @@ export interface RouteEntry {
 
 /** Ordered list of navigable routes for sidebar / navbar rendering. */
 export const NAV_ROUTES: readonly RouteEntry[] = [
-  { path: ROUTES.HOME, label: 'Home', icon: 'home', requiresAuth: false },
-  { path: ROUTES.CREWS, label: 'My Crews', icon: 'users', requiresAuth: false },
+  { path: ROUTES.HOME, label: 'Home', icon: 'home', requiresAuth: true },
+  { path: ROUTES.CREWS, label: 'My Crews', icon: 'users', requiresAuth: true },
   { path: ROUTES.TEMPLATES, label: 'Templates', icon: 'template', requiresAuth: true },
   { path: ROUTES.MARKETPLACE, label: 'Marketplace', icon: 'store', requiresAuth: true },
   { path: ROUTES.SETTINGS, label: 'Settings', icon: 'settings', requiresAuth: true },

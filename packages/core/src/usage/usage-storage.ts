@@ -105,9 +105,7 @@ export class InMemoryUsageStorage implements UsageStorageProvider {
       status: input.status,
       endedAt: now,
       durationMs: endTime - startTime,
-      metadata: input.metadata
-        ? { ...existing.metadata, ...input.metadata }
-        : existing.metadata,
+      metadata: input.metadata ? { ...existing.metadata, ...input.metadata } : existing.metadata,
     };
 
     this._runs.set(runId, updated);
@@ -166,11 +164,7 @@ export class InMemoryUsageStorage implements UsageStorageProvider {
     return { runs, total };
   }
 
-  async countRuns(
-    accountId: string,
-    startedAfter: string,
-    startedBefore: string,
-  ): Promise<number> {
+  async countRuns(accountId: string, startedAfter: string, startedBefore: string): Promise<number> {
     let count = 0;
     for (const run of this._runs.values()) {
       if (

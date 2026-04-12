@@ -36,7 +36,12 @@ function collectTokenLeaves(
       'type' in (val as Record<string, unknown>)
     ) {
       const token = val as { value: unknown; type: string; description?: string };
-      results.push({ path: current, value: token.value, type: token.type, description: token.description });
+      results.push({
+        path: current,
+        value: token.value,
+        type: token.type,
+        description: token.description,
+      });
     } else if (val && typeof val === 'object') {
       results.push(...collectTokenLeaves(val as Record<string, unknown>, current));
     }
@@ -59,9 +64,8 @@ describe('template-library.json — design tokens', () => {
     expect(crewspace).toHaveProperty('templateLibrary');
   });
 
-  const templateLibrary = (
-    tokens as { crewspace: { templateLibrary: Record<string, unknown> } }
-  ).crewspace.templateLibrary;
+  const templateLibrary = (tokens as { crewspace: { templateLibrary: Record<string, unknown> } })
+    .crewspace.templateLibrary;
 
   it('contains required top-level sections', () => {
     const requiredSections = [
@@ -97,16 +101,31 @@ describe('template-library.json — design tokens', () => {
     it('every leaf has a non-empty value', () => {
       for (const leaf of leaves) {
         expect(leaf.value, `${leaf.path} should have a value`).toBeDefined();
-        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(0);
+        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(
+          0,
+        );
       }
     });
 
     it('every leaf has a valid type', () => {
       const validTypes = [
-        'color', 'number', 'string', 'boolean', 'sizing', 'spacing',
-        'borderWidth', 'borderRadius', 'transition', 'boxShadow',
-        'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing',
-        'gradient', 'duration', 'cubicBezier',
+        'color',
+        'number',
+        'string',
+        'boolean',
+        'sizing',
+        'spacing',
+        'borderWidth',
+        'borderRadius',
+        'transition',
+        'boxShadow',
+        'fontSize',
+        'fontWeight',
+        'lineHeight',
+        'letterSpacing',
+        'gradient',
+        'duration',
+        'cubicBezier',
       ];
       for (const leaf of leaves) {
         expect(validTypes, `${leaf.path} has type "${leaf.type}"`).toContain(leaf.type);
@@ -327,15 +346,25 @@ describe('template-card.json — design tokens', () => {
     expect(crewspace).toHaveProperty('templateCard');
   });
 
-  const templateCard = (
-    tokens as { crewspace: { templateCard: Record<string, unknown> } }
-  ).crewspace.templateCard;
+  const templateCard = (tokens as { crewspace: { templateCard: Record<string, unknown> } })
+    .crewspace.templateCard;
 
   it('contains required sections', () => {
     const requiredSections = [
-      'card', 'sizing', 'thumbnail', 'previewOverlay', 'badge',
-      'categoryIcon', 'title', 'description', 'tag', 'meta',
-      'previewButton', 'useButton', 'skeleton', 'animation',
+      'card',
+      'sizing',
+      'thumbnail',
+      'previewOverlay',
+      'badge',
+      'categoryIcon',
+      'title',
+      'description',
+      'tag',
+      'meta',
+      'previewButton',
+      'useButton',
+      'skeleton',
+      'animation',
     ];
     for (const section of requiredSections) {
       expect(templateCard, `missing section: ${section}`).toHaveProperty(section);
@@ -491,7 +520,9 @@ describe('template-preview-modal.json — design tokens', () => {
   it('every leaf has a non-empty value', () => {
     for (const leaf of leaves) {
       expect(leaf.value, `${leaf.path} should have a value`).toBeDefined();
-      expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(0);
+      expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(
+        0,
+      );
     }
   });
 });
@@ -1184,12 +1215,12 @@ describe('template-library-theme.ts — consistency with tokens', () => {
 
   describe('keyframe consistency', () => {
     it('card enter keyframe matches spec transforms', () => {
-      expect(twSource).toContain("scale(0.92) translateY(8px)");
-      expect(twSource).toContain("scale(1) translateY(0)");
+      expect(twSource).toContain('scale(0.92) translateY(8px)');
+      expect(twSource).toContain('scale(1) translateY(0)');
     });
 
     it('modal enter keyframe matches spec transforms', () => {
-      expect(twSource).toContain("scale(0.95) translateY(12px)");
+      expect(twSource).toContain('scale(0.95) translateY(12px)');
     });
   });
 });

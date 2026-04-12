@@ -6,12 +6,7 @@
  * validation state styling (valid, invalid, warning).
  */
 import { clsx } from 'clsx';
-import {
-  type ReactNode,
-  type HTMLAttributes,
-  forwardRef,
-  useId,
-} from 'react';
+import { type ReactNode, type HTMLAttributes, forwardRef, useId } from 'react';
 
 /* ------------------------------------------------------------------ */
 /* Types                                                               */
@@ -104,11 +99,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const showMessage = activeMessage && validationState !== 'none';
     const showHelper = helperText && !showMessage;
 
-    const ariaDescribedBy = showMessage
-      ? messageId
-      : showHelper
-        ? helperId
-        : undefined;
+    const ariaDescribedBy = showMessage ? messageId : showHelper ? helperId : undefined;
 
     return (
       <div
@@ -124,16 +115,10 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       >
         {/* Label */}
         {label && (
-          <label
-            htmlFor={fieldId}
-            className="text-xs font-medium text-form-label"
-          >
+          <label htmlFor={fieldId} className="text-xs font-medium text-form-label">
             {label}
             {required && (
-              <span
-                className="ml-0.5 text-form-label-required"
-                aria-hidden="true"
-              >
+              <span className="ml-0.5 text-form-label-required" aria-hidden="true">
                 *
               </span>
             )}

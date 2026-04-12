@@ -74,9 +74,7 @@ export const StatusSuccess = forwardRef<HTMLDivElement, StatusSuccessProps>(
 
         <div className="text-center">
           <h3 className="text-lg font-semibold text-slate-100">{heading}</h3>
-          {message && (
-            <p className="mt-1 text-sm text-slate-400 max-w-md">{message}</p>
-          )}
+          {message && <p className="mt-1 text-sm text-slate-400 max-w-md">{message}</p>}
         </div>
 
         <div className="flex items-center gap-3">

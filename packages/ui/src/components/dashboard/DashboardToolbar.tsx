@@ -40,7 +40,11 @@ export const DashboardToolbar = forwardRef<HTMLDivElement, DashboardToolbarProps
         {...rest}
       >
         <SearchBar value={search} onValueChange={onSearchChange} className="w-full sm:w-64" />
-        <FilterChips value={statusFilter} onChange={onStatusFilterChange} className="overflow-x-auto" />
+        <FilterChips
+          value={statusFilter}
+          onChange={onStatusFilterChange}
+          className="overflow-x-auto"
+        />
         <div className="hidden sm:block flex-1" />
         <div className="flex items-center justify-between sm:justify-end gap-2">
           <ViewToggle value={viewMode} onChange={onViewModeChange} />
@@ -58,11 +62,22 @@ export const DashboardToolbar = forwardRef<HTMLDivElement, DashboardToolbarProps
                 'min-h-touch-min',
               )}
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden="true"
+              >
                 <path d="M8 2v12M2 8h12" />
               </svg>
               <span className="hidden xs:inline">New Workflow</span>
-              <span className="xs:hidden" aria-hidden="true">New</span>
+              <span className="xs:hidden" aria-hidden="true">
+                New
+              </span>
             </button>
           )}
         </div>

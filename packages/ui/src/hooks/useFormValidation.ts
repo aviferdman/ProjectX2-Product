@@ -63,9 +63,7 @@ export interface UseFormValidationResult {
 /* Hook                                                                */
 /* ------------------------------------------------------------------ */
 
-function buildInitialStates(
-  fields: Record<string, FieldConfig>,
-): Record<string, FieldState> {
+function buildInitialStates(fields: Record<string, FieldConfig>): Record<string, FieldState> {
   const out: Record<string, FieldState> = {};
   for (const name of Object.keys(fields)) {
     out[name] = { state: 'none', message: undefined, touched: false };
@@ -73,15 +71,13 @@ function buildInitialStates(
   return out;
 }
 
-export function useFormValidation(
-  options: UseFormValidationOptions,
-): UseFormValidationResult {
+export function useFormValidation(options: UseFormValidationOptions): UseFormValidationResult {
   const { fields } = options;
   const fieldsRef = useRef(fields);
   fieldsRef.current = fields;
 
-  const [fieldStates, setFieldStates] = useState<Record<string, FieldState>>(
-    () => buildInitialStates(fields),
+  const [fieldStates, setFieldStates] = useState<Record<string, FieldState>>(() =>
+    buildInitialStates(fields),
   );
   const [validatingCount, setValidatingCount] = useState(0);
 
@@ -117,9 +113,7 @@ export function useFormValidation(
   const validateAll = useCallback(
     async (values: Record<string, string>): Promise<boolean> => {
       const names = Object.keys(fieldsRef.current);
-      const results = await Promise.all(
-        names.map((n) => validateField(n, values[n] ?? '')),
-      );
+      const results = await Promise.all(names.map((n) => validateField(n, values[n] ?? '')));
       return results.every((r) => r.state === 'none' || r.state === 'valid');
     },
     [validateField],

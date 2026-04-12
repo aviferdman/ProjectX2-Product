@@ -10,10 +10,15 @@ import { CrewspaceError, ErrorCode } from '../errors/base.js';
 // Error codes
 // ---------------------------------------------------------------------------
 
+/** Error code for workflow execution failure. */
 export const WORKFLOW_EXECUTION_FAILED = 'WORKFLOW_EXECUTION_FAILED' as unknown as ErrorCode;
+/** Error code for inactive workflow. */
 export const WORKFLOW_NOT_ACTIVE = 'WORKFLOW_NOT_ACTIVE' as unknown as ErrorCode;
+/** Error code for cancelled workflow execution. */
 export const WORKFLOW_EXECUTION_CANCELLED = 'WORKFLOW_EXECUTION_CANCELLED' as unknown as ErrorCode;
+/** Error code for workflow execution timeout. */
 export const WORKFLOW_EXECUTION_TIMEOUT = 'WORKFLOW_EXECUTION_TIMEOUT' as unknown as ErrorCode;
+/** Error code for workflow with no agents. */
 export const WORKFLOW_NO_AGENTS = 'WORKFLOW_NO_AGENTS' as unknown as ErrorCode;
 
 // ---------------------------------------------------------------------------

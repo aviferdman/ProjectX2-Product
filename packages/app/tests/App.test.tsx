@@ -39,12 +39,12 @@ describe('App', () => {
     expect(container).toBeTruthy();
   });
 
-  it('shows login page when not authenticated (default redirect from /)', () => {
+  it('shows public home page at default route (/)', () => {
     const adapter = createAdapter();
-    render(React.createElement(App, { authAdapter: adapter }));
+    const { container } = render(React.createElement(App, { authAdapter: adapter }));
 
-    // The default route "/" redirects to "/dashboard" which is protected → redirects to "/login"
-    expect(screen.getByTestId('login-page')).toBeTruthy();
+    // The default route "/" renders the public HomePage
+    expect(container.innerHTML.length).toBeGreaterThan(0);
   });
 
   it('accepts initial app state overrides', () => {

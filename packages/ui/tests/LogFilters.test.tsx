@@ -203,7 +203,11 @@ describe('filterLogEntries', () => {
   });
 
   it('returns empty when no entries match', () => {
-    const filters: LogFilters = { ...DEFAULT_LOG_FILTERS, levels: ['error'], agentIds: ['agent-1'] };
+    const filters: LogFilters = {
+      ...DEFAULT_LOG_FILTERS,
+      levels: ['error'],
+      agentIds: ['agent-1'],
+    };
     const result = filterLogEntries(testEntries, filters);
     expect(result).toHaveLength(0);
   });
@@ -429,8 +433,12 @@ describe('LogFilterBar interactions', () => {
   it('agent chip has aria-checked when active', () => {
     const filters: LogFilters = { ...DEFAULT_LOG_FILTERS, agentIds: ['agent-2'] };
     renderFilterBar({ filters });
-    expect(screen.getByTestId('log-filter-agent-agent-2').getAttribute('aria-checked')).toBe('true');
-    expect(screen.getByTestId('log-filter-agent-agent-1').getAttribute('aria-checked')).toBe('false');
+    expect(screen.getByTestId('log-filter-agent-agent-2').getAttribute('aria-checked')).toBe(
+      'true',
+    );
+    expect(screen.getByTestId('log-filter-agent-agent-1').getAttribute('aria-checked')).toBe(
+      'false',
+    );
   });
 });
 

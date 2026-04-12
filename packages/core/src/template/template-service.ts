@@ -287,7 +287,7 @@ export class TemplateLibraryService {
 
     for (const [templateId, meta] of this._featured) {
       const template = await this._templateStorage.get(templateId);
-      if (!template || template.status !== 'published') {
+      if (template?.status !== 'published') {
         toRemove.push(templateId);
         continue;
       }
@@ -327,10 +327,7 @@ export class TemplateLibraryService {
    *
    * @throws TemplateNotFoundError if the source template doesn't exist
    */
-  async duplicate(
-    templateId: string,
-    newName?: string,
-  ): Promise<StoredTemplate> {
+  async duplicate(templateId: string, newName?: string): Promise<StoredTemplate> {
     const source = await this._templateStorage.get(templateId);
     if (!source) {
       throw new TemplateNotFoundError(templateId);

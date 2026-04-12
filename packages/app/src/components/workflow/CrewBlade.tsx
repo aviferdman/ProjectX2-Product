@@ -57,12 +57,7 @@ export function CrewBlade({
 
   return (
     <>
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
+      {isOpen && <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={onClose} />}
 
       <div
         className={`fixed top-0 right-0 h-full w-[400px] max-w-full z-50 flex flex-col glass border-l border-[var(--cs-border-subtle)] transition-transform duration-300 ease-in-out ${
@@ -76,7 +71,15 @@ export function CrewBlade({
             className="p-1.5 rounded-md text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-primary)] hover:bg-white/5 transition-colors"
             aria-label="Close panel"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
               <path d="M4 4l8 8M12 4l-8 8" />
             </svg>
           </button>
@@ -93,11 +96,13 @@ export function CrewBlade({
           >
             <span className="flex items-center justify-center gap-2">
               Agents
-              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                activeTab === 'agents'
-                  ? 'bg-indigo-600/20 text-indigo-400'
-                  : 'bg-white/5 text-[var(--cs-text-tertiary)]'
-              }`}>
+              <span
+                className={`text-xs px-1.5 py-0.5 rounded-full ${
+                  activeTab === 'agents'
+                    ? 'bg-indigo-600/20 text-indigo-400'
+                    : 'bg-white/5 text-[var(--cs-text-tertiary)]'
+                }`}
+              >
                 {agents.length}
               </span>
             </span>
@@ -116,11 +121,13 @@ export function CrewBlade({
           >
             <span className="flex items-center justify-center gap-2">
               Tasks
-              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                activeTab === 'tasks'
-                  ? 'bg-indigo-600/20 text-indigo-400'
-                  : 'bg-white/5 text-[var(--cs-text-tertiary)]'
-              }`}>
+              <span
+                className={`text-xs px-1.5 py-0.5 rounded-full ${
+                  activeTab === 'tasks'
+                    ? 'bg-indigo-600/20 text-indigo-400'
+                    : 'bg-white/5 text-[var(--cs-text-tertiary)]'
+                }`}
+              >
                 {tasks.length}
               </span>
             </span>

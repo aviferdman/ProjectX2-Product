@@ -36,7 +36,12 @@ function collectTokenLeaves(
       'type' in (val as Record<string, unknown>)
     ) {
       const token = val as { value: unknown; type: string; description?: string };
-      results.push({ path: current, value: token.value, type: token.type, description: token.description });
+      results.push({
+        path: current,
+        value: token.value,
+        type: token.type,
+        description: token.description,
+      });
     } else if (val && typeof val === 'object') {
       results.push(...collectTokenLeaves(val as Record<string, unknown>, current));
     }
@@ -59,7 +64,8 @@ describe('dashboard.json — design tokens', () => {
     expect(crewspace).toHaveProperty('dashboard');
   });
 
-  const dashboard = (tokens as { crewspace: { dashboard: Record<string, unknown> } }).crewspace.dashboard;
+  const dashboard = (tokens as { crewspace: { dashboard: Record<string, unknown> } }).crewspace
+    .dashboard;
 
   it('contains required top-level sections', () => {
     const requiredSections = [
@@ -91,7 +97,9 @@ describe('dashboard.json — design tokens', () => {
     it('every leaf has a non-empty value', () => {
       for (const leaf of leaves) {
         expect(leaf.value, `${leaf.path} should have a value`).toBeDefined();
-        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(0);
+        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(
+          0,
+        );
       }
     });
 
@@ -237,7 +245,9 @@ describe('dashboard.json — design tokens', () => {
   describe('stat-card-shadow token', () => {
     it('exists with correct boxShadow value', () => {
       expect(dashboard).toHaveProperty('stat-card-shadow');
-      const shadow = (dashboard as Record<string, { value: string; type: string }>)['stat-card-shadow'];
+      const shadow = (dashboard as Record<string, { value: string; type: string }>)[
+        'stat-card-shadow'
+      ];
       expect(shadow.type).toBe('boxShadow');
       expect(shadow.value).toContain('rgba(0,0,0,0.2)');
       expect(shadow.value).toContain('rgba(113,113,122,0.06)');
@@ -706,11 +716,11 @@ describe('dashboard-theme.ts — consistency with spec', () => {
     });
 
     it('card-enter keyframe has scale(0.92) and translateY(8px)', () => {
-      expect(twSource).toContain("scale(0.92) translateY(8px)");
+      expect(twSource).toContain('scale(0.92) translateY(8px)');
     });
 
     it('empty-state-in keyframe has translateY(12px)', () => {
-      expect(twSource).toContain("translateY(12px)");
+      expect(twSource).toContain('translateY(12px)');
     });
   });
 });
@@ -768,7 +778,8 @@ describe('dashboard tokens ↔ CSS ↔ Tailwind value consistency', () => {
   const tokens = loadTokens('dashboard.json');
   const css = loadCSS('dashboard-variables.css');
   const twSource = loadTailwind('dashboard-theme.ts');
-  const dashboard = (tokens as { crewspace: { dashboard: Record<string, unknown> } }).crewspace.dashboard;
+  const dashboard = (tokens as { crewspace: { dashboard: Record<string, unknown> } }).crewspace
+    .dashboard;
   const sizing = dashboard.sizing as Record<string, { value: string }>;
 
   it('header height is consistent (56px)', () => {

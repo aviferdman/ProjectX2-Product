@@ -3,7 +3,13 @@
  * TASK-131: Provides login, logout, and session management.
  */
 import React, { createContext, useContext, useReducer, useCallback, useMemo } from 'react';
-import type { AuthState, AuthContextValue, LoginCredentials, OAuthProviderType, User } from './types.js';
+import type {
+  AuthState,
+  AuthContextValue,
+  LoginCredentials,
+  OAuthProviderType,
+  User,
+} from './types.js';
 
 /* ------------------------------------------------------------------ */
 /* Reducer                                                             */

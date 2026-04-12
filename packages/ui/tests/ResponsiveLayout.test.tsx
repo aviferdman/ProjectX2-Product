@@ -96,10 +96,7 @@ describe('Responsive breakpoint detection', () => {
   it('renders mobile layout at xs viewport (375px)', () => {
     setViewportWidth(375);
     render(
-      <ResponsiveLayout
-        title="Test App"
-        sidebarContent={<div>Sidebar</div>}
-      >
+      <ResponsiveLayout title="Test App" sidebarContent={<div>Sidebar</div>}>
         <div>Content</div>
       </ResponsiveLayout>,
     );
@@ -112,10 +109,7 @@ describe('Responsive breakpoint detection', () => {
   it('renders desktop layout at xl viewport (1280px)', () => {
     setViewportWidth(1280);
     render(
-      <ResponsiveLayout
-        title="Test App"
-        sidebarContent={<div>Nav Items</div>}
-      >
+      <ResponsiveLayout title="Test App" sidebarContent={<div>Nav Items</div>}>
         <div>Content</div>
       </ResponsiveLayout>,
     );
@@ -185,9 +179,7 @@ describe('ResponsiveLayout', () => {
 
     // Close sidebar — pick the close button inside the aside
     const closeButtons = screen.getAllByLabelText('Close navigation');
-    const insideDrawer = closeButtons.find((btn) =>
-      btn.closest('aside'),
-    )!;
+    const insideDrawer = closeButtons.find((btn) => btn.closest('aside'))!;
     fireEvent.click(insideDrawer);
     // On hidden mode, sidebar unmounts when closed
     expect(screen.queryByRole('navigation')).toBeNull();
@@ -331,9 +323,7 @@ describe('Modal responsive behavior', () => {
 /* ------------------------------------------------------------------ */
 describe('WorkflowGrid responsive columns', () => {
   it('applies responsive grid column classes', () => {
-    const { container } = render(
-      <WorkflowGrid workflows={mockWorkflows} />,
-    );
+    const { container } = render(<WorkflowGrid workflows={mockWorkflows} />);
 
     const grid = container.firstElementChild;
     expect(grid?.className).toContain('grid-cols-1');
@@ -343,9 +333,7 @@ describe('WorkflowGrid responsive columns', () => {
   });
 
   it('applies responsive gap classes', () => {
-    const { container } = render(
-      <WorkflowGrid workflows={mockWorkflows} />,
-    );
+    const { container } = render(<WorkflowGrid workflows={mockWorkflows} />);
 
     const grid = container.firstElementChild;
     expect(grid?.className).toContain('gap-grid-gap-mobile');
@@ -359,9 +347,7 @@ describe('WorkflowGrid responsive columns', () => {
 /* ------------------------------------------------------------------ */
 describe('WorkflowList responsive columns', () => {
   it('renders table with hidden columns for mobile', () => {
-    const { container } = render(
-      <WorkflowList workflows={mockWorkflows} />,
-    );
+    const { container } = render(<WorkflowList workflows={mockWorkflows} />);
 
     const headers = container.querySelectorAll('th');
     // Agents and Tasks columns should have 'hidden md:table-cell'
@@ -383,9 +369,7 @@ describe('WorkflowList responsive columns', () => {
 /* ------------------------------------------------------------------ */
 describe('DashboardPage responsive behavior', () => {
   it('renders with responsive gap classes', () => {
-    const { container } = render(
-      <DashboardPage workflows={mockWorkflows} />,
-    );
+    const { container } = render(<DashboardPage workflows={mockWorkflows} />);
 
     const dashboard = container.querySelector('.cs-dashboard');
     expect(dashboard?.className).toContain('gap-4');
@@ -409,9 +393,7 @@ describe('DashboardPage responsive behavior', () => {
 /* ------------------------------------------------------------------ */
 describe('DashboardToolbar responsive layout', () => {
   it('renders search bar with full width on mobile', () => {
-    const { container } = render(
-      <DashboardPage workflows={mockWorkflows} />,
-    );
+    const { container } = render(<DashboardPage workflows={mockWorkflows} />);
 
     const searchbox = screen.getByRole('searchbox');
     const parent = searchbox.closest('[class*="w-full"]');
@@ -424,9 +406,7 @@ describe('DashboardToolbar responsive layout', () => {
 /* ------------------------------------------------------------------ */
 describe('WorkflowCard responsive thumbnail', () => {
   it('applies responsive thumbnail height', () => {
-    render(
-      <WorkflowGrid workflows={mockWorkflows} />,
-    );
+    render(<WorkflowGrid workflows={mockWorkflows} />);
 
     const cards = document.querySelectorAll('.cs-workflow-card');
     expect(cards.length).toBe(2);

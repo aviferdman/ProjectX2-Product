@@ -6,12 +6,7 @@
  * animated dash patterns for active data-flow visualization.
  */
 import { memo } from 'react';
-import {
-  BaseEdge,
-  getSmoothStepPath,
-  type EdgeProps,
-  EdgeLabelRenderer,
-} from '@xyflow/react';
+import { BaseEdge, getSmoothStepPath, type EdgeProps, EdgeLabelRenderer } from '@xyflow/react';
 import { clsx } from 'clsx';
 import type { WorkflowEdgeData } from './types.js';
 

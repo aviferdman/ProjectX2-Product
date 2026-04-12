@@ -57,11 +57,7 @@ export const WorkflowList = forwardRef<HTMLDivElement, WorkflowListProps>(
           className="ml-1 inline-block"
           aria-hidden="true"
         >
-          {sortDirection === 'asc' ? (
-            <path d="M6 2l4 5H2z" />
-          ) : (
-            <path d="M6 10l4-5H2z" />
-          )}
+          {sortDirection === 'asc' ? <path d="M6 2l4 5H2z" /> : <path d="M6 10l4-5H2z" />}
         </svg>
       );
     };

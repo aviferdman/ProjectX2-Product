@@ -414,8 +414,10 @@ describe('publish-check', () => {
 
     it('parses multiple --package flags', () => {
       const result = parsePublishCheckArgs([
-        '--package', 'packages/tools-file',
-        '--package', 'packages/tools-web',
+        '--package',
+        'packages/tools-file',
+        '--package',
+        'packages/tools-web',
         '--rebuild',
       ]);
       expect(result.rebuild).toBe(true);

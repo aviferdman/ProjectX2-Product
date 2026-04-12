@@ -43,14 +43,30 @@ const VARIANT_STYLES: Record<ToastVariant, { container: string; icon: string }> 
 };
 
 const SuccessIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    aria-hidden="true"
+  >
     <circle cx="10" cy="10" r="8" />
     <path d="M6.5 10.5l2 2 5-5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const ErrorIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    aria-hidden="true"
+  >
     <circle cx="10" cy="10" r="8" />
     <path d="M10 6v5" strokeLinecap="round" />
     <circle cx="10" cy="14" r="0.75" fill="currentColor" stroke="none" />
@@ -58,7 +74,15 @@ const ErrorIcon = () => (
 );
 
 const WarningIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    aria-hidden="true"
+  >
     <path d="M10 3L2 17h16L10 3z" />
     <path d="M10 8v4" strokeLinecap="round" />
     <circle cx="10" cy="14.5" r="0.75" fill="currentColor" stroke="none" />
@@ -66,7 +90,15 @@ const WarningIcon = () => (
 );
 
 const InfoIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    aria-hidden="true"
+  >
     <circle cx="10" cy="10" r="8" />
     <path d="M10 9v5" strokeLinecap="round" />
     <circle cx="10" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
@@ -128,9 +160,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
 
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-slate-100">{title}</p>
-          {message && (
-            <p className="mt-0.5 text-xs text-slate-400">{message}</p>
-          )}
+          {message && <p className="mt-0.5 text-xs text-slate-400">{message}</p>}
         </div>
 
         {dismissible && onDismiss && (
@@ -145,7 +175,16 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
             )}
             aria-label="Dismiss notification"
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
               <path d="M3 3l8 8M11 3l-8 8" />
             </svg>
           </button>

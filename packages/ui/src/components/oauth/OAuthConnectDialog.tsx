@@ -8,8 +8,10 @@ import React, { forwardRef } from 'react';
 import { clsx } from 'clsx';
 import type { OAuthFlowStatus, OAuthConnection } from './types.js';
 
-export interface OAuthConnectDialogProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface OAuthConnectDialogProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   open: boolean;
   onClose: () => void;
   /** The connection being acted on. */
@@ -181,7 +183,13 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
                   aria-hidden="true"
                 >
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M8 12l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="M8 12l3 3 5-5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 <p className="text-sm font-medium text-emerald-300">
                   {isDisconnect ? 'Successfully disconnected' : 'Successfully connected'}
@@ -212,7 +220,12 @@ export const OAuthConnectDialog = forwardRef<HTMLDivElement, OAuthConnectDialogP
                   aria-hidden="true"
                 >
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path
+                    d="M15 9l-6 6M9 9l6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
                 </svg>
                 <p className="text-sm font-medium text-rose-300">
                   {isDisconnect ? 'Disconnect failed' : 'Connection failed'}

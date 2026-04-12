@@ -5,8 +5,10 @@ import { MarketplaceSearchBar } from './MarketplaceSearchBar.js';
 import { MarketplaceCategoryFilter } from './MarketplaceCategoryFilter.js';
 import { MarketplaceSortDropdown } from './MarketplaceSortDropdown.js';
 
-export interface MarketplaceToolbarProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface MarketplaceToolbarProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'onChange'
+> {
   search: string;
   onSearchChange: (value: string) => void;
   category: IntegrationCategory | 'all';
@@ -34,18 +36,10 @@ export const MarketplaceToolbar = forwardRef<HTMLDivElement, MarketplaceToolbarP
     ref,
   ) {
     return (
-      <div
-        ref={ref}
-        className={clsx('flex flex-col gap-3', className)}
-        {...props}
-      >
+      <div ref={ref} className={clsx('flex flex-col gap-3', className)} {...props}>
         {/* Top row: search + sort + count */}
         <div className="flex flex-wrap items-center gap-3">
-          <MarketplaceSearchBar
-            value={search}
-            onValueChange={onSearchChange}
-            className="w-72"
-          />
+          <MarketplaceSearchBar value={search} onValueChange={onSearchChange} className="w-72" />
           <div className="flex-1" />
           {resultCount !== undefined && totalCount !== undefined && (
             <span className="text-[11px] text-[var(--cs-text-secondary,#a1a1aa)] whitespace-nowrap">

@@ -14,7 +14,6 @@ import type {
   ListTemplatesOptions,
   ListTemplatesResult,
   StoredTemplate,
-  TemplateCategory,
   TemplateStorageProvider,
   UpdateTemplateInput,
 } from './template-storage-types.js';
@@ -121,14 +120,10 @@ function validateCreateInput(input: CreateTemplateInput): void {
     if (task.dependencies) {
       for (const dep of task.dependencies) {
         if (!taskIds.has(dep)) {
-          throw new TemplateValidationError(
-            `Task "${task.id}" depends on unknown task "${dep}"`,
-          );
+          throw new TemplateValidationError(`Task "${task.id}" depends on unknown task "${dep}"`);
         }
         if (dep === task.id) {
-          throw new TemplateValidationError(
-            `Task "${task.id}" cannot depend on itself`,
-          );
+          throw new TemplateValidationError(`Task "${task.id}" cannot depend on itself`);
         }
       }
     }
@@ -291,7 +286,8 @@ export class InMemoryTemplateStorage implements TemplateStorageProvider {
     const updated: StoredTemplate = {
       ...existing,
       name: input.name !== undefined ? input.name.trim() : existing.name,
-      description: input.description !== undefined ? input.description?.trim() : existing.description,
+      description:
+        input.description !== undefined ? input.description?.trim() : existing.description,
       status: input.status ?? existing.status,
       category: input.category ?? existing.category,
       agents: input.agents !== undefined ? [...input.agents] : existing.agents,

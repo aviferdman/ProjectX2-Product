@@ -26,9 +26,7 @@ describe('Input', () => {
   });
 
   it('hides helper text when error is present', () => {
-    render(
-      <Input label="Username" helperText="Choose a unique name" error="Taken" />,
-    );
+    render(<Input label="Username" helperText="Choose a unique name" error="Taken" />);
     expect(screen.queryByText('Choose a unique name')).not.toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('Taken');
   });
@@ -46,7 +44,13 @@ describe('Input', () => {
 
   it('forwards ref', () => {
     let inputEl: HTMLInputElement | null = null;
-    render(<Input ref={(el) => { inputEl = el; }} />);
+    render(
+      <Input
+        ref={(el) => {
+          inputEl = el;
+        }}
+      />,
+    );
     expect(inputEl).toBeInstanceOf(HTMLInputElement);
   });
 });

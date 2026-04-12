@@ -97,7 +97,7 @@ export const actionEventCardsTheme = {
   },
 
   borderRadius: {
-    'card': '10px',
+    card: '10px',
     'card-code': '6px',
     'card-metrics': '8px',
     'card-badge': '9999px',

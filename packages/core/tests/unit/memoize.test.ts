@@ -97,7 +97,10 @@ describe('memoizeAsync', () => {
   it('deduplicates concurrent calls with the same key', async () => {
     let resolvePromise!: (val: number) => void;
     const fn = vi.fn(
-      () => new Promise<number>((resolve) => { resolvePromise = resolve; }),
+      () =>
+        new Promise<number>((resolve) => {
+          resolvePromise = resolve;
+        }),
     );
     const memo = memoizeAsync(fn);
 

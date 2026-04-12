@@ -8,8 +8,8 @@ describe('createLazyComponent', () => {
     const TestComp: React.FC<{ label: string }> = ({ label }) =>
       React.createElement('div', { 'data-testid': 'lazy' }, label);
 
-    const { Component } = createLazyComponent(
-      () => Promise.resolve({ default: TestComp as React.ComponentType<Record<string, unknown>> }),
+    const { Component } = createLazyComponent(() =>
+      Promise.resolve({ default: TestComp as React.ComponentType<Record<string, unknown>> }),
     );
 
     render(

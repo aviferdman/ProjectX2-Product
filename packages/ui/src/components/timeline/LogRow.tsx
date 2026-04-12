@@ -29,8 +29,10 @@ export function formatTimestamp(ms: number): string {
 /** Detect if a string looks like JSON */
 function isJsonLike(str: string): boolean {
   const trimmed = str.trim();
-  return (trimmed.startsWith('{') && trimmed.endsWith('}')) ||
-         (trimmed.startsWith('[') && trimmed.endsWith(']'));
+  return (
+    (trimmed.startsWith('{') && trimmed.endsWith('}')) ||
+    (trimmed.startsWith('[') && trimmed.endsWith(']'))
+  );
 }
 
 /** Tokenize a JSON string for syntax highlighting. */
@@ -51,7 +53,9 @@ export function tokenizeJson(input: string): SyntaxToken[] {
       // Key (string followed by colon)
       tokens.push({ text: match[1], type: 'key' });
       // Find and add the colon
-      const colonMatch = input.slice(regex.lastIndex - match[0].length + match[1].length).match(/^\s*:/);
+      const colonMatch = input
+        .slice(regex.lastIndex - match[0].length + match[1].length)
+        .match(/^\s*:/);
       if (colonMatch) {
         // The colon is captured in the original match
       }

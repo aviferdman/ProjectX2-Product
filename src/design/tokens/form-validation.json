@@ -4,38 +4,110 @@
     "form": {
       "validation": {
         "valid": {
-          "border": { "value": "rgba(5,150,105,0.6)", "type": "color", "description": "Valid field border color" },
-          "text": { "value": "#34d399", "type": "color", "description": "Valid message text color" },
+          "border": {
+            "value": "rgba(5,150,105,0.6)",
+            "type": "color",
+            "description": "Valid field border color"
+          },
+          "text": {
+            "value": "#34d399",
+            "type": "color",
+            "description": "Valid message text color"
+          },
           "icon": { "value": "#34d399", "type": "color", "description": "Valid state icon color" },
-          "bg": { "value": "rgba(16,185,129,0.06)", "type": "color", "description": "Valid field background tint" }
+          "bg": {
+            "value": "rgba(16,185,129,0.06)",
+            "type": "color",
+            "description": "Valid field background tint"
+          }
         },
         "invalid": {
-          "border": { "value": "rgba(225,29,72,0.6)", "type": "color", "description": "Invalid field border color" },
-          "text": { "value": "#f87171", "type": "color", "description": "Error message text color" },
-          "icon": { "value": "#f87171", "type": "color", "description": "Invalid state icon color" },
-          "bg": { "value": "rgba(244,63,94,0.06)", "type": "color", "description": "Invalid field background tint" }
+          "border": {
+            "value": "rgba(225,29,72,0.6)",
+            "type": "color",
+            "description": "Invalid field border color"
+          },
+          "text": {
+            "value": "#f87171",
+            "type": "color",
+            "description": "Error message text color"
+          },
+          "icon": {
+            "value": "#f87171",
+            "type": "color",
+            "description": "Invalid state icon color"
+          },
+          "bg": {
+            "value": "rgba(244,63,94,0.06)",
+            "type": "color",
+            "description": "Invalid field background tint"
+          }
         },
         "warning": {
-          "border": { "value": "rgba(217,119,6,0.6)", "type": "color", "description": "Warning field border color" },
-          "text": { "value": "#fbbf24", "type": "color", "description": "Warning message text color" },
-          "icon": { "value": "#fbbf24", "type": "color", "description": "Warning state icon color" },
-          "bg": { "value": "rgba(245,158,11,0.06)", "type": "color", "description": "Warning field background tint" }
+          "border": {
+            "value": "rgba(217,119,6,0.6)",
+            "type": "color",
+            "description": "Warning field border color"
+          },
+          "text": {
+            "value": "#fbbf24",
+            "type": "color",
+            "description": "Warning message text color"
+          },
+          "icon": {
+            "value": "#fbbf24",
+            "type": "color",
+            "description": "Warning state icon color"
+          },
+          "bg": {
+            "value": "rgba(245,158,11,0.06)",
+            "type": "color",
+            "description": "Warning field background tint"
+          }
         }
       },
       "label": {
-        "color": { "value": "{crewspace.color.primitive.slate.300}", "type": "color", "description": "Form label text color" },
-        "required": { "value": "#f87171", "type": "color", "description": "Required field indicator color" }
+        "color": {
+          "value": "{crewspace.color.primitive.slate.300}",
+          "type": "color",
+          "description": "Form label text color"
+        },
+        "required": {
+          "value": "#f87171",
+          "type": "color",
+          "description": "Required field indicator color"
+        }
       },
       "helper": {
-        "color": { "value": "{crewspace.color.primitive.slate.500}", "type": "color", "description": "Helper text color" }
+        "color": {
+          "value": "{crewspace.color.primitive.slate.500}",
+          "type": "color",
+          "description": "Helper text color"
+        }
       },
       "transition": {
-        "duration": { "value": "150ms", "type": "duration", "description": "Validation state transition" }
+        "duration": {
+          "value": "150ms",
+          "type": "duration",
+          "description": "Validation state transition"
+        }
       },
       "message": {
-        "font-size": { "value": "0.75rem", "type": "dimension", "description": "Validation message font size" },
-        "line-height": { "value": "1rem", "type": "dimension", "description": "Validation message line height" },
-        "gap": { "value": "0.25rem", "type": "dimension", "description": "Gap between icon and message text" }
+        "font-size": {
+          "value": "0.75rem",
+          "type": "dimension",
+          "description": "Validation message font size"
+        },
+        "line-height": {
+          "value": "1rem",
+          "type": "dimension",
+          "description": "Validation message line height"
+        },
+        "gap": {
+          "value": "0.25rem",
+          "type": "dimension",
+          "description": "Gap between icon and message text"
+        }
       }
     }
   }

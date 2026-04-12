@@ -4,113 +4,193 @@
     "canvas": {
       "viewport": {
         "background": { "value": "#0c0c14", "type": "color" },
-        "grid-size":  { "value": "20", "type": "number", "description": "Pixel distance between grid dots" },
+        "grid-size": {
+          "value": "20",
+          "type": "number",
+          "description": "Pixel distance between grid dots"
+        },
         "grid-dot-radius": { "value": "1", "type": "number" },
-        "grid-dot-color":  { "value": "rgba(113,113,122,0.12)", "type": "color", "description": "Minor grid dot color" },
-        "grid-line-color": { "value": "rgba(113,113,122,0.06)", "type": "color", "description": "Major grid line color (every 5th)" },
-        "min-zoom":   { "value": "0.1", "type": "number" },
-        "max-zoom":   { "value": "2.0", "type": "number" },
+        "grid-dot-color": {
+          "value": "rgba(113,113,122,0.12)",
+          "type": "color",
+          "description": "Minor grid dot color"
+        },
+        "grid-line-color": {
+          "value": "rgba(113,113,122,0.06)",
+          "type": "color",
+          "description": "Major grid line color (every 5th)"
+        },
+        "min-zoom": { "value": "0.1", "type": "number" },
+        "max-zoom": { "value": "2.0", "type": "number" },
         "default-zoom": { "value": "1.0", "type": "number" },
-        "zoom-step":  { "value": "0.1", "type": "number" },
-        "snap-grid":  { "value": "10", "type": "number", "description": "Snap-to-grid increment in pixels" }
+        "zoom-step": { "value": "0.1", "type": "number" },
+        "snap-grid": {
+          "value": "10",
+          "type": "number",
+          "description": "Snap-to-grid increment in pixels"
+        }
       },
       "node": {
-        "width":              { "value": "220px", "type": "sizing", "description": "Default node width" },
-        "min-width":          { "value": "180px", "type": "sizing" },
-        "max-width":          { "value": "280px", "type": "sizing" },
-        "header-height":      { "value": "40px", "type": "sizing", "description": "Node header row height" },
-        "border-radius":      { "value": "10px", "type": "borderRadius" },
-        "border-width":       { "value": "1.5px", "type": "borderWidth" },
-        "border-width-hover": { "value": "2px",   "type": "borderWidth" },
-        "header-padding":     { "value": "10px 12px", "type": "spacing" },
-        "body-padding":       { "value": "8px 12px",  "type": "spacing" },
-        "gap":                { "value": "6px", "type": "spacing", "description": "Vertical gap between header/body/footer sections" },
-        "agent-bg":           { "value": "rgba(99,102,241,0.12)", "type": "color" },
-        "agent-border":       { "value": "#6366f1", "type": "color" },
-        "agent-icon":         { "value": "#818cf8", "type": "color" },
-        "task-bg":            { "value": "rgba(14,165,233,0.12)", "type": "color" },
-        "task-border":        { "value": "#0891b2", "type": "color" },
-        "task-icon":          { "value": "#22d3ee", "type": "color" },
-        "tool-bg":            { "value": "rgba(16,185,129,0.12)", "type": "color" },
-        "tool-border":        { "value": "#059669", "type": "color" },
-        "tool-icon":          { "value": "#34d399", "type": "color" },
-        "llm-bg":             { "value": "rgba(245,158,11,0.12)", "type": "color" },
-        "llm-border":         { "value": "#d97706", "type": "color" },
-        "llm-icon":           { "value": "#fbbf24", "type": "color" },
-        "selected-ring":      { "value": "#818cf8", "type": "color" },
-        "selected-glow":      { "value": "rgba(99,102,241,0.25)", "type": "color" },
-        "running-pulse":      { "value": "#34d399", "type": "color" },
-        "error-pulse":        { "value": "#f87171", "type": "color" },
-        "disabled-opacity":   { "value": "0.4", "type": "number" }
+        "width": { "value": "220px", "type": "sizing", "description": "Default node width" },
+        "min-width": { "value": "180px", "type": "sizing" },
+        "max-width": { "value": "280px", "type": "sizing" },
+        "header-height": {
+          "value": "40px",
+          "type": "sizing",
+          "description": "Node header row height"
+        },
+        "border-radius": { "value": "10px", "type": "borderRadius" },
+        "border-width": { "value": "1.5px", "type": "borderWidth" },
+        "border-width-hover": { "value": "2px", "type": "borderWidth" },
+        "header-padding": { "value": "10px 12px", "type": "spacing" },
+        "body-padding": { "value": "8px 12px", "type": "spacing" },
+        "gap": {
+          "value": "6px",
+          "type": "spacing",
+          "description": "Vertical gap between header/body/footer sections"
+        },
+        "agent-bg": { "value": "rgba(99,102,241,0.12)", "type": "color" },
+        "agent-border": { "value": "#6366f1", "type": "color" },
+        "agent-icon": { "value": "#818cf8", "type": "color" },
+        "task-bg": { "value": "rgba(14,165,233,0.12)", "type": "color" },
+        "task-border": { "value": "#0891b2", "type": "color" },
+        "task-icon": { "value": "#22d3ee", "type": "color" },
+        "tool-bg": { "value": "rgba(16,185,129,0.12)", "type": "color" },
+        "tool-border": { "value": "#059669", "type": "color" },
+        "tool-icon": { "value": "#34d399", "type": "color" },
+        "llm-bg": { "value": "rgba(245,158,11,0.12)", "type": "color" },
+        "llm-border": { "value": "#d97706", "type": "color" },
+        "llm-icon": { "value": "#fbbf24", "type": "color" },
+        "selected-ring": { "value": "#818cf8", "type": "color" },
+        "selected-glow": { "value": "rgba(99,102,241,0.25)", "type": "color" },
+        "running-pulse": { "value": "#34d399", "type": "color" },
+        "error-pulse": { "value": "#f87171", "type": "color" },
+        "disabled-opacity": { "value": "0.4", "type": "number" }
       },
       "edge": {
-        "width":        { "value": "2", "type": "number" },
-        "width-hover":  { "value": "3", "type": "number" },
-        "type":         { "value": "smoothstep", "type": "string", "description": "React Flow edge type (smoothstep | bezier | straight)" },
-        "animated":     { "value": "true", "type": "boolean", "description": "Animated dashes for active data flow" },
-        "dash-array":   { "value": "5 5", "type": "string" },
-        "arrow-size":   { "value": "12", "type": "number" },
-        "color-default":  { "value": "#52525b", "type": "color", "description": "Default edge stroke (slate-500)" },
-        "color-active":   { "value": "#818cf8", "type": "color", "description": "Selected/active edge (violet-400)" },
-        "color-data-flow":{ "value": "#22d3ee", "type": "color", "description": "Active data transfer (sky-400)" },
-        "color-error":    { "value": "#f87171", "type": "color", "description": "Failed connection (rose-400)" },
-        "label-bg":     { "value": "rgba(17,17,19,0.9)", "type": "color" },
-        "label-padding":{ "value": "2px 6px", "type": "spacing" },
+        "width": { "value": "2", "type": "number" },
+        "width-hover": { "value": "3", "type": "number" },
+        "type": {
+          "value": "smoothstep",
+          "type": "string",
+          "description": "React Flow edge type (smoothstep | bezier | straight)"
+        },
+        "animated": {
+          "value": "true",
+          "type": "boolean",
+          "description": "Animated dashes for active data flow"
+        },
+        "dash-array": { "value": "5 5", "type": "string" },
+        "arrow-size": { "value": "12", "type": "number" },
+        "color-default": {
+          "value": "#52525b",
+          "type": "color",
+          "description": "Default edge stroke (slate-500)"
+        },
+        "color-active": {
+          "value": "#818cf8",
+          "type": "color",
+          "description": "Selected/active edge (violet-400)"
+        },
+        "color-data-flow": {
+          "value": "#22d3ee",
+          "type": "color",
+          "description": "Active data transfer (sky-400)"
+        },
+        "color-error": {
+          "value": "#f87171",
+          "type": "color",
+          "description": "Failed connection (rose-400)"
+        },
+        "label-bg": { "value": "rgba(17,17,19,0.9)", "type": "color" },
+        "label-padding": { "value": "2px 6px", "type": "spacing" },
         "label-radius": { "value": "4px", "type": "borderRadius" },
-        "label-font-size":{ "value": "12px", "type": "sizing", "description": "Monospace label text size" },
-        "label-max-width":{ "value": "120px", "type": "sizing", "description": "Truncated with ellipsis" }
+        "label-font-size": {
+          "value": "12px",
+          "type": "sizing",
+          "description": "Monospace label text size"
+        },
+        "label-max-width": {
+          "value": "120px",
+          "type": "sizing",
+          "description": "Truncated with ellipsis"
+        }
       },
       "handle": {
-        "size":           { "value": "10px", "type": "sizing" },
-        "border-width":   { "value": "2px", "type": "borderWidth" },
-        "hit-area":       { "value": "20px", "type": "sizing", "description": "Invisible expanded click target" },
-        "bg":             { "value": "#18181b", "type": "color" },
-        "border-color":   { "value": "#52525b", "type": "color" },
-        "hover-bg":       { "value": "#6366f1", "type": "color" },
-        "hover-border":   { "value": "#818cf8", "type": "color" },
-        "connected-bg":   { "value": "#818cf8", "type": "color" }
+        "size": { "value": "10px", "type": "sizing" },
+        "border-width": { "value": "2px", "type": "borderWidth" },
+        "hit-area": {
+          "value": "20px",
+          "type": "sizing",
+          "description": "Invisible expanded click target"
+        },
+        "bg": { "value": "#18181b", "type": "color" },
+        "border-color": { "value": "#52525b", "type": "color" },
+        "hover-bg": { "value": "#6366f1", "type": "color" },
+        "hover-border": { "value": "#818cf8", "type": "color" },
+        "connected-bg": { "value": "#818cf8", "type": "color" }
       },
       "selection": {
-        "marquee-bg":     { "value": "rgba(99,102,241,0.08)", "type": "color" },
+        "marquee-bg": { "value": "rgba(99,102,241,0.08)", "type": "color" },
         "marquee-border": { "value": "rgba(99,102,241,0.5)", "type": "color" },
-        "marquee-dash":   { "value": "4 4", "type": "string" }
+        "marquee-dash": { "value": "4 4", "type": "string" }
       },
       "minimap": {
-        "width":      { "value": "200px", "type": "sizing" },
-        "height":     { "value": "140px", "type": "sizing" },
-        "position":   { "value": "bottom-right", "type": "string" },
-        "margin":     { "value": "16px", "type": "spacing" },
+        "width": { "value": "200px", "type": "sizing" },
+        "height": { "value": "140px", "type": "sizing" },
+        "position": { "value": "bottom-right", "type": "string" },
+        "margin": { "value": "16px", "type": "spacing" },
         "border-radius": { "value": "8px", "type": "borderRadius" },
-        "opacity":    { "value": "0.85", "type": "number" },
-        "bg":         { "value": "rgba(17,17,19,0.9)", "type": "color" },
+        "opacity": { "value": "0.85", "type": "number" },
+        "bg": { "value": "rgba(17,17,19,0.9)", "type": "color" },
         "viewport-color": { "value": "rgba(99,102,241,0.3)", "type": "color" }
       },
       "toolbar": {
-        "height":     { "value": "48px", "type": "sizing" },
-        "btn-size":   { "value": "36px", "type": "sizing" },
-        "icon-size":  { "value": "18px", "type": "sizing" },
-        "gap":        { "value": "4px", "type": "spacing" },
-        "padding":    { "value": "0 12px", "type": "spacing" },
-        "divider-gap":{ "value": "8px", "type": "spacing", "description": "Margin on each side of vertical dividers" }
+        "height": { "value": "48px", "type": "sizing" },
+        "btn-size": { "value": "36px", "type": "sizing" },
+        "icon-size": { "value": "18px", "type": "sizing" },
+        "gap": { "value": "4px", "type": "spacing" },
+        "padding": { "value": "0 12px", "type": "spacing" },
+        "divider-gap": {
+          "value": "8px",
+          "type": "spacing",
+          "description": "Margin on each side of vertical dividers"
+        }
       },
       "sidebar": {
-        "width":           { "value": "280px", "type": "sizing" },
+        "width": { "value": "280px", "type": "sizing" },
         "collapsed-width": { "value": "48px", "type": "sizing" },
-        "padding":         { "value": "12px", "type": "spacing" },
-        "section-gap":     { "value": "16px", "type": "spacing" }
+        "padding": { "value": "12px", "type": "spacing" },
+        "section-gap": { "value": "16px", "type": "spacing" }
       },
       "properties": {
-        "width":         { "value": "320px", "type": "sizing" },
-        "padding":       { "value": "16px", "type": "spacing" },
-        "label-width":   { "value": "100px", "type": "sizing" },
-        "input-height":  { "value": "32px", "type": "sizing" },
+        "width": { "value": "320px", "type": "sizing" },
+        "padding": { "value": "16px", "type": "spacing" },
+        "label-width": { "value": "100px", "type": "sizing" },
+        "input-height": { "value": "32px", "type": "sizing" },
         "header-height": { "value": "48px", "type": "sizing" }
       },
       "animation": {
-        "node-enter":   { "value": "200ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Scale-in bounce when a node is added" },
-        "edge-draw":    { "value": "300ms ease-out", "type": "transition", "description": "Edge path animation on connect" },
-        "running-pulse":{ "value": "1.5s ease-in-out infinite", "type": "transition", "description": "Glow pulse when node is executing" },
-        "data-flow":    { "value": "1s linear infinite", "type": "transition", "description": "Animated dash on active edge" }
+        "node-enter": {
+          "value": "200ms cubic-bezier(0.34,1.56,0.64,1)",
+          "type": "transition",
+          "description": "Scale-in bounce when a node is added"
+        },
+        "edge-draw": {
+          "value": "300ms ease-out",
+          "type": "transition",
+          "description": "Edge path animation on connect"
+        },
+        "running-pulse": {
+          "value": "1.5s ease-in-out infinite",
+          "type": "transition",
+          "description": "Glow pulse when node is executing"
+        },
+        "data-flow": {
+          "value": "1s linear infinite",
+          "type": "transition",
+          "description": "Animated dash on active edge"
+        }
       }
     }
   }

@@ -26,7 +26,15 @@ vi.mock('@xyflow/react', () => {
   return {
     ...actual,
     ReactFlow: ({ children, nodes, edges, ...props }: any) => (
-      <div data-testid="mock-react-flow" data-node-count={nodes?.length ?? 0} data-edge-count={edges?.length ?? 0} data-snap-to-grid={props.snapToGrid} data-min-zoom={props.minZoom} data-max-zoom={props.maxZoom} data-nodes-draggable={props.nodesDraggable}>
+      <div
+        data-testid="mock-react-flow"
+        data-node-count={nodes?.length ?? 0}
+        data-edge-count={edges?.length ?? 0}
+        data-snap-to-grid={props.snapToGrid}
+        data-min-zoom={props.minZoom}
+        data-max-zoom={props.maxZoom}
+        data-nodes-draggable={props.nodesDraggable}
+      >
         {/* Render custom nodes to test WorkflowNode */}
         {nodes?.map((node: any) => {
           const NodeComponent = props.nodeTypes?.[node.type];

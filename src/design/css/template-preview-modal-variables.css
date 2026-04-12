@@ -22,8 +22,7 @@
   --modal-border: var(--cs-border-default);
   --modal-border-width: 1px;
   --modal-radius: var(--cs-radius-xl);
-  --modal-shadow: 0 24px 48px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(148, 163, 184, 0.08);
+  --modal-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(148, 163, 184, 0.08);
   --modal-w: 900px;
   --modal-max-w: calc(100vw - 48px);
   --modal-max-h: 85vh;

@@ -21,18 +21,7 @@ export interface StatusLoadingProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const StatusLoading = forwardRef<HTMLDivElement, StatusLoadingProps>(
-  (
-    {
-      size = 32,
-      message,
-      progress,
-      overlay = false,
-      compact = false,
-      className,
-      ...rest
-    },
-    ref,
-  ) => {
+  ({ size = 32, message, progress, overlay = false, compact = false, className, ...rest }, ref) => {
     const showProgress = typeof progress === 'number';
 
     return (
@@ -71,9 +60,7 @@ export const StatusLoading = forwardRef<HTMLDivElement, StatusLoadingProps>(
           />
         </svg>
 
-        {message && (
-          <p className="text-sm text-slate-400">{message}</p>
-        )}
+        {message && <p className="text-sm text-slate-400">{message}</p>}
 
         {showProgress && (
           <div className="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden">

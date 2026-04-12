@@ -102,8 +102,14 @@ export const crewspaceTheme = {
     'node-title': ['0.8125rem', { lineHeight: '1.25', fontWeight: '600' }],
     'node-body': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
     'node-badge': ['0.625rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
-    'panel-heading': ['0.8125rem', { lineHeight: '1.25', fontWeight: '600', letterSpacing: '0.025em' }],
-    'toolbar-label': ['0.6875rem', { lineHeight: '1', fontWeight: '500', letterSpacing: '0.025em' }],
+    'panel-heading': [
+      '0.8125rem',
+      { lineHeight: '1.25', fontWeight: '600', letterSpacing: '0.025em' },
+    ],
+    'toolbar-label': [
+      '0.6875rem',
+      { lineHeight: '1', fontWeight: '500', letterSpacing: '0.025em' },
+    ],
     'property-label': ['0.75rem', { lineHeight: '1.5', fontWeight: '500' }],
     'property-value': ['0.8125rem', { lineHeight: '1.5', fontWeight: '400' }],
   },
@@ -161,6 +167,7 @@ export const crewspaceTheme = {
   animation: {
     'node-enter': 'node-enter 200ms cubic-bezier(0.34,1.56,0.64,1)',
     'running-pulse': 'running-pulse 1.5s ease-in-out infinite',
+    'running-flicker': 'running-flicker 1.8s step-end infinite',
     'error-pulse': 'error-pulse 1.5s ease-in-out infinite',
     'edge-flow': 'edge-flow 1s linear infinite',
     'edge-draw': 'edge-draw 300ms ease-out',
@@ -175,6 +182,16 @@ export const crewspaceTheme = {
     'running-pulse': {
       '0%, 100%': { boxShadow: '0 0 0 0 rgba(52,211,153,0.35)' },
       '50%': { boxShadow: '0 0 8px 2px rgba(52,211,153,0.35)' },
+    },
+    'running-flicker': {
+      '0%, 100%': { opacity: '1', boxShadow: '0 0 8px 2px rgba(52,211,153,0.35)' },
+      '10%': { opacity: '0.82', boxShadow: '0 0 4px 1px rgba(52,211,153,0.2)' },
+      '32%': { opacity: '0.7', boxShadow: '0 0 2px 0px rgba(52,211,153,0.1)' },
+      '42%': { opacity: '0.9', boxShadow: '0 0 10px 3px rgba(52,211,153,0.4)' },
+      '52%': { opacity: '0.75', boxShadow: '0 0 3px 1px rgba(52,211,153,0.15)' },
+      '68%': { opacity: '0.6', boxShadow: '0 0 1px 0px rgba(52,211,153,0.05)' },
+      '75%': { opacity: '0.92', boxShadow: '0 0 12px 3px rgba(52,211,153,0.45)' },
+      '85%': { opacity: '0.78', boxShadow: '0 0 5px 1px rgba(52,211,153,0.2)' },
     },
     'error-pulse': {
       '0%, 100%': { boxShadow: '0 0 0 0 rgba(244,63,94,0.3)' },

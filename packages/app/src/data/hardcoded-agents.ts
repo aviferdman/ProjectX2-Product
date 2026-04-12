@@ -316,6 +316,8 @@ export function getAgentById(id: string): HardcodedAgent | undefined {
 }
 
 /** Get agents by category. */
-export function getAgentsByCategory(category: HardcodedAgent['category']): readonly HardcodedAgent[] {
+export function getAgentsByCategory(
+  category: HardcodedAgent['category'],
+): readonly HardcodedAgent[] {
   return ALL_HARDCODED_AGENTS.filter((a) => a.category === category);
 }

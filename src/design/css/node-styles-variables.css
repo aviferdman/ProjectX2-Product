@@ -8,201 +8,201 @@
   /* -----------------------------------------------------------------------
      NODE ICON SIZING
      ----------------------------------------------------------------------- */
-  --cs-node-icon-size:           20px;
-  --cs-node-icon-size-compact:   16px;
-  --cs-node-icon-size-expanded:  24px;
-  --cs-node-icon-stroke-width:   1.75;
+  --cs-node-icon-size: 20px;
+  --cs-node-icon-size-compact: 16px;
+  --cs-node-icon-size-expanded: 24px;
+  --cs-node-icon-stroke-width: 1.75;
 
   /* -----------------------------------------------------------------------
      AGENT NODE — Extended palette
      ----------------------------------------------------------------------- */
-  --cs-node-agent-bg:            rgba(99,102,241,0.12);
-  --cs-node-agent-bg-hover:      rgba(99,102,241,0.18);
-  --cs-node-agent-bg-active:     rgba(99,102,241,0.24);
-  --cs-node-agent-bg-muted:      rgba(99,102,241,0.06);
-  --cs-node-agent-border:        #6366f1;
-  --cs-node-agent-border-hover:  #818cf8;
-  --cs-node-agent-border-focus:  #818cf8;
-  --cs-node-agent-icon:          #818cf8;
-  --cs-node-agent-icon-muted:    rgba(167,139,250,0.6);
-  --cs-node-agent-badge-bg:      rgba(99,102,241,0.2);
-  --cs-node-agent-badge-text:    #a5b4fc;
-  --cs-node-agent-header-start:  rgba(99,102,241,0.16);
-  --cs-node-agent-header-end:    rgba(99,102,241,0.04);
-  --cs-node-agent-accent:        #6366f1;
+  --cs-node-agent-bg: rgba(99, 102, 241, 0.12);
+  --cs-node-agent-bg-hover: rgba(99, 102, 241, 0.18);
+  --cs-node-agent-bg-active: rgba(99, 102, 241, 0.24);
+  --cs-node-agent-bg-muted: rgba(99, 102, 241, 0.06);
+  --cs-node-agent-border: #6366f1;
+  --cs-node-agent-border-hover: #818cf8;
+  --cs-node-agent-border-focus: #818cf8;
+  --cs-node-agent-icon: #818cf8;
+  --cs-node-agent-icon-muted: rgba(167, 139, 250, 0.6);
+  --cs-node-agent-badge-bg: rgba(99, 102, 241, 0.2);
+  --cs-node-agent-badge-text: #a5b4fc;
+  --cs-node-agent-header-start: rgba(99, 102, 241, 0.16);
+  --cs-node-agent-header-end: rgba(99, 102, 241, 0.04);
+  --cs-node-agent-accent: #6366f1;
 
   /* -----------------------------------------------------------------------
      TASK NODE — Extended palette
      ----------------------------------------------------------------------- */
-  --cs-node-task-bg:             rgba(14,165,233,0.12);
-  --cs-node-task-bg-hover:       rgba(14,165,233,0.18);
-  --cs-node-task-bg-active:      rgba(14,165,233,0.24);
-  --cs-node-task-bg-muted:       rgba(14,165,233,0.06);
-  --cs-node-task-border:         #0891b2;
-  --cs-node-task-border-hover:   #06b6d4;
-  --cs-node-task-border-focus:   #22d3ee;
-  --cs-node-task-icon:           #22d3ee;
-  --cs-node-task-icon-muted:     rgba(56,189,248,0.6);
-  --cs-node-task-badge-bg:       rgba(14,165,233,0.2);
-  --cs-node-task-badge-text:     #7dd3fc;
-  --cs-node-task-header-start:   rgba(14,165,233,0.16);
-  --cs-node-task-header-end:     rgba(14,165,233,0.04);
-  --cs-node-task-accent:         #0891b2;
+  --cs-node-task-bg: rgba(14, 165, 233, 0.12);
+  --cs-node-task-bg-hover: rgba(14, 165, 233, 0.18);
+  --cs-node-task-bg-active: rgba(14, 165, 233, 0.24);
+  --cs-node-task-bg-muted: rgba(14, 165, 233, 0.06);
+  --cs-node-task-border: #0891b2;
+  --cs-node-task-border-hover: #06b6d4;
+  --cs-node-task-border-focus: #22d3ee;
+  --cs-node-task-icon: #22d3ee;
+  --cs-node-task-icon-muted: rgba(56, 189, 248, 0.6);
+  --cs-node-task-badge-bg: rgba(14, 165, 233, 0.2);
+  --cs-node-task-badge-text: #7dd3fc;
+  --cs-node-task-header-start: rgba(14, 165, 233, 0.16);
+  --cs-node-task-header-end: rgba(14, 165, 233, 0.04);
+  --cs-node-task-accent: #0891b2;
 
   /* -----------------------------------------------------------------------
      TOOL NODE — Extended palette
      ----------------------------------------------------------------------- */
-  --cs-node-tool-bg:             rgba(16,185,129,0.12);
-  --cs-node-tool-bg-hover:       rgba(16,185,129,0.18);
-  --cs-node-tool-bg-active:      rgba(16,185,129,0.24);
-  --cs-node-tool-bg-muted:       rgba(16,185,129,0.06);
-  --cs-node-tool-border:         #059669;
-  --cs-node-tool-border-hover:   #10b981;
-  --cs-node-tool-border-focus:   #34d399;
-  --cs-node-tool-icon:           #34d399;
-  --cs-node-tool-icon-muted:     rgba(52,211,153,0.6);
-  --cs-node-tool-badge-bg:       rgba(16,185,129,0.2);
-  --cs-node-tool-badge-text:     #6ee7b7;
-  --cs-node-tool-header-start:   rgba(16,185,129,0.16);
-  --cs-node-tool-header-end:     rgba(16,185,129,0.04);
-  --cs-node-tool-accent:         #059669;
+  --cs-node-tool-bg: rgba(16, 185, 129, 0.12);
+  --cs-node-tool-bg-hover: rgba(16, 185, 129, 0.18);
+  --cs-node-tool-bg-active: rgba(16, 185, 129, 0.24);
+  --cs-node-tool-bg-muted: rgba(16, 185, 129, 0.06);
+  --cs-node-tool-border: #059669;
+  --cs-node-tool-border-hover: #10b981;
+  --cs-node-tool-border-focus: #34d399;
+  --cs-node-tool-icon: #34d399;
+  --cs-node-tool-icon-muted: rgba(52, 211, 153, 0.6);
+  --cs-node-tool-badge-bg: rgba(16, 185, 129, 0.2);
+  --cs-node-tool-badge-text: #6ee7b7;
+  --cs-node-tool-header-start: rgba(16, 185, 129, 0.16);
+  --cs-node-tool-header-end: rgba(16, 185, 129, 0.04);
+  --cs-node-tool-accent: #059669;
 
   /* -----------------------------------------------------------------------
      LLM NODE — Extended palette
      ----------------------------------------------------------------------- */
-  --cs-node-llm-bg:              rgba(245,158,11,0.12);
-  --cs-node-llm-bg-hover:        rgba(245,158,11,0.18);
-  --cs-node-llm-bg-active:       rgba(245,158,11,0.24);
-  --cs-node-llm-bg-muted:        rgba(245,158,11,0.06);
-  --cs-node-llm-border:          #d97706;
-  --cs-node-llm-border-hover:    #f59e0b;
-  --cs-node-llm-border-focus:    #fbbf24;
-  --cs-node-llm-icon:            #fbbf24;
-  --cs-node-llm-icon-muted:      rgba(251,191,36,0.6);
-  --cs-node-llm-badge-bg:        rgba(245,158,11,0.2);
-  --cs-node-llm-badge-text:      #fde68a;
-  --cs-node-llm-header-start:    rgba(245,158,11,0.16);
-  --cs-node-llm-header-end:      rgba(245,158,11,0.04);
-  --cs-node-llm-accent:          #d97706;
+  --cs-node-llm-bg: rgba(245, 158, 11, 0.12);
+  --cs-node-llm-bg-hover: rgba(245, 158, 11, 0.18);
+  --cs-node-llm-bg-active: rgba(245, 158, 11, 0.24);
+  --cs-node-llm-bg-muted: rgba(245, 158, 11, 0.06);
+  --cs-node-llm-border: #d97706;
+  --cs-node-llm-border-hover: #f59e0b;
+  --cs-node-llm-border-focus: #fbbf24;
+  --cs-node-llm-icon: #fbbf24;
+  --cs-node-llm-icon-muted: rgba(251, 191, 36, 0.6);
+  --cs-node-llm-badge-bg: rgba(245, 158, 11, 0.2);
+  --cs-node-llm-badge-text: #fde68a;
+  --cs-node-llm-header-start: rgba(245, 158, 11, 0.16);
+  --cs-node-llm-header-end: rgba(245, 158, 11, 0.04);
+  --cs-node-llm-accent: #d97706;
 
   /* -----------------------------------------------------------------------
      NODE HEADER
      ----------------------------------------------------------------------- */
-  --cs-node-header-height:       40px;
-  --cs-node-header-padding:      10px 12px;
-  --cs-node-header-icon-gap:     8px;
+  --cs-node-header-height: 40px;
+  --cs-node-header-padding: 10px 12px;
+  --cs-node-header-icon-gap: 8px;
   --cs-node-header-accent-width: 3px;
 
   /* -----------------------------------------------------------------------
      NODE BODY
      ----------------------------------------------------------------------- */
-  --cs-node-body-padding:        8px 12px;
-  --cs-node-body-field-gap:      4px;
-  --cs-node-body-label-color:    #52525b;
-  --cs-node-body-value-color:    #e2e8f0;
-  --cs-node-body-label-width:    64px;
-  --cs-node-body-separator:      rgba(113,113,122,0.1);
+  --cs-node-body-padding: 8px 12px;
+  --cs-node-body-field-gap: 4px;
+  --cs-node-body-label-color: #52525b;
+  --cs-node-body-value-color: #e2e8f0;
+  --cs-node-body-label-width: 64px;
+  --cs-node-body-separator: rgba(113, 113, 122, 0.1);
 
   /* -----------------------------------------------------------------------
      STATUS BADGE
      ----------------------------------------------------------------------- */
-  --cs-node-badge-height:        18px;
-  --cs-node-badge-padding:       0 6px;
-  --cs-node-badge-radius:        9px;
-  --cs-node-badge-font-size:     10px;
-  --cs-node-badge-font-weight:   600;
-  --cs-node-badge-letter-spacing:0.05em;
-  --cs-node-badge-dot-size:      6px;
-  --cs-node-badge-dot-gap:       4px;
+  --cs-node-badge-height: 18px;
+  --cs-node-badge-padding: 0 6px;
+  --cs-node-badge-radius: 9px;
+  --cs-node-badge-font-size: 10px;
+  --cs-node-badge-font-weight: 600;
+  --cs-node-badge-letter-spacing: 0.05em;
+  --cs-node-badge-dot-size: 6px;
+  --cs-node-badge-dot-gap: 4px;
 
   /* -----------------------------------------------------------------------
      STATE: IDLE
      ----------------------------------------------------------------------- */
-  --cs-node-idle-border-width:   1.5px;
-  --cs-node-idle-opacity:        1;
-  --cs-node-idle-badge-text:     #a1a1aa;
-  --cs-node-idle-badge-bg:       rgba(100,116,139,0.2);
+  --cs-node-idle-border-width: 1.5px;
+  --cs-node-idle-opacity: 1;
+  --cs-node-idle-badge-text: #a1a1aa;
+  --cs-node-idle-badge-bg: rgba(100, 116, 139, 0.2);
 
   /* -----------------------------------------------------------------------
      STATE: HOVER
      ----------------------------------------------------------------------- */
-  --cs-node-hover-border-width:  2px;
-  --cs-node-hover-shadow:        0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.15);
-  --cs-node-hover-transition:    all 100ms ease-out;
+  --cs-node-hover-border-width: 2px;
+  --cs-node-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(113, 113, 122, 0.15);
+  --cs-node-hover-transition: all 100ms ease-out;
 
   /* -----------------------------------------------------------------------
      STATE: SELECTED
      ----------------------------------------------------------------------- */
   --cs-node-selected-ring-width: 2px;
   --cs-node-selected-ring-color: #818cf8;
-  --cs-node-selected-glow:       0 0 0 2px #818cf8, 0 4px 20px rgba(99,102,241,0.25);
+  --cs-node-selected-glow: 0 0 0 2px #818cf8, 0 4px 20px rgba(99, 102, 241, 0.25);
   --cs-node-selected-transition: box-shadow 150ms ease-out;
 
   /* -----------------------------------------------------------------------
      STATE: DRAGGING
      ----------------------------------------------------------------------- */
-  --cs-node-dragging-scale:      1.02;
-  --cs-node-dragging-shadow:     0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.2);
-  --cs-node-dragging-opacity:    0.95;
+  --cs-node-dragging-scale: 1.02;
+  --cs-node-dragging-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(113, 113, 122, 0.2);
+  --cs-node-dragging-opacity: 0.95;
   --cs-node-dragging-transition: transform 100ms ease-out, box-shadow 100ms ease-out;
 
   /* -----------------------------------------------------------------------
      STATE: RUNNING
      ----------------------------------------------------------------------- */
-  --cs-node-running-border-width:  2px;
-  --cs-node-running-glow-color:    rgba(52,211,153,0.35);
-  --cs-node-running-glow-spread:   8px;
-  --cs-node-running-pulse-dur:     1.5s;
-  --cs-node-running-badge-text:    #34d399;
-  --cs-node-running-badge-bg:      rgba(16,185,129,0.25);
-  --cs-node-running-dot-color:     #10b981;
+  --cs-node-running-border-width: 2px;
+  --cs-node-running-glow-color: rgba(52, 211, 153, 0.35);
+  --cs-node-running-glow-spread: 8px;
+  --cs-node-running-pulse-dur: 1.5s;
+  --cs-node-running-badge-text: #34d399;
+  --cs-node-running-badge-bg: rgba(16, 185, 129, 0.25);
+  --cs-node-running-dot-color: #10b981;
 
   /* -----------------------------------------------------------------------
      STATE: SUCCESS
      ----------------------------------------------------------------------- */
-  --cs-node-success-flash-color:   rgba(16,185,129,0.4);
-  --cs-node-success-flash-dur:     600ms;
-  --cs-node-success-border:        #10b981;
-  --cs-node-success-badge-text:    #10b981;
-  --cs-node-success-badge-bg:      rgba(16,185,129,0.2);
+  --cs-node-success-flash-color: rgba(16, 185, 129, 0.4);
+  --cs-node-success-flash-dur: 600ms;
+  --cs-node-success-border: #10b981;
+  --cs-node-success-badge-text: #10b981;
+  --cs-node-success-badge-bg: rgba(16, 185, 129, 0.2);
 
   /* -----------------------------------------------------------------------
      STATE: ERROR
      ----------------------------------------------------------------------- */
-  --cs-node-error-border:          #ef4444;
-  --cs-node-error-glow-color:      rgba(244,63,94,0.3);
-  --cs-node-error-glow-spread:     6px;
-  --cs-node-error-pulse-dur:       1.5s;
-  --cs-node-error-badge-text:      #f87171;
-  --cs-node-error-badge-bg:        rgba(244,63,94,0.2);
+  --cs-node-error-border: #ef4444;
+  --cs-node-error-glow-color: rgba(244, 63, 94, 0.3);
+  --cs-node-error-glow-spread: 6px;
+  --cs-node-error-pulse-dur: 1.5s;
+  --cs-node-error-badge-text: #f87171;
+  --cs-node-error-badge-bg: rgba(244, 63, 94, 0.2);
 
   /* -----------------------------------------------------------------------
      STATE: DISABLED
      ----------------------------------------------------------------------- */
-  --cs-node-disabled-opacity:      0.4;
-  --cs-node-disabled-border:       #3f3f46;
-  --cs-node-disabled-badge-text:   #52525b;
-  --cs-node-disabled-badge-bg:     rgba(71,85,105,0.2);
+  --cs-node-disabled-opacity: 0.4;
+  --cs-node-disabled-border: #3f3f46;
+  --cs-node-disabled-badge-text: #52525b;
+  --cs-node-disabled-badge-bg: rgba(71, 85, 105, 0.2);
 
   /* -----------------------------------------------------------------------
      STATE: QUEUED
      ----------------------------------------------------------------------- */
-  --cs-node-queued-opacity:        0.7;
-  --cs-node-queued-badge-text:     #a1a1aa;
-  --cs-node-queued-badge-bg:       rgba(113,113,122,0.15);
+  --cs-node-queued-opacity: 0.7;
+  --cs-node-queued-badge-text: #a1a1aa;
+  --cs-node-queued-badge-bg: rgba(113, 113, 122, 0.15);
 
   /* -----------------------------------------------------------------------
      HANDLE — Type-aware connected colors
      ----------------------------------------------------------------------- */
-  --cs-handle-agent-connected:     #818cf8;
-  --cs-handle-task-connected:      #06b6d4;
-  --cs-handle-tool-connected:      #10b981;
-  --cs-handle-llm-connected:       #f59e0b;
-  --cs-handle-compatible-pulse:    rgba(99,102,241,0.4);
-  --cs-handle-incompatible:        rgba(244,63,94,0.3);
-  --cs-handle-label-font-size:     10px;
-  --cs-handle-label-color:         #a1a1aa;
-  --cs-handle-label-offset:        6px;
+  --cs-handle-agent-connected: #818cf8;
+  --cs-handle-task-connected: #06b6d4;
+  --cs-handle-tool-connected: #10b981;
+  --cs-handle-llm-connected: #f59e0b;
+  --cs-handle-compatible-pulse: rgba(99, 102, 241, 0.4);
+  --cs-handle-incompatible: rgba(244, 63, 94, 0.3);
+  --cs-handle-label-font-size: 10px;
+  --cs-handle-label-color: #a1a1aa;
+  --cs-handle-label-offset: 6px;
 }
 
 /* ===========================================================================
@@ -211,58 +211,111 @@
 
 /* Node enter — bounce-in scale */
 @keyframes cs-node-enter {
-  0%   { opacity: 0; transform: scale(0.85); }
-  60%  { opacity: 1; transform: scale(1.03); }
-  100% { transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Node exit — shrink-out */
 @keyframes cs-node-exit {
-  0%   { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.9); }
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
 }
 
 /* Running state — emerald glow pulse */
 @keyframes cs-node-running-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--cs-node-running-glow-color); }
-  50%      { box-shadow: 0 0 var(--cs-node-running-glow-spread) 2px var(--cs-node-running-glow-color); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--cs-node-running-glow-color);
+  }
+  50% {
+    box-shadow: 0 0 var(--cs-node-running-glow-spread) 2px var(--cs-node-running-glow-color);
+  }
 }
 
 /* Running badge dot blink */
 @keyframes cs-badge-dot-blink {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 /* Error state — rose glow pulse */
 @keyframes cs-node-error-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--cs-node-error-glow-color); }
-  50%      { box-shadow: 0 0 var(--cs-node-error-glow-spread) 2px var(--cs-node-error-glow-color); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--cs-node-error-glow-color);
+  }
+  50% {
+    box-shadow: 0 0 var(--cs-node-error-glow-spread) 2px var(--cs-node-error-glow-color);
+  }
 }
 
 /* Success flash — brief emerald burst */
 @keyframes cs-node-success-flash {
-  0%   { box-shadow: 0 0 0 0 var(--cs-node-success-flash-color); transform: scale(1); }
-  30%  { box-shadow: 0 0 16px 4px var(--cs-node-success-flash-color); transform: scale(1.03); }
-  100% { box-shadow: 0 0 0 0 transparent; transform: scale(1); }
+  0% {
+    box-shadow: 0 0 0 0 var(--cs-node-success-flash-color);
+    transform: scale(1);
+  }
+  30% {
+    box-shadow: 0 0 16px 4px var(--cs-node-success-flash-color);
+    transform: scale(1.03);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: scale(1);
+  }
 }
 
 /* Handle compatible pulse (shown during drag) */
 @keyframes cs-handle-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--cs-handle-compatible-pulse); }
-  50%      { box-shadow: 0 0 0 6px var(--cs-handle-compatible-pulse); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--cs-handle-compatible-pulse);
+  }
+  50% {
+    box-shadow: 0 0 0 6px var(--cs-handle-compatible-pulse);
+  }
 }
 
 /* Badge enter — pop-in */
 @keyframes cs-badge-enter {
-  0%   { opacity: 0; transform: scale(0.7); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Queued border dash animation */
 @keyframes cs-queued-dash {
-  0%   { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 20; }
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 20;
+  }
 }
 
 /* ===========================================================================
@@ -271,15 +324,53 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --cs-node-running-pulse-dur: 0s;
-    --cs-node-error-pulse-dur:   0s;
+    --cs-node-error-pulse-dur: 0s;
     --cs-node-success-flash-dur: 0s;
   }
 
-  @keyframes cs-node-enter          { 0%, 100% { opacity: 1; transform: scale(1); } }
-  @keyframes cs-node-exit           { 0%, 100% { opacity: 0; transform: scale(1); } }
-  @keyframes cs-node-running-pulse  { 0%, 100% { box-shadow: 0 0 4px 1px var(--cs-node-running-glow-color); } }
-  @keyframes cs-node-error-pulse    { 0%, 100% { box-shadow: 0 0 4px 1px var(--cs-node-error-glow-color); } }
-  @keyframes cs-node-success-flash  { 0%, 100% { box-shadow: none; transform: scale(1); } }
-  @keyframes cs-handle-pulse        { 0%, 100% { box-shadow: 0 0 0 3px var(--cs-handle-compatible-pulse); } }
-  @keyframes cs-badge-dot-blink     { 0%, 100% { opacity: 1; } }
+  @keyframes cs-node-enter {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes cs-node-exit {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+  @keyframes cs-node-running-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 4px 1px var(--cs-node-running-glow-color);
+    }
+  }
+  @keyframes cs-node-error-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 4px 1px var(--cs-node-error-glow-color);
+    }
+  }
+  @keyframes cs-node-success-flash {
+    0%,
+    100% {
+      box-shadow: none;
+      transform: scale(1);
+    }
+  }
+  @keyframes cs-handle-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 3px var(--cs-handle-compatible-pulse);
+    }
+  }
+  @keyframes cs-badge-dot-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+  }
 }

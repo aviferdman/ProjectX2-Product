@@ -11,9 +11,13 @@ import type { PlanLimits, PlanTier } from './usage-types.js';
 // Error codes
 // ---------------------------------------------------------------------------
 
+/** Error code for usage limit exceeded. */
 export const USAGE_LIMIT_EXCEEDED = 'USAGE_LIMIT_EXCEEDED' as unknown as ErrorCode;
+/** Error code for usage run not found. */
 export const USAGE_RUN_NOT_FOUND = 'USAGE_RUN_NOT_FOUND' as unknown as ErrorCode;
+/** Error code for usage account not found. */
 export const USAGE_ACCOUNT_NOT_FOUND = 'USAGE_ACCOUNT_NOT_FOUND' as unknown as ErrorCode;
+/** Error code for invalid usage state transition. */
 export const USAGE_INVALID_TRANSITION = 'USAGE_INVALID_TRANSITION' as unknown as ErrorCode;
 
 // ---------------------------------------------------------------------------

@@ -5,37 +5,105 @@
       "_description": "TASK-183: Create marketing assets (landing page design, screenshots, demo video). Design tokens for the Crewspace marketing landing page — hero, features, code demo, screenshots, video, social proof, pricing, and footer CTA.",
 
       "layout": {
-        "page-bg": { "value": "#09090b", "type": "color", "description": "Deep slate-950 page background" },
-        "content-max-w": { "value": "1280px", "type": "sizing", "description": "Maximum content width" },
-        "content-padding": { "value": "24px", "type": "sizing", "description": "Horizontal gutter on desktop" },
-        "content-padding-mobile": { "value": "16px", "type": "sizing", "description": "Horizontal gutter on mobile" },
-        "section-gap": { "value": "96px", "type": "sizing", "description": "Vertical spacing between major sections" },
-        "section-gap-mobile": { "value": "64px", "type": "sizing", "description": "Mobile vertical spacing" }
+        "page-bg": {
+          "value": "#09090b",
+          "type": "color",
+          "description": "Deep slate-950 page background"
+        },
+        "content-max-w": {
+          "value": "1280px",
+          "type": "sizing",
+          "description": "Maximum content width"
+        },
+        "content-padding": {
+          "value": "24px",
+          "type": "sizing",
+          "description": "Horizontal gutter on desktop"
+        },
+        "content-padding-mobile": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Horizontal gutter on mobile"
+        },
+        "section-gap": {
+          "value": "96px",
+          "type": "sizing",
+          "description": "Vertical spacing between major sections"
+        },
+        "section-gap-mobile": {
+          "value": "64px",
+          "type": "sizing",
+          "description": "Mobile vertical spacing"
+        }
       },
 
       "hero": {
-        "bg-gradient": { "value": "radial-gradient(ellipse 80% 60% at 50% -20%, rgba(99,102,241,0.15) 0%, transparent 70%)", "type": "gradient", "description": "Violet glow behind hero" },
-        "grid-color": { "value": "rgba(113,113,122,0.04)", "type": "color", "description": "Subtle dot-grid pattern" },
+        "bg-gradient": {
+          "value": "radial-gradient(ellipse 80% 60% at 50% -20%, rgba(99,102,241,0.15) 0%, transparent 70%)",
+          "type": "gradient",
+          "description": "Violet glow behind hero"
+        },
+        "grid-color": {
+          "value": "rgba(113,113,122,0.04)",
+          "type": "color",
+          "description": "Subtle dot-grid pattern"
+        },
         "grid-size": { "value": "32px", "type": "sizing", "description": "Grid cell size" },
-        "min-height": { "value": "640px", "type": "sizing", "description": "Hero section minimum height" },
-        "padding-top": { "value": "120px", "type": "sizing", "description": "Top padding below nav" },
+        "min-height": {
+          "value": "640px",
+          "type": "sizing",
+          "description": "Hero section minimum height"
+        },
+        "padding-top": {
+          "value": "120px",
+          "type": "sizing",
+          "description": "Top padding below nav"
+        },
         "padding-bottom": { "value": "80px", "type": "sizing" },
-        "badge-bg": { "value": "rgba(99,102,241,0.12)", "type": "color", "description": "Version badge background" },
+        "badge-bg": {
+          "value": "rgba(99,102,241,0.12)",
+          "type": "color",
+          "description": "Version badge background"
+        },
         "badge-border": { "value": "rgba(99,102,241,0.25)", "type": "color" },
         "badge-text": { "value": "#a5b4fc", "type": "color" },
         "badge-height": { "value": "28px", "type": "sizing" },
         "badge-radius": { "value": "9999px", "type": "borderRadius" },
-        "headline-color": { "value": "#fafafa", "type": "color", "description": "White-ish headline" },
-        "headline-gradient": { "value": "linear-gradient(135deg, #fafafa 0%, #a5b4fc 50%, #818cf8 100%)", "type": "gradient", "description": "Gradient text for emphasis span" },
-        "subheadline-color": { "value": "#a1a1aa", "type": "color", "description": "Slate-400 body copy" },
+        "headline-color": {
+          "value": "#fafafa",
+          "type": "color",
+          "description": "White-ish headline"
+        },
+        "headline-gradient": {
+          "value": "linear-gradient(135deg, #fafafa 0%, #a5b4fc 50%, #818cf8 100%)",
+          "type": "gradient",
+          "description": "Gradient text for emphasis span"
+        },
+        "subheadline-color": {
+          "value": "#a1a1aa",
+          "type": "color",
+          "description": "Slate-400 body copy"
+        },
         "max-headline-w": { "value": "800px", "type": "sizing" },
         "max-subheadline-w": { "value": "640px", "type": "sizing" }
       },
 
       "heroTypography": {
-        "headline-size": { "value": "3.5rem", "type": "fontSize", "description": "56px desktop headline" },
-        "headline-size-tablet": { "value": "2.75rem", "type": "fontSize", "description": "44px tablet" },
-        "headline-size-mobile": { "value": "2rem", "type": "fontSize", "description": "32px mobile" },
+        "headline-size": {
+          "value": "3.5rem",
+          "type": "fontSize",
+          "description": "56px desktop headline"
+        },
+        "headline-size-tablet": {
+          "value": "2.75rem",
+          "type": "fontSize",
+          "description": "44px tablet"
+        },
+        "headline-size-mobile": {
+          "value": "2rem",
+          "type": "fontSize",
+          "description": "32px mobile"
+        },
         "headline-weight": { "value": "800", "type": "fontWeight" },
         "headline-line-height": { "value": "1.1", "type": "lineHeight" },
         "headline-letter-spacing": { "value": "-0.025em", "type": "letterSpacing" },
@@ -48,13 +116,21 @@
       },
 
       "ctaButton": {
-        "primary-bg": { "value": "#6366f1", "type": "color", "description": "Violet-600 primary CTA" },
+        "primary-bg": {
+          "value": "#6366f1",
+          "type": "color",
+          "description": "Violet-600 primary CTA"
+        },
         "primary-bg-hover": { "value": "#818cf8", "type": "color" },
         "primary-bg-active": { "value": "#4f46e5", "type": "color" },
         "primary-text": { "value": "#ffffff", "type": "color" },
         "primary-shadow": { "value": "0 4px 16px rgba(99,102,241,0.4)", "type": "boxShadow" },
         "primary-shadow-hover": { "value": "0 8px 24px rgba(99,102,241,0.5)", "type": "boxShadow" },
-        "primary-glow": { "value": "0 0 40px rgba(99,102,241,0.25)", "type": "boxShadow", "description": "Ambient glow behind primary CTA" },
+        "primary-glow": {
+          "value": "0 0 40px rgba(99,102,241,0.25)",
+          "type": "boxShadow",
+          "description": "Ambient glow behind primary CTA"
+        },
         "secondary-bg": { "value": "transparent", "type": "color" },
         "secondary-bg-hover": { "value": "rgba(113,113,122,0.08)", "type": "color" },
         "secondary-border": { "value": "rgba(113,113,122,0.2)", "type": "color" },
@@ -70,7 +146,11 @@
       },
 
       "nav": {
-        "bg": { "value": "rgba(2,6,23,0.8)", "type": "color", "description": "Semi-transparent nav" },
+        "bg": {
+          "value": "rgba(2,6,23,0.8)",
+          "type": "color",
+          "description": "Semi-transparent nav"
+        },
         "bg-blur": { "value": "16px", "type": "sizing", "description": "Backdrop blur amount" },
         "border": { "value": "rgba(113,113,122,0.08)", "type": "color" },
         "height": { "value": "64px", "type": "sizing" },
@@ -94,7 +174,11 @@
       },
 
       "featureCard": {
-        "bg": { "value": "rgba(17,17,19,0.6)", "type": "color", "description": "Slate-900/60 card bg" },
+        "bg": {
+          "value": "rgba(17,17,19,0.6)",
+          "type": "color",
+          "description": "Slate-900/60 card bg"
+        },
         "bg-hover": { "value": "rgba(17,17,19,0.8)", "type": "color" },
         "border": { "value": "rgba(113,113,122,0.08)", "type": "color" },
         "border-hover": { "value": "rgba(99,102,241,0.2)", "type": "color" },
@@ -120,7 +204,11 @@
       },
 
       "codeDemo": {
-        "bg": { "value": "rgba(17,17,19,0.8)", "type": "color", "description": "Code block background" },
+        "bg": {
+          "value": "rgba(17,17,19,0.8)",
+          "type": "color",
+          "description": "Code block background"
+        },
         "border": { "value": "rgba(113,113,122,0.1)", "type": "color" },
         "radius": { "value": "16px", "type": "borderRadius" },
         "padding": { "value": "24px", "type": "sizing" },
@@ -134,12 +222,20 @@
         "filename-color": { "value": "#52525b", "type": "color" },
         "line-number-color": { "value": "#27272a", "type": "color" },
         "text-color": { "value": "#e2e8f0", "type": "color" },
-        "keyword-color": { "value": "#a5b4fc", "type": "color", "description": "import, const, etc." },
+        "keyword-color": {
+          "value": "#a5b4fc",
+          "type": "color",
+          "description": "import, const, etc."
+        },
         "string-color": { "value": "#34d399", "type": "color" },
         "comment-color": { "value": "#3f3f46", "type": "color" },
         "function-color": { "value": "#22d3ee", "type": "color" },
         "type-color": { "value": "#fbbf24", "type": "color" },
-        "highlight-bg": { "value": "rgba(99,102,241,0.08)", "type": "color", "description": "Active line highlight" },
+        "highlight-bg": {
+          "value": "rgba(99,102,241,0.08)",
+          "type": "color",
+          "description": "Active line highlight"
+        },
         "highlight-border": { "value": "rgba(99,102,241,0.3)", "type": "color" },
         "shadow": { "value": "0 8px 32px rgba(0,0,0,0.4)", "type": "boxShadow" },
         "max-width": { "value": "720px", "type": "sizing" },
@@ -155,9 +251,16 @@
         "container-bg": { "value": "rgba(17,17,19,0.5)", "type": "color" },
         "container-border": { "value": "rgba(113,113,122,0.08)", "type": "color" },
         "container-radius": { "value": "16px", "type": "borderRadius" },
-        "container-shadow": { "value": "0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.06)", "type": "boxShadow" },
+        "container-shadow": {
+          "value": "0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.06)",
+          "type": "boxShadow"
+        },
         "container-padding": { "value": "4px", "type": "sizing" },
-        "chrome-bg": { "value": "#111113", "type": "color", "description": "Browser chrome bar bg" },
+        "chrome-bg": {
+          "value": "#111113",
+          "type": "color",
+          "description": "Browser chrome bar bg"
+        },
         "chrome-height": { "value": "40px", "type": "sizing" },
         "chrome-border": { "value": "rgba(113,113,122,0.1)", "type": "color" },
         "chrome-dot-size": { "value": "10px", "type": "sizing" },
@@ -190,7 +293,11 @@
         "play-btn-icon-color": { "value": "#ffffff", "type": "color" },
         "play-btn-icon-size": { "value": "28px", "type": "sizing" },
         "play-btn-radius": { "value": "9999px", "type": "borderRadius" },
-        "overlay-bg": { "value": "rgba(0,0,0,0.4)", "type": "color", "description": "Scrim over poster image" },
+        "overlay-bg": {
+          "value": "rgba(0,0,0,0.4)",
+          "type": "color",
+          "description": "Scrim over poster image"
+        },
         "poster-radius": { "value": "16px", "type": "borderRadius" },
         "duration-bg": { "value": "rgba(0,0,0,0.7)", "type": "color" },
         "duration-text": { "value": "#e2e8f0", "type": "color" },
@@ -246,7 +353,10 @@
       },
 
       "footerCta": {
-        "bg-gradient": { "value": "radial-gradient(ellipse 80% 50% at 50% 120%, rgba(99,102,241,0.12) 0%, transparent 70%)", "type": "gradient" },
+        "bg-gradient": {
+          "value": "radial-gradient(ellipse 80% 50% at 50% 120%, rgba(99,102,241,0.12) 0%, transparent 70%)",
+          "type": "gradient"
+        },
         "heading-color": { "value": "#fafafa", "type": "color" },
         "heading-size": { "value": "2.5rem", "type": "fontSize" },
         "heading-size-mobile": { "value": "1.75rem", "type": "fontSize" },
@@ -283,12 +393,32 @@
         "feature-stagger": { "value": "80ms", "type": "duration" },
         "scroll-reveal-duration": { "value": "500ms", "type": "duration" },
         "scroll-reveal-easing": { "value": "cubic-bezier(0.22,1,0.36,1)", "type": "cubicBezier" },
-        "code-type-speed": { "value": "40ms", "type": "duration", "description": "Per-character typing animation" },
+        "code-type-speed": {
+          "value": "40ms",
+          "type": "duration",
+          "description": "Per-character typing animation"
+        },
         "screenshot-crossfade": { "value": "400ms", "type": "duration" },
-        "stat-count-duration": { "value": "1200ms", "type": "duration", "description": "Counter number roll-up" },
-        "gradient-shift-duration": { "value": "8s", "type": "duration", "description": "Slow background gradient animation" },
-        "float-duration": { "value": "6s", "type": "duration", "description": "Gentle floating motion for decorative elements" },
-        "pulse-duration": { "value": "2s", "type": "duration", "description": "CTA button ambient pulse" }
+        "stat-count-duration": {
+          "value": "1200ms",
+          "type": "duration",
+          "description": "Counter number roll-up"
+        },
+        "gradient-shift-duration": {
+          "value": "8s",
+          "type": "duration",
+          "description": "Slow background gradient animation"
+        },
+        "float-duration": {
+          "value": "6s",
+          "type": "duration",
+          "description": "Gentle floating motion for decorative elements"
+        },
+        "pulse-duration": {
+          "value": "2s",
+          "type": "duration",
+          "description": "CTA button ambient pulse"
+        }
       }
     }
   }

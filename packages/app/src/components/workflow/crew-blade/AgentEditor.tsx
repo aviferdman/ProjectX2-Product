@@ -1,13 +1,21 @@
 import React, { useState, useCallback } from 'react';
 import type { AgentNode } from '../../../types/workflow.js';
-import { ALL_HARDCODED_AGENTS, BUSINESS_PRODUCT_AGENTS, RESEARCH_ANALYSIS_AGENTS } from '../../../data/hardcoded-agents.js';
+import {
+  ALL_HARDCODED_AGENTS,
+  BUSINESS_PRODUCT_AGENTS,
+  RESEARCH_ANALYSIS_AGENTS,
+} from '../../../data/hardcoded-agents.js';
 import type { HardcodedAgent } from '../../../data/hardcoded-agents.js';
 import { AgentAvatar } from '../../AgentAvatar.js';
 
 interface AgentEditorProps {
   agent?: AgentNode;
   /** When editing, view-only detail of the selected agent. When adding, show catalog picker. */
-  onSave: (agent: Omit<AgentNode, 'id' | 'status' | 'position'> | { id: string } & Partial<Omit<AgentNode, 'id'>>) => void;
+  onSave: (
+    agent:
+      | Omit<AgentNode, 'id' | 'status' | 'position'>
+      | ({ id: string } & Partial<Omit<AgentNode, 'id'>>),
+  ) => void;
   onCancel: () => void;
   onDelete?: (agentId: string) => void;
   /** IDs of agents already in the workflow (to disable in picker). */
@@ -27,7 +35,13 @@ const AGENT_COLORS = [
 
 type CategoryFilter = 'all' | 'business-product' | 'research-analysis';
 
-export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentIds = [] }: AgentEditorProps) {
+export function AgentEditor({
+  agent,
+  onSave,
+  onCancel,
+  onDelete,
+  existingAgentIds = [],
+}: AgentEditorProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [search, setSearch] = useState('');
@@ -85,9 +99,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
     return (
       <div className="p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">
-            Agent Details
-          </h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">Agent Details</h3>
         </div>
 
         {/* Role */}
@@ -134,10 +146,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
         {/* Color indicator */}
         <div className="space-y-1.5">
           <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Color</label>
-          <div
-            className="w-6 h-6 rounded-full"
-            style={{ backgroundColor: agent.color }}
-          />
+          <div className="w-6 h-6 rounded-full" style={{ backgroundColor: agent.color }} />
         </div>
 
         {/* Actions */}
@@ -184,9 +193,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
   return (
     <div className="p-4 space-y-3 h-full flex flex-col">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">
-          Select Agent
-        </h3>
+        <h3 className="text-sm font-semibold text-[var(--cs-text-primary)]">Select Agent</h3>
         <button
           onClick={onCancel}
           className="text-xs text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)] transition-colors"
@@ -216,7 +223,11 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
                 : 'bg-[var(--cs-surface-app)] border-[var(--cs-border-subtle)] text-[var(--cs-text-tertiary)] hover:text-[var(--cs-text-secondary)]'
             }`}
           >
-            {cat === 'all' ? 'All' : cat === 'business-product' ? 'Business & Product' : 'Research & Analysis'}
+            {cat === 'all'
+              ? 'All'
+              : cat === 'business-product'
+                ? 'Business & Product'
+                : 'Research & Analysis'}
           </button>
         ))}
       </div>
@@ -237,7 +248,11 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
               }`}
             >
               <div className="flex items-start gap-2">
-                <AgentAvatar id={def.id} size={18} className="shrink-0 mt-0.5 text-[var(--cs-text-secondary)]" />
+                <AgentAvatar
+                  id={def.id}
+                  size={18}
+                  className="shrink-0 mt-0.5 text-[var(--cs-text-secondary)]"
+                />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-[var(--cs-text-primary)]">
@@ -249,9 +264,7 @@ export function AgentEditor({ agent, onSave, onCancel, onDelete, existingAgentId
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-[var(--cs-text-tertiary)] mt-0.5">
-                    {def.subtitle}
-                  </p>
+                  <p className="text-xs text-[var(--cs-text-tertiary)] mt-0.5">{def.subtitle}</p>
                   <p className="text-xs text-[var(--cs-text-tertiary)] mt-1 line-clamp-2">
                     {def.goal}
                   </p>

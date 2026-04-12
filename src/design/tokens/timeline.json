@@ -3,49 +3,125 @@
   "crewspace": {
     "timeline": {
       "color": {
-        "background": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Timeline panel background" },
-        "header-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Timeline header/toolbar background" },
-        "lane-bg": { "value": "rgba(17,17,19,0.6)", "type": "color", "description": "Agent lane background" },
-        "lane-bg-alt": { "value": "rgba(17,17,19,0.8)", "type": "color", "description": "Alternating agent lane background" },
-        "lane-border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Horizontal lane divider" },
-        "lane-label-bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Sticky lane label background" },
-        "axis-line": { "value": "{crewspace.color.primitive.slate.700}", "type": "color", "description": "Time axis line" },
-        "axis-tick": { "value": "{crewspace.color.primitive.slate.600}", "type": "color", "description": "Time axis tick marks" },
-        "axis-label": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color", "description": "Time axis labels" },
-        "grid-line": { "value": "rgba(113,113,122,0.06)", "type": "color", "description": "Vertical grid lines" },
-        "playhead": { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Current time playhead line" },
-        "playhead-glow": { "value": "rgba(99,102,241,0.3)", "type": "color", "description": "Playhead glow effect" },
-        "selection-range": { "value": "rgba(99,102,241,0.1)", "type": "color", "description": "Time range selection highlight" },
+        "background": {
+          "value": "{crewspace.color.semantic.surface.app}",
+          "type": "color",
+          "description": "Timeline panel background"
+        },
+        "header-bg": {
+          "value": "{crewspace.color.semantic.surface.panel}",
+          "type": "color",
+          "description": "Timeline header/toolbar background"
+        },
+        "lane-bg": {
+          "value": "rgba(17,17,19,0.6)",
+          "type": "color",
+          "description": "Agent lane background"
+        },
+        "lane-bg-alt": {
+          "value": "rgba(17,17,19,0.8)",
+          "type": "color",
+          "description": "Alternating agent lane background"
+        },
+        "lane-border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Horizontal lane divider"
+        },
+        "lane-label-bg": {
+          "value": "{crewspace.color.semantic.surface.panel}",
+          "type": "color",
+          "description": "Sticky lane label background"
+        },
+        "axis-line": {
+          "value": "{crewspace.color.primitive.slate.700}",
+          "type": "color",
+          "description": "Time axis line"
+        },
+        "axis-tick": {
+          "value": "{crewspace.color.primitive.slate.600}",
+          "type": "color",
+          "description": "Time axis tick marks"
+        },
+        "axis-label": {
+          "value": "{crewspace.color.semantic.text.tertiary}",
+          "type": "color",
+          "description": "Time axis labels"
+        },
+        "grid-line": {
+          "value": "rgba(113,113,122,0.06)",
+          "type": "color",
+          "description": "Vertical grid lines"
+        },
+        "playhead": {
+          "value": "{crewspace.color.primitive.violet.500}",
+          "type": "color",
+          "description": "Current time playhead line"
+        },
+        "playhead-glow": {
+          "value": "rgba(99,102,241,0.3)",
+          "type": "color",
+          "description": "Playhead glow effect"
+        },
+        "selection-range": {
+          "value": "rgba(99,102,241,0.1)",
+          "type": "color",
+          "description": "Time range selection highlight"
+        },
         "selection-border": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" }
       },
       "event": {
         "llm-call": {
-          "bg": { "value": "rgba(245,158,11,0.2)", "type": "color", "description": "LLM call event block" },
+          "bg": {
+            "value": "rgba(245,158,11,0.2)",
+            "type": "color",
+            "description": "LLM call event block"
+          },
           "border": { "value": "{crewspace.color.primitive.amber.500}", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" }
         },
         "tool-use": {
-          "bg": { "value": "rgba(16,185,129,0.2)", "type": "color", "description": "Tool invocation event block" },
+          "bg": {
+            "value": "rgba(16,185,129,0.2)",
+            "type": "color",
+            "description": "Tool invocation event block"
+          },
           "border": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" }
         },
         "task-start": {
-          "bg": { "value": "rgba(14,165,233,0.2)", "type": "color", "description": "Task start marker" },
+          "bg": {
+            "value": "rgba(14,165,233,0.2)",
+            "type": "color",
+            "description": "Task start marker"
+          },
           "border": { "value": "{crewspace.color.primitive.sky.500}", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.sky.400}", "type": "color" }
         },
         "task-complete": {
-          "bg": { "value": "rgba(16,185,129,0.15)", "type": "color", "description": "Task completion marker" },
+          "bg": {
+            "value": "rgba(16,185,129,0.15)",
+            "type": "color",
+            "description": "Task completion marker"
+          },
           "border": { "value": "{crewspace.color.primitive.emerald.500}", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.emerald.400}", "type": "color" }
         },
         "error": {
-          "bg": { "value": "rgba(244,63,94,0.2)", "type": "color", "description": "Error event block" },
+          "bg": {
+            "value": "rgba(244,63,94,0.2)",
+            "type": "color",
+            "description": "Error event block"
+          },
           "border": { "value": "{crewspace.color.primitive.rose.500}", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.rose.400}", "type": "color" }
         },
         "message": {
-          "bg": { "value": "rgba(99,102,241,0.15)", "type": "color", "description": "Agent message / delegation" },
+          "bg": {
+            "value": "rgba(99,102,241,0.15)",
+            "type": "color",
+            "description": "Agent message / delegation"
+          },
           "border": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
           "icon": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" }
         },
@@ -76,22 +152,39 @@
           "warn": { "value": "rgba(245,158,11,0.1)", "type": "color" },
           "error": { "value": "rgba(244,63,94,0.1)", "type": "color" }
         },
-        "search-highlight": { "value": "rgba(251,191,36,0.3)", "type": "color", "description": "Text search match highlight" },
-        "search-highlight-active": { "value": "rgba(251,191,36,0.6)", "type": "color", "description": "Active search match" }
+        "search-highlight": {
+          "value": "rgba(251,191,36,0.3)",
+          "type": "color",
+          "description": "Text search match highlight"
+        },
+        "search-highlight-active": {
+          "value": "rgba(251,191,36,0.6)",
+          "type": "color",
+          "description": "Active search match"
+        }
       },
       "filter": {
         "bar-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
         "chip-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
         "chip-bg-active": { "value": "rgba(99,102,241,0.2)", "type": "color" },
         "chip-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "chip-border-active": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "chip-border-active": {
+          "value": "{crewspace.color.primitive.violet.500}",
+          "type": "color"
+        },
         "chip-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
         "chip-text-active": { "value": "{crewspace.color.primitive.violet.300}", "type": "color" },
         "dropdown-bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
-        "dropdown-item-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
+        "dropdown-item-hover": {
+          "value": "{crewspace.color.semantic.surface.elevated}",
+          "type": "color"
+        },
         "search-bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
         "search-border": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "search-border-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" }
+        "search-border-focus": {
+          "value": "{crewspace.color.primitive.violet.500}",
+          "type": "color"
+        }
       },
       "sizing": {
         "panel-min-height": { "value": "200px", "type": "sizing" },
@@ -113,23 +206,71 @@
         "log-timestamp-width": { "value": "100px", "type": "sizing" },
         "log-level-width": { "value": "56px", "type": "sizing" },
         "log-agent-width": { "value": "120px", "type": "sizing" },
-        "resizer-handle": { "value": "6px", "type": "sizing", "description": "Drag handle for resizing timeline/log split" }
+        "resizer-handle": {
+          "value": "6px",
+          "type": "sizing",
+          "description": "Drag handle for resizing timeline/log split"
+        }
       },
       "animation": {
-        "playhead-pulse": { "value": "2s ease-in-out infinite", "type": "transition", "description": "Gentle pulse on active playhead" },
-        "event-enter": { "value": "150ms ease-out", "type": "transition", "description": "Event block fade-in" },
-        "lane-expand": { "value": "200ms ease-out", "type": "transition", "description": "Lane expand/collapse" },
-        "filter-toggle": { "value": "150ms ease-out", "type": "transition", "description": "Filter chip toggle" },
-        "log-scroll": { "value": "100ms ease-out", "type": "transition", "description": "Smooth log auto-scroll" }
+        "playhead-pulse": {
+          "value": "2s ease-in-out infinite",
+          "type": "transition",
+          "description": "Gentle pulse on active playhead"
+        },
+        "event-enter": {
+          "value": "150ms ease-out",
+          "type": "transition",
+          "description": "Event block fade-in"
+        },
+        "lane-expand": {
+          "value": "200ms ease-out",
+          "type": "transition",
+          "description": "Lane expand/collapse"
+        },
+        "filter-toggle": {
+          "value": "150ms ease-out",
+          "type": "transition",
+          "description": "Filter chip toggle"
+        },
+        "log-scroll": {
+          "value": "100ms ease-out",
+          "type": "transition",
+          "description": "Smooth log auto-scroll"
+        }
       },
       "syntax": {
-        "string": { "value": "#34d399", "type": "color", "description": "JSON string value — emerald-400" },
-        "number": { "value": "#fbbf24", "type": "color", "description": "JSON number value — amber-400" },
-        "boolean": { "value": "#818cf8", "type": "color", "description": "JSON boolean/null — violet-400" },
-        "null": { "value": "#818cf8", "type": "color", "description": "JSON null value — violet-400" },
+        "string": {
+          "value": "#34d399",
+          "type": "color",
+          "description": "JSON string value — emerald-400"
+        },
+        "number": {
+          "value": "#fbbf24",
+          "type": "color",
+          "description": "JSON number value — amber-400"
+        },
+        "boolean": {
+          "value": "#818cf8",
+          "type": "color",
+          "description": "JSON boolean/null — violet-400"
+        },
+        "null": {
+          "value": "#818cf8",
+          "type": "color",
+          "description": "JSON null value — violet-400"
+        },
         "key": { "value": "#22d3ee", "type": "color", "description": "JSON key — sky-400" },
-        "error": { "value": "#f87171", "type": "color", "description": "Error/stack trace text — rose-400" },
-        "punctuation": { "value": "#a1a1aa", "type": "color", "description": "Brackets, commas — slate-400" }
+        "error": {
+          "value": "#f87171",
+          "type": "color",
+          "description": "Error/stack trace text — rose-400"
+        },
+        "punctuation": {
+          "value": "#a1a1aa",
+          "type": "color",
+          "description": "Brackets, commas — slate-400"
+        }
       }
     }
   }

@@ -2,7 +2,14 @@
  * CrewStore — React context + useReducer for crew CRUD.
  * Persists to localStorage under 'crewspace:crews'.
  */
-import React, { createContext, useContext, useReducer, useCallback, useMemo, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useCallback,
+  useMemo,
+  useEffect,
+} from 'react';
 import type { CrewDefinition, CreateCrewInput, UpdateCrewInput } from '../types/crew.js';
 import type { AgentNode, TaskNode } from '../types/workflow.js';
 
@@ -12,7 +19,16 @@ import type { AgentNode, TaskNode } from '../types/workflow.js';
 
 const STORAGE_KEY = 'crewspace:crews';
 
-const CREW_COLORS = ['#6366f1', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
+const CREW_COLORS = [
+  '#6366f1',
+  '#06b6d4',
+  '#f59e0b',
+  '#10b981',
+  '#ef4444',
+  '#ec4899',
+  '#6366f1',
+  '#14b8a6',
+];
 
 function generateId(prefix: string): string {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -49,7 +65,10 @@ export interface CrewStoreActions {
   createCrew(input: CreateCrewInput): CrewDefinition;
   updateCrew(crewId: string, input: UpdateCrewInput): void;
   deleteCrew(crewId: string): void;
-  addAgentToCrew(crewId: string, agent: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }): AgentNode;
+  addAgentToCrew(
+    crewId: string,
+    agent: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string },
+  ): AgentNode;
   updateAgentInCrew(crewId: string, agentId: string, updates: Partial<Omit<AgentNode, 'id'>>): void;
   removeAgentFromCrew(crewId: string, agentId: string): void;
   addTaskToCrew(crewId: string, task: Omit<TaskNode, 'id' | 'status'>): TaskNode;
@@ -57,7 +76,12 @@ export interface CrewStoreActions {
   removeTaskFromCrew(crewId: string, taskId: string): void;
   addWorkflowToCrew(crewId: string, workflowId: string): void;
   getCrewById(crewId: string): CrewDefinition | undefined;
-  importCrewFromWorkflow(name: string, description: string, agents: AgentNode[], tasks: TaskNode[]): CrewDefinition;
+  importCrewFromWorkflow(
+    name: string,
+    description: string,
+    agents: AgentNode[],
+    tasks: TaskNode[],
+  ): CrewDefinition;
 }
 
 export type CrewContextValue = CrewStoreState & CrewStoreActions;
@@ -179,7 +203,10 @@ export function CrewProvider({ initialCrews, children }: CrewProviderProps): Rea
   }, []);
 
   const addAgentToCrew = useCallback(
-    (crewId: string, agentInput: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string }): AgentNode => {
+    (
+      crewId: string,
+      agentInput: Omit<AgentNode, 'id' | 'status' | 'position'> & { id?: string },
+    ): AgentNode => {
       const crew = state.crews.find((c) => c.id === crewId);
       const { id: inputId, ...rest } = agentInput;
       const agent: AgentNode = {
@@ -286,7 +313,15 @@ export function CrewProvider({ initialCrews, children }: CrewProviderProps): Rea
       const updated: CrewDefinition = {
         ...crew,
         workflowIds: [...crew.workflowIds, workflowId],
-        workflows: [...(crew.workflows ?? []), { id: workflowId, name: `Workflow ${workflowId.slice(0, 8)}`, description: '', createdAt: Date.now() }],
+        workflows: [
+          ...(crew.workflows ?? []),
+          {
+            id: workflowId,
+            name: `Workflow ${workflowId.slice(0, 8)}`,
+            description: '',
+            createdAt: Date.now(),
+          },
+        ],
         updatedAt: Date.now(),
       };
       dispatch({ type: 'REPLACE_CREW', crew: updated });

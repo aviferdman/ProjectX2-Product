@@ -84,15 +84,15 @@ describe('InMemoryUsageStorage', () => {
     });
 
     it('throws if accountId is empty', async () => {
-      await expect(
-        storage.recordRun({ accountId: '', workflowId: 'wf-1' }),
-      ).rejects.toThrow('accountId is required');
+      await expect(storage.recordRun({ accountId: '', workflowId: 'wf-1' })).rejects.toThrow(
+        'accountId is required',
+      );
     });
 
     it('throws if workflowId is empty', async () => {
-      await expect(
-        storage.recordRun({ accountId: 'acct-1', workflowId: '' }),
-      ).rejects.toThrow('workflowId is required');
+      await expect(storage.recordRun({ accountId: 'acct-1', workflowId: '' })).rejects.toThrow(
+        'workflowId is required',
+      );
     });
   });
 
@@ -150,9 +150,9 @@ describe('InMemoryUsageStorage', () => {
     });
 
     it('throws UsageRunNotFoundError for unknown run', async () => {
-      await expect(
-        storage.completeRun('no-such-run', { status: 'completed' }),
-      ).rejects.toThrow(UsageRunNotFoundError);
+      await expect(storage.completeRun('no-such-run', { status: 'completed' })).rejects.toThrow(
+        UsageRunNotFoundError,
+      );
     });
 
     it('throws UsageInvalidTransitionError for already completed run', async () => {
@@ -162,9 +162,9 @@ describe('InMemoryUsageStorage', () => {
       });
       await storage.completeRun(run.id, { status: 'completed' });
 
-      await expect(
-        storage.completeRun(run.id, { status: 'failed' }),
-      ).rejects.toThrow(UsageInvalidTransitionError);
+      await expect(storage.completeRun(run.id, { status: 'failed' })).rejects.toThrow(
+        UsageInvalidTransitionError,
+      );
     });
   });
 
@@ -314,9 +314,9 @@ describe('InMemoryAccountPlanStorage', () => {
   });
 
   it('throws if accountId is empty', async () => {
-    await expect(
-      plans.setAccountPlan(makeAccountPlan({ accountId: '' })),
-    ).rejects.toThrow('accountId is required');
+    await expect(plans.setAccountPlan(makeAccountPlan({ accountId: '' }))).rejects.toThrow(
+      'accountId is required',
+    );
   });
 
   it('overwrites existing plan', async () => {
@@ -374,9 +374,9 @@ describe('UsageTracker', () => {
       const run2 = await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-2' });
       await tracker.completeRun(run2.id, { status: 'completed' });
 
-      await expect(
-        tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-3' }),
-      ).rejects.toThrow(UsageLimitExceededError);
+      await expect(tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-3' })).rejects.toThrow(
+        UsageLimitExceededError,
+      );
     });
 
     it('throws UsageLimitExceededError when concurrent limit reached', async () => {
@@ -384,9 +384,9 @@ describe('UsageTracker', () => {
       await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-1' });
       await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-2' });
 
-      await expect(
-        tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-3' }),
-      ).rejects.toThrow(UsageLimitExceededError);
+      await expect(tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-3' })).rejects.toThrow(
+        UsageLimitExceededError,
+      );
     });
 
     it('allows new run after completing a concurrent run', async () => {
@@ -413,9 +413,7 @@ describe('UsageTracker', () => {
 
     it('skips limit enforcement when disabled', async () => {
       const t = createTracker({ enforceLimits: false });
-      await t.plans.setAccountPlan(
-        makeAccountPlan({ customLimits: { maxRunsPerMonth: 1 } }),
-      );
+      await t.plans.setAccountPlan(makeAccountPlan({ customLimits: { maxRunsPerMonth: 1 } }));
 
       await t.tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-1' });
 
@@ -455,9 +453,7 @@ describe('UsageTracker', () => {
     });
 
     it('returns allowed=false when monthly limit exceeded', async () => {
-      await plans.setAccountPlan(
-        makeAccountPlan({ customLimits: { maxRunsPerMonth: 1 } }),
-      );
+      await plans.setAccountPlan(makeAccountPlan({ customLimits: { maxRunsPerMonth: 1 } }));
 
       await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-1' });
 
@@ -521,9 +517,7 @@ describe('UsageTracker', () => {
       });
 
       // Use a higher concurrent limit to allow multiple active runs
-      await plans.setAccountPlan(
-        makeAccountPlan({ planTier: 'pro' }),
-      );
+      await plans.setAccountPlan(makeAccountPlan({ planTier: 'pro' }));
 
       const summary = await tracker.getUsageSummary('acct-1');
       expect(summary.activeRuns).toBe(1);
@@ -545,9 +539,7 @@ describe('UsageTracker', () => {
     });
 
     it('applies custom limits over defaults', async () => {
-      await plans.setAccountPlan(
-        makeAccountPlan({ customLimits: { maxRunsPerMonth: 100 } }),
-      );
+      await plans.setAccountPlan(makeAccountPlan({ customLimits: { maxRunsPerMonth: 100 } }));
 
       const summary = await tracker.getUsageSummary('acct-1');
       expect(summary.limits.maxRunsPerMonth).toBe(100);
@@ -564,9 +556,7 @@ describe('UsageTracker', () => {
   describe('listRuns', () => {
     it('delegates to storage', async () => {
       // Use a plan with enough concurrent headroom
-      await plans.setAccountPlan(
-        makeAccountPlan({ customLimits: { maxConcurrentRuns: 10 } }),
-      );
+      await plans.setAccountPlan(makeAccountPlan({ customLimits: { maxConcurrentRuns: 10 } }));
 
       await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-1' });
       await tracker.recordRun({ accountId: 'acct-1', workflowId: 'wf-2' });

@@ -44,7 +44,7 @@ const typeStyles: Record<
 };
 
 const statusClasses: Record<string, string> = {
-  running: 'animate-running-pulse',
+  running: 'animate-running-flicker',
   error: 'animate-error-pulse',
   disabled: 'opacity-40 pointer-events-none',
 };

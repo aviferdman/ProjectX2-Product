@@ -113,7 +113,10 @@ export const dashboardTheme = {
     'workflow-card-title': ['0.875rem', { lineHeight: '1.25', fontWeight: '600' }],
     'workflow-card-desc': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
     'workflow-card-meta': ['0.6875rem', { lineHeight: '1.25', fontWeight: '400' }],
-    'workflow-status-badge': ['0.625rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
+    'workflow-status-badge': [
+      '0.625rem',
+      { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' },
+    ],
     'stat-value': ['1.5rem', { lineHeight: '1.25', fontWeight: '700' }],
     'stat-label': ['0.75rem', { lineHeight: '1.5', fontWeight: '500' }],
     'stat-trend': ['0.6875rem', { lineHeight: '1', fontWeight: '500' }],

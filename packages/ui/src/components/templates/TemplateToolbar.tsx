@@ -5,8 +5,10 @@ import { TemplateSearchBar, type TemplateSearchBarProps } from './TemplateSearch
 import { TemplateCategoryFilter } from './TemplateCategoryFilter.js';
 import { TemplateSortDropdown } from './TemplateSortDropdown.js';
 
-export interface TemplateToolbarProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface TemplateToolbarProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'onChange'
+> {
   search: string;
   onSearchChange: (value: string) => void;
   category: TemplateCategory | 'all';
@@ -36,20 +38,12 @@ export const TemplateToolbar = forwardRef<HTMLDivElement, TemplateToolbarProps>(
     return (
       <div
         ref={ref}
-        className={clsx(
-          'flex flex-col gap-3',
-          'min-h-[theme(spacing.tpl-toolbar-h)]',
-          className,
-        )}
+        className={clsx('flex flex-col gap-3', 'min-h-[theme(spacing.tpl-toolbar-h)]', className)}
         {...props}
       >
         {/* Top row: search + sort + count */}
         <div className="flex flex-wrap items-center gap-3">
-          <TemplateSearchBar
-            value={search}
-            onValueChange={onSearchChange}
-            className="w-72"
-          />
+          <TemplateSearchBar value={search} onValueChange={onSearchChange} className="w-72" />
           <div className="flex-1" />
           {resultCount !== undefined && totalCount !== undefined && (
             <span className="text-tpl-card-meta text-tpl-card-meta whitespace-nowrap">

@@ -114,10 +114,7 @@ describe('DTCG JSON tokens — design-system.json', () => {
         }
       }
     }
-    checkLeaves(
-      (tokens.crewspace as Record<string, unknown>),
-      'crewspace',
-    );
+    checkLeaves(tokens.crewspace as Record<string, unknown>, 'crewspace');
   });
 });
 
@@ -255,7 +252,19 @@ describe('CSS variables — design-system-variables.css', () => {
   });
 
   it('has all primitive slate palette variables', () => {
-    for (const shade of ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']) {
+    for (const shade of [
+      '50',
+      '100',
+      '200',
+      '300',
+      '400',
+      '500',
+      '600',
+      '700',
+      '800',
+      '900',
+      '950',
+    ]) {
       expect(css).toContain(`--cs-slate-${shade}:`);
     }
   });
@@ -273,7 +282,15 @@ describe('CSS variables — design-system-variables.css', () => {
   });
 
   it('has all text variables including disabled and link', () => {
-    for (const suf of ['primary', 'secondary', 'tertiary', 'inverse', 'disabled', 'link', 'link-hover']) {
+    for (const suf of [
+      'primary',
+      'secondary',
+      'tertiary',
+      'inverse',
+      'disabled',
+      'link',
+      'link-hover',
+    ]) {
       expect(css).toContain(`--cs-text-${suf}:`);
     }
   });

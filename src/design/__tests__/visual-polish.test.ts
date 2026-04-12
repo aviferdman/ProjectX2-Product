@@ -26,9 +26,19 @@ function collectTokenLeaves(
   for (const [key, val] of Object.entries(obj)) {
     if (key.startsWith('_')) continue;
     const current = path ? `${path}.${key}` : key;
-    if (val && typeof val === 'object' && 'value' in (val as Record<string, unknown>) && 'type' in (val as Record<string, unknown>)) {
+    if (
+      val &&
+      typeof val === 'object' &&
+      'value' in (val as Record<string, unknown>) &&
+      'type' in (val as Record<string, unknown>)
+    ) {
       const token = val as { value: unknown; type: string; description?: string };
-      results.push({ path: current, value: token.value, type: token.type, description: token.description });
+      results.push({
+        path: current,
+        value: token.value,
+        type: token.type,
+        description: token.description,
+      });
     } else if (val && typeof val === 'object') {
       results.push(...collectTokenLeaves(val as Record<string, unknown>, current));
     }
@@ -51,7 +61,8 @@ describe('visual-polish.json — design tokens', () => {
     expect(crewspace).toHaveProperty('visualPolish');
   });
 
-  const visualPolish = (tokens as { crewspace: { visualPolish: Record<string, unknown> } }).crewspace.visualPolish;
+  const visualPolish = (tokens as { crewspace: { visualPolish: Record<string, unknown> } })
+    .crewspace.visualPolish;
 
   it('contains required top-level sections', () => {
     const requiredSections = [
@@ -89,15 +100,27 @@ describe('visual-polish.json — design tokens', () => {
     it('every leaf has a non-empty value', () => {
       for (const leaf of leaves) {
         expect(leaf.value, `${leaf.path} should have a value`).toBeDefined();
-        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(0);
+        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(
+          0,
+        );
       }
     });
 
     it('every leaf has a valid type', () => {
       const validTypes = [
-        'color', 'sizing', 'number', 'borderRadius', 'boxShadow',
-        'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing',
-        'duration', 'cubicBezier', 'gradient', 'typography',
+        'color',
+        'sizing',
+        'number',
+        'borderRadius',
+        'boxShadow',
+        'fontSize',
+        'fontWeight',
+        'lineHeight',
+        'letterSpacing',
+        'duration',
+        'cubicBezier',
+        'gradient',
+        'typography',
       ];
       for (const leaf of leaves) {
         expect(validTypes, `${leaf.path} has type "${leaf.type}"`).toContain(leaf.type);
@@ -109,7 +132,14 @@ describe('visual-polish.json — design tokens', () => {
     const spacing = visualPolish.spacing as Record<string, Record<string, unknown>>;
 
     it('has component gap scale', () => {
-      const gaps = ['component-gap-xs', 'component-gap-sm', 'component-gap-md', 'component-gap-lg', 'component-gap-xl', 'component-gap-2xl'];
+      const gaps = [
+        'component-gap-xs',
+        'component-gap-sm',
+        'component-gap-md',
+        'component-gap-lg',
+        'component-gap-xl',
+        'component-gap-2xl',
+      ];
       for (const gap of gaps) {
         expect(spacing, `missing ${gap}`).toHaveProperty(gap);
       }
@@ -130,8 +160,14 @@ describe('visual-polish.json — design tokens', () => {
     });
 
     it('gap values increase monotonically', () => {
-      const gapValues = ['component-gap-xs', 'component-gap-sm', 'component-gap-md', 'component-gap-lg', 'component-gap-xl', 'component-gap-2xl']
-        .map(k => parseInt((spacing[k] as { value: string }).value));
+      const gapValues = [
+        'component-gap-xs',
+        'component-gap-sm',
+        'component-gap-md',
+        'component-gap-lg',
+        'component-gap-xl',
+        'component-gap-2xl',
+      ].map((k) => parseInt((spacing[k] as { value: string }).value));
       for (let i = 1; i < gapValues.length; i++) {
         expect(gapValues[i], `gap scale should increase`).toBeGreaterThan(gapValues[i - 1]);
       }
@@ -251,8 +287,9 @@ describe('visual-polish.json — design tokens', () => {
     });
 
     it('icon sizes increase monotonically', () => {
-      const sizeValues = ['xs', 'sm', 'md', 'lg', 'xl', '2xl']
-        .map(k => parseInt((iconSize[k] as { value: string }).value));
+      const sizeValues = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'].map((k) =>
+        parseInt((iconSize[k] as { value: string }).value),
+      );
       for (let i = 1; i < sizeValues.length; i++) {
         expect(sizeValues[i]).toBeGreaterThan(sizeValues[i - 1]);
       }
@@ -263,14 +300,32 @@ describe('visual-polish.json — design tokens', () => {
     const typography = visualPolish.typography as Record<string, Record<string, unknown>>;
 
     it('has all standard typography presets', () => {
-      const presets = ['page-title', 'section-title', 'card-title', 'card-body', 'card-meta', 'label', 'caption', 'overline'];
+      const presets = [
+        'page-title',
+        'section-title',
+        'card-title',
+        'card-body',
+        'card-meta',
+        'label',
+        'caption',
+        'overline',
+      ];
       for (const preset of presets) {
         expect(typography, `missing preset ${preset}`).toHaveProperty(preset);
       }
     });
 
     it('each preset has fontSize and fontWeight', () => {
-      const presets = ['page-title', 'section-title', 'card-title', 'card-body', 'card-meta', 'label', 'caption', 'overline'];
+      const presets = [
+        'page-title',
+        'section-title',
+        'card-title',
+        'card-body',
+        'card-meta',
+        'label',
+        'caption',
+        'overline',
+      ];
       for (const preset of presets) {
         const val = (typography[preset] as { value: Record<string, string> }).value;
         expect(val).toHaveProperty('fontSize');
@@ -283,7 +338,14 @@ describe('visual-polish.json — design tokens', () => {
     const animation = visualPolish.animation as Record<string, { value: string }>;
 
     it('has duration scale', () => {
-      const durations = ['duration-instant', 'duration-fast', 'duration-normal', 'duration-moderate', 'duration-slow', 'duration-enter'];
+      const durations = [
+        'duration-instant',
+        'duration-fast',
+        'duration-normal',
+        'duration-moderate',
+        'duration-slow',
+        'duration-enter',
+      ];
       for (const d of durations) {
         expect(animation, `missing ${d}`).toHaveProperty(d);
       }
@@ -325,15 +387,32 @@ describe('visual-polish.json — design tokens', () => {
     const zIndex = visualPolish.zIndex as Record<string, { value: string }>;
 
     it('has complete stacking scale', () => {
-      const layers = ['base', 'dropdown', 'sticky', 'overlay', 'modal', 'popover', 'tooltip', 'toast'];
+      const layers = [
+        'base',
+        'dropdown',
+        'sticky',
+        'overlay',
+        'modal',
+        'popover',
+        'tooltip',
+        'toast',
+      ];
       for (const layer of layers) {
         expect(zIndex, `missing z-index ${layer}`).toHaveProperty(layer);
       }
     });
 
     it('z-index values increase monotonically', () => {
-      const values = ['base', 'dropdown', 'sticky', 'overlay', 'modal', 'popover', 'tooltip', 'toast']
-        .map(k => parseInt(zIndex[k].value));
+      const values = [
+        'base',
+        'dropdown',
+        'sticky',
+        'overlay',
+        'modal',
+        'popover',
+        'tooltip',
+        'toast',
+      ].map((k) => parseInt(zIndex[k].value));
       for (let i = 1; i < values.length; i++) {
         expect(values[i]).toBeGreaterThan(values[i - 1]);
       }
@@ -610,7 +689,9 @@ describe('visual-polish-variables.css — custom properties', () => {
 
   describe('reduced motion overrides', () => {
     it('zeroes all durations in prefers-reduced-motion', () => {
-      const reducedMotionMatch = css.match(/@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/);
+      const reducedMotionMatch = css.match(
+        /@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/,
+      );
       expect(reducedMotionMatch).not.toBeNull();
       if (reducedMotionMatch) {
         expect(reducedMotionMatch[1]).toContain('--cs-duration-instant: 0ms');
@@ -759,7 +840,15 @@ describe('visual-polish-theme.ts — Tailwind theme extension', () => {
   });
 
   describe('z-index tokens', () => {
-    const requiredLayers = ['dropdown', 'sticky', 'overlay', 'modal', 'popover', 'tooltip', 'toast'];
+    const requiredLayers = [
+      'dropdown',
+      'sticky',
+      'overlay',
+      'modal',
+      'popover',
+      'tooltip',
+      'toast',
+    ];
 
     for (const layer of requiredLayers) {
       it(`has '${layer}' z-index`, () => {

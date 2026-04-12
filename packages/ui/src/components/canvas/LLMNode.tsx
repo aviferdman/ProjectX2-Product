@@ -37,7 +37,9 @@ function LLMNodeComponent({ data, selected }: NodeProps) {
             </span>
             <span>
               <span className="text-text-tertiary">Out:</span>{' '}
-              <span className="text-text-secondary">{formatTokenCount(meta.tokenUsage.output)}</span>
+              <span className="text-text-secondary">
+                {formatTokenCount(meta.tokenUsage.output)}
+              </span>
             </span>
           </div>
         ) : undefined

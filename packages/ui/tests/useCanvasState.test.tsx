@@ -21,11 +21,7 @@ function makeSnapshot(label = 'Agent', x = 100, y = 200): CanvasSnapshot {
   };
 }
 
-function makeStoredState(
-  id: string,
-  snapshot: CanvasSnapshot,
-  version = 1,
-): StoredCanvasState {
+function makeStoredState(id: string, snapshot: CanvasSnapshot, version = 1): StoredCanvasState {
   return {
     id,
     workflowId: 'wf_test',
@@ -37,9 +33,7 @@ function makeStoredState(
   };
 }
 
-function createMockService(
-  initialState?: StoredCanvasState,
-): CanvasStateManager & {
+function createMockService(initialState?: StoredCanvasState): CanvasStateManager & {
   _canUndo: boolean;
   _canRedo: boolean;
   _historyEntries: Array<{ version: number; snapshot: CanvasSnapshot; timestamp: string }>;
@@ -176,8 +170,7 @@ describe('useCanvasState', () => {
 
     it('should reload when canvasId changes', async () => {
       const { result, rerender } = renderHook(
-        ({ canvasId }) =>
-          useCanvasState({ service, canvasId, enableShortcuts: false }),
+        ({ canvasId }) => useCanvasState({ service, canvasId, enableShortcuts: false }),
         { initialProps: { canvasId: 'cs_1' } },
       );
 
@@ -624,9 +617,7 @@ describe('useCanvasState', () => {
     });
 
     it('should ignore non-meta key presses', async () => {
-      renderHook(() =>
-        useCanvasState({ service, canvasId: 'cs_1', enableShortcuts: true }),
-      );
+      renderHook(() => useCanvasState({ service, canvasId: 'cs_1', enableShortcuts: true }));
 
       await act(async () => {
         window.dispatchEvent(

@@ -25,12 +25,7 @@ import {
   getIconsByCategory,
   hasIcon,
 } from '../icons/registry.js';
-import {
-  iconSize,
-  iconStroke,
-  iconColor,
-  nodeTypeIcons,
-} from '../icons/tokens.js';
+import { iconSize, iconStroke, iconColor, nodeTypeIcons } from '../icons/tokens.js';
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                             */
@@ -88,8 +83,15 @@ describe('DTCG JSON tokens — icons.json', () => {
     const icon = cs.icon as Record<string, unknown>;
     const category = icon.category as Record<string, unknown>;
     const expectedCategories = [
-      'navigation', 'action', 'node', 'status', 'content',
-      'layout', 'communication', 'workflow', 'brand',
+      'navigation',
+      'action',
+      'node',
+      'status',
+      'content',
+      'layout',
+      'communication',
+      'workflow',
+      'brand',
     ];
     for (const cat of expectedCategories) {
       expect(category).toHaveProperty(cat);
@@ -209,7 +211,16 @@ describe('CSS variables — icons-variables.css', () => {
   });
 
   it('has semantic icon color variables', () => {
-    for (const color of ['default', 'primary', 'muted', 'brand', 'success', 'warning', 'error', 'info']) {
+    for (const color of [
+      'default',
+      'primary',
+      'muted',
+      'brand',
+      'success',
+      'warning',
+      'error',
+      'info',
+    ]) {
       expect(css).toContain(`--cs-icon-color-${color}:`);
     }
   });

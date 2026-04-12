@@ -35,7 +35,9 @@ export const WorkflowListRow = forwardRef<HTMLTableRowElement, WorkflowListRowPr
         tabIndex={0}
         aria-selected={selected}
         onClick={handleClick}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClick(); }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') handleClick();
+        }}
         className={clsx(
           'cs-workflow-list group h-14 border-b border-slate-800 cursor-pointer',
           'transition-colors duration-100',
@@ -66,9 +68,7 @@ export const WorkflowListRow = forwardRef<HTMLTableRowElement, WorkflowListRowPr
         <td className="px-4 py-2 text-xs text-slate-400">
           {workflow.taskCount} task{workflow.taskCount !== 1 ? 's' : ''}
         </td>
-        <td className="px-4 py-2 text-xs text-slate-500">
-          {formatDate(workflow.updatedAt)}
-        </td>
+        <td className="px-4 py-2 text-xs text-slate-500">{formatDate(workflow.updatedAt)}</td>
         <td className="px-4 py-2">
           <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             {onDuplicate && (
@@ -79,7 +79,15 @@ export const WorkflowListRow = forwardRef<HTMLTableRowElement, WorkflowListRowPr
                 aria-label={`Duplicate ${workflow.name}`}
                 title="Duplicate"
               >
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                >
                   <rect x="5" y="5" width="9" height="9" rx="1.5" />
                   <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-7A1.5 1.5 0 001 3.5v7A1.5 1.5 0 002.5 12H5" />
                 </svg>
@@ -93,7 +101,15 @@ export const WorkflowListRow = forwardRef<HTMLTableRowElement, WorkflowListRowPr
                 aria-label={`Delete ${workflow.name}`}
                 title="Delete"
               >
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                >
                   <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 011.334-1.334h2.666a1.333 1.333 0 011.334 1.334V4M12.667 4v9.333a1.333 1.333 0 01-1.334 1.334H4.667a1.333 1.333 0 01-1.334-1.334V4" />
                 </svg>
               </button>

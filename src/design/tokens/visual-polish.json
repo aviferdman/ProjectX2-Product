@@ -6,99 +6,309 @@
 
       "spacing": {
         "_description": "Semantic spacing aliases that map to the base spacing scale. Use these instead of raw pixel values to ensure consistent rhythm across all components.",
-        "component-gap-xs": { "value": "4px",  "type": "sizing", "description": "Tight gap between inline elements (icons + labels, badge groups)" },
-        "component-gap-sm": { "value": "8px",  "type": "sizing", "description": "Small gap between related elements (form fields, chip groups)" },
-        "component-gap-md": { "value": "12px", "type": "sizing", "description": "Medium gap between component sections (card header/body)" },
-        "component-gap-lg": { "value": "16px", "type": "sizing", "description": "Standard gap between cards in a grid, list items" },
-        "component-gap-xl": { "value": "24px", "type": "sizing", "description": "Large gap between page sections, panel sections" },
-        "component-gap-2xl": { "value": "32px", "type": "sizing", "description": "Extra large gap between major layout regions" },
+        "component-gap-xs": {
+          "value": "4px",
+          "type": "sizing",
+          "description": "Tight gap between inline elements (icons + labels, badge groups)"
+        },
+        "component-gap-sm": {
+          "value": "8px",
+          "type": "sizing",
+          "description": "Small gap between related elements (form fields, chip groups)"
+        },
+        "component-gap-md": {
+          "value": "12px",
+          "type": "sizing",
+          "description": "Medium gap between component sections (card header/body)"
+        },
+        "component-gap-lg": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Standard gap between cards in a grid, list items"
+        },
+        "component-gap-xl": {
+          "value": "24px",
+          "type": "sizing",
+          "description": "Large gap between page sections, panel sections"
+        },
+        "component-gap-2xl": {
+          "value": "32px",
+          "type": "sizing",
+          "description": "Extra large gap between major layout regions"
+        },
 
-        "inset-xs":  { "value": "4px",  "type": "sizing", "description": "Minimal inset padding (badges, tiny chips)" },
-        "inset-sm":  { "value": "8px",  "type": "sizing", "description": "Small inset padding (compact cards, list items)" },
-        "inset-md":  { "value": "12px", "type": "sizing", "description": "Medium inset padding (card bodies, toolbar sections)" },
-        "inset-lg":  { "value": "16px", "type": "sizing", "description": "Standard inset padding (cards, panels, modals)" },
-        "inset-xl":  { "value": "24px", "type": "sizing", "description": "Large inset padding (page content, dialog bodies)" },
-        "inset-2xl": { "value": "32px", "type": "sizing", "description": "Extra large inset padding (hero sections, splash screens)" },
+        "inset-xs": {
+          "value": "4px",
+          "type": "sizing",
+          "description": "Minimal inset padding (badges, tiny chips)"
+        },
+        "inset-sm": {
+          "value": "8px",
+          "type": "sizing",
+          "description": "Small inset padding (compact cards, list items)"
+        },
+        "inset-md": {
+          "value": "12px",
+          "type": "sizing",
+          "description": "Medium inset padding (card bodies, toolbar sections)"
+        },
+        "inset-lg": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Standard inset padding (cards, panels, modals)"
+        },
+        "inset-xl": {
+          "value": "24px",
+          "type": "sizing",
+          "description": "Large inset padding (page content, dialog bodies)"
+        },
+        "inset-2xl": {
+          "value": "32px",
+          "type": "sizing",
+          "description": "Extra large inset padding (hero sections, splash screens)"
+        },
 
-        "stack-xs":  { "value": "2px",  "type": "sizing", "description": "Micro stack spacing (label + helper text)" },
-        "stack-sm":  { "value": "4px",  "type": "sizing", "description": "Tight stack spacing (title + subtitle)" },
-        "stack-md":  { "value": "8px",  "type": "sizing", "description": "Standard stack spacing (form rows, list items)" },
-        "stack-lg":  { "value": "16px", "type": "sizing", "description": "Loose stack spacing (card sections, panel groups)" },
-        "stack-xl":  { "value": "24px", "type": "sizing", "description": "Section stack spacing (page sections)" }
+        "stack-xs": {
+          "value": "2px",
+          "type": "sizing",
+          "description": "Micro stack spacing (label + helper text)"
+        },
+        "stack-sm": {
+          "value": "4px",
+          "type": "sizing",
+          "description": "Tight stack spacing (title + subtitle)"
+        },
+        "stack-md": {
+          "value": "8px",
+          "type": "sizing",
+          "description": "Standard stack spacing (form rows, list items)"
+        },
+        "stack-lg": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Loose stack spacing (card sections, panel groups)"
+        },
+        "stack-xl": {
+          "value": "24px",
+          "type": "sizing",
+          "description": "Section stack spacing (page sections)"
+        }
       },
 
       "card": {
         "_description": "Unified card patterns. All card-like surfaces (workflow, template, integration, stat) should derive from these base tokens.",
-        "padding": { "value": "16px", "type": "sizing", "description": "Standard card body padding — all cards use 16px" },
-        "padding-compact": { "value": "12px", "type": "sizing", "description": "Compact card padding for dense layouts" },
-        "gap": { "value": "16px", "type": "sizing", "description": "Standard gap between cards in a grid" },
-        "gap-compact": { "value": "12px", "type": "sizing", "description": "Compact gap for dense grids" },
-        "radius": { "value": "12px", "type": "borderRadius", "description": "Unified card corner radius (xl)" },
-        "border-width": { "value": "1px", "type": "sizing", "description": "Standard card border width" },
+        "padding": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Standard card body padding — all cards use 16px"
+        },
+        "padding-compact": {
+          "value": "12px",
+          "type": "sizing",
+          "description": "Compact card padding for dense layouts"
+        },
+        "gap": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Standard gap between cards in a grid"
+        },
+        "gap-compact": {
+          "value": "12px",
+          "type": "sizing",
+          "description": "Compact gap for dense grids"
+        },
+        "radius": {
+          "value": "12px",
+          "type": "borderRadius",
+          "description": "Unified card corner radius (xl)"
+        },
+        "border-width": {
+          "value": "1px",
+          "type": "sizing",
+          "description": "Standard card border width"
+        },
         "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
         "bg-hover": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
         "border-color": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "border-color-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color" },
-        "shadow": { "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)", "type": "boxShadow", "description": "Resting card shadow — consistent across all card types" },
-        "shadow-hover": { "value": "0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)", "type": "boxShadow", "description": "Hover card shadow — consistent elevation" },
-        "shadow-active": { "value": "0 1px 2px rgba(0,0,0,0.2), 0 0 0 1px rgba(113,113,122,0.08)", "type": "boxShadow", "description": "Pressed/active card shadow" },
-        "transition": { "value": "150ms ease-out", "type": "sizing", "description": "Card hover transition duration + easing" }
+        "border-color-hover": {
+          "value": "{crewspace.color.semantic.border.strong}",
+          "type": "color"
+        },
+        "shadow": {
+          "value": "0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(113,113,122,0.06)",
+          "type": "boxShadow",
+          "description": "Resting card shadow — consistent across all card types"
+        },
+        "shadow-hover": {
+          "value": "0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.1)",
+          "type": "boxShadow",
+          "description": "Hover card shadow — consistent elevation"
+        },
+        "shadow-active": {
+          "value": "0 1px 2px rgba(0,0,0,0.2), 0 0 0 1px rgba(113,113,122,0.08)",
+          "type": "boxShadow",
+          "description": "Pressed/active card shadow"
+        },
+        "transition": {
+          "value": "150ms ease-out",
+          "type": "sizing",
+          "description": "Card hover transition duration + easing"
+        }
       },
 
       "focus": {
         "_description": "Unified focus ring styles for accessibility. All interactive elements must show a visible focus ring on keyboard navigation.",
-        "ring-color": { "value": "{crewspace.color.primitive.violet.500}", "type": "color", "description": "Focus ring color (brand violet)" },
+        "ring-color": {
+          "value": "{crewspace.color.primitive.violet.500}",
+          "type": "color",
+          "description": "Focus ring color (brand violet)"
+        },
         "ring-width": { "value": "2px", "type": "sizing", "description": "Focus ring width" },
-        "ring-offset": { "value": "2px", "type": "sizing", "description": "Gap between element and focus ring" },
-        "ring-offset-color": { "value": "{crewspace.color.semantic.surface.app}", "type": "color", "description": "Focus ring offset fill — matches app background" },
-        "ring-shadow": { "value": "0 0 0 2px #09090b, 0 0 0 4px #818cf8", "type": "boxShadow", "description": "Composite focus ring using box-shadow (offset + ring)" }
+        "ring-offset": {
+          "value": "2px",
+          "type": "sizing",
+          "description": "Gap between element and focus ring"
+        },
+        "ring-offset-color": {
+          "value": "{crewspace.color.semantic.surface.app}",
+          "type": "color",
+          "description": "Focus ring offset fill — matches app background"
+        },
+        "ring-shadow": {
+          "value": "0 0 0 2px #09090b, 0 0 0 4px #818cf8",
+          "type": "boxShadow",
+          "description": "Composite focus ring using box-shadow (offset + ring)"
+        }
       },
 
       "divider": {
         "_description": "Consistent divider/separator patterns used between sections, in panels, and within cards.",
-        "color": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Default divider color" },
-        "color-strong": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Emphasized divider color" },
+        "color": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Default divider color"
+        },
+        "color-strong": {
+          "value": "{crewspace.color.semantic.border.default}",
+          "type": "color",
+          "description": "Emphasized divider color"
+        },
         "width": { "value": "1px", "type": "sizing", "description": "Standard divider thickness" },
-        "spacing": { "value": "16px", "type": "sizing", "description": "Margin above and below a divider" },
-        "spacing-compact": { "value": "8px", "type": "sizing", "description": "Compact divider margin" }
+        "spacing": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Margin above and below a divider"
+        },
+        "spacing-compact": {
+          "value": "8px",
+          "type": "sizing",
+          "description": "Compact divider margin"
+        }
       },
 
       "overlay": {
         "_description": "Standardized overlay and backdrop styles for modals, dropdowns, and popups.",
-        "bg": { "value": "rgba(0,0,0,0.6)", "type": "color", "description": "Standard modal overlay" },
-        "bg-light": { "value": "rgba(0,0,0,0.4)", "type": "color", "description": "Light overlay for dropdowns, popovers" },
-        "bg-heavy": { "value": "rgba(0,0,0,0.75)", "type": "color", "description": "Heavy overlay for critical modals, image lightbox" },
-        "backdrop-blur": { "value": "8px", "type": "sizing", "description": "Backdrop blur radius for glass effect" },
-        "backdrop-blur-sm": { "value": "4px", "type": "sizing", "description": "Subtle backdrop blur" }
+        "bg": {
+          "value": "rgba(0,0,0,0.6)",
+          "type": "color",
+          "description": "Standard modal overlay"
+        },
+        "bg-light": {
+          "value": "rgba(0,0,0,0.4)",
+          "type": "color",
+          "description": "Light overlay for dropdowns, popovers"
+        },
+        "bg-heavy": {
+          "value": "rgba(0,0,0,0.75)",
+          "type": "color",
+          "description": "Heavy overlay for critical modals, image lightbox"
+        },
+        "backdrop-blur": {
+          "value": "8px",
+          "type": "sizing",
+          "description": "Backdrop blur radius for glass effect"
+        },
+        "backdrop-blur-sm": {
+          "value": "4px",
+          "type": "sizing",
+          "description": "Subtle backdrop blur"
+        }
       },
 
       "iconSize": {
         "_description": "Standardized icon sizing scale to replace ad-hoc sizes across components.",
-        "xs": { "value": "12px", "type": "sizing", "description": "Inline icons (status dots, mini indicators)" },
-        "sm": { "value": "16px", "type": "sizing", "description": "Small icons (badges, chips, compact buttons)" },
-        "md": { "value": "20px", "type": "sizing", "description": "Standard icons (toolbar, nav, card actions)" },
-        "lg": { "value": "24px", "type": "sizing", "description": "Large icons (section headers, empty states)" },
-        "xl": { "value": "32px", "type": "sizing", "description": "Extra large icons (feature highlights)" },
-        "2xl": { "value": "48px", "type": "sizing", "description": "Jumbo icons (logo containers, hero empty state)" }
+        "xs": {
+          "value": "12px",
+          "type": "sizing",
+          "description": "Inline icons (status dots, mini indicators)"
+        },
+        "sm": {
+          "value": "16px",
+          "type": "sizing",
+          "description": "Small icons (badges, chips, compact buttons)"
+        },
+        "md": {
+          "value": "20px",
+          "type": "sizing",
+          "description": "Standard icons (toolbar, nav, card actions)"
+        },
+        "lg": {
+          "value": "24px",
+          "type": "sizing",
+          "description": "Large icons (section headers, empty states)"
+        },
+        "xl": {
+          "value": "32px",
+          "type": "sizing",
+          "description": "Extra large icons (feature highlights)"
+        },
+        "2xl": {
+          "value": "48px",
+          "type": "sizing",
+          "description": "Jumbo icons (logo containers, hero empty state)"
+        }
       },
 
       "button": {
         "_description": "Unified interactive button tokens. All primary CTA buttons share these base values.",
-        "height-sm": { "value": "28px", "type": "sizing", "description": "Compact button height (filter chips, tags)" },
+        "height-sm": {
+          "value": "28px",
+          "type": "sizing",
+          "description": "Compact button height (filter chips, tags)"
+        },
         "height-md": { "value": "36px", "type": "sizing", "description": "Default button height" },
-        "height-lg": { "value": "40px", "type": "sizing", "description": "Large button height (primary CTAs)" },
-        "padding-x-sm": { "value": "8px",  "type": "sizing" },
+        "height-lg": {
+          "value": "40px",
+          "type": "sizing",
+          "description": "Large button height (primary CTAs)"
+        },
+        "padding-x-sm": { "value": "8px", "type": "sizing" },
         "padding-x-md": { "value": "12px", "type": "sizing" },
         "padding-x-lg": { "value": "16px", "type": "sizing" },
-        "radius": { "value": "8px", "type": "borderRadius", "description": "Standard button radius (lg)" },
-        "radius-pill": { "value": "9999px", "type": "borderRadius", "description": "Pill-shaped button radius (chips, tags)" },
-        "font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px — standard button text" },
+        "radius": {
+          "value": "8px",
+          "type": "borderRadius",
+          "description": "Standard button radius (lg)"
+        },
+        "radius-pill": {
+          "value": "9999px",
+          "type": "borderRadius",
+          "description": "Pill-shaped button radius (chips, tags)"
+        },
+        "font-size": {
+          "value": "0.8125rem",
+          "type": "fontSize",
+          "description": "13px — standard button text"
+        },
         "font-weight": { "value": "500", "type": "fontWeight" },
         "primary-bg": { "value": "{crewspace.color.primitive.violet.600}", "type": "color" },
         "primary-bg-hover": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
         "primary-text": { "value": "#ffffff", "type": "color" },
         "primary-shadow": { "value": "0 2px 8px rgba(99,102,241,0.35)", "type": "boxShadow" },
-        "primary-shadow-hover": { "value": "0 4px 12px rgba(99,102,241,0.45)", "type": "boxShadow" },
+        "primary-shadow-hover": {
+          "value": "0 4px 12px rgba(99,102,241,0.45)",
+          "type": "boxShadow"
+        },
         "ghost-bg": { "value": "transparent", "type": "color" },
         "ghost-bg-hover": { "value": "rgba(113,113,122,0.08)", "type": "color" },
         "ghost-text": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
@@ -116,8 +326,14 @@
         "radius": { "value": "6px", "type": "borderRadius" },
         "bg": { "value": "{crewspace.color.semantic.surface.elevated}", "type": "color" },
         "border-color": { "value": "{crewspace.color.semantic.border.default}", "type": "color" },
-        "border-color-hover": { "value": "{crewspace.color.semantic.border.strong}", "type": "color" },
-        "border-color-focus": { "value": "{crewspace.color.primitive.violet.500}", "type": "color" },
+        "border-color-hover": {
+          "value": "{crewspace.color.semantic.border.strong}",
+          "type": "color"
+        },
+        "border-color-focus": {
+          "value": "{crewspace.color.primitive.violet.500}",
+          "type": "color"
+        },
         "placeholder": { "value": "{crewspace.color.semantic.text.tertiary}", "type": "color" },
         "text": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
         "font-size": { "value": "0.8125rem", "type": "fontSize" }
@@ -132,47 +348,191 @@
         "font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
         "font-weight": { "value": "600", "type": "fontWeight" },
         "letter-spacing": { "value": "0.025em", "type": "letterSpacing" },
-        "dot-size": { "value": "6px", "type": "sizing", "description": "Status indicator dot in badges" },
+        "dot-size": {
+          "value": "6px",
+          "type": "sizing",
+          "description": "Status indicator dot in badges"
+        },
         "dot-gap": { "value": "4px", "type": "sizing", "description": "Gap between dot and label" }
       },
 
       "typography": {
         "_description": "Polished typography presets standardized across all screens. Use these instead of per-component overrides.",
-        "page-title":    { "value": { "fontSize": "1.5rem",     "fontWeight": "700", "lineHeight": "1.25", "letterSpacing": "-0.01em" }, "type": "typography", "description": "Page-level heading (24px bold)" },
-        "section-title": { "value": { "fontSize": "1rem",       "fontWeight": "600", "lineHeight": "1.25", "letterSpacing": "0"       }, "type": "typography", "description": "Section heading (16px semibold)" },
-        "card-title":    { "value": { "fontSize": "0.875rem",   "fontWeight": "600", "lineHeight": "1.25", "letterSpacing": "0"       }, "type": "typography", "description": "Card title (14px semibold)" },
-        "card-body":     { "value": { "fontSize": "0.75rem",    "fontWeight": "400", "lineHeight": "1.5",  "letterSpacing": "0"       }, "type": "typography", "description": "Card description text (12px regular)" },
-        "card-meta":     { "value": { "fontSize": "0.6875rem",  "fontWeight": "400", "lineHeight": "1.25", "letterSpacing": "0"       }, "type": "typography", "description": "Card metadata (11px regular)" },
-        "label":         { "value": { "fontSize": "0.75rem",    "fontWeight": "500", "lineHeight": "1.5",  "letterSpacing": "0"       }, "type": "typography", "description": "Form labels, property labels (12px medium)" },
-        "caption":       { "value": { "fontSize": "0.6875rem",  "fontWeight": "500", "lineHeight": "1.25", "letterSpacing": "0.025em" }, "type": "typography", "description": "Captions, uppercased section labels (11px medium)" },
-        "overline":      { "value": { "fontSize": "0.625rem",   "fontWeight": "600", "lineHeight": "1",    "letterSpacing": "0.05em"  }, "type": "typography", "description": "Small uppercase labels (10px semibold)" }
+        "page-title": {
+          "value": {
+            "fontSize": "1.5rem",
+            "fontWeight": "700",
+            "lineHeight": "1.25",
+            "letterSpacing": "-0.01em"
+          },
+          "type": "typography",
+          "description": "Page-level heading (24px bold)"
+        },
+        "section-title": {
+          "value": {
+            "fontSize": "1rem",
+            "fontWeight": "600",
+            "lineHeight": "1.25",
+            "letterSpacing": "0"
+          },
+          "type": "typography",
+          "description": "Section heading (16px semibold)"
+        },
+        "card-title": {
+          "value": {
+            "fontSize": "0.875rem",
+            "fontWeight": "600",
+            "lineHeight": "1.25",
+            "letterSpacing": "0"
+          },
+          "type": "typography",
+          "description": "Card title (14px semibold)"
+        },
+        "card-body": {
+          "value": {
+            "fontSize": "0.75rem",
+            "fontWeight": "400",
+            "lineHeight": "1.5",
+            "letterSpacing": "0"
+          },
+          "type": "typography",
+          "description": "Card description text (12px regular)"
+        },
+        "card-meta": {
+          "value": {
+            "fontSize": "0.6875rem",
+            "fontWeight": "400",
+            "lineHeight": "1.25",
+            "letterSpacing": "0"
+          },
+          "type": "typography",
+          "description": "Card metadata (11px regular)"
+        },
+        "label": {
+          "value": {
+            "fontSize": "0.75rem",
+            "fontWeight": "500",
+            "lineHeight": "1.5",
+            "letterSpacing": "0"
+          },
+          "type": "typography",
+          "description": "Form labels, property labels (12px medium)"
+        },
+        "caption": {
+          "value": {
+            "fontSize": "0.6875rem",
+            "fontWeight": "500",
+            "lineHeight": "1.25",
+            "letterSpacing": "0.025em"
+          },
+          "type": "typography",
+          "description": "Captions, uppercased section labels (11px medium)"
+        },
+        "overline": {
+          "value": {
+            "fontSize": "0.625rem",
+            "fontWeight": "600",
+            "lineHeight": "1",
+            "letterSpacing": "0.05em"
+          },
+          "type": "typography",
+          "description": "Small uppercase labels (10px semibold)"
+        }
       },
 
       "stateOpacity": {
         "_description": "Standardized opacity levels for interactive states to ensure consistent feel.",
-        "hover-highlight": { "value": "0.08", "type": "number", "description": "Subtle background highlight on hover" },
-        "active-highlight": { "value": "0.12", "type": "number", "description": "Background highlight on active/pressed" },
-        "selected-highlight": { "value": "0.15", "type": "number", "description": "Background highlight for selected items" },
-        "disabled": { "value": "0.4", "type": "number", "description": "Opacity for disabled elements" },
-        "placeholder": { "value": "0.5", "type": "number", "description": "Opacity for placeholder content" }
+        "hover-highlight": {
+          "value": "0.08",
+          "type": "number",
+          "description": "Subtle background highlight on hover"
+        },
+        "active-highlight": {
+          "value": "0.12",
+          "type": "number",
+          "description": "Background highlight on active/pressed"
+        },
+        "selected-highlight": {
+          "value": "0.15",
+          "type": "number",
+          "description": "Background highlight for selected items"
+        },
+        "disabled": {
+          "value": "0.4",
+          "type": "number",
+          "description": "Opacity for disabled elements"
+        },
+        "placeholder": {
+          "value": "0.5",
+          "type": "number",
+          "description": "Opacity for placeholder content"
+        }
       },
 
       "animation": {
         "_description": "Standardized animation timing to replace inconsistent per-component values.",
-        "duration-instant": { "value": "50ms",  "type": "duration", "description": "Instant feedback (button press)" },
-        "duration-fast":    { "value": "100ms", "type": "duration", "description": "Fast micro-interactions (tooltips, chips)" },
-        "duration-normal":  { "value": "150ms", "type": "duration", "description": "Standard transitions (hover, focus)" },
-        "duration-moderate":{ "value": "200ms", "type": "duration", "description": "Moderate transitions (panel slide, tabs)" },
-        "duration-slow":    { "value": "300ms", "type": "duration", "description": "Slow transitions (modals, page sections)" },
-        "duration-enter":   { "value": "250ms", "type": "duration", "description": "Element enter animation" },
+        "duration-instant": {
+          "value": "50ms",
+          "type": "duration",
+          "description": "Instant feedback (button press)"
+        },
+        "duration-fast": {
+          "value": "100ms",
+          "type": "duration",
+          "description": "Fast micro-interactions (tooltips, chips)"
+        },
+        "duration-normal": {
+          "value": "150ms",
+          "type": "duration",
+          "description": "Standard transitions (hover, focus)"
+        },
+        "duration-moderate": {
+          "value": "200ms",
+          "type": "duration",
+          "description": "Moderate transitions (panel slide, tabs)"
+        },
+        "duration-slow": {
+          "value": "300ms",
+          "type": "duration",
+          "description": "Slow transitions (modals, page sections)"
+        },
+        "duration-enter": {
+          "value": "250ms",
+          "type": "duration",
+          "description": "Element enter animation"
+        },
 
-        "easing-default":   { "value": "cubic-bezier(0.4, 0, 0.2, 1)", "type": "cubicBezier", "description": "Material-style default easing" },
-        "easing-in":        { "value": "cubic-bezier(0.4, 0, 1, 1)",   "type": "cubicBezier", "description": "Accelerate easing (exit)" },
-        "easing-out":       { "value": "cubic-bezier(0, 0, 0.2, 1)",   "type": "cubicBezier", "description": "Decelerate easing (enter)" },
-        "easing-spring":    { "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "type": "cubicBezier", "description": "Spring bounce for card/modal enter" },
+        "easing-default": {
+          "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "type": "cubicBezier",
+          "description": "Material-style default easing"
+        },
+        "easing-in": {
+          "value": "cubic-bezier(0.4, 0, 1, 1)",
+          "type": "cubicBezier",
+          "description": "Accelerate easing (exit)"
+        },
+        "easing-out": {
+          "value": "cubic-bezier(0, 0, 0.2, 1)",
+          "type": "cubicBezier",
+          "description": "Decelerate easing (enter)"
+        },
+        "easing-spring": {
+          "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+          "type": "cubicBezier",
+          "description": "Spring bounce for card/modal enter"
+        },
 
-        "stagger-delay":    { "value": "40ms",  "type": "duration", "description": "Unified stagger delay for sequential card animations" },
-        "max-stagger":      { "value": "500ms", "type": "duration", "description": "Maximum total stagger before all items appear" }
+        "stagger-delay": {
+          "value": "40ms",
+          "type": "duration",
+          "description": "Unified stagger delay for sequential card animations"
+        },
+        "max-stagger": {
+          "value": "500ms",
+          "type": "duration",
+          "description": "Maximum total stagger before all items appear"
+        }
       },
 
       "scrollbar": {
@@ -186,14 +546,14 @@
 
       "zIndex": {
         "_description": "Standardized z-index scale to prevent stacking conflicts.",
-        "base":     { "value": "0",    "type": "number" },
-        "dropdown": { "value": "100",  "type": "number" },
-        "sticky":   { "value": "200",  "type": "number" },
-        "overlay":  { "value": "300",  "type": "number" },
-        "modal":    { "value": "400",  "type": "number" },
-        "popover":  { "value": "500",  "type": "number" },
-        "tooltip":  { "value": "600",  "type": "number" },
-        "toast":    { "value": "700",  "type": "number" }
+        "base": { "value": "0", "type": "number" },
+        "dropdown": { "value": "100", "type": "number" },
+        "sticky": { "value": "200", "type": "number" },
+        "overlay": { "value": "300", "type": "number" },
+        "modal": { "value": "400", "type": "number" },
+        "popover": { "value": "500", "type": "number" },
+        "tooltip": { "value": "600", "type": "number" },
+        "toast": { "value": "700", "type": "number" }
       }
     }
   }

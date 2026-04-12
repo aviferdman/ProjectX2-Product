@@ -84,6 +84,18 @@ export interface CrewConfig {
 
   /** Enable verbose logging of crew operations (default: false). */
   readonly verbose?: boolean;
+
+  /**
+   * Enable parallel execution of independent tasks (default: false).
+   * When true, tasks with no unmet dependencies run concurrently.
+   */
+  readonly parallel?: boolean;
+
+  /**
+   * Maximum number of tasks to run concurrently when parallel is enabled.
+   * Defaults to Infinity (all ready tasks run at once).
+   */
+  readonly maxConcurrency?: number;
 }
 
 /** Result of a full crew run. */
@@ -110,7 +122,19 @@ export interface CrewEventMap {
   'crew:task:complete': (crewId: string, taskId: string, result: TaskResult) => void;
   'crew:task:error': (crewId: string, taskId: string, error: Error) => void;
   'crew:status-changed': (crewId: string, status: CrewStatus) => void;
-  'crew:discussion:start': (crewId: string, discussionId: string, participantIds: readonly string[]) => void;
-  'crew:discussion:message': (crewId: string, discussionId: string, message: DiscussionMessage) => void;
-  'crew:discussion:complete': (crewId: string, discussionId: string, result: DiscussionResult) => void;
+  'crew:discussion:start': (
+    crewId: string,
+    discussionId: string,
+    participantIds: readonly string[],
+  ) => void;
+  'crew:discussion:message': (
+    crewId: string,
+    discussionId: string,
+    message: DiscussionMessage,
+  ) => void;
+  'crew:discussion:complete': (
+    crewId: string,
+    discussionId: string,
+    result: DiscussionResult,
+  ) => void;
 }

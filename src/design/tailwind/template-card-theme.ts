@@ -170,7 +170,10 @@ export const templateCardTheme = {
     'tpl-card-desc': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
     'tpl-card-tag': ['0.625rem', { lineHeight: '1', fontWeight: '500', letterSpacing: '0.02em' }],
     'tpl-card-meta': ['0.6875rem', { lineHeight: '1.25', fontWeight: '400' }],
-    'tpl-card-badge': ['0.5625rem', { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' }],
+    'tpl-card-badge': [
+      '0.5625rem',
+      { lineHeight: '1', fontWeight: '600', letterSpacing: '0.05em' },
+    ],
     'tpl-card-btn': ['0.8125rem', { lineHeight: '1', fontWeight: '500' }],
     'tpl-card-btn-primary': ['0.8125rem', { lineHeight: '1', fontWeight: '600' }],
   },

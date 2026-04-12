@@ -31,14 +31,7 @@ export interface LiveRegionProps extends HTMLAttributes<HTMLDivElement> {
  */
 export const LiveRegion = forwardRef<HTMLDivElement, LiveRegionProps>(
   (
-    {
-      politeness = 'polite',
-      atomic = true,
-      visuallyHidden = true,
-      className,
-      children,
-      ...rest
-    },
+    { politeness = 'polite', atomic = true, visuallyHidden = true, className, children, ...rest },
     ref,
   ) => {
     const role = politeness === 'assertive' ? 'alert' : 'status';

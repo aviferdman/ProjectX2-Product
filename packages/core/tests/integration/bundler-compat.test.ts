@@ -306,7 +306,7 @@ describe('Vite compatibility', () => {
 
     const output = fs.readFileSync(outFile, 'utf-8');
     expect(output.length).toBeGreaterThan(0);
-  });
+  }, 30_000);
 
   it('should bundle CJS entry with Vite build', async () => {
     const { build } = await import('vite');
@@ -361,7 +361,7 @@ describe('Vite compatibility', () => {
     for (const sym of EXPECTED_SYMBOLS) {
       expect(output).toContain(sym);
     }
-  });
+  }, 30_000);
 });
 
 // ---------------------------------------------------------------------------

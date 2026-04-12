@@ -63,10 +63,7 @@ export class CanvasStateService {
    * History stacks per canvas ID.
    * Each entry contains the ordered history and a cursor index.
    */
-  private readonly _history = new Map<
-    string,
-    { entries: CanvasHistoryEntry[]; cursor: number }
-  >();
+  private readonly _history = new Map<string, { entries: CanvasHistoryEntry[]; cursor: number }>();
 
   constructor(config: CanvasStateServiceConfig) {
     this._storage = config.storage;
@@ -177,7 +174,9 @@ export class CanvasStateService {
    * Get the full undo/redo history for a canvas.
    * Returns entries and the current cursor position.
    */
-  getHistory(canvasId: string): { entries: readonly CanvasHistoryEntry[]; cursor: number } | undefined {
+  getHistory(
+    canvasId: string,
+  ): { entries: readonly CanvasHistoryEntry[]; cursor: number } | undefined {
     const hist = this._history.get(canvasId);
     if (!hist) return undefined;
     return { entries: [...hist.entries], cursor: hist.cursor };

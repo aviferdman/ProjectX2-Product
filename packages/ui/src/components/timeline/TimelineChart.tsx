@@ -90,8 +90,7 @@ export const TimelineChart: React.FC<TimelineChartProps> = ({
 
   // SVG dimensions
   const timelineContentWidth = Math.max(0, containerWidth - TIMELINE_SIZING.laneLabelWidth);
-  const chartHeight =
-    TIMELINE_SIZING.axisHeight + agents.length * TIMELINE_SIZING.laneHeight;
+  const chartHeight = TIMELINE_SIZING.axisHeight + agents.length * TIMELINE_SIZING.laneHeight;
 
   // Playhead position
   const playheadX = useMemo(() => {

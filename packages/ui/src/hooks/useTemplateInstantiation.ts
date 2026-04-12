@@ -14,12 +14,7 @@ import { useState, useCallback, useRef } from 'react';
 /* ------------------------------------------------------------------ */
 
 /** Lifecycle status of an instantiation flow. */
-export type InstantiationStatus =
-  | 'idle'
-  | 'configuring'
-  | 'instantiating'
-  | 'success'
-  | 'error';
+export type InstantiationStatus = 'idle' | 'configuring' | 'instantiating' | 'success' | 'error';
 
 /** User-provided options when confirming instantiation. */
 export interface InstantiateFormValues {
@@ -95,8 +90,7 @@ export function useTemplateInstantiation(
   options: UseTemplateInstantiationOptions,
 ): UseTemplateInstantiationResult {
   const [status, setStatus] = useState<InstantiationStatus>('idle');
-  const [selectedTemplate, setSelectedTemplate] =
-    useState<InstantiationTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<InstantiationTemplate | null>(null);
   const [result, setResult] = useState<InstantiationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -104,15 +98,12 @@ export function useTemplateInstantiation(
   const optionsRef = useRef(options);
   optionsRef.current = options;
 
-  const startInstantiation = useCallback(
-    (template: InstantiationTemplate) => {
-      setSelectedTemplate(template);
-      setResult(null);
-      setError(null);
-      setStatus('configuring');
-    },
-    [],
-  );
+  const startInstantiation = useCallback((template: InstantiationTemplate) => {
+    setSelectedTemplate(template);
+    setResult(null);
+    setError(null);
+    setStatus('configuring');
+  }, []);
 
   const confirmInstantiation = useCallback(
     async (values: InstantiateFormValues) => {
@@ -122,21 +113,15 @@ export function useTemplateInstantiation(
       setError(null);
 
       try {
-        const res = await optionsRef.current.onInstantiate(
-          selectedTemplate.id,
-          values,
-        );
+        const res = await optionsRef.current.onInstantiate(selectedTemplate.id, values);
         setResult(res);
         setStatus('success');
         optionsRef.current.onSuccess?.(res);
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : 'An unknown error occurred';
+        const message = err instanceof Error ? err.message : 'An unknown error occurred';
         setError(message);
         setStatus('error');
-        optionsRef.current.onError?.(
-          err instanceof Error ? err : new Error(message),
-        );
+        optionsRef.current.onError?.(err instanceof Error ? err : new Error(message));
       }
     },
     [selectedTemplate],

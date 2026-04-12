@@ -39,15 +39,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 /* ------------------------------------------------------------------ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      variant = 'primary',
-      size = 'md',
-      loading = false,
-      disabled,
-      className,
-      children,
-      ...rest
-    },
+    { variant = 'primary', size = 'md', loading = false, disabled, className, children, ...rest },
     ref,
   ) => {
     return (
@@ -65,12 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...rest}
       >
         {loading && (
-          <svg
-            className="animate-spin h-4 w-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-          >
+          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle
               className="opacity-25"
               cx="12"

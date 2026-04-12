@@ -8,7 +8,6 @@
  * @packageDocumentation
  */
 
-import { ErrorCode } from '../errors/base.js';
 import { WorkflowNotFoundError, WorkflowValidationError } from './workflow-errors.js';
 import type {
   CreateWorkflowInput,
@@ -105,14 +104,10 @@ function validateCreateInput(input: CreateWorkflowInput): void {
     if (task.dependencies) {
       for (const dep of task.dependencies) {
         if (!taskIds.has(dep)) {
-          throw new WorkflowValidationError(
-            `Task "${task.id}" depends on unknown task "${dep}"`,
-          );
+          throw new WorkflowValidationError(`Task "${task.id}" depends on unknown task "${dep}"`);
         }
         if (dep === task.id) {
-          throw new WorkflowValidationError(
-            `Task "${task.id}" cannot depend on itself`,
-          );
+          throw new WorkflowValidationError(`Task "${task.id}" cannot depend on itself`);
         }
       }
     }
@@ -258,7 +253,8 @@ export class InMemoryWorkflowStorage implements WorkflowStorageProvider {
     const updated: StoredWorkflow = {
       ...existing,
       name: input.name !== undefined ? input.name.trim() : existing.name,
-      description: input.description !== undefined ? input.description?.trim() : existing.description,
+      description:
+        input.description !== undefined ? input.description?.trim() : existing.description,
       status: input.status ?? existing.status,
       agents: input.agents !== undefined ? [...input.agents] : existing.agents,
       tasks: input.tasks !== undefined ? [...input.tasks] : existing.tasks,

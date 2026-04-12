@@ -53,9 +53,7 @@ function getOrCreateRegion(politeness: AriaPoliteness): HTMLElement {
 /* Hook                                                                */
 /* ------------------------------------------------------------------ */
 
-export function useAriaAnnouncer(
-  options: UseAriaAnnouncerOptions = {},
-): UseAriaAnnouncerResult {
+export function useAriaAnnouncer(options: UseAriaAnnouncerOptions = {}): UseAriaAnnouncerResult {
   const { politeness: defaultPoliteness = 'polite' } = options;
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 

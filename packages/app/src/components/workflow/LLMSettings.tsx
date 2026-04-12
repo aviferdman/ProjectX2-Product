@@ -12,13 +12,42 @@ interface LLMSettingsProps {
 }
 
 const PROVIDERS = [
-  { value: 'azure' as const, label: 'Azure OpenAI', placeholder: 'Managed by server', models: ['gpt-4o-mini'] },
-  { value: 'openai' as const, label: 'OpenAI', placeholder: 'sk-…', models: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-3.5-turbo'] },
-  { value: 'anthropic' as const, label: 'Anthropic', placeholder: 'sk-ant-…', models: ['claude-sonnet-4-20250514', 'claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-haiku-20240307'] },
-  { value: 'ollama' as const, label: 'Ollama (local)', placeholder: 'No key needed', models: ['llama3', 'mistral', 'codellama', 'mixtral'] },
+  {
+    value: 'azure' as const,
+    label: 'Azure OpenAI',
+    placeholder: 'Managed by server',
+    models: ['gpt-4o-mini'],
+  },
+  {
+    value: 'openai' as const,
+    label: 'OpenAI',
+    placeholder: 'sk-…',
+    models: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-3.5-turbo'],
+  },
+  {
+    value: 'anthropic' as const,
+    label: 'Anthropic',
+    placeholder: 'sk-ant-…',
+    models: [
+      'claude-sonnet-4-20250514',
+      'claude-3-5-sonnet-20241022',
+      'claude-3-5-haiku-20241022',
+      'claude-3-haiku-20240307',
+    ],
+  },
+  {
+    value: 'ollama' as const,
+    label: 'Ollama (local)',
+    placeholder: 'No key needed',
+    models: ['llama3', 'mistral', 'codellama', 'mixtral'],
+  },
 ];
 
-export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React.JSX.Element | null {
+export function LLMSettings({
+  open,
+  onClose,
+  onSaved,
+}: LLMSettingsProps): React.JSX.Element | null {
   const [config, setConfig] = useState<LLMConfig>(getDefaultLLMConfig());
 
   useEffect(() => {
@@ -44,15 +73,30 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      onClick={onClose}
+    >
       <div
         className="bg-[var(--cs-surface-panel)] border border-[var(--cs-border-default)] rounded-xl w-full max-w-md p-6 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-[var(--cs-text-primary)]">LLM Settings</h2>
-          <button onClick={onClose} className="text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <button
+            onClick={onClose}
+            className="text-[var(--cs-text-secondary)] hover:text-[var(--cs-text-primary)] transition-colors"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -67,7 +111,11 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
               <button
                 key={p.value}
                 onClick={() => {
-                  const next: LLMConfig = { ...config, provider: p.value, modelId: p.models[0] ?? '' };
+                  const next: LLMConfig = {
+                    ...config,
+                    provider: p.value,
+                    modelId: p.models[0] ?? '',
+                  };
                   if (p.value === 'ollama' || p.value === 'azure') {
                     delete next.apiKey;
                   }
@@ -127,7 +175,9 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
             className="w-full px-3 py-2 rounded-lg bg-[var(--cs-surface-card)] border border-[var(--cs-border-default)] text-[var(--cs-text-primary)] text-sm focus:outline-none focus:border-indigo-600 transition-colors appearance-none"
           >
             {providerInfo?.models.map((m) => (
-              <option key={m} value={m}>{m}</option>
+              <option key={m} value={m}>
+                {m}
+              </option>
             ))}
           </select>
         </div>
@@ -142,7 +192,9 @@ export function LLMSettings({ open, onClose, onSaved }: LLMSettingsProps): React
           </button>
           <button
             onClick={handleSave}
-            disabled={config.provider !== 'ollama' && config.provider !== 'azure' && !config.apiKey?.trim()}
+            disabled={
+              config.provider !== 'ollama' && config.provider !== 'azure' && !config.apiKey?.trim()
+            }
             className="flex-1 px-4 py-2 rounded-lg bg-indigo-700 text-white hover:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-sm font-medium"
           >
             Save

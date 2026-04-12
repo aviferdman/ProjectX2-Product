@@ -106,10 +106,7 @@ describe('validate-npm-credentials', () => {
     });
 
     it('fails when access=public is missing', () => {
-      writeFileSync(
-        join(tempDir, '.npmrc'),
-        'registry=https://registry.npmjs.org/\n',
-      );
+      writeFileSync(join(tempDir, '.npmrc'), 'registry=https://registry.npmjs.org/\n');
 
       const checks = checkNpmrc(tempDir);
       expect(checks.find((c) => c.name === 'npmrc-access')?.status).toBe('fail');
@@ -176,10 +173,7 @@ describe('validate-npm-credentials', () => {
       const pkg1 = join(pkgsDir, 'core');
       mkdirSync(pkg1, { recursive: true });
 
-      writeFileSync(
-        join(pkg1, 'package.json'),
-        JSON.stringify({ name: '@crewspace/core' }),
-      );
+      writeFileSync(join(pkg1, 'package.json'), JSON.stringify({ name: '@crewspace/core' }));
 
       const checks = checkPackagePublishConfig(tempDir);
       expect(checks.find((c) => c.name === 'packages-publish-config')?.status).toBe('fail');
@@ -300,9 +294,7 @@ describe('validate-npm-credentials', () => {
     it('formats failing result', () => {
       const output = formatCredentialOutput({
         passed: false,
-        checks: [
-          { name: 'npmrc-exists', status: 'fail', message: '.npmrc not found' },
-        ],
+        checks: [{ name: 'npmrc-exists', status: 'fail', message: '.npmrc not found' }],
         npmVersion: '10.0.0',
         authenticatedUser: null,
         scope: '@crewspace',

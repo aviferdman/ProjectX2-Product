@@ -27,9 +27,7 @@ function renderWithStore(overrides?: Parameters<typeof AppProvider>[0]['initialS
       captured = ctx;
     },
   });
-  const result = render(
-    React.createElement(AppProvider, { initialState: overrides }, consumer),
-  );
+  const result = render(React.createElement(AppProvider, { initialState: overrides }, consumer));
   return { ...result, getContext: () => captured };
 }
 

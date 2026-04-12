@@ -4,19 +4,9 @@
  */
 
 // Types
-export type {
-  PlanTier,
-  PlanLimits,
-  UsageStats,
-  UsageAlertSeverity,
-} from './types.js';
+export type { PlanTier, PlanLimits, UsageStats, UsageAlertSeverity } from './types.js';
 
-export {
-  isUnlimited,
-  PLAN_DISPLAY_NAMES,
-  USAGE_THRESHOLDS,
-  getAlertSeverity,
-} from './types.js';
+export { isUnlimited, PLAN_DISPLAY_NAMES, USAGE_THRESHOLDS, getAlertSeverity } from './types.js';
 
 // Components
 export { PlanBadge, type PlanBadgeProps } from './PlanBadge.js';

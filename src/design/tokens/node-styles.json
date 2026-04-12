@@ -7,305 +7,450 @@
       "icon": {
         "_description": "Icon specifications per node type and subtype. All icons from Lucide React, 20px default.",
         "size": {
-          "default":  { "value": "20px", "type": "sizing" },
-          "compact":  { "value": "16px", "type": "sizing", "description": "Used at zoom < 60%" },
+          "default": { "value": "20px", "type": "sizing" },
+          "compact": { "value": "16px", "type": "sizing", "description": "Used at zoom < 60%" },
           "expanded": { "value": "24px", "type": "sizing", "description": "Used at zoom > 150%" }
         },
         "stroke-width": { "value": "1.75", "type": "number" },
         "agent": {
-          "primary":         { "value": "bot",           "type": "string", "description": "Default agent icon (Lucide bot)" },
-          "researcher":      { "value": "search",        "type": "string", "description": "Research-focused agent" },
-          "writer":          { "value": "pen-line",      "type": "string", "description": "Content-generating agent" },
-          "analyst":         { "value": "bar-chart-3",   "type": "string", "description": "Data analysis agent" },
-          "coordinator":     { "value": "network",       "type": "string", "description": "Multi-agent coordinator / manager" },
-          "coder":           { "value": "code-2",        "type": "string", "description": "Code-generating agent" },
-          "reviewer":        { "value": "shield-check",  "type": "string", "description": "QA / review agent" },
-          "custom":          { "value": "user-circle",   "type": "string", "description": "Fallback for custom agents" }
+          "primary": {
+            "value": "bot",
+            "type": "string",
+            "description": "Default agent icon (Lucide bot)"
+          },
+          "researcher": {
+            "value": "search",
+            "type": "string",
+            "description": "Research-focused agent"
+          },
+          "writer": {
+            "value": "pen-line",
+            "type": "string",
+            "description": "Content-generating agent"
+          },
+          "analyst": {
+            "value": "bar-chart-3",
+            "type": "string",
+            "description": "Data analysis agent"
+          },
+          "coordinator": {
+            "value": "network",
+            "type": "string",
+            "description": "Multi-agent coordinator / manager"
+          },
+          "coder": { "value": "code-2", "type": "string", "description": "Code-generating agent" },
+          "reviewer": {
+            "value": "shield-check",
+            "type": "string",
+            "description": "QA / review agent"
+          },
+          "custom": {
+            "value": "user-circle",
+            "type": "string",
+            "description": "Fallback for custom agents"
+          }
         },
         "task": {
-          "primary":         { "value": "clipboard-list", "type": "string", "description": "Default task icon" },
-          "sequential":      { "value": "list-ordered",   "type": "string", "description": "Sequential step task" },
-          "parallel":        { "value": "git-branch",     "type": "string", "description": "Parallel / fan-out task" },
-          "conditional":     { "value": "git-fork",       "type": "string", "description": "Conditional branching task" },
-          "loop":            { "value": "repeat",         "type": "string", "description": "Iterative / loop task" },
-          "human-input":     { "value": "hand",           "type": "string", "description": "Human-in-the-loop task" },
-          "output":          { "value": "file-output",    "type": "string", "description": "Final output / deliverable task" },
-          "custom":          { "value": "square-check",   "type": "string", "description": "Fallback for custom tasks" }
+          "primary": {
+            "value": "clipboard-list",
+            "type": "string",
+            "description": "Default task icon"
+          },
+          "sequential": {
+            "value": "list-ordered",
+            "type": "string",
+            "description": "Sequential step task"
+          },
+          "parallel": {
+            "value": "git-branch",
+            "type": "string",
+            "description": "Parallel / fan-out task"
+          },
+          "conditional": {
+            "value": "git-fork",
+            "type": "string",
+            "description": "Conditional branching task"
+          },
+          "loop": { "value": "repeat", "type": "string", "description": "Iterative / loop task" },
+          "human-input": {
+            "value": "hand",
+            "type": "string",
+            "description": "Human-in-the-loop task"
+          },
+          "output": {
+            "value": "file-output",
+            "type": "string",
+            "description": "Final output / deliverable task"
+          },
+          "custom": {
+            "value": "square-check",
+            "type": "string",
+            "description": "Fallback for custom tasks"
+          }
         },
         "tool": {
-          "primary":         { "value": "wrench",         "type": "string", "description": "Default tool icon" },
-          "api":             { "value": "globe",          "type": "string", "description": "HTTP / API call tool" },
-          "database":        { "value": "database",       "type": "string", "description": "Database query tool" },
-          "file":            { "value": "file-text",      "type": "string", "description": "File I/O tool" },
-          "search":          { "value": "search",         "type": "string", "description": "Search / retrieval tool" },
-          "calculator":      { "value": "calculator",     "type": "string", "description": "Computation tool" },
-          "custom":          { "value": "puzzle",         "type": "string", "description": "Fallback for custom tools" }
+          "primary": { "value": "wrench", "type": "string", "description": "Default tool icon" },
+          "api": { "value": "globe", "type": "string", "description": "HTTP / API call tool" },
+          "database": {
+            "value": "database",
+            "type": "string",
+            "description": "Database query tool"
+          },
+          "file": { "value": "file-text", "type": "string", "description": "File I/O tool" },
+          "search": {
+            "value": "search",
+            "type": "string",
+            "description": "Search / retrieval tool"
+          },
+          "calculator": {
+            "value": "calculator",
+            "type": "string",
+            "description": "Computation tool"
+          },
+          "custom": {
+            "value": "puzzle",
+            "type": "string",
+            "description": "Fallback for custom tools"
+          }
         },
         "llm": {
-          "primary":         { "value": "sparkles",       "type": "string", "description": "Default LLM icon" },
-          "openai":          { "value": "sparkles",       "type": "string", "description": "OpenAI provider" },
-          "anthropic":       { "value": "brain",          "type": "string", "description": "Anthropic provider" },
-          "local":           { "value": "hard-drive",     "type": "string", "description": "Local / self-hosted model" },
-          "custom":          { "value": "cpu",            "type": "string", "description": "Fallback for custom providers" }
+          "primary": { "value": "sparkles", "type": "string", "description": "Default LLM icon" },
+          "openai": { "value": "sparkles", "type": "string", "description": "OpenAI provider" },
+          "anthropic": { "value": "brain", "type": "string", "description": "Anthropic provider" },
+          "local": {
+            "value": "hard-drive",
+            "type": "string",
+            "description": "Local / self-hosted model"
+          },
+          "custom": {
+            "value": "cpu",
+            "type": "string",
+            "description": "Fallback for custom providers"
+          }
         }
       },
 
       "color": {
         "_description": "Extended color palette per node type with hover, active, focus, and muted variants",
         "agent": {
-          "bg":              { "value": "rgba(99,102,241,0.12)",  "type": "color" },
-          "bg-hover":        { "value": "rgba(99,102,241,0.18)",  "type": "color" },
-          "bg-active":       { "value": "rgba(99,102,241,0.24)",  "type": "color" },
-          "bg-muted":        { "value": "rgba(99,102,241,0.06)",  "type": "color" },
-          "border":          { "value": "#6366f1", "type": "color" },
-          "border-hover":    { "value": "#818cf8", "type": "color" },
-          "border-focus":    { "value": "#818cf8", "type": "color" },
-          "icon":            { "value": "#818cf8", "type": "color" },
-          "icon-muted":      { "value": "rgba(167,139,250,0.6)", "type": "color" },
-          "badge-bg":        { "value": "rgba(99,102,241,0.2)",   "type": "color" },
-          "badge-text":      { "value": "#a5b4fc", "type": "color" },
+          "bg": { "value": "rgba(99,102,241,0.12)", "type": "color" },
+          "bg-hover": { "value": "rgba(99,102,241,0.18)", "type": "color" },
+          "bg-active": { "value": "rgba(99,102,241,0.24)", "type": "color" },
+          "bg-muted": { "value": "rgba(99,102,241,0.06)", "type": "color" },
+          "border": { "value": "#6366f1", "type": "color" },
+          "border-hover": { "value": "#818cf8", "type": "color" },
+          "border-focus": { "value": "#818cf8", "type": "color" },
+          "icon": { "value": "#818cf8", "type": "color" },
+          "icon-muted": { "value": "rgba(167,139,250,0.6)", "type": "color" },
+          "badge-bg": { "value": "rgba(99,102,241,0.2)", "type": "color" },
+          "badge-text": { "value": "#a5b4fc", "type": "color" },
           "header-gradient-start": { "value": "rgba(99,102,241,0.16)", "type": "color" },
-          "header-gradient-end":   { "value": "rgba(99,102,241,0.04)", "type": "color" },
-          "accent-line":     { "value": "#6366f1", "type": "color", "description": "3px left accent stripe on header" }
+          "header-gradient-end": { "value": "rgba(99,102,241,0.04)", "type": "color" },
+          "accent-line": {
+            "value": "#6366f1",
+            "type": "color",
+            "description": "3px left accent stripe on header"
+          }
         },
         "task": {
-          "bg":              { "value": "rgba(14,165,233,0.12)",  "type": "color" },
-          "bg-hover":        { "value": "rgba(14,165,233,0.18)",  "type": "color" },
-          "bg-active":       { "value": "rgba(14,165,233,0.24)",  "type": "color" },
-          "bg-muted":        { "value": "rgba(14,165,233,0.06)",  "type": "color" },
-          "border":          { "value": "#0891b2", "type": "color" },
-          "border-hover":    { "value": "#06b6d4", "type": "color" },
-          "border-focus":    { "value": "#22d3ee", "type": "color" },
-          "icon":            { "value": "#22d3ee", "type": "color" },
-          "icon-muted":      { "value": "rgba(56,189,248,0.6)",  "type": "color" },
-          "badge-bg":        { "value": "rgba(14,165,233,0.2)",   "type": "color" },
-          "badge-text":      { "value": "#7dd3fc", "type": "color" },
+          "bg": { "value": "rgba(14,165,233,0.12)", "type": "color" },
+          "bg-hover": { "value": "rgba(14,165,233,0.18)", "type": "color" },
+          "bg-active": { "value": "rgba(14,165,233,0.24)", "type": "color" },
+          "bg-muted": { "value": "rgba(14,165,233,0.06)", "type": "color" },
+          "border": { "value": "#0891b2", "type": "color" },
+          "border-hover": { "value": "#06b6d4", "type": "color" },
+          "border-focus": { "value": "#22d3ee", "type": "color" },
+          "icon": { "value": "#22d3ee", "type": "color" },
+          "icon-muted": { "value": "rgba(56,189,248,0.6)", "type": "color" },
+          "badge-bg": { "value": "rgba(14,165,233,0.2)", "type": "color" },
+          "badge-text": { "value": "#7dd3fc", "type": "color" },
           "header-gradient-start": { "value": "rgba(14,165,233,0.16)", "type": "color" },
-          "header-gradient-end":   { "value": "rgba(14,165,233,0.04)", "type": "color" },
-          "accent-line":     { "value": "#0891b2", "type": "color" }
+          "header-gradient-end": { "value": "rgba(14,165,233,0.04)", "type": "color" },
+          "accent-line": { "value": "#0891b2", "type": "color" }
         },
         "tool": {
-          "bg":              { "value": "rgba(16,185,129,0.12)",  "type": "color" },
-          "bg-hover":        { "value": "rgba(16,185,129,0.18)",  "type": "color" },
-          "bg-active":       { "value": "rgba(16,185,129,0.24)",  "type": "color" },
-          "bg-muted":        { "value": "rgba(16,185,129,0.06)",  "type": "color" },
-          "border":          { "value": "#059669", "type": "color" },
-          "border-hover":    { "value": "#10b981", "type": "color" },
-          "border-focus":    { "value": "#34d399", "type": "color" },
-          "icon":            { "value": "#34d399", "type": "color" },
-          "icon-muted":      { "value": "rgba(52,211,153,0.6)",  "type": "color" },
-          "badge-bg":        { "value": "rgba(16,185,129,0.2)",   "type": "color" },
-          "badge-text":      { "value": "#6ee7b7", "type": "color" },
+          "bg": { "value": "rgba(16,185,129,0.12)", "type": "color" },
+          "bg-hover": { "value": "rgba(16,185,129,0.18)", "type": "color" },
+          "bg-active": { "value": "rgba(16,185,129,0.24)", "type": "color" },
+          "bg-muted": { "value": "rgba(16,185,129,0.06)", "type": "color" },
+          "border": { "value": "#059669", "type": "color" },
+          "border-hover": { "value": "#10b981", "type": "color" },
+          "border-focus": { "value": "#34d399", "type": "color" },
+          "icon": { "value": "#34d399", "type": "color" },
+          "icon-muted": { "value": "rgba(52,211,153,0.6)", "type": "color" },
+          "badge-bg": { "value": "rgba(16,185,129,0.2)", "type": "color" },
+          "badge-text": { "value": "#6ee7b7", "type": "color" },
           "header-gradient-start": { "value": "rgba(16,185,129,0.16)", "type": "color" },
-          "header-gradient-end":   { "value": "rgba(16,185,129,0.04)", "type": "color" },
-          "accent-line":     { "value": "#059669", "type": "color" }
+          "header-gradient-end": { "value": "rgba(16,185,129,0.04)", "type": "color" },
+          "accent-line": { "value": "#059669", "type": "color" }
         },
         "llm": {
-          "bg":              { "value": "rgba(245,158,11,0.12)",  "type": "color" },
-          "bg-hover":        { "value": "rgba(245,158,11,0.18)",  "type": "color" },
-          "bg-active":       { "value": "rgba(245,158,11,0.24)",  "type": "color" },
-          "bg-muted":        { "value": "rgba(245,158,11,0.06)",  "type": "color" },
-          "border":          { "value": "#d97706", "type": "color" },
-          "border-hover":    { "value": "#f59e0b", "type": "color" },
-          "border-focus":    { "value": "#fbbf24", "type": "color" },
-          "icon":            { "value": "#fbbf24", "type": "color" },
-          "icon-muted":      { "value": "rgba(251,191,36,0.6)",  "type": "color" },
-          "badge-bg":        { "value": "rgba(245,158,11,0.2)",   "type": "color" },
-          "badge-text":      { "value": "#fde68a", "type": "color" },
+          "bg": { "value": "rgba(245,158,11,0.12)", "type": "color" },
+          "bg-hover": { "value": "rgba(245,158,11,0.18)", "type": "color" },
+          "bg-active": { "value": "rgba(245,158,11,0.24)", "type": "color" },
+          "bg-muted": { "value": "rgba(245,158,11,0.06)", "type": "color" },
+          "border": { "value": "#d97706", "type": "color" },
+          "border-hover": { "value": "#f59e0b", "type": "color" },
+          "border-focus": { "value": "#fbbf24", "type": "color" },
+          "icon": { "value": "#fbbf24", "type": "color" },
+          "icon-muted": { "value": "rgba(251,191,36,0.6)", "type": "color" },
+          "badge-bg": { "value": "rgba(245,158,11,0.2)", "type": "color" },
+          "badge-text": { "value": "#fde68a", "type": "color" },
           "header-gradient-start": { "value": "rgba(245,158,11,0.16)", "type": "color" },
-          "header-gradient-end":   { "value": "rgba(245,158,11,0.04)", "type": "color" },
-          "accent-line":     { "value": "#d97706", "type": "color" }
+          "header-gradient-end": { "value": "rgba(245,158,11,0.04)", "type": "color" },
+          "accent-line": { "value": "#d97706", "type": "color" }
         }
       },
 
       "state": {
         "_description": "Visual treatments for each node execution state",
         "idle": {
-          "border-width":     { "value": "1.5px", "type": "borderWidth" },
-          "opacity":          { "value": "1", "type": "number" },
-          "badge-text":       { "value": "#a1a1aa", "type": "color" },
-          "badge-bg":         { "value": "rgba(100,116,139,0.2)", "type": "color" },
-          "badge-label":      { "value": "IDLE", "type": "string" }
+          "border-width": { "value": "1.5px", "type": "borderWidth" },
+          "opacity": { "value": "1", "type": "number" },
+          "badge-text": { "value": "#a1a1aa", "type": "color" },
+          "badge-bg": { "value": "rgba(100,116,139,0.2)", "type": "color" },
+          "badge-label": { "value": "IDLE", "type": "string" }
         },
         "hover": {
-          "border-width":     { "value": "2px", "type": "borderWidth" },
-          "shadow":           { "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.15)", "type": "boxShadow" },
-          "scale":            { "value": "1.0", "type": "number" },
-          "transition":       { "value": "all 100ms ease-out", "type": "transition" }
+          "border-width": { "value": "2px", "type": "borderWidth" },
+          "shadow": {
+            "value": "0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(113,113,122,0.15)",
+            "type": "boxShadow"
+          },
+          "scale": { "value": "1.0", "type": "number" },
+          "transition": { "value": "all 100ms ease-out", "type": "transition" }
         },
         "selected": {
-          "ring-width":       { "value": "2px", "type": "borderWidth" },
-          "ring-color":       { "value": "#818cf8", "type": "color" },
-          "glow":             { "value": "0 0 0 2px #818cf8, 0 4px 20px rgba(99,102,241,0.25)", "type": "boxShadow" },
-          "transition":       { "value": "box-shadow 150ms ease-out", "type": "transition" }
+          "ring-width": { "value": "2px", "type": "borderWidth" },
+          "ring-color": { "value": "#818cf8", "type": "color" },
+          "glow": {
+            "value": "0 0 0 2px #818cf8, 0 4px 20px rgba(99,102,241,0.25)",
+            "type": "boxShadow"
+          },
+          "transition": { "value": "box-shadow 150ms ease-out", "type": "transition" }
         },
         "dragging": {
-          "scale":            { "value": "1.02", "type": "number" },
-          "shadow":           { "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.2)", "type": "boxShadow" },
-          "opacity":          { "value": "0.95", "type": "number" },
-          "cursor":           { "value": "grabbing", "type": "string" },
-          "transition":       { "value": "transform 100ms ease-out, box-shadow 100ms ease-out", "type": "transition" }
+          "scale": { "value": "1.02", "type": "number" },
+          "shadow": {
+            "value": "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.2)",
+            "type": "boxShadow"
+          },
+          "opacity": { "value": "0.95", "type": "number" },
+          "cursor": { "value": "grabbing", "type": "string" },
+          "transition": {
+            "value": "transform 100ms ease-out, box-shadow 100ms ease-out",
+            "type": "transition"
+          }
         },
         "running": {
-          "border-width":     { "value": "2px", "type": "borderWidth" },
-          "glow-color":       { "value": "rgba(52,211,153,0.35)", "type": "color" },
-          "glow-spread":      { "value": "8px", "type": "sizing" },
-          "pulse-duration":   { "value": "1.5s", "type": "duration" },
-          "pulse-easing":     { "value": "ease-in-out", "type": "string" },
-          "badge-text":       { "value": "#34d399", "type": "color" },
-          "badge-bg":         { "value": "rgba(16,185,129,0.25)", "type": "color" },
-          "badge-label":      { "value": "RUNNING", "type": "string" },
-          "badge-dot":        { "value": "#10b981", "type": "color", "description": "Animated blinking dot on badge" },
-          "badge-dot-size":   { "value": "6px", "type": "sizing" }
+          "border-width": { "value": "2px", "type": "borderWidth" },
+          "glow-color": { "value": "rgba(52,211,153,0.35)", "type": "color" },
+          "glow-spread": { "value": "8px", "type": "sizing" },
+          "pulse-duration": { "value": "1.5s", "type": "duration" },
+          "pulse-easing": { "value": "ease-in-out", "type": "string" },
+          "badge-text": { "value": "#34d399", "type": "color" },
+          "badge-bg": { "value": "rgba(16,185,129,0.25)", "type": "color" },
+          "badge-label": { "value": "RUNNING", "type": "string" },
+          "badge-dot": {
+            "value": "#10b981",
+            "type": "color",
+            "description": "Animated blinking dot on badge"
+          },
+          "badge-dot-size": { "value": "6px", "type": "sizing" }
         },
         "success": {
-          "flash-color":      { "value": "rgba(16,185,129,0.4)", "type": "color" },
-          "flash-duration":   { "value": "600ms", "type": "duration" },
-          "border-flash":     { "value": "#10b981", "type": "color" },
-          "badge-text":       { "value": "#10b981", "type": "color" },
-          "badge-bg":         { "value": "rgba(16,185,129,0.2)", "type": "color" },
-          "badge-label":      { "value": "DONE", "type": "string" },
-          "badge-icon":       { "value": "check", "type": "string", "description": "Lucide check icon shown on success" }
+          "flash-color": { "value": "rgba(16,185,129,0.4)", "type": "color" },
+          "flash-duration": { "value": "600ms", "type": "duration" },
+          "border-flash": { "value": "#10b981", "type": "color" },
+          "badge-text": { "value": "#10b981", "type": "color" },
+          "badge-bg": { "value": "rgba(16,185,129,0.2)", "type": "color" },
+          "badge-label": { "value": "DONE", "type": "string" },
+          "badge-icon": {
+            "value": "check",
+            "type": "string",
+            "description": "Lucide check icon shown on success"
+          }
         },
         "error": {
-          "border-color":     { "value": "#ef4444", "type": "color" },
-          "glow-color":       { "value": "rgba(244,63,94,0.3)", "type": "color" },
-          "glow-spread":      { "value": "6px", "type": "sizing" },
-          "pulse-duration":   { "value": "1.5s", "type": "duration" },
-          "pulse-easing":     { "value": "ease-in-out", "type": "string" },
-          "badge-text":       { "value": "#f87171", "type": "color" },
-          "badge-bg":         { "value": "rgba(244,63,94,0.2)", "type": "color" },
-          "badge-label":      { "value": "ERROR", "type": "string" },
-          "badge-icon":       { "value": "alert-circle", "type": "string" },
-          "error-stripe":     { "value": "repeating-linear-gradient(135deg, transparent, transparent 4px, rgba(244,63,94,0.06) 4px, rgba(244,63,94,0.06) 8px)", "type": "string", "description": "Subtle diagonal stripe on error nodes" }
+          "border-color": { "value": "#ef4444", "type": "color" },
+          "glow-color": { "value": "rgba(244,63,94,0.3)", "type": "color" },
+          "glow-spread": { "value": "6px", "type": "sizing" },
+          "pulse-duration": { "value": "1.5s", "type": "duration" },
+          "pulse-easing": { "value": "ease-in-out", "type": "string" },
+          "badge-text": { "value": "#f87171", "type": "color" },
+          "badge-bg": { "value": "rgba(244,63,94,0.2)", "type": "color" },
+          "badge-label": { "value": "ERROR", "type": "string" },
+          "badge-icon": { "value": "alert-circle", "type": "string" },
+          "error-stripe": {
+            "value": "repeating-linear-gradient(135deg, transparent, transparent 4px, rgba(244,63,94,0.06) 4px, rgba(244,63,94,0.06) 8px)",
+            "type": "string",
+            "description": "Subtle diagonal stripe on error nodes"
+          }
         },
         "disabled": {
-          "opacity":          { "value": "0.4", "type": "number" },
-          "border-color":     { "value": "#3f3f46", "type": "color" },
-          "pointer-events":   { "value": "none", "type": "string" },
-          "badge-text":       { "value": "#52525b", "type": "color" },
-          "badge-bg":         { "value": "rgba(71,85,105,0.2)", "type": "color" },
-          "badge-label":      { "value": "DISABLED", "type": "string" }
+          "opacity": { "value": "0.4", "type": "number" },
+          "border-color": { "value": "#3f3f46", "type": "color" },
+          "pointer-events": { "value": "none", "type": "string" },
+          "badge-text": { "value": "#52525b", "type": "color" },
+          "badge-bg": { "value": "rgba(71,85,105,0.2)", "type": "color" },
+          "badge-label": { "value": "DISABLED", "type": "string" }
         },
         "queued": {
-          "opacity":          { "value": "0.7", "type": "number" },
-          "border-style":     { "value": "dashed", "type": "string" },
-          "badge-text":       { "value": "#a1a1aa", "type": "color" },
-          "badge-bg":         { "value": "rgba(113,113,122,0.15)", "type": "color" },
-          "badge-label":      { "value": "QUEUED", "type": "string" },
-          "badge-icon":       { "value": "clock", "type": "string" }
+          "opacity": { "value": "0.7", "type": "number" },
+          "border-style": { "value": "dashed", "type": "string" },
+          "badge-text": { "value": "#a1a1aa", "type": "color" },
+          "badge-bg": { "value": "rgba(113,113,122,0.15)", "type": "color" },
+          "badge-label": { "value": "QUEUED", "type": "string" },
+          "badge-icon": { "value": "clock", "type": "string" }
         }
       },
 
       "badge": {
         "_description": "Status badge specifications — small pill shown in node header",
-        "height":             { "value": "18px", "type": "sizing" },
-        "padding":            { "value": "0 6px", "type": "spacing" },
-        "border-radius":      { "value": "9px", "type": "borderRadius" },
-        "font-size":          { "value": "10px", "type": "fontSize" },
-        "font-weight":        { "value": "600", "type": "fontWeight" },
-        "letter-spacing":     { "value": "0.05em", "type": "letterSpacing" },
-        "line-height":        { "value": "18px", "type": "lineHeight" },
-        "text-transform":     { "value": "uppercase", "type": "string" },
-        "dot-size":           { "value": "6px", "type": "sizing", "description": "Animated activity dot for running state" },
-        "dot-gap":            { "value": "4px", "type": "spacing" }
+        "height": { "value": "18px", "type": "sizing" },
+        "padding": { "value": "0 6px", "type": "spacing" },
+        "border-radius": { "value": "9px", "type": "borderRadius" },
+        "font-size": { "value": "10px", "type": "fontSize" },
+        "font-weight": { "value": "600", "type": "fontWeight" },
+        "letter-spacing": { "value": "0.05em", "type": "letterSpacing" },
+        "line-height": { "value": "18px", "type": "lineHeight" },
+        "text-transform": { "value": "uppercase", "type": "string" },
+        "dot-size": {
+          "value": "6px",
+          "type": "sizing",
+          "description": "Animated activity dot for running state"
+        },
+        "dot-gap": { "value": "4px", "type": "spacing" }
       },
 
       "header": {
         "_description": "Node header region — contains icon, title, and badge",
-        "height":             { "value": "40px", "type": "sizing" },
-        "padding":            { "value": "10px 12px", "type": "spacing" },
-        "icon-gap":           { "value": "8px", "type": "spacing", "description": "Gap between icon and title" },
-        "accent-width":       { "value": "3px", "type": "sizing", "description": "Left accent stripe width" },
-        "accent-radius":      { "value": "10px 0 0 0", "type": "borderRadius", "description": "Top-left corner radius on accent stripe" },
-        "gradient-direction":  { "value": "to bottom", "type": "string" }
+        "height": { "value": "40px", "type": "sizing" },
+        "padding": { "value": "10px 12px", "type": "spacing" },
+        "icon-gap": {
+          "value": "8px",
+          "type": "spacing",
+          "description": "Gap between icon and title"
+        },
+        "accent-width": {
+          "value": "3px",
+          "type": "sizing",
+          "description": "Left accent stripe width"
+        },
+        "accent-radius": {
+          "value": "10px 0 0 0",
+          "type": "borderRadius",
+          "description": "Top-left corner radius on accent stripe"
+        },
+        "gradient-direction": { "value": "to bottom", "type": "string" }
       },
 
       "body": {
         "_description": "Node body region — displays key configuration fields",
-        "padding":            { "value": "8px 12px", "type": "spacing" },
-        "field-gap":          { "value": "4px", "type": "spacing" },
-        "label-color":        { "value": "#52525b", "type": "color" },
-        "value-color":        { "value": "#e2e8f0", "type": "color" },
-        "label-width":        { "value": "64px", "type": "sizing" },
-        "max-lines":          { "value": "3", "type": "number", "description": "Max visible body lines before truncation" },
-        "truncation":         { "value": "ellipsis", "type": "string" },
-        "separator-color":    { "value": "rgba(113,113,122,0.1)", "type": "color" },
-        "separator-margin":   { "value": "0 12px", "type": "spacing" }
+        "padding": { "value": "8px 12px", "type": "spacing" },
+        "field-gap": { "value": "4px", "type": "spacing" },
+        "label-color": { "value": "#52525b", "type": "color" },
+        "value-color": { "value": "#e2e8f0", "type": "color" },
+        "label-width": { "value": "64px", "type": "sizing" },
+        "max-lines": {
+          "value": "3",
+          "type": "number",
+          "description": "Max visible body lines before truncation"
+        },
+        "truncation": { "value": "ellipsis", "type": "string" },
+        "separator-color": { "value": "rgba(113,113,122,0.1)", "type": "color" },
+        "separator-margin": { "value": "0 12px", "type": "spacing" }
       },
 
       "handle": {
         "_description": "Extended handle tokens for connection ports — type-aware coloring",
-        "agent-connected":    { "value": "#818cf8", "type": "color" },
-        "task-connected":     { "value": "#06b6d4", "type": "color" },
-        "tool-connected":     { "value": "#10b981", "type": "color" },
-        "llm-connected":      { "value": "#f59e0b", "type": "color" },
-        "compatible-pulse":   { "value": "rgba(99,102,241,0.4)", "type": "color", "description": "Pulse effect on compatible handles during drag" },
-        "incompatible":       { "value": "rgba(244,63,94,0.3)", "type": "color" },
-        "label-font-size":    { "value": "10px", "type": "fontSize" },
-        "label-color":        { "value": "#a1a1aa", "type": "color" },
-        "label-offset":       { "value": "6px", "type": "spacing", "description": "Distance from handle circle to label text" }
+        "agent-connected": { "value": "#818cf8", "type": "color" },
+        "task-connected": { "value": "#06b6d4", "type": "color" },
+        "tool-connected": { "value": "#10b981", "type": "color" },
+        "llm-connected": { "value": "#f59e0b", "type": "color" },
+        "compatible-pulse": {
+          "value": "rgba(99,102,241,0.4)",
+          "type": "color",
+          "description": "Pulse effect on compatible handles during drag"
+        },
+        "incompatible": { "value": "rgba(244,63,94,0.3)", "type": "color" },
+        "label-font-size": { "value": "10px", "type": "fontSize" },
+        "label-color": { "value": "#a1a1aa", "type": "color" },
+        "label-offset": {
+          "value": "6px",
+          "type": "spacing",
+          "description": "Distance from handle circle to label text"
+        }
       },
 
       "animation": {
         "_description": "Animation tokens for node lifecycle transitions",
         "enter": {
-          "duration":         { "value": "200ms", "type": "duration" },
-          "easing":           { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier" },
-          "scale-from":       { "value": "0.85", "type": "number" },
-          "opacity-from":     { "value": "0", "type": "number" }
+          "duration": { "value": "200ms", "type": "duration" },
+          "easing": { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier" },
+          "scale-from": { "value": "0.85", "type": "number" },
+          "opacity-from": { "value": "0", "type": "number" }
         },
         "exit": {
-          "duration":         { "value": "150ms", "type": "duration" },
-          "easing":           { "value": "ease-in", "type": "cubicBezier" },
-          "scale-to":         { "value": "0.9", "type": "number" },
-          "opacity-to":       { "value": "0", "type": "number" }
+          "duration": { "value": "150ms", "type": "duration" },
+          "easing": { "value": "ease-in", "type": "cubicBezier" },
+          "scale-to": { "value": "0.9", "type": "number" },
+          "opacity-to": { "value": "0", "type": "number" }
         },
         "state-transition": {
-          "duration":         { "value": "300ms", "type": "duration" },
-          "easing":           { "value": "ease-out", "type": "cubicBezier" }
+          "duration": { "value": "300ms", "type": "duration" },
+          "easing": { "value": "ease-out", "type": "cubicBezier" }
         },
         "running-dot-blink": {
-          "duration":         { "value": "1s", "type": "duration" },
-          "easing":           { "value": "ease-in-out", "type": "cubicBezier" },
-          "opacity-min":      { "value": "0.3", "type": "number" },
-          "opacity-max":      { "value": "1", "type": "number" }
+          "duration": { "value": "1s", "type": "duration" },
+          "easing": { "value": "ease-in-out", "type": "cubicBezier" },
+          "opacity-min": { "value": "0.3", "type": "number" },
+          "opacity-max": { "value": "1", "type": "number" }
         },
         "success-flash": {
-          "duration":         { "value": "600ms", "type": "duration" },
-          "easing":           { "value": "ease-out", "type": "cubicBezier" },
-          "scale-peak":       { "value": "1.03", "type": "number" }
+          "duration": { "value": "600ms", "type": "duration" },
+          "easing": { "value": "ease-out", "type": "cubicBezier" },
+          "scale-peak": { "value": "1.03", "type": "number" }
         },
         "badge-enter": {
-          "duration":         { "value": "150ms", "type": "duration" },
-          "easing":           { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier" }
+          "duration": { "value": "150ms", "type": "duration" },
+          "easing": { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "cubicBezier" }
         },
         "handle-pulse": {
-          "duration":         { "value": "800ms", "type": "duration" },
-          "easing":           { "value": "ease-in-out", "type": "cubicBezier" },
-          "scale-max":        { "value": "1.8", "type": "number" }
+          "duration": { "value": "800ms", "type": "duration" },
+          "easing": { "value": "ease-in-out", "type": "cubicBezier" },
+          "scale-max": { "value": "1.8", "type": "number" }
         }
       },
 
       "zoom-levels": {
         "_description": "Content visibility rules at different zoom levels",
         "full": {
-          "min-zoom":         { "value": "0.6", "type": "number" },
-          "description":      { "value": "All fields visible: header, body, handles, badges", "type": "string" }
+          "min-zoom": { "value": "0.6", "type": "number" },
+          "description": {
+            "value": "All fields visible: header, body, handles, badges",
+            "type": "string"
+          }
         },
         "compact": {
-          "min-zoom":         { "value": "0.3", "type": "number" },
-          "max-zoom":         { "value": "0.6", "type": "number" },
-          "description":      { "value": "Header only: icon + title + badge. Body hidden.", "type": "string" }
+          "min-zoom": { "value": "0.3", "type": "number" },
+          "max-zoom": { "value": "0.6", "type": "number" },
+          "description": {
+            "value": "Header only: icon + title + badge. Body hidden.",
+            "type": "string"
+          }
         },
         "minimal": {
-          "max-zoom":         { "value": "0.3", "type": "number" },
-          "description":      { "value": "Colored rectangle with centered icon only", "type": "string" },
-          "icon-size":        { "value": "28px", "type": "sizing" }
+          "max-zoom": { "value": "0.3", "type": "number" },
+          "description": { "value": "Colored rectangle with centered icon only", "type": "string" },
+          "icon-size": { "value": "28px", "type": "sizing" }
         },
         "expanded": {
-          "min-zoom":         { "value": "1.5", "type": "number" },
-          "description":      { "value": "Extended detail: all config fields, connection list, metrics", "type": "string" }
+          "min-zoom": { "value": "1.5", "type": "number" },
+          "description": {
+            "value": "Extended detail: all config fields, connection list, metrics",
+            "type": "string"
+          }
         }
       }
     }

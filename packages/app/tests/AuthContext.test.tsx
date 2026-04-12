@@ -42,9 +42,7 @@ function renderWithAuth(adapter: AuthAdapter, ui?: React.ReactElement) {
       captured = ctx;
     },
   });
-  const result = render(
-    React.createElement(AuthProvider, { adapter }, ui ?? consumer),
-  );
+  const result = render(React.createElement(AuthProvider, { adapter }, ui ?? consumer));
   return { ...result, getContext: () => captured };
 }
 

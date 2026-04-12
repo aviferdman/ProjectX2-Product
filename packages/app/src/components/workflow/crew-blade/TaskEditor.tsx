@@ -5,7 +5,9 @@ interface TaskEditorProps {
   task?: TaskNode;
   agents: AgentNode[];
   tasks: TaskNode[];
-  onSave: (task: Omit<TaskNode, 'id' | 'status'> | { id: string } & Partial<Omit<TaskNode, 'id'>>) => void;
+  onSave: (
+    task: Omit<TaskNode, 'id' | 'status'> | ({ id: string } & Partial<Omit<TaskNode, 'id'>>),
+  ) => void;
   onCancel: () => void;
   onDelete?: (taskId: string) => void;
 }
@@ -64,7 +66,9 @@ export function TaskEditor({ task, agents, tasks, onSave, onCancel, onDelete }: 
 
       {/* Assigned Agent */}
       <div className="space-y-1.5">
-        <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Assigned Agent</label>
+        <label className="text-xs font-medium text-[var(--cs-text-secondary)]">
+          Assigned Agent
+        </label>
         <select
           value={agentId}
           onChange={(e) => setAgentId(e.target.value)}
@@ -82,7 +86,9 @@ export function TaskEditor({ task, agents, tasks, onSave, onCancel, onDelete }: 
       {/* Dependencies */}
       {otherTasks.length > 0 && (
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Dependencies</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">
+            Dependencies
+          </label>
           <div className="space-y-1.5 max-h-32 overflow-y-auto scrollbar-thin">
             {otherTasks.map((t) => (
               <label
@@ -106,7 +112,9 @@ export function TaskEditor({ task, agents, tasks, onSave, onCancel, onDelete }: 
 
       {/* Expected Output */}
       <div className="space-y-1.5">
-        <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Expected Output</label>
+        <label className="text-xs font-medium text-[var(--cs-text-secondary)]">
+          Expected Output
+        </label>
         <textarea
           value={expectedOutput}
           onChange={(e) => setExpectedOutput(e.target.value)}

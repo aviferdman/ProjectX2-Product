@@ -224,7 +224,11 @@ export class WorkflowExecutor {
       // 3. Record run start (usage tracking)
       let usageRunId: string | undefined;
       if (this._usageTracker && options?.accountId) {
-        const runInput: { accountId: string; workflowId: string; metadata?: Readonly<Record<string, unknown>> } = {
+        const runInput: {
+          accountId: string;
+          workflowId: string;
+          metadata?: Readonly<Record<string, unknown>>;
+        } = {
           accountId: options.accountId,
           workflowId,
         };
@@ -279,10 +283,7 @@ export class WorkflowExecutor {
         ...(options?.metadata !== undefined ? { metadata: options.metadata } : {}),
       };
 
-      await this._completeUsageRun(
-        usageRunId,
-        result.success ? 'completed' : 'failed',
-      );
+      await this._completeUsageRun(usageRunId, result.success ? 'completed' : 'failed');
 
       this._emit('execution:complete', runId, executionResult);
       return executionResult;
@@ -443,11 +444,7 @@ export class WorkflowExecutor {
   /**
    * Wrap an execution promise with a timeout.
    */
-  private async _withTimeout<T>(
-    promise: Promise<T>,
-    runId: string,
-    timeoutMs: number,
-  ): Promise<T> {
+  private async _withTimeout<T>(promise: Promise<T>, runId: string, timeoutMs: number): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       const timer = setTimeout(() => {
         reject(new WorkflowExecutionTimeoutError(runId, timeoutMs));

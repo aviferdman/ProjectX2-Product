@@ -16,8 +16,10 @@ const statusStyles: Record<OAuthConnectionStatus, string> = {
   error: 'bg-rose-900/30 text-rose-300 border-rose-700/50',
 };
 
-export interface OAuthStatusBadgeProps
-  extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'children'> {
+export interface OAuthStatusBadgeProps extends Omit<
+  React.HTMLAttributes<HTMLSpanElement>,
+  'children'
+> {
   status: OAuthConnectionStatus;
 }
 

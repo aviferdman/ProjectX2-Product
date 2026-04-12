@@ -5,30 +5,69 @@
       "_description": "TASK-158: Design template preview modal (workflow diagram, details, use button). Comprehensive design tokens for the Template Preview Modal component.",
 
       "overlay": {
-        "bg": { "value": "rgba(0,0,0,0.7)", "type": "color", "description": "Modal backdrop overlay" },
-        "bg-blur": { "value": "8px", "type": "dimension", "description": "Backdrop blur radius for frosted glass effect" }
+        "bg": {
+          "value": "rgba(0,0,0,0.7)",
+          "type": "color",
+          "description": "Modal backdrop overlay"
+        },
+        "bg-blur": {
+          "value": "8px",
+          "type": "dimension",
+          "description": "Backdrop blur radius for frosted glass effect"
+        }
       },
 
       "container": {
-        "bg": { "value": "{crewspace.color.semantic.surface.panel}", "type": "color", "description": "Modal background" },
-        "border": { "value": "{crewspace.color.semantic.border.default}", "type": "color", "description": "Modal outer border" },
+        "bg": {
+          "value": "{crewspace.color.semantic.surface.panel}",
+          "type": "color",
+          "description": "Modal background"
+        },
+        "border": {
+          "value": "{crewspace.color.semantic.border.default}",
+          "type": "color",
+          "description": "Modal outer border"
+        },
         "border-width": { "value": "1px", "type": "borderWidth" },
-        "radius": { "value": "{crewspace.radius.xl}", "type": "borderRadius", "description": "12px corner radius" },
-        "shadow": { "value": "0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.08)", "type": "boxShadow" },
+        "radius": {
+          "value": "{crewspace.radius.xl}",
+          "type": "borderRadius",
+          "description": "12px corner radius"
+        },
+        "shadow": {
+          "value": "0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(113,113,122,0.08)",
+          "type": "boxShadow"
+        },
         "width": { "value": "900px", "type": "sizing", "description": "Fixed modal width" },
-        "max-width": { "value": "calc(100vw - 48px)", "type": "sizing", "description": "Responsive max width with margin" },
+        "max-width": {
+          "value": "calc(100vw - 48px)",
+          "type": "sizing",
+          "description": "Responsive max width with margin"
+        },
         "max-height": { "value": "85vh", "type": "sizing" },
-        "min-height": { "value": "520px", "type": "sizing", "description": "Minimum height to prevent collapsed layout" }
+        "min-height": {
+          "value": "520px",
+          "type": "sizing",
+          "description": "Minimum height to prevent collapsed layout"
+        }
       },
 
       "header": {
         "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
-        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Bottom border below header" },
+        "border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Bottom border below header"
+        },
         "height": { "value": "64px", "type": "sizing" },
         "padding-x": { "value": "24px", "type": "spacing" },
         "padding-y": { "value": "16px", "type": "spacing" },
         "gap": { "value": "12px", "type": "spacing", "description": "Gap between header elements" },
-        "radius": { "value": "12px 12px 0 0", "type": "borderRadius", "description": "Top corners match container" },
+        "radius": {
+          "value": "12px 12px 0 0",
+          "type": "borderRadius",
+          "description": "Top corners match container"
+        },
         "title": {
           "color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
           "font-size": { "value": "1.25rem", "type": "fontSize", "description": "20px" },
@@ -67,20 +106,48 @@
       },
 
       "body": {
-        "display": { "value": "flex", "type": "string", "description": "Horizontal split: diagram + sidebar" },
-        "overflow": { "value": "hidden auto", "type": "string", "description": "Vertical scroll when needed" }
+        "display": {
+          "value": "flex",
+          "type": "string",
+          "description": "Horizontal split: diagram + sidebar"
+        },
+        "overflow": {
+          "value": "hidden auto",
+          "type": "string",
+          "description": "Vertical scroll when needed"
+        }
       },
 
       "diagram": {
-        "bg": { "value": "rgba(10,14,26,0.9)", "type": "color", "description": "Dark background matching canvas" },
-        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Right border separating from sidebar" },
-        "height": { "value": "400px", "type": "sizing", "description": "Fixed diagram area height" },
+        "bg": {
+          "value": "rgba(10,14,26,0.9)",
+          "type": "color",
+          "description": "Dark background matching canvas"
+        },
+        "border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Right border separating from sidebar"
+        },
+        "height": {
+          "value": "400px",
+          "type": "sizing",
+          "description": "Fixed diagram area height"
+        },
         "min-height": { "value": "300px", "type": "sizing", "description": "Responsive minimum" },
         "padding": { "value": "24px", "type": "spacing" },
-        "flex": { "value": "1", "type": "string", "description": "Takes remaining width after sidebar" },
+        "flex": {
+          "value": "1",
+          "type": "string",
+          "description": "Takes remaining width after sidebar"
+        },
 
         "grid": {
-          "dot-color": { "value": "rgba(113,113,122,0.08)", "type": "color", "description": "Subtle background grid" },
+          "dot-color": {
+            "value": "rgba(113,113,122,0.08)",
+            "type": "color",
+            "description": "Subtle background grid"
+          },
           "dot-size": { "value": "1px", "type": "sizing" },
           "dot-spacing": { "value": "20px", "type": "sizing" }
         },
@@ -99,7 +166,11 @@
           "llm-border": { "value": "{crewspace.color.primitive.amber.500}", "type": "color" },
           "llm-icon": { "value": "{crewspace.color.primitive.amber.400}", "type": "color" },
           "width": { "value": "140px", "type": "sizing", "description": "Preview node card width" },
-          "height": { "value": "48px", "type": "sizing", "description": "Compact preview node height" },
+          "height": {
+            "value": "48px",
+            "type": "sizing",
+            "description": "Compact preview node height"
+          },
           "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
           "border-width": { "value": "1.5px", "type": "borderWidth" },
           "icon-size": { "value": "16px", "type": "sizing" },
@@ -113,18 +184,29 @@
           "color": { "value": "rgba(113,113,122,0.25)", "type": "color" },
           "color-active": { "value": "{crewspace.color.primitive.violet.400}", "type": "color" },
           "width": { "value": "1.5px", "type": "borderWidth" },
-          "dash-array": { "value": "4 4", "type": "string", "description": "Dashed line for data flow" },
+          "dash-array": {
+            "value": "4 4",
+            "type": "string",
+            "description": "Dashed line for data flow"
+          },
           "arrow-size": { "value": "8px", "type": "sizing" }
         },
 
         "controls": {
-          "bg": { "value": "rgba(17,17,19,0.8)", "type": "color", "description": "Zoom controls background" },
+          "bg": {
+            "value": "rgba(17,17,19,0.8)",
+            "type": "color",
+            "description": "Zoom controls background"
+          },
           "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
           "radius": { "value": "{crewspace.radius.lg}", "type": "borderRadius" },
           "btn-size": { "value": "28px", "type": "sizing" },
           "btn-icon-size": { "value": "14px", "type": "sizing" },
           "btn-color": { "value": "{crewspace.color.semantic.text.secondary}", "type": "color" },
-          "btn-color-hover": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
+          "btn-color-hover": {
+            "value": "{crewspace.color.semantic.text.primary}",
+            "type": "color"
+          },
           "btn-bg-hover": { "value": "rgba(30,41,59,0.6)", "type": "color" },
           "position": { "value": "bottom-left", "type": "string" },
           "inset": { "value": "16px", "type": "spacing" },
@@ -141,17 +223,33 @@
 
       "sidebar": {
         "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
-        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Left border" },
+        "border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Left border"
+        },
         "width": { "value": "300px", "type": "sizing" },
         "min-width": { "value": "260px", "type": "sizing" },
         "padding": { "value": "20px", "type": "spacing" },
-        "gap": { "value": "20px", "type": "spacing", "description": "Gap between sidebar sections" },
-        "overflow": { "value": "hidden auto", "type": "string", "description": "Scroll when content overflows" },
+        "gap": {
+          "value": "20px",
+          "type": "spacing",
+          "description": "Gap between sidebar sections"
+        },
+        "overflow": {
+          "value": "hidden auto",
+          "type": "string",
+          "description": "Scroll when content overflows"
+        },
 
         "section-divider": {
           "color": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color" },
           "width": { "value": "1px", "type": "borderWidth" },
-          "margin-y": { "value": "0px", "type": "spacing", "description": "Divider spacing handled by section gap" }
+          "margin-y": {
+            "value": "0px",
+            "type": "spacing",
+            "description": "Divider spacing handled by section gap"
+          }
         },
 
         "section-label": {
@@ -168,8 +266,16 @@
         "author": {
           "avatar-size": { "value": "28px", "type": "sizing" },
           "avatar-radius": { "value": "{crewspace.radius.full}", "type": "borderRadius" },
-          "avatar-bg": { "value": "rgba(99,102,241,0.15)", "type": "color", "description": "Fallback avatar bg" },
-          "avatar-text": { "value": "{crewspace.color.primitive.violet.300}", "type": "color", "description": "Initials color" },
+          "avatar-bg": {
+            "value": "rgba(99,102,241,0.15)",
+            "type": "color",
+            "description": "Fallback avatar bg"
+          },
+          "avatar-text": {
+            "value": "{crewspace.color.primitive.violet.300}",
+            "type": "color",
+            "description": "Initials color"
+          },
           "name-color": { "value": "{crewspace.color.semantic.text.primary}", "type": "color" },
           "name-font-size": { "value": "0.8125rem", "type": "fontSize", "description": "13px" },
           "name-font-weight": { "value": "500", "type": "fontWeight" },
@@ -231,17 +337,29 @@
         "tag-font-size": { "value": "0.6875rem", "type": "fontSize", "description": "11px" },
         "tag-font-weight": { "value": "500", "type": "fontWeight" },
         "gap": { "value": "6px", "type": "spacing" },
-        "wrap": { "value": "wrap", "type": "string", "description": "Tags wrap to multiple rows in sidebar (not truncated)" }
+        "wrap": {
+          "value": "wrap",
+          "type": "string",
+          "description": "Tags wrap to multiple rows in sidebar (not truncated)"
+        }
       },
 
       "footer": {
         "bg": { "value": "{crewspace.color.semantic.surface.card}", "type": "color" },
-        "border": { "value": "{crewspace.color.semantic.border.subtle}", "type": "color", "description": "Top border above footer" },
+        "border": {
+          "value": "{crewspace.color.semantic.border.subtle}",
+          "type": "color",
+          "description": "Top border above footer"
+        },
         "height": { "value": "64px", "type": "sizing" },
         "padding-x": { "value": "24px", "type": "spacing" },
         "padding-y": { "value": "12px", "type": "spacing" },
         "gap": { "value": "12px", "type": "spacing" },
-        "radius": { "value": "0 0 12px 12px", "type": "borderRadius", "description": "Bottom corners match container" },
+        "radius": {
+          "value": "0 0 12px 12px",
+          "type": "borderRadius",
+          "description": "Bottom corners match container"
+        },
 
         "useButton": {
           "height": { "value": "40px", "type": "sizing" },
@@ -277,24 +395,80 @@
       },
 
       "animation": {
-        "overlay-enter": { "value": "200ms ease-out", "type": "transition", "description": "Backdrop fade in" },
-        "overlay-exit": { "value": "150ms ease-in", "type": "transition", "description": "Backdrop fade out" },
-        "modal-enter": { "value": "300ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Modal scale-in with spring" },
-        "modal-exit": { "value": "200ms ease-in", "type": "transition", "description": "Modal scale-out" },
-        "diagram-nodes-enter": { "value": "250ms cubic-bezier(0.34,1.56,0.64,1)", "type": "transition", "description": "Staggered node appearance in diagram" },
-        "diagram-edges-draw": { "value": "400ms ease-out", "type": "transition", "description": "Edge path animation after nodes settle" },
-        "diagram-node-stagger": { "value": "60ms", "type": "duration", "description": "Delay between node appearances" },
-        "sidebar-content-enter": { "value": "200ms ease-out", "type": "transition", "description": "Sidebar content fade in" },
-        "sidebar-content-delay": { "value": "150ms", "type": "duration", "description": "Delay after modal enter before sidebar fades in" },
-        "button-transition": { "value": "150ms ease-out", "type": "transition", "description": "Button hover/active transitions" },
+        "overlay-enter": {
+          "value": "200ms ease-out",
+          "type": "transition",
+          "description": "Backdrop fade in"
+        },
+        "overlay-exit": {
+          "value": "150ms ease-in",
+          "type": "transition",
+          "description": "Backdrop fade out"
+        },
+        "modal-enter": {
+          "value": "300ms cubic-bezier(0.34,1.56,0.64,1)",
+          "type": "transition",
+          "description": "Modal scale-in with spring"
+        },
+        "modal-exit": {
+          "value": "200ms ease-in",
+          "type": "transition",
+          "description": "Modal scale-out"
+        },
+        "diagram-nodes-enter": {
+          "value": "250ms cubic-bezier(0.34,1.56,0.64,1)",
+          "type": "transition",
+          "description": "Staggered node appearance in diagram"
+        },
+        "diagram-edges-draw": {
+          "value": "400ms ease-out",
+          "type": "transition",
+          "description": "Edge path animation after nodes settle"
+        },
+        "diagram-node-stagger": {
+          "value": "60ms",
+          "type": "duration",
+          "description": "Delay between node appearances"
+        },
+        "sidebar-content-enter": {
+          "value": "200ms ease-out",
+          "type": "transition",
+          "description": "Sidebar content fade in"
+        },
+        "sidebar-content-delay": {
+          "value": "150ms",
+          "type": "duration",
+          "description": "Delay after modal enter before sidebar fades in"
+        },
+        "button-transition": {
+          "value": "150ms ease-out",
+          "type": "transition",
+          "description": "Button hover/active transitions"
+        },
         "close-btn-transition": { "value": "100ms ease-out", "type": "transition" }
       },
 
       "responsive": {
-        "breakpoint-collapse": { "value": "768px", "type": "dimension", "description": "Below this, sidebar stacks below diagram" },
-        "collapsed-sidebar-position": { "value": "below", "type": "string", "description": "Sidebar moves below diagram on narrow screens" },
-        "collapsed-diagram-height": { "value": "280px", "type": "sizing", "description": "Shorter diagram on narrow screens" },
-        "collapsed-width": { "value": "calc(100vw - 32px)", "type": "sizing", "description": "Nearly full-width on mobile" },
+        "breakpoint-collapse": {
+          "value": "768px",
+          "type": "dimension",
+          "description": "Below this, sidebar stacks below diagram"
+        },
+        "collapsed-sidebar-position": {
+          "value": "below",
+          "type": "string",
+          "description": "Sidebar moves below diagram on narrow screens"
+        },
+        "collapsed-diagram-height": {
+          "value": "280px",
+          "type": "sizing",
+          "description": "Shorter diagram on narrow screens"
+        },
+        "collapsed-width": {
+          "value": "calc(100vw - 32px)",
+          "type": "sizing",
+          "description": "Nearly full-width on mobile"
+        },
         "collapsed-max-height": { "value": "90vh", "type": "sizing" }
       },
 

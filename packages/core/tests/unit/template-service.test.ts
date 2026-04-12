@@ -6,10 +6,16 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { InMemoryTemplateStorage, _resetTemplateIdCounter } from '../../src/template/template-storage.js';
+import {
+  InMemoryTemplateStorage,
+  _resetTemplateIdCounter,
+} from '../../src/template/template-storage.js';
 import { InMemoryWorkflowStorage, _resetIdCounter } from '../../src/workflow/workflow-storage.js';
 import { TemplateLibraryService } from '../../src/template/template-service.js';
-import { TemplateNotFoundError, TemplateValidationError } from '../../src/template/template-errors.js';
+import {
+  TemplateNotFoundError,
+  TemplateValidationError,
+} from '../../src/template/template-errors.js';
 import type {
   CreateTemplateInput,
   StoredTemplate,
@@ -267,26 +273,20 @@ describe('TemplateLibraryService', () => {
     });
 
     it('throws TemplateNotFoundError for nonexistent template', async () => {
-      await expect(service.instantiate('nonexistent')).rejects.toThrow(
-        TemplateNotFoundError,
-      );
+      await expect(service.instantiate('nonexistent')).rejects.toThrow(TemplateNotFoundError);
     });
 
     it('throws TemplateValidationError for draft template', async () => {
       const draft = await createDraftTemplate(templateStorage);
 
-      await expect(service.instantiate(draft.id)).rejects.toThrow(
-        TemplateValidationError,
-      );
+      await expect(service.instantiate(draft.id)).rejects.toThrow(TemplateValidationError);
     });
 
     it('throws TemplateValidationError for archived template', async () => {
       const template = await createPublishedTemplate(templateStorage);
       await templateStorage.update(template.id, { status: 'archived' });
 
-      await expect(service.instantiate(template.id)).rejects.toThrow(
-        TemplateValidationError,
-      );
+      await expect(service.instantiate(template.id)).rejects.toThrow(TemplateValidationError);
     });
 
     it('copies agents and tasks independently from the template', async () => {
@@ -296,7 +296,12 @@ describe('TemplateLibraryService', () => {
       ];
       const tasks = [
         { id: 't1', description: 'Task 1', agentId: 'a1' },
-        { id: 't2', description: 'Task 2', agentId: 'a2', dependencies: ['t1'] as readonly string[] },
+        {
+          id: 't2',
+          description: 'Task 2',
+          agentId: 'a2',
+          dependencies: ['t1'] as readonly string[],
+        },
       ];
 
       const template = await createPublishedTemplate(templateStorage, {
@@ -464,17 +469,13 @@ describe('TemplateLibraryService', () => {
     });
 
     it('throws TemplateNotFoundError when featuring nonexistent template', async () => {
-      await expect(service.setFeatured('nonexistent', 1)).rejects.toThrow(
-        TemplateNotFoundError,
-      );
+      await expect(service.setFeatured('nonexistent', 1)).rejects.toThrow(TemplateNotFoundError);
     });
 
     it('enforces max featured templates limit', async () => {
-      const customService = new TemplateLibraryService(
-        templateStorage,
-        workflowStorage,
-        { maxFeaturedTemplates: 2 },
-      );
+      const customService = new TemplateLibraryService(templateStorage, workflowStorage, {
+        maxFeaturedTemplates: 2,
+      });
 
       const t1 = await createPublishedTemplate(templateStorage, { name: 'T1' });
       const t2 = await createPublishedTemplate(templateStorage, { name: 'T2' });
@@ -483,17 +484,13 @@ describe('TemplateLibraryService', () => {
       await customService.setFeatured(t1.id, 1);
       await customService.setFeatured(t2.id, 2);
 
-      await expect(customService.setFeatured(t3.id, 3)).rejects.toThrow(
-        TemplateValidationError,
-      );
+      await expect(customService.setFeatured(t3.id, 3)).rejects.toThrow(TemplateValidationError);
     });
 
     it('allows updating display order of already-featured template', async () => {
-      const customService = new TemplateLibraryService(
-        templateStorage,
-        workflowStorage,
-        { maxFeaturedTemplates: 1 },
-      );
+      const customService = new TemplateLibraryService(templateStorage, workflowStorage, {
+        maxFeaturedTemplates: 1,
+      });
 
       const template = await createPublishedTemplate(templateStorage);
 
@@ -551,9 +548,7 @@ describe('TemplateLibraryService', () => {
     });
 
     it('throws TemplateNotFoundError for nonexistent template', async () => {
-      await expect(service.duplicate('nonexistent')).rejects.toThrow(
-        TemplateNotFoundError,
-      );
+      await expect(service.duplicate('nonexistent')).rejects.toThrow(TemplateNotFoundError);
     });
 
     it('creates an independent copy (modifying copy does not affect original)', async () => {

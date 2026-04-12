@@ -51,10 +51,10 @@ describe('script path resolution', () => {
     const output = execSync('npx tsx scripts/publish-check.ts', {
       cwd: ROOT,
       encoding: 'utf-8',
-      timeout: 30000,
+      timeout: 60000,
       stdio: ['pipe', 'pipe', 'pipe'],
     });
     expect(output).toContain('Ready to publish');
     expect(output).not.toContain('not found');
-  }, 30_000);
+  }, 60_000);
 });

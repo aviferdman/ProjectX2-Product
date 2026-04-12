@@ -50,9 +50,7 @@ describe('useAnimation', () => {
 
   it('transitions from entering to entered', () => {
     const onEntered = vi.fn();
-    const { result } = renderHook(() =>
-      useAnimation({ show: true, variant: 'fade', onEntered }),
-    );
+    const { result } = renderHook(() => useAnimation({ show: true, variant: 'fade', onEntered }));
 
     expect(result.current.phase).toBe('entering');
 
@@ -65,18 +63,14 @@ describe('useAnimation', () => {
   });
 
   it('returns style object with opacity for fade variant', () => {
-    const { result } = renderHook(() =>
-      useAnimation({ show: true, variant: 'fade' }),
-    );
+    const { result } = renderHook(() => useAnimation({ show: true, variant: 'fade' }));
 
     expect(result.current.style).toBeDefined();
     expect('opacity' in result.current.style).toBe(true);
   });
 
   it('returns style with transform for slideUp variant', () => {
-    const { result } = renderHook(() =>
-      useAnimation({ show: false, variant: 'slideUp' }),
-    );
+    const { result } = renderHook(() => useAnimation({ show: false, variant: 'slideUp' }));
 
     expect(result.current.style).toBeDefined();
     expect('transform' in result.current.style).toBe(true);
@@ -84,9 +78,7 @@ describe('useAnimation', () => {
 
   it('respects duration override', () => {
     const onEntered = vi.fn();
-    renderHook(() =>
-      useAnimation({ show: true, variant: 'fade', duration: 500, onEntered }),
-    );
+    renderHook(() => useAnimation({ show: true, variant: 'fade', duration: 500, onEntered }));
 
     // At 300ms (default fade duration) should not have fired
     act(() => {
@@ -105,22 +97,21 @@ describe('useAnimation', () => {
     // Re-override to return true for reduced motion
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: (query: string): MediaQueryList => ({
-        matches: query.includes('prefers-reduced-motion'),
-        media: query,
-        onchange: null,
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        addListener: () => {},
-        removeListener: () => {},
-        dispatchEvent: () => true,
-      } as unknown as MediaQueryList),
+      value: (query: string): MediaQueryList =>
+        ({
+          matches: query.includes('prefers-reduced-motion'),
+          media: query,
+          onchange: null,
+          addEventListener: () => {},
+          removeEventListener: () => {},
+          addListener: () => {},
+          removeListener: () => {},
+          dispatchEvent: () => true,
+        }) as unknown as MediaQueryList,
     });
 
     const onEntered = vi.fn();
-    renderHook(() =>
-      useAnimation({ show: true, variant: 'fade', onEntered }),
-    );
+    renderHook(() => useAnimation({ show: true, variant: 'fade', onEntered }));
 
     // With reduced motion, duration is 0 so callback fires immediately
     act(() => {

@@ -220,7 +220,13 @@ export function validateKeywords(pkg: PackageJson): ValidationCheck[] {
   const checks: ValidationCheck[] = [];
 
   if (!pkg.keywords || !Array.isArray(pkg.keywords)) {
-    return [{ name: 'keywords-present', status: 'fail', message: 'Keywords field is missing or not an array' }];
+    return [
+      {
+        name: 'keywords-present',
+        status: 'fail',
+        message: 'Keywords field is missing or not an array',
+      },
+    ];
   }
 
   if (pkg.keywords.length === 0) {

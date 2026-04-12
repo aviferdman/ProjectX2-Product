@@ -1,5 +1,10 @@
 export { useMediaQuery } from './useMediaQuery.js';
-export { useBreakpoint, BREAKPOINTS, type Breakpoint, type BreakpointState } from './useBreakpoint.js';
+export {
+  useBreakpoint,
+  BREAKPOINTS,
+  type Breakpoint,
+  type BreakpointState,
+} from './useBreakpoint.js';
 // TASK-181: Async error handling hook
 export {
   useAsyncError,
@@ -38,17 +43,9 @@ export {
   type InstantiationTemplate,
 } from './useTemplateInstantiation.js';
 // TASK-167: OAuth flow management hook
-export {
-  useOAuthFlow,
-  type UseOAuthFlowOptions,
-  type UseOAuthFlowResult,
-} from './useOAuthFlow.js';
+export { useOAuthFlow, type UseOAuthFlowOptions, type UseOAuthFlowResult } from './useOAuthFlow.js';
 // TASK-173: Animation hook
-export {
-  useAnimation,
-  type UseAnimationOptions,
-  type UseAnimationResult,
-} from './useAnimation.js';
+export { useAnimation, type UseAnimationOptions, type UseAnimationResult } from './useAnimation.js';
 // TASK-174: Accessibility hooks
 export {
   useKeyboardShortcuts,
@@ -72,11 +69,7 @@ export {
   type UseAriaAnnouncerResult,
 } from './useAriaAnnouncer.js';
 // TASK-182: Toast notification hook
-export {
-  useToast,
-  type UseToastOptions,
-  type UseToastResult,
-} from './useToast.js';
+export { useToast, type UseToastOptions, type UseToastResult } from './useToast.js';
 // TASK-187: Form validation hook
 export {
   useFormValidation,

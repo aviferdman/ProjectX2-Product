@@ -12,6 +12,7 @@ import { CrewspaceError, ErrorCode } from '../errors/base.js';
 
 /** Error code for workflow-specific errors. */
 export const WORKFLOW_NOT_FOUND = 'WORKFLOW_NOT_FOUND' as unknown as ErrorCode;
+/** Error code for workflow validation failure. */
 export const WORKFLOW_VALIDATION = 'WORKFLOW_VALIDATION' as unknown as ErrorCode;
 
 // ---------------------------------------------------------------------------

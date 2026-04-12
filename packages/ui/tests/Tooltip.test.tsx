@@ -24,17 +24,29 @@ describe('Tooltip', () => {
   });
 
   it('applies bottom placement', () => {
-    render(<Tooltip label="Info" placement="bottom">Trigger</Tooltip>);
+    render(
+      <Tooltip label="Info" placement="bottom">
+        Trigger
+      </Tooltip>,
+    );
     expect(screen.getByRole('tooltip').className).toContain('top-full');
   });
 
   it('applies left placement', () => {
-    render(<Tooltip label="Info" placement="left">Trigger</Tooltip>);
+    render(
+      <Tooltip label="Info" placement="left">
+        Trigger
+      </Tooltip>,
+    );
     expect(screen.getByRole('tooltip').className).toContain('right-full');
   });
 
   it('applies right placement', () => {
-    render(<Tooltip label="Info" placement="right">Trigger</Tooltip>);
+    render(
+      <Tooltip label="Info" placement="right">
+        Trigger
+      </Tooltip>,
+    );
     expect(screen.getByRole('tooltip').className).toContain('left-full');
   });
 });

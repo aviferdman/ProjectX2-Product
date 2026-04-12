@@ -35,7 +35,7 @@ export function TaskList({
   const getAgent = (agentId: string) => agents.find((a) => a.id === agentId);
 
   const handleSave = (
-    data: Omit<TaskNode, 'id' | 'status'> | { id: string } & Partial<Omit<TaskNode, 'id'>>,
+    data: Omit<TaskNode, 'id' | 'status'> | ({ id: string } & Partial<Omit<TaskNode, 'id'>>),
   ) => {
     if ('id' in data) {
       const { id, ...updates } = data;
@@ -75,12 +75,7 @@ export function TaskList({
   if (isAdding) {
     return (
       <div className="h-full overflow-y-auto scrollbar-thin">
-        <TaskEditor
-          agents={agents}
-          tasks={tasks}
-          onSave={handleSave}
-          onCancel={handleCancel}
-        />
+        <TaskEditor agents={agents} tasks={tasks} onSave={handleSave} onCancel={handleCancel} />
       </div>
     );
   }
@@ -91,13 +86,23 @@ export function TaskList({
         {tasks.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <div className="w-10 h-10 rounded-full bg-indigo-600/10 flex items-center justify-center mb-3">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-indigo-400">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-indigo-400"
+              >
                 <rect x="3" y="3" width="14" height="14" rx="2" />
                 <path d="M7 10l2 2 4-4" />
               </svg>
             </div>
             <p className="text-sm text-[var(--cs-text-tertiary)]">No tasks yet</p>
-            <p className="text-xs text-[var(--cs-text-tertiary)] mt-1">Add your first task to get started</p>
+            <p className="text-xs text-[var(--cs-text-tertiary)] mt-1">
+              Add your first task to get started
+            </p>
           </div>
         ) : (
           tasks.map((task) => {
@@ -139,7 +144,9 @@ export function TaskList({
                       )}
                     </div>
 
-                    <span className={`px-1.5 py-0.5 text-[10px] rounded shrink-0 ${status.bg} ${status.text}`}>
+                    <span
+                      className={`px-1.5 py-0.5 text-[10px] rounded shrink-0 ${status.bg} ${status.text}`}
+                    >
                       {status.label}
                     </span>
                   </div>
@@ -156,7 +163,15 @@ export function TaskList({
           onClick={() => setIsAdding(true)}
           className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-md border border-dashed border-[var(--cs-border-subtle)] text-[var(--cs-text-secondary)] hover:text-indigo-400 hover:border-indigo-500/40 hover:bg-indigo-600/5 transition-colors"
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          >
             <path d="M7 1v12M1 7h12" />
           </svg>
           Add Task

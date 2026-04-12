@@ -6,137 +6,173 @@
       "$description": "Icon system tokens — sizing, stroke, and category definitions for the Crewspace curated icon set",
 
       "size": {
-        "xs":      { "$value": "12px", "$type": "dimension", "$description": "Extra-small icon (inline badges)" },
-        "sm":      { "$value": "16px", "$type": "dimension", "$description": "Small icon (compact UI, breadcrumbs)" },
-        "md":      { "$value": "20px", "$type": "dimension", "$description": "Default icon size (buttons, nodes)" },
-        "lg":      { "$value": "24px", "$type": "dimension", "$description": "Large icon (headers, empty states)" },
-        "xl":      { "$value": "32px", "$type": "dimension", "$description": "Extra-large icon (hero, onboarding)" },
-        "2xl":     { "$value": "48px", "$type": "dimension", "$description": "Display icon (landing, feature cards)" }
+        "xs": {
+          "$value": "12px",
+          "$type": "dimension",
+          "$description": "Extra-small icon (inline badges)"
+        },
+        "sm": {
+          "$value": "16px",
+          "$type": "dimension",
+          "$description": "Small icon (compact UI, breadcrumbs)"
+        },
+        "md": {
+          "$value": "20px",
+          "$type": "dimension",
+          "$description": "Default icon size (buttons, nodes)"
+        },
+        "lg": {
+          "$value": "24px",
+          "$type": "dimension",
+          "$description": "Large icon (headers, empty states)"
+        },
+        "xl": {
+          "$value": "32px",
+          "$type": "dimension",
+          "$description": "Extra-large icon (hero, onboarding)"
+        },
+        "2xl": {
+          "$value": "48px",
+          "$type": "dimension",
+          "$description": "Display icon (landing, feature cards)"
+        }
       },
 
       "stroke": {
-        "thin":    { "$value": "1.25", "$type": "number", "$description": "Thin stroke for decorative icons" },
-        "default": { "$value": "1.75", "$type": "number", "$description": "Standard stroke weight" },
-        "bold":    { "$value": "2.25", "$type": "number", "$description": "Bold stroke for emphasis / active states" }
+        "thin": {
+          "$value": "1.25",
+          "$type": "number",
+          "$description": "Thin stroke for decorative icons"
+        },
+        "default": {
+          "$value": "1.75",
+          "$type": "number",
+          "$description": "Standard stroke weight"
+        },
+        "bold": {
+          "$value": "2.25",
+          "$type": "number",
+          "$description": "Bold stroke for emphasis / active states"
+        }
       },
 
       "category": {
         "$description": "Curated icon categories with Lucide-compatible names",
 
         "navigation": {
-          "home":           { "$value": "home",            "$type": "string" },
-          "menu":           { "$value": "menu",            "$type": "string" },
-          "chevronRight":   { "$value": "chevron-right",   "$type": "string" },
-          "chevronLeft":    { "$value": "chevron-left",    "$type": "string" },
-          "chevronDown":    { "$value": "chevron-down",    "$type": "string" },
-          "chevronUp":      { "$value": "chevron-up",      "$type": "string" },
-          "arrowRight":     { "$value": "arrow-right",     "$type": "string" },
-          "arrowLeft":      { "$value": "arrow-left",      "$type": "string" },
-          "externalLink":   { "$value": "external-link",   "$type": "string" },
+          "home": { "$value": "home", "$type": "string" },
+          "menu": { "$value": "menu", "$type": "string" },
+          "chevronRight": { "$value": "chevron-right", "$type": "string" },
+          "chevronLeft": { "$value": "chevron-left", "$type": "string" },
+          "chevronDown": { "$value": "chevron-down", "$type": "string" },
+          "chevronUp": { "$value": "chevron-up", "$type": "string" },
+          "arrowRight": { "$value": "arrow-right", "$type": "string" },
+          "arrowLeft": { "$value": "arrow-left", "$type": "string" },
+          "externalLink": { "$value": "external-link", "$type": "string" },
           "moreHorizontal": { "$value": "more-horizontal", "$type": "string" },
-          "moreVertical":   { "$value": "more-vertical",   "$type": "string" }
+          "moreVertical": { "$value": "more-vertical", "$type": "string" }
         },
 
         "action": {
-          "plus":           { "$value": "plus",            "$type": "string" },
-          "minus":          { "$value": "minus",           "$type": "string" },
-          "x":              { "$value": "x",               "$type": "string" },
-          "check":          { "$value": "check",           "$type": "string" },
-          "edit":           { "$value": "pencil",          "$type": "string" },
-          "trash":          { "$value": "trash-2",         "$type": "string" },
-          "copy":           { "$value": "copy",            "$type": "string" },
-          "download":       { "$value": "download",        "$type": "string" },
-          "upload":         { "$value": "upload",          "$type": "string" },
-          "refresh":        { "$value": "refresh-cw",      "$type": "string" },
-          "search":         { "$value": "search",          "$type": "string" },
-          "filter":         { "$value": "filter",          "$type": "string" },
-          "settings":       { "$value": "settings",        "$type": "string" },
-          "save":           { "$value": "save",            "$type": "string" },
-          "undo":           { "$value": "undo",            "$type": "string" },
-          "redo":           { "$value": "redo",            "$type": "string" }
+          "plus": { "$value": "plus", "$type": "string" },
+          "minus": { "$value": "minus", "$type": "string" },
+          "x": { "$value": "x", "$type": "string" },
+          "check": { "$value": "check", "$type": "string" },
+          "edit": { "$value": "pencil", "$type": "string" },
+          "trash": { "$value": "trash-2", "$type": "string" },
+          "copy": { "$value": "copy", "$type": "string" },
+          "download": { "$value": "download", "$type": "string" },
+          "upload": { "$value": "upload", "$type": "string" },
+          "refresh": { "$value": "refresh-cw", "$type": "string" },
+          "search": { "$value": "search", "$type": "string" },
+          "filter": { "$value": "filter", "$type": "string" },
+          "settings": { "$value": "settings", "$type": "string" },
+          "save": { "$value": "save", "$type": "string" },
+          "undo": { "$value": "undo", "$type": "string" },
+          "redo": { "$value": "redo", "$type": "string" }
         },
 
         "node": {
-          "agent":          { "$value": "bot",             "$type": "string" },
-          "task":           { "$value": "clipboard-list",  "$type": "string" },
-          "tool":           { "$value": "wrench",          "$type": "string" },
-          "llm":            { "$value": "sparkles",        "$type": "string" },
-          "researcher":     { "$value": "search",          "$type": "string" },
-          "writer":         { "$value": "pen-line",        "$type": "string" },
-          "analyst":        { "$value": "bar-chart-3",     "$type": "string" },
-          "coordinator":    { "$value": "network",         "$type": "string" },
-          "coder":          { "$value": "code-2",          "$type": "string" },
-          "reviewer":       { "$value": "shield-check",    "$type": "string" }
+          "agent": { "$value": "bot", "$type": "string" },
+          "task": { "$value": "clipboard-list", "$type": "string" },
+          "tool": { "$value": "wrench", "$type": "string" },
+          "llm": { "$value": "sparkles", "$type": "string" },
+          "researcher": { "$value": "search", "$type": "string" },
+          "writer": { "$value": "pen-line", "$type": "string" },
+          "analyst": { "$value": "bar-chart-3", "$type": "string" },
+          "coordinator": { "$value": "network", "$type": "string" },
+          "coder": { "$value": "code-2", "$type": "string" },
+          "reviewer": { "$value": "shield-check", "$type": "string" }
         },
 
         "status": {
-          "success":        { "$value": "check-circle",    "$type": "string" },
-          "warning":        { "$value": "alert-triangle",  "$type": "string" },
-          "error":          { "$value": "x-circle",        "$type": "string" },
-          "info":           { "$value": "info",            "$type": "string" },
-          "loading":        { "$value": "loader",          "$type": "string" },
-          "clock":          { "$value": "clock",           "$type": "string" },
-          "pause":          { "$value": "pause",           "$type": "string" }
+          "success": { "$value": "check-circle", "$type": "string" },
+          "warning": { "$value": "alert-triangle", "$type": "string" },
+          "error": { "$value": "x-circle", "$type": "string" },
+          "info": { "$value": "info", "$type": "string" },
+          "loading": { "$value": "loader", "$type": "string" },
+          "clock": { "$value": "clock", "$type": "string" },
+          "pause": { "$value": "pause", "$type": "string" }
         },
 
         "content": {
-          "file":           { "$value": "file-text",       "$type": "string" },
-          "folder":         { "$value": "folder",          "$type": "string" },
-          "image":          { "$value": "image",           "$type": "string" },
-          "code":           { "$value": "code-2",          "$type": "string" },
-          "terminal":       { "$value": "terminal",        "$type": "string" },
-          "database":       { "$value": "database",        "$type": "string" },
-          "globe":          { "$value": "globe",           "$type": "string" },
-          "link":           { "$value": "link",            "$type": "string" },
-          "key":            { "$value": "key",             "$type": "string" },
-          "lock":           { "$value": "lock",            "$type": "string" },
-          "unlock":         { "$value": "unlock",          "$type": "string" }
+          "file": { "$value": "file-text", "$type": "string" },
+          "folder": { "$value": "folder", "$type": "string" },
+          "image": { "$value": "image", "$type": "string" },
+          "code": { "$value": "code-2", "$type": "string" },
+          "terminal": { "$value": "terminal", "$type": "string" },
+          "database": { "$value": "database", "$type": "string" },
+          "globe": { "$value": "globe", "$type": "string" },
+          "link": { "$value": "link", "$type": "string" },
+          "key": { "$value": "key", "$type": "string" },
+          "lock": { "$value": "lock", "$type": "string" },
+          "unlock": { "$value": "unlock", "$type": "string" }
         },
 
         "layout": {
-          "sidebar":        { "$value": "panel-left",      "$type": "string" },
-          "grid":           { "$value": "layout-grid",     "$type": "string" },
-          "list":           { "$value": "list",            "$type": "string" },
-          "columns":        { "$value": "columns",         "$type": "string" },
-          "maximize":       { "$value": "maximize-2",      "$type": "string" },
-          "minimize":       { "$value": "minimize-2",      "$type": "string" },
-          "zoomIn":         { "$value": "zoom-in",         "$type": "string" },
-          "zoomOut":        { "$value": "zoom-out",        "$type": "string" },
-          "fitView":        { "$value": "scan",            "$type": "string" }
+          "sidebar": { "$value": "panel-left", "$type": "string" },
+          "grid": { "$value": "layout-grid", "$type": "string" },
+          "list": { "$value": "list", "$type": "string" },
+          "columns": { "$value": "columns", "$type": "string" },
+          "maximize": { "$value": "maximize-2", "$type": "string" },
+          "minimize": { "$value": "minimize-2", "$type": "string" },
+          "zoomIn": { "$value": "zoom-in", "$type": "string" },
+          "zoomOut": { "$value": "zoom-out", "$type": "string" },
+          "fitView": { "$value": "scan", "$type": "string" }
         },
 
         "communication": {
-          "bell":           { "$value": "bell",            "$type": "string" },
-          "messageSquare":  { "$value": "message-square",  "$type": "string" },
-          "mail":           { "$value": "mail",            "$type": "string" },
-          "share":          { "$value": "share-2",         "$type": "string" },
-          "users":          { "$value": "users",           "$type": "string" },
-          "user":           { "$value": "user",            "$type": "string" }
+          "bell": { "$value": "bell", "$type": "string" },
+          "messageSquare": { "$value": "message-square", "$type": "string" },
+          "mail": { "$value": "mail", "$type": "string" },
+          "share": { "$value": "share-2", "$type": "string" },
+          "users": { "$value": "users", "$type": "string" },
+          "user": { "$value": "user", "$type": "string" }
         },
 
         "workflow": {
-          "play":           { "$value": "play",            "$type": "string" },
-          "stop":           { "$value": "square",          "$type": "string" },
-          "skipForward":    { "$value": "skip-forward",    "$type": "string" },
-          "rewind":         { "$value": "rewind",          "$type": "string" },
-          "gitBranch":      { "$value": "git-branch",      "$type": "string" },
-          "gitFork":        { "$value": "git-fork",        "$type": "string" },
-          "repeat":         { "$value": "repeat",          "$type": "string" },
-          "shuffle":        { "$value": "shuffle",         "$type": "string" },
-          "workflow":       { "$value": "workflow",        "$type": "string" },
-          "zap":            { "$value": "zap",             "$type": "string" }
+          "play": { "$value": "play", "$type": "string" },
+          "stop": { "$value": "square", "$type": "string" },
+          "skipForward": { "$value": "skip-forward", "$type": "string" },
+          "rewind": { "$value": "rewind", "$type": "string" },
+          "gitBranch": { "$value": "git-branch", "$type": "string" },
+          "gitFork": { "$value": "git-fork", "$type": "string" },
+          "repeat": { "$value": "repeat", "$type": "string" },
+          "shuffle": { "$value": "shuffle", "$type": "string" },
+          "workflow": { "$value": "workflow", "$type": "string" },
+          "zap": { "$value": "zap", "$type": "string" }
         },
 
         "brand": {
-          "brain":          { "$value": "brain",           "$type": "string" },
-          "sparkles":       { "$value": "sparkles",        "$type": "string" },
-          "cpu":            { "$value": "cpu",             "$type": "string" },
-          "hardDrive":      { "$value": "hard-drive",      "$type": "string" },
-          "rocket":         { "$value": "rocket",          "$type": "string" },
-          "star":           { "$value": "star",            "$type": "string" },
-          "heart":          { "$value": "heart",           "$type": "string" },
-          "shield":         { "$value": "shield",          "$type": "string" },
-          "award":          { "$value": "award",           "$type": "string" }
+          "brain": { "$value": "brain", "$type": "string" },
+          "sparkles": { "$value": "sparkles", "$type": "string" },
+          "cpu": { "$value": "cpu", "$type": "string" },
+          "hardDrive": { "$value": "hard-drive", "$type": "string" },
+          "rocket": { "$value": "rocket", "$type": "string" },
+          "star": { "$value": "star", "$type": "string" },
+          "heart": { "$value": "heart", "$type": "string" },
+          "shield": { "$value": "shield", "$type": "string" },
+          "award": { "$value": "award", "$type": "string" }
         }
       }
     }

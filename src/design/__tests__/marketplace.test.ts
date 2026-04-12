@@ -26,9 +26,19 @@ function collectTokenLeaves(
   for (const [key, val] of Object.entries(obj)) {
     if (key.startsWith('_')) continue;
     const current = path ? `${path}.${key}` : key;
-    if (val && typeof val === 'object' && 'value' in (val as Record<string, unknown>) && 'type' in (val as Record<string, unknown>)) {
+    if (
+      val &&
+      typeof val === 'object' &&
+      'value' in (val as Record<string, unknown>) &&
+      'type' in (val as Record<string, unknown>)
+    ) {
       const token = val as { value: unknown; type: string; description?: string };
-      results.push({ path: current, value: token.value, type: token.type, description: token.description });
+      results.push({
+        path: current,
+        value: token.value,
+        type: token.type,
+        description: token.description,
+      });
     } else if (val && typeof val === 'object') {
       results.push(...collectTokenLeaves(val as Record<string, unknown>, current));
     }
@@ -51,7 +61,8 @@ describe('marketplace.json — design tokens', () => {
     expect(crewspace).toHaveProperty('marketplace');
   });
 
-  const marketplace = (tokens as { crewspace: { marketplace: Record<string, unknown> } }).crewspace.marketplace;
+  const marketplace = (tokens as { crewspace: { marketplace: Record<string, unknown> } }).crewspace
+    .marketplace;
 
   it('contains required top-level sections', () => {
     const requiredSections = [
@@ -93,15 +104,27 @@ describe('marketplace.json — design tokens', () => {
     it('every leaf has a non-empty value', () => {
       for (const leaf of leaves) {
         expect(leaf.value, `${leaf.path} should have a value`).toBeDefined();
-        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(0);
+        expect(String(leaf.value).length, `${leaf.path} value should not be empty`).toBeGreaterThan(
+          0,
+        );
       }
     });
 
     it('every leaf has a valid type', () => {
       const validTypes = [
-        'color', 'sizing', 'number', 'borderRadius', 'boxShadow',
-        'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing',
-        'duration', 'cubicBezier', 'gradient', 'string',
+        'color',
+        'sizing',
+        'number',
+        'borderRadius',
+        'boxShadow',
+        'fontSize',
+        'fontWeight',
+        'lineHeight',
+        'letterSpacing',
+        'duration',
+        'cubicBezier',
+        'gradient',
+        'string',
       ];
       for (const leaf of leaves) {
         expect(validTypes, `${leaf.path} has type "${leaf.type}"`).toContain(leaf.type);
@@ -328,7 +351,15 @@ describe('marketplace-theme.ts — Tailwind theme extension', () => {
   });
 
   describe('theme sections', () => {
-    const requiredSections = ['colors', 'spacing', 'fontSize', 'maxHeight', 'boxShadow', 'animation', 'keyframes'];
+    const requiredSections = [
+      'colors',
+      'spacing',
+      'fontSize',
+      'maxHeight',
+      'boxShadow',
+      'animation',
+      'keyframes',
+    ];
     for (const section of requiredSections) {
       it(`has ${section} section`, () => {
         expect(themeSource).toContain(`${section}:`);

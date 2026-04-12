@@ -241,13 +241,13 @@
 /* Syntax highlighting (§4.5)                                          */
 /* ------------------------------------------------------------------ */
 .cs-log-viewer {
-  --syntax-string: #34d399;          /* emerald-400 */
-  --syntax-number: #fbbf24;          /* amber-400 */
-  --syntax-boolean: #818cf8;         /* indigo-400 */
-  --syntax-null: #818cf8;            /* indigo-400 */
-  --syntax-key: #22d3ee;             /* sky-400 */
-  --syntax-error: #f87171;           /* rose-400 */
-  --syntax-punctuation: #a1a1aa;     /* slate-400 */
+  --syntax-string: #34d399; /* emerald-400 */
+  --syntax-number: #fbbf24; /* amber-400 */
+  --syntax-boolean: #818cf8; /* indigo-400 */
+  --syntax-null: #818cf8; /* indigo-400 */
+  --syntax-key: #22d3ee; /* sky-400 */
+  --syntax-error: #f87171; /* rose-400 */
+  --syntax-punctuation: #a1a1aa; /* slate-400 */
 }
 
 /* ------------------------------------------------------------------ */

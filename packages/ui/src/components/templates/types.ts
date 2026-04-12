@@ -2,13 +2,7 @@
  * Template Browser types — TASK-159
  */
 
-export type TemplateCategory =
-  | 'research'
-  | 'code'
-  | 'support'
-  | 'content'
-  | 'data'
-  | 'automation';
+export type TemplateCategory = 'research' | 'code' | 'support' | 'content' | 'data' | 'automation';
 
 export type TemplateSortField = 'name' | 'popularity' | 'createdAt' | 'updatedAt';
 export type SortDirection = 'asc' | 'desc';

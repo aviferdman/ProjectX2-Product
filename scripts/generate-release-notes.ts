@@ -239,7 +239,7 @@ export function generateReleaseNotes(options: ReleaseNotesOptions): ReleaseNotes
 
   // Changelog section
   if (changelogNotes) {
-    sections.push('## What\'s Changed');
+    sections.push("## What's Changed");
     sections.push('');
     sections.push(changelogNotes);
     sections.push('');
@@ -316,9 +316,7 @@ export function generateReleaseNotes(options: ReleaseNotesOptions): ReleaseNotes
   } else {
     sections.push('---');
     sections.push('');
-    sections.push(
-      `**Full Changelog**: [${tag}](${repoUrl}/commits/${tag})`,
-    );
+    sections.push(`**Full Changelog**: [${tag}](${repoUrl}/commits/${tag})`);
   }
   sections.push('');
 

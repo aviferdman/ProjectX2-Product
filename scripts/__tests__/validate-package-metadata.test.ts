@@ -265,33 +265,45 @@ describe('validate-package-metadata', () => {
   describe('validatePublishConfig', () => {
     it('passes with correct publishConfig', () => {
       const checks = validatePublishConfig(
-        makePackageJson({ publishConfig: { access: 'public', registry: 'https://registry.npmjs.org/' } }),
+        makePackageJson({
+          publishConfig: { access: 'public', registry: 'https://registry.npmjs.org/' },
+        }),
       );
       expect(checks.every((c) => c.status === 'pass')).toBe(true);
     });
 
     it('fails when publishConfig is missing', () => {
       const checks = validatePublishConfig(makePackageJson({ publishConfig: undefined }));
-      expect(checks.some((c) => c.status === 'fail' && c.name === 'publish-config-present')).toBe(true);
+      expect(checks.some((c) => c.status === 'fail' && c.name === 'publish-config-present')).toBe(
+        true,
+      );
     });
 
     it('fails when access is not public', () => {
       const checks = validatePublishConfig(
         makePackageJson({ publishConfig: { access: 'restricted' } }),
       );
-      expect(checks.some((c) => c.status === 'fail' && c.name === 'publish-config-access')).toBe(true);
+      expect(checks.some((c) => c.status === 'fail' && c.name === 'publish-config-access')).toBe(
+        true,
+      );
     });
 
     it('warns when registry is non-standard', () => {
       const checks = validatePublishConfig(
-        makePackageJson({ publishConfig: { access: 'public', registry: 'https://custom.registry.com/' } }),
+        makePackageJson({
+          publishConfig: { access: 'public', registry: 'https://custom.registry.com/' },
+        }),
       );
-      expect(checks.some((c) => c.status === 'warn' && c.name === 'publish-config-registry')).toBe(true);
+      expect(checks.some((c) => c.status === 'warn' && c.name === 'publish-config-registry')).toBe(
+        true,
+      );
     });
 
     it('passes when registry matches without trailing slash', () => {
       const checks = validatePublishConfig(
-        makePackageJson({ publishConfig: { access: 'public', registry: 'https://registry.npmjs.org' } }),
+        makePackageJson({
+          publishConfig: { access: 'public', registry: 'https://registry.npmjs.org' },
+        }),
       );
       const registryCheck = checks.find((c) => c.name === 'publish-config-registry');
       expect(registryCheck?.status).toBe('pass');
@@ -509,9 +521,7 @@ describe('validate-package-metadata', () => {
         {
           packageName: '@crewspace/broken',
           packageDir: '/tmp/broken',
-          checks: [
-            { name: 'test', status: 'fail', message: 'Missing field', fixable: true },
-          ],
+          checks: [{ name: 'test', status: 'fail', message: 'Missing field', fixable: true }],
           passed: false,
         },
       ]);
